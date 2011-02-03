@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the Shopping list extension in the FRONTEND</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="title">Titel</label>
+			<label index="company">Company</label>
+			<label index="lastName">Last Name</label>
+			<label index="firstName">First Name</label>
+			<label index="position">Position</label>
+			<label index="email">Email</label>
+			<label index="telephone">Phone</label>
+			<label index="mobilephone">Mobile-Phone</label>
+			<label index="fax">Fax</label>
+			<label index="address">Street / House Number</label>
+			<label index="zip">Zip</label>
+			<label index="city">City</label>
+			<label index="country">Country</label>
+			<label index="password">Password</label>
+
+
+			<label index="edit.saved">Userdata updated</label>
+			<label index="create.saved">User created</label>
+			<label index="info.mandatory.fields"><![CDATA[Fields with <span>*</span> are mandatory]]></label>
+
+			<label index="error.notauser">The given form does not contain userdata</label>
+			<label index="error.notexists">Attribute does not exists</label>
+
+
+			<label index="submit.create">create</label>
+			<label index="submit.change">change</label>
+			<label index="submit.save">save</label>
+			<label index="submit.update">update</label>
+
+
+			<label index="newPassword1">New password</label>
+			<label index="newPassword2">repeated password</label>
+			<label index="password.saved">password saved</label>
+
+			<label index="error.empty.password1">Password may not be empty</label>
+			<label index="error.empty.password2">Password repetition may not be empty</label>
+			<label index="error.notequal.passwords">Password fields are not equal</label>
+			<label index="error.1238108067">The length of %1$s was not between %2$s and %3$s characters.</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+		</languageKey>
+	</data>
+</T3locallang>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for backend labels belonging to extension 'sf_register'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tt_content.list_type_form">Feuser Register</label>
+			<label index="fe_users.mobilephone">Mobile phone:</label>
+
+			<label index="form_flexform.sheet_general">General settings</label>
+			<label index="form_flexform.switchableControllerAction">General settings</label>
+			<label index="form_flexform.switchableControllerAction">What action should be taken?</label>
+			<label index="form_flexform.switchableControllerAction.create">Create</label>
+			<label index="form_flexform.switchableControllerAction.edit">Edit</label>
+			<label index="form_flexform.switchableControllerAction.password">Password</label>
+		</languageKey>
+	</data>
+</T3locallang>

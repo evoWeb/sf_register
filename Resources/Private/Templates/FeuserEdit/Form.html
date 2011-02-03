@@ -1,0 +1,48 @@
+edit Action
+<f:render partial="formErrors" arguments="{for: 'user'}" />
+<f:form action="preview" name="user" object="{user}">
+<dl>
+	<dt><f:translate key="title"/>*</dt>
+	<dd><f:form.textbox property="title" /></dd>
+
+	<dt><f:translate key="company"/>*</dt>
+	<dd><f:form.textbox property="company" /></dd>
+
+	<dt><f:translate key="lastName"/>*</dt>
+	<dd><f:form.textbox property="lastName" /></dd>
+
+	<dt><f:translate key="firstName"/>*</dt>
+	<dd><f:form.textbox property="firstName" /></dd>
+
+	<dt><f:translate key="position"/></dt>
+	<dd><f:form.textbox property="position" /></dd>
+
+	<dt><f:translate key="email"/></dt>
+	<dd>{user.email}</dd>
+
+	<dt><f:translate key="telephone"/></dt>
+	<dd><f:form.textbox property="telephone" /></dd>
+
+	<dt><f:translate key="mobilephone"/></dt>
+	<dd><f:form.textbox property="mobilephone" /></dd>
+
+	<dt><f:translate key="fax"/></dt>
+	<dd><f:form.textbox property="fax" /></dd>
+
+	<dt><f:translate key="address"/></dt>
+	<dd><f:form.textbox property="address" /></dd>
+
+	<dt><f:translate key="zip"/></dt>
+	<dd><f:form.textbox property="zip" /></dd>
+
+	<dt><f:translate key="city"/></dt>
+	<dd><f:form.textbox property="city" /></dd>
+
+	<dt><f:translate key="country"/></dt>
+	<dd><f:form.textbox property="country" /></dd>
+
+	<dt></dt>
+	<dd><f:form.submit class="submit" value="{f:translate(key:'submit.update')}" /></dd>
+</dl>
+</f:form>
+<div class="mandatory"><f:translate key="info.mandatory.fields" htmlEscape="false"/></div>

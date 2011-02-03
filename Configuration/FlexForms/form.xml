@@ -1,0 +1,40 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+		<!--  <langChildren>1</langChildren>!-->
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.sheet_general</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<switchableControllerActions>
+						<TCEforms>
+							<label>LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.switchableControllerAction</label>
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+											<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.switchableControllerAction.create</numIndex>
+											<numIndex index="1">FeuserCreate->form;FeuserCreate->preview;FeuserCreate->proxy;FeuserCreate->save;FeuserCreate->confirm</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+											<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.switchableControllerAction.edit</numIndex>
+											<numIndex index="1">FeuserEdit->form;FeuserEdit->preview;FeuserEdit->proxy;FeuserEdit->save</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+											<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.switchableControllerAction.password</numIndex>
+											<numIndex index="1">FeuserPassword->form;FeuserPassword->save</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</switchableControllerActions>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

@@ -1,0 +1,16 @@
+form Action
+<f:form action="preview" name="user" object="{user}">
+<dl>
+	<dt><f:translate key="firstname"/></dt>
+	<dd><f:form.textbox property="firstName" /></dd>
+
+	<dt><f:translate key="lastname"/></dt>
+	<dd><f:form.textbox property="lastName" /></dd>
+
+	<dt><f:translate key="mobilphone"/></dt>
+	<dd><f:form.textbox property="mobilphone" /></dd>
+
+	<dt></dt>
+	<dd><f:form.submit class="submit" value="{f:translate(key:'submit.create')}" /></dd>
+</dl>
+</f:form>

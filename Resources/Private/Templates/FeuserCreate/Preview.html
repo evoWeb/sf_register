@@ -1,0 +1,16 @@
+Preview Action
+<f:form action="proxy" name="user" object="{user}">
+<dl>
+	<dt><f:translate key="firstname"/></dt>
+	<dd><f:form.hidden property="firstName" />{user.firstName}</dd>
+
+	<dt><f:translate key="lastname"/></dt>
+	<dd><f:form.hidden property="lastName" />{user.lastName}</dd>
+
+	<dt><f:translate key="mobilphone"/></dt>
+	<dd><f:form.hidden property="mobilphone" />{user.mobilphone}</dd>
+
+	<dt><f:form.submit class="submit" name="form" value="{f:translate(key:'submit.change')}" /></dt>
+	<dd><f:form.submit class="submit" name="save" value="{f:translate(key:'submit.create')}" /></dd>
+</dl>
+</f:form>

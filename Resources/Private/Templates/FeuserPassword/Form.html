@@ -1,0 +1,15 @@
+password Action
+
+<f:render partial="formErrors" arguments="{for: 'passwords'}" />
+<f:form action="save" name="passwords">
+<dl>
+	<dt><f:translate key="newPassword1"/></dt>
+	<dd><f:form.password property="newPassword1" /></dd>
+
+	<dt><f:translate key="newPassword2"/></dt>
+	<dd><f:form.password property="newPassword2" /></dd>
+
+	<dt></dt>
+	<dd><f:form.submit class="submit" value="{f:translate(key:'submit.update')}" /></dd>
+</dl>
+</f:form>

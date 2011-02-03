@@ -1,0 +1,26 @@
+plugin.tx_sfregister {
+	settings {
+		useDataOfLoggedinFeuser = 1
+
+		validation {
+			firstName = StringLength(minimum = 1, maximum = 80)
+			lastName = StringLength(minimum = 1, maximum = 80)
+		}
+	}
+
+	persistence {
+		storagePid = 44
+
+		classes {
+			Tx_SfRegister_Domain_Model_FrontendUser {
+				mapping {
+					tableName = fe_users
+					recordType = Tx_Extbase_Domain_Model_FrontendUser
+					columns {
+						tx_mfcform_position.mapOnProperty = position
+					}
+				}
+			}
+		}
+	}
+}
