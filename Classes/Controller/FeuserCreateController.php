@@ -40,6 +40,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		// @todo add user to repository
 		//$this->userRepository->update($user);
+
+		if ($this->settings['forwardToEditAfterSave']) {
+			$this->forward('form', 'FeuserEdit');
+		}
 	}
 }
 

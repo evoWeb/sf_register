@@ -32,6 +32,10 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	 */
 	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$this->userRepository->update($user);
+
+		if ($this->settings['forwardToEditAfterSave']) {
+			$this->forward('form');
+		}
 	}
 }
 
