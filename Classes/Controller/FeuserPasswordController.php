@@ -35,7 +35,7 @@ class Tx_SfRegister_Controller_FeuserPasswordController extends Tx_SfRegister_Co
 	/**
 	 * @param array $passwords
 	 * @return void
-	 * @validate $passwords Tx_SfRegister_Domain_Validator_PasswordValidator
+	 * @validate $passwords Tx_SfRegister_Domain_Validator_PasswordValidator(minimum = 8, maximum = 40)
 	 */
 	public function saveAction(array $passwords) {
 		$password = $this->encryptPassword($passwords['newPassword1']);

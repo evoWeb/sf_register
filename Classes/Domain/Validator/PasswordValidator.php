@@ -52,7 +52,26 @@ class Tx_SfRegister_Domain_Validator_PasswordValidator extends Tx_Extbase_Valida
 			$result = FALSE;
 		}
 
+		if (strlen($passwords['newPassword1']) < $this->options['minimum'] || strlen($passwords['newPassword1']) > $this->options['maximum']) {
+			$this->addError(vsprintf(Tx_Extbase_Utility_Localization::translate('error.length.password', 'SfRegister'), $this->options), 1296591067);
+			$result = FALSE;
+		}
+
+		if ($this->inBadWordList($passwords['newPassword1'])) {
+			$this->addError(vsprintf(Tx_Extbase_Utility_Localization::translate('error.badword.password', 'SfRegister'), $this->options), 1296591068);
+			$result = FALSE;
+		}
+
 		return $result;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function inBadWordList($word) {
+		$global = Tx_Extbase_Dispatcher::getConfigurationManager()->loadTypoScriptSetup();
+		$badWordItems = t3lib_div::trimExplode(',', $global['plugin.']['tx_sfregister.']['settings.']['badWordList']);
+		return in_array(strtolower($word), $badWordItems);
 	}
 }
 

@@ -60,7 +60,8 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 * @return void
 	 */
 	protected function getSettings() {
-		$this->settings = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.'];
+		$global = Tx_Extbase_Dispatcher::getConfigurationManager()->loadTypoScriptSetup();
+		$this->settings = $global['plugin.']['tx_sfregister.']['settings.'];
 	}
 
 	/**

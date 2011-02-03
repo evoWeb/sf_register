@@ -42,8 +42,10 @@
 
 			<label index="error.empty.password1">Password may not be empty</label>
 			<label index="error.empty.password2">Password repetition may not be empty</label>
+			<label index="error.length.password">The password length was not between %1$s and %2$s characters</label>
 			<label index="error.notequal.passwords">Password fields are not equal</label>
-			<label index="error.1238108067">The length of %1$s was not between %2$s and %3$s characters.</label>
+			<label index="error.badword.password">The password you entered is not allowed</label>
+			<label index="error.1238108067">The length of %1$s was not between %2$s and %3$s characters</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 		</languageKey>
