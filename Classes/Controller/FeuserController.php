@@ -37,6 +37,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 */
 	protected function initializeAction() {
 		$this->userRepository = t3lib_div::makeInstance('Tx_SfRegister_Domain_Repository_FrontendUserRepository');
+
 	}
 
 	/**
@@ -74,6 +75,34 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 		}
 
 		$this->forward($action);
+	}
+
+	/**
+	 * @param string $pidList
+	 * @param integer $recursive
+	 * @return string
+	 */
+	public function getPageIdList($pidList, $recursive = 0) {
+		if (!strcmp($pidList, '')) {
+			$pidList = $GLOBALS['TSFE']->id;
+		}
+
+		$recursive = t3lib_div::intInRange($recursive, 0);
+
+		$pids = array_unique(t3lib_div::trimExplode(',', $pidList, 1));
+		$pageIdsForPagesAndChildrens = array();
+
+		foreach ($pids as $pid) {
+			$pid = t3lib_div::intInRange($pid, 0);
+			if ($pid) {
+				$pageIdOfTree = $this->cObj->getTreeList(-1 * $pid, $recursive);
+				if ($pageIdOfTree) {
+					$pageIdsForPagesAndChildrens[] = $pageIdOfTree;
+				}
+			}
+		}
+
+		return implode(',', $pageIdsForPagesAndChildrens);
 	}
 }
 

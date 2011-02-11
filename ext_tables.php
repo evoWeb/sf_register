@@ -11,7 +11,9 @@ t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/', 'Feuser Regis
 
 
 t3lib_div::loadTCA('fe_users');
-$TCA['fe_users']['columns']['tx_extbase_type']['config']['default'] = 'Tx_Extbase_Domain_Model_FrontendUser';
+t3lib_extMgm::addPageTSConfig('
+TCAdefaults.fe_users.tx_extbase_type = Tx_Extbase_Domain_Model_FrontendUser
+');
 
 $tempColumns = array (
 	'mobilephone' => array (

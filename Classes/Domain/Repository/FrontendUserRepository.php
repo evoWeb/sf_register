@@ -26,7 +26,37 @@
  * A repository for feusers
  */
 class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_Domain_Repository_FrontendUserRepository {
+	public function findAll() {
+		$query = $this->createQuery();
 
+		$query->getQuerySettings()->setRespectStoragePage(FALSE);
+
+		return $query->execute();
+	}
+
+	/**
+	 * Finds an object matching the given identifier.
+	 *
+	 * @param int $uid The identifier of the object to find
+	 * @return object The matching object if found, otherwise NULL
+	 * @api
+	 */
+	public function findByUid($uid) {
+		if ($this->identityMap->hasIdentifier($uid, $this->objectType)) {
+			$object = $this->identityMap->getObjectByIdentifier($uid, $this->objectType);
+		} else {
+			$query = $this->createQuery();
+			$query->getQuerySettings()->setRespectSysLanguage(FALSE);
+			$query->getQuerySettings()->setRespectStoragePage(FALSE);
+			$result = $query->matching($query->equals('uid', $uid))->execute();
+			$object = NULL;
+			if (count($result) > 0) {
+				$object = current($result);
+				$this->identityMap->registerObject($object, $uid);
+			}
+		}
+		return $object;
+	}
 }
 
 ?>
