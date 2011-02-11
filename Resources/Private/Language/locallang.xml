@@ -6,7 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="title">Titel</label>
+			<label index="title">Title</label>
 			<label index="company">Company</label>
 			<label index="lastName">Last Name</label>
 			<label index="firstName">First Name</label>
