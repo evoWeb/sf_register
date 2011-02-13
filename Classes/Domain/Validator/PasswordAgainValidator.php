@@ -23,42 +23,28 @@
  ***************************************************************/
 
 /**
- * A Passwordvalidator
+ * A Password again validator
  *
  * @scope singleton
  */
-class Tx_SfRegister_Domain_Validator_PasswordValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_SfRegister_Domain_Validator_PasswordAgainValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
 	 * If the given passwords are valid
 	 *
-	 * @param array $passwords The passwords
+	 * @param array $passwordAgain The repeated password
 	 * @return boolean
 	 */
-	public function isValid($passwords) {
+	public function isValid($passwordAgain) {
 		$result = TRUE;
+		$password = $this->getPasswordFromRequest();
 
-		if ($passwords['newPassword1'] === '') {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.empty.password1', 'SfRegister'), 1296591064);
-			$result = FALSE;
-		}
-
-		if ($passwords['newPassword2'] === '') {
+		if ($passwordAgain === '') {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.empty.password2', 'SfRegister'), 1296591065);
 			$result = FALSE;
 		}
 
-		if ($passwords['newPassword1'] !== $passwords['newPassword2']) {
+		if ($password !== $passwordAgain) {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notequal.passwords', 'SfRegister'), 1296591066);
-			$result = FALSE;
-		}
-
-		if (strlen($passwords['newPassword1']) < $this->options['minimum'] || strlen($passwords['newPassword1']) > $this->options['maximum']) {
-			$this->addError(vsprintf(Tx_Extbase_Utility_Localization::translate('error.length.password', 'SfRegister'), $this->options), 1296591067);
-			$result = FALSE;
-		}
-
-		if ($this->inBadWordList($passwords['newPassword1'])) {
-			$this->addError(vsprintf(Tx_Extbase_Utility_Localization::translate('error.badword.password', 'SfRegister'), $this->options), 1296591068);
 			$result = FALSE;
 		}
 
@@ -66,12 +52,17 @@ class Tx_SfRegister_Domain_Validator_PasswordValidator extends Tx_Extbase_Valida
 	}
 
 	/**
-	 * @return boolean
+	 * @return string
 	 */
-	protected function inBadWordList($word) {
-		$global = Tx_Extbase_Dispatcher::getConfigurationManager()->loadTypoScriptSetup();
-		$badWordItems = t3lib_div::trimExplode(',', $global['plugin.']['tx_sfregister.']['settings.']['badWordList']);
-		return in_array(strtolower($word), $badWordItems);
+	protected function getPasswordFromRequest() {
+		$requestData = t3lib_div::_GP('tx_sfregister_form');
+		$result = '';
+
+		if (isset($requestData['user']) && isset($requestData['user']['password'])) {
+			$result = $requestData['user']['password'];
+		}
+
+		return $result;
 	}
 }
 
