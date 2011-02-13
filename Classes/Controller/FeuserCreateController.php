@@ -27,10 +27,31 @@
  */
 class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Controller_FeuserController {
 	/**
-	 * @param string $authCode
-	 * @return void
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param string $passwordAgain
+	 * @return string An HTML form
+	 * @dontvalidate $user
+	 * @dontvalidate $passwordAgain
 	 */
-	public function confirmAction($authCode) {
+	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL, $passwordAgain = NULL) {
+		if ($user == NULL && $GLOBALS['TSFE']->fe_user->user != FALSE) {
+			$user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
+		}
+
+		$this->view->assign('user', $user);
+		$this->view->assign('passwordAgain', $passwordAgain);
+	}
+
+	/**
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param string $passwordAgain
+	 * @return void
+	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
+	 * @validate $passwordAgain Tx_SfRegister_Domain_Validator_PasswordAgainValidator
+	 */
+	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $passwordAgain) {
+		$this->view->assign('user', $user);
+		$this->view->assign('passwordAgain', $passwordAgain);
 	}
 
 	/**
@@ -38,12 +59,39 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return void
 	 */
 	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		// @todo add user to repository
-		//$this->userRepository->update($user);
+		$password = $this->encryptPassword($user->getPassword());
+		$user->setPassword($password);
+
+		$this->userRepository->add($user);
 
 		if ($this->settings['forwardToEditAfterSave']) {
 			$this->forward('form', 'FeuserEdit');
 		}
+	}
+
+	/**
+	 * @param string $authCode
+	 * @return void
+	 */
+	public function confirmAction($authCode) {
+	}
+
+	/**
+	 * @param string $password
+	 * @return string
+	 */
+	protected function encryptPassword($password) {
+		if (t3lib_extMgm::isLoaded('saltedpasswords')) {
+			if (tx_saltedpasswords_div::isUsageEnabled('FE')) {
+				$saltObject = tx_saltedpasswords_salts_factory::getSaltingInstance(NULL);
+
+				if (is_object($saltObject)) {
+					$password = $saltObject->getHashedPassword($password);
+				}
+			}
+		}
+
+		return $password;
 	}
 }
 
