@@ -26,19 +26,18 @@
 			<label index="create.saved">User created</label>
 			<label index="info.mandatory.fields"><![CDATA[Fields with <span>*</span> are mandatory]]></label>
 
-			<label index="error.notauser">The given form does not contain userdata</label>
-			<label index="error.notexists">Attribute does not exists</label>
-
-
 			<label index="submit.create">create</label>
 			<label index="submit.change">change</label>
 			<label index="submit.save">save</label>
 			<label index="submit.update">update</label>
 
-
+			<label index="username">Username</label>
 			<label index="newPassword1">New password</label>
 			<label index="newPassword2">repeated password</label>
 			<label index="password.saved">password saved</label>
+
+			<label index="error.notauser">The given form does not contain userdata</label>
+			<label index="error.notexists">Attribute does not exists</label>
 
 			<label index="error.empty.password1">Password may not be empty</label>
 			<label index="error.empty.password2">Password repetition may not be empty</label>

@@ -1,16 +1,53 @@
 Preview Action
 <f:form action="proxy" name="user" object="{user}">
 <dl>
-	<dt><f:translate key="firstname"/></dt>
-	<dd><f:form.hidden property="firstName" />{user.firstName}</dd>
+	<dt><f:translate key="username"/>*</dt>
+	<dd><f:form.hidden property="username" />{user.username}</dd>
 
-	<dt><f:translate key="lastname"/></dt>
+	<dt><f:translate key="newPassword1"/>*</dt>
+	<dd><f:form.hidden property="password" />{user.password}</dd>
+
+	<dt><f:translate key="newPassword2"/>*</dt>
+	<dd><f:form.hidden name="passwordAgain" />{passwordAgain}</dd>
+</dl>
+<dl>
+	<dt><f:translate key="title"/></dt>
+	<dd><f:form.hidden property="title" />{user.title}</dd>
+
+	<dt><f:translate key="company"/></dt>
+	<dd><f:form.hidden property="company" />{user.company}</dd>
+
+	<dt><f:translate key="lastName"/></dt>
 	<dd><f:form.hidden property="lastName" />{user.lastName}</dd>
 
-	<dt><f:translate key="mobilphone"/></dt>
-	<dd><f:form.hidden property="mobilphone" />{user.mobilphone}</dd>
+	<dt><f:translate key="firstName"/></dt>
+	<dd><f:form.hidden property="firstName" />{user.firstName}</dd>
 
-	<dt><f:form.submit class="submit" name="form" value="{f:translate(key:'submit.change')}" /></dt>
-	<dd><f:form.submit class="submit" name="save" value="{f:translate(key:'submit.create')}" /></dd>
+	<dt><f:translate key="email"/></dt>
+	<dd>{user.email}</dd>
+
+	<dt><f:translate key="telephone"/></dt>
+	<dd><f:form.hidden property="telephone" />{user.telephone}</dd>
+
+	<dt><f:translate key="mobilephone"/></dt>
+	<dd><f:form.hidden property="mobilephone" />{user.mobilephone}</dd>
+
+	<dt><f:translate key="fax"/></dt>
+	<dd><f:form.hidden property="fax" />{user.fax}</dd>
+
+	<dt><f:translate key="address"/></dt>
+	<dd><f:form.hidden property="address" />{user.address}</dd>
+
+	<dt><f:translate key="zip"/></dt>
+	<dd><f:form.hidden property="zip" />{user.zip}</dd>
+
+	<dt><f:translate key="city"/></dt>
+	<dd><f:form.hidden property="city" />{user.city}</dd>
+
+	<dt><f:translate key="country"/></dt>
+	<dd><f:form.hidden property="country" />{user.country}</dd>
+
+	<dt><f:form.submit name="form" value="{f:translate(key:'submit.change')}" /></dt>
+	<dd><f:form.submit name="save" value="{f:translate(key:'submit.save')}" /></dd>
 </dl>
 </f:form>
