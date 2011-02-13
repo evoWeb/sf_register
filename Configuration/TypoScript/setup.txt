@@ -3,11 +3,13 @@ plugin.tx_sfregister {
 		useDataOfLoggedinFeuser = 1
 
 		validation {
+			username = StringLength(minimum = 1, maximum = 80)
+			password = StringLength(minimum = 8, maximum = 40)
 			firstName = StringLength(minimum = 1, maximum = 80)
 			lastName = StringLength(minimum = 1, maximum = 80)
 		}
 
-		forwardToEditAfterSave = 1
+		forwardToEditAfterSave = 0
 	}
 
 	persistence {
@@ -19,7 +21,7 @@ plugin.tx_sfregister {
 					tableName = fe_users
 					recordType = Tx_Extbase_Domain_Model_FrontendUser
 					columns {
-						tx_mfcform_position.mapOnProperty = position
+						#tx_mfcform_position.mapOnProperty = position
 					}
 				}
 			}

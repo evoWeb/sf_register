@@ -32,13 +32,6 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	protected $mobilephone = '';
 
 	/**
-	 * Position in the company
-	 *
-	 * @var string
-	 */
-	protected $position = '';
-
-	/**
 	 * @param string $mobilephone
 	 * @return void
 	 */
@@ -51,21 +44,6 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	public function getMobilephone() {
 		return $this->mobilephone;
-	}
-
-	/**
-	 * @param string $position
-	 * @return void
-	 */
-	public function setPosition($position) {
-		$this->position = $position;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPosition() {
-		return $this->position;
 	}
 }
 
