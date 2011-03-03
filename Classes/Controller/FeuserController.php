@@ -76,33 +76,26 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 
 		$this->forward($action);
 	}
+	
 
 	/**
-	 * @param string $pidList
-	 * @param integer $recursive
+	 * @param string $password
 	 * @return string
 	 */
-	public function getPageIdList($pidList, $recursive = 0) {
-		if (!strcmp($pidList, '')) {
-			$pidList = $GLOBALS['TSFE']->id;
-		}
+	protected function encryptPassword($password) {
+		if (t3lib_extMgm::isLoaded('saltedpasswords') && tx_saltedpasswords_div::isUsageEnabled('FE')) {
+			$saltObject = tx_saltedpasswords_salts_factory::getSaltingInstance(NULL);
 
-		$recursive = t3lib_div::intInRange($recursive, 0);
-
-		$pids = array_unique(t3lib_div::trimExplode(',', $pidList, 1));
-		$pageIdsForPagesAndChildrens = array();
-
-		foreach ($pids as $pid) {
-			$pid = t3lib_div::intInRange($pid, 0);
-			if ($pid) {
-				$pageIdOfTree = $this->cObj->getTreeList(-1 * $pid, $recursive);
-				if ($pageIdOfTree) {
-					$pageIdsForPagesAndChildrens[] = $pageIdOfTree;
-				}
+			if (is_object($saltObject)) {
+				$password = $saltObject->getHashedPassword($password);
 			}
+		} elseif ($this->settings['encryptPassword'] === 'md5') {
+			$password = md5($password);
+		} elseif ($this->settings['encryptPassword'] === 'sha1') {
+			$password = sha1($password);
 		}
 
-		return implode(',', $pageIdsForPagesAndChildrens);
+		return $password;
 	}
 }
 

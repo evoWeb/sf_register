@@ -75,24 +75,6 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 */
 	public function confirmAction($authCode) {
 	}
-
-	/**
-	 * @param string $password
-	 * @return string
-	 */
-	protected function encryptPassword($password) {
-		if (t3lib_extMgm::isLoaded('saltedpasswords')) {
-			if (tx_saltedpasswords_div::isUsageEnabled('FE')) {
-				$saltObject = tx_saltedpasswords_salts_factory::getSaltingInstance(NULL);
-
-				if (is_object($saltObject)) {
-					$password = $saltObject->getHashedPassword($password);
-				}
-			}
-		}
-
-		return $password;
-	}
 }
 
 ?>
