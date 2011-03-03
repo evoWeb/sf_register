@@ -79,7 +79,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		);
 
 		$templatePathAndFilename = $this->getTemplatePathAndFilename('ConfirmationMail');
-		$message = $this->renderFileTemplate('', 'confirm', $templatePathAndFilename, $variables);
+		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$user->getEmail(),
