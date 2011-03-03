@@ -27,6 +27,11 @@
  */
 class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Controller_FeuserController {
 	/**
+	 * @var Tx_Extbase_Domain_Model_FrontendUserGroupRepository
+	 */
+	protected $userGroupRepository = null;
+	
+	/**
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @param string $passwordAgain
 	 * @return string An HTML form
@@ -55,12 +60,24 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * @return void
+	 */
+	protected function initializeSaveAction() {
+		$this->userGroupRepository = t3lib_div::makeInstance('Tx_Extbase_Domain_Model_FrontendUserGroupRepository');
+	}
+	
+	/**
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
 	 */
 	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$password = $this->encryptPassword($user->getPassword());
 		$user->setPassword($password);
+
+		if (intval($this->settings['activationOnRegistrationNeeded']) > 0) {
+			$user->setDisable(TRUE);
+			$user = $this->setUsergroupBeforeActivation($user);
+		}
 
 		$this->userRepository->add($user);
 
@@ -74,6 +91,40 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return void
 	 */
 	public function confirmAction($authCode) {
+		if (intval($this->settings['activationOnRegistrationNeeded']) > 0) {
+			$user = $this->changeUsergroupAfterActivation($user);
+			$user->setDisable(FALSE);
+		}
+	}
+
+	/**
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 */
+	protected function setUsergroupBeforeActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		if (intval($this->settings['usergroupBeforeActivation']) > 0) {
+			$usergroupToAdd = $this->userGroupRepository->findByUid($this->settings['usergroupBeforeActivation']);
+			$user->addUsergroup($usergroupToAdd);
+		}
+
+		return $user;
+	}
+	
+	/**
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 */
+	protected function changeUsergroupAfterActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		if (intval($this->settings['usergroupAfterActivation']) > 0 &&
+				intval($this->settings['usergroupAfterActivation']) != intval($this->settings['usergroupBeforeActivation'])) {
+			$usergroupToAdd = $this->userGroupRepository->findByUid($this->settings['usergroupAfterActivation']);
+			$user->addUsergroup($usergroupToAdd);
+
+			$usergroupToRemove = $this->userGroupRepository->findByUid($this->settings['usergroupBeforeActivation']);
+			$user->removeUsergroup($usergroupToRemove);
+		}
+
+		return $user;
 	}
 }
 
