@@ -37,7 +37,6 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 */
 	protected function initializeAction() {
 		$this->userRepository = t3lib_div::makeInstance('Tx_SfRegister_Domain_Repository_FrontendUserRepository');
-
 	}
 
 	/**
