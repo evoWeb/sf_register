@@ -10,13 +10,15 @@ plugin.tx_sfregister.settings {
 	}
 
 	forwardToEditAfterSave = 0
-	
+
 	# md5 | sha1
 	encryptPassword = md5
-	
+
 	activationOnRegistrationNeeded = 1
 	usergroupBeforeActivation = 1
 	usergroupAfterActivation = 2
+
+	usergroupOnRegistrationWithoutActivation = 1
 }
 
 plugin.tx_sfregister.persistence {
@@ -27,9 +29,6 @@ plugin.tx_sfregister.persistence {
 			mapping {
 				tableName = fe_users
 				recordType = Tx_Extbase_Domain_Model_FrontendUser
-				columns {
-					#tx_mfcform_position.mapOnProperty = position
-				}
 			}
 		}
 	}
