@@ -27,7 +27,7 @@
  */
 class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Controller_FeuserController {
 	/**
-	 * @var Tx_Extbase_Domain_Model_FrontendUserGroupRepository
+	 * @var Tx_Extbase_Domain_Repository_FrontendUserGroupRepository
 	 */
 	protected $userGroupRepository = null;
 	
@@ -59,7 +59,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return void
 	 */
 	protected function initializeSaveAction() {
-		$this->userGroupRepository = t3lib_div::makeInstance('Tx_Extbase_Domain_Model_FrontendUserGroupRepository');
+		$this->userGroupRepository = t3lib_div::makeInstance('Tx_Extbase_Domain_Repository_FrontendUserGroupRepository');
 	}
 	
 	/**
