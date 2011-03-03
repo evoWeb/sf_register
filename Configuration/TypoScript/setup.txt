@@ -19,6 +19,17 @@ plugin.tx_sfregister.settings {
 	usergroupAfterActivation = 2
 
 	usergroupOnRegistrationWithoutActivation = 1
+
+	confirmationmail {
+		fromName = Tester1
+		fromEmail = test1@test.local
+
+		replyName = Tester2
+		replyEmail = test2@test.local
+	}
+
+	adminmail {
+	}
 }
 
 plugin.tx_sfregister.persistence {
