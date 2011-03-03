@@ -27,9 +27,48 @@
  */
 class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_FrontendUser {
 	/**
+	 * @var boolean
+	 */
+	protected $disable;
+
+	/**
+	 * @var string Hash for confirmation mail
+	 */
+	protected $mailhash = '';
+
+	/**
 	 * @var string Number of mobilephone
 	 */
 	protected $mobilephone = '';
+
+	/**
+	 * @var boolean $disable
+	 */
+	public function setDisable($disable) {
+		$this->disable = ($disable ? TRUE : FALSE);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getDisable() {
+		return is_bool($this->disable) ? $this->disable : FALSE;
+	}
+
+	/**
+	 * @param string $mailhash
+	 * @return void
+	 */
+	public function setMailhash($mailhash) {
+		$this->mailhash = trim($mailhash);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getMailhash() {
+		return $this->mailhash;
+	}
 
 	/**
 	 * @param string $mobilephone
