@@ -7,6 +7,7 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="tt_content.list_type_form">Feuser Register</label>
+			<label index="fe_users.mailhash">Mailhash of confirmation mail:</label>
 			<label index="fe_users.mobilephone">Mobile phone:</label>
 
 			<label index="form_flexform.sheet_general">General settings</label>

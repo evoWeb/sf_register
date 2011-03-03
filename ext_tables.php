@@ -16,6 +16,13 @@ TCAdefaults.fe_users.tx_extbase_type = Tx_Extbase_Domain_Model_FrontendUser
 ');
 
 $tempColumns = array (
+	'mailhash' => array (
+		'exclude' => 1,
+		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.mailhash',
+		'config' => array (
+			'type' => 'passthrough',
+		)
+	),
 	'mobilephone' => array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.mobilephone',
@@ -27,6 +34,7 @@ $tempColumns = array (
 );
 t3lib_extMgm::addTCAcolumns('fe_users', $tempColumns, 1);
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'mobilephone', '', 'after:telephone');
+t3lib_extMgm::addToAllTCAtypes('fe_users', 'mailhash');
 
 
 
