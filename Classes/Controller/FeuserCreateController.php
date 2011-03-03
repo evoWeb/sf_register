@@ -77,6 +77,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 		if (intval($this->settings['activationOnRegistrationNeeded']) > 0) {
 			$user->setDisable(TRUE);
 			$user = $this->setUsergroupBeforeActivation($user);
+		} else {
+			$user = $this->addUsergroup($user, $this->settings['usergroupOnRegistrationWithoutActivation']);
 		}
 
 		$this->userRepository->add($user);
@@ -96,6 +98,18 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			$user->setDisable(FALSE);
 		}
 	}
+	
+	/**
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param integer $usergroupUid
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 */
+	protected function addUsergroup(Tx_SfRegister_Domain_Model_FrontendUser $user, $usergroupUid) {
+		$usergroupToAdd = $this->userGroupRepository->findByUid($usergroupUid);
+		$user->addUsergroup($usergroupToAdd);
+		
+		return $user;
+	}
 
 	/**
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
@@ -103,8 +117,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 */
 	protected function setUsergroupBeforeActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		if (intval($this->settings['usergroupBeforeActivation']) > 0) {
-			$usergroupToAdd = $this->userGroupRepository->findByUid($this->settings['usergroupBeforeActivation']);
-			$user->addUsergroup($usergroupToAdd);
+			$user = $this->addUsergroup($user, $this->settings['usergroupBeforeActivation']);
 		}
 
 		return $user;
@@ -117,8 +130,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	protected function changeUsergroupAfterActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		if (intval($this->settings['usergroupAfterActivation']) > 0 &&
 				intval($this->settings['usergroupAfterActivation']) != intval($this->settings['usergroupBeforeActivation'])) {
-			$usergroupToAdd = $this->userGroupRepository->findByUid($this->settings['usergroupAfterActivation']);
-			$user->addUsergroup($usergroupToAdd);
+			$user = $this->addUsergroup($user, $this->settings['usergroupBeforeActivation']);
 
 			$usergroupToRemove = $this->userGroupRepository->findByUid($this->settings['usergroupBeforeActivation']);
 			$user->removeUsergroup($usergroupToRemove);
