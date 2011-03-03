@@ -27,42 +27,120 @@
  */
 class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
+	 * @var array
+	 */
+	protected $settings = array();
+	
+	/**
+	 * @var Tx_Extbase_Object_ManagerInterface
+	 */
+	protected $objectManager;
+
+	/**
+	 * @param array $settings
+	 * @return Tx_SfRegister_Services_Mail
+	 */
+	public function injectSettings(array $settings) {
+		$this->settings = $settings;
+
+		return $this;
+	}
+	
+	/**
+	 * @param unknown_type $objectManager
+	 * @return Tx_SfRegister_Services_Mail
+	 */
+	public function injectObjectManager($objectManager) {
+		$this->objectManager = $objectManager;
+
+		return $this;
+	}
+
+	/**
 	 * Send an email on registration request to activate the user
 	 * 
 	 * @param Tx_Rsmysherpasusers_Domain_Model_AbstractUser $user
 	 */
-	protected static function sendConfirmationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	public function sendConfirmationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$mailer = t3lib_div::makeInstance('t3lib_htmlmail');
 
-			//Sendmail
-		$transport = Swift_SendmailTransport::newInstance(ini_get('sendmail_path'));
-			//Create the Mailer using your created Transport
-		$mailer = Swift_Mailer::newInstance($transport);
+		$user->setMailhash(md5($user->getUsername() . time() . $user->getEmail()));
 
-		$hash = md5($user->getUsername().time().$user->getEmail());
-		$user->setMailhash($hash);
+		$subject = Tx_Extbase_Utility_Localization::translate('emails.confirmationSubject', 'subject of confirmation email not set');
+		$subject = vsprintf($subject, array('sitename'));
 
-			//Create a message
-		$message = Swift_Message::newInstance(Tx_Extbase_Utility_Localization::translate('emails.registrationSubject','rsmysherpasusers'))
-			->setFrom(array('registration@mysherpas.com' => Tx_Extbase_Utility_Localization::translate('emails.registrationSenderName','rsmysherpasusers')))
-			->setTo(array($user->getEmail() => $user->getName()))
-			->setBody(self::renderFileTemplate(
-				t3lib_extMgm::extPath('rsmysherpasusers', 'Resources/Private/Templates/eMails/registration.html'),
-				array(
-					'user' => $user,
-					'hash' => $hash
-				)
-			), 'text/html')
-			->addPart(self::renderFileTemplate(
-				t3lib_extMgm::extPath('rsmysherpasusers', 'Resources/Private/Templates/eMails/registration.txt'),
-				array(
-					'user' => $user,
-					'hash' => $hash
-				)
-			), 'text/plain')
-		;
+		$variables = array(
+			'user' => $user
+		);
 
-			//Send the message
-		$result = $mailer->send($message);
+		$this->sendTemplateEmail(
+			$user->getEmail(),
+			$this->settings['confirmationmail']['fromEmail'],
+			$this->settings['confirmationmail']['fromName'],
+			$subject,
+			'ConfirmationMail',
+			$variables
+		);
+
+		return $user;
+	}
+
+	/**
+	 * @param string $recipient
+	 * @param string $senderEmail
+	 * @param string $senderName
+	 * @param string $subject
+	 * @param string $templateName
+	 * @param array $variables
+	 * @return boolean
+	 */
+	protected function sendTemplateEmail($recipient, $senderEmail, $senderName, $subject, $templateName, array $variables = array()) {
+		$emailView = $this->objectManager->create('Tx_Fluid_View_StandaloneView');
+		$emailView->setFormat('html');
+
+		$templatePathAndFilename = $this->getTemplatePathAndFilename($templateName);
+
+		$emailView->setTemplatePathAndFilename($templatePathAndFilename);
+		$emailView->assignMultiple($variables);
+		$emailBody = $emailView->render();
+
+			// TODO replace by t3lib_mail_Mailer as t3lib_htmlmail is deprecated
+		$htmlMail = t3lib_div::makeInstance('t3lib_htmlmail');
+		$htmlMail->start();
+		$htmlMail->recipient = $recipient;
+		$htmlMail->subject = $subject;
+		$htmlMail->from_email = $senderEmail;
+		$htmlMail->from_name = $senderName;
+		$htmlMail->returnPath = $senderEmail;
+		$htmlMail->addPlain($emailBody);
+		$htmlMail->setHTML($htmlMail->encodeMsg($emailBody));
+
+		return $htmlMail->send($recipient);
+	}
+
+	/**
+	 * @param string $templateName
+	 * @return string
+	 */
+	protected function getTemplatePathAndFilename($templateName) {
+		$extbaseFrameworkConfiguration = $this->getFrameworkConfiguration();
+		$templateRootPath = t3lib_div::getFileAbsFileName($extbaseFrameworkConfiguration['view']['templateRootPath']);
+		$templatePathAndFilename = $templateRootPath . 'Email/' . $templateName . '.html';
+
+		return $templatePathAndFilename;
+	}
+	
+	/**
+	 * @return array
+	 */
+	protected function getFrameworkConfiguration() {
+		//$this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		//$this->concreteConfigurationManager->getConfiguration($extensionName, $pluginName);
+		$configuration = Tx_Extbase_Dispatcher::$extbaseFrameworkConfiguration;
+
+		debug($configuration);
+
+		return $configuration;
 	}
 }
 

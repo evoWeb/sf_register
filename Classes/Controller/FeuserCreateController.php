@@ -81,6 +81,11 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			$user = $this->addUsergroup($user, $this->settings['usergroupOnRegistrationWithoutActivation']);
 		}
 
+		$user = t3lib_div::makeInstance('Tx_SfRegister_Services_Mail')
+			->injectSettings($this->settings)
+			->injectObjectManager($this->objectManager)
+			->sendConfirmationMail($user);
+
 		$this->userRepository->add($user);
 
 		if ($this->settings['forwardToEditAfterSave']) {
@@ -97,6 +102,12 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			$user = $this->changeUsergroupAfterActivation($user);
 			$user->setDisable(FALSE);
 		}
+
+		$this->userRepository->update($user);
+
+		if ($autologin) {
+			
+		}
 	}
 	
 	/**
@@ -107,7 +118,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	protected function addUsergroup(Tx_SfRegister_Domain_Model_FrontendUser $user, $usergroupUid) {
 		$usergroupToAdd = $this->userGroupRepository->findByUid($usergroupUid);
 		$user->addUsergroup($usergroupToAdd);
-		
+
 		return $user;
 	}
 
