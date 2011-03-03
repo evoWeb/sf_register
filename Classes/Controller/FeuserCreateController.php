@@ -39,10 +39,6 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @dontvalidate $passwordAgain
 	 */
 	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL, $passwordAgain = NULL) {
-		if ($user == NULL && $GLOBALS['TSFE']->fe_user->user != FALSE) {
-			$user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
-		}
-
 		$this->view->assign('user', $user);
 		$this->view->assign('passwordAgain', $passwordAgain);
 	}
