@@ -1,28 +1,34 @@
-plugin.tx_sfregister {
-	settings {
-		useDataOfLoggedinFeuser = 1
+plugin.tx_sfregister.settings {
+	useDataOfLoggedinFeuser = 1
 
-		validation {
-			username = StringLength(minimum = 1, maximum = 80)
-			password = StringLength(minimum = 8, maximum = 40)
-			firstName = StringLength(minimum = 1, maximum = 80)
-			lastName = StringLength(minimum = 1, maximum = 80)
-		}
-
-		forwardToEditAfterSave = 0
+	validation {
+		username = StringLength(minimum = 1, maximum = 80)
+		password = StringLength(minimum = 8, maximum = 40)
+		firstName = StringLength(minimum = 1, maximum = 80)
+		lastName = StringLength(minimum = 1, maximum = 80)
+		email = EmailAddress
 	}
 
-	persistence {
-		storagePid = 44
+	forwardToEditAfterSave = 0
+	
+	# md5 | sha1
+	encryptPassword = md5
+	
+	activationOnRegistrationNeeded = 1
+	usergroupBeforeActivation = 1
+	usergroupAfterActivation = 2
+}
 
-		classes {
-			Tx_SfRegister_Domain_Model_FrontendUser {
-				mapping {
-					tableName = fe_users
-					recordType = Tx_Extbase_Domain_Model_FrontendUser
-					columns {
-						#tx_mfcform_position.mapOnProperty = position
-					}
+plugin.tx_sfregister.persistence {
+	storagePid = 44
+
+	classes {
+		Tx_SfRegister_Domain_Model_FrontendUser {
+			mapping {
+				tableName = fe_users
+				recordType = Tx_Extbase_Domain_Model_FrontendUser
+				columns {
+					#tx_mfcform_position.mapOnProperty = position
 				}
 			}
 		}
