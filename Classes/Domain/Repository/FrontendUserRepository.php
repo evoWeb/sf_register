@@ -57,6 +57,22 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 		}
 		return $object;
 	}
+	
+	/**
+	 * @param string $mailhash
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 */
+	public function findByMailhash($mailhash) {
+		$query = $this->createQuery();
+		$query->getQuerySettings()->setRespectEnableFields(FALSE);
+		
+		$data = $query
+			->matching($query->equals('mailhash', $mailhash))
+			->setLimit(1)
+			->execute();
+
+		return current($data);
+	}
 }
 
 ?>
