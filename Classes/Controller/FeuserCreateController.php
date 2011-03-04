@@ -111,8 +111,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			if ($autologin) {
 			}
 		} else {
-			// no user found for mailhash
-			// already activated or not available
+			$this->view->assign('userNotFoundByAuthCode', 1);
 		}
 	}
 	
