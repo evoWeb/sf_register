@@ -20,7 +20,8 @@ $tempColumns = array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.mailhash',
 		'config' => array (
-			'type' => 'passthrough',
+			'type' => 'input',
+			'readOnly' => true,
 		)
 	),
 	'mobilephone' => array (
