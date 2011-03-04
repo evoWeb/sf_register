@@ -90,19 +90,29 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * @return void
+	 */
+	protected function initializeConfirmAction() {
+		$this->userGroupRepository = t3lib_div::makeInstance('Tx_Extbase_Domain_Repository_FrontendUserGroupRepository');
+	}
+
+	/**
 	 * @param string $authCode
 	 * @return void
 	 */
 	public function confirmAction($authCode) {
-		if (intval($this->settings['activationOnRegistrationNeeded']) > 0) {
+		$user = $this->userRepository->findByMailhash($authCode);
+
+		if ($user instanceof Tx_SfRegister_Domain_Model_FrontendUser) {
 			$user = $this->changeUsergroupAfterActivation($user);
 			$user->setDisable(FALSE);
-		}
+			$user->setMailhash('');
 
-		$this->userRepository->update($user);
-
-		if ($autologin) {
-			
+			if ($autologin) {
+			}
+		} else {
+			// no user found for mailhash
+			// already activated or not available
 		}
 	}
 	
@@ -137,7 +147,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	protected function changeUsergroupAfterActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		if (intval($this->settings['usergroupAfterActivation']) > 0 &&
 				intval($this->settings['usergroupAfterActivation']) != intval($this->settings['usergroupBeforeActivation'])) {
-			$user = $this->addUsergroup($user, $this->settings['usergroupBeforeActivation']);
+			$user = $this->addUsergroup($user, $this->settings['usergroupAfterActivation']);
 
 			$usergroupToRemove = $this->userGroupRepository->findByUid($this->settings['usergroupBeforeActivation']);
 			$user->removeUsergroup($usergroupToRemove);
