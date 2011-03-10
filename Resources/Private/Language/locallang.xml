@@ -47,7 +47,10 @@
 			<label index="error.1238108067">The length of %1$s was not between %2$s and %3$s characters</label>
 			<label index="error.1221559976">The %1$s has no valid email adress format</label>
 			
-			<label index="emails.confirmationSubject">Confirmation request for your registration at %1$s</label>
+			<label index="subjectAdminActivationMail">Activate %2$s's registration at %1$s</label>
+			<label index="subjectUserActivationMail">Activate your account %2$s at %1$s</label>
+			<label index="subjectAdminNotificationMail">User %2$s registered at %1$s</label>
+			<label index="subjectUserNotificationMail">You registered yourself at %1$s as %2$s</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 		</languageKey>
