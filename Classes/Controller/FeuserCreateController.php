@@ -30,7 +30,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @var Tx_Extbase_Domain_Repository_FrontendUserGroupRepository
 	 */
 	protected $userGroupRepository = null;
-	
+
 	/**
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @param string $passwordAgain
@@ -61,7 +61,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	protected function initializeSaveAction() {
 		$this->userGroupRepository = t3lib_div::makeInstance('Tx_Extbase_Domain_Repository_FrontendUserGroupRepository');
 	}
-	
+
 	/**
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
@@ -70,17 +70,14 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 		$password = $this->encryptPassword($user->getPassword());
 		$user->setPassword($password);
 
-		if (intval($this->settings['activationOnRegistrationNeeded']) > 0) {
+		if ($this->isActivateByUser() || $this->isActivateByAdmin()) {
 			$user->setDisable(TRUE);
 			$user = $this->setUsergroupBeforeActivation($user);
 		} else {
-			$user = $this->addUsergroup($user, $this->settings['usergroupOnRegistrationWithoutActivation']);
+			$user = $this->addUsergroup($user, $this->settings['usergroupWithoutActivation']);
 		}
 
-		$user = t3lib_div::makeInstance('Tx_SfRegister_Services_Mail')
-			->injectSettings($this->settings)
-			->injectObjectManager($this->objectManager)
-			->sendConfirmationMail($user);
+		$user = $this->sendEmails($user);
 
 		$this->userRepository->add($user);
 
@@ -114,7 +111,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			$this->view->assign('userNotFoundByAuthCode', 1);
 		}
 	}
-	
+
+
 	/**
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @param integer $usergroupUid
@@ -138,7 +136,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 
 		return $user;
 	}
-	
+
 	/**
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
@@ -153,6 +151,85 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 		}
 
 		return $user;
+	}
+
+
+	/**
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 */
+	protected function sendEmails($user) {
+		$mailService = t3lib_div::makeInstance('Tx_SfRegister_Services_Mail')
+			->injectSettings($this->settings)
+			->injectObjectManager($this->objectManager);
+
+		if ($this->isActivateByAdmin()) {
+			$user = $mailService->sendAdminActivationMail($user);
+		} elseif ($this->isActivateByUser()) {
+			$user = $mailService->sendUserActivationMail($user);
+		}
+
+		if ($this->isNotifyToAdmin()) {
+			$mailService->sendAdminNotificationMail($user);
+		}
+		if ($this->isNotifyToUser()) {
+			$mailService->sendUserNotificationMail($user);
+		}
+
+		return $user;
+	}
+
+
+	/**
+	 * @return boolean
+	 */
+	protected function isActivateByUser() {
+		$result = FALSE;
+
+		if ($this->settings['activateByUser'] && !$this->settings['activateByAdmin']) {
+			$result = TRUE;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function isActivateByAdmin() {
+		$result = FALSE;
+
+		if ($this->settings['activateByAdmin']) {
+			$result = TRUE;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function isNotifyToUser() {
+		$result = FALSE;
+
+		if ($this->settings['notifyToUser'] && !$this->isActivateByUser()) {
+			$result = TRUE;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function isNotifyToAdmin() {
+		$result = FALSE;
+
+		if ($this->settings['notifyToAdmin'] && !$this->isActivateByAdmin()) {
+			$result = TRUE;
+		}
+
+		return $result;
 	}
 }
 
