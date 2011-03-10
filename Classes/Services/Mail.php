@@ -81,7 +81,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
-			$user->getEmail(),
+			$this->getAdminRecipient(),
 			'adminEmail',
 			$subject,
 			$message
@@ -109,7 +109,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
-			$user->getEmail(),
+			$this->getUserRecipient($user),
 			'userEmail',
 			$subject,
 			$message
@@ -135,7 +135,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
-			$user->getEmail(),
+			$this->getAdminRecipient(),
 			'adminEmail',
 			$subject,
 			$message
@@ -161,13 +161,41 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
-			$user->getEmail(),
+			$this->getUserRecipient($user),
 			'userEmail',
 			$subject,
 			$message
 		);
 
 		return $user;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	protected function getAdminRecipient() {
+		$recipient = $this->settings['adminEmail']['toEmail'];
+
+		if ($this->settings['adminEmail']['toName']) {
+			$recipient = trim($this->settings['adminEmail']['toName']) . '<' . $recipient . '>';
+		}
+
+		return $recipient;
+	}
+
+	/**
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return string
+	 */
+	protected function getUserRecipient($user) {
+		$recipient = $user->getEmail();
+
+		if ($user->getFirstName() || $user->getLastName()) {
+			$recipient = trim($user->getFirstName() . ' ' . $user->getLastName()) . '<' . $recipient . '>';
+		}
+
+		return $recipient;
 	}
 
 
@@ -192,6 +220,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 		return $htmlMail->send($recipient);
 	}
+
 
 	/**
 	 * @param string $templateName
