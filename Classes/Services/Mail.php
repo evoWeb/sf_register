@@ -69,9 +69,9 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 */
 	public function sendAdminActivationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$user->setMailhash(md5($user->getUsername() . time() . $user->getEmail()));
-// @todo fix me
-		$subject = Tx_Extbase_Utility_Localization::translate('emails.confirmationSubject', 'sf_register');
-		$subject = vsprintf($subject, array('sitename'));
+
+		$subjectArguments = array('sitename', $user->getUsername());
+		$subject = Tx_Extbase_Utility_Localization::translate('subjectAdminActivationMail', 'sf_register', $subjectArguments);
 
 		$variables = array(
 			'user' => $user
@@ -97,9 +97,9 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 */
 	public function sendUserActivationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$user->setMailhash(md5($user->getUsername() . time() . $user->getEmail()));
-// @todo fix me
-		$subject = Tx_Extbase_Utility_Localization::translate('emails.confirmationSubject', 'sf_register');
-		$subject = vsprintf($subject, array('sitename'));
+
+		$subjectArguments = array('sitename', $user->getUsername());
+		$subject = Tx_Extbase_Utility_Localization::translate('subjectUserActivationMail', 'sf_register', $subjectArguments);
 
 		$variables = array(
 			'user' => $user
@@ -124,9 +124,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 */
 	public function sendAdminNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-// @todo fix me
-		$subject = Tx_Extbase_Utility_Localization::translate('emails.confirmationSubject', 'sf_register');
-		$subject = vsprintf($subject, array('sitename'));
+		$subjectArguments = array('sitename', $user->getUsername());
+		$subject = Tx_Extbase_Utility_Localization::translate('subjectAdminNotificationMail', 'sf_register', $subjectArguments);
 
 		$variables = array(
 			'user' => $user
@@ -151,9 +150,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 */
 	public function sendUserNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-// @todo fix me
-		$subject = Tx_Extbase_Utility_Localization::translate('emails.confirmationSubject', 'sf_register');
-		$subject = vsprintf($subject, array('sitename'));
+		$subjectArguments = array('sitename', $user->getUsername());
+		$subject = Tx_Extbase_Utility_Localization::translate('subjectUserNotificationMail', 'sf_register', $subjectArguments);
 
 		$variables = array(
 			'user' => $user
