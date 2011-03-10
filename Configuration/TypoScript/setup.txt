@@ -15,36 +15,36 @@ plugin.tx_sfregister.settings {
 	encryptPassword = md5
 
 	# boolean if user or admin need to activate
-	activateByUser = 1
-	activateByAdmin = 1
+	#activateByUser = 1
+	#activateByAdmin = 1
 
 	# boolean if user or admin should be notified
-	notifyToUser = 1
-	notifyToAdmin = 1
+	#notifyToUser = 1
+	#notifyToAdmin = 1
 
 	# usergroups set if activation is needed
 	usergroupBeforeActivation = 1
 	usergroupAfterActivation = 2
 	# usergroup set if no activation is needed
-	usergroupWithoutActivation = 1
+	usergroupWithoutActivation = 2
 
 	userEmail {
-		fromName = Tester1
-		fromEmail = test1@test.local
+		fromName = userEmail from
+		fromEmail = userEmailfrom@test.local
 
-		replyName = Tester2
-		replyEmail = test2@test.local
+		replyName = userEmail reply
+		replyEmail = userEmailreply@test.local
 	}
 
 	adminEmail {
-		toName =
-		toEmail =
+		toName = adminEmail to
+		toEmail = sebastian@krypton.localdomain
 
-		fromName = Tester1
-		fromEmail = test1@test.local
+		fromName = adminEmail from
+		fromEmail = adminEmailfrom@test.local
 
-		replyName = Tester2
-		replyEmail = test2@test.local
+		replyName = adminEmail reply
+		replyEmail = adminEmailreply@test.local
 	}
 }
 
