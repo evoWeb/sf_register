@@ -14,13 +14,21 @@ plugin.tx_sfregister.settings {
 	# md5 | sha1
 	encryptPassword = md5
 
-	activationOnRegistrationNeeded = 1
+	# boolean if user or admin need to activate
+	activateByUser = 1
+	activateByAdmin = 1
+
+	# boolean if user or admin should be notified
+	notifyToUser = 1
+	notifyToAdmin = 1
+
+	# usergroups set if activation is needed
 	usergroupBeforeActivation = 1
 	usergroupAfterActivation = 2
+	# usergroup set if no activation is needed
+	usergroupWithoutActivation = 1
 
-	usergroupOnRegistrationWithoutActivation = 1
-
-	confirmationmail {
+	userEmail {
 		fromName = Tester1
 		fromEmail = test1@test.local
 
@@ -28,7 +36,15 @@ plugin.tx_sfregister.settings {
 		replyEmail = test2@test.local
 	}
 
-	adminmail {
+	adminEmail {
+		toName =
+		toEmail =
+
+		fromName = Tester1
+		fromEmail = test1@test.local
+
+		replyName = Tester2
+		replyEmail = test2@test.local
 	}
 }
 
