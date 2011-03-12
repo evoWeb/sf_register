@@ -52,13 +52,20 @@ class Tx_SfRegister_Domain_Validator_PasswordsValidator extends Tx_Extbase_Valid
 			$result = FALSE;
 		}
 
-		if (strlen($passwords['newPassword1']) < $this->options['minimum'] || strlen($passwords['newPassword1']) > $this->options['maximum']) {
-			$this->addError(vsprintf(Tx_Extbase_Utility_Localization::translate('error.length.password', 'SfRegister'), $this->options), 1296591067);
+		if (strlen($passwords['newPassword1']) < $this->options['minimum'] ||
+				strlen($passwords['newPassword1']) > $this->options['maximum']) {
+			$this->addError(
+				vsprintf(Tx_Extbase_Utility_Localization::translate('error.length.password', 'SfRegister'), $this->options),
+				1296591067
+			);
 			$result = FALSE;
 		}
 
 		if ($this->inBadWordList($passwords['newPassword1'])) {
-			$this->addError(vsprintf(Tx_Extbase_Utility_Localization::translate('error.badword.password', 'SfRegister'), $this->options), 1296591068);
+			$this->addError(
+				vsprintf(Tx_Extbase_Utility_Localization::translate('error.badword.password', 'SfRegister'), $this->options),
+				1296591068
+			);
 			$result = FALSE;
 		}
 
@@ -66,6 +73,9 @@ class Tx_SfRegister_Domain_Validator_PasswordsValidator extends Tx_Extbase_Valid
 	}
 
 	/**
+	 * Check if word is in bad word list
+	 *
+	 * @param string $word
 	 * @return boolean
 	 */
 	protected function inBadWordList($word) {

@@ -15,19 +15,19 @@ t3lib_extMgm::addPageTSConfig('
 TCAdefaults.fe_users.tx_extbase_type = Tx_Extbase_Domain_Model_FrontendUser
 ');
 
-$tempColumns = array (
-	'mailhash' => array (
+$tempColumns = array(
+	'mailhash' => array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.mailhash',
-		'config' => array (
+		'config' => array(
 			'type' => 'input',
-			'readOnly' => true,
+			'readOnly' => TRUE,
 		)
 	),
-	'mobilephone' => array (
+	'mobilephone' => array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.mobilephone',
-		'config' => array (
+		'config' => array(
 			'type' => 'input',
 			'size' => 20,
 		)

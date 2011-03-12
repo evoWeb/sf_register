@@ -49,6 +49,8 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	protected $currentValidatorOptions = array();
 
 	/**
+	 * Constructor
+	 *
 	 * @return void
 	 */
 	public function __construct() {
@@ -57,6 +59,8 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	}
 
 	/**
+	 * Get settings
+	 *
 	 * @return void
 	 */
 	protected function getSettings() {
@@ -65,6 +69,8 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	}
 
 	/**
+	 * Get validator resolver
+	 *
 	 * @return void
 	 */
 	protected function getValidatorResolver() {
@@ -101,6 +107,8 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	}
 
 	/**
+	 * Validate value with rule
+	 *
 	 * @param mixed $value
 	 * @param string $rule
 	 * @return boolean
@@ -111,7 +119,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 		$validator = $this->getValidator($rule);
 		if ($validator instanceof Tx_Extbase_Validation_Validator_ValidatorInterface AND
 				!$validator->isValid($value)) {
-			$this->mergeErrorsIntoLokalErrors($validator->getErrors());
+			$this->mergeErrorsIntoLocalErrors($validator->getErrors());
 			$result = FALSE;
 		}
 
@@ -119,10 +127,12 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	}
 
 	/**
+	 * Merge error into local errors
+	 *
 	 * @param array $errors
 	 * @return void
 	 */
-	protected function mergeErrorsIntoLokalErrors($errors) {
+	protected function mergeErrorsIntoLocalErrors($errors) {
 		foreach ($errors as $error) {
 			$localizedFieldName = Tx_Extbase_Utility_Localization::translate($this->currentFieldName, 'SfRegister');
 			$localizedErrorMessage = Tx_Extbase_Utility_Localization::translate('error.' . $error->getCode(), 'SfRegister');
@@ -135,7 +145,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	}
 
 	/**
-	 * Parse the rule and instanciate an validator with the name and the options returned
+	 * Parse the rule and instanciate an validator with the name and the options
 	 *
 	 * @param string $rule
 	 * @return Tx_Extbase_Validation_Validator_ValidatorInterface
@@ -152,6 +162,8 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	}
 
 	/**
+	 * Parse rule
+	 *
 	 * @param string $rule
 	 * @return void
 	 */

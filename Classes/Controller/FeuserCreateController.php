@@ -29,9 +29,11 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * @var Tx_Extbase_Domain_Repository_FrontendUserGroupRepository
 	 */
-	protected $userGroupRepository = null;
+	protected $userGroupRepository = NULL;
 
 	/**
+	 * Form action
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @param string $passwordAgain
 	 * @return string An HTML form
@@ -44,6 +46,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * Preview action
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @param string $passwordAgain
 	 * @return void
@@ -56,6 +60,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * Initialization of save action
+	 *
 	 * @return void
 	 */
 	protected function initializeSaveAction() {
@@ -63,6 +69,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * Save action
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
 	 */
@@ -87,6 +95,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * Initialization confirm action
+	 *
 	 * @return void
 	 */
 	protected function initializeConfirmAction() {
@@ -94,6 +104,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * Comnfirm action
+	 *
 	 * @param string $authCode
 	 * @return void
 	 */
@@ -114,6 +126,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 
 
 	/**
+	 * Add usergroup to user
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @param integer $usergroupUid
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
@@ -126,6 +140,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * Set usergroup to user before activation
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
@@ -138,6 +154,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * Change usergroup of user after activation
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
@@ -155,6 +173,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 
 
 	/**
+	 * Send emails to user and/or to admin
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
@@ -181,6 +201,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 
 
 	/**
+	 * Check if the user needs to activate
+	 *
 	 * @return boolean
 	 */
 	protected function isActivateByUser() {
@@ -194,6 +216,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * Check if the admin needs to activate
+	 *
 	 * @return boolean
 	 */
 	protected function isActivateByAdmin() {
@@ -207,6 +231,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * Check if the user should get notified
+	 *
 	 * @return boolean
 	 */
 	protected function isNotifyToUser() {
@@ -220,6 +246,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * Check if the admin should get notified
+	 *
 	 * @return boolean
 	 */
 	protected function isNotifyToAdmin() {

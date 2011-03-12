@@ -27,12 +27,16 @@
  */
 class Tx_SfRegister_Controller_FeuserPasswordController extends Tx_SfRegister_Controller_FeuserController {
 	/**
+	 * Form action
+	 *
 	 * @return void
 	 */
 	public function formAction() {
 	}
 
 	/**
+	 * Save action
+	 *
 	 * @param array $passwords
 	 * @return void
 	 * @validate $passwords Tx_SfRegister_Domain_Validator_PasswordsValidator(minimum = 8, maximum = 40)

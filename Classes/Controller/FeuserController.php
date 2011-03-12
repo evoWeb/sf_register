@@ -29,9 +29,11 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * @var Tx_SfRegister_Domain_Model_FrontendUserRepository
 	 */
-	protected $userRepository = null;
+	protected $userRepository = NULL;
 
 	/**
+	 * Initialize all actions
+	 *
 	 * @see Tx_Extbase_MVC_Controller_ActionController::initializeAction()
 	 * @return void
 	 */
@@ -40,6 +42,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
+	 * Form action
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return string An HTML form
 	 * @dontvalidate $user
@@ -53,6 +57,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
+	 * Preview action
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
@@ -62,6 +68,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
+	 * Proxy action
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
@@ -75,9 +83,11 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 
 		$this->forward($action);
 	}
-	
+
 
 	/**
+	 * Encrypt the password
+	 *
 	 * @param string $password
 	 * @return string
 	 */

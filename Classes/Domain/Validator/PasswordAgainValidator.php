@@ -52,6 +52,8 @@ class Tx_SfRegister_Domain_Validator_PasswordAgainValidator extends Tx_Extbase_V
 	}
 
 	/**
+	 * Get password from request
+	 *
 	 * @return string
 	 */
 	protected function getPasswordFromRequest() {

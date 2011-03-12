@@ -26,6 +26,12 @@
  * A repository for feusers
  */
 class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_Domain_Repository_FrontendUserRepository {
+	/**
+	 * (non-PHPdoc)
+	 *
+	 * @see Tx_Extbase_Persistence_Repository::findAll()
+	 * @return Tx_Extbase_Persistence_ObjectStorage
+	 */
 	public function findAll() {
 		$query = $this->createQuery();
 
@@ -57,15 +63,17 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 		}
 		return $object;
 	}
-	
+
 	/**
+	 * Find user by mailhash
+	 *
 	 * @param string $mailhash
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function findByMailhash($mailhash) {
 		$query = $this->createQuery();
 		$query->getQuerySettings()->setRespectEnableFields(FALSE);
-		
+
 		$data = $query
 			->matching($query->equals('mailhash', $mailhash))
 			->setLimit(1)

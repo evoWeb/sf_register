@@ -27,6 +27,8 @@
  */
 class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Controller_FeuserController {
 	/**
+	 * Save action
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
 	 */

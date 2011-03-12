@@ -42,6 +42,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	protected $objectManager;
 
 	/**
+	 * Inject settings
+	 *
 	 * @param array $settings
 	 * @return Tx_SfRegister_Services_Mail
 	 */
@@ -50,8 +52,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 		return $this;
 	}
-	
+
 	/**
+	 * Inject object manager
+	 *
 	 * @param Tx_Extbase_Object_ManagerInterface $objectManager
 	 * @return Tx_SfRegister_Services_Mail
 	 */
@@ -64,8 +68,9 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 	/**
 	 * Send an email on registration request to activate the user by admin
-	 * 
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendAdminActivationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$user->setMailhash(md5($user->getUsername() . time() . $user->getEmail()));
@@ -92,8 +97,9 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 	/**
 	 * Send an email on registration request to activate the user by user
-	 * 
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendUserActivationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$user->setMailhash(md5($user->getUsername() . time() . $user->getEmail()));
@@ -120,8 +126,9 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 	/**
 	 * Send an email notify about the registration to the admin
-	 * 
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendAdminNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$subjectArguments = array('sitename', $user->getUsername());
@@ -146,8 +153,9 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 	/**
 	 * Send an email notify about the registration to the user
-	 * 
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendUserNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$subjectArguments = array('sitename', $user->getUsername());
@@ -172,6 +180,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 
 	/**
+	 * Get admin recipient
+	 *
 	 * @return string
 	 */
 	protected function getAdminRecipient() {
@@ -185,6 +195,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	}
 
 	/**
+	 * Get user recipient
+	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return string
 	 */
@@ -200,6 +212,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 
 	/**
+	 * Send email
+	 *
 	 * @param string $recipient
 	 * @param string $typeOfEmail
 	 * @param string $subject
@@ -223,6 +237,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 
 	/**
+	 * Get template path and filename
+	 *
 	 * @param string $templateName
 	 * @return string
 	 */
@@ -236,6 +252,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	}
 
 	/**
+	 * Get framework configuration
+	 *
 	 * @return array
 	 */
 	protected function getFrameworkConfiguration() {
@@ -245,6 +263,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	}
 
 	/**
+	 * Get absolute template root path
+	 *
 	 * @return string
 	 */
 	protected function getAbsoluteTemplateRootPath() {
@@ -264,8 +284,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 *
 	 * @param string $controller
 	 * @param string $action
-	 * @param string $templateFile		absolute path to the template File
-	 * @param array $vars an array of all variables you want to assgin to the view f.e: array('blog'=> $blog, 'posts' => $posts)
+	 * @param string $templateFile absolute path to the template File
+	 * @param array $vars array of all variables you want to assgin to the view
 	 * @return string of the rendered View.
 	 */
 	protected function renderFileTemplate($controller, $action, $templateFile, array $vars) {
@@ -274,7 +294,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 		$data = '';
 		$templateContent = file_get_contents($templateFile);
-		if ($templateContent !== false) {$content = $templateParser->parse($templateContent);
+		if ($templateContent !== FALSE) {
+			$content = $templateParser->parse($templateContent);
 			$variableContainer = $objectManager->create('Tx_Fluid_Core_ViewHelper_TemplateVariableContainer', $vars);
 			$viewHelperVariableContainer = $objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
 

@@ -27,7 +27,7 @@
  */
 class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_FrontendUser {
 	/**
-	 * @var boolean
+	 * @var boolean Flag if user is diable or not
 	 */
 	protected $disable;
 
@@ -42,13 +42,18 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	protected $mobilephone = '';
 
 	/**
-	 * @var boolean $disable
+	 * Setter for disable
+	 *
+	 * @param boolean $disable
+	 * @return void
 	 */
 	public function setDisable($disable) {
 		$this->disable = ($disable ? TRUE : FALSE);
 	}
 
 	/**
+	 * Getter for disable
+	 *
 	 * @return boolean
 	 */
 	public function getDisable() {
@@ -56,6 +61,8 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
+	 * Setter for mailhash
+	 *
 	 * @param string $mailhash
 	 * @return void
 	 */
@@ -64,6 +71,8 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
+	 * Getter for mailhash
+	 *
 	 * @return string
 	 */
 	public function getMailhash() {
@@ -71,6 +80,8 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
+	 * Setter for mobilphone
+	 *
 	 * @param string $mobilephone
 	 * @return void
 	 */
@@ -79,6 +90,8 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
+	 * Getter for mobilphone
+	 *
 	 * @return string
 	 */
 	public function getMobilephone() {

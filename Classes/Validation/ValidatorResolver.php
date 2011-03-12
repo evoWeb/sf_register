@@ -26,7 +26,7 @@
 ***************************************************************/
 
 /**
- * Validator resolver to automatically find a appropriate validator for a given subject
+ * Validator resolver to automatically find a validator for a given subject
  *
  * @package Extbase
  * @subpackage Validation
