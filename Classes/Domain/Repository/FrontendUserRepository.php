@@ -81,6 +81,55 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 
 		return current($data);
 	}
+
+	/**
+	 * Enter description here ...
+	 *
+	 * @param unknown_type $field
+	 * @param unknown_type $value
+	 * @return integer
+	 */
+	public function countByField($field, $value) {
+		$query = $this->createQuery();
+		$query->getQuerySettings()->setRespectEnableFields(FALSE);
+
+		$data = $query
+			->matching(
+				$query->logicalAnd(
+					$query->equals('deleted', 0),
+					$query->equals($field, $value)
+				)
+			)
+			->setLimit(1)
+			->execute();
+
+		return $this->createQuery()->count();
+	}
+
+	/**
+	 * Enter description here ...
+	 *
+	 * @param unknown_type $field
+	 * @param unknown_type $value
+	 * @return integer
+	 */
+	public function countByFieldGlobal($field, $value) {
+		$query = $this->createQuery();
+		$query->getQuerySettings()->setRespectEnableFields(FALSE);
+		$query->getQuerySettings()->setRespectStoragePage(FALSE);
+
+		$data = $query
+			->matching(
+				$query->logicalAnd(
+					$query->equals('deleted', 0),
+					$query->equals($field, $value)
+				)
+			)
+			->setLimit(1)
+			->execute();
+
+		return $this->createQuery()->count();
+	}
 }
 
 ?>

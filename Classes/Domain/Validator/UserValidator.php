@@ -117,6 +117,9 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 		$result = TRUE;
 
 		$validator = $this->getValidator($rule);
+		if (method_exists($validator, 'setFieldname')) {
+			$validator->setFieldname($this->currentFieldName);
+		}
 		if ($validator instanceof Tx_Extbase_Validation_Validator_ValidatorInterface AND
 				!$validator->isValid($value)) {
 			$this->mergeErrorsIntoLocalErrors($validator->getErrors());
