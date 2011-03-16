@@ -54,10 +54,10 @@ class Tx_SfRegister_Domain_Validator_UniqueValidator extends Tx_Extbase_Validati
 		$repository = t3lib_div::makeInstance('Tx_SfRegister_Domain_Repository_FrontendUserRepository');
 
 		if ($repository->countByField($this->fieldname, $value)) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notunique', 'SfRegister'), 1296591064);
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notunique', 'SfRegister'), 1296591068);
 			$result = FALSE;
-		} elseif ($this->options['global'] && $repository->countByField($this->fieldname, $value)) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notunique', 'SfRegister'), 1296591064);
+		} elseif ($this->options['global'] && $repository->countByFieldGlobal($this->fieldname, $value)) {
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.globalnotunique', 'SfRegister'), 1296591069);
 			$result = FALSE;
 		}
 
