@@ -91,14 +91,41 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notauser', 'SfRegister'), 1296594373);
 			$result = FALSE;
 		} else {
-			foreach ($this->settings['validation.'] as $fieldName => $rule) {
-				$methodName = 'get' . ucfirst($fieldName);
-				if (!method_exists($user, $methodName)) {
-					$this->addError(Tx_Extbase_Utility_Localization::translate('error.notexists', 'SfRegister'), 1296594373);
-					$result = FALSE;
+			$result = $this->validateRules($user);
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Validate all rules
+	 *
+	 * @param object $user
+	 * @return boolean
+	 */
+	protected function validateRules($user) {
+		foreach ($this->settings['validation.'] as $fieldName => $rule) {
+			$fieldName = str_replace('.', '', $fieldName);
+			$methodName = 'get' . ucfirst($fieldName);
+
+			if (!method_exists($user, $methodName)) {
+				$this->addError(Tx_Extbase_Utility_Localization::translate('error.notexists', 'SfRegister'), 1296594373);
+				$result = FALSE;
+			} else {
+				$this->currentFieldName = $fieldName;
+				$fieldValue = $user->{$methodName}();
+
+				if (!is_array($rule)) {
+					$result = $this->validateValueWithRule($fieldValue, $rule) && $result ? TRUE : FALSE;
 				} else {
-					$this->currentFieldName = $fieldName;
-					$result = $this->validateValueWithRule($user->{$methodName}(), $rule) && $result ? TRUE : FALSE;
+					foreach ($rule as $subrule) {
+						$subRuleResult = $this->validateValueWithRule($fieldValue, $subrule);
+						$result = $subRuleResult && $result ? TRUE : FALSE;
+
+						if (!$subRuleResult) {
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -138,7 +165,10 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	protected function mergeErrorsIntoLocalErrors($errors) {
 		foreach ($errors as $error) {
 			$localizedFieldName = Tx_Extbase_Utility_Localization::translate($this->currentFieldName, 'SfRegister');
-			$localizedErrorMessage = Tx_Extbase_Utility_Localization::translate('error.' . $error->getCode(), 'SfRegister');
+
+			$errorMessage = $error->getMessage();
+			$localizedErrorCode = Tx_Extbase_Utility_Localization::translate('error.' . $error->getCode(), 'SfRegister');
+			$localizedErrorMessage = $localizedErrorCode ? $localizedErrorCode : $errorMessage;
 
 			$markers = array_merge((array) $localizedFieldName, $this->currentValidatorOptions);
 			$messageWithReplacedMarkers = vsprintf($localizedErrorMessage, $markers);
