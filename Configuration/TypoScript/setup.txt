@@ -2,7 +2,11 @@ plugin.tx_sfregister.settings {
 	useDataOfLoggedinFeuser = 1
 
 	validation {
-		username = StringLength(minimum = 1, maximum = 80)
+		username {
+			1 = StringLength(minimum = 1, maximum = 80)
+			2 = Tx_SfRegister_Domain_Validator_UniqueValidator
+			3 = Tx_SfRegister_Domain_Validator_UniqueValidator(global = 1)
+		}
 		password = StringLength(minimum = 8, maximum = 40)
 		firstName = StringLength(minimum = 1, maximum = 80)
 		lastName = StringLength(minimum = 1, maximum = 80)
