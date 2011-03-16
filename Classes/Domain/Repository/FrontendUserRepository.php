@@ -96,14 +96,14 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 		$data = $query
 			->matching(
 				$query->logicalAnd(
-					$query->equals('deleted', 0),
-					$query->equals($field, $value)
+					$query->equals($field, $value),
+					$query->equals('deleted', 0)
 				)
 			)
 			->setLimit(1)
 			->execute();
 
-		return $this->createQuery()->count();
+		return $query->count();
 	}
 
 	/**
@@ -128,7 +128,7 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 			->setLimit(1)
 			->execute();
 
-		return $this->createQuery()->count();
+		return $query->count();
 	}
 }
 
