@@ -104,6 +104,8 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 * @return boolean
 	 */
 	protected function validateRules($user) {
+		$result = TRUE;
+
 		foreach ($this->settings['validation.'] as $fieldName => $rule) {
 			$fieldName = str_replace('.', '', $fieldName);
 			$methodName = 'get' . ucfirst($fieldName);
@@ -118,15 +120,29 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 				if (!is_array($rule)) {
 					$result = $this->validateValueWithRule($fieldValue, $rule) && $result ? TRUE : FALSE;
 				} else {
-					foreach ($rule as $subrule) {
-						$subRuleResult = $this->validateValueWithRule($fieldValue, $subrule);
-						$result = $subRuleResult && $result ? TRUE : FALSE;
-
-						if (!$subRuleResult) {
-							break;
-						}
-					}
+					$result = $this->validateRuleArray($fieldValue, $rule) && $result ? TRUE : FALSE;
 				}
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Validate rules until one of them failes and then stop validating any further
+	 *
+	 * @param mixed $fieldValue
+	 * @param array $rules
+	 * @return boolean
+	 */
+	protected function validateRuleArray($fieldValue, Array $rules) {
+		$result = TRUE;
+
+		foreach ($rules as $rule) {
+			$result = $this->validateValueWithRule($fieldValue, $rule) && $result ? TRUE : FALSE;
+
+			if (!$result) {
+				break;
 			}
 		}
 
