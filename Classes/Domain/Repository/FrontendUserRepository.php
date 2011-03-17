@@ -82,8 +82,9 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 		return current($data);
 	}
 
+
 	/**
-	 * Enter description here ...
+	 * Count users in storagefolder which have a field that contains the value
 	 *
 	 * @param unknown_type $field
 	 * @param unknown_type $value
@@ -107,7 +108,7 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 	}
 
 	/**
-	 * Enter description here ...
+	 * Count users installationwide which have a field that contains the value
 	 *
 	 * @param unknown_type $field
 	 * @param unknown_type $value
