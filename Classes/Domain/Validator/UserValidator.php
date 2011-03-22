@@ -69,6 +69,26 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	}
 
 	/**
+	 * Add an error with message and code to the property errors
+	 *
+	 * @param array $propertyName name of the property to add the error to
+	 * @param string $message Message to be shwon
+	 * @param string $code Error code to identify the error
+	 * @return void
+	 */
+	protected function addErrorsForProperty($propertyName, $message, $code) {
+		if (!isset($this->errors[$propertyName])) {
+			$this->errors[$propertyName] = t3lib_div::makeInstance('Tx_Extbase_Validation_PropertyError', $propertyName);
+		}
+
+		$errors = array(
+			t3lib_div::makeInstance('Tx_Extbase_Validation_Error', $message, $code)
+		);
+
+		$this->errors[$propertyName]->addErrors($errors);
+	}
+
+	/**
 	 * Get validator resolver
 	 *
 	 * @return void
@@ -189,7 +209,11 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 			$markers = array_merge((array) $localizedFieldName, $this->currentValidatorOptions);
 			$messageWithReplacedMarkers = vsprintf($localizedErrorMessage, $markers);
 
-			$this->addError($messageWithReplacedMarkers, $error->getCode());
+			$this->addErrorsForProperty(
+				$this->currentFieldName,
+				$messageWithReplacedMarkers,
+				$error->getCode()
+			);
 		}
 	}
 
