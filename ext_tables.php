@@ -24,6 +24,7 @@ $tempColumns = array(
 			'readOnly' => TRUE,
 		)
 	),
+
 	'mobilephone' => array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.mobilephone',
@@ -32,10 +33,17 @@ $tempColumns = array(
 			'size' => 20,
 		)
 	),
+	'gtc' => array(
+		'exclude' => 1,
+		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.gtc',
+		'config'  => array(
+			'type' => 'check'
+		)
+	),
 );
 t3lib_extMgm::addTCAcolumns('fe_users', $tempColumns, 1);
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'mobilephone', '', 'after:telephone');
-t3lib_extMgm::addToAllTCAtypes('fe_users', 'mailhash');
+t3lib_extMgm::addToAllTCAtypes('fe_users', 'mailhash, gtc');
 
 
 

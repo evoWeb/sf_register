@@ -34,12 +34,19 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	/**
 	 * @var string Hash for confirmation mail
 	 */
-	protected $mailhash = '';
+	protected $mailhash;
+
+
 
 	/**
 	 * @var string Number of mobilephone
 	 */
-	protected $mobilephone = '';
+	protected $mobilephone;
+
+	/**
+	 * @var boolean General terms and conditions accepted flag
+	 */
+	protected $gtc;
 
 	/**
 	 * Setter for disable
@@ -79,6 +86,8 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 		return $this->mailhash;
 	}
 
+
+
 	/**
 	 * Setter for mobilphone
 	 *
@@ -96,6 +105,25 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	public function getMobilephone() {
 		return $this->mobilephone;
+	}
+
+	/**
+	 * Setter for gtc
+	 *
+	 * @param boolean $gtc
+	 * @return void
+	 */
+	public function setGtc($gtc) {
+		$this->gtc = ($gtc ? TRUE : FALSE);
+	}
+
+	/**
+	 * Getter for gtc
+	 *
+	 * @return boolean
+	 */
+	public function getGtc() {
+		return $this->gtc;
 	}
 }
 
