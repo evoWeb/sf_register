@@ -47,6 +47,9 @@ Preview Action
 	<dt><f:translate key="country"/></dt>
 	<dd><f:form.hidden property="country" />{user.country}</dd>
 
+	<dt><f:translate key="gtc"/></dt>
+	<dd><f:form.hidden property="gtc" /><f:translate key="gtc.checked{user.gtc}"/></dd>
+
 	<dt><f:form.submit name="form" value="{f:translate(key:'submit.change')}" /></dt>
 	<dd><f:form.submit name="save" value="{f:translate(key:'submit.save')}" /></dd>
 </dl>

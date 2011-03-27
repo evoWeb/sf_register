@@ -41,6 +41,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @dontvalidate $passwordAgain
 	 */
 	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL, $passwordAgain = NULL) {
+		if ($user === NULL) {
+			$user = t3lib_div::makeInstance('Tx_SfRegister_Domain_Model_FrontendUser');
+		}
+
 		$this->view->assign('user', $user);
 		$this->view->assign('passwordAgain', $passwordAgain);
 	}

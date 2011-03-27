@@ -123,7 +123,7 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 * @return boolean
 	 */
 	public function getGtc() {
-		return $this->gtc;
+		return $this->gtc ? TRUE : FALSE;
 	}
 }
 
