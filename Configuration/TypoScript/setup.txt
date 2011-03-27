@@ -12,6 +12,7 @@ plugin.tx_sfregister.settings {
 		lastName = StringLength(minimum = 2, maximum = 80)
 		email = EmailAddress
 		gtc = Tx_SfRegister_Domain_Validator_IsTrueValidator
+		image = Tx_SfRegister_Domain_Validator_ImageUploadValidator
 	}
 
 	forwardToEditAfterSave = 0

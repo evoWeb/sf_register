@@ -23,7 +23,7 @@
  ***************************************************************/
 
 /**
- * An frontend user controller
+ * Service to handle mail sending
  */
 class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**

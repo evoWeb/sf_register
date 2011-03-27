@@ -32,6 +32,11 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	protected $userRepository = NULL;
 
 	/**
+	 * @var Tx_SfRegister_Services_File
+	 */
+	protected $fileService;
+
+	/**
 	 * Initialize all actions
 	 *
 	 * @see Tx_Extbase_MVC_Controller_ActionController::initializeAction()
@@ -57,6 +62,16 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
+	 * Initialization of preview
+	 *
+	 * @return void
+	 */
+	protected function initializePreviewAction() {
+		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File', 'image');
+		$this->fileService->setRequest($this->request);
+	}
+
+	/**
 	 * Preview action
 	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
@@ -64,6 +79,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
 	 */
 	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$user->setImage($this->fileService->moveTempFileToUploadfolder());
+
 		$this->view->assign('user', $user);
 	}
 

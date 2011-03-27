@@ -1,6 +1,6 @@
 edit Action
 <f:render partial="formErrors" arguments="{for: 'user'}" />
-<f:form action="preview" name="user" object="{user}">
+<f:form action="preview" name="user" object="{user}" enctype="multipart/form-data">
 <dl>
 	<dt><f:translate key="title"/>*</dt>
 	<dd><f:form.textbox property="title" /></dd>

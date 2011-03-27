@@ -107,7 +107,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	public function isValid($user) {
 		$result = TRUE;
 
-		if (! $user instanceof Tx_Extbase_Domain_Model_FrontendUser) {
+		if (!$user instanceof Tx_Extbase_Domain_Model_FrontendUser) {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notauser', 'SfRegister'), 1296594373);
 			$result = FALSE;
 		} else {

@@ -32,7 +32,21 @@
  * @subpackage Validation\Validator
  * @scope singleton
  */
-class Tx_SfRegister_Domain_Validator_IsTrueValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_SfRegister_Domain_Validator_ImageUploadValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+	/**
+	 * @var Tx_SfRegister_Services_File
+	 */
+	protected $fileService;
+
+	/**
+	 * Constructor of the class
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File');
+	}
+
 	/**
 	 * If the given value is set
 	 *
@@ -42,8 +56,8 @@ class Tx_SfRegister_Domain_Validator_IsTrueValidator extends Tx_Extbase_Validati
 	public function isValid($value) {
 		$result = TRUE;
 
-		if ($value !== TRUE) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.nottrue', 'SfRegister'), 1296591065);
+		if (!$this->fileService->isValid()) {
+			$this->errors = $this->fileService->getErrors();
 			$result = FALSE;
 		}
 

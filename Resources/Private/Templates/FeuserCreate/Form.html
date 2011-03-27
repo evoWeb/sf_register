@@ -1,6 +1,6 @@
 create Action
 
-<f:form action="preview" name="user" object="{user}">
+<f:form action="preview" name="user" object="{user}" enctype="multipart/form-data">
 <dl>
 	<dt><f:translate key="username"/>*</dt>
 	<dd>
@@ -82,6 +82,20 @@ create Action
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.gtc'}" />
 		<f:form.checkbox property="gtc" value="1"/></dd>
+
+	<dt><f:translate key="image"/></dt>
+	<dd>
+		<f:render partial="fieldError" arguments="{field: 'user.image'}" />
+		<f:if condition="{user.image}">
+			<f:then>
+				<f:form.hidden property="image" />
+				<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
+			</f:then>
+			<f:else>
+				<f:form.hidden property="image" value="" />
+				<f:form.upload name="image"/>
+			</f:else>
+		</f:if></dd>
 
 	<dt>&nbsp;</dt>
 	<dd><f:form.submit class="submit" value="{f:translate(key:'submit.create')}" /></dd>
