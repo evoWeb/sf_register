@@ -85,6 +85,16 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
+	 * Initialization of preview
+	 *
+	 * @return void
+	 */
+	protected function initializeProxyAction() {
+		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File', 'image');
+		$this->fileService->setRequest($this->request);
+	}
+
+	/**
 	 * Proxy action
 	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
