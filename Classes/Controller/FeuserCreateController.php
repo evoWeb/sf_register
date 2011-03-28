@@ -59,7 +59,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @validate $passwordAgain Tx_SfRegister_Domain_Validator_PasswordAgainValidator
 	 */
 	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $passwordAgain) {
-		$user->setImage($this->fileService->moveTempFileToUploadfolder());
+		$imagePath = $this->fileService->moveTempFileToUploadfolder();
+		if ($imagePath) {
+			$user->setImage($imagePath);
+		}
 
 		$this->view->assign('user', $user);
 		$this->view->assign('passwordAgain', $passwordAgain);

@@ -22,8 +22,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-//http://forge.typo3.org/projects/extension-tkaddress/repository/entry/trunk/Classes/Service/FileService.php
-
 /**
  * Service to handle file upload and deletion
  */
@@ -69,7 +67,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		t3lib_div::loadTCA('fe_users');
 		$this->allowedFileExtensions = $GLOBALS['TCA']['fe_users']['columns'][$this->parameter]['config']['allowed'];
 		$this->uploadfolder = $GLOBALS['TCA']['fe_users']['columns'][$this->parameter]['config']['uploadfolder'];
-		$this->maxFilesize = $GLOBALS['TCA']['fe_users']['columns'][$this->parameter]['config']['max_size'];
+		$this->maxFilesize = $GLOBALS['TCA']['fe_users']['columns'][$this->parameter]['config']['max_size'] * 1024;
 	}
 
 	/**
@@ -169,7 +167,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		$result = TRUE;
 
 		if ($filesize > $this->maxFilesize) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.image.filesize', 'SfRegister'), 1296591064);
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.' . $this->parameter . '.filesize', 'SfRegister'), 1296591064);
 			$result = FALSE;
 		}
 
@@ -185,9 +183,8 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	protected function isAllowedFileExtension($fileExtension) {
 		$result = TRUE;
 
-
-		if (!t3lib_div::inList($this->allowedFileExtensions, strtolower($fileExtension))) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.image.extension', 'SfRegister'), 1296591064);
+		if ($fileExtension !== NULL && !t3lib_div::inList($this->allowedFileExtensions, strtolower($fileExtension))) {
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.' . $this->parameter . '.extension', 'SfRegister'), 1296591064);
 			$result = FALSE;
 		}
 
@@ -203,17 +200,17 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	public function moveTempFileToUploadfolder() {
 		$result = '';
 		$fileData = $this->getUploadedFileInfo();
-		$filePathinfo = pathinfo($fileData['filename']);
 
-		$fileFunc = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+		if (count($fileData)) {
+			$fileFunc = t3lib_div::makeInstance('t3lib_basicFileFunctions');
 
-		$filename = $fileFunc->cleanFileName($fileData['filename']);
-		$uploadfolder = $fileFunc->cleanDirectoryName(PATH_site . $this->uploadfolder);
-		$uniqueFilename = $fileFunc->getUniqueName($filename, $uploadfolder);
+			$filename = $fileFunc->cleanFileName($fileData['filename']);
+			$uploadfolder = $fileFunc->cleanDirectoryName(PATH_site . $this->uploadfolder);
+			$uniqueFilename = $fileFunc->getUniqueName($filename, $uploadfolder);
 
-		$moved = t3lib_div::upload_copy_move($fileData['tmp_name'], $uniqueFilename);
-		if ($moved) {
-			$result = basename($uniqueFilename);
+			if (t3lib_div::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
+				$result = basename($uniqueFilename);
+			}
 		}
 
 		return $result;
