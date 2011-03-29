@@ -98,6 +98,18 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 		$this->forward($action);
 	}
 
+	/**
+	 * Remove an image and forward to the action where it was called
+	 *
+	 * @return void
+	 */
+	public function removeImageAction() {
+		$this->fileService->removeImage($filename);
+
+		if ($this->request->hasArgument('forward')) {
+			$this->forward($this->request->getArgument('forward'));
+		}
+	}
 
 	/**
 	 * Encrypt the password

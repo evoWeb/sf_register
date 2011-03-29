@@ -59,6 +59,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	/**
 	 * Constructor
 	 *
+	 * @param string $parameter name of the parameter the file belongs to in the user model
 	 * @return void
 	 */
 	public function __construct($parameter) {
@@ -73,7 +74,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	/**
 	 * Setter for controller
 	 *
-	 * @param Tx_Extbase_MVC_Request $controller
+	 * @param Tx_Extbase_MVC_Request $request
 	 * @return void
 	 */
 	public function setRequest(Tx_Extbase_MVC_Request $request) {
@@ -121,7 +122,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		if (is_array($uploadData) && count($uploadData) > 0) {
 			$filename = $uploadData['name'][$this->parameter];
 			$type = $uploadData['type'][$this->parameter];
-			$tmp_name = $uploadData['tmp_name'][$this->parameter];
+			$tmpName = $uploadData['tmp_name'][$this->parameter];
 			$error = $uploadData['error'][$this->parameter];
 			$size = $uploadData['size'][$this->parameter];
 
@@ -129,7 +130,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 				$fileData = array(
 					'filename' => $filename,
 					'type' => $type,
-					'tmp_name' => $tmp_name,
+					'tmp_name' => $tmpName,
 					'error' => $error,
 					'size' => $size,
 				);
@@ -167,7 +168,10 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		$result = TRUE;
 
 		if ($filesize > $this->maxFilesize) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.' . $this->parameter . '.filesize', 'SfRegister'), 1296591064);
+			$this->addError(
+				Tx_Extbase_Utility_Localization::translate('error.' . $this->parameter . '.filesize', 'SfRegister'),
+				1296591064
+			);
 			$result = FALSE;
 		}
 
@@ -184,7 +188,10 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		$result = TRUE;
 
 		if ($fileExtension !== NULL && !t3lib_div::inList($this->allowedFileExtensions, strtolower($fileExtension))) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.' . $this->parameter . '.extension', 'SfRegister'), 1296591064);
+			$this->addError(
+				Tx_Extbase_Utility_Localization::translate('error.' . $this->parameter . '.extension', 'SfRegister'),
+				1296591064
+			);
 			$result = FALSE;
 		}
 
@@ -214,6 +221,20 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Return image from upload folder
+	 *
+	 * @param string $filename name of the file to remove
+	 * @return void
+	 */
+	public function removeImage($filename) {
+		$filepath = PATH_site . $this->uploadfolder . $filename;
+
+		if (@file_exists($filepath)) {
+			unlink($filepath);
+		}
 	}
 }
 
