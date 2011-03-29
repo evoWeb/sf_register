@@ -23,6 +23,11 @@ plugin.tx_sfregister.settings {
 		image = Tx_SfRegister_Domain_Validator_ImageUploadValidator
 	}
 
+	validation.password {
+		password = StringLength(minimum = 2, maximum = 4)
+	}
+	checkOldPasswordOnChange = 1
+
 	forwardToEditAfterSave = 0
 
 	# md5 | sha1
