@@ -1,13 +1,21 @@
 plugin.tx_sfregister.settings {
 	useDataOfLoggedinFeuser = 1
 
-	validation {
+	validation.create {
 		username {
 			1 = StringLength(minimum = 1, maximum = 80)
 			2 = Tx_SfRegister_Domain_Validator_UniqueValidator
 			3 = Tx_SfRegister_Domain_Validator_UniqueValidator(global = 1)
 		}
 		password = StringLength(minimum = 8, maximum = 40)
+		firstName = StringLength(minimum = 2, maximum = 80)
+		lastName = StringLength(minimum = 2, maximum = 80)
+		email = EmailAddress
+		gtc = Tx_SfRegister_Domain_Validator_IsTrueValidator
+		image = Tx_SfRegister_Domain_Validator_ImageUploadValidator
+	}
+
+	validation.edit {
 		firstName = StringLength(minimum = 2, maximum = 80)
 		lastName = StringLength(minimum = 2, maximum = 80)
 		email = EmailAddress

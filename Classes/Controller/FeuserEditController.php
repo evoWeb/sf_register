@@ -27,6 +27,19 @@
  */
 class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Controller_FeuserController {
 	/**
+	 * Preview action
+	 *
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return void
+	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator(type = edit)
+	 */
+	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$user->setImage($this->fileService->moveTempFileToUploadfolder());
+
+		$this->view->assign('user', $user);
+	}
+
+	/**
 	 * Save action
 	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user

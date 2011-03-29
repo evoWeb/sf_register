@@ -69,6 +69,15 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	}
 
 	/**
+	 * Get validation settings
+	 *
+	 * @return array
+	 */
+	protected function getValidationSettings() {
+		return (array) $this->settings['validation.'][$this->options['type'] . '.'];
+	}
+
+	/**
 	 * Add an error with message and code to the property errors
 	 *
 	 * @param array $propertyName name of the property to add the error to
@@ -126,7 +135,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	protected function validateRules($user) {
 		$result = TRUE;
 
-		foreach ($this->settings['validation.'] as $fieldName => $rule) {
+		foreach ($this->getValidationSettings() as $fieldName => $rule) {
 			$fieldName = str_replace('.', '', $fieldName);
 			$methodName = 'get' . ucfirst($fieldName);
 

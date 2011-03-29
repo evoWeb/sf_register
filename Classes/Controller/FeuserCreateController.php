@@ -55,7 +55,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @param string $passwordAgain
 	 * @return void
-	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
+	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator(type = create)
 	 * @validate $passwordAgain Tx_SfRegister_Domain_Validator_PasswordAgainValidator
 	 */
 	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $passwordAgain) {
