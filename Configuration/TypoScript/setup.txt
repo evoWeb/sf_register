@@ -24,9 +24,13 @@ plugin.tx_sfregister.settings {
 	}
 
 	validation.password {
-		password = StringLength(minimum = 2, maximum = 4)
+		password = StringLength(minimum = 2, maximum = 40)
+		passwordAgain = NotEmpty
+		oldPassword {
+			1 = StringLength(minimum = 8, maximum = 40)
+			2 = Tx_SfRegister_Domain_Validator_NotEqualCurrentPasswordValidator
+		}
 	}
-	checkOldPasswordOnChange = 1
 
 	forwardToEditAfterSave = 0
 

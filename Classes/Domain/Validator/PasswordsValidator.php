@@ -71,7 +71,7 @@ class Tx_SfRegister_Domain_Validator_PasswordsValidator extends Tx_Extbase_Valid
 
 		return $result;
 	}
-
+// @todo needed in password check
 	/**
 	 * Check if word is in bad word list
 	 *

@@ -1,22 +1,21 @@
 password Action
 
-<f:render partial="formErrors" arguments="{for: 'passwords'}" />
-<f:form action="save" name="user">
+<f:form action="save" name="password">
 <dl>
 	<dt><f:translate key="oldPassword"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'oldPassword'}" />
-		<f:form.password name="oldPassword" /></dd>
+		<f:render partial="fieldError" arguments="{field: 'password.oldPassword'}" />
+		<f:form.password property="oldPassword" /></dd>
 
 	<dt><f:translate key="newPassword1"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.password'}" />
+		<f:render partial="fieldError" arguments="{field: 'password.password'}" />
 		<f:form.password property="password" /></dd>
 
 	<dt><f:translate key="newPassword2"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'passwordAgain'}" />
-		<f:form.password name="passwordAgain" value="" /></dd>
+		<f:render partial="fieldError" arguments="{field: 'password.passwordAgain'}" />
+		<f:form.password property="passwordAgain" value="" /></dd>
 
 	<dt>&nbsp;</dt>
 	<dd><f:form.submit class="submit" value="{f:translate(key:'submit.update')}" /></dd>
