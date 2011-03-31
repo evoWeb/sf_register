@@ -43,7 +43,7 @@ class Tx_SfRegister_Domain_Validator_IsTrueValidator extends Tx_Extbase_Validati
 		$result = TRUE;
 
 		if ($value !== TRUE) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.nottrue', 'SfRegister'), 1296591065);
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.nottrue', 'SfRegister'), 1301599670);
 			$result = FALSE;
 		}
 

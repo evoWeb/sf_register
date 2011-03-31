@@ -114,17 +114,17 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	/**
 	 * If the given user are valid
 	 *
-	 * @param object $model
+	 * @param object $object
 	 * @return boolean
 	 */
-	public function isValid($model) {
+	public function isValid($object) {
 		$result = TRUE;
 
-		if (!$model instanceof Tx_Extbase_Domain_Model_FrontendUser && !$model instanceof Tx_Extbase_Domain_Model_Password) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notauser', 'SfRegister'), 1296594373);
+		if (!is_object($object)) {
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notvalidatable', 'SfRegister'), 1301599551);
 			$result = FALSE;
 		} else {
-			$result = $this->validateRules($model);
+			$result = $this->validateRules($object);
 		}
 
 		return $result;
@@ -133,22 +133,22 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	/**
 	 * Validate all rules
 	 *
-	 * @param object $model
+	 * @param object $object
 	 * @return boolean
 	 */
-	protected function validateRules($model) {
+	protected function validateRules($object) {
 		$result = TRUE;
 
 		foreach ($this->getValidationSettings() as $fieldName => $rule) {
 			$fieldName = str_replace('.', '', $fieldName);
 			$methodName = 'get' . ucfirst($fieldName);
 
-			if (!method_exists($model, $methodName)) {
-				$this->addError(Tx_Extbase_Utility_Localization::translate('error.notexists', 'SfRegister'), 1296594373);
+			if (!method_exists($object, $methodName)) {
+				$this->addError(Tx_Extbase_Utility_Localization::translate('error.notexists', 'SfRegister'), 1301599575);
 				$result = FALSE;
 			} else {
 				$this->currentFieldName = $fieldName;
-				$fieldValue = $model->{$methodName}();
+				$fieldValue = $object->{$methodName}();
 
 				if (is_array($rule)) {
 					$result = $this->validateRuleArray($fieldValue, $rule) && $result ? TRUE : FALSE;

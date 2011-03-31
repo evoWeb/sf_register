@@ -29,6 +29,20 @@
  */
 class Tx_SfRegister_Domain_Validator_BadWordValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * @var array
+	 */
+	protected $settings = array();
+
+	/**
+	 * Constructor
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		$this->settings = Tx_SfRegister_Domain_Validator_UserValidator::getSettings();
+	}
+
+	/**
 	 * If the given passwords are valid
 	 *
 	 * @param string $value The value
@@ -37,14 +51,10 @@ class Tx_SfRegister_Domain_Validator_BadWordValidator extends Tx_Extbase_Validat
 	public function isValid($value) {
 		$result = TRUE;
 
-		$settings = Tx_SfRegister_Domain_Validator_UserValidator::getSettings();
-		$badWordItems = t3lib_div::trimExplode(',', $settings['badWordList']);
+		$badWordItems = t3lib_div::trimExplode(',', $this->settings['badWordList']);
 
 		if (in_array(strtolower($value), $badWordItems)) {
-			$this->addError(
-				vsprintf(Tx_Extbase_Utility_Localization::translate('error.badword.password', 'SfRegister'), $this->options),
-				1296591068
-			);
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.badword', 'SfRegister', $this->options), 1301599720);
 			$result = FALSE;
 		}
 

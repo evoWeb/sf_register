@@ -29,6 +29,21 @@
  */
 class Tx_SfRegister_Domain_Validator_PasswordsEqualValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * @var string
+	 */
+	protected $fieldname = '';
+
+	/**
+	 * Setter for fieldname
+	 *
+	 * @param string $fieldname
+	 * @return void
+	 */
+	public function setFieldname($fieldname) {
+		$this->fieldname = $fieldname;
+	}
+
+	/**
 	 * If the given passwords are valid
 	 *
 	 * @param array $passwordAgain The repeated password
@@ -39,7 +54,7 @@ class Tx_SfRegister_Domain_Validator_PasswordsEqualValidator extends Tx_Extbase_
 debug($passwordAgain, 'test');
 // @todo needs to be changed to the new password model
 		if ($passwordAgain !== $this->getPasswordFromRequest()) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notequal.passwordAgain', 'SfRegister'), 1296591066);
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.passwordagain.notequal', 'SfRegister'), 1301599641);
 			$result = FALSE;
 		}
 

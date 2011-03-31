@@ -24,11 +24,13 @@ plugin.tx_sfregister.settings {
 	}
 
 	validation.password {
-		password = StringLength(minimum = 2, maximum = 40)
+		password {
+			1 = StringLength(minimum = 2, maximum = 40)
+			2 = Tx_SfRegister_Domain_Validator_BadWordValidator
+		}
 		passwordAgain {
 			1 = StringLength(minimum = 2, maximum = 40)
 			2 = Tx_SfRegister_Domain_Validator_PasswordsEqualValidator
-			3 = Tx_SfRegister_Domain_Validator_BadWordValidator
 		}
 		oldPassword {
 			1 = StringLength(minimum = 8, maximum = 40)

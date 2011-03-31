@@ -41,21 +41,21 @@
 			<label index="newPassword2">repeated password</label>
 			<label index="password.saved">password saved</label>
 
-			<label index="error.notauser">The given form does not contain userdata</label>
+			<label index="error.changepassword.notloggedin">You need to be logged in to change the password</label>
+			<label index="error.changepassword.notequal">The give password was not equal to the current password</label>
+			<label index="error.badword">The password you entered is on the not allowed list</label>
+			<label index="error.nottrue">The %1$s was not accepted</label>
+			<label index="error.passwordagain.notequal">Password fields are not equal</label>
+			<label index="error.notunique.local">The %1$s is not unique</label>
+			<label index="error.notunique.global">The %1$s is not unique</label>
+			<label index="error.notvalidatable">The given form does not contain data that can be validated</label>
 			<label index="error.notexists">Attribute does not exists</label>
-
-			<label index="error.notequal.passwordEqual">Password fields are not equal</label>
-			<label index="error.badword.password">The password you entered is not allowed</label>
-			<label index="error.notequalcurrentpassword">The give password was not equal to the current password</label>
-			<label index="error.needloggedintochangepassword">You need to be logged in to change the password</label>
+			<label index="error.image.filesize">The file was bigger than the maximum allowed filesize</label>
+			<label index="error.image.extension">The file was not of an allowed image extension</label>
 
 			<label index="error.1238108067">The length of %1$s was not between %2$s and %3$s characters</label>
 			<label index="error.1221559976">The %1$s has no valid email adress format</label>
-			<label index="error.notunique">The %1$s is not unique</label>
 			<label index="error.1296591069">The %1$s is global not unique</label>
-			<label index="error.nottrue">The %1$s was not accepted</label>
-			<label index="error.image.filesize">The file was bigger than the maximum allowed filesize</label>
-			<label index="error.image.extension">The file was not of an allowed image extension</label>
 
 			<label index="subjectAdminActivationMail">Activate %2$s's registration at %1$s</label>
 			<label index="subjectUserActivationMail">Activate your account %2$s at %1$s</label>

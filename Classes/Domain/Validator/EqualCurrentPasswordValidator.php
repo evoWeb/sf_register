@@ -39,6 +39,15 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 	protected $settings = array();
 
 	/**
+	 * Constructor
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		$this->settings = Tx_SfRegister_Domain_Validator_UserValidator::getSettings();
+	}
+
+	/**
 	 * If the given value is set
 	 *
 	 * @param boolean $password The value
@@ -48,7 +57,7 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 		$result = FALSE;
 
 		if (!$this->isUserLoggedIn()) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.needloggedintochangepassword', 'SfRegister'), 1296591065);
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.changepassword.notloggedin', 'SfRegister'), 1301599489);
 			$result = FALSE;
 		} else {
 			$userRepository = t3lib_div::makeInstance('Tx_SfRegister_Domain_Repository_FrontendUserRepository');
@@ -57,7 +66,7 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 			$password = $this->encryptPassword($password);
 
 			if ($user->getPassword() !== $password) {
-				$this->addError(Tx_Extbase_Utility_Localization::translate('error.notequalcurrentpassword', 'SfRegister'), 1296591065);
+				$this->addError(Tx_Extbase_Utility_Localization::translate('error.changepassword.notequal', 'SfRegister'), 1301599507);
 				$result = FALSE;
 			}
 		}
@@ -81,8 +90,6 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 	 * @return string
 	 */
 	protected function encryptPassword($password) {
-		$this->settings = Tx_SfRegister_Domain_Validator_UserValidator::getSettings();
-
 		if (t3lib_extMgm::isLoaded('saltedpasswords') && tx_saltedpasswords_div::isUsageEnabled('FE')) {
 			$saltObject = tx_saltedpasswords_salts_factory::getSaltingInstance(NULL);
 
