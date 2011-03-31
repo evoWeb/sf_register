@@ -54,7 +54,7 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 	 * @return boolean
 	 */
 	public function isValid($password) {
-		$result = FALSE;
+		$result = TRUE;
 
 		if (!$this->isUserLoggedIn()) {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.changepassword.notloggedin', 'SfRegister'), 1301599489);

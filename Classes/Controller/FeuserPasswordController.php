@@ -42,7 +42,6 @@ class Tx_SfRegister_Controller_FeuserPasswordController extends Tx_SfRegister_Co
 	 * @validate $password Tx_SfRegister_Domain_Validator_UserValidator(type = password)
 	 */
 	public function saveAction(Tx_SfRegister_Domain_Model_Password $password) {
-		debug($password);
 		if ($GLOBALS['TSFE']->fe_user->user != FALSE) {
 			$user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
 

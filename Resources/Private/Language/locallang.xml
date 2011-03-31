@@ -40,10 +40,11 @@
 			<label index="newPassword1">New password</label>
 			<label index="newPassword2">repeated password</label>
 			<label index="password.saved">password saved</label>
+			<label index="passwordAgain">Password repeatition</label>
 
 			<label index="error.changepassword.notloggedin">You need to be logged in to change the password</label>
 			<label index="error.changepassword.notequal">The give password was not equal to the current password</label>
-			<label index="error.badword">The password you entered is on the not allowed list</label>
+			<label index="error.badword">The password you entered is on the disallowed list</label>
 			<label index="error.nottrue">The %1$s was not accepted</label>
 			<label index="error.passwordagain.notequal">Password fields are not equal</label>
 			<label index="error.notunique.local">The %1$s is not unique</label>

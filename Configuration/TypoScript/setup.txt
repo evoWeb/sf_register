@@ -33,15 +33,17 @@ plugin.tx_sfregister.settings {
 			2 = Tx_SfRegister_Domain_Validator_PasswordsEqualValidator
 		}
 		oldPassword {
-			1 = StringLength(minimum = 8, maximum = 40)
+			1 = StringLength(minimum = 2, maximum = 40)
 			2 = Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator
 		}
 	}
 
+	badWordList = god, sex, password
+
 	forwardToEditAfterSave = 0
 
 	# md5 | sha1
-	#encryptPassword = md5
+	encryptPassword = md5
 
 	# boolean if user or admin need to activate
 	#activateByUser = 1

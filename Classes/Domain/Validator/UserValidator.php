@@ -198,6 +198,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 		}
 		if ($validator instanceof Tx_Extbase_Validation_Validator_ValidatorInterface AND
 				!$validator->isValid($value)) {
+
 			$this->mergeErrorsIntoLocalErrors($validator->getErrors());
 			$result = FALSE;
 		}

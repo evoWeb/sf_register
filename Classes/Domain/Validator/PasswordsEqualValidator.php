@@ -51,8 +51,7 @@ class Tx_SfRegister_Domain_Validator_PasswordsEqualValidator extends Tx_Extbase_
 	 */
 	public function isValid($passwordAgain) {
 		$result = TRUE;
-debug($passwordAgain, 'test');
-// @todo needs to be changed to the new password model
+
 		if ($passwordAgain !== $this->getPasswordFromRequest()) {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.passwordagain.notequal', 'SfRegister'), 1301599641);
 			$result = FALSE;
@@ -68,6 +67,7 @@ debug($passwordAgain, 'test');
 	 */
 	protected function getPasswordFromRequest() {
 		$requestData = t3lib_div::_GP('tx_sfregister_form');
+		$fieldname = str_replace('Again', '', $this->fieldname);
 		$result = '';
 
 		if (isset($requestData['user'])) {
@@ -76,8 +76,8 @@ debug($passwordAgain, 'test');
 			$formData = $requestData['password'];
 		}
 
-		if (isset($formData['password'])) {
-			$result = $formData['password'];
+		if (isset($formData[$fieldname])) {
+			$result = $formData[$fieldname];
 		}
 
 		return $result;
