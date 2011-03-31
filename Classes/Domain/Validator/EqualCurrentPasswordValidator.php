@@ -32,7 +32,12 @@
  * @subpackage Validation\Validator
  * @scope singleton
  */
-class Tx_SfRegister_Domain_Validator_NotEqualCurrentPasswordValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+	/**
+	 * @var array
+	 */
+	protected $settings = array();
+
 	/**
 	 * If the given value is set
 	 *
@@ -48,7 +53,9 @@ class Tx_SfRegister_Domain_Validator_NotEqualCurrentPasswordValidator extends Tx
 		} else {
 			$userRepository = t3lib_div::makeInstance('Tx_SfRegister_Domain_Repository_FrontendUserRepository');
 			$user = $userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
-// @todo encryption if set needed
+
+			$password = $this->encryptPassword($password);
+
 			if ($user->getPassword() !== $password) {
 				$this->addError(Tx_Extbase_Utility_Localization::translate('error.notequalcurrentpassword', 'SfRegister'), 1296591065);
 				$result = FALSE;
@@ -65,6 +72,30 @@ class Tx_SfRegister_Domain_Validator_NotEqualCurrentPasswordValidator extends Tx
 	 */
 	protected function isUserLoggedIn() {
 		return $GLOBALS['TSFE']->fe_user->user === FALSE ? FALSE : TRUE;
+	}
+
+	/**
+	 * Encrypt the password
+	 *
+	 * @param string $password
+	 * @return string
+	 */
+	protected function encryptPassword($password) {
+		$this->settings = Tx_SfRegister_Domain_Validator_UserValidator::getSettings();
+
+		if (t3lib_extMgm::isLoaded('saltedpasswords') && tx_saltedpasswords_div::isUsageEnabled('FE')) {
+			$saltObject = tx_saltedpasswords_salts_factory::getSaltingInstance(NULL);
+
+			if (is_object($saltObject)) {
+				$password = $saltObject->getHashedPassword($password);
+			}
+		} elseif ($this->settings['encryptPassword'] === 'md5') {
+			$password = md5($password);
+		} elseif ($this->settings['encryptPassword'] === 'sha1') {
+			$password = sha1($password);
+		}
+
+		return $password;
 	}
 }
 

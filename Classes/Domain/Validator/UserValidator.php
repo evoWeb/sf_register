@@ -31,7 +31,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	/**
 	 * @var array
 	 */
-	protected $settings = array();
+	protected static $settings = NULL;
 
 	/**
 	 * @var string
@@ -54,18 +54,22 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 * @return void
 	 */
 	public function __construct() {
-		$this->getSettings();
+		$this->settings = $this->getSettings();
 		$this->getValidatorResolver();
 	}
 
 	/**
 	 * Get settings
 	 *
-	 * @return void
+	 * @return array
 	 */
-	protected function getSettings() {
-		$global = Tx_Extbase_Dispatcher::getConfigurationManager()->loadTypoScriptSetup();
-		$this->settings = $global['plugin.']['tx_sfregister.']['settings.'];
+	public static function getSettings() {
+		if (self::$settings == NULL) {
+			$global = Tx_Extbase_Dispatcher::getConfigurationManager()->loadTypoScriptSetup();
+			self::$settings = (array) $global['plugin.']['tx_sfregister.']['settings.'];
+		}
+
+		return self::$settings;
 	}
 
 	/**

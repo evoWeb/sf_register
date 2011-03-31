@@ -27,7 +27,7 @@
  *
  * @scope singleton
  */
-class Tx_SfRegister_Domain_Validator_PasswordAgainValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_SfRegister_Domain_Validator_PasswordsEqualValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
 	 * If the given passwords are valid
 	 *
@@ -36,12 +36,10 @@ class Tx_SfRegister_Domain_Validator_PasswordAgainValidator extends Tx_Extbase_V
 	 */
 	public function isValid($passwordAgain) {
 		$result = TRUE;
+debug($passwordAgain, 'test');
 // @todo needs to be changed to the new password model
-		if ($passwordAgain === '') {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.empty.password2', 'SfRegister'), 1296591065);
-			$result = FALSE;
-		} elseif ($passwordAgain !== $this->getPasswordFromRequest()) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notequal.passwords', 'SfRegister'), 1296591066);
+		if ($passwordAgain !== $this->getPasswordFromRequest()) {
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notequal.passwordAgain', 'SfRegister'), 1296591066);
 			$result = FALSE;
 		}
 

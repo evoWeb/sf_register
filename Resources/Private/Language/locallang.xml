@@ -44,10 +44,7 @@
 			<label index="error.notauser">The given form does not contain userdata</label>
 			<label index="error.notexists">Attribute does not exists</label>
 
-			<label index="error.empty.password1">Password may not be empty</label>
-			<label index="error.empty.password2">Password repetition may not be empty</label>
-			<label index="error.length.password">The password length was not between %1$s and %2$s characters</label>
-			<label index="error.notequal.passwords">Password fields are not equal</label>
+			<label index="error.notequal.passwordEqual">Password fields are not equal</label>
 			<label index="error.badword.password">The password you entered is not allowed</label>
 			<label index="error.notequalcurrentpassword">The give password was not equal to the current password</label>
 			<label index="error.needloggedintochangepassword">You need to be logged in to change the password</label>
