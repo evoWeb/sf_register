@@ -90,6 +90,7 @@ create Action
 			<f:then>
 				<f:form.hidden property="image" />
 				<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
+				<dt><f:form.submit name="removeImage" value="{f:translate(key:'submit.removeImage')}" /></dt>
 			</f:then>
 			<f:else>
 				<f:form.hidden property="image" value="" />

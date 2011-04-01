@@ -34,6 +34,7 @@
 			<label index="submit.change">change</label>
 			<label index="submit.save">save</label>
 			<label index="submit.update">update</label>
+			<label index="submit.removeImage">remove</label>
 
 			<label index="username">Username</label>
 			<label index="oldPassword">Old password</label>

@@ -101,13 +101,16 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Remove an image and forward to the action where it was called
 	 *
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param string $filename
 	 * @return void
 	 */
-	public function removeImageAction() {
+	public function removeImageAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $filename) {
 		$this->fileService->removeImage($filename);
 
-		if ($this->request->hasArgument('forward')) {
-			$this->forward($this->request->getArgument('forward'));
+		if ($this->request->hasArgument('__referrer')) {
+			$referrer = $this->request->getArgument('__referrer');
+			$this->forward($referrer['actionName']);
 		}
 	}
 

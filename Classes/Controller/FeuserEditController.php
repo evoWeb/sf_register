@@ -34,9 +34,16 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator(type = edit)
 	 */
 	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$user->setImage($this->fileService->moveTempFileToUploadfolder());
+		if ($this->request->hasArgument('removeImage')) {
+			$this->forward('removeImage');
+		} else {
+			$imagePath = $this->fileService->moveTempFileToUploadfolder();
+			if ($imagePath) {
+				$user->setImage($imagePath);
+			}
 
-		$this->view->assign('user', $user);
+			$this->view->assign('user', $user);
+		}
 	}
 
 	/**
