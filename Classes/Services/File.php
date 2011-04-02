@@ -29,7 +29,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	/**
 	 * @var string
 	 */
-	protected $parameter;
+	protected $fieldname;
 
 	/**
 	 * @var Tx_Extbase_MVC_Request
@@ -59,11 +59,11 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	/**
 	 * Constructor
 	 *
-	 * @param string $parameter name of the parameter the file belongs to in the user model
+	 * @param string $fieldname name of the parameter the file belongs to in the user model
 	 * @return void
 	 */
-	public function __construct($parameter) {
-		$this->parameter = $parameter;
+	public function __construct($fieldname) {
+		$this->fieldname = $fieldname;
 
 		t3lib_div::loadTCA('fe_users');
 		$this->allowedFileExtensions = $GLOBALS['TCA']['fe_users']['columns'][$this->parameter]['config']['allowed'];
