@@ -48,6 +48,8 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	protected $gtc;
 
+
+
 	/**
 	 * Setter for disable
 	 *
@@ -84,6 +86,57 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	public function getMailhash() {
 		return $this->mailhash;
+	}
+
+	/**
+	 * Set an image list
+	 *
+	 * @param array $imageList
+	 * @return void
+	 */
+	public function setImageList($imageList) {
+		$this->image = implode(',', $imageList);
+	}
+
+	/**
+	 * Get an image list
+	 *
+	 * @return array
+	 */
+	public function getImageList() {
+		return t3lib_div::trimExplode(',', $this->image, TRUE);
+	}
+
+	/**
+	 * Add an image to the imagelist
+	 *
+	 * @param string $image
+	 * @return void
+	 */
+	public function addImage($image) {
+		$imageList = $this->getImageList();
+
+		if (!in_array($image, $imageList)) {
+			$imageList = array_merge($imageList, array($image));
+		}
+
+		$this->setImageList($imageList);
+	}
+
+	/**
+	 * Remove an image from the imagelist
+	 *
+	 * @param string $image
+	 * @return void
+	 */
+	public function removeImage($image) {
+		$imageList = $this->getImageList();
+
+		if (in_array($image, $imageList)) {
+			$imageList = array_diff($imageList, array($image));
+		}
+
+		$this->setImageList($imageList);
 	}
 
 

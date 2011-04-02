@@ -91,3 +91,10 @@ plugin.tx_sfregister.persistence {
 		}
 	}
 }
+
+page {
+	includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/styles.css
+
+	includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register.js
+	includeJSFooter.passwordmeter = EXT:sf_register/Resources/Public/JavaScript/passwordmeter.js
+}
