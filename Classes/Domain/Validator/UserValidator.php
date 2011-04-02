@@ -65,7 +65,15 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 */
 	public static function getSettings() {
 		if (self::$settings == NULL) {
-			$global = Tx_Extbase_Dispatcher::getConfigurationManager()->loadTypoScriptSetup();
+			$global = array();
+
+			$configurationManager = Tx_Extbase_Dispatcher::getConfigurationManager();
+			if (method_exists($configurationManager, 'loadTypoScriptSetup')) {
+				$global = $configurationManager->loadTypoScriptSetup();
+			} elseif (method_exists($configurationManager, 'getTypoScriptSetup')) {
+				$global = $configurationManager->getTypoScriptSetup();
+			}
+
 			self::$settings = (array) $global['plugin.']['tx_sfregister.']['settings.'];
 		}
 
