@@ -27,6 +27,23 @@
  */
 class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Controller_FeuserController {
 	/**
+	 * Form action
+	 *
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return string An HTML form
+	 * @dontvalidate $user
+	 */
+	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL) {
+		if ($user == NULL && $GLOBALS['TSFE']->fe_user->user != FALSE) {
+			$user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
+
+			$user = $this->moveTempFile($user);
+		}
+
+		$this->view->assign('user', $user);
+	}
+
+	/**
 	 * Preview action
 	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
@@ -34,16 +51,9 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator(type = edit)
 	 */
 	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		if ($this->request->hasArgument('removeImage')) {
-			$this->forward('removeImage');
-		} else {
-			$imagePath = $this->fileService->moveTempFileToUploadfolder();
-			if ($imagePath) {
-				$user->setImage($imagePath);
-			}
+		$user = $this->moveTempFile($user);
 
-			$this->view->assign('user', $user);
-		}
+		$this->view->assign('user', $user);
 	}
 
 	/**
@@ -53,6 +63,7 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	 * @return void
 	 */
 	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$user = $this->moveImageFile($user);
 		$this->userRepository->update($user);
 
 		if ($this->settings['forwardToEditAfterSave']) {

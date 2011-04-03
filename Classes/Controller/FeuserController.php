@@ -44,41 +44,13 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 */
 	protected function initializeAction() {
 		$this->userRepository = t3lib_div::makeInstance('Tx_SfRegister_Domain_Repository_FrontendUserRepository');
-	}
 
-	/**
-	 * Form action
-	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return string An HTML form
-	 * @dontvalidate $user
-	 */
-	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL) {
-		if ($user == NULL && $GLOBALS['TSFE']->fe_user->user != FALSE) {
-			$user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
+		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File', 'image');
+		$this->fileService->setRequest($this->request);
+
+		if ($this->request->hasArgument('removeImage') && $this->request->getArgument('removeImage')) {
+			$this->forward('removeImage');
 		}
-
-		$this->view->assign('user', $user);
-	}
-
-	/**
-	 * Initialization of preview
-	 *
-	 * @return void
-	 */
-	protected function initializePreviewAction() {
-		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File', 'image');
-		$this->fileService->setRequest($this->request);
-	}
-
-	/**
-	 * Initialization of preview
-	 *
-	 * @return void
-	 */
-	protected function initializeProxyAction() {
-		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File', 'image');
-		$this->fileService->setRequest($this->request);
 	}
 
 	/**
@@ -102,16 +74,45 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * Remove an image and forward to the action where it was called
 	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @param string $filename
+	 * @param string $imagefile
 	 * @return void
-	 */
-	public function removeImageAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $filename) {
-		$this->fileService->removeImage($filename);
+	 * @dontvalidate $user
+ 	 */
+	protected function removeImageAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $imagefile) {
+		$filename = $this->fileService->removeImage($imagefile);
+		$user->removeImage($filename);
+		$this->request->setArgument('removeImage', FALSE);
 
 		if ($this->request->hasArgument('__referrer')) {
 			$referrer = $this->request->getArgument('__referrer');
-			$this->forward($referrer['actionName']);
+			$this->forward($referrer['actionName'], $referrer['controllerName'], $referrer['extensionName'], $this->request->getArguments());
 		}
+	}
+
+	/**
+	 * Move uploaded image and add to user
+	 *
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+ 	 */
+	protected function moveTempFile($user) {
+		if ($imagePath = $this->fileService->moveTempFileToTempFolder()) {
+			$user->addImage($imagePath);
+		}
+
+		return $user;
+	}
+
+	/**
+	 * Move uploaded image and add to user
+	 *
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+ 	 */
+	protected function moveImageFile($user) {
+		$this->fileService->moveFileFromTempFolderToUploadFolder($user->getImage());
+
+		return $user;
 	}
 
 	/**
@@ -123,7 +124,6 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	protected function encryptPassword($password) {
 		if (t3lib_extMgm::isLoaded('saltedpasswords') && tx_saltedpasswords_div::isUsageEnabled('FE')) {
 			$saltObject = tx_saltedpasswords_salts_factory::getSaltingInstance(NULL);
-
 			if (is_object($saltObject)) {
 				$password = $saltObject->getHashedPassword($password);
 			}

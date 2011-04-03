@@ -54,7 +54,7 @@ Preview Action
 	<dd><f:form.hidden property="image" />
 		<f:if condition="{user.image}">
 			<f:then>
-				<f:image src="uploads/pics/{user.image}" maxHeight="100" maxWidth="100" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
+				<f:image src="typo3temp/sf_register/{user.image}" maxHeight="100" maxWidth="100" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
 			</f:then>
 			<f:else>
 				<f:translate key="image.none"/>

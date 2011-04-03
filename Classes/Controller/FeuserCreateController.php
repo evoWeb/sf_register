@@ -38,15 +38,15 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @param string $passwordAgain
 	 * @return string An HTML form
 	 * @dontvalidate $user
-	 * @dontvalidate $passwordAgain
 	 */
-	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL, $passwordAgain = NULL) {
+	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL) {
 		if ($user === NULL) {
 			$user = t3lib_div::makeInstance('Tx_SfRegister_Domain_Model_FrontendUser');
+		} else {
+			$user = $this->moveTempFile($user);
 		}
 
 		$this->view->assign('user', $user);
-		$this->view->assign('passwordAgain', $passwordAgain);
 	}
 
 	/**
@@ -59,17 +59,9 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @validate $passwordAgain Tx_SfRegister_Domain_Validator_PasswordAgainValidator
 	 */
 	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $passwordAgain) {
-		if ($this->request->hasArgument('removeImage')) {
-			$this->forward('removeImage');
-		} else {
-			$imagePath = $this->fileService->moveTempFileToUploadfolder();
-			if ($imagePath) {
-				$user->setImage($imagePath);
-			}
+		$user = $this->moveTempFile($user);
 
-			$this->view->assign('user', $user);
-			$this->view->assign('passwordAgain', $passwordAgain);
-		}
+		$this->view->assign('user', $user);
 	}
 
 	/**
@@ -88,13 +80,13 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return void
 	 */
 	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$password = $this->encryptPassword($user->getPassword());
-		$user->setPassword($password);
+		$user->setPassword($this->encryptPassword($user->getPassword()));
 
 		if ($this->isActivateByUser() || $this->isActivateByAdmin()) {
 			$user->setDisable(TRUE);
 			$user = $this->setUsergroupBeforeActivation($user);
 		} else {
+			$user = $this->moveImageFile($user);
 			$user = $this->addUsergroup($user, $this->settings['usergroupWithoutActivation']);
 		}
 
@@ -127,6 +119,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 
 		if ($user instanceof Tx_SfRegister_Domain_Model_FrontendUser) {
 			$user = $this->changeUsergroupAfterActivation($user);
+			$user = $this->moveImageFile($user);
 			$user->setDisable(FALSE);
 			$user->setMailhash('');
 

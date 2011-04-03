@@ -38,10 +38,10 @@ class Tx_SfRegister_Domain_Validator_PasswordAgainValidator extends Tx_Extbase_V
 		$result = TRUE;
 // @todo needs to be changed to the new password model
 		if ($passwordAgain === '') {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.empty.password2', 'SfRegister'), 1296591065);
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.passwordagain.empty', 'SfRegister'), 1296591065);
 			$result = FALSE;
 		} elseif ($passwordAgain !== $this->getPasswordFromRequest()) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notequal.passwords', 'SfRegister'), 1296591066);
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.passwordagain.notequal', 'SfRegister'), 1296591066);
 			$result = FALSE;
 		}
 

@@ -49,6 +49,11 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	/**
 	 * @var string
 	 */
+	protected $tempfolder = 'typo3temp/sf_register';
+
+	/**
+	 * @var string
+	 */
 	protected $uploadfolder = '';
 
 	/**
@@ -202,9 +207,9 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	/**
 	 * Move an temporary uploaded file to the upload folder
 	 *
-	 * @return void
+	 * @return string
 	 */
-	public function moveTempFileToUploadfolder() {
+	public function moveTempFileToTempFolder() {
 		$result = '';
 		$fileData = $this->getUploadedFileInfo();
 
@@ -212,7 +217,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 			$fileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
 
 			$filename = $fileFunctions->cleanFileName($fileData['filename']);
-			$uploadfolder = $fileFunctions->cleanDirectoryName(PATH_site . $this->uploadfolder);
+			$uploadfolder = $fileFunctions->cleanDirectoryName(PATH_site . $this->tempfolder);
 			$uniqueFilename = $fileFunctions->getUniqueName($filename, $uploadfolder);
 
 			if (t3lib_div::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
@@ -224,17 +229,67 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	}
 
 	/**
+	 * Move an temporary uploaded file to the upload folder
+	 *
+	 * @return void
+	 */
+	public function moveFileFromTempFolderToUploadFolder($filename) {
+		$result = '';
+
+		$fileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+
+		$filename = $fileFunctions->cleanFileName($filename);
+		$uploadfolder = $fileFunctions->cleanDirectoryName(PATH_site . $this->uploadfolder);
+		$uniqueFilename = $fileFunctions->getUniqueName($filename, $uploadfolder);
+
+		if (t3lib_div::upload_copy_move(PATH_site . $this->tempfolder . $filename, $uniqueFilename)) {
+			$result = basename($uniqueFilename);
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Return image from upload folder
 	 *
 	 * @param string $filename name of the file to remove
 	 * @return void
 	 */
-	public function removeImage($filename) {
-		$filepath = PATH_site . $this->uploadfolder . $filename;
+	public function removeImage($fileNameAndPath) {
+		$filepath = $this->getFilepath($fileNameAndPath);
+		$filename = $this->getFilename($fileNameAndPath);
+		$imageNameAndPath = PATH_site . $filepath . '/' . $filename;
 
-		if (@file_exists($filepath)) {
-			unlink($filepath);
+		if (@file_exists($imageNameAndPath)) {
+			unlink($imageNameAndPath);
 		}
+
+		return $filename;
+	}
+
+	/**
+	 * @param  $filename
+	 * @return void
+	 */
+	protected function getFilepath($filename) {
+		$filenameParts = t3lib_div::trimExplode('/', $filename, TRUE);
+
+		$result = implode('/', array_slice($filenameParts, 0, -1));
+		if (!in_array($result, array($this->tempfolder, $this->uploadfolder))) {
+			$result = '';
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @param  $filename
+	 * @return void
+	 */
+	protected function getFilename($filename) {
+		$filenameParts = t3lib_div::trimExplode('/', $filename, TRUE);
+
+		return array_pop($filenameParts);
 	}
 }
 

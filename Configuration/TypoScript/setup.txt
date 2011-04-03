@@ -8,6 +8,8 @@ plugin.tx_sfregister.settings {
 			3 = Tx_SfRegister_Domain_Validator_UniqueValidator(global = 1)
 		}
 		password = StringLength(minimum = 8, maximum = 40)
+		title = StringLength(minimum = 2, maximum = 80)
+		company = StringLength(minimum = 2, maximum = 80)
 		firstName = StringLength(minimum = 2, maximum = 80)
 		lastName = StringLength(minimum = 2, maximum = 80)
 		email = EmailAddress
