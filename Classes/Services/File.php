@@ -66,9 +66,9 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		$this->fieldname = $fieldname;
 
 		t3lib_div::loadTCA('fe_users');
-		$this->allowedFileExtensions = $GLOBALS['TCA']['fe_users']['columns'][$this->parameter]['config']['allowed'];
-		$this->uploadfolder = $GLOBALS['TCA']['fe_users']['columns'][$this->parameter]['config']['uploadfolder'];
-		$this->maxFilesize = $GLOBALS['TCA']['fe_users']['columns'][$this->parameter]['config']['max_size'] * 1024;
+		$this->allowedFileExtensions = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config']['allowed'];
+		$this->uploadfolder = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config']['uploadfolder'];
+		$this->maxFilesize = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config']['max_size'] * 1024;
 	}
 
 	/**
@@ -120,11 +120,11 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		$fileData = array();
 
 		if (is_array($uploadData) && count($uploadData) > 0) {
-			$filename = $uploadData['name'][$this->parameter];
-			$type = $uploadData['type'][$this->parameter];
-			$tmpName = $uploadData['tmp_name'][$this->parameter];
-			$error = $uploadData['error'][$this->parameter];
-			$size = $uploadData['size'][$this->parameter];
+			$filename = $uploadData['name'][$this->fieldname];
+			$type = $uploadData['type'][$this->fieldname];
+			$tmpName = $uploadData['tmp_name'][$this->fieldname];
+			$error = $uploadData['error'][$this->fieldname];
+			$size = $uploadData['size'][$this->fieldname];
 
 			if ($filename !== NULL && $filename !== '') {
 				$fileData = array(
@@ -169,7 +169,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 
 		if ($filesize > $this->maxFilesize) {
 			$this->addError(
-				Tx_Extbase_Utility_Localization::translate('error.' . $this->parameter . '.filesize', 'SfRegister'),
+				Tx_Extbase_Utility_Localization::translate('error.' . $this->fieldname . '.filesize', 'SfRegister'),
 				1296591064
 			);
 			$result = FALSE;
@@ -189,7 +189,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 
 		if ($fileExtension !== NULL && !t3lib_div::inList($this->allowedFileExtensions, strtolower($fileExtension))) {
 			$this->addError(
-				Tx_Extbase_Utility_Localization::translate('error.' . $this->parameter . '.extension', 'SfRegister'),
+				Tx_Extbase_Utility_Localization::translate('error.' . $this->fieldname . '.extension', 'SfRegister'),
 				1296591064
 			);
 			$result = FALSE;
@@ -209,11 +209,11 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		$fileData = $this->getUploadedFileInfo();
 
 		if (count($fileData)) {
-			$fileFunc = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+			$fileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
 
-			$filename = $fileFunc->cleanFileName($fileData['filename']);
-			$uploadfolder = $fileFunc->cleanDirectoryName(PATH_site . $this->uploadfolder);
-			$uniqueFilename = $fileFunc->getUniqueName($filename, $uploadfolder);
+			$filename = $fileFunctions->cleanFileName($fileData['filename']);
+			$uploadfolder = $fileFunctions->cleanDirectoryName(PATH_site . $this->uploadfolder);
+			$uniqueFilename = $fileFunctions->getUniqueName($filename, $uploadfolder);
 
 			if (t3lib_div::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
 				$result = basename($uniqueFilename);
