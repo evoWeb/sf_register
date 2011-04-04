@@ -110,7 +110,11 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
  	 */
 	protected function moveImageFile($user) {
-		$this->fileService->moveFileFromTempFolderToUploadFolder($user->getImage());
+		$oldFilename = $user->getImage();
+
+		$this->fileService->moveFileFromTempFolderToUploadFolder($oldFilename);
+
+		$user->setImage($oldFilename);
 
 		return $user;
 	}

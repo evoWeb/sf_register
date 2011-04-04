@@ -49,12 +49,12 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	/**
 	 * @var string
 	 */
-	protected $tempfolder = 'typo3temp/sf_register';
+	protected $tempFolder = 'typo3temp/sf_register';
 
 	/**
 	 * @var string
 	 */
-	protected $uploadfolder = '';
+	protected $uploadFolder = '';
 
 	/**
 	 * @var integer
@@ -72,7 +72,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 
 		t3lib_div::loadTCA('fe_users');
 		$this->allowedFileExtensions = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config']['allowed'];
-		$this->uploadfolder = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config']['uploadfolder'];
+		$this->uploadFolder = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config']['uploadfolder'];
 		$this->maxFilesize = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config']['max_size'] * 1024;
 	}
 
@@ -125,13 +125,13 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		$fileData = array();
 
 		if (is_array($uploadData) && count($uploadData) > 0) {
-			$filename = $uploadData['name'][$this->fieldname];
+			$filename = str_replace(chr(0), '', $uploadData['name'][$this->fieldname]);
 			$type = $uploadData['type'][$this->fieldname];
 			$tmpName = $uploadData['tmp_name'][$this->fieldname];
 			$error = $uploadData['error'][$this->fieldname];
 			$size = $uploadData['size'][$this->fieldname];
 
-			if ($filename !== NULL && $filename !== '') {
+			if ($filename !== NULL && $filename !== '' && t3lib_div::validPathStr($filename)) {
 				$fileData = array(
 					'filename' => $filename,
 					'type' => $type,
@@ -214,11 +214,13 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		$fileData = $this->getUploadedFileInfo();
 
 		if (count($fileData)) {
-			$fileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+			$basicFileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
 
-			$filename = $fileFunctions->cleanFileName($fileData['filename']);
-			$uploadfolder = $fileFunctions->cleanDirectoryName(PATH_site . $this->tempfolder);
-			$uniqueFilename = $fileFunctions->getUniqueName($filename, $uploadfolder);
+			$filename = $basicFileFunctions->cleanFileName($fileData['filename']);
+			$uploadFolder = $basicFileFunctions->cleanDirectoryName(PATH_site . $this->tempFolder);
+			$uniqueFilename = $basicFileFunctions->getUniqueName($filename, $uploadFolder);
+
+			$this->createUploadFolderIfNotExist($uploadFolder);
 
 			if (t3lib_div::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
 				$result = basename($uniqueFilename);
@@ -229,21 +231,42 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	}
 
 	/**
+	 * @param  $uploadFolder
+	 * @return void
+	 */
+	protected function createUploadFolderIfNotExist($uploadFolder) {
+		if (!is_dir($uploadFolder)) {
+			t3lib_div::mkdir($uploadFolder);
+		}
+	}
+
+	/**
 	 * Move an temporary uploaded file to the upload folder
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function moveFileFromTempFolderToUploadFolder($filename) {
 		$result = '';
 
-		$fileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+		if ($filename) {
+			$allowedFolders = array(1 => array('path' => $this->tempFolder), 2 => array('path' => $this->uploadFolder));
 
-		$filename = $fileFunctions->cleanFileName($filename);
-		$uploadfolder = $fileFunctions->cleanDirectoryName(PATH_site . $this->uploadfolder);
-		$uniqueFilename = $fileFunctions->getUniqueName($filename, $uploadfolder);
+			$fileExtensions = (array) $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions'];
+			$fileExtensions['webspace']['allow'] = $this->allowedFileExtensions;
 
-		if (t3lib_div::upload_copy_move(PATH_site . $this->tempfolder . $filename, $uniqueFilename)) {
-			$result = basename($uniqueFilename);
+			$extFileFunctions = t3lib_div::makeInstance('t3lib_extFileFunctions');
+			$extFileFunctions->init($allowedFolders, $fileExtensions);
+			$extFileFunctions->init_actionPerms(1);
+
+			$cmds = array(
+				'data' => $this->tempFolder . '/' . $filename,
+				'target' => $this->uploadFolder,
+				'altName' => TRUE
+			);
+
+			$result = $extFileFunctions->func_move($cmds);
+			$resultParts = t3lib_div::trimExplode('/', $result);
+			$result = array_pop($resultParts);
 		}
 
 		return $result;
@@ -275,7 +298,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		$filenameParts = t3lib_div::trimExplode('/', $filename, TRUE);
 
 		$result = implode('/', array_slice($filenameParts, 0, -1));
-		if (!in_array($result, array($this->tempfolder, $this->uploadfolder))) {
+		if (!in_array($result, array($this->tempFolder, $this->uploadFolder))) {
 			$result = '';
 		}
 
