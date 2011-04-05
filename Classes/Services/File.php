@@ -273,14 +273,29 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	}
 
 	/**
+	 * @param  $filename
+	 * @return void
+	 */
+	public function removeTemporaryFile($filename) {
+		return $this->removeFile($filename, $this->tempFolder);
+	}
+
+	/**
+	 * @param  $filename
+	 * @return string
+	 */
+	public function removeUploadedImage($filename) {
+		return $this->removeFile($filename, $this->uploadFolder);
+	}
+
+	/**
 	 * Return image from upload folder
 	 *
 	 * @param string $filename name of the file to remove
-	 * @return void
+	 * @param string $filepath path where the image is stored
+	 * @return string
 	 */
-	public function removeImage($fileNameAndPath) {
-		$filepath = $this->getFilepath($fileNameAndPath);
-		$filename = $this->getFilename($fileNameAndPath);
+	public function removeFile($filename, $filepath) {
 		$imageNameAndPath = PATH_site . $filepath . '/' . $filename;
 
 		if (@file_exists($imageNameAndPath)) {

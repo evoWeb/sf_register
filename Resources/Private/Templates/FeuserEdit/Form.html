@@ -68,7 +68,7 @@ edit Action
 		<f:if condition="{user.image}">
 			<f:then>
 				<f:form.hidden property="image" />
-				<f:form.hidden name="imagefile" value="typo3temp/sf_register/{user.image}" />
+				<f:form.hidden name="imagefile" value="{user.image}" />
 				<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
 				<dt><f:form.submit name="removeImage" value="{f:translate(key:'submit.removeImage')}" /></dt>
 			</f:then>

@@ -48,7 +48,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File', 'image');
 		$this->fileService->setRequest($this->request);
 
-		if ($this->request->hasArgument('removeImage') && $this->request->getArgument('removeImage')) {
+		if ($this->request->hasArgument('removeImage') && $this->request->getArgument('removeImage') &&
+			$this->request->getControllerActionName() != 'removeImage') {
 			$this->forward('removeImage');
 		}
 	}
@@ -79,14 +80,32 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * @dontvalidate $user
  	 */
 	protected function removeImageAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $imagefile) {
-		$filename = $this->fileService->removeImage($imagefile);
-		$user->removeImage($filename);
+		if ($this->fileIsTemporary()) {
+			$removedImage = $this->fileService->removeTemporaryFile($imagefile);
+		} else {
+			$removedImage = $this->fileService->removeUploadedImage($imagefile);
+		}
+
+		$user->removeImage($removedImage);
 		$this->request->setArgument('removeImage', FALSE);
 
 		if ($this->request->hasArgument('__referrer')) {
 			$referrer = $this->request->getArgument('__referrer');
-			$this->forward($referrer['actionName'], $referrer['controllerName'], $referrer['extensionName'], $this->request->getArguments());
+			$this->forward($referrer['actionName']);
 		}
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function fileIsTemporary() {
+		$result = FALSE;
+
+		if ($this->request->hasArgument('temporary') && $this->request->getArgument('temporary') != '') {
+			$result = TRUE;
+		}
+
+		return $result;
 	}
 
 	/**
