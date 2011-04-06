@@ -37,6 +37,25 @@ Preview Action
 	<dt><f:translate key="country"/></dt>
 	<dd><f:form.hidden property="country" />{user.country}</dd>
 
+	<dt><f:translate key="image"/></dt>
+	<dd><f:form.hidden property="image" />
+		<f:if condition="{user.image}">
+			<f:then>
+				<f:form.hidden name="temporaryImage" value="{temporaryImage}" />
+				<f:if condition="{temporaryImage}">
+					<f:then>
+						<f:image height="100" width="100c" src="typo3temp/sf_register/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
+					</f:then>
+					<f:else>
+						<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
+					</f:else>
+				</f:if>
+			</f:then>
+			<f:else>
+				<f:translate key="image.none"/>
+			</f:else>
+		</f:if></dd>
+
 	<dt><f:form.submit name="form" value="{f:translate(key:'submit.change')}" /></dt>
 	<dd><f:form.submit name="save" value="{f:translate(key:'submit.save')}" /></dd>
 </dl>

@@ -40,6 +40,9 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 			$user = $this->moveTempFile($user);
 		}
 
+		if ($this->request->hasArgument('temporaryImage')) {
+			$this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
+		}
 		$this->view->assign('user', $user);
 	}
 
@@ -52,6 +55,10 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	 */
 	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$user = $this->moveTempFile($user);
+
+		if ($this->request->hasArgument('temporaryImage')) {
+			$this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
+		}
 
 		$this->view->assign('user', $user);
 	}

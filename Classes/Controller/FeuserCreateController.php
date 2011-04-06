@@ -46,6 +46,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			$user = $this->moveTempFile($user);
 		}
 
+		if ($this->request->hasArgument('temporaryImage')) {
+			$this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
+		}
+
 		$this->view->assign('user', $user);
 	}
 
@@ -60,6 +64,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 */
 	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $passwordAgain) {
 		$user = $this->moveTempFile($user);
+
+		if ($this->request->hasArgument('temporaryImage')) {
+			$this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
+		}
 
 		$this->view->assign('user', $user);
 	}

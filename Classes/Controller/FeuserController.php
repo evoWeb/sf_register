@@ -85,14 +85,42 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 		} else {
 			$removedImage = $this->fileService->removeUploadedImage($imagefile);
 		}
+		$user = $this->removeImageFromUserAndRequest($user, $removedImage);
 
 		$user->removeImage($removedImage);
+		$requestUser = $this->request->getArgument('user');
+		$requestUser['image'] = $user->getImage();
+		$this->request->setArgument('user', $requestUser);
+
 		$this->request->setArgument('removeImage', FALSE);
 
 		if ($this->request->hasArgument('__referrer')) {
 			$referrer = $this->request->getArgument('__referrer');
-			$this->forward($referrer['actionName']);
+			$this->forward($referrer['actionName'], $referrer['controllerName'], $referrer['extensionName'], $this->request->getArguments());
 		}
+	}
+
+	/**
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 */
+	protected function removeImageFromUserAndRequest(Tx_SfRegister_Domain_Model_FrontendUser $user, $removeImage) {
+		if ($user->getUid() !== NULL) {
+			$localUser = $this->userRepository->findByUid($user->getUid());
+			$localUser->removeImage($removeImage);
+			$this->userRepository->update($localUser);
+
+			$persistenceManager = Tx_Extbase_Dispatcher::getPersistenceManager();
+			$persistenceManager->persistAll();
+		}
+
+		$user->removeImage($removeImage);
+
+		$requestUser = $this->request->getArgument('user');
+		$requestUser['image'] = $user->getImage();
+		$this->request->setArgument('user', $requestUser);
+
+		return $user;
 	}
 
 	/**

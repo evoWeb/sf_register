@@ -54,7 +54,15 @@ Preview Action
 	<dd><f:form.hidden property="image" />
 		<f:if condition="{user.image}">
 			<f:then>
-				<f:image src="typo3temp/sf_register/{user.image}" maxHeight="100" maxWidth="100" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
+				<f:form.hidden name="temporaryImage" value="{temporaryImage}" />
+				<f:if condition="{temporaryImage}">
+					<f:then>
+						<f:image height="100" width="100c" src="typo3temp/sf_register/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
+					</f:then>
+					<f:else>
+						<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
+					</f:else>
+				</f:if>
 			</f:then>
 			<f:else>
 				<f:translate key="image.none"/>
