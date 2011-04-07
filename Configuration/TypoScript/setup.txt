@@ -40,24 +40,32 @@ plugin.tx_sfregister.settings {
 		}
 	}
 
+	# comma separated list of words used in bad word validator
 	badWordList = god, sex, password
 
-	forwardToEditAfterSave = 0
+	# Show the edit after saving the create or edit form
+	#forwardToEditAfterSave = 1
 
 	# md5 | sha1
 	encryptPassword = md5
+
+	# use encrypted filename
+	useEncryptedFilename = 1
 
 	# boolean if user or admin need to activate
 	#activateByUser = 1
 	#activateByAdmin = 1
 
 	# boolean if user or admin should be notified
+	# if the user gets an activation email no notification email will be send
 	#notifyToUser = 1
+	# if the admin gets an activation email no notification email will be send
 	#notifyToAdmin = 1
 
 	# usergroups set if activation is needed
 	usergroupBeforeActivation = 1
 	usergroupAfterActivation = 2
+
 	# usergroup set if no activation is needed
 	usergroupWithoutActivation = 2
 

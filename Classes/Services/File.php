@@ -39,6 +39,11 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	/**
 	 * @var array
 	 */
+	protected $settings = array();
+
+	/**
+	 * @var array
+	 */
 	protected $errors = array();
 
 	/**
@@ -87,6 +92,14 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	}
 
 	/**
+	 * @param array $settings
+	 * @return void
+	 */
+	public function setSettings(array $settings) {
+		$this->settings = $settings;
+	}
+
+	/**
 	 * Returns an array of errors which occurred during the last isValid() call.
 	 *
 	 * @return array An array of Tx_Extbase_Validation_Error objects or an empty array if no errors occurred.
@@ -132,6 +145,13 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 			$size = $uploadData['size'][$this->fieldname];
 
 			if ($filename !== NULL && $filename !== '' && t3lib_div::validPathStr($filename)) {
+				if ($this->settings['useEncryptedFilename']) {
+					$filenameParts = t3lib_div::trimExplode('.', $filename);
+					$extension = array_pop($filenameParts);
+					$filename = md5(mktime() . mt_rand() . $filename . $tmpName .
+						$GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) . '.' . $extension;
+				}
+
 				$fileData = array(
 					'filename' => $filename,
 					'type' => $type,
@@ -295,7 +315,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	 * @param string $filepath path where the image is stored
 	 * @return string
 	 */
-	public function removeFile($filename, $filepath) {
+	protected function removeFile($filename, $filepath) {
 		$imageNameAndPath = PATH_site . $filepath . '/' . $filename;
 
 		if (@file_exists($imageNameAndPath)) {

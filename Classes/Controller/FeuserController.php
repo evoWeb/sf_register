@@ -47,6 +47,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 
 		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File', 'image');
 		$this->fileService->setRequest($this->request);
+		$this->fileService->setSettings((array) $this->settings);
 
 		if ($this->request->hasArgument('removeImage') && $this->request->getArgument('removeImage') &&
 			$this->request->getControllerActionName() != 'removeImage') {
