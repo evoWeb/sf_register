@@ -37,9 +37,14 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	protected $frameworkConfiguration = array();
 
 	/**
-	 * @var Tx_Extbase_Object_ManagerInterface
+	 * @var Tx_Extbase_Object_ObjectManagerInterface
 	 */
 	protected $objectManager;
+
+	/**
+	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 */
+	protected $configurationManager;
 
 	/**
 	 * Inject settings
@@ -56,11 +61,24 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
 	 * Inject object manager
 	 *
-	 * @param Tx_Extbase_Object_ManagerInterface $objectManager
+	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
 	 * @return Tx_SfRegister_Services_Mail
 	 */
-	public function injectObjectManager($objectManager) {
+	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
+
+		return $this;
+	}
+
+	/**
+	 * Inject configuration manager
+	 *
+	 * @param Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
+	 * @return Tx_SfRegister_Services_Mail
+	 */
+	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
+		$this->configurationManager = $configurationManager;
+		$this->frameworkConfiguration = $configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 
 		return $this;
 	}
@@ -257,8 +275,15 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return array
 	 */
 	protected function getFrameworkConfiguration() {
-		$this->frameworkConfiguration = Tx_Extbase_Dispatcher::getExtbaseFrameworkConfiguration();
-
+		if (TYPO3_branch == '4.4') {
+			$this->frameworkConfiguration = Tx_Extbase_Dispatcher::getExtbaseFrameworkConfiguration();
+		} else {
+			if ($this->configurationManager == NULL) {
+				$this->configurationManager = $this->objectManager->get('Tx_Extbase_Configuration_ConfigurationManagerInterface');
+				$this->frameworkConfiguration = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+			}
+		}
+		
 		return $this->frameworkConfiguration;
 	}
 
@@ -281,6 +306,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 	/**
 	 * renders the given Template file via fluid rendering engine.
+	 * Version which build own fluid rendering - not needed anymore as of 4.5
 	 *
 	 * @param string $controller
 	 * @param string $action
@@ -288,7 +314,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @param array $vars array of all variables you want to assgin to the view
 	 * @return string of the rendered View.
 	 */
-	protected function renderFileTemplate($controller, $action, $templateFile, array $vars) {
+	protected function _renderFileTemplate_v44($controller, $action, $templateFile, array $vars) {
 		$templateParser = Tx_Fluid_Compatibility_TemplateParserBuilder::build();
 		$objectManager = t3lib_div::makeInstance('Tx_Fluid_Compatibility_ObjectManager');
 
@@ -323,6 +349,35 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 			$data = $content->render($renderingContext);
 		}
 
+		return $data;
+	}
+	
+	/**
+	 * renders the given Template file via fluid rendering engine.
+	 *
+	 * @param string $controller
+	 * @param string $action
+	 * @param string $templateFile absolute path to the template File
+	 * @param array $vars array of all variables you want to assgin to the view
+	 * @return string of the rendered View.
+	 */
+	protected function renderFileTemplate($controller, $action, $templateFile, array $vars) {
+		$data = '';
+		
+		if (TYPO3_branch == '4.4') {
+			$data = $this->_renderFileTemplate_v44($controller, $action, $templateFile, $vars);
+		} else {
+			$view = $this->objectManager->get('Tx_Fluid_View_StandaloneView');
+			$view->setTemplatePathAndFilename($templateFile);
+			$view->assignMultiple($vars);
+			$request = $view->getRequest();
+			$request->setPluginName($this->frameworkConfiguration['pluginName']);
+			$request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
+			$request->setControllerName($controller);
+			$request->setControllerActionName($action);
+			$data = $view->render();
+		}
+		
 		return $data;
 	}
 }
