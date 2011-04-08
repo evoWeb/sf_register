@@ -61,6 +61,18 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
 	 * Inject object manager
 	 *
+	 * @param Tx_Extbase_Object_Manager $objectManager
+	 * @return Tx_SfRegister_Services_Mail
+	 */
+	public function _injectObjectManager_v44(Tx_Extbase_Object_Manager $objectManager) {
+		$this->objectManager = $objectManager;
+
+		return $this;
+	}
+
+	/**
+	 * Inject object manager
+	 *
 	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
 	 * @return Tx_SfRegister_Services_Mail
 	 */

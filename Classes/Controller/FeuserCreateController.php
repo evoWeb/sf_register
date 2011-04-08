@@ -193,11 +193,13 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	protected function sendEmails($user) {
-		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail')
-			->injectSettings($this->settings);
 		if (TYPO3_branch == 4.4) {
-			$mailService->injectObjectManager($this->objectManager);
+			$mailService = $this->objectManager->getObject('Tx_SfRegister_Services_Mail');
+			$mailService->_injectObjectManager_v44($this->objectManager);
+		} else {
+			$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
 		}
+		$mailService->injectSettings($this->settings);
 
 		if ($this->isActivateByAdmin()) {
 			$user = $mailService->sendAdminActivationMail($user);
