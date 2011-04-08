@@ -66,7 +66,7 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 * @return boolean
 	 */
 	public function getDisable() {
-		return is_bool($this->disable) ? $this->disable : FALSE;
+		return ($this->disable ? TRUE : FALSE);
 	}
 
 	/**

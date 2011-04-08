@@ -25,7 +25,7 @@
 /**
  * A password object for validation
  */
-class Tx_SfRegister_Domain_Model_Password extends Tx_Extbase_Domain_Model_FrontendUser {
+class Tx_SfRegister_Domain_Model_Password extends Tx_Extbase_DomainObject_AbstractEntity {
 	/**
 	 * @var string
 	 */
