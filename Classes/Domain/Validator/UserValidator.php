@@ -67,7 +67,9 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 		if (self::$settings == NULL) {
 			$global = array();
 
+				// @todo dispatcher will be deleted with extbase 1.5
 			$configurationManager = Tx_Extbase_Dispatcher::getConfigurationManager();
+				// @todo deleted with release of TYPO3 4.7
 			if (method_exists($configurationManager, 'loadTypoScriptSetup')) {
 				$global = $configurationManager->loadTypoScriptSetup();
 			} elseif (method_exists($configurationManager, 'getTypoScriptSetup')) {
