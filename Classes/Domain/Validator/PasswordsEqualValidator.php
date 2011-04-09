@@ -51,7 +51,7 @@ class Tx_SfRegister_Domain_Validator_PasswordsEqualValidator extends Tx_Extbase_
 	 */
 	public function isValid($passwordAgain) {
 		$result = TRUE;
-debug($passwordAgain);
+
 		if ($passwordAgain !== $this->getPasswordFromRequest()) {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.passwordagain.notequal', 'SfRegister'), 1301599641);
 			$result = FALSE;
