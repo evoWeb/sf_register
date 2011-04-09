@@ -39,12 +39,25 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 	protected $settings = array();
 
 	/**
+	 * @var Tx_SfRegister_Domain_Repository_FrontendUserRepository
+	 */
+	protected $userRepository = NULL;
+
+	/**
 	 * Constructor
 	 *
 	 * @return void
 	 */
 	public function __construct() {
 		$this->settings = Tx_SfRegister_Domain_Validator_UserValidator::getSettings();
+	}
+
+	/**
+	 * @param Tx_SfRegister_Domain_Repository_FrontendUserRepository $repository
+	 * @return void
+	 */
+	public function injectUserRepository(Tx_SfRegister_Domain_Repository_FrontendUserRepository $repository) {
+		$this->userRepository = $repository;
 	}
 
 	/**
@@ -60,8 +73,7 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.changepassword.notloggedin', 'SfRegister'), 1301599489);
 			$result = FALSE;
 		} else {
-			$userRepository = t3lib_div::makeInstance('Tx_SfRegister_Domain_Repository_FrontendUserRepository');
-			$user = $userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
+			$user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
 
 			$password = $this->encryptPassword($password);
 

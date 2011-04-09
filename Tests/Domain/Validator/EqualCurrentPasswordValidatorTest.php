@@ -43,7 +43,6 @@ class Tx_SfRegister_Domain_Model_EqualCurrentPasswordValidatorTest extends Tx_Ex
 		$this->testingFramework->createFakeFrontEnd($pageUid);
 
 		$this->fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator', array('dummy'));
-		$this->fixture->_set('settings', $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
 	}
 
 	public function tearDown() {
@@ -79,6 +78,36 @@ class Tx_SfRegister_Domain_Model_EqualCurrentPasswordValidatorTest extends Tx_Ex
 
 		$this->assertTrue(
 			$this->fixture->_call('isUserLoggedIn')
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function loggedinUserFoundInDb() {
+		if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'])) {
+			unset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword']);
+		}
+		$this->fixture->_set('settings', $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
+
+		$expected = 'myFancyPassword';
+
+		$userId = $this->testingFramework->createAndLoginFrontEndUser('', array('password' => $expected));
+
+		$userMock = $this->getMock('Tx_SfRegister_Domain_Model_FrontendUser');
+		$userMock->expects($this->once())
+			->method('getPassword')
+			->will($this->returnValue($expected));
+
+		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
+		$repositoryMock->expects($this->once())
+			->method('findByUid')
+			->with($userId)
+			->will($this->returnValue($userMock));
+		$this->fixture->injectUserRepository($repositoryMock);
+
+		$this->assertTrue(
+			$this->fixture->isValid($expected)
 		);
 	}
 }
