@@ -56,6 +56,17 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
+	 * @TODO FIX THIS
+	 * @param Tx_Extbase_MVC_View_ViewInterface $view
+	 * @return void
+	 */
+	protected function initializeView(Tx_Extbase_MVC_View_ViewInterface $view) {
+		if (isset($this->settings['templateRootPath']) && !empty($this->settings['templateRootPath'])) {
+			$this->view->setTemplateRootPath($this->settings['templateRootPath']);
+		}
+	}
+
+	/**
 	 * Proxy action
 	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
