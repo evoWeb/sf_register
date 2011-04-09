@@ -57,7 +57,7 @@ class Tx_SfRegister_Domain_Model_BadWordValidatorTest extends Tx_Extbase_BaseTes
 	 */
 	public function settingsContainsValidTyposcriptSettings() {
 		$this->assertArrayHasKey(
-			'validation.',
+			'badWordList',
 			$GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
 		);
 	}
@@ -65,9 +65,11 @@ class Tx_SfRegister_Domain_Model_BadWordValidatorTest extends Tx_Extbase_BaseTes
 	/**
 	 * @test
 	 */
-	public function isValidReturnsFalseForGod() {
+	public function isValidReturnsFalseForWordOnBadwordlist() {
+		$words = t3lib_div::trimExplode(',', $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList']);
+
 		$this->assertFalse(
-			$this->fixture->isValid('god')
+			$this->fixture->isValid(current($words))
 		);
 	}
 

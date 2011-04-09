@@ -49,7 +49,7 @@ class Tx_SfRegister_Domain_Model_FrontendUserTest extends Tx_Extbase_BaseTestCas
 	}
 
 	/**
-	 * @return void
+	 * @return array
 	 */
 	public function notEmptyDataProvider() {
 		return array(
