@@ -74,7 +74,7 @@ class Tx_SfRegister_Domain_Model_FeuserPasswordControllerTest extends Tx_Extbase
 	/**
 	 * @test
 	 */
-	public function saveAction() {
+	public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserrepository() {
 			// we dont want to test the encryption here
 		if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'])) {
 			unset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword']);
@@ -82,11 +82,8 @@ class Tx_SfRegister_Domain_Model_FeuserPasswordControllerTest extends Tx_Extbase
 		$expected = 'myPassword';
 
 		$userId = $this->testingFramework->createAndLoginFrontEndUser('', array('password' => $expected));
-
-		$userMock = $this->getMock('Tx_SfRegister_Domain_Model_FrontendUser');
-		$userMock->expects($this->any())
-			->method('setPassword')
-			->with($expected);
+			// we need to clone the create object else the isClone param is not set and the both object wont match
+		$userMock = clone(new Tx_SfRegister_Domain_Model_FrontendUser());
 
 		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
