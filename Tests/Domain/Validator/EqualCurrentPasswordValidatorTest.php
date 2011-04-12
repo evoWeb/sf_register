@@ -84,7 +84,7 @@ class Tx_SfRegister_Domain_Model_EqualCurrentPasswordValidatorTest extends Tx_Ex
 	/**
 	 * @test
 	 */
-	public function loggedinUserFoundInDb() {
+	public function loggedinUserFoundInDbHasEqualUnencryptedPassword() {
 		if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'])) {
 			unset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword']);
 		}
@@ -98,6 +98,35 @@ class Tx_SfRegister_Domain_Model_EqualCurrentPasswordValidatorTest extends Tx_Ex
 		$userMock->expects($this->once())
 			->method('getPassword')
 			->will($this->returnValue($expected));
+
+		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
+		$repositoryMock->expects($this->once())
+			->method('findByUid')
+			->with($userId)
+			->will($this->returnValue($userMock));
+		$this->fixture->injectUserRepository($repositoryMock);
+
+		$this->assertTrue(
+			$this->fixture->isValid($expected)
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function loggedinUserFoundInDbHasEqualMd5EncryptedPassword() {
+		$GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'] = 'md5';
+
+		$this->fixture->_set('settings', $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
+
+		$expected = 'myFancyPassword';
+
+		$userId = $this->testingFramework->createAndLoginFrontEndUser('', array('password' => $expected));
+
+		$userMock = $this->getMock('Tx_SfRegister_Domain_Model_FrontendUser');
+		$userMock->expects($this->once())
+			->method('getPassword')
+			->will($this->returnValue(md5($expected)));
 
 		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())

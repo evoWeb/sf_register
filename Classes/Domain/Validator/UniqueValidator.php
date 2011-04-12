@@ -29,9 +29,22 @@
  */
 class Tx_SfRegister_Domain_Validator_UniqueValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * @var Tx_SfRegister_Domain_Repository_FrontendUserRepository
+	 */
+	protected $userRepository = NULL;
+
+	/**
 	 * @var string
 	 */
 	protected $fieldname = '';
+
+	/**
+	 * @param Tx_SfRegister_Domain_Repository_FrontendUserRepository $repository
+	 * @return void
+	 */
+	public function injectUserRepository(Tx_SfRegister_Domain_Repository_FrontendUserRepository $repository) {
+		$this->userRepository = $repository;
+	}
 
 	/**
 	 * Setter for fieldname
@@ -51,12 +64,11 @@ class Tx_SfRegister_Domain_Validator_UniqueValidator extends Tx_Extbase_Validati
 	 */
 	public function isValid($value) {
 		$result = TRUE;
-		$repository = t3lib_div::makeInstance('Tx_SfRegister_Domain_Repository_FrontendUserRepository');
 
-		if ($repository->countByField($this->fieldname, $value)) {
+		if ($this->userRepository->countByField($this->fieldname, $value)) {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notunique.local', 'SfRegister'), 1301599608);
 			$result = FALSE;
-		} elseif ($this->options['global'] && $repository->countByFieldGlobal($this->fieldname, $value)) {
+		} elseif ($this->options['global'] && $this->userRepository->countByFieldGlobal($this->fieldname, $value)) {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notunique.global', 'SfRegister'), 1301599619);
 			$result = FALSE;
 		}
