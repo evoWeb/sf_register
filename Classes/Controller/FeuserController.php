@@ -37,14 +37,20 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	protected $fileService;
 
 	/**
+	 * @param Tx_SfRegister_Domain_Repository_FrontendUserRepository $repository
+	 * @return void
+	 */
+	public function injectUserRepository(Tx_SfRegister_Domain_Repository_FrontendUserRepository $repository) {
+		$this->userRepository = $repository;
+	}
+
+	/**
 	 * Initialize all actions
 	 *
 	 * @see Tx_Extbase_MVC_Controller_ActionController::initializeAction()
 	 * @return void
 	 */
 	protected function initializeAction() {
-		$this->userRepository = t3lib_div::makeInstance('Tx_SfRegister_Domain_Repository_FrontendUserRepository');
-
 		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File', 'image');
 		$this->fileService->setRequest($this->request);
 		$this->fileService->setSettings((array) $this->settings);
@@ -81,6 +87,16 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 		}
 
 		$this->forward($action);
+	}
+
+
+	/**
+	 * Check if the user is logged in
+	 *
+	 * @return boolean
+	 */
+	protected function isUserLoggedIn() {
+		return $GLOBALS['TSFE']->fe_user->user === FALSE ? FALSE : TRUE;
 	}
 
 	/**
