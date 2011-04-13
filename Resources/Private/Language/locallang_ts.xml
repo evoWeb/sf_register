@@ -6,7 +6,28 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="ptss.useDataOfLoggedinFeuser">defines in edit mode if the fields get filled with data of logged in user</label>
+			<label index="ptss.badWordList">comma separated list of words used in bad word validator</label>
+			<label index="ptss.forwardToEditAfterSave">show the edit form after saving the create or edit form</label>
 			<label index="ptss.encryptPassword">Mode of password encryption</label>
+			<label index="ptss.useEncryptedFilename">use encrypted filename to deny direct access on uploaded files</label>
+			<label index="ptss.activateByUser">wether an user needs to activate his account</label>
+			<label index="ptss.activateByAdmin">wether an admin needs to activate the user account</label>
+			<label index="ptss.notifyToUser">wether an user get an notification about the creation of the account. If an activation email was send this wont be send afterwards.</label>
+			<label index="ptss.notifyToAdmin">wether an admin get an notification about the creation of an user account. If an activation email was send this wont be send afterwards.</label>
+			<label index="ptss.usergroupBeforeActivation">usergroup set if an account waits for activation</label>
+			<label index="ptss.usergroupAfterActivation">usergroup set if the account was activate</label>
+			<label index="ptss.usergroupWithoutActivation">usergroup set if no activation is needed</label>
+			<label index="ptss.userEmail.fromName">from name used in email to user</label>
+			<label index="ptss.userEmail.fromEmail">from email used in email to user</label>
+			<label index="ptss.userEmail.replyName">reply name used in email to user</label>
+			<label index="ptss.userEmail.replyEmail">reply email used in email to user</label>
+			<label index="ptss.adminEmail.toName">to name used in email to admin</label>
+			<label index="ptss.adminEmail.toEmail">to email used in email to admin</label>
+			<label index="ptss.adminEmail.fromName">from name used in email to admin</label>
+			<label index="ptss.adminEmail.fromEmail">from email used in email to admin</label>
+			<label index="ptss.adminEmail.replyName">reply name used in email to admin</label>
+			<label index="ptss.adminEmail.replyEmail">reply email used in email to admin</label>
 		</languageKey>
 	</data>
 </T3locallang>

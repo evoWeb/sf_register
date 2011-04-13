@@ -9,54 +9,54 @@ page {
 
 plugin.tx_sfregister.settings {
 	# boolean defines in edit mode if the fields get filled with data of logged in user
-	useDataOfLoggedinFeuser = 1
+	useDataOfLoggedinFeuser = {$plugin.tx_sfregister.settings.useDataOfLoggedinFeuser}
 
 	# comma separated list of words used in bad word validator
-	badWordList = god, sex, password
+	badWordList = {$plugin.tx_sfregister.settings.badWordList}
 
 	# boolean show the edit after saving the create or edit form
-	forwardToEditAfterSave = 0
+	forwardToEditAfterSave = {$plugin.tx_sfregister.settings.forwardToEditAfterSave}
 
 	# string [md5|sha1]
 	encryptPassword = {$plugin.tx_sfregister.settings.encryptPassword}
 
 	# boolean use encrypted filename to deny direct access on uploaded files
-	useEncryptedFilename = 1
+	useEncryptedFilename = {$plugin.tx_sfregister.settings.useEncryptedFilename}
 
 	# boolean if user or admin need to activate
-	activateByUser = 0
-	activateByAdmin = 0
+	activateByUser = {$plugin.tx_sfregister.settings.activateByUser}
+	activateByAdmin = {$plugin.tx_sfregister.settings.activateByAdmin}
 
 	# boolean if user or admin should be notified
 	# if the user gets an activation email no notification email will be send
-	notifyToUser = 0
+	notifyToUser = {$plugin.tx_sfregister.settings.notifyToUser}
 	# if the admin gets an activation email no notification email will be send
-	notifyToAdmin = 0
+	notifyToAdmin = {$plugin.tx_sfregister.settings.notifyToAdmin}
 
 	# integer usergroups set if activation is needed
-	usergroupBeforeActivation = 1
-	usergroupAfterActivation = 2
+	usergroupBeforeActivation = {$plugin.tx_sfregister.settings.usergroupBeforeActivation}
+	usergroupAfterActivation = {$plugin.tx_sfregister.settings.usergroupAfterActivation}
 
 	# integer usergroup set if no activation is needed
-	usergroupWithoutActivation = 2
+	usergroupWithoutActivation = {$plugin.tx_sfregister.settings.usergroupWithoutActivation}
 
 	userEmail {
-		fromName = userEmail from
-		fromEmail = userEmailfrom@test.local
+		fromName = {$plugin.tx_sfregister.settings.userEmail.fromName}
+		fromEmail = {$plugin.tx_sfregister.settings.userEmail.fromEmail}
 
-		replyName = userEmail reply
-		replyEmail = userEmailreply@test.local
+		replyName = {$plugin.tx_sfregister.settings.userEmail.replyName}
+		replyEmail = {$plugin.tx_sfregister.settings.userEmail.replyEmail}
 	}
 
 	adminEmail {
-		toName = adminEmail to
-		toEmail = sebastian@krypton.localdomain
+		toName = {$plugin.tx_sfregister.settings.adminEmail.toName}
+		toEmail = {$plugin.tx_sfregister.settings.adminEmail.toEmail}
 
-		fromName = adminEmail from
-		fromEmail = adminEmailfrom@test.local
+		fromName = {$plugin.tx_sfregister.settings.adminEmail.fromName}
+		fromEmail = {$plugin.tx_sfregister.settings.adminEmail.fromEmail}
 
-		replyName = adminEmail reply
-		replyEmail = adminEmailreply@test.local
+		replyName = {$plugin.tx_sfregister.settings.adminEmail.replyName}
+		replyEmail = {$plugin.tx_sfregister.settings.adminEmail.replyEmail}
 	}
 
 	validation.create {

@@ -1,4 +1,62 @@
 plugin.tx_sfregister.settings {
-	# cat=sf_register.settings/dims/70; type=options[,md5,sha1]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.encryptPassword
+	# cat=sf_register.settings/enable/40; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.useDataOfLoggedinFeuser
+	useDataOfLoggedinFeuser = 1
+
+	# cat=sf_register.settings//40; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.badWordList
+	badWordList = god, sex, password
+
+	# cat=sf_register.settings/enable/40; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.forwardToEditAfterSave
+	forwardToEditAfterSave = 0
+
+	# cat=sf_register.settings//40; type=options[,md5,sha1]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.encryptPassword
 	encryptPassword =
+
+	# cat=sf_register.settings/enable/40; type=options[,md5,sha1]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.useEncryptedFilename
+	useEncryptedFilename = 1
+
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.activateByUser
+	activateByUser = 0
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.activateByAdmin
+	activateByAdmin = 0
+
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.notifyToUser
+	notifyToUser = 0
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.notifyToAdmin
+	notifyToAdmin = 0
+
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupBeforeActivation
+	usergroupBeforeActivation = 1
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupAfterActivation
+	usergroupAfterActivation = 2
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupWithoutActivation
+	usergroupWithoutActivation = 2
+
+	userEmail {
+		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.userEmail.fromName
+		fromName = userEmail from
+		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.userEmail.fromEmail
+		fromEmail = userEmailfrom@test.local
+
+		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.userEmail.replyName
+		replyName = userEmail reply
+		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.userEmail.replyEmail
+		replyEmail = userEmailreply@test.local
+	}
+
+	adminEmail {
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.toName
+		toName = adminEmail to
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.toEmail
+		toEmail = sebastian@krypton.localdomain
+
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.fromName
+		fromName = adminEmail from
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.fromEmail
+		fromEmail = adminEmailfrom@test.local
+
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.replyName
+		replyName = adminEmail reply
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.replyEmail
+		replyEmail = adminEmailreply@test.local
+	}
 }
