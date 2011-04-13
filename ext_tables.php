@@ -49,7 +49,7 @@ t3lib_extMgm::addToAllTCAtypes('fe_users', 'mailhash, gtc');
 
 t3lib_div::loadTCA('tt_content');
 $TCA['tt_content']['types']['list']['subtypes_excludelist']['sfregister_form'] =
-	'layout, select_key, pages, recursive';
+	'layout, select_key';
 $TCA['tt_content']['types']['list']['subtypes_addlist']['sfregister_form'] =
 	'pi_flexform';
 t3lib_extMgm::addPiFlexFormValue('sfregister_form', 'FILE:EXT:sf_register/Configuration/FlexForms/form.xml');

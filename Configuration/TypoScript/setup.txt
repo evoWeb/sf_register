@@ -1,5 +1,63 @@
+page {
+	includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/styles.css
+
+	includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register.js
+	includeJSFooter.passwordmeter = EXT:sf_register/Resources/Public/JavaScript/passwordmeter.js
+}
+
+
+
 plugin.tx_sfregister.settings {
+	# boolean defines in edit mode if the fields get filled with data of logged in user
 	useDataOfLoggedinFeuser = 1
+
+	# comma separated list of words used in bad word validator
+	badWordList = god, sex, password
+
+	# boolean show the edit after saving the create or edit form
+	forwardToEditAfterSave = 0
+
+	# string [md5|sha1]
+	encryptPassword = {$plugin.tx_sfregister.settings.encryptPassword}
+
+	# boolean use encrypted filename to deny direct access on uploaded files
+	useEncryptedFilename = 1
+
+	# boolean if user or admin need to activate
+	activateByUser = 0
+	activateByAdmin = 0
+
+	# boolean if user or admin should be notified
+	# if the user gets an activation email no notification email will be send
+	notifyToUser = 0
+	# if the admin gets an activation email no notification email will be send
+	notifyToAdmin = 0
+
+	# integer usergroups set if activation is needed
+	usergroupBeforeActivation = 1
+	usergroupAfterActivation = 2
+
+	# integer usergroup set if no activation is needed
+	usergroupWithoutActivation = 2
+
+	userEmail {
+		fromName = userEmail from
+		fromEmail = userEmailfrom@test.local
+
+		replyName = userEmail reply
+		replyEmail = userEmailreply@test.local
+	}
+
+	adminEmail {
+		toName = adminEmail to
+		toEmail = sebastian@krypton.localdomain
+
+		fromName = adminEmail from
+		fromEmail = adminEmailfrom@test.local
+
+		replyName = adminEmail reply
+		replyEmail = adminEmailreply@test.local
+	}
 
 	validation.create {
 		username {
@@ -39,58 +97,10 @@ plugin.tx_sfregister.settings {
 			2 = Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator
 		}
 	}
-
-	# comma separated list of words used in bad word validator
-	badWordList = god, sex, password
-
-	# Show the edit after saving the create or edit form
-	#forwardToEditAfterSave = 1
-
-	# md5 | sha1
-	encryptPassword = md5
-
-	# use encrypted filename
-	useEncryptedFilename = 1
-
-	# boolean if user or admin need to activate
-	#activateByUser = 1
-	#activateByAdmin = 1
-
-	# boolean if user or admin should be notified
-	# if the user gets an activation email no notification email will be send
-	#notifyToUser = 1
-	# if the admin gets an activation email no notification email will be send
-	#notifyToAdmin = 1
-
-	# usergroups set if activation is needed
-	usergroupBeforeActivation = 1
-	usergroupAfterActivation = 2
-
-	# usergroup set if no activation is needed
-	usergroupWithoutActivation = 2
-
-	userEmail {
-		fromName = userEmail from
-		fromEmail = userEmailfrom@test.local
-
-		replyName = userEmail reply
-		replyEmail = userEmailreply@test.local
-	}
-
-	adminEmail {
-		toName = adminEmail to
-		toEmail = sebastian@krypton.localdomain
-
-		fromName = adminEmail from
-		fromEmail = adminEmailfrom@test.local
-
-		replyName = adminEmail reply
-		replyEmail = adminEmailreply@test.local
-	}
 }
 
 plugin.tx_sfregister.persistence {
-	storagePid = 44
+	storagePid =
 
 	classes {
 		Tx_SfRegister_Domain_Model_FrontendUser {
@@ -100,11 +110,4 @@ plugin.tx_sfregister.persistence {
 			}
 		}
 	}
-}
-
-page {
-	includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/styles.css
-
-	includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register.js
-	includeJSFooter.passwordmeter = EXT:sf_register/Resources/Public/JavaScript/passwordmeter.js
 }

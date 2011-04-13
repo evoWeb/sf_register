@@ -1,0 +1,4 @@
+plugin.tx_sfregister.settings {
+	# cat=sf_register.settings/dims/70; type=options[,md5,sha1]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.encryptPassword
+	encryptPassword =
+}

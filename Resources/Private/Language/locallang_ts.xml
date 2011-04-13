@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for backend labels belonging to extension 'sf_register'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="ptss.encryptPassword">Mode of password encryption</label>
+		</languageKey>
+	</data>
+</T3locallang>
