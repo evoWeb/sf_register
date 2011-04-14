@@ -25,11 +25,11 @@ plugin.tx_sfregister.settings {
 	notifyToAdmin = 0
 
 	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupBeforeActivation
-	usergroupBeforeActivation = 1
+	usergroupBeforeActivation = 0
 	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupAfterActivation
-	usergroupAfterActivation = 2
+	usergroupAfterActivation = 0
 	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupWithoutActivation
-	usergroupWithoutActivation = 2
+	usergroupWithoutActivation = 0
 
 	userEmail {
 		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.userEmail.fromName
@@ -59,4 +59,9 @@ plugin.tx_sfregister.settings {
 		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.replyEmail
 		replyEmail = adminEmailreply@test.local
 	}
+}
+
+plugin.tx_sfregister.persistence {
+	# cat=sf_register.settings//10; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.storagePid
+	storagePid =
 }

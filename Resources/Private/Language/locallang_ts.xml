@@ -28,6 +28,7 @@
 			<label index="ptss.adminEmail.fromEmail">from email used in email to admin</label>
 			<label index="ptss.adminEmail.replyName">reply name used in email to admin</label>
 			<label index="ptss.adminEmail.replyEmail">reply email used in email to admin</label>
+			<label index="ptss.storagePid">Sysfolder that contains the usergroups and users if not set zero or a selected value in the plugin will be used for storing the user</label>
 		</languageKey>
 	</data>
 </T3locallang>

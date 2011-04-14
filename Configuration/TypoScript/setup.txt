@@ -100,7 +100,7 @@ plugin.tx_sfregister.settings {
 }
 
 plugin.tx_sfregister.persistence {
-	storagePid =
+	storagePid = {$plugin.tx_sfregister.persistence.storagePid}
 
 	classes {
 		Tx_SfRegister_Domain_Model_FrontendUser {
