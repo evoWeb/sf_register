@@ -25,7 +25,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class Tx_SfRegister_Domain_Model_FeuserPasswordControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class Tx_SfRegister_Controller_FeuserPasswordControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	/**
 	 * @var Tx_SfRegister_Controller_FeuserPasswordController
 	 */
