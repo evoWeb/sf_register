@@ -27,45 +27,6 @@
  */
 class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_Domain_Repository_FrontendUserRepository {
 	/**
-	 * (non-PHPdoc)
-	 *
-	 * @see Tx_Extbase_Persistence_Repository::findAll()
-	 * @return Tx_Extbase_Persistence_ObjectStorage
-	 */
-	public function findAll() {
-		$query = $this->createQuery();
-
-		$query->getQuerySettings()->setRespectStoragePage(FALSE);
-
-		return $query->execute();
-	}
-
-	/**
-	 * Finds an object matching the given identifier.
-	 *
-	 * @param int $uid The identifier of the object to find
-	 * @return object The matching object if found, otherwise NULL
-	 * @api
-	 */
-	public function findByUid($uid) {
-		if ($this->identityMap->hasIdentifier($uid, $this->objectType)) {
-			$object = $this->identityMap->getObjectByIdentifier($uid, $this->objectType);
-		} else {
-			$query = $this->createQuery();
-			$query->getQuerySettings()->setRespectSysLanguage(FALSE);
-			$query->getQuerySettings()->setRespectStoragePage(FALSE);
-
-			$users = $query->matching($query->equals('uid', $uid))->execute();
-			$user = NULL;
-			if (count($users) > 0) {
-				$user = $users->getFirst();
-				$this->identityMap->registerObject($user, $uid);
-			}
-		}
-		return $user;
-	}
-
-	/**
 	 * Find user by mailhash
 	 *
 	 * @param string $mailhash
@@ -76,26 +37,27 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 		$query->getQuerySettings()->setRespectEnableFields(FALSE);
 
 		$users = $query
-			->matching($query->equals('mailhash', $mailhash))
+			->matching(
+				$query->equals('mailhash', $mailhash)
+			)
 			->setLimit(1)
 			->execute();
 
 		return $users->getFirst();
 	}
 
-
 	/**
 	 * Count users in storagefolder which have a field that contains the value
 	 *
-	 * @param unknown_type $field
-	 * @param unknown_type $value
+	 * @param string $field
+	 * @param string $value
 	 * @return integer
 	 */
 	public function countByField($field, $value) {
 		$query = $this->createQuery();
 		$query->getQuerySettings()->setRespectEnableFields(FALSE);
 
-		$data = $query
+		$query
 			->matching(
 				$query->logicalAnd(
 					$query->equals($field, $value),
@@ -111,8 +73,8 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 	/**
 	 * Count users installationwide which have a field that contains the value
 	 *
-	 * @param unknown_type $field
-	 * @param unknown_type $value
+	 * @param string $field
+	 * @param string $value
 	 * @return integer
 	 */
 	public function countByFieldGlobal($field, $value) {
@@ -120,11 +82,11 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 		$query->getQuerySettings()->setRespectEnableFields(FALSE);
 		$query->getQuerySettings()->setRespectStoragePage(FALSE);
 
-		$data = $query
+		$query
 			->matching(
 				$query->logicalAnd(
-					$query->equals('deleted', 0),
-					$query->equals($field, $value)
+					$query->equals($field, $value),
+					$query->equals('deleted', 0)
 				)
 			)
 			->setLimit(1)

@@ -25,48 +25,12 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class Tx_SfRegister_Domain_Model_IstrueValidatorTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
-	/**
-	 * @var Tx_SfRegister_Domain_Validator_IsTrueValidator
-	 */
-	protected $fixture;
-
-	public function setUp() {
-		$this->fixture = new Tx_SfRegister_Domain_Validator_IsTrueValidator();
-	}
-
-	public function tearDown() {
-		unset($this->fixture);
-	}
-
+class Tx_SfRegister_Domain_Repository_FrontendUserRepositoryTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	/**
 	 * @test
 	 */
-	public function isValidReturnsTrueIfTrueWasUsed() {
-		$this->assertTrue(
-			$this->fixture->isValid(TRUE)
-		);
-	}
-
-	/**
-	 * @return array
-	 */
-	public function isValidNonTrueDataProvider() {
-		return array(
-			'stringIsNonTrue' => array('true'),
-			'integerIsNonTrue' => array(1),
-			'arrayIsNonTrue' => array(array()),
-		);
-	}
-
-	/**
-	 * @test
-	 * @dataProvider isValidNonTrueDataProvider
-	 */
-	public function isValidReturnsFalseIfNonTrueWasUsed($input) {
-		$this->assertFalse(
-			$this->fixture->isValid($input)
-		);
+	public function findByMailhash() {
+		$this->markTestIncomplete('not implemented by now');
 	}
 }
 
