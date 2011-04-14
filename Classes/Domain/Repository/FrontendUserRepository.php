@@ -58,7 +58,7 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 			$users = $query->matching($query->equals('uid', $uid))->execute();
 			$user = NULL;
 			if (count($users) > 0) {
-				$user = current($users);
+				$user = $users->getFirst();
 				$this->identityMap->registerObject($user, $uid);
 			}
 		}
