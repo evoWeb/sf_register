@@ -54,14 +54,15 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 			$query = $this->createQuery();
 			$query->getQuerySettings()->setRespectSysLanguage(FALSE);
 			$query->getQuerySettings()->setRespectStoragePage(FALSE);
-			$result = $query->matching($query->equals('uid', $uid))->execute();
-			$object = NULL;
-			if (count($result) > 0) {
-				$object = current($result);
-				$this->identityMap->registerObject($object, $uid);
+
+			$users = $query->matching($query->equals('uid', $uid))->execute();
+			$user = NULL;
+			if (count($users) > 0) {
+				$user = current($users);
+				$this->identityMap->registerObject($user, $uid);
 			}
 		}
-		return $object;
+		return $user;
 	}
 
 	/**
@@ -74,12 +75,12 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 		$query = $this->createQuery();
 		$query->getQuerySettings()->setRespectEnableFields(FALSE);
 
-		$data = $query
+		$users = $query
 			->matching($query->equals('mailhash', $mailhash))
 			->setLimit(1)
 			->execute();
 
-		return current($data);
+		return $users->getFirst();
 	}
 
 
