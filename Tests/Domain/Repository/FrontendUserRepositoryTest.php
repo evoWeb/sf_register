@@ -50,7 +50,7 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepositoryTest extends Tx_Extb
 		);
 
 		$bootstrap = new Tx_Extbase_Core_Bootstrap();
-		$bootstrap->run($content, array(
+		$bootstrap->run('', array(
 			'userFunc' => 'tx_extbase_core_bootstrap->run',
 			'extensionName' => $extensionName,
 			'pluginName' => $pluginName,
@@ -71,9 +71,13 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepositoryTest extends Tx_Extb
 	public function findByMailhashReturnsUserThatShouldGetActivated() {
 		$expected = 'testHash';
 
-		//$this->testingFramework->createAndLoginFrontEndUser('', array('mailhash' => $expected));
+		$this->testingFramework->createAndLoginFrontEndUser(
+			'',
+			array('tx_extbase_type' => 'Tx_Extbase_Domain_Model_FrontendUser', 'mailhash' => $expected)
+		);
 
-		$this->assertTrue(
+		$this->assertInstanceOf(
+			'Tx_SfRegister_Domain_Model_FrontendUser',
 			$this->fixture->findByMailhash($expected)
 		);
 	}

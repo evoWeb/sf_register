@@ -35,6 +35,7 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 	public function findByMailhash($mailhash) {
 		$query = $this->createQuery();
 		$query->getQuerySettings()->setRespectEnableFields(FALSE);
+		$query->getQuerySettings()->setRespectStoragePage(FALSE);
 
 		$user = $query
 			->matching(
