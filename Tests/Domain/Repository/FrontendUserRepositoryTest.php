@@ -44,12 +44,14 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepositoryTest extends Tx_Extb
 
 		$extensionName = 'SfRegister';
 		$pluginName = 'Form';
-		$controllerName = 'FeuserCreate';
-		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName]['plugins'][$pluginName]['controllers'][$controllerName] = array('actions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'));
-		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName]['plugins'][$pluginName]['controllers'][$controllerName]['nonCacheableActions'] = array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage');
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName]['modules'][$pluginName]['controllers']['FeuserEdit'] = array(
+			'actions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'),
+			'nonCacheableActions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'),
+		);
 
 		$bootstrap = new Tx_Extbase_Core_Bootstrap();
 		$bootstrap->run($content, array(
+			'userFunc' => 'tx_extbase_core_bootstrap->run',
 			'extensionName' => $extensionName,
 			'pluginName' => $pluginName,
 		));
@@ -69,7 +71,7 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepositoryTest extends Tx_Extb
 	public function findByMailhashReturnsUserThatShouldGetActivated() {
 		$expected = 'testHash';
 
-		$this->testingFramework->createAndLoginFrontEndUser('', array('mailhash' => $expected));
+		//$this->testingFramework->createAndLoginFrontEndUser('', array('mailhash' => $expected));
 
 		$this->assertTrue(
 			$this->fixture->findByMailhash($expected)

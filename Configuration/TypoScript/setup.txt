@@ -111,3 +111,5 @@ plugin.tx_sfregister.persistence {
 		}
 	}
 }
+
+module.tx_sfregister < plugin.tx_sfregister
