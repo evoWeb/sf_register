@@ -42,6 +42,18 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepositoryTest extends Tx_Extb
 		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/'));
 		$this->testingFramework->createFakeFrontEnd($pageUid);
 
+		$extensionName = 'SfRegister';
+		$pluginName = 'Form';
+		$controllerName = 'FeuserCreate';
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName]['plugins'][$pluginName]['controllers'][$controllerName] = array('actions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'));
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName]['plugins'][$pluginName]['controllers'][$controllerName]['nonCacheableActions'] = array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage');
+
+		$bootstrap = new Tx_Extbase_Core_Bootstrap();
+		$bootstrap->run($content, array(
+			'extensionName' => $extensionName,
+			'pluginName' => $pluginName,
+		));
+
 		$this->fixture = new Tx_SfRegister_Domain_Repository_FrontendUserRepository();
 	}
 
