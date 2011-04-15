@@ -27,10 +27,41 @@
 
 class Tx_SfRegister_Domain_Repository_FrontendUserRepositoryTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	/**
+	 * @var Tx_SfRegister_Domain_Validator_BadWordValidator
+	 */
+	protected $fixture;
+
+	/**
+	 * @var Tx_Phpunit_Framework
+	 */
+	private $testingFramework;
+
+	public function setUp() {
+		$this->testingFramework = new Tx_Phpunit_Framework('fe_users');
+		$pageUid = $this->testingFramework->createFrontEndPage();
+		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/'));
+		$this->testingFramework->createFakeFrontEnd($pageUid);
+
+		$this->fixture = new Tx_SfRegister_Domain_Repository_FrontendUserRepository();
+	}
+
+	public function tearDown() {
+		$this->testingFramework->cleanUp();
+
+		unset($this->fixture, $this->testingFramework);
+	}
+
+	/**
 	 * @test
 	 */
-	public function findByMailhash() {
-		$this->markTestIncomplete('not implemented by now');
+	public function findByMailhashReturnsUserThatShouldGetActivated() {
+		$expected = 'testHash';
+
+		$this->testingFramework->createAndLoginFrontEndUser('', array('mailhash' => $expected));
+
+		$this->assertTrue(
+			$this->fixture->findByMailhash($expected)
+		);
 	}
 }
 

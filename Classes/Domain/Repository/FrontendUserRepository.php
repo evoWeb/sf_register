@@ -36,14 +36,15 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 		$query = $this->createQuery();
 		$query->getQuerySettings()->setRespectEnableFields(FALSE);
 
-		$users = $query
+		$user = $query
 			->matching(
 				$query->equals('mailhash', $mailhash)
 			)
 			->setLimit(1)
-			->execute();
+			->execute()
+			->getFirst();
 
-		return $users->getFirst();
+		return $user;
 	}
 
 	/**
