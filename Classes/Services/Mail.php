@@ -74,82 +74,12 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 
 	/**
-	 * Send an email on registration request to activate the user by admin
-	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
-	 */
-	public function sendAdminActivationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$user->setMailhash($this->getMailHash($user));
-
-		$subject = Tx_Extbase_Utility_Localization::translate(
-			'subjectAdminActivationMail',
-			'sf_register',
-			array($this->settings['sitename'], $user->getUsername())
-		);
-
-		$variables = array(
-			'user' => $user
-		);
-
-		$templatePathAndFilename = $this->getTemplatePathAndFilename('AdminActivationMail');
-		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
-
-		$this->sendEmail(
-			$this->getAdminRecipient(),
-			'adminEmail',
-			$subject,
-			$message
-		);
-
-		return $user;
-	}
-
-	/**
-	 * Send an email on registration request to activate the user by user
-	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
-	 */
-	public function sendUserActivationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$user->setMailhash($this->getMailHash($user));
-
-		$subject = Tx_Extbase_Utility_Localization::translate(
-			'subjectUserActivationMail',
-			'sf_register',
-			array($this->settings['sitename'], $user->getUsername())
-		);
-
-		$variables = array(
-			'user' => $user
-		);
-
-		$templatePathAndFilename = $this->getTemplatePathAndFilename('UserActivationMail');
-		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
-
-		$this->sendEmail(
-			$this->getUserRecipient($user),
-			'userEmail',
-			$subject,
-			$message
-		);
-
-		return $user;
-	}
-
-	/**
 	 * Send an email notification pre activation to the admin
 	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendAdminNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$subject = Tx_Extbase_Utility_Localization::translate(
-			'subjectAdminNotificationMail',
-			'sf_register',
-			array($this->settings['sitename'],$user->getUsername())
-		);
-
 		$variables = array(
 			'user' => $user
 		);
@@ -160,37 +90,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
-			$subject,
-			$message
-		);
-
-		return $user;
-	}
-
-	/**
-	 * Send an email notification pre activation to the user
-	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
-	 */
-	public function sendUserNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$subject = Tx_Extbase_Utility_Localization::translate(
-			'subjectUserNotificationMail',
-			'sf_register',
-			array($this->settings['sitename'], $user->getUsername())
-		);
-
-		$variables = array(
-			'user' => $user
-		);
-
-		$templatePathAndFilename = $this->getTemplatePathAndFilename('UserNotificationMail');
-		$message = $this->renderFileTemplate('FeuserCreate', 'form', $templatePathAndFilename, $variables);
-
-		$this->sendEmail(
-			$this->getUserRecipient($user),
-			'userEmail',
-			$subject,
+			$this->getSubject($user, 'subjectAdminNotificationMail'),
 			$message
 		);
 
@@ -204,12 +104,6 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendAdminNotificationMailPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$subject = Tx_Extbase_Utility_Localization::translate(
-			'subjectAdminNotificationMailPostActivation',
-			'sf_register',
-			array($this->settings['sitename'], $user->getUsername())
-		);
-
 		$variables = array(
 			'user' => $user
 		);
@@ -220,7 +114,57 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
-			$subject,
+			$this->getSubject($user, 'subjectAdminNotificationMailPostActivation'),
+			$message
+		);
+
+		return $user;
+	}
+
+	/**
+	 * Send an email on registration request to activate the user by admin
+	 *
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 */
+	public function sendAdminNotificationMailPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$user->setMailhash($this->getMailHash($user));
+
+		$variables = array(
+			'user' => $user
+		);
+
+		$templatePathAndFilename = $this->getTemplatePathAndFilename('AdminNotificationMailPreActivation');
+		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
+
+		$this->sendEmail(
+			$this->getAdminRecipient(),
+			'adminEmail',
+			$this->getSubject($user, 'subjectAdminNotificationMailPreActivation'),
+			$message
+		);
+
+		return $user;
+	}
+
+	/**
+	 * Send an email notification pre activation to the user
+	 *
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 */
+	public function sendUserNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$variables = array(
+			'user' => $user
+		);
+
+		$templatePathAndFilename = $this->getTemplatePathAndFilename('UserNotificationMail');
+		$message = $this->renderFileTemplate('FeuserCreate', 'form', $templatePathAndFilename, $variables);
+
+		$this->sendEmail(
+			$this->getUserRecipient($user),
+			'userEmail',
+			$this->getSubject($user, 'subjectUserNotificationMail'),
 			$message
 		);
 
@@ -234,12 +178,6 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendUserNotificationMailPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$subject = Tx_Extbase_Utility_Localization::translate(
-			'subjectUserNotificationMailPostActivation',
-			'sf_register',
-			array($this->settings['sitename'], $user->getUsername())
-		);
-
 		$variables = array(
 			'user' => $user
 		);
@@ -250,7 +188,33 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$this->sendEmail(
 			$this->getUserRecipient($user),
 			'userEmail',
-			$subject,
+			$this->getSubject($user, 'subjectUserNotificationMailPostActivation'),
+			$message
+		);
+
+		return $user;
+	}
+
+	/**
+	 * Send an email on registration request to activate the user by user
+	 *
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 */
+	public function sendUserNotificationMailPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$user->setMailhash($this->getMailHash($user));
+
+		$variables = array(
+			'user' => $user
+		);
+
+		$templatePathAndFilename = $this->getTemplatePathAndFilename('UserNotificationMailPreActivation');
+		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
+
+		$this->sendEmail(
+			$this->getUserRecipient($user),
+			'userEmail',
+			$this->getSubject($user, 'subjectUserNotificationMailPreActivation'),
 			$message
 		);
 
@@ -259,12 +223,13 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 
 	/**
-	 * @param string $labelKey
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param string $labelIndex
 	 * @return string
 	 */
-	protected function getSubject($labelKey) {
+	protected function getSubject(Tx_SfRegister_Domain_Model_FrontendUser $user, $labelIndex) {
 		return Tx_Extbase_Utility_Localization::translate(
-			$labelKey,
+			$labelIndex,
 			'sf_register',
 			array($this->settings['sitename'], $user->getUsername())
 		);
@@ -287,7 +252,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$recipient = $this->settings['adminEmail']['toEmail'];
 
 		if ($this->settings['adminEmail']['toName']) {
-			$recipient = trim($this->settings['adminEmail']['toName']) . '<' . $recipient . '>';
+			$recipient = trim($this->settings['adminEmail']['toName']) . ' <' . $recipient . '>';
 		}
 
 		return $recipient;
@@ -299,11 +264,11 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return string
 	 */
-	protected function getUserRecipient($user) {
+	protected function getUserRecipient(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$recipient = $user->getEmail();
 
 		if ($user->getFirstName() || $user->getLastName()) {
-			$recipient = trim($user->getFirstName() . ' ' . $user->getLastName()) . '<' . $recipient . '>';
+			$recipient = trim($user->getFirstName() . ' ' . $user->getLastName()) . ' <' . $recipient . '>';
 		}
 
 		return $recipient;
@@ -330,12 +295,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$htmlMail->returnPath = $this->settings[$typeOfEmail]['fromEmail'];
 		$htmlMail->addPlain($message);
 		$htmlMail->setHTML($htmlMail->encodeMsg($message));
-debug($subject);
-debug($subject);
-debug($recipient);
-debug($message);
-debug($htmlMail->encodeMsg($message));
-die();
+debug($subject, 'subject');
+
 		return $htmlMail->send($recipient);
 	}
 

@@ -14,22 +14,29 @@ plugin.tx_sfregister.settings {
 	# cat=sf_register.settings/enable/40; type=options[,md5,sha1]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.useEncryptedFilename
 	useEncryptedFilename = 1
 
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.activateByUser
-	activateByUser = 0
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.activateByAdmin
-	activateByAdmin = 0
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.notifyPreActivationToAdmin
+	notifyPreActivationToAdmin = 0
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.notifyPostActivationToAdmin
+	notifyPostActivationToAdmin = 0
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.notifyPreActivationToUser
+	notifyPreActivationToUser = 0
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.notifyPostActivationToUser
+	notifyPostActivationToUser = 0
 
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.notifyToUser
-	notifyToUser = 0
 	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.notifyToAdmin
 	notifyToAdmin = 0
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.notifyToUser
+	notifyToUser = 0
 
-	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupBeforeActivation
-	usergroupBeforeActivation = 0
-	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupAfterActivation
-	usergroupAfterActivation = 0
-	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupWithoutActivation
-	usergroupWithoutActivation = 0
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.autologinPostActivation
+	autologinPostActivation = 0
+
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupPreActivation
+	usergroupPreActivation = 0
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupPostActivation
+	usergroupPostActivation = 0
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroup
+	usergroup = 0
 
 	# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.sitename
 	sitename = dummy Site

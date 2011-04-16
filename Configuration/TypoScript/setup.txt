@@ -23,22 +23,23 @@ plugin.tx_sfregister.settings {
 	# boolean use encrypted filename to deny direct access on uploaded files
 	useEncryptedFilename = {$plugin.tx_sfregister.settings.useEncryptedFilename}
 
-	# boolean if user or admin need to activate
-	activateByUser = {$plugin.tx_sfregister.settings.activateByUser}
-	activateByAdmin = {$plugin.tx_sfregister.settings.activateByAdmin}
-
-	# boolean if user or admin should be notified
-	# if the user gets an activation email no notification email will be send
-	notifyToUser = {$plugin.tx_sfregister.settings.notifyToUser}
-	# if the admin gets an activation email no notification email will be send
+	# boolean if user or admin need to activate or notified
 	notifyToAdmin = {$plugin.tx_sfregister.settings.notifyToAdmin}
+	notifyPreActivationToAdmin = {$plugin.tx_sfregister.settings.notifyPreActivationToAdmin}
+	notifyPostActivationToAdmin = {$plugin.tx_sfregister.settings.notifyPostActivationToAdmin}
+	notifyToUser = {$plugin.tx_sfregister.settings.notifyToUser}
+	notifyPreActivationToUser = {$plugin.tx_sfregister.settings.notifyPreActivationToUser}
+	notifyPostActivationToUser = {$plugin.tx_sfregister.settings.notifyPostActivationToUser}
+
+	# boolean if user should get logged in after activation
+	autologinPostActivation = {$plugin.tx_sfregister.settings.autologinPostActivation}
 
 	# integer usergroups set if activation is needed
-	usergroupBeforeActivation = {$plugin.tx_sfregister.settings.usergroupBeforeActivation}
-	usergroupAfterActivation = {$plugin.tx_sfregister.settings.usergroupAfterActivation}
+	usergroupPreActivation = {$plugin.tx_sfregister.settings.usergroupPreActivation}
+	usergroupPostActivation = {$plugin.tx_sfregister.settings.usergroupPostActivation}
 
 	# integer usergroup set if no activation is needed
-	usergroupWithoutActivation = {$plugin.tx_sfregister.settings.usergroupWithoutActivation}
+	usergroup = {$plugin.tx_sfregister.settings.usergroup}
 
 	# string name of the site used in subject
 	sitename = {$plugin.tx_sfregister.settings.sitename}
