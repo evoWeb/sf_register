@@ -29,9 +29,19 @@
  */
 class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 */
+	protected $objectManager;
+
+	/**
 	 * @var array
 	 */
-	protected static $settings = NULL;
+	protected $settings = NULL;
+
+	/**
+	 * @var  Tx_SfRegister_Validation_ValidatorResolver
+	 */
+	protected $validatorResolver;
 
 	/**
 	 * @var string
@@ -54,42 +64,44 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 * @return void
 	 */
 	public function __construct() {
-		$this->settings = $this->getSettings();
-		$this->getValidatorResolver();
+		$this->initializeObjectManager();
+		$this->initializeSettings();
+		$this->initializeValidatorResolver();
 	}
 
 	/**
-	 * Get settings
+	 * Initializes the Object framework.
+	 *
+	 * @return void
+	 * @see initialize()
+	 */
+	protected function initializeObjectManager() {
+		$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+	}
+
+	/**
+	 * Initialize settings
 	 *
 	 * @return array
 	 */
-	public static function getSettings() {
-		if (self::$settings == NULL) {
-			$global = array();
-
-				// @todo dispatcher will be deleted with extbase 1.5
-			$configurationManager = Tx_Extbase_Dispatcher::getConfigurationManager();
-				// @todo deleted with release of TYPO3 4.7
-			if (method_exists($configurationManager, 'loadTypoScriptSetup')) {
-				$global = $configurationManager->loadTypoScriptSetup();
-			} elseif (method_exists($configurationManager, 'getTypoScriptSetup')) {
-				$global = $configurationManager->getTypoScriptSetup();
-			}
-
-			self::$settings = (array) $global['plugin.']['tx_sfregister.']['settings.'];
+	protected function initializeSettings() {
+		if ($this->settings == NULL) {
+			$configurationManager = $this->objectManager->get('Tx_Extbase_Configuration_ConfigurationManagerInterface');
+			$this->settings = $configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 		}
 
-		return self::$settings;
+		return $this->settings;
 	}
 
 	/**
-	 * Get validation settings
+	 * Initialize validator resolver
 	 *
-	 * @return array
+	 * @return void
 	 */
-	protected function getValidationSettings() {
-		return (array) $this->settings['validation.'][$this->options['type'] . '.'];
+	protected function initializeValidatorResolver() {
+		$this->validatorResolver = $this->objectManager->get('Tx_SfRegister_Validation_ValidatorResolver');
 	}
+
 
 	/**
 	 * Add an error with message and code to the property errors
@@ -109,16 +121,6 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 		);
 
 		$this->errors[$propertyName]->addErrors($errors);
-	}
-
-	/**
-	 * Get validator resolver
-	 *
-	 * @return void
-	 */
-	protected function getValidatorResolver() {
-		$this->validatorResolver = t3lib_div::makeInstance('Tx_SfRegister_Validation_ValidatorResolver');
-		$this->validatorResolver->injectObjectManager(t3lib_div::makeInstance('Tx_Extbase_Object_Manager'));
 	}
 
 	/**
@@ -149,7 +151,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	protected function validateRules($object) {
 		$result = TRUE;
 
-		foreach ($this->getValidationSettings() as $fieldName => $rule) {
+		foreach ($this->settings['validation'][$this->options['type']] as $fieldName => $rule) {
 			$fieldName = str_replace('.', '', $fieldName);
 			$methodName = 'get' . ucfirst($fieldName);
 
