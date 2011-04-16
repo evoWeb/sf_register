@@ -32,14 +32,19 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	protected $fieldname;
 
 	/**
-	 * @var Tx_Extbase_MVC_Request
+	 * @var Tx_Extbase_Configuration_ConfigurationManager
 	 */
-	protected $request;
+	protected $configurationManager;
 
 	/**
 	 * @var array
 	 */
 	protected $settings = array();
+
+	/**
+	 * @var  string
+	 */
+	protected $namespace = '';
 
 	/**
 	 * @var array
@@ -67,37 +72,35 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	protected $maxFilesize = 0;
 
 	/**
-	 * Constructor
-	 *
-	 * @param string $fieldname name of the parameter the file belongs to in the user model
+	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
 	 * @return void
 	 */
-	public function __construct($fieldname) {
+	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
+		$this->configurationManager = $configurationManager;
+		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+
+		if (isset($this->settings['filefieldname']) && !empty($this->settings['filefieldname'])) {
+			$this->setFieldname($this->settings['filefieldname']);
+		}
+	}
+
+	/**
+	 * @param string $fieldname
+	 * @return void
+	 */
+	public function setFieldname($fieldname) {
+		if (!isset($GLOBALS['TCA']['fe_users']['columns'])) {
+			t3lib_div::loadTCA('fe_users');
+		}
+
 		$this->fieldname = $fieldname;
 
-		t3lib_div::loadTCA('fe_users');
-		$this->allowedFileExtensions = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config']['allowed'];
-		$this->uploadFolder = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config']['uploadfolder'];
-		$this->maxFilesize = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config']['max_size'] * 1024;
+		$fieldConfiguration = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config'];
+		$this->allowedFileExtensions = $fieldConfiguration['allowed'];
+		$this->uploadFolder = $fieldConfiguration['uploadfolder'];
+		$this->maxFilesize = $fieldConfiguration['max_size'] * 1024;
 	}
 
-	/**
-	 * Setter for controller
-	 *
-	 * @param Tx_Extbase_MVC_Request $request
-	 * @return void
-	 */
-	public function setRequest(Tx_Extbase_MVC_Request $request) {
-		$this->request = $request;
-	}
-
-	/**
-	 * @param array $settings
-	 * @return void
-	 */
-	public function setSettings(array $settings) {
-		$this->settings = $settings;
-	}
 
 	/**
 	 * Returns an array of errors which occurred during the last isValid() call.
@@ -125,7 +128,12 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getNamespace() {
-		return strtolower('tx_' . $this->request->getControllerExtensionName() . '_' . $this->request->getPluginName());
+		if ($this->namespace === '') {
+			$frameworkSettings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+			$this->namespace = strtolower('tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']);
+		}
+
+		return $this->namespace;
 	}
 
 	/**

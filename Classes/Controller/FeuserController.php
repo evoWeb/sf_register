@@ -51,13 +51,11 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * @return void
 	 */
 	protected function initializeAction() {
-			// @TODO change this to injection not setting
-		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File', 'image');
-		$this->fileService->setRequest($this->request);
-		$this->fileService->setSettings((array) $this->settings);
+		$this->fileService = $this->objectManager->get('Tx_SfRegister_Services_File');
 
-		if ($this->request->hasArgument('removeImage') && $this->request->getArgument('removeImage') &&
-			$this->request->getControllerActionName() != 'removeImage') {
+		if ($this->request->getControllerActionName() != 'removeImage' &&
+				$this->request->hasArgument('removeImage') &&
+				$this->request->getArgument('removeImage')) {
 			$this->forward('removeImage');
 		}
 	}
