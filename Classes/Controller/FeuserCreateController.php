@@ -202,10 +202,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 		}
 
 		if ($this->isNotifyPreActivationToAdmin()) {
-			$mailService->sendAdminNotificationMailPreActivation($user);
+			$mailService->sendAdminNotificationMail($user);
 		}
 		if ($this->isNotifyPreActivationToUser()) {
-			$mailService->sendUserNotificationMailPreActivation($user);
+			$mailService->sendUserNotificationMail($user);
 		}
 
 		return $user;
