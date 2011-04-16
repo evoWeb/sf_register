@@ -51,6 +51,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * @return void
 	 */
 	protected function initializeAction() {
+			// @TODO change this to injection not setting
 		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File', 'image');
 		$this->fileService->setRequest($this->request);
 		$this->fileService->setSettings((array) $this->settings);
@@ -62,13 +63,15 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
-	 * @TODO FIX THIS
 	 * @param Tx_Extbase_MVC_View_ViewInterface $view
 	 * @return void
 	 */
 	protected function initializeView(Tx_Extbase_MVC_View_ViewInterface $view) {
 		if (isset($this->settings['templateRootPath']) && !empty($this->settings['templateRootPath'])) {
-			$this->view->setTemplateRootPath($this->settings['templateRootPath']);
+			$templateRootPath = t3lib_div::getFileAbsFileName($this->settings['templateRootPath'], TRUE);
+			if (t3lib_div::isAllowedAbsPath($templateRootPath)) {
+				$this->view->setTemplateRootPath($templateRootPath);
+			}
 		}
 	}
 
@@ -80,10 +83,10 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
 	 */
 	public function proxyAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$action = 'save';
+
 		if ($this->request->hasArgument('form')) {
 			$action = 'form';
-		} else {
-			$action = 'save';
 		}
 
 		$this->forward($action);
@@ -96,6 +99,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * @return boolean
 	 */
 	protected function isUserLoggedIn() {
+			// @TODO move this into a scope outside of controller
 		return $GLOBALS['TSFE']->fe_user->user === FALSE ? FALSE : TRUE;
 	}
 
@@ -114,7 +118,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 			$removedImage = $this->fileService->removeUploadedImage($imagefile);
 		}
 		$user = $this->removeImageFromUserAndRequest($user, $removedImage);
-
+			// @TODO can this get removed? testing
 		$user->removeImage($removedImage);
 		$requestUser = $this->request->getArgument('user');
 		$requestUser['image'] = $user->getImage();
@@ -138,8 +142,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 			$localUser->removeImage($removeImage);
 			$this->userRepository->update($localUser);
 
-			$persistenceManager = Tx_Extbase_Dispatcher::getPersistenceManager();
-			$persistenceManager->persistAll();
+			$this->objectManager->get('Tx_Extbase_Persistence_Manager')->persistAll();
 		}
 
 		$user->removeImage($removeImage);
