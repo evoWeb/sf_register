@@ -98,7 +98,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			$user = $this->addUsergroup($user, $this->settings['usergroupWithoutActivation']);
 		}
 
-		$user = $this->sendEmails($user);
+		$user = $this->sendEmailsPreSave($user);
 
 		$this->userRepository->add($user);
 
@@ -192,7 +192,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
-	protected function sendEmails($user) {
+	protected function sendEmailsPreSave($user) {
 		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
 
 		if ($this->isActivateByAdmin()) {
@@ -201,31 +201,35 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			$user = $mailService->sendUserActivationMail($user);
 		}
 
-		if ($this->isNotifyToAdmin()) {
-			$mailService->sendAdminNotificationMail($user);
+		if ($this->isNotifyPreActivationToAdmin()) {
+			$mailService->sendAdminNotificationMailPreActivation($user);
 		}
-		if ($this->isNotifyToUser()) {
-			$mailService->sendUserNotificationMail($user);
+		if ($this->isNotifyPreActivationToUser()) {
+			$mailService->sendUserNotificationMailPreActivation($user);
 		}
 
 		return $user;
 	}
 
-
 	/**
-	 * Check if the user needs to activate
+	 * Send emails to user and/or to admin
 	 *
-	 * @return boolean
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
-	protected function isActivateByUser() {
-		$result = FALSE;
+	protected function sendEmailsPostConfirm($user) {
+		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
 
-		if ($this->settings['activateByUser'] && !$this->settings['activateByAdmin']) {
-			$result = TRUE;
+		if ($this->isNotifyPostActivationToAdmin()) {
+			$mailService->sendAdminNotificationMailPostActivation($user);
+		}
+		if ($this->isNotifyPostActivationToUser()) {
+			$mailService->sendUserNotificationMailPostActivation($user);
 		}
 
-		return $result;
+		return $user;
 	}
+
 
 	/**
 	 * Check if the admin needs to activate
@@ -243,11 +247,41 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
+	 * Check if the user needs to activate
+	 *
+	 * @return boolean
+	 */
+	protected function isActivateByUser() {
+		$result = FALSE;
+
+		if ($this->settings['activateByUser'] && !$this->settings['activateByAdmin']) {
+			$result = TRUE;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Check if the admin should get notified
+	 *
+	 * @return boolean
+	 */
+	protected function isNotifyPreActivationToAdmin() {
+		$result = FALSE;
+
+		if ($this->settings['notifyToAdmin'] && !$this->isActivateByAdmin()) {
+			$result = TRUE;
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Check if the user should get notified
 	 *
 	 * @return boolean
 	 */
-	protected function isNotifyToUser() {
+	protected function isNotifyPreActivationToUser() {
 		$result = FALSE;
 
 		if ($this->settings['notifyToUser'] && !$this->isActivateByUser()) {
@@ -262,10 +296,25 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 *
 	 * @return boolean
 	 */
-	protected function isNotifyToAdmin() {
+	protected function isNotifyPostActivationToAdmin() {
 		$result = FALSE;
 
 		if ($this->settings['notifyToAdmin'] && !$this->isActivateByAdmin()) {
+			$result = TRUE;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Check if the user should get notified
+	 *
+	 * @return boolean
+	 */
+	protected function isNotifyPostActivationToUser() {
+		$result = FALSE;
+
+		if ($this->settings['notifyToUser'] && !$this->isActivateByUser()) {
 			$result = TRUE;
 		}
 

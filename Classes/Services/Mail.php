@@ -27,16 +27,6 @@
  */
 class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
-	 * @var array
-	 */
-	protected $settings = array();
-
-	/**
-	 * @var array
-	 */
-	protected $frameworkConfiguration = array();
-
-	/**
 	 * @var Tx_Extbase_Object_ObjectManagerInterface
 	 */
 	protected $objectManager;
@@ -47,28 +37,14 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	protected $configurationManager;
 
 	/**
-	 * Inject settings
-	 *
-	 * @param array $settings
-	 * @return Tx_SfRegister_Services_Mail
+	 * @var array
 	 */
-	public function injectSettings(array $settings) {
-		$this->settings = $settings;
-
-		return $this;
-	}
+	protected $settings = array();
 
 	/**
-	 * Inject object manager
-	 *
-	 * @param Tx_Extbase_Object_Manager $objectManager
-	 * @return Tx_SfRegister_Services_Mail
+	 * @var array
 	 */
-	public function _injectObjectManager_v44(Tx_Extbase_Object_Manager $objectManager) {
-		$this->objectManager = $objectManager;
-
-		return $this;
-	}
+	protected $frameworkConfiguration = array();
 
 	/**
 	 * Inject object manager
@@ -90,6 +66,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 */
 	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
+		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 		$this->frameworkConfiguration = $configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 
 		return $this;
@@ -103,10 +80,13 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendAdminActivationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$user->setMailhash(md5($user->getUsername() . time() . $user->getEmail()));
+		$user->setMailhash($this->getMailHash($user));
 
-		$subjectArguments = array('sitename', $user->getUsername());
-		$subject = Tx_Extbase_Utility_Localization::translate('subjectAdminActivationMail', 'sf_register', $subjectArguments);
+		$subject = Tx_Extbase_Utility_Localization::translate(
+			'subjectAdminActivationMail',
+			'sf_register',
+			array($this->settings['sitename'], $user->getUsername())
+		);
 
 		$variables = array(
 			'user' => $user
@@ -132,10 +112,13 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendUserActivationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$user->setMailhash(md5($user->getUsername() . time() . $user->getEmail()));
+		$user->setMailhash($this->getMailHash($user));
 
-		$subjectArguments = array('sitename', $user->getUsername());
-		$subject = Tx_Extbase_Utility_Localization::translate('subjectUserActivationMail', 'sf_register', $subjectArguments);
+		$subject = Tx_Extbase_Utility_Localization::translate(
+			'subjectUserActivationMail',
+			'sf_register',
+			array($this->settings['sitename'], $user->getUsername())
+		);
 
 		$variables = array(
 			'user' => $user
@@ -155,21 +138,29 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	}
 
 	/**
-	 * Send an email notify about the registration to the admin
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return string
+	 */
+	protected function getMailHash(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		return md5($user->getUsername() . time() . $user->getEmail());
+	}
+
+	/**
+	 * Send an email notification pre activation to the admin
 	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
-	public function sendAdminNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$subjectArguments = array('sitename', $user->getUsername());
-		$subject = Tx_Extbase_Utility_Localization::translate('subjectAdminNotificationMail', 'sf_register', $subjectArguments);
+	public function sendAdminNotificationMailPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$subjectArguments = array($this->settings['sitename'], $user->getUsername());
+		$subject = Tx_Extbase_Utility_Localization::translate('subjectAdminNotificationMailPreActivation', 'sf_register', $subjectArguments);
 
 		$variables = array(
 			'user' => $user
 		);
 
-		$templatePathAndFilename = $this->getTemplatePathAndFilename('AdminNotificationMail');
-		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
+		$templatePathAndFilename = $this->getTemplatePathAndFilename('AdminNotificationMailPreActivation');
+		$message = $this->renderFileTemplate('FeuserCreate', 'form', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getAdminRecipient(),
@@ -182,21 +173,75 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	}
 
 	/**
-	 * Send an email notify about the registration to the user
+	 * Send an email notification pre activation to the user
 	 *
 	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
-	public function sendUserNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$subjectArguments = array('sitename', $user->getUsername());
-		$subject = Tx_Extbase_Utility_Localization::translate('subjectUserNotificationMail', 'sf_register', $subjectArguments);
+	public function sendUserNotificationMailPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$subjectArguments = array($this->settings['sitename'], $user->getUsername());
+		$subject = Tx_Extbase_Utility_Localization::translate('subjectUserNotificationMailPreActivation', 'sf_register', $subjectArguments);
 
 		$variables = array(
 			'user' => $user
 		);
 
-		$templatePathAndFilename = $this->getTemplatePathAndFilename('UserNotificationMail');
-		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
+		$templatePathAndFilename = $this->getTemplatePathAndFilename('UserNotificationMailPreActivation');
+		$message = $this->renderFileTemplate('FeuserCreate', 'form', $templatePathAndFilename, $variables);
+
+		$this->sendEmail(
+			$this->getUserRecipient($user),
+			'userEmail',
+			$subject,
+			$message
+		);
+
+		return $user;
+	}
+
+	/**
+	 * Send an email notification post activation to the admin
+	 *
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 */
+	public function sendAdminNotificationMailPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$subjectArguments = array($this->settings['sitename'], $user->getUsername());
+		$subject = Tx_Extbase_Utility_Localization::translate('subjectAdminNotificationMailPostActivation', 'sf_register', $subjectArguments);
+
+		$variables = array(
+			'user' => $user
+		);
+
+		$templatePathAndFilename = $this->getTemplatePathAndFilename('AdminNotificationMailPostActivation');
+		$message = $this->renderFileTemplate('FeuserEdit', 'form', $templatePathAndFilename, $variables);
+
+		$this->sendEmail(
+			$this->getAdminRecipient(),
+			'adminEmail',
+			$subject,
+			$message
+		);
+
+		return $user;
+	}
+
+	/**
+	 * Send an email notification post activation to the user
+	 *
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 */
+	public function sendUserNotificationMailPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$subjectArguments = array($this->settings['sitename'], $user->getUsername());
+		$subject = Tx_Extbase_Utility_Localization::translate('subjectUserNotificationMailPostActivation', 'sf_register', $subjectArguments);
+
+		$variables = array(
+			'user' => $user
+		);
+
+		$templatePathAndFilename = $this->getTemplatePathAndFilename('UserNotificationMailPostActivation');
+		$message = $this->renderFileTemplate('FeuserEdit', 'form', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getUserRecipient($user),
@@ -261,7 +306,12 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$htmlMail->returnPath = $this->settings[$typeOfEmail]['fromEmail'];
 		$htmlMail->addPlain($message);
 		$htmlMail->setHTML($htmlMail->encodeMsg($message));
-
+debug($subject);
+debug($subject);
+debug($recipient);
+debug($message);
+debug($htmlMail->encodeMsg($message));
+die();
 		return $htmlMail->send($recipient);
 	}
 
@@ -273,30 +323,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getTemplatePathAndFilename($templateName) {
-		$this->getFrameworkConfiguration();
-
-		$templateRootPath = $this->getAbsoluteTemplateRootPath();
-		$templatePathAndFilename = $templateRootPath . 'Email/' . $templateName . '.html';
-
-		return $templatePathAndFilename;
-	}
-
-	/**
-	 * Get framework configuration
-	 *
-	 * @return array
-	 */
-	protected function getFrameworkConfiguration() {
-		if (TYPO3_branch == '4.4') {
-			$this->frameworkConfiguration = Tx_Extbase_Dispatcher::getExtbaseFrameworkConfiguration();
-		} else {
-			if ($this->configurationManager == NULL) {
-				$this->configurationManager = $this->objectManager->get('Tx_Extbase_Configuration_ConfigurationManagerInterface');
-				$this->frameworkConfiguration = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-			}
-		}
-		
-		return $this->frameworkConfiguration;
+		return $this->getAbsoluteTemplateRootPath() . 'Email/' . $templateName . '.html';
 	}
 
 	/**
@@ -305,65 +332,18 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getAbsoluteTemplateRootPath() {
-		$templateRootPath = '';
+		$templateRootPath = $this->frameworkConfiguration['view']['templateRootPath'];
 
-		if ($this->frameworkConfiguration['view']['templateRootPath'] === '') {
+		if ($templateRootPath === '') {
 			$templateRootPath = t3lib_extMgm::extPath('sf_register') . 'Resources/Private/Templates/';
-		} else {
-			$templateRootPath = $this->frameworkConfiguration['view']['templateRootPath'];
 		}
 
-		return t3lib_div::getFileAbsFileName($templateRootPath);
-	}
-
-	/**
-	 * renders the given Template file via fluid rendering engine.
-	 * Version which build own fluid rendering - not needed anymore as of 4.5
-	 *
-	 * @param string $controller
-	 * @param string $action
-	 * @param string $templateFile absolute path to the template File
-	 * @param array $vars array of all variables you want to assgin to the view
-	 * @return string of the rendered View.
-	 */
-	protected function _renderFileTemplate_v44($controller, $action, $templateFile, array $vars) {
-		$templateParser = Tx_Fluid_Compatibility_TemplateParserBuilder::build();
-		$objectManager = t3lib_div::makeInstance('Tx_Fluid_Compatibility_ObjectManager');
-
-		$data = '';
-		$templateContent = file_get_contents($templateFile);
-		if ($templateContent !== FALSE) {
-			$content = $templateParser->parse($templateContent);
-			$variableContainer = $objectManager->create('Tx_Fluid_Core_ViewHelper_TemplateVariableContainer', $vars);
-			$viewHelperVariableContainer = $objectManager->create('Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer');
-
-			$controllerContext = $objectManager->create('Tx_Extbase_MVC_Controller_ControllerContext');
-			$request = t3lib_div::makeInstance('Tx_Extbase_MVC_Web_Request');
-			$request->setPluginName($this->frameworkConfiguration['pluginName']);
-			$request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
-			$request->setControllerName($controller);
-			$request->setControllerActionName($action);
-			$request->setRequestURI(t3lib_div::getIndpEnv('TYPO3_SITE_URL'));
-			$request->setBaseURI(t3lib_div::getIndpEnv('TYPO3_SITE_URL'));
-			$request->setMethod((isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : NULL);
-
-			$uriBuilder = t3lib_div::makeInstance('Tx_Extbase_MVC_Web_Routing_UriBuilder');
-			$uriBuilder->setRequest($request);
-
-			$controllerContext->setRequest($request);
-			$controllerContext->setUriBuilder($uriBuilder);
-
-			$renderingContext = $objectManager->create('Tx_Fluid_Core_Rendering_RenderingContext');
-			$renderingContext->setTemplateVariableContainer($variableContainer);
-			$renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
-			$renderingContext->setControllerContext($controllerContext);
-
-			$data = $content->render($renderingContext);
+		$templateRootPath = t3lib_div::getFileAbsFileName($templateRootPath);
+		if (t3lib_div::isAllowedAbsPath($templateRootPath)) {
+			return $templateRootPath;
 		}
-
-		return $data;
 	}
-	
+
 	/**
 	 * renders the given Template file via fluid rendering engine.
 	 *
@@ -374,22 +354,18 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return string of the rendered View.
 	 */
 	protected function renderFileTemplate($controller, $action, $templateFile, array $vars) {
-		$data = '';
-		
-		if (TYPO3_branch == '4.4') {
-			$data = $this->_renderFileTemplate_v44($controller, $action, $templateFile, $vars);
-		} else {
-			$view = $this->objectManager->get('Tx_Fluid_View_StandaloneView');
-			$view->setTemplatePathAndFilename($templateFile);
-			$view->assignMultiple($vars);
-			$request = $view->getRequest();
-			$request->setPluginName($this->frameworkConfiguration['pluginName']);
-			$request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
-			$request->setControllerName($controller);
-			$request->setControllerActionName($action);
-			$data = $view->render();
-		}
-		
+		$view = $this->objectManager->get('Tx_Fluid_View_StandaloneView');
+		$view->setTemplatePathAndFilename($templateFile);
+		$view->assignMultiple($vars);
+
+		$request = $view->getRequest();
+		$request->setPluginName($this->frameworkConfiguration['pluginName']);
+		$request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
+		$request->setControllerName($controller);
+		$request->setControllerActionName($action);
+
+		$data = $view->render();
+
 		return $data;
 	}
 }

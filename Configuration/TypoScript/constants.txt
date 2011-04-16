@@ -31,6 +31,9 @@ plugin.tx_sfregister.settings {
 	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.usergroupWithoutActivation
 	usergroupWithoutActivation = 0
 
+	# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.sitename
+	sitename = dummy Site
+
 	userEmail {
 		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.userEmail.fromName
 		fromName = userEmail from
@@ -47,7 +50,7 @@ plugin.tx_sfregister.settings {
 		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.toName
 		toName = adminEmail to
 		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.toEmail
-		toEmail = sebastian@krypton.localdomain
+		toEmail = adminToEmail@test.local
 
 		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.fromName
 		fromName = adminEmail from

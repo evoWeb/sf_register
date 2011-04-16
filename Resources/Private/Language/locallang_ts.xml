@@ -18,6 +18,7 @@
 			<label index="ptss.usergroupBeforeActivation">usergroup set if an account waits for activation</label>
 			<label index="ptss.usergroupAfterActivation">usergroup set if the account was activate</label>
 			<label index="ptss.usergroupWithoutActivation">usergroup set if no activation is needed</label>
+			<label index="ptss.sitename">Name of the site used in email subject</label>
 			<label index="ptss.userEmail.fromName">from name used in email to user</label>
 			<label index="ptss.userEmail.fromEmail">from email used in email to user</label>
 			<label index="ptss.userEmail.replyName">reply name used in email to user</label>

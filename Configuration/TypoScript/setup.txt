@@ -40,6 +40,9 @@ plugin.tx_sfregister.settings {
 	# integer usergroup set if no activation is needed
 	usergroupWithoutActivation = {$plugin.tx_sfregister.settings.usergroupWithoutActivation}
 
+	# string name of the site used in subject
+	sitename = {$plugin.tx_sfregister.settings.sitename}
+
 	userEmail {
 		fromName = {$plugin.tx_sfregister.settings.userEmail.fromName}
 		fromEmail = {$plugin.tx_sfregister.settings.userEmail.fromEmail}
