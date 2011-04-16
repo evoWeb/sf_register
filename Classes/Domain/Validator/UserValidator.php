@@ -49,11 +49,6 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	protected $currentFieldName = '';
 
 	/**
-	 * @var string
-	 */
-	protected $currentValidatorName = '';
-
-	/**
 	 * @var array
 	 */
 	protected $currentValidatorOptions = array();
@@ -152,7 +147,6 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 		$result = TRUE;
 
 		foreach ($this->settings['validation'][$this->options['type']] as $fieldName => $rule) {
-			$fieldName = str_replace('.', '', $fieldName);
 			$methodName = 'get' . ucfirst($fieldName);
 
 			if (!method_exists($object, $methodName)) {
@@ -208,6 +202,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 		if (method_exists($validator, 'setFieldname')) {
 			$validator->setFieldname($this->currentFieldName);
 		}
+
 		if ($validator instanceof Tx_Extbase_Validation_Validator_ValidatorInterface AND
 				!$validator->isValid($value)) {
 
@@ -250,14 +245,15 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 * @return Tx_Extbase_Validation_Validator_ValidatorInterface
 	 */
 	protected function getValidator($rule) {
-		$this->parseRule($rule);
-
-		$validator = $this->validatorResolver->createValidator(
-			$this->currentValidatorName,
+		$currentValidator = $this->parseRule($rule);
+		$this->currentValidatorOptions = (array) $currentValidator['validatorOptions'];
+		
+		$validatorObject = $this->validatorResolver->createValidator(
+			$currentValidator['validatorName'],
 			$this->currentValidatorOptions
 		);
 
-		return $validator;
+		return $validatorObject;
 	}
 
 	/**
@@ -268,9 +264,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 */
 	protected function parseRule($rule) {
 		$parsedRules = $this->validatorResolver->getParsedValidatorAnnotation($rule);
-
-		$this->currentValidatorName = $parsedRules['validators'][0]['validatorName'];
-		$this->currentValidatorOptions = (array) $parsedRules['validators'][0]['validatorOptions'];
+		return current($parsedRules['validators']);
 	}
 }
 
