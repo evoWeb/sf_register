@@ -26,12 +26,14 @@
 			<label index="ptss.userEmail.fromEmail">from email used in email to user</label>
 			<label index="ptss.userEmail.replyName">reply name used in email to user</label>
 			<label index="ptss.userEmail.replyEmail">reply email used in email to user</label>
+			<label index="ptss.userEmail.returnPath">email address where a reply message goes to</label>
 			<label index="ptss.adminEmail.toName">to name used in email to admin</label>
 			<label index="ptss.adminEmail.toEmail">to email used in email to admin</label>
 			<label index="ptss.adminEmail.fromName">from name used in email to admin</label>
 			<label index="ptss.adminEmail.fromEmail">from email used in email to admin</label>
 			<label index="ptss.adminEmail.replyName">reply name used in email to admin</label>
 			<label index="ptss.adminEmail.replyEmail">reply email used in email to admin</label>
+			<label index="ptss.adminEmail.returnPath">email address where a reply message goes to</label>
 			<label index="ptss.storagePid">Sysfolder that contains the usergroups and users if not set zero or a selected value in the plugin will be used for storing the user</label>
 		</languageKey>
 	</data>

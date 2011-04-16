@@ -51,6 +51,9 @@ plugin.tx_sfregister.settings {
 		replyName = userEmail reply
 		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.userEmail.replyEmail
 		replyEmail = userEmailreply@test.local
+
+		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.userEmail.returnPath
+		returnPath = userEmailreturn@test.local
 	}
 
 	adminEmail {
@@ -68,6 +71,9 @@ plugin.tx_sfregister.settings {
 		replyName = adminEmail reply
 		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.replyEmail
 		replyEmail = adminEmailreply@test.local
+
+		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.adminEmail.returnPath
+		returnPath = adminEmailreturn@test.local
 	}
 }
 

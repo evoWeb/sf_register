@@ -249,13 +249,9 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getAdminRecipient() {
-		$recipient = $this->settings['adminEmail']['toEmail'];
-
-		if ($this->settings['adminEmail']['toName']) {
-			$recipient = trim($this->settings['adminEmail']['toName']) . ' <' . $recipient . '>';
-		}
-
-		return $recipient;
+		return array(
+			trim($this->settings['adminEmail']['toEmail']) => trim($this->settings['adminEmail']['toName'])
+		);
 	}
 
 	/**
@@ -265,39 +261,38 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getUserRecipient(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$recipient = $user->getEmail();
-
 		if ($user->getFirstName() || $user->getLastName()) {
-			$recipient = trim($user->getFirstName() . ' ' . $user->getLastName()) . ' <' . $recipient . '>';
+			$name = trim($user->getFirstName() . ' ' . $user->getLastName());
 		}
 
-		return $recipient;
+		return array(
+			trim($user->getEmail()) => $name
+		);
 	}
 
 
 	/**
 	 * Send email
 	 *
-	 * @param string $recipient
+	 * @param array $recipient
 	 * @param string $typeOfEmail
 	 * @param string $subject
-	 * @param string $message
+	 * @param string $body
 	 * @return boolean
 	 */
-	protected function sendEmail($recipient, $typeOfEmail, $subject, $message) {
-			// TODO replace by t3lib_mail_Mailer as t3lib_htmlmail is deprecated
-		$htmlMail = t3lib_div::makeInstance('t3lib_htmlmail');
-		$htmlMail->start();
-		$htmlMail->recipient = $recipient;
-		$htmlMail->subject = $subject;
-		$htmlMail->from_email = $this->settings[$typeOfEmail]['fromEmail'];
-		$htmlMail->from_name = $this->settings[$typeOfEmail]['fromName'];
-		$htmlMail->returnPath = $this->settings[$typeOfEmail]['fromEmail'];
-		$htmlMail->addPlain($message);
-		$htmlMail->setHTML($htmlMail->encodeMsg($message));
-debug($subject, 'subject');
+	protected function sendEmail(array $recipient, $typeOfEmail, $subject, $body) {
+		$mail = t3lib_div::makeInstance('t3lib_mail_Message');
+		$mail
+			->setTo($recipient)
+			->setFrom(array($this->settings[$typeOfEmail]['fromEmail'] => $this->settings[$typeOfEmail]['fromName']))
+			->setReplyTo(array($this->settings[$typeOfEmail]['replyEmail'] => $this->settings[$typeOfEmail]['replyName']))
+			->setSubject($subject)
+			->setBody($body);
 
-		return $htmlMail->send($recipient);
+		//$mail->attach(Swift_Attachment::fromPath($theFile)->setFilename($theName));
+
+		$mail->send();
+		return $mail->isSent();
 	}
 
 

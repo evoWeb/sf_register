@@ -50,6 +50,8 @@ plugin.tx_sfregister.settings {
 
 		replyName = {$plugin.tx_sfregister.settings.userEmail.replyName}
 		replyEmail = {$plugin.tx_sfregister.settings.userEmail.replyEmail}
+
+		returnPath = {$plugin.tx_sfregister.settings.userEmail.returnPath}
 	}
 
 	adminEmail {
@@ -61,6 +63,8 @@ plugin.tx_sfregister.settings {
 
 		replyName = {$plugin.tx_sfregister.settings.adminEmail.replyName}
 		replyEmail = {$plugin.tx_sfregister.settings.adminEmail.replyEmail}
+
+		returnPath = {$plugin.tx_sfregister.settings.adminEmail.returnPath}
 	}
 
 	validation.create {
