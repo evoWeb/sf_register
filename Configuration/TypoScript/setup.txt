@@ -97,6 +97,8 @@ plugin.tx_sfregister.settings {
 			2 = Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator
 		}
 	}
+
+	filefieldname = image
 }
 
 plugin.tx_sfregister.persistence {
