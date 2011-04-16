@@ -1,7 +1,6 @@
 <T3DataStructure>
 	<meta>
 		<langDisable>1</langDisable>
-		<!--  <langChildren>1</langChildren>!-->
 	</meta>
 	<sheets>
 		<sDEF>
@@ -19,11 +18,11 @@
 								<items type="array">
 									<numIndex index="0" type="array">
 											<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.switchableControllerAction.create</numIndex>
-											<numIndex index="1">FeuserCreate->form;FeuserCreate->preview;FeuserCreate->proxy;FeuserCreate->save;FeuserCreate->confirm</numIndex>
+											<numIndex index="1">FeuserCreate->form;FeuserCreate->preview;FeuserCreate->proxy;FeuserCreate->save;FeuserCreate->confirm;FeuserCreate->removeImage</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
 											<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.switchableControllerAction.edit</numIndex>
-											<numIndex index="1">FeuserEdit->form;FeuserEdit->preview;FeuserEdit->proxy;FeuserEdit->save</numIndex>
+											<numIndex index="1">FeuserEdit->form;FeuserEdit->preview;FeuserEdit->proxy;FeuserEdit->save;FeuserEdit->removeImage</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
 											<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.switchableControllerAction.password</numIndex>
