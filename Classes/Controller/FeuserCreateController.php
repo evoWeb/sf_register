@@ -209,7 +209,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 		if ($this->isNotifyToUser()) {
 			$mailService->sendUserNotificationMail($user);
 		}
-die();
+
 		return $user;
 	}
 

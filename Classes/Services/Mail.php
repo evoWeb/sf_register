@@ -94,6 +94,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 			$message
 		);
 
+		$user = $this->processHook('sendAdminNotificationMailPostSend', $user, $this->settings, $this->objectManager);
+
 		return $user;
 	}
 
@@ -117,6 +119,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 			$this->getSubject($user, 'subjectAdminNotificationMailPostActivation'),
 			$message
 		);
+
+		$user = $this->processHook('sendAdminNotificationMailPostActivationPostSend', $user, $this->settings, $this->objectManager);
 
 		return $user;
 	}
@@ -144,6 +148,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 			$message
 		);
 
+		$user = $this->processHook('sendAdminNotificationMailPreActivationPostSend', $user, $this->settings, $this->objectManager);
+
 		return $user;
 	}
 
@@ -168,6 +174,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 			$message
 		);
 
+		$user = $this->processHook('sendUserNotificationMailPostSend', $user, $this->settings, $this->objectManager);
+
 		return $user;
 	}
 
@@ -191,6 +199,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 			$this->getSubject($user, 'subjectUserNotificationMailPostActivation'),
 			$message
 		);
+
+		$user = $this->processHook('sendUserNotificationMailPostActivationPostSend', $user, $this->settings, $this->objectManager);
 
 		return $user;
 	}
@@ -217,6 +227,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 			$this->getSubject($user, 'subjectUserNotificationMailPreActivation'),
 			$message
 		);
+
+		$user = $this->processHook('sendUserNotificationMailPreActivationPostSend', $user, $this->settings, $this->objectManager);
 
 		return $user;
 	}
@@ -278,7 +290,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @param string $typeOfEmail
 	 * @param string $subject
 	 * @param string $body
-	 * @return boolean
+	 * @return void
 	 */
 	protected function sendEmail(array $recipient, $typeOfEmail, $subject, $body) {
 		$mail = t3lib_div::makeInstance('t3lib_mail_Message');
@@ -289,13 +301,12 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 			->setSubject($subject)
 			->setBody($body);
 
-		//$mail->attach(Swift_Attachment::fromPath($theFile)->setFilename($theName));
+		$mail = $this->processHook('sendMailPreSend', $mail, $this->settings, $this->objectManager);
 
 		$mail->send();
-		return $mail->isSent();
 	}
 
-
+	
 	/**
 	 * Get template path and filename
 	 *
@@ -347,6 +358,24 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$data = $view->render();
 
 		return $data;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	protected function processHook($hookName) {
+		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['Tx_SfRegister_Services_Mail'][$hookName])) {
+			$userObjectReferences = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['Tx_SfRegister_Services_Mail'][$hookName];
+			$result = func_get_arg(1);
+			$arguments = array_slice(func_get_args(), 2);
+
+			foreach ($userObjectReferences as $userObjectReference) {
+				$hookObj =& t3lib_div::getUserObj($userObjectReference);
+				$result = $hookObj->{$hookName}($result, $arguments);
+			}
+		}
+
+		return $result;
 	}
 }
 
