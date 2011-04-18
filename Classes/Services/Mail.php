@@ -81,23 +81,17 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 */
 	public function sendAdminNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$type = 'AdminNotificationMail';
-		$variables = array(
-			'user' => $user
-		);
-
+		$variables = array('user' => $user);
 		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
-		$message = $this->renderFileTemplate('FeuserCreate', 'form', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject($user, 'subject' . $type),
-			$message
+			$this->renderFileTemplate('FeuserCreate', 'form', $templatePathAndFilename, $variables)
 		);
 
-		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
-
-		return $user;
+		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 	}
 
 	/**
@@ -108,23 +102,17 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 */
 	public function sendAdminNotificationMailPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$type = 'AdminNotificationMailPostActivation';
-		$variables = array(
-			'user' => $user
-		);
-
+		$variables = array('user' => $user);
 		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
-		$message = $this->renderFileTemplate('FeuserEdit', 'form', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject($user, 'subject' . $type),
-			$message
+			$this->renderFileTemplate('FeuserEdit', 'form', $templatePathAndFilename, $variables)
 		);
 
-		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
-
-		return $user;
+		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 	}
 
 	/**
@@ -135,25 +123,19 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 */
 	public function sendAdminNotificationMailPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$type = 'AdminNotificationMailPreActivation';
-		$user->setMailhash($this->getMailHash($user));
-
-		$variables = array(
-			'user' => $user
-		);
-
+		$variables = array('user' => $user);
 		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
-		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
+
+		$user->setMailhash($this->getMailHash($user));
 
 		$this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject($user, 'subject' . $type),
-			$message
+			$this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables)
 		);
 
-		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
-
-		return $user;
+		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 	}
 
 	/**
@@ -164,23 +146,17 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 */
 	public function sendUserNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$type = 'UserNotificationMail';
-		$variables = array(
-			'user' => $user
-		);
-
+		$variables = array('user' => $user);
 		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
-		$message = $this->renderFileTemplate('FeuserCreate', 'form', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getUserRecipient($user),
 			'userEmail',
 			$this->getSubject($user, 'subject' . $type),
-			$message
+			$this->renderFileTemplate('FeuserCreate', 'form', $templatePathAndFilename, $variables)
 		);
 
-		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
-
-		return $user;
+		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 	}
 
 	/**
@@ -191,23 +167,17 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 */
 	public function sendUserNotificationMailPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$type = 'UserNotificationMailPostActivation';
-		$variables = array(
-			'user' => $user
-		);
-
+		$variables = array('user' => $user);
 		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
-		$message = $this->renderFileTemplate('FeuserEdit', 'form', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getUserRecipient($user),
 			'userEmail',
 			$this->getSubject($user, 'subject' . $type),
-			$message
+			$this->renderFileTemplate('FeuserEdit', 'form', $templatePathAndFilename, $variables)
 		);
 
-		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
-
-		return $user;
+		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 	}
 
 	/**
@@ -218,25 +188,19 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 */
 	public function sendUserNotificationMailPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$type = 'UserNotificationMailPreActivation';
-		$user->setMailhash($this->getMailHash($user));
-
-		$variables = array(
-			'user' => $user
-		);
-
+		$variables = array('user' => $user);
 		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
-		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
+
+		$user->setMailhash($this->getMailHash($user));
 
 		$this->sendEmail(
 			$this->getUserRecipient($user),
 			'userEmail',
 			$this->getSubject($user, 'subject' . $type),
-			$message
+			$this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables)
 		);
 
-		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
-
-		return $user;
+		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 	}
 
 
@@ -342,6 +306,24 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	}
 
 	/**
+	 * Get absolute layout root path
+	 *
+	 * @return string
+	 */
+	protected function getLayoutRootPath() {
+		$layoutRootPath = $this->frameworkConfiguration['view']['layoutRootPath'];
+
+		if ($layoutRootPath === '') {
+			$layoutRootPath = t3lib_extMgm::extPath('sf_register') . 'Resources/Private/Layout/';
+		}
+
+		$layoutRootPath = t3lib_div::getFileAbsFileName($layoutRootPath);
+		if (t3lib_div::isAllowedAbsPath($layoutRootPath)) {
+			return $layoutRootPath;
+		}
+	}
+
+	/**
 	 * renders the given Template file via fluid rendering engine.
 	 *
 	 * @param string $controller
@@ -350,10 +332,11 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @param array $vars array of all variables you want to assgin to the view
 	 * @return string of the rendered View.
 	 */
-	protected function renderFileTemplate($controller, $action, $templateFile, array $vars) {
+	protected function renderFileTemplate($controller, $action, $templateFile, array $variables) {
 		$view = $this->objectManager->get('Tx_Fluid_View_StandaloneView');
 		$view->setTemplatePathAndFilename($templateFile);
-		$view->assignMultiple($vars);
+		$view->setLayoutRootPath($this->getLayoutRootPath());
+		$view->assignMultiple($variables);
 
 		$request = $view->getRequest();
 		$request->setPluginName($this->frameworkConfiguration['pluginName']);
