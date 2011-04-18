@@ -62,7 +62,6 @@ class Tx_SfRegister_Domain_Validator_ImageUploadValidator extends Tx_Extbase_Val
 
 		return $result;
 	}
-
 }
 
 ?>

@@ -29,9 +29,9 @@
  */
 class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var Tx_Extbase_Configuration_ConfigurationManager
 	 */
-	protected $objectManager;
+	protected $configurationManager;
 
 	/**
 	 * @var array
@@ -54,49 +54,23 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	protected $currentValidatorOptions = array();
 
 	/**
-	 * Constructor
-	 *
+	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
 	 * @return void
 	 */
-	public function __construct() {
-		$this->initializeObjectManager();
-		$this->initializeSettings();
-		$this->initializeValidatorResolver();
-	}
-
-	/**
-	 * Initializes the Object framework.
-	 *
-	 * @return void
-	 * @see initialize()
-	 */
-	protected function initializeObjectManager() {
-		$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
-	}
-
-	/**
-	 * Initialize settings
-	 *
-	 * @return array
-	 */
-	protected function initializeSettings() {
-		if ($this->settings == NULL) {
-			$configurationManager = $this->objectManager->get('Tx_Extbase_Configuration_ConfigurationManagerInterface');
-			$this->settings = $configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-		}
-
-		return $this->settings;
+	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
+		$this->configurationManager = $configurationManager;
+		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 	}
 
 	/**
 	 * Initialize validator resolver
 	 *
+	 * @param Tx_SfRegister_Validation_ValidatorResolver $validatorResolver
 	 * @return void
 	 */
-	protected function initializeValidatorResolver() {
-		$this->validatorResolver = $this->objectManager->get('Tx_SfRegister_Validation_ValidatorResolver');
+	public function injectValidatorResolver(Tx_SfRegister_Validation_ValidatorResolver $validatorResolver) {
+		$this->validatorResolver = $validatorResolver;
 	}
-
 
 	/**
 	 * Add an error with message and code to the property errors

@@ -80,21 +80,22 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendAdminNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$type = 'AdminNotificationMail';
 		$variables = array(
 			'user' => $user
 		);
 
-		$templatePathAndFilename = $this->getTemplatePathAndFilename('AdminNotificationMail');
+		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
 		$message = $this->renderFileTemplate('FeuserCreate', 'form', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
-			$this->getSubject($user, 'subjectAdminNotificationMail'),
+			$this->getSubject($user, 'subject' . $type),
 			$message
 		);
 
-		$user = $this->processHook('sendAdminNotificationMailPostSend', $user, $this->settings, $this->objectManager);
+		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 
 		return $user;
 	}
@@ -106,21 +107,22 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendAdminNotificationMailPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$type = 'AdminNotificationMailPostActivation';
 		$variables = array(
 			'user' => $user
 		);
 
-		$templatePathAndFilename = $this->getTemplatePathAndFilename('AdminNotificationMailPostActivation');
+		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
 		$message = $this->renderFileTemplate('FeuserEdit', 'form', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
-			$this->getSubject($user, 'subjectAdminNotificationMailPostActivation'),
+			$this->getSubject($user, 'subject' . $type),
 			$message
 		);
 
-		$user = $this->processHook('sendAdminNotificationMailPostActivationPostSend', $user, $this->settings, $this->objectManager);
+		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 
 		return $user;
 	}
@@ -132,23 +134,24 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendAdminNotificationMailPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$type = 'AdminNotificationMailPreActivation';
 		$user->setMailhash($this->getMailHash($user));
 
 		$variables = array(
 			'user' => $user
 		);
 
-		$templatePathAndFilename = $this->getTemplatePathAndFilename('AdminNotificationMailPreActivation');
+		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
 		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
-			$this->getSubject($user, 'subjectAdminNotificationMailPreActivation'),
+			$this->getSubject($user, 'subject' . $type),
 			$message
 		);
 
-		$user = $this->processHook('sendAdminNotificationMailPreActivationPostSend', $user, $this->settings, $this->objectManager);
+		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 
 		return $user;
 	}
@@ -160,21 +163,22 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendUserNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$type = 'UserNotificationMail';
 		$variables = array(
 			'user' => $user
 		);
 
-		$templatePathAndFilename = $this->getTemplatePathAndFilename('UserNotificationMail');
+		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
 		$message = $this->renderFileTemplate('FeuserCreate', 'form', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getUserRecipient($user),
 			'userEmail',
-			$this->getSubject($user, 'subjectUserNotificationMail'),
+			$this->getSubject($user, 'subject' . $type),
 			$message
 		);
 
-		$user = $this->processHook('sendUserNotificationMailPostSend', $user, $this->settings, $this->objectManager);
+		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 
 		return $user;
 	}
@@ -186,21 +190,22 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendUserNotificationMailPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$type = 'UserNotificationMailPostActivation';
 		$variables = array(
 			'user' => $user
 		);
 
-		$templatePathAndFilename = $this->getTemplatePathAndFilename('UserNotificationMailPostActivation');
+		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
 		$message = $this->renderFileTemplate('FeuserEdit', 'form', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getUserRecipient($user),
 			'userEmail',
-			$this->getSubject($user, 'subjectUserNotificationMailPostActivation'),
+			$this->getSubject($user, 'subject' . $type),
 			$message
 		);
 
-		$user = $this->processHook('sendUserNotificationMailPostActivationPostSend', $user, $this->settings, $this->objectManager);
+		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 
 		return $user;
 	}
@@ -212,23 +217,24 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	public function sendUserNotificationMailPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$type = 'UserNotificationMailPreActivation';
 		$user->setMailhash($this->getMailHash($user));
 
 		$variables = array(
 			'user' => $user
 		);
 
-		$templatePathAndFilename = $this->getTemplatePathAndFilename('UserNotificationMailPreActivation');
+		$templatePathAndFilename = $this->getTemplatePathAndFilename($type);
 		$message = $this->renderFileTemplate('FeuserCreate', 'confirm', $templatePathAndFilename, $variables);
 
 		$this->sendEmail(
 			$this->getUserRecipient($user),
 			'userEmail',
-			$this->getSubject($user, 'subjectUserNotificationMailPreActivation'),
+			$this->getSubject($user, 'subject' . $type),
 			$message
 		);
 
-		$user = $this->processHook('sendUserNotificationMailPreActivationPostSend', $user, $this->settings, $this->objectManager);
+		$user = $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
 
 		return $user;
 	}
