@@ -9,7 +9,10 @@
 			<label index="ptss.useDataOfLoggedinFeuser">defines in edit mode if the fields get filled with data of logged in user</label>
 			<label index="ptss.badWordList">comma separated list of words used in bad word validator</label>
 			<label index="ptss.forwardToEditAfterSave">show the edit form after saving the create or edit form</label>
-			<label index="ptss.encryptPassword">Mode of password encryption</label>
+			<label index="ptss.encryptPassword">Mode of password encryption: if saltedpassword is installed it overrides selection made here</label>
+			<label index="ptss.encryptPassword.0">plaintext no encrytion at all</label>
+			<label index="ptss.encryptPassword.1">md5-hash of password</label>
+			<label index="ptss.encryptPassword.2">sha1-hash of password</label>
 			<label index="ptss.useEncryptedFilename">use encrypted filename to deny direct access on uploaded files</label>
 			<label index="ptss.notifyPreActivationToAdmin">whether the admin needs to activate the user account</label>
 			<label index="ptss.notifyPostActivationToAdmin">whether the admin should get notified about the activation of the user account</label>
