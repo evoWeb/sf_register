@@ -39,12 +39,11 @@ class Tx_SfRegister_Domain_Validator_ImageUploadValidator extends Tx_Extbase_Val
 	protected $fileService;
 
 	/**
-	 * Constructor of the class
-	 *
+	 * @param Tx_SfRegister_Services_File $fileService
 	 * @return void
 	 */
-	public function __construct() {
-		$this->fileService = t3lib_div::makeInstance('Tx_SfRegister_Services_File');
+	public function injectFileService(Tx_SfRegister_Services_File $fileService) {
+		$this->fileService = $fileService;
 	}
 
 	/**

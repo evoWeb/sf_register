@@ -34,6 +34,11 @@
  */
 class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * @var Tx_Extbase_Configuration_ConfigurationManager
+	 */
+	protected $configurationManager;
+
+	/**
 	 * @var array
 	 */
 	protected $settings = array();
@@ -44,12 +49,12 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 	protected $userRepository = NULL;
 
 	/**
-	 * Constructor
-	 *
+	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
 	 * @return void
 	 */
-	public function __construct() {
-		$this->settings = Tx_SfRegister_Domain_Validator_UserValidator::getSettings();
+	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
+		$this->configurationManager = $configurationManager;
+		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 	}
 
 	/**

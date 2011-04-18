@@ -29,9 +29,33 @@
  */
 class Tx_SfRegister_Domain_Validator_PasswordsEqualValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * @var Tx_Extbase_Configuration_ConfigurationManager
+	 */
+	protected $configurationManager;
+
+	/**
+	 * @var array
+	 */
+	protected $settings = array();
+
+	/**
 	 * @var string
 	 */
 	protected $fieldname = 'password';
+
+	/**
+	 * @var string
+	 */
+	protected $namespace = '';
+
+	/**
+	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
+	 * @return void
+	 */
+	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
+		$this->configurationManager = $configurationManager;
+		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+	}
 
 	/**
 	 * Setter for fieldname
@@ -66,7 +90,7 @@ class Tx_SfRegister_Domain_Validator_PasswordsEqualValidator extends Tx_Extbase_
 	 * @return string
 	 */
 	protected function getPasswordFromRequest() {
-		$requestData = t3lib_div::_GP('tx_sfregister_form');
+		$requestData = t3lib_div::_GP($this->getNamespace());
 		$fieldname = str_replace('Again', '', $this->fieldname);
 		$result = '';
 
@@ -81,6 +105,20 @@ class Tx_SfRegister_Domain_Validator_PasswordsEqualValidator extends Tx_Extbase_
 		}
 
 		return $result;
+	}
+
+/**
+	 * Get the namespace of the uploaded file
+	 *
+	 * @return string
+	 */
+	protected function getNamespace() {
+		if ($this->namespace === '') {
+			$frameworkSettings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+			$this->namespace = strtolower('tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']);
+		}
+
+		return $this->namespace;
 	}
 }
 
