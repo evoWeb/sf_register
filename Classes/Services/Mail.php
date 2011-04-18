@@ -370,9 +370,11 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return mixed
 	 */
 	protected function processHook($hookName) {
-		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['Tx_SfRegister_Services_Mail'][$hookName])) {
+		$result = func_get_arg(1);
+
+		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['Tx_SfRegister_Services_Mail'][$hookName]) &&
+				count($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['Tx_SfRegister_Services_Mail'][$hookName])) {
 			$userObjectReferences = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['Tx_SfRegister_Services_Mail'][$hookName];
-			$result = func_get_arg(1);
 			$arguments = array_slice(func_get_args(), 2);
 
 			foreach ($userObjectReferences as $userObjectReference) {
