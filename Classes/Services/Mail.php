@@ -288,7 +288,11 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getAbsoluteTemplateRootPath() {
-		$templateRootPath = $this->frameworkConfiguration['view']['templateRootPath'];
+		$templateRootPath = $this->settings['templateRootPath'];
+
+		if ($templateRootPath === '') {
+			$templateRootPath = $this->frameworkConfiguration['view']['templateRootPath'];
+		}
 
 		if ($templateRootPath === '') {
 			$templateRootPath = t3lib_extMgm::extPath('sf_register') . 'Resources/Private/Templates/';
@@ -306,7 +310,11 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getAbsoluteLayoutRootPath() {
-		$layoutRootPath = $this->frameworkConfiguration['view']['layoutRootPath'];
+		$layoutRootPath = $this->settings['layoutRootPath'];
+
+		if ($layoutRootPath === '') {
+			$layoutRootPath = $this->frameworkConfiguration['view']['layoutRootPath'];
+		}
 
 		if ($layoutRootPath === '') {
 			$layoutRootPath = t3lib_extMgm::extPath('sf_register') . 'Resources/Private/Layout/';
