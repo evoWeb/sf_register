@@ -39,7 +39,24 @@ class Tx_SfRegister_Domain_Model_PasswordsEqualValidatorTest extends Tx_Extbase_
 	public function setUp() {
 		$this->postBackup = $_POST;
 
+		$extensionName = 'SfRegister';
+		$pluginName = 'Form';
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName]['modules'][$pluginName]['controllers']['FeuserEdit'] = array(
+			'actions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'),
+			'nonCacheableActions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'),
+		);
+
+		$bootstrap = new Tx_Extbase_Core_Bootstrap();
+		$bootstrap->run('', array(
+			'userFunc' => 'tx_extbase_core_bootstrap->run',
+			'extensionName' => $extensionName,
+			'pluginName' => $pluginName,
+		));
+
+		$configurationManager = $this->objectManager->get('Tx_Extbase_Configuration_ConfigurationManager');
+
 		$this->fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_PasswordsEqualValidator', array('dummy'));
+		$this->fixture->injectConfigurationManager($configurationManager);
 	}
 
 	public function tearDown() {
