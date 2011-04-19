@@ -83,7 +83,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$type = str_replace('send', '', __FUNCTION__);
 		$variables = array('user' => $user);
 
-		$this->sendEmail(
+		$mailResult = $this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject($user, 'subject' . $type),
@@ -103,7 +103,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$type = str_replace('send', '', __FUNCTION__);
 		$variables = array('user' => $user);
 
-		$this->sendEmail(
+		$mailResult = $this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject($user, 'subject' . $type),
@@ -125,7 +125,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 		$user->setMailhash($this->getMailHash($user));
 
-		$this->sendEmail(
+		$mailResult = $this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject($user, 'subject' . $type),
@@ -145,7 +145,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$type = str_replace('send', '', __FUNCTION__);
 		$variables = array('user' => $user);
 
-		$this->sendEmail(
+		$mailResult = $this->sendEmail(
 			$this->getUserRecipient($user),
 			'userEmail',
 			$this->getSubject($user, 'subject' . $type),
@@ -165,7 +165,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$type = str_replace('send', '', __FUNCTION__);
 		$variables = array('user' => $user);
 
-		$this->sendEmail(
+		$mailResult = $this->sendEmail(
 			$this->getUserRecipient($user),
 			'userEmail',
 			$this->getSubject($user, 'subject' . $type),
@@ -187,7 +187,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 		$user->setMailhash($this->getMailHash($user));
 
-		$this->sendEmail(
+		$mailResult = $this->sendEmail(
 			$this->getUserRecipient($user),
 			'userEmail',
 			$this->getSubject($user, 'subject' . $type),
@@ -254,24 +254,31 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @param array $recipient
 	 * @param string $typeOfEmail
 	 * @param string $subject
-	 * @param string $body
+	 * @param string $bodyHTML
+	 * @param string $bodyPlain
 	 * @return void
 	 */
-	protected function sendEmail(array $recipient, $typeOfEmail, $subject, $body) {
+	protected function sendEmail(array $recipient, $typeOfEmail, $subject, $bodyHTML, $bodyPlain = '') {
 		$mail = t3lib_div::makeInstance('t3lib_mail_Message');
 		$mail
 			->setTo($recipient)
 			->setFrom(array($this->settings[$typeOfEmail]['fromEmail'] => $this->settings[$typeOfEmail]['fromName']))
 			->setReplyTo(array($this->settings[$typeOfEmail]['replyEmail'] => $this->settings[$typeOfEmail]['replyName']))
-			->setSubject($subject)
-			->setBody($body);
+			->setSubject($subject);
+
+		if ($bodyHTML !== '') {
+			$mail->addPart($bodyHTML, 'text/html');
+		}
+		if ($bodyPlain !== '') {
+			$mail->addPart($bodyPlain, 'text/plain');
+		}
 
 		$mail = $this->processHook('sendMailPreSend', $mail, $this->settings, $this->objectManager);
 
-		$mail->send();
+		return $mail->send();
 	}
 
-	
+
 	/**
 	 * Get template path and filename
 	 *
@@ -288,10 +295,11 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getAbsoluteTemplateRootPath() {
-		$templateRootPath = $this->settings['templateRootPath'];
+		$result = '';
+		$templateRootPath = trim($this->settings['templateRootPath']);
 
 		if ($templateRootPath === '') {
-			$templateRootPath = $this->frameworkConfiguration['view']['templateRootPath'];
+			$templateRootPath = trim($this->frameworkConfiguration['view']['templateRootPath']);
 		}
 
 		if ($templateRootPath === '') {
@@ -300,8 +308,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 		$templateRootPath = t3lib_div::getFileAbsFileName($templateRootPath);
 		if (t3lib_div::isAllowedAbsPath($templateRootPath)) {
-			return $templateRootPath;
+			$result = $templateRootPath . (substr($templateRootPath, -1) !== '/' ? '/' : '');
 		}
+
+		return $result;
 	}
 
 	/**
@@ -310,10 +320,11 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getAbsoluteLayoutRootPath() {
-		$layoutRootPath = $this->settings['layoutRootPath'];
+		$result = '';
+		$layoutRootPath = trim($this->settings['layoutRootPath']);
 
 		if ($layoutRootPath === '') {
-			$layoutRootPath = $this->frameworkConfiguration['view']['layoutRootPath'];
+			$layoutRootPath = trim($this->frameworkConfiguration['view']['layoutRootPath']);
 		}
 
 		if ($layoutRootPath === '') {
@@ -322,8 +333,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 		$layoutRootPath = t3lib_div::getFileAbsFileName($layoutRootPath);
 		if (t3lib_div::isAllowedAbsPath($layoutRootPath)) {
-			return $layoutRootPath;
+			$result = $layoutRootPath . (substr($layoutRootPath, -1) !== '/' ? '/' : '');
 		}
+
+		return $result;
 	}
 
 	/**
