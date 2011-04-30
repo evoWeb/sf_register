@@ -21,6 +21,7 @@
 			<label index="city">City</label>
 			<label index="country">Country</label>
 			<label index="staticInfoCountry">Country</label>
+			<label index="zone">State/province</label>
 			<label index="password">Password</label>
 			<label index="gtc">General terms and conditions</label>
 			<label index="gtc.checked">not accepted</label>

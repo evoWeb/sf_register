@@ -122,9 +122,15 @@ plugin.tx_sfregister.persistence {
 				recordType = Tx_Extbase_Domain_Model_FrontendUser
 			}
 		}
+
 		Tx_SfRegister_Domain_Model_StaticCountry {
 			mapping {
 				tableName = static_countries
+			}
+		}
+		Tx_SfRegister_Domain_Model_StaticCountryZone {
+			mapping {
+				tableName = static_country_zones
 			}
 		}
 	}
