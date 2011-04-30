@@ -39,6 +39,31 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 
 
 	/**
+	 * @var  integer 1 or 2 for mr or mrs
+	 */
+	protected $gender;
+
+	/**
+	 * @var  DateTime date of birth
+	 */
+	protected $dateOfBirth;
+
+	/**
+	 * @var string of language
+	 */
+	protected $language;
+
+	/**
+	 * @var string code of zone
+	 */
+	protected $zone;
+
+	/**
+	 * @var string two character iso code of country
+	 */
+	protected $staticInfoCountry;
+
+	/**
 	 * @var string Number of mobilephone
 	 */
 	protected $mobilephone;
@@ -47,6 +72,31 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 * @var boolean General terms and conditions accepted flag
 	 */
 	protected $gtc;
+
+	/**
+	 * @var integer of employee status
+	 */
+	protected $status;
+
+	/**
+	 * @var boolean wether the user register by invitation
+	 */
+	protected $byInvitation;
+
+	/**
+	 * @var string comment of user
+	 */
+	protected $comments;
+
+	/**
+	 * @var boolean if emails should be send as HTML or plain text
+	 */
+	protected $moduleSysDmailHtml;
+
+	/**
+	 * @var array of selected categories
+	 */
+	protected $moduleSysDmailCategory;
 
 
 
@@ -140,6 +190,25 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 
+
+	/**
+	 * Setter for dateOfBirth
+	 *
+	 * @param string $dateOfBirth
+	 * @return void
+	 */
+	public function setDateOfBirth($dateOfBirth) {
+		$this->dateOfBirth = $dateOfBirth;
+	}
+
+	/**
+	 * Getter for dateOfBirth
+	 *
+	 * @return date
+	 */
+	public function getDateOfBirth() {
+		return $this->dateOfBirth;
+	}
 
 	/**
 	 * Setter for mobilphone

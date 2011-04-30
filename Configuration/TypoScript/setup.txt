@@ -1,8 +1,8 @@
 page {
 	includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/styles.css
 
-	includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register.js
 	includeJSFooter.passwordmeter = EXT:sf_register/Resources/Public/JavaScript/passwordmeter.js
+	includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register.js
 }
 
 
@@ -120,6 +120,11 @@ plugin.tx_sfregister.persistence {
 			mapping {
 				tableName = fe_users
 				recordType = Tx_Extbase_Domain_Model_FrontendUser
+			}
+		}
+		Tx_SfRegister_Domain_Model_StaticCountry {
+			mapping {
+				tableName = static_countries
 			}
 		}
 	}

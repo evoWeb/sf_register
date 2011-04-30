@@ -20,10 +20,12 @@
 			<label index="zip">Zip</label>
 			<label index="city">City</label>
 			<label index="country">Country</label>
+			<label index="staticInfoCountry">Country</label>
 			<label index="password">Password</label>
 			<label index="gtc">General terms and conditions</label>
 			<label index="gtc.checked">not accepted</label>
 			<label index="gtc.checked1">accepted</label>
+			<label index="dateOfBirth">Birth date</label>
 			<label index="image">Profilimage</label>
 			<label index="image.none">Profilimage not uploaded</label>
 
