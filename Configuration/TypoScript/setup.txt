@@ -133,6 +133,11 @@ plugin.tx_sfregister.persistence {
 				tableName = static_country_zones
 			}
 		}
+		Tx_SfRegister_Domain_Model_StaticLanguage {
+			mapping {
+				tableName = static_languages
+			}
+		}
 	}
 }
 
