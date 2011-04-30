@@ -2,10 +2,11 @@
 <T3locallang>
 	<meta type="array">
 		<type>module</type>
-		<description>Language labels for the Shopping list extension in the FRONTEND</description>
+		<description>Language labels for frontend belonging to extension 'sf_register'</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="gender">Gender</label>
 			<label index="title">Title</label>
 			<label index="company">Company</label>
 			<label index="lastName">Last Name</label>

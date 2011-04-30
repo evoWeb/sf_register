@@ -2,14 +2,31 @@
 <T3locallang>
 	<meta type="array">
 		<type>database</type>
-		<description>Language labels for backend labels belonging to extension 'sf_register'</description>
+		<description>Language labels for backend belonging to extension 'sf_register'</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="tt_content.list_type_form">Feuser Register</label>
 			<label index="fe_users.mailhash">Mailhash of confirmation mail</label>
+			<label index="fe_users.gender">Mr/Ms:</label>
+			<label index="fe_users.gender.I.1">Mr</label>
+			<label index="fe_users.gender.I.2">Ms</label>
+			<label index="fe_users.date_of_birth">Date of birth</label>
+			<label index="fe_users.language">Language</label>
+			<label index="fe_users.zone">State/province</label>
+			<label index="fe_users.static_info_country">Country Code</label>
 			<label index="fe_users.mobilephone">Mobile phone:</label>
 			<label index="fe_users.gtc">General terms and conditions accepted</label>
+			<label index="fe_users.status">Status:</label>
+			<label index="fe_users.status.I.1">Student</label>
+			<label index="fe_users.status.I.2">Job seeking full time</label>
+			<label index="fe_users.status.I.3">Working</label>
+			<label index="fe_users.status.I.4">Retired</label>
+			<label index="fe_users.status.I.5">Job seeking half time</label>
+			<label index="fe_users.by_invitation">Was invited</label>
+			<label index="fe_users.comments">Comments</label>
+			<label index="fe_users.module_sys_dmail_html">Receive emails in HTML format</label>
+			<label index="fe_users.module_sys_dmail_category">Subscribe to categories</label>
 
 			<label index="form_flexform.sheet_general">General settings</label>
 			<label index="form_flexform.switchableControllerAction">General settings</label>
