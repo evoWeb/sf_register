@@ -1,9 +1,9 @@
 function attachKeyupEvent() {
 	var element = document.getElementById('sfrPassword');
 
-	if (element.addEventListener) {
+	if (element && element.addEventListener) {
 		element.addEventListener('keyup', callTestPassword, false);
-	} else {
+	} else if (element) {
 		element.attachEvent('onkeyup', callTestPassword);
 	}
 }
