@@ -192,6 +192,25 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 
 
 	/**
+	 * Setter for gender
+	 *
+	 * @param integer $gender
+	 * @return void
+	 */
+	public function setGender($gender) {
+		$this->gender = $gender;
+	}
+
+	/**
+	 * Getter for gender
+	 *
+	 * @return integer
+	 */
+	public function getGender() {
+		return $this->gender;
+	}
+
+	/**
 	 * Setter for dateOfBirth
 	 *
 	 * @param string $dateOfBirth
@@ -204,7 +223,7 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	/**
 	 * Getter for dateOfBirth
 	 *
-	 * @return date
+	 * @return DateTime
 	 */
 	public function getDateOfBirth() {
 		return $this->dateOfBirth;
@@ -227,6 +246,44 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	public function getMobilephone() {
 		return $this->mobilephone;
+	}
+
+	/**
+	 * Setter for zone
+	 * 
+	 * @param string $zone
+	 * @return void
+	 */
+	public function setZone($zone) {
+		$this->zone = $zone;
+	}
+
+	/**
+	 * Getter for zone
+	 *
+	 * @return string
+	 */
+	public function getZone() {
+		return $this->zone;
+	}
+
+	/**
+	 * Setter got static info country
+	 *
+	 * @param string $staticInfoCountry
+	 * @return void
+	 */
+	public function setStaticInfoCountry($staticInfoCountry) {
+		$this->staticInfoCountry = $staticInfoCountry;
+	}
+
+	/**
+	 * Getter for static info cpuntry
+	 * 
+	 * @return string
+	 */
+	public function getStaticInfoCountry() {
+		return $this->staticInfoCountry;
 	}
 
 	/**
