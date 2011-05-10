@@ -101,7 +101,8 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	public function isValid($object) {
 		$result = TRUE;
 
-		if (!is_object($object)) {
+		if (!($object instanceof Tx_Extbase_Domain_Model_FrontendUser) &&
+				!($object instanceof Tx_SfRegister_Domain_Model_Password)) {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notvalidatable', 'SfRegister'), 1301599551);
 			$result = FALSE;
 		} else {
@@ -120,7 +121,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	protected function validateRules($object) {
 		$result = TRUE;
 
-		foreach ($this->settings['validation'][$this->options['type']] as $fieldName => $rule) {
+		foreach ($this->getRulesFromSettings($object) as $fieldName => $rule) {
 			$methodName = 'get' . ucfirst($fieldName);
 
 			if (!method_exists($object, $methodName)) {
@@ -139,6 +140,28 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Get validation rules from settings
+	 * Warning: Dont remove the added validators
+	 *          These prevent that editing others data is possible
+	 *
+	 * @param object $object
+	 * @return array
+	 */
+	protected function getRulesFromSettings($object) {
+		$rules = $this->settings['validation'][$this->options['type']];
+
+		if ($object instanceof Tx_Extbase_Domain_Model_FrontendUser) {
+			if ($this->options['type'] == 'create') {
+				$rules = array_merge(array('uid' => 'Tx_SfRegister_Domain_Validator_EmptyValidator'), $rules);
+			} elseif ($this->options['type'] == 'edit') {
+				$rules = array_merge(array('uid' => 'Tx_SfRegister_Domain_Validator_EqualCurrentUserValidator'), $rules);
+			}
+		}
+
+		return $rules;
 	}
 
 	/**

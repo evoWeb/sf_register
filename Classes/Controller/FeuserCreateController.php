@@ -40,7 +40,9 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @dontvalidate $user
 	 */
 	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL) {
-		if ($user === NULL) {
+		if ($user === NULL ||
+				$user instanceof Tx_Extbase_Domain_Model_FrontendUser &&
+				$user->getUid()) {
 			$user = t3lib_div::makeInstance('Tx_SfRegister_Domain_Model_FrontendUser');
 		} else {
 			$user = $this->moveTempFile($user);

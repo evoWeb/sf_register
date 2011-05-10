@@ -6,6 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="uid">Userid</label>
 			<label index="gender">Gender</label>
 			<label index="title">Title</label>
 			<label index="company">Company</label>
@@ -47,6 +48,8 @@
 			<label index="password.saved">password saved</label>
 			<label index="passwordAgain">Password repeatition</label>
 
+			<label index="error.noteempty">The %1$s was not empty which it should have been</label>
+			<label index="error.notequalcurrentuser">The %1$s does not equals your own user which is not allowed</label>
 			<label index="error.changepassword.notloggedin">You need to be logged in to change the password</label>
 			<label index="error.changepassword.notequal">The give password was not equal to the current password</label>
 			<label index="error.badword">The password you entered is on the disallowed list</label>
