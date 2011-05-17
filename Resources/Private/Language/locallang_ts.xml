@@ -23,7 +23,8 @@
 			<label index="ptss.notifyPostActivationToUser">whether the user should get notified about the activation of his user account</label>
 			<label index="ptss.notifyToAdmin">whether the admin get an notification about the creation of an user account. If an activation email was send this wont be send afterwards.</label>
 			<label index="ptss.notifyToUser">whether the user get an notification about the creation of the account. If an activation email was send this wont be send afterwards.</label>
-			<label index="ptss.autologinPostActivation">whether the user should get logged in on activation</label>
+			<label index="ptss.autologinPostRegistration">whether the user should get logged in after registration</label>
+			<label index="ptss.autologinPostActivation">whether the user should get logged in after activation</label>
 			<label index="ptss.usergroupPreActivation">usergroup set if an account waits for activation</label>
 			<label index="ptss.usergroupPostActivation">usergroup set if the account was activate</label>
 			<label index="ptss.usergroup">usergroup set if no activation is needed</label>
