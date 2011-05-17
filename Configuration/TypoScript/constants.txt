@@ -28,6 +28,8 @@ plugin.tx_sfregister.settings {
 	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.notifyToUser
 	notifyToUser = 0
 
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.autologinPostRegistration
+	autologinPostRegistration = 0
 	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:ptss.autologinPostActivation
 	autologinPostActivation = 0
 
