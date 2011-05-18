@@ -109,10 +109,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			$this->autoLogin($user);
 		}
 
-		if ($this->settings['forwardToEditAfterSave'] && $this->settings['autologinPostRegistration']) {
-			$this->redirectToPage($this->settings['editPageId']);
-		} elseif ($this->settings['forwardToEditAfterSave']) {
-			$this->forward('form', 'FeuserEdit');
+		if ($this->settings['redirectPostRegistration']) {
+			$this->redirectToPage($this->settings['redirectPostRegistrationPageId']);
 		}
 	}
 
@@ -145,6 +143,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			if ($this->settings['autologinPostActivation']) {
 				$this->persistAll();
 				$this->autoLogin($user);
+			}
+
+			if ($this->settings['redirectPostActivation']) {
+				$this->redirectToPage($this->settings['redirectPostActivationPageId']);
 			}
 		} else {
 			$this->view->assign('userNotFoundByAuthCode', 1);

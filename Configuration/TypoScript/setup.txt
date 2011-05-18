@@ -14,10 +14,15 @@ plugin.tx_sfregister.settings {
 	# comma separated list of words used in bad word validator
 	badWordList = {$plugin.tx_sfregister.settings.badWordList}
 
-	# boolean show the edit after saving the create or edit form
-	forwardToEditAfterSave = {$plugin.tx_sfregister.settings.forwardToEditAfterSave}
-	# uid of the page where the edit form could be found
-	editPageId = {$plugin.tx_sfregister.settings.editPageId}
+	# boolean redirect after the saving of the user
+	redirectPostRegistration = {$plugin.tx_sfregister.settings.redirectPostRegistration}
+	# uid of the page to redirect to after saving
+	redirectPostRegistrationPageId = {$plugin.tx_sfregister.settings.redirectPostRegistrationPageId}
+
+	# boolean redirect after the confirmation of the user
+	redirectPostActivation = {$plugin.tx_sfregister.settings.redirectPostActivation}
+	# uid of the page to redirect to after confirmation
+	redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId}
 
 	# string [md5|sha1]
 	encryptPassword = {$plugin.tx_sfregister.settings.encryptPassword}
