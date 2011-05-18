@@ -104,7 +104,14 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 
 		$this->userRepository->add($user);
 
-		if ($this->settings['forwardToEditAfterSave']) {
+		if ($this->settings['autologinPostRegistration']) {
+			$this->persistAll();
+			$this->autoLogin($user);
+		}
+
+		if ($this->settings['forwardToEditAfterSave'] && $this->settings['autologinPostRegistration']) {
+			$this->redirectToPage($this->settings['editPageId']);
+		} elseif ($this->settings['forwardToEditAfterSave']) {
 			$this->forward('form', 'FeuserEdit');
 		}
 	}
@@ -135,11 +142,46 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 
 			$this->sendEmailsPostConfirm($user);
 
-			if ($this->isNotifyPreActivationToUser() && $this->settings['autologinPostActivation']) {
+			if ($this->settings['autologinPostActivation']) {
+				$this->persistAll();
+				$this->autoLogin($user);
 			}
 		} else {
 			$this->view->assign('userNotFoundByAuthCode', 1);
 		}
+	}
+
+
+	/**
+	 * Redirect to a page with given id
+	 *
+	 * @param integer $pageId
+	 * @return void
+	 */
+	protected function redirectToPage($pageId) {
+		$url = $GLOBALS['TSFE']->cObj->typoLink_URL(array('parameter' => $pageId));
+		t3lib_utility_Http::redirect($url, t3lib_utility_Http::HTTP_STATUS_200);
+	}
+
+	/**
+	 * Persist all data that was not stored by now
+	 *
+	 * @return void
+	 */
+	protected function persistAll() {
+		$persistenceManager = $this->objectManager->get('Tx_Extbase_Persistence_Manager');
+		$persistenceManager->persistAll();
+	}
+
+	/**
+	 * Login user with service
+	 *
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return void
+	 */
+	protected function autoLogin(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+		$loginService = $this->objectManager->get('Tx_SfRegister_Services_Login');
+		$loginService->loginUserById($user->getUid());
 	}
 
 

@@ -16,6 +16,8 @@ plugin.tx_sfregister.settings {
 
 	# boolean show the edit after saving the create or edit form
 	forwardToEditAfterSave = {$plugin.tx_sfregister.settings.forwardToEditAfterSave}
+	# uid of the page where the edit form could be found
+	editPageId = {$plugin.tx_sfregister.settings.editPageId}
 
 	# string [md5|sha1]
 	encryptPassword = {$plugin.tx_sfregister.settings.encryptPassword}
