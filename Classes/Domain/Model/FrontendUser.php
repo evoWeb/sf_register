@@ -25,7 +25,7 @@
 /**
  * An extended frontend user with more attributes
  */
-class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_FrontendUser {
+class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_FrontendUser implements Tx_SfRegister_Interfaces_FeUser {
 	/**
 	 * @var boolean Flag if user is diable or not
 	 */
