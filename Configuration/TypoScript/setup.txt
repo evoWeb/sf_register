@@ -125,7 +125,7 @@ plugin.tx_sfregister.persistence {
 	storagePid = {$plugin.tx_sfregister.persistence.storagePid}
 
 	classes {
-		Tx_SfRegister_Domain_Model_FrontendUser {
+		Tx_DeineExtension_Domain_Model_FrontendUser {
 			mapping {
 				tableName = fe_users
 				recordType = Tx_Extbase_Domain_Model_FrontendUser

@@ -109,7 +109,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * @return void
 	 * @dontvalidate $user
  	 */
-	protected function removeImageAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $imagefile) {
+	protected function removeImageAction(Tx_SfRegister_Interfaces_FrontendUser $user, $imagefile) {
 		if ($this->fileIsTemporary()) {
 			$removedImage = $this->fileService->removeTemporaryFile($imagefile);
 		} else {
@@ -134,7 +134,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
-	protected function removeImageFromUserAndRequest(Tx_SfRegister_Domain_Model_FrontendUser $user, $removeImage) {
+	protected function removeImageFromUserAndRequest(Tx_SfRegister_Interfaces_FrontendUser $user, $removeImage) {
 		if ($user->getUid() !== NULL) {
 			$localUser = $this->userRepository->findByUid($user->getUid());
 			$localUser->removeImage($removeImage);

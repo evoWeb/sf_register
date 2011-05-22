@@ -37,7 +37,6 @@
 							<label>LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.viewTemplateRootPath</label>
 							<config>
 								<type>input</type>
-								<default>EXT:sf_register/Resources/Private/Templates</default>
 							</config>
 						</TCEforms>
 					</settings.templateRootPath>

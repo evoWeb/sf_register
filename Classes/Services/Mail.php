@@ -76,10 +76,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
 	 * Send an email notification pre activation to the admin
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
-	public function sendAdminNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	public function sendAdminNotificationMail(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		$type = str_replace('send', '', __FUNCTION__);
 		$variables = array('user' => $user);
 
@@ -96,10 +96,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
 	 * Send an email notification post activation to the admin
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
-	public function sendAdminNotificationMailPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	public function sendAdminNotificationMailPostActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		$type = str_replace('send', '', __FUNCTION__);
 		$variables = array('user' => $user);
 
@@ -116,10 +116,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
 	 * Send an email on registration request to activate the user by admin
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
-	public function sendAdminNotificationMailPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	public function sendAdminNotificationMailPreActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		$type = str_replace('send', '', __FUNCTION__);
 		$variables = array('user' => $user);
 
@@ -138,10 +138,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
 	 * Send an email notification pre activation to the user
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
-	public function sendUserNotificationMail(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	public function sendUserNotificationMail(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		$type = str_replace('send', '', __FUNCTION__);
 		$variables = array('user' => $user);
 
@@ -158,10 +158,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
 	 * Send an email notification post activation to the user
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
-	public function sendUserNotificationMailPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	public function sendUserNotificationMailPostActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		$type = str_replace('send', '', __FUNCTION__);
 		$variables = array('user' => $user);
 
@@ -178,10 +178,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
 	 * Send an email on registration request to activate the user by user
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
-	public function sendUserNotificationMailPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	public function sendUserNotificationMailPreActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		$type = str_replace('send', '', __FUNCTION__);
 		$variables = array('user' => $user);
 
@@ -199,11 +199,11 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 
 	/**
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @param string $labelIndex
 	 * @return string
 	 */
-	protected function getSubject(Tx_SfRegister_Domain_Model_FrontendUser $user, $labelIndex) {
+	protected function getSubject(Tx_SfRegister_Interfaces_FrontendUser $user, $labelIndex) {
 		return Tx_Extbase_Utility_Localization::translate(
 			$labelIndex,
 			'sf_register',
@@ -212,10 +212,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	}
 
 	/**
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return string
 	 */
-	protected function getMailHash(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	protected function getMailHash(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		return md5($user->getUsername() . time() . $user->getEmail());
 	}
 
@@ -233,10 +233,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
 	 * Get user recipient
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return string
 	 */
-	protected function getUserRecipient(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	protected function getUserRecipient(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		$name = '';
 		if ($user->getFirstName() || $user->getLastName()) {
 			$name = trim($user->getFirstName() . ' ' . $user->getLastName());

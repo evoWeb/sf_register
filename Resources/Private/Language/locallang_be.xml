@@ -34,7 +34,7 @@
 			<label index="form_flexform.switchableControllerAction.create">Create</label>
 			<label index="form_flexform.switchableControllerAction.edit">Edit</label>
 			<label index="form_flexform.switchableControllerAction.password">Password</label>
-			<label index="form_flexform.viewTemplateRootPath">Template root path</label>
+			<label index="form_flexform.viewTemplateRootPath">Template root path (EXT:sf_register/Resources/Private/Templates)</label>
 		</languageKey>
 	</data>
 </T3locallang>

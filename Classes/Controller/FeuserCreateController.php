@@ -89,7 +89,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return void
 	 */
-	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	public function saveAction(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		$user->setPassword($this->encryptPassword($user->getPassword()));
 
 		if ($this->isNotifyPreActivationToUser() || $this->isNotifyPreActivationToAdmin()) {
@@ -181,7 +181,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return void
 	 */
-	protected function autoLogin(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	protected function autoLogin(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		$loginService = $this->objectManager->get('Tx_SfRegister_Services_Login');
 		$loginService->loginUserById($user->getUid());
 	}
@@ -194,7 +194,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @param integer $usergroupUid
 	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
-	protected function addUsergroup(Tx_SfRegister_Domain_Model_FrontendUser $user, $usergroupUid) {
+	protected function addUsergroup(Tx_SfRegister_Interfaces_FrontendUser $user, $usergroupUid) {
 		$usergroupToAdd = $this->userGroupRepository->findByUid($usergroupUid);
 		$user->addUsergroup($usergroupToAdd);
 
@@ -207,7 +207,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
-	protected function setUsergroupPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	protected function setUsergroupPreActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		if (intval($this->settings['usergroupPreActivation']) > 0) {
 			$user = $this->addUsergroup($user, $this->settings['usergroupPreActivation']);
 		}
@@ -221,7 +221,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
-	protected function changeUsergroupPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	protected function changeUsergroupPostActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		if (intval($this->settings['usergroupPostActivation']) > 0 &&
 				intval($this->settings['usergroupAfterActivation']) != intval($this->settings['usergroupPreActivation'])) {
 			$user = $this->addUsergroup($user, $this->settings['usergroupPostActivation']);
