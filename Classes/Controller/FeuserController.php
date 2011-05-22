@@ -76,7 +76,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Proxy action
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
 	 */
@@ -104,7 +104,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Remove an image and forward to the action where it was called
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @param string $imagefile
 	 * @return void
 	 * @dontvalidate $user
@@ -131,8 +131,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
 	protected function removeImageFromUserAndRequest(Tx_SfRegister_Domain_Model_FrontendUser $user, $removeImage) {
 		if ($user->getUid() !== NULL) {
@@ -168,8 +168,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Move uploaded image and add to user
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
  	 */
 	protected function moveTempFile($user) {
 		if ($imagePath = $this->fileService->moveTempFileToTempFolder()) {
@@ -182,8 +182,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Move uploaded image and add to user
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
  	 */
 	protected function moveImageFile($user) {
 		$oldFilename = $user->getImage();

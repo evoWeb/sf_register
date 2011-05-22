@@ -34,14 +34,14 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Form action
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @param string $passwordAgain
 	 * @return string An HTML form
 	 * @dontvalidate $user
 	 */
 	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL) {
 		if ($user === NULL ||
-				$user instanceof Tx_Extbase_Domain_Model_FrontendUser &&
+				$user instanceof Tx_SfRegister_Interfaces_FrontendUser &&
 				$user->getUid()) {
 			$user = t3lib_div::makeInstance('Tx_SfRegister_Domain_Model_FrontendUser');
 		} else {
@@ -58,7 +58,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Preview action
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @param string $passwordAgain
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator(type = create)
@@ -86,7 +86,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Save action
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return void
 	 */
 	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
@@ -132,7 +132,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	public function confirmAction($authCode) {
 		$user = $this->userRepository->findByMailhash($authCode);
 
-		if ($user instanceof Tx_SfRegister_Domain_Model_FrontendUser) {
+		if ($user instanceof Tx_SfRegister_Interfaces_FrontendUser) {
 			$user = $this->changeUsergroupPostActivation($user);
 			$user = $this->moveImageFile($user);
 			$user->setDisable(FALSE);
@@ -178,7 +178,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Login user with service
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return void
 	 */
 	protected function autoLogin(Tx_SfRegister_Domain_Model_FrontendUser $user) {
@@ -190,9 +190,9 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Add usergroup to user
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @param integer $usergroupUid
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
 	protected function addUsergroup(Tx_SfRegister_Domain_Model_FrontendUser $user, $usergroupUid) {
 		$usergroupToAdd = $this->userGroupRepository->findByUid($usergroupUid);
@@ -204,8 +204,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Set usergroup to user before activation
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
 	protected function setUsergroupPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		if (intval($this->settings['usergroupPreActivation']) > 0) {
@@ -218,8 +218,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Change usergroup of user after activation
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
 	protected function changeUsergroupPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		if (intval($this->settings['usergroupPostActivation']) > 0 &&
@@ -237,8 +237,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Send emails to user and/or to admin
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
 	protected function sendEmailsPreSave($user) {
 		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
@@ -262,8 +262,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Send emails to user and/or to admin
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
 	protected function sendEmailsPostConfirm($user) {
 		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');

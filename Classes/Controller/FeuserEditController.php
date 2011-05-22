@@ -29,7 +29,7 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	/**
 	 * Form action
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return string An HTML form
 	 * @dontvalidate $user
 	 */
@@ -51,7 +51,7 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	/**
 	 * Preview action
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator(type = edit)
 	 */
@@ -68,7 +68,7 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	/**
 	 * Save action
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return void
 	 */
 	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
