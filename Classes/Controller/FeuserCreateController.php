@@ -43,7 +43,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 		if ($user === NULL ||
 				$user instanceof Tx_SfRegister_Interfaces_FrontendUser &&
 				$user->getUid()) {
-			$user = t3lib_div::makeInstance('Tx_SfRegister_Domain_Model_FrontendUser');
+			$user = $this->objectManager->get('Tx_SfRegister_Domain_Model_FrontendUser');
 		} else {
 			$user = $this->moveTempFile($user);
 		}
@@ -89,7 +89,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return void
 	 */
-	public function saveAction(Tx_SfRegister_Interfaces_FrontendUser $user) {
+	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$user->setPassword($this->encryptPassword($user->getPassword()));
 
 		if ($this->isNotifyPreActivationToUser() || $this->isNotifyPreActivationToAdmin()) {

@@ -58,7 +58,6 @@ class Tx_SfRegister_Services_Login implements t3lib_Singleton {
 		$feUser->start();
 		$feUser->unpack_uc('');
 		$feUser->fetchSessionData();
-		tslib_fe::ini_get();
 
 		$userdata[$feUser->lastLogin_column] = $GLOBALS['EXEC_TIME'];
 		$userdata['is_online'] = $GLOBALS['EXEC_TIME'];
@@ -66,9 +65,9 @@ class Tx_SfRegister_Services_Login implements t3lib_Singleton {
 
 			// Call hook for possible manipulation of frontend user object
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['initFEuser'])) {
-			$_params = array('pObj' => &$GLOBALS['TSFE']);
-			foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['initFEuser'] as $_funcRef) {
-				t3lib_div::callUserFunction($_funcRef, $_params, $GLOBALS['TSFE']);
+			$parameters = array('pObj' => &$GLOBALS['TSFE']);
+			foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['initFEuser'] as $functionReference) {
+				t3lib_div::callUserFunction($functionReference, $parameters, $GLOBALS['TSFE']);
 			}
 		}
 

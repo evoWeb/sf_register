@@ -101,7 +101,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	public function isValid($object) {
 		$result = TRUE;
 
-		if (!($object instanceof Tx_Extbase_Domain_Model_FrontendUser) &&
+		if (!($object instanceof Tx_SfRegister_Interfaces_FrontendUser) &&
 				!($object instanceof Tx_SfRegister_Domain_Model_Password)) {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notvalidatable', 'SfRegister'), 1301599551);
 			$result = FALSE;
