@@ -13,6 +13,7 @@ t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/', 'Feuser Regis
 t3lib_div::loadTCA('fe_users');
 t3lib_extMgm::addPageTSConfig('
 TCAdefaults.fe_users.tx_extbase_type = Tx_Extbase_Domain_Model_FrontendUser
+TCAdefaults.fe_groups.tx_extbase_type = Tx_Extbase_Domain_Model_FrontendUserGroup
 ');
 
 $tempColumns = array(
