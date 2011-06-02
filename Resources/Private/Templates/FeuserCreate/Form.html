@@ -1,3 +1,4 @@
+{namespace register=Tx_SfRegister_ViewHelpers}
 create Action
 
 <f:form action="preview" name="user" object="{user}" enctype="multipart/form-data">
@@ -115,6 +116,19 @@ create Action
 				<f:form.upload name="image"/>
 			</f:else>
 		</f:if></dd>
+
+	<dt></dt>
+	<dd>
+		<f:render partial="fieldError" arguments="{field: 'user.image'}" />
+
+		<f:alias map="{x: '{register:form.captcha(type: \'freecap\')}'}">
+			<f:format.html>{x.image}</f:format.html>
+			<f:format.html>{x.notice}</f:format.html>
+			<f:format.html>{x.cantRead}</f:format.html>
+			<f:format.html>{x.accessible}</f:format.html>
+		</f:alias>
+		<f:form.textbox property="captcha" id="iCaptcha" maxlength="15" class="inputhint"	value=""/>
+	</dd>
 
 	<dt>&nbsp;</dt>
 	<dd><f:form.submit class="submit" value="{f:translate(key:'submit.create')}" /></dd>

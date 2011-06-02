@@ -36,6 +36,10 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	protected $mailhash;
 
+	/**
+	 * @var string
+	 */
+	protected $captcha;
 
 
 	/**
@@ -136,6 +140,25 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	public function getMailhash() {
 		return $this->mailhash;
+	}
+
+	/**
+	 * Setter for captcha
+	 *
+	 * @param string $captcha
+	 * @return void
+	 */
+	public function setCaptcha($captcha) {
+		$this->captcha = trim($captcha);
+	}
+
+	/**
+	 * Getter for captcha
+	 *
+	 * @return string
+	 */
+	public function getCaptcha() {
+		return $this->captcha;
 	}
 
 	/**
