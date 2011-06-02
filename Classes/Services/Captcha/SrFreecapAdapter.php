@@ -92,7 +92,7 @@ class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Serv
 
 		if (!$this->captcha->checkWord($value)) {
 			$validCaptcha = FALSE;
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.captchanotcorrect', 'SfRegister'), 1306910429);
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.captcha.notcorrect', 'SfRegister'), 1306910429);
 		}
 
 		return $validCaptcha;
