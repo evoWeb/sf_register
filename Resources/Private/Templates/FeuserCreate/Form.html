@@ -117,9 +117,9 @@ create Action
 			</f:else>
 		</f:if></dd>
 
-	<dt></dt>
+	<dt>&nbsp;</dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.image'}" />
+		<register:form.captcha type="recaptcha"/>
 
 		<f:alias map="{x: '{register:form.captcha(type: \'freecap\')}'}">
 			<f:format.html>{x.image}</f:format.html>
@@ -127,7 +127,9 @@ create Action
 			<f:format.html>{x.cantRead}</f:format.html>
 			<f:format.html>{x.accessible}</f:format.html>
 		</f:alias>
-		<f:form.textbox property="captcha" id="iCaptcha" maxlength="15" class="inputhint"	value=""/>
+
+		<f:render partial="fieldError" arguments="{field: 'user.captcha'}" />
+		<f:form.textbox property="captcha" id="iCaptcha" maxlength="15"/>
 	</dd>
 
 	<dt>&nbsp;</dt>
