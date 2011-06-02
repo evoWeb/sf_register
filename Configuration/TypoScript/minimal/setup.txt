@@ -9,15 +9,13 @@ page {
 
 plugin.tx_sfregister.settings {
 	# boolean defines in edit mode if the fields get filled with data of logged in user
-	useDataOfLoggedinFeuser = {$plugin.tx_sfregister.settings.useDataOfLoggedinFeuser}
+	useDataOfLoggedinFeuser = 1
 
 	# comma separated list of words used in bad word validator
 	badWordList = {$plugin.tx_sfregister.settings.badWordList}
 
-	# boolean redirect after the saving of the user
-	redirectPostRegistration = {$plugin.tx_sfregister.settings.redirectPostRegistration}
 	# uid of the page to redirect to after saving
-	redirectPostRegistrationPageId = {$plugin.tx_sfregister.settings.redirectPostRegistrationPageId}
+	redirectPostRegistrationPageId =
 
 	# boolean redirect after the confirmation of the user
 	redirectPostActivation = {$plugin.tx_sfregister.settings.redirectPostActivation}
@@ -25,18 +23,18 @@ plugin.tx_sfregister.settings {
 	redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId}
 
 	# string [md5|sha1]
-	encryptPassword = {$plugin.tx_sfregister.settings.encryptPassword}
+	encryptPassword =
 
 	# boolean use encrypted filename to deny direct access on uploaded files
-	useEncryptedFilename = {$plugin.tx_sfregister.settings.useEncryptedFilename}
+	useEncryptedFilename = md5
 
 	# boolean if user or admin need to activate or notified
-	notifyToAdmin = {$plugin.tx_sfregister.settings.notifyToAdmin}
-	notifyPreActivationToAdmin = {$plugin.tx_sfregister.settings.notifyPreActivationToAdmin}
-	notifyPostActivationToAdmin = {$plugin.tx_sfregister.settings.notifyPostActivationToAdmin}
-	notifyToUser = {$plugin.tx_sfregister.settings.notifyToUser}
-	notifyPreActivationToUser = {$plugin.tx_sfregister.settings.notifyPreActivationToUser}
-	notifyPostActivationToUser = {$plugin.tx_sfregister.settings.notifyPostActivationToUser}
+	notifyToAdmin = 0
+	notifyPreActivationToAdmin = 0
+	notifyPostActivationToAdmin = 1
+	notifyToUser = 0
+	notifyPreActivationToUser = 1
+	notifyPostActivationToUser = 0
 
 	# boolean if user should get logged in after registration
 	autologinPostRegistration = {$plugin.tx_sfregister.settings.autologinPostRegistration}
@@ -48,32 +46,32 @@ plugin.tx_sfregister.settings {
 	usergroupPostActivation = {$plugin.tx_sfregister.settings.usergroupPostActivation}
 
 	# integer usergroup set if no activation is needed
-	usergroup = {$plugin.tx_sfregister.settings.usergroup}
+	usergroup =
 
 	# string name of the site used in subject
-	sitename = {$plugin.tx_sfregister.settings.sitename}
+	sitename = {$plugin.tx_sfregister.settings.emailSitename}
 
 	userEmail {
-		fromName = {$plugin.tx_sfregister.settings.userEmail.fromName}
-		fromEmail = {$plugin.tx_sfregister.settings.userEmail.fromEmail}
+		fromName = {$plugin.tx_sfregister.settings.emailName}
+		fromEmail = {$plugin.tx_sfregister.settings.emailAddress}
 
-		replyName = {$plugin.tx_sfregister.settings.userEmail.replyName}
-		replyEmail = {$plugin.tx_sfregister.settings.userEmail.replyEmail}
+		replyName = {$plugin.tx_sfregister.settings.emailName}
+		replyEmail = {$plugin.tx_sfregister.settings.emailAddress}
 
-		returnPath = {$plugin.tx_sfregister.settings.userEmail.returnPath}
+		returnPath = {$plugin.tx_sfregister.settings.emailAddress}
 	}
 
 	adminEmail {
-		toName = {$plugin.tx_sfregister.settings.adminEmail.toName}
-		toEmail = {$plugin.tx_sfregister.settings.adminEmail.toEmail}
+		toName = {$plugin.tx_sfregister.settings.emailName}
+		toEmail = {$plugin.tx_sfregister.settings.emailAddress}
 
-		fromName = {$plugin.tx_sfregister.settings.adminEmail.fromName}
-		fromEmail = {$plugin.tx_sfregister.settings.adminEmail.fromEmail}
+		fromName = {$plugin.tx_sfregister.settings.emailName}
+		fromEmail = {$plugin.tx_sfregister.settings.emailAddress}
 
-		replyName = {$plugin.tx_sfregister.settings.adminEmail.replyName}
-		replyEmail = {$plugin.tx_sfregister.settings.adminEmail.replyEmail}
+		replyName = {$plugin.tx_sfregister.settings.emailName}
+		replyEmail = {$plugin.tx_sfregister.settings.emailAddress}
 
-		returnPath = {$plugin.tx_sfregister.settings.adminEmail.returnPath}
+		returnPath = {$plugin.tx_sfregister.settings.emailAddress}
 	}
 
 	validation.create {
@@ -122,13 +120,12 @@ plugin.tx_sfregister.settings {
 	filefieldname = image
 
 	captcha {
+		recaptcha = Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter
 		freecap = Tx_SfRegister_Services_Captcha_SrFreecapAdapter
 	}
 }
 
 plugin.tx_sfregister.persistence {
-	storagePid = {$plugin.tx_sfregister.persistence.storagePid}
-
 	classes {
 		Tx_SfRegister_Domain_Model_FrontendUser {
 			mapping {
@@ -151,6 +148,28 @@ plugin.tx_sfregister.persistence {
 			mapping {
 				tableName = static_languages
 			}
+		}
+	}
+}
+
+plugin.tx_sfregister.fieldError = TEXT
+plugin.tx_sfregister.fieldError {
+	current = 1
+	split {
+		token = .
+		cObjNum = 1
+
+		1 = COA
+		1 {
+			10 = TEXT
+			10.current = 1
+			10.substring = 0, 1
+			10.case = upper
+
+			20 = TEXT
+			20.current = 1
+			20.substring = 1, 1000
+			20.case = lower
 		}
 	}
 }

@@ -6,7 +6,17 @@ if (!defined('TYPO3_MODE')) {
 
 
 
-t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/', 'Feuser Register');
+$extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$_EXTKEY]);
+
+switch($extensionConfiguration['typoscriptComplexity']) {
+	case 'maximal':
+		t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/maximal/', 'Feuser Register [maximal]');
+		break;
+	case 'minimal':
+	default:
+		t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/minimal/', 'Feuser Register [minimal]');
+		break;
+}
 
 
 

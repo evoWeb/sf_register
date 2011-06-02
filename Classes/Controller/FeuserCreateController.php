@@ -109,7 +109,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			$this->autoLogin($user);
 		}
 
-		if ($this->settings['redirectPostRegistration']) {
+		if ($this->settings['redirectPostRegistrationPageId']) {
 			$this->redirectToPage($this->settings['redirectPostRegistrationPageId']);
 		}
 	}
@@ -145,7 +145,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 				$this->autoLogin($user);
 			}
 
-			if ($this->settings['redirectPostActivation']) {
+			if ($this->settings['redirectPostActivationPageId']) {
 				$this->redirectToPage($this->settings['redirectPostActivationPageId']);
 			}
 		} else {
