@@ -1,0 +1,7 @@
+{namespace register=Tx_SfRegister_ViewHelpers}
+<f:alias map="{x: '{register:form.captcha(type: \'srfreecap\')}'}">
+	<f:format.html>{x.image}</f:format.html>
+	<f:format.html>{x.notice}</f:format.html>
+	<f:format.html>{x.cantRead}</f:format.html>
+	<f:format.html>{x.accessible}</f:format.html>
+</f:alias>

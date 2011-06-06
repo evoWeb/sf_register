@@ -77,7 +77,7 @@ class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Serv
 			$values = array_values($this->captcha->makeCaptcha());
 			$output = array_combine($this->keys, $values);
 		} else {
-			$output = 'fix me: captcha extension not installed error';
+			$output = Tx_Extbase_Utility_Localization::translate('error.captcha.notinstalled', 'sf_register', array('sr_freecap'));
 		}
 
 		return $output;

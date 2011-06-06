@@ -22,41 +22,52 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * A Uservalidator
- *
- * @scope singleton
- */
-class Tx_SfRegister_Domain_Validator_CaptchaValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter extends Tx_SfRegister_Services_Captcha_AbstractAdapter {
 	/**
-	 * @var Tx_SfRegister_Services_Captcha_CaptchaAdapterFactory
+	 * @var tx_jmrecaptcha
 	 */
-	protected $captchaAdapterFactory;
+	protected $captcha = NULL;
 
 	/**
-	 * @param Tx_SfRegister_Services_Captcha_CaptchaAdapterFactory $captchaAdapterFactory
+	 * class constuctor
+	 *
 	 * @return void
 	 */
-	public function injectCaptchaAdapterFactory(Tx_SfRegister_Services_Captcha_CaptchaAdapterFactory $captchaAdapterFactory) {
-		$this->captchaAdapterFactory = $captchaAdapterFactory;
+	public function __construct() {
+		if (t3lib_extMgm::isLoaded('jm_recaptcha')) {
+			require_once(t3lib_extMgm::extPath('jm_recaptcha') . 'class.tx_jmrecaptcha.php');
+			$this->captcha = t3lib_div::makeInstance('tx_jmrecaptcha');
+		}
 	}
 
 	/**
-	 * If the given user are valid
-	 *
-	 * @param object $object
-	 * @return boolean
+	 * @return string
 	 */
-	public function isValid($value) {
-		$result = TRUE;
-
-		$captchaAdapter = $this->captchaAdapterFactory->getCaptchaAdapter($this->options['type']);
-		if (!$captchaAdapter->isValid($value)) {
-			$result = FALSE;
-			$this->errors = $captchaAdapter->getErrors();
+	public function render() {
+		if ($this->captcha !== null) {
+			$output = $this->captcha->getReCaptcha($this->settings['error']);
+		} else {
+			$output = Tx_Extbase_Utility_Localization::translate('error.captcha.notinstalled', 'sf_register', array('jm_recaptcha'));
 		}
 
-		return $result;
+		return $output;
+	}
+
+	/**
+	 * @param string $value
+	 * @return bool
+	 */
+	public function isValid($value) {
+		$validCaptcha = TRUE;
+
+		$status = $this->captcha->validateReCaptcha();
+debug($status);
+		if ($status['error'] !== NULL) {
+			$validCaptcha = FALSE;
+			$this->errors[] = $status['error'];
+		}
+
+		return $validCaptcha;
 	}
 }
 

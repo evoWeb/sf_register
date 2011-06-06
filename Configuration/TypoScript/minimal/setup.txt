@@ -91,7 +91,7 @@ plugin.tx_sfregister.settings {
 		email = EmailAddress
 		gtc = Tx_SfRegister_Domain_Validator_IsTrueValidator
 		image = Tx_SfRegister_Domain_Validator_ImageUploadValidator
-		captcha = Tx_SfRegister_Domain_Validator_CaptchaValidator(type = freecap)
+		captcha = Tx_SfRegister_Domain_Validator_CaptchaValidator(type = jmrecaptcha)
 	}
 
 	validation.edit {
@@ -120,8 +120,8 @@ plugin.tx_sfregister.settings {
 	filefieldname = image
 
 	captcha {
-		recaptcha = Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter
-		freecap = Tx_SfRegister_Services_Captcha_SrFreecapAdapter
+		jmrecaptcha = Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter
+		srfreecap = Tx_SfRegister_Services_Captcha_SrFreecapAdapter
 	}
 }
 
