@@ -61,8 +61,10 @@
 			<label index="error.notexists">Attribute does not exists</label>
 			<label index="error.image.filesize">The file was bigger than the maximum allowed filesize</label>
 			<label index="error.image.extension">The file was not of an allowed image extension</label>
+
 			<label index="error.captcha.notcorrect">The entered captcha is incorrect</label>
 			<label index="error.captcha.notinstalled">Captcha '%1$s' extension not installed error</label>
+			<label index="error.jmrecaptcha.incorrect-captcha-sol">Incorrect captcha</label>
 
 			<label index="error.1238108067">The length of %1$s was not between %2$s and %3$s characters</label>
 			<label index="error.1221559976">The %1$s has no valid email adress format</label>
