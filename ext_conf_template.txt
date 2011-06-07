@@ -1,2 +1,5 @@
-   # cat=TypoScript complexity; type=options[LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:extmgm.typoscriptComplexity.0=minimal,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:extmgm.typoscriptComplexity.1=maximal]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:extmgm.typoscriptComplexity
+	# cat=sf_register.settings/enable/20; type=options[LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:extmgm.typoscriptComplexity.0=minimal,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:extmgm.typoscriptComplexity.1=maximal]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:extmgm.typoscriptComplexity
 typoscriptComplexity = minimal
+
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:extmgm.setRealurlConfigByDefault
+setRealurlConfigByDefault = 1

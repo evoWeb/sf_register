@@ -57,6 +57,7 @@
 			<label index="extmgm.typoscriptComplexity">TypoScript complexity: wether to show minimal or maximal settings</label>
 			<label index="extmgm.typoscriptComplexity.0">minimal</label>
 			<label index="extmgm.typoscriptComplexity.1">maximum</label>
+			<label index="extmgm.setRealurlConfigByDefault">Set realurl config by default: In case you have a separate config for realurl or the default settings dont suite your needs you would like to disable this</label>
 		</languageKey>
 	</data>
 </T3locallang>
