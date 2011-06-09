@@ -30,7 +30,10 @@ create Action
 	<dt><f:translate key="title"/>*</dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.title'}" />
-		<f:form.textbox property="title" /></dd>
+		<f:form.textbox property="title" />
+		<f:form.select property="title" options="{none: '{f:translate(key: \'title_none\')}', dr: '{f:translate(key: \'title_dr\')}',
+			prof: '{f:translate(key: \'title_prof\')}', profdr: '{f:translate(key: \'title_profdr\')}'}"/>
+		</dd>
 
 	<dt><f:translate key="company"/>*</dt>
 	<dd>

@@ -51,7 +51,12 @@ plugin.tx_sfregister.settings {
 	userEmail {
 		fromName = {$plugin.tx_sfregister.settings.userEmail.fromName}
 		fromEmail = {$plugin.tx_sfregister.settings.userEmail.fromEmail}
-
+plugin.tx_sfregister._LOCAL_LANG.default {
+	title_none = Please select
+	title_dr = Dr.
+	title_prof = Prof.
+	title_profdr = Prof. Dr.
+}
 		replyName = {$plugin.tx_sfregister.settings.userEmail.replyName}
 		replyEmail = {$plugin.tx_sfregister.settings.userEmail.replyEmail}
 
@@ -88,7 +93,12 @@ plugin.tx_sfregister.settings {
 		email = EmailAddress
 		gtc = Tx_SfRegister_Domain_Validator_IsTrueValidator
 		image = Tx_SfRegister_Domain_Validator_ImageUploadValidator
-		captcha = Tx_SfRegister_Domain_Validator_CaptchaValidator(type = jmrecaptcha)
+		captcha =plugin.tx_sfregister._LOCAL_LANG.default {
+	title_none = Please select
+	title_dr = Dr.
+	title_prof = Prof.
+	title_profdr = Prof. Dr.
+} Tx_SfRegister_Domain_Validator_CaptchaValidator(type = jmrecaptcha)
 	}
 
 	validation.edit {
@@ -171,6 +181,13 @@ plugin.tx_sfregister.fieldError {
 			20.case = lower
 		}
 	}
+}
+
+plugin.tx_sfregister._LOCAL_LANG.default {
+	title_none = Please select
+	title_dr = Dr.
+	title_prof = Prof.
+	title_profdr = Prof. Dr.
 }
 
 module.tx_sfregister < plugin.tx_sfregister
