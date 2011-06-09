@@ -35,18 +35,27 @@ $register = array(
 		array(
 			'GETvar' => 'tx_sfregister_form[action]',
 		),
+	),
+	'ac' => array(
 		array(
 			'GETvar' => 'tx_sfregister_form[authCode]',
-			'noMatch' => 'bypass',
+			/*'lookUpTable' => array(
+				'table' => 'fe_users',
+				'id_field' => 'mailhash',
+				'alias_field' => 'username',
+				'addWhereClause' => ' AND mailhash <> ""'
+			),*/
 		),
 	),
 );
 
 foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'] as $domain => $config) {
-	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'][$domain]['postVarSets']['_DEFAULT'] = array_merge(
-		$register,
-		(array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'][$domain]['postVarSets']['_DEFAULT']
-	);
+	if (is_array($config)) {
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'][$domain]['postVarSets']['_DEFAULT'] = array_merge(
+			$register,
+			(array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'][$domain]['postVarSets']['_DEFAULT']
+		);
+	}
 
 	unset($config);
 }
