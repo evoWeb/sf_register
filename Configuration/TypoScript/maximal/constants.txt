@@ -10,6 +10,9 @@ plugin.tx_sfregister.settings {
 	# cat=sf_register.settings/enable/40; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.redirectPostActivationPageId
 	redirectPostActivationPageId =
 
+	# cat=sf_register.settings/enable/40; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.useEmailAddressAsUsername
+	useEmailAddressAsUsername =
+
 	# cat=sf_register.settings/enable/40; type=options[LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.encryptPassword.0=,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.encryptPassword.1=md5,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.encryptPassword.2=sha1]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.encryptPassword
 	encryptPassword =
 

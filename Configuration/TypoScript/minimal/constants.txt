@@ -5,8 +5,6 @@ plugin.tx_sfregister.settings {
 	# cat=sf_register.settings//50; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:minimal.redirectPostActivationPageId
 	redirectPostActivationPageId =
 
-	# cat=sf_register.settings//55; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:minimal.autologinPostRegistration
-	autologinPostRegistration = 0
 	# cat=sf_register.settings//55; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:minimal.autologinPostActivation
 	autologinPostActivation = 0
 

@@ -102,6 +102,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 
 		$user = $this->sendEmailsPreSave($user);
 
+		if ($this->settings['useEmailAddressAsUsername']) {
+			$user->setUsername($user->getEmail());
+		}
+
 		$this->userRepository->add($user);
 
 		if ($this->settings['autologinPostRegistration']) {

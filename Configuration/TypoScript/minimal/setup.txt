@@ -11,16 +11,16 @@ plugin.tx_sfregister.settings {
 	# boolean defines in edit mode if the fields get filled with data of logged in user
 	useDataOfLoggedinFeuser = 1
 
-	# comma separated list of words used in bad word validator
+	# comma separated list of words used in bad word validatorchro
 	badWordList = {$plugin.tx_sfregister.settings.badWordList}
 
 	# uid of the page to redirect to after saving
 	redirectPostRegistrationPageId =
-
-	# boolean redirect after the confirmation of the user
-	redirectPostActivation = {$plugin.tx_sfregister.settings.redirectPostActivation}
 	# uid of the page to redirect to after confirmation
 	redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId}
+
+	# wether the email address entered should be used as username
+	useEmailAddressAsUsername =
 
 	# string [md5|sha1]
 	encryptPassword =
@@ -37,7 +37,7 @@ plugin.tx_sfregister.settings {
 	notifyPostActivationToUser = 0
 
 	# boolean if user should get logged in after registration
-	autologinPostRegistration = {$plugin.tx_sfregister.settings.autologinPostRegistration}
+	autologinPostRegistration =
 	# boolean if user should get logged in after activation
 	autologinPostActivation = {$plugin.tx_sfregister.settings.autologinPostActivation}
 

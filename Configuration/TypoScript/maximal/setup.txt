@@ -19,6 +19,9 @@ plugin.tx_sfregister.settings {
 	# uid of the page to redirect to after confirmation
 	redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId}
 
+	# wether the email address entered should be used as username
+	useEmailAddressAsUsername = {$plugin.tx_sfregister.settings.useEmailAddressAsUsername}
+
 	# string [md5|sha1]
 	encryptPassword = {$plugin.tx_sfregister.settings.encryptPassword}
 
