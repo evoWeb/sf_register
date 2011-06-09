@@ -39,12 +39,6 @@ $register = array(
 	'ac' => array(
 		array(
 			'GETvar' => 'tx_sfregister_form[authCode]',
-			/*'lookUpTable' => array(
-				'table' => 'fe_users',
-				'id_field' => 'mailhash',
-				'alias_field' => 'username',
-				'addWhereClause' => ' AND mailhash <> ""'
-			),*/
 		),
 	),
 );
