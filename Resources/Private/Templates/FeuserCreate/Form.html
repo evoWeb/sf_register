@@ -16,16 +16,22 @@ create Action
 		<f:form.password property="password" value="" id="sfrPassword" />
 		<div id="bargraph" class="is0"></div></dd>
 
-	<dt><f:translate key="newPassword2"/>*</dt>
+	<dt><f:translate key="passwordRepeat"/>*</dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'passwordAgain'}" />
-		<f:form.password name="passwordAgain" value="" /></dd>
+		<f:render partial="fieldError" arguments="{field: 'user.passwordRepeat'}" />
+		<f:form.password name="passwordRepeat" value="" /></dd>
 </dl>
 <dl>
 	<dt><f:translate key="gender"/>*</dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.gender'}" />
-		<f:form.textbox property="gender" /></dd>
+		<f:form.radio property="gender" value="1"/> <f:translate key="gender_male" />
+		<f:form.radio property="gender" value="2"/> <f:translate key="gender_female" /><br/>
+		<f:form.select property="gender" options="{
+				1: '{f:translate(key: \'gender_male\')}',
+				2: '{f:translate(key: \'gender_female\')}'
+			}"/>
+		</dd>
 
 	<dt><f:translate key="title"/>*</dt>
 	<dd>
@@ -58,6 +64,11 @@ create Action
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.email'}" />
 		<f:form.textbox property="email" /></dd>
+
+	<dt><f:translate key="emailRepeat"/>*</dt>
+	<dd>
+		<f:render partial="fieldError" arguments="{field: 'user.emailRepeat'}" />
+		<f:form.textbox property="emailRepeat" /></dd>
 
 	<dt><f:translate key="telephone"/></dt>
 	<dd>

@@ -36,10 +36,24 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	protected $mailhash;
 
+
 	/**
+	 *  virtual not stored in database
 	 * @var string
 	 */
 	protected $captcha;
+
+	/**
+	 *  virtual not stored in database
+	 * @var string
+	 */
+	protected $passwortRepeat;
+
+	/**
+	 *  virtual not stored in database
+	 * @var string
+	 */
+	protected $emailRepeat;
 
 
 	/**
@@ -142,6 +156,7 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 		return $this->mailhash;
 	}
 
+
 	/**
 	 * Setter for captcha
 	 *
@@ -160,6 +175,45 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	public function getCaptcha() {
 		return $this->captcha;
 	}
+
+	/**
+	 * Setter for passwortRepeat
+	 *
+	 * @param string $passwortRepeat
+	 * @return void
+	 */
+	public function setPasswortRepeat($passwortRepeat) {
+		$this->passwortRepeat = trim($passwortRepeat);
+	}
+
+	/**
+	 * Getter for passwortRepeat
+	 *
+	 * @return string
+	 */
+	public function getPasswortRepeat() {
+		return $this->passwortRepeat;
+	}
+
+	/**
+	 * Setter for emailRepeat
+	 *
+	 * @param string $emailRepeat
+	 * @return void
+	 */
+	public function setEmailRepeat($emailRepeat) {
+		$this->emailRepeat = trim($emailRepeat);
+	}
+
+	/**
+	 * Getter for emailRepeat
+	 *
+	 * @return string
+	 */
+	public function getEmailRepeat() {
+		return $this->emailRepeat;
+	}
+
 
 	/**
 	 * Set an image list
@@ -213,6 +267,19 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 
+
+	/**
+	 * Setter for title
+	 *
+	 * @param string $title
+	 * @return void
+	 */
+	public function setTitle($title) {
+		if ($title == 'none') {
+			$title = '';
+		}
+		$this->title = $title;
+	}
 
 	/**
 	 * Setter for gender

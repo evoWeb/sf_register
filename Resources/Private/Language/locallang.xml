@@ -8,12 +8,15 @@
 		<languageKey index="default" type="array">
 			<label index="uid">Userid</label>
 			<label index="gender">Gender</label>
+			<label index="gender_male">Herr</label>
+			<label index="gender_female">Frau</label>
 			<label index="title">Title</label>
 			<label index="company">Company</label>
 			<label index="lastName">Last Name</label>
 			<label index="firstName">First Name</label>
 			<label index="position">Position</label>
 			<label index="email">Email</label>
+			<label index="emailRepeat">Email repeatition</label>
 			<label index="telephone">Phone</label>
 			<label index="mobilephone">Mobile-Phone</label>
 			<label index="fax">Fax</label>
@@ -24,6 +27,7 @@
 			<label index="staticInfoCountry">Country</label>
 			<label index="zone">State/province</label>
 			<label index="password">Password</label>
+			<label index="passwordRepeat">Password repeatition</label>
 			<label index="gtc">General terms and conditions</label>
 			<label index="gtc.checked">not accepted</label>
 			<label index="gtc.checked1">accepted</label>
@@ -46,7 +50,6 @@
 			<label index="newPassword1">New password</label>
 			<label index="newPassword2">repeated password</label>
 			<label index="password.saved">password saved</label>
-			<label index="passwordAgain">Password repeatition</label>
 
 			<label index="error.noteempty">The %1$s was not empty which it should have been</label>
 			<label index="error.notequalcurrentuser">The %1$s does not equals your own user which is not allowed</label>
