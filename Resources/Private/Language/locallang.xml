@@ -46,6 +46,7 @@
 			<label index="submit.removeImage">remove</label>
 
 			<label index="username">Username</label>
+			<label index="pseudonym">Pseudonym</label>
 			<label index="oldPassword">Old password</label>
 			<label index="newPassword1">New password</label>
 			<label index="newPassword2">repeated password</label>

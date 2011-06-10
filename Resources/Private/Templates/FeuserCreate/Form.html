@@ -10,6 +10,11 @@ create Action
 		<f:render partial="fieldError" arguments="{field: 'user.username'}" />
 		<f:form.textbox property="username" /></dd>
 
+	<dt><f:translate key="pseudonym"/>*</dt>
+	<dd>
+		<f:render partial="fieldError" arguments="{field: 'user.pseudonym'}" />
+		<f:form.textbox property="pseudonym" /></dd>
+
 	<dt><f:translate key="newPassword1"/>*</dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.password'}" />

@@ -57,6 +57,11 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 
 
 	/**
+	 * @var string
+	 */
+	protected $pseudonym;
+
+	/**
 	 * @var  integer 1 or 2 for mr or mrs
 	 */
 	protected $gender;
@@ -279,6 +284,24 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 			$title = '';
 		}
 		$this->title = $title;
+	}
+
+	/**
+	 * Setter for pseudonym
+	 *
+	 * @param string $pseudonym
+	 */
+	public function setPseudonym($pseudonym) {
+		$this->pseudonym = $pseudonym;
+	}
+
+	/**
+	 * Getter for pseudonym
+	 *
+	 * @return string
+	 */
+	public function getPseudonym() {
+		return $this->pseudonym;
 	}
 
 	/**

@@ -4,6 +4,7 @@
 CREATE TABLE fe_users (
 	mailhash varchar(60) DEFAULT '',
 
+	pseudonym varchar(50) DEFAULT '',
 	gender int(11) unsigned DEFAULT '0' NOT NULL,
 	date_of_birth int(11) DEFAULT '0' NOT NULL,
 	language char(2) DEFAULT '' NOT NULL,

@@ -40,6 +40,16 @@ $tempColumns = array(
 		)
 	),
 
+	'pseudonym' => array(
+		'exclude' => 0,
+		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.pseudonym',
+		'config' => array(
+			'type' => 'input',
+			'size' => '20',
+			'max' => '50',
+			'eval' => 'trim',
+		)
+	),
 	'gender' => array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.gender',
@@ -144,6 +154,7 @@ $tempColumns = array(
 
 t3lib_extMgm::addTCAcolumns('fe_users', $tempColumns, 1);
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'gender', '', 'before:name');
+t3lib_extMgm::addToAllTCAtypes('fe_users', 'pseudonym', '', 'after:username');
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'date_of_birth, language, status', '', 'after:name');
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'zone', '', 'after:city');
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'mobilephone', '', 'after:telephone');
