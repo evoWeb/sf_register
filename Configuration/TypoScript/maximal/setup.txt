@@ -54,12 +54,7 @@ plugin.tx_sfregister.settings {
 	userEmail {
 		fromName = {$plugin.tx_sfregister.settings.userEmail.fromName}
 		fromEmail = {$plugin.tx_sfregister.settings.userEmail.fromEmail}
-plugin.tx_sfregister._LOCAL_LANG.default {
-	title_none = Please select
-	title_dr = Dr.
-	title_prof = Prof.
-	title_profdr = Prof. Dr.
-}
+
 		replyName = {$plugin.tx_sfregister.settings.userEmail.replyName}
 		replyEmail = {$plugin.tx_sfregister.settings.userEmail.replyEmail}
 
@@ -89,19 +84,16 @@ plugin.tx_sfregister._LOCAL_LANG.default {
 			1 = StringLength(minimum = 8, maximum = 40)
 			2 = Tx_SfRegister_Domain_Validator_BadWordValidator
 		}
+		passwordRepeat = Tx_SfRegister_Domain_Validator_RepeatValidator
 		title = StringLength(minimum = 2, maximum = 80)
 		company = StringLength(minimum = 2, maximum = 80)
 		firstName = StringLength(minimum = 2, maximum = 80)
 		lastName = StringLength(minimum = 2, maximum = 80)
 		email = EmailAddress
+		emailRepeat = Tx_SfRegister_Domain_Validator_RepeatValidator
 		gtc = Tx_SfRegister_Domain_Validator_IsTrueValidator
 		image = Tx_SfRegister_Domain_Validator_ImageUploadValidator
-		captcha =plugin.tx_sfregister._LOCAL_LANG.default {
-	title_none = Please select
-	title_dr = Dr.
-	title_prof = Prof.
-	title_profdr = Prof. Dr.
-} Tx_SfRegister_Domain_Validator_CaptchaValidator(type = jmrecaptcha)
+		captcha = Tx_SfRegister_Domain_Validator_CaptchaValidator(type = jmrecaptcha)
 	}
 
 	validation.edit {
@@ -119,7 +111,7 @@ plugin.tx_sfregister._LOCAL_LANG.default {
 		}
 		passwordAgain {
 			1 = StringLength(minimum = 2, maximum = 40)
-			2 = Tx_SfRegister_Domain_Validator_PasswordsEqualValidator
+			2 = Tx_SfRegister_Domain_Validator_RepeatValidator
 		}
 		oldPassword {
 			1 = StringLength(minimum = 2, maximum = 40)
