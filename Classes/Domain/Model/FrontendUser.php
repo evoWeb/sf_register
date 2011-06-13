@@ -47,7 +47,7 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 *  virtual not stored in database
 	 * @var string
 	 */
-	protected $passwortRepeat;
+	protected $passwordRepeat;
 
 	/**
 	 *  virtual not stored in database
@@ -182,22 +182,22 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * Setter for passwortRepeat
+	 * Setter for passwordRepeat
 	 *
-	 * @param string $passwortRepeat
+	 * @param string $passwordRepeat
 	 * @return void
 	 */
-	public function setPasswortRepeat($passwortRepeat) {
-		$this->passwortRepeat = trim($passwortRepeat);
+	public function setPasswordRepeat($passwordRepeat) {
+		$this->passwordRepeat = trim($passwordRepeat);
 	}
 
 	/**
-	 * Getter for passwortRepeat
+	 * Getter for passwordRepeat
 	 *
 	 * @return string
 	 */
-	public function getPasswortRepeat() {
-		return $this->passwortRepeat;
+	public function getPasswordRepeat() {
+		return $this->passwordRepeat;
 	}
 
 	/**
