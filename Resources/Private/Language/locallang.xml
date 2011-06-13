@@ -65,6 +65,7 @@
 			<label index="error.notexists">Attribute does not exists</label>
 			<label index="error.image.filesize">The file was bigger than the maximum allowed filesize</label>
 			<label index="error.image.extension">The file was not of an allowed image extension</label>
+			<label index="error.repeatitionwasnotequal">The repeatition of %1$s was not equal</label>
 
 			<label index="error.captcha.notcorrect">The entered captcha is incorrect</label>
 			<label index="error.captcha.notinstalled">Captcha '%1$s' extension not installed error</label>
