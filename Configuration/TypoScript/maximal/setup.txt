@@ -109,7 +109,7 @@ plugin.tx_sfregister.settings {
 			1 = StringLength(minimum = 2, maximum = 40)
 			2 = Tx_SfRegister_Domain_Validator_BadWordValidator
 		}
-		passwordAgain {
+		passwordRepeat {
 			1 = StringLength(minimum = 2, maximum = 40)
 			2 = Tx_SfRegister_Domain_Validator_RepeatValidator
 		}
