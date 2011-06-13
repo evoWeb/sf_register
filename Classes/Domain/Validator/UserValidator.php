@@ -54,6 +54,11 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	protected $currentValidatorOptions = array();
 
 	/**
+	 * @var object
+	 */
+	protected $model;
+
+	/**
 	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
 	 * @return void
 	 */
@@ -95,18 +100,18 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	/**
 	 * If the given user are valid
 	 *
-	 * @param object $object
+	 * @param object model
 	 * @return boolean
 	 */
-	public function isValid($object) {
-		$result = TRUE;
+	public function isValid($model) {
+		$this->model = $model;
 
-		if (!($object instanceof Tx_SfRegister_Interfaces_FrontendUser) &&
-				!($object instanceof Tx_SfRegister_Domain_Model_Password)) {
+		if (!($model instanceof Tx_SfRegister_Interfaces_FrontendUser) &&
+				!($model instanceof Tx_SfRegister_Domain_Model_Password)) {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notvalidatable', 'SfRegister'), 1301599551);
 			$result = FALSE;
 		} else {
-			$result = $this->validateRules($object);
+			$result = $this->validateRules($model);
 		}
 
 		return $result;
@@ -115,21 +120,21 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	/**
 	 * Validate all rules
 	 *
-	 * @param object $object
+	 * @param object $model
 	 * @return boolean
 	 */
-	protected function validateRules($object) {
+	protected function validateRules($model) {
 		$result = TRUE;
 
-		foreach ($this->getRulesFromSettings($object) as $fieldName => $rule) {
+		foreach ($this->getRulesFromSettings() as $fieldName => $rule) {
 			$methodName = 'get' . ucfirst($fieldName);
 
-			if (!method_exists($object, $methodName)) {
+			if (!method_exists($model, $methodName)) {
 				$this->addError(Tx_Extbase_Utility_Localization::translate('error.notexists', 'SfRegister'), 1301599575);
 				$result = FALSE;
 			} else {
 				$this->currentFieldName = $fieldName;
-				$fieldValue = $object->{$methodName}();
+				$fieldValue = $model->{$methodName}();
 
 				if (is_array($rule)) {
 					$result = $this->validateRuleArray($fieldValue, $rule) && $result ? TRUE : FALSE;
@@ -147,13 +152,12 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 * Warning: Dont remove the added validators
 	 *          These prevent that editing others data is possible
 	 *
-	 * @param object $object
 	 * @return array
 	 */
-	protected function getRulesFromSettings($object) {
+	protected function getRulesFromSettings() {
 		$rules = $this->settings['validation'][$this->options['type']];
 
-		if ($object instanceof Tx_Extbase_Domain_Model_FrontendUser) {
+		if ($this->model instanceof Tx_Extbase_Domain_Model_FrontendUser) {
 			if ($this->options['type'] == 'create') {
 				$rules = array_merge(array('uid' => 'Tx_SfRegister_Domain_Validator_EmptyValidator'), $rules);
 			} elseif ($this->options['type'] == 'edit') {
@@ -196,6 +200,9 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 		$result = TRUE;
 
 		$validator = $this->getValidator($rule);
+		if (method_exists($validator, 'setModel')) {
+			$validator->setModel($this->model);
+		}
 		if (method_exists($validator, 'setFieldname')) {
 			$validator->setFieldname($this->currentFieldName);
 		}
