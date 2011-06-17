@@ -95,6 +95,63 @@ $tempColumns = array(
 			'default' => ''
 		)
 	),
+	'timezone' => array(
+		'exclude' => 0,
+		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone',
+		'config' => array(
+			'type' => 'select',
+			'items' => array(
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-12', -12),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-11', -11),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-10', -10),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-9.5', -9.5),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-9', -9),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-8', -8),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-7', -7),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-6', -6),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-5', -5),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-4.5', -4.5),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-4', -4),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-3.5', -3.5),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-3', -3),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-2', -2),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-1', -1),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.0', 0),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.1', 1),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.2', 2),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.3', 3),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.3.5', 3.5),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.4', 4),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.4.5', 4.5),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.5', 5),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.5.5', 5.5),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.5.75', 5.75),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.6', 6),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.6.5', 6.5),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.7', 7),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.8', 8),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.9', 9),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.9.5', 9.5),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.10', 10),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.11', 11),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.11.5', 11.5),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.12', 12),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.12.75', 12.75),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.13', 13),
+				Array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.14', 14),
+			),
+			'size' => 1,
+			'maxitems' => 1,
+			'default' => 0,
+		)
+	),
+	'daylight' => array(
+		'exclude' => 1,
+		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.daylight',
+		'config'  => array(
+			'type' => 'check'
+		)
+	),
 	'mobilephone' => array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.mobilephone',
@@ -106,6 +163,13 @@ $tempColumns = array(
 	'gtc' => array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.gtc',
+		'config'  => array(
+			'type' => 'check'
+		)
+	),
+	'privacy' => array(
+		'exclude' => 1,
+		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.privacy',
 		'config'  => array(
 			'type' => 'check'
 		)
@@ -156,9 +220,9 @@ t3lib_extMgm::addTCAcolumns('fe_users', $tempColumns, 1);
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'gender', '', 'before:name');
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'pseudonym', '', 'after:username');
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'date_of_birth, language, status', '', 'after:name');
-t3lib_extMgm::addToAllTCAtypes('fe_users', 'zone', '', 'after:city');
+t3lib_extMgm::addToAllTCAtypes('fe_users', 'zone, timezone, daylight', '', 'after:city');
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'mobilephone', '', 'after:telephone');
-t3lib_extMgm::addToAllTCAtypes('fe_users', 'mailhash, gtc');
+t3lib_extMgm::addToAllTCAtypes('fe_users', 'mailhash, gtc, privacy');
 
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'by_invitation, comments, module_sys_dmail_html');
 

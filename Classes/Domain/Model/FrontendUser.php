@@ -82,6 +82,16 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	protected $zone;
 
 	/**
+	 * @var float
+	 */
+	protected $timezone;
+
+	/**
+	 * @var boolean wether the daylight saving time must go into time calculation
+	 */
+	protected $daylight;
+
+	/**
 	 * @var string two character iso code of country
 	 */
 	protected $staticInfoCountry;
@@ -95,6 +105,11 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 * @var boolean General terms and conditions accepted flag
 	 */
 	protected $gtc;
+
+	/**
+	 * @var boolean Privacy agreement accepted flag
+	 */
+	protected $privacy;
 
 	/**
 	 * @var integer of employee status
@@ -381,6 +396,34 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
+	 * @param integer $timezone
+	 */
+	public function setTimezone($timezone) {
+		$this->timezone = ($timezone > 14 || $timezone < -12 ? $timezone / 10 : $timezone);
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function getTimezone() {
+		return floor($this->timezone) != $this->timezone ? $this->timezone * 10 : $this->timezone;
+	}
+
+	/**
+	 * @param boolean $daylight
+	 */
+	public function setDaylight($daylight) {
+		$this->daylight = ($daylight ? TRUE : FALSE);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getDaylight() {
+		return $this->daylight ? TRUE : FALSE;
+	}
+
+	/**
 	 * Setter got static info country
 	 *
 	 * @param string $staticInfoCountry
@@ -416,6 +459,24 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	public function getGtc() {
 		return $this->gtc ? TRUE : FALSE;
+	}
+
+	/**
+	 * Setter for privacy agreement flag
+	 *
+	 * @param boolean $privacy
+	 */
+	public function setPrivacy($privacy) {
+		$this->privacy = ($privacy ? TRUE : FALSE);
+	}
+
+	/**
+	 * Getter for privacy agreement flag
+	 *
+	 * @return boolean
+	 */
+	public function getPrivacy() {
+		return $this->privacy ? TRUE : FALSE;
 	}
 }
 
