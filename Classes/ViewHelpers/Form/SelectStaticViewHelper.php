@@ -22,14 +22,9 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_SfRegister_ViewHelpers_Form_SelectStaticCountryZonesViewHelper extends Tx_SfRegister_ViewHelpers_Form_SelectStaticViewHelper {
+class Tx_SfRegister_ViewHelpers_Form_SelectStaticViewHelper extends Tx_Fluid_ViewHelpers_Form_SelectViewHelper {
 	/**
-	 * @var Tx_SfRegister_Domain_Repository_StaticCountryZoneRepository
-	 */
-	protected $countryZonesRepository;
-
-	/**
-	 * Initialize arguments. Cant be moved to parent because of "private $argumentDefinitions = array();"
+	 * Initialize arguments.
 	 *
 	 * @return void
 	 */
@@ -50,23 +45,58 @@ class Tx_SfRegister_ViewHelpers_Form_SelectStaticCountryZonesViewHelper extends 
 	}
 
 	/**
-	 * Injects the country repository
+	 * Render the option tags.
 	 *
-	 * @param Tx_SfRegister_Domain_Repository_StaticCountryRepository $countryRepository
-	 * @return void
+	 * @return array an associative array of options, key will be the value of the option tag
 	 */
-	public function injectCountryZoneRepository(Tx_SfRegister_Domain_Repository_StaticCountryZoneRepository $countryZonesRepository) {
-		$this->countryZonesRepository = $countryZonesRepository;
-	}
-
-	/**
-	 * @return void
-	 */
-	public function initialize() {
-		parent::initialize();
-		if ($this->arguments->hasArgument('parent') && $this->arguments['parent'] != '') {
-			$this->options = $this->countryZonesRepository->findAllByIso2($this->arguments['parent']);
+	protected function getOptions() {
+		if (!is_array($this->options) && !($this->options instanceof Traversable)) {
+			return array();
 		}
+
+		$options = array();
+		$optionsArgument = $this->options;
+		foreach ($optionsArgument as $key => $value) {
+			if (is_object($value)) {
+
+				if ($this->arguments->hasArgument('optionValueField')) {
+					$key = Tx_Extbase_Reflection_ObjectAccess::getProperty($value, $this->arguments['optionValueField']);
+					if (is_object($key)) {
+						if (method_exists($key, '__toString')) {
+							$key = (string)$key;
+						} else {
+							throw new Tx_Fluid_Core_ViewHelper_Exception('Identifying value for object of class "' . get_class($value) . '" was an object.' , 1247827428);
+						}
+					}
+				} elseif ($this->persistenceManager->getBackend()->getIdentifierByObject($value) !== NULL) {
+					$key = $this->persistenceManager->getBackend()->getIdentifierByObject($value);
+				} elseif (method_exists($value, '__toString')) {
+					$key = (string)$value;
+				} else {
+					throw new Tx_Fluid_Core_ViewHelper_Exception('No identifying value for object of class "' . get_class($value) . '" found.' , 1247826696);
+				}
+
+				if ($this->arguments->hasArgument('optionLabelField')) {
+					$value = Tx_Extbase_Reflection_ObjectAccess::getProperty($value, $this->arguments['optionLabelField']);
+					if (is_object($value)) {
+						if (method_exists($value, '__toString')) {
+							$value = (string)$value;
+						} else {
+							throw new Tx_Fluid_Core_ViewHelper_Exception('Label value for object of class "' . get_class($value) . '" was an object without a __toString() method.' , 1247827553);
+						}
+					}
+				} elseif (method_exists($value, '__toString')) {
+					$value = (string)$value;
+				} elseif ($this->persistenceManager->getBackend()->getIdentifierByObject($value) !== NULL) {
+					$value = $this->persistenceManager->getBackend()->getIdentifierByObject($value);
+				}
+			}
+			$options[$key] = $value;
+		}
+		if ($this->arguments['sortByOptionLabel']) {
+			asort($options);
+		}
+		return $options;
 	}
 }
 
