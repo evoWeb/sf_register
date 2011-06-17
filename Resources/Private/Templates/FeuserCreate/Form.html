@@ -108,12 +108,53 @@ create Action
 	<dt><f:translate key="country"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.country'}" />
-		<f:form.textbox property="country" /></dd>
+		<f:if condition="{user.staticInfoCountry}">
+			<f:then>
+				<register:form.SelectStaticCountries property="staticInfoCountry"/>
+			</f:then>
+			<f:else>
+				<register:form.SelectStaticCountries property="staticInfoCountry" value="US"/>
+			</f:else>
+		</f:if></dd>
+
+	<dt><f:translate key="zone"/></dt>
+	<dd>
+		<f:render partial="fieldError" arguments="{field: 'user.zone'}"/>
+		<f:if condition="{user.staticInfoCountry}">
+			<f:then>
+				<f:if condition="{user.zone}">
+					<f:then>
+						<register:form.SelectStaticCountryZones property="zone" parent="{user.staticInfoCountry}"/>
+					</f:then>
+					<f:else>
+						<register:form.SelectStaticCountryZones property="zone" value="" parent="{user.staticInfoCountry}"/>
+					</f:else>
+				</f:if>
+			</f:then>
+			<f:else>
+				<register:form.SelectStaticCountryZones property="zone" value="" parent="US"/>
+			</f:else>
+		</f:if></dd>
+
+	<dt><f:translate key="daylight"/>*</dt>
+	<dd>
+		<f:render partial="fieldError" arguments="{field: 'user.daylight'}" />
+		<f:form.checkbox property="daylight" value="1"/></dd>
+
+	<dt><f:translate key="timezone"/>*</dt>
+	<dd>
+		<f:render partial="fieldError" arguments="{field: 'user.timezone'}" />
+		<f:render partial="selectTimezone" arguments="{user: user}" /></dd>
 
 	<dt><f:translate key="gtc"/>*</dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.gtc'}" />
 		<f:form.checkbox property="gtc" value="1"/></dd>
+
+	<dt><f:translate key="privacy"/>*</dt>
+	<dd>
+		<f:render partial="fieldError" arguments="{field: 'user.privacy'}" />
+		<f:form.checkbox property="privacy" value="1"/></dd>
 
 	<dt><f:translate key="image"/></dt>
 	<dd>
@@ -146,7 +187,7 @@ create Action
 		<f:render partial="captchaSrFreecap" />
 
 		<f:render partial="fieldError" arguments="{field: 'user.captcha'}" />
-		<f:form.textbox property="captcha" id="iCaptcha" maxlength="15"/>
+		<f:form.textbox property="captcha" value="" id="iCaptcha" maxlength="15"/>
 	</dd>
 
 	<dt>&nbsp;</dt>
