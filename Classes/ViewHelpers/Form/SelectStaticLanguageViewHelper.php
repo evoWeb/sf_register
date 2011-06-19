@@ -63,7 +63,10 @@ class Tx_SfRegister_ViewHelpers_Form_SelectStaticLanguageViewHelper extends Tx_S
 	 */
 	public function initialize() {
 		parent::initialize();
-		$this->options = $this->languageRepository->findAll();
+
+		if (t3lib_extMgm::isLoaded('static_info_tables')) {
+			$this->options = $this->languageRepository->findAll();
+		}
 	}
 }
 

@@ -63,7 +63,10 @@ class Tx_SfRegister_ViewHelpers_Form_SelectStaticCountriesViewHelper extends Tx_
 	 */
 	public function initialize() {
 		parent::initialize();
-		$this->options = $this->countryRepository->findAll();
+
+		if (t3lib_extMgm::isLoaded('static_info_tables')) {
+			$this->options = $this->countryRepository->findAll();
+		}
 	}
 }
 
