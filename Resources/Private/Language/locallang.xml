@@ -109,7 +109,7 @@
 			<label index="error.repeatitionwasnotequal">The repeatition of %1$s was not equal</label>
 
 			<label index="error.captcha.notcorrect">The entered captcha is incorrect</label>
-			<label index="error.captcha.notinstalled">Captcha '%1$s' extension not installed error</label>
+			<label index="error.captcha.notinstalled">Captcha extension '%1$s' not installed error</label>
 			<label index="error.jmrecaptcha.incorrect-captcha-sol">Incorrect captcha</label>
 
 			<label index="error.1238108067">The length of %1$s was not between %2$s and %3$s characters</label>
@@ -124,6 +124,122 @@
 			<label index="subjectUserNotificationMailPreActivation">You registered your account %2$s at %1$s</label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="uid">Userid</label>
+			<label index="gender">Gender</label>
+			<label index="gender_male">Herr</label>
+			<label index="gender_female">Frau</label>
+			<label index="title">Title</label>
+			<label index="company">Company</label>
+			<label index="lastName">Nachname</label>
+			<label index="firstName">Vorname</label>
+			<label index="position">Position</label>
+			<label index="email">Email</label>
+			<label index="emailRepeat">Email repeatition</label>
+			<label index="telephone">Phone</label>
+			<label index="mobilephone">Mobile-Phone</label>
+			<label index="fax">Fax</label>
+			<label index="address">Street / House Number</label>
+			<label index="zip">Zip</label>
+			<label index="city">City</label>
+			<label index="country">Country</label>
+			<label index="staticInfoCountry">Country</label>
+			<label index="zone">State/province</label>
+			<label index="timezone">Timezone</label>
+			<label index="timezone.I.-12">UTC−12:00</label>
+			<label index="timezone.I.-11">UTC−11:00</label>
+			<label index="timezone.I.-10">UTC−10:00</label>
+			<label index="timezone.I.-9.5">UTC−09:30</label>
+			<label index="timezone.I.-9">UTC−09:00</label>
+			<label index="timezone.I.-8">UTC−08:00</label>
+			<label index="timezone.I.-7">UTC−07:00</label>
+			<label index="timezone.I.-6">UTC−06:00</label>
+			<label index="timezone.I.-5">UTC−05:00</label>
+			<label index="timezone.I.-4.5">UTC−04:30</label>
+			<label index="timezone.I.-4">UTC−04:00</label>
+			<label index="timezone.I.-3.5">UTC−03:30</label>
+			<label index="timezone.I.-3">UTC−03:00</label>
+			<label index="timezone.I.-2">UTC−02:00</label>
+			<label index="timezone.I.-1">UTC−01:00</label>
+			<label index="timezone.I.0">UTC</label>
+			<label index="timezone.I.1">UTC+01:00</label>
+			<label index="timezone.I.2">UTC+02:00</label>
+			<label index="timezone.I.3">UTC+03:00</label>
+			<label index="timezone.I.3.5">UTC+03:30</label>
+			<label index="timezone.I.4">UTC+04:00</label>
+			<label index="timezone.I.4.5">UTC+04:30</label>
+			<label index="timezone.I.5">UTC+05:00</label>
+			<label index="timezone.I.5.5">UTC+05:30</label>
+			<label index="timezone.I.5.75">UTC+05:45</label>
+			<label index="timezone.I.6">UTC+06:00</label>
+			<label index="timezone.I.6.5">UTC+06:30</label>
+			<label index="timezone.I.7">UTC+07:00</label>
+			<label index="timezone.I.8">UTC+08:00</label>
+			<label index="timezone.I.9">UTC+09:00</label>
+			<label index="timezone.I.9.5">UTC+09:30</label>
+			<label index="timezone.I.10">UTC+10:00</label>
+			<label index="timezone.I.11">UTC+11:00</label>
+			<label index="timezone.I.11.5">UTC+11:30</label>
+			<label index="timezone.I.12">UTC+12:00</label>
+			<label index="timezone.I.12.75">UTC+12:45</label>
+			<label index="timezone.I.13">UTC+13:00</label>
+			<label index="timezone.I.14">UTC+14:00</label>
+			<label index="daylight">Daylight saving time</label>
+			<label index="password">Passwort</label>
+			<label index="passwordRepeat">Passwortwiederholung</label>
+			<label index="gtc">General terms and conditions</label>
+			<label index="gtc.checked">not accepted</label>
+			<label index="gtc.checked1">accepted</label>
+			<label index="privacy">Privacy agreement</label>
+			<label index="dateOfBirth">Birth date</label>
+			<label index="image">Profilimage</label>
+			<label index="image.none">Profilimage not uploaded</label>
+
+			<label index="edit.saved">Userdata updated</label>
+			<label index="create.saved">User created</label>
+			<label index="info.mandatory.fields"><![CDATA[Mit <span>*</span> markierte Felder sind Pflichtfelder]]></label>
+
+			<label index="submit.create">registrieren</label>
+			<label index="submit.change">change</label>
+			<label index="submit.save">save</label>
+			<label index="submit.update">update</label>
+			<label index="submit.removeImage">remove</label>
+
+			<label index="username">Benutzername</label>
+			<label index="pseudonym">Pseudonym</label>
+			<label index="oldPassword">Old password</label>
+			<label index="newPassword1">New password</label>
+			<label index="newPassword2">repeated password</label>
+			<label index="password.saved">password saved</label>
+
+			<label index="error.noteempty">The %1$s was not empty which it should have been</label>
+			<label index="error.notequalcurrentuser">The %1$s does not equals your own user which is not allowed</label>
+			<label index="error.changepassword.notloggedin">You need to be logged in to change the password</label>
+			<label index="error.changepassword.notequal">The give password was not equal to the current password</label>
+			<label index="error.badword">The password you entered is on the disallowed list</label>
+			<label index="error.nottrue">The %1$s was not accepted</label>
+			<label index="error.passwordagain.notequal">Password fields are not equal</label>
+			<label index="error.notunique.local">The %1$s is not unique</label>
+			<label index="error.notunique.global">The %1$s is not unique</label>
+			<label index="error.notvalidatable">The given form does not contain data that can be validated</label>
+			<label index="error.notexists">Attribute does not exists</label>
+			<label index="error.image.filesize">The file was bigger than the maximum allowed filesize</label>
+			<label index="error.image.extension">The file was not of an allowed image extension</label>
+			<label index="error.repeatitionwasnotequal">Die Wiederholung von %1$s war ungleich</label>
+
+			<label index="error.captcha.notcorrect">The entered captcha is incorrect</label>
+			<label index="error.captcha.notinstalled">Die Captcha extension '%1$s' ist nicht installiert</label>
+			<label index="error.jmrecaptcha.incorrect-captcha-sol">Incorrect captcha</label>
+
+			<label index="error.1238108067">Bitte geben sie zwischen %2$s und %3$s Zeichen ein</label>
+			<label index="error.1221559976">Die %1$s hat kein gültiges Format</label>
+			<label index="error.1296591069">The %1$s is global not unique</label>
+
+			<label index="subjectAdminNotificationMail">User %2$s registered at %1$s</label>
+			<label index="subjectAdminNotificationMailPostActivation">User %2$s registered at %1$s and is now activated</label>
+			<label index="subjectAdminNotificationMailPreActivation">User %2$s registered at %1$s and needs to be activated</label>
+			<label index="subjectUserNotificationMail">You registered yourself at %1$s as %2$s</label>
+			<label index="subjectUserNotificationMailPostActivation">You activated account %2$s at %1$s</label>
+			<label index="subjectUserNotificationMailPreActivation">You registered your account %2$s at %1$s</label>
 		</languageKey>
 	</data>
 </T3locallang>
