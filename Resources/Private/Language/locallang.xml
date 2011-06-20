@@ -224,13 +224,13 @@
 			<label index="error.notexists">Attribute does not exists</label>
 			<label index="error.image.filesize">The file was bigger than the maximum allowed filesize</label>
 			<label index="error.image.extension">The file was not of an allowed image extension</label>
-			<label index="error.repeatitionwasnotequal">Die Wiederholung von %1$s war ungleich</label>
+			<label index="error.repeatitionwasnotequal">Bitte wiederholen Sie das %1$s</label>
 
-			<label index="error.captcha.notcorrect">The entered captcha is incorrect</label>
-			<label index="error.captcha.notinstalled">Die Captcha extension '%1$s' ist nicht installiert</label>
-			<label index="error.jmrecaptcha.incorrect-captcha-sol">Incorrect captcha</label>
+			<label index="error.captcha.notcorrect">Der eingegebene Verifizierungscode stimmt nicht mit dem Angegebenen überein.</label>
+			<label index="error.captcha.notinstalled">Die Verifizierungscode Extension '%1$s' ist nicht installiert</label>
+			<label index="error.jmrecaptcha.incorrect-captcha-sol">Sie haben das Verifizierungscode nicht korrekt eingegeben.</label>
 
-			<label index="error.1238108067">Bitte geben sie zwischen %2$s und %3$s Zeichen ein</label>
+			<label index="error.1238108067">Bitte geben Sie %2$s bis %3$s Zeichen ein</label>
 			<label index="error.1221559976">Die %1$s hat kein gültiges Format</label>
 			<label index="error.1296591069">The %1$s is global not unique</label>
 
