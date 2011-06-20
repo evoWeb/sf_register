@@ -199,8 +199,8 @@
 			<label index="info.mandatory.fields"><![CDATA[Mit <span>*</span> markierte Felder sind Pflichtfelder]]></label>
 
 			<label index="submit.create">registrieren</label>
-			<label index="submit.change">change</label>
-			<label index="submit.save">save</label>
+			<label index="submit.change">ändern</label>
+			<label index="submit.save">speichern</label>
 			<label index="submit.update">update</label>
 			<label index="submit.removeImage">remove</label>
 
