@@ -239,7 +239,7 @@
 			<label index="subjectAdminNotificationMailPreActivation">User %2$s registered at %1$s and needs to be activated</label>
 			<label index="subjectUserNotificationMail">You registered yourself at %1$s as %2$s</label>
 			<label index="subjectUserNotificationMailPostActivation">You activated account %2$s at %1$s</label>
-			<label index="subjectUserNotificationMailPreActivation">You registered your account %2$s at %1$s</label>
+			<label index="subjectUserNotificationMailPreActivation">Ihre Registrierung des Account %2$s auf %1$s</label>
 		</languageKey>
 	</data>
 </T3locallang>
