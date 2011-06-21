@@ -29,12 +29,65 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	/**
 	 * @var string
 	 */
-	protected $znNameLocal;
+	protected $znCountryIso2;
+
+	/**
+	 * @var string
+	 */
+	protected $znCountryIso3;
+
+	/**
+	 * @var string
+	 */
+	protected $znCountryIsoNr;
 
 	/**
 	 * @var string
 	 */
 	protected $znCode;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameLocal;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameEn;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameDe;
+
+	/**
+	 * @return string
+	 */
+	public function getZnCountryIso2() {
+		return $this->znCountryIso2;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnCountryIso3() {
+		return $this->znCountryIso3;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnCountryIsoNr() {
+		return $this->znCountryIsoNr;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnCode() {
+		return $this->znCode;
+	}
 
 	/**
 	 * @return string
@@ -46,8 +99,15 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	/**
 	 * @return string
 	 */
-	public function getZnCode() {
-		return $this->znCode;
+	public function getZnNameEn() {
+		return $this->znNameEn;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameDe() {
+		return $this->znNameDe;
 	}
 }
 

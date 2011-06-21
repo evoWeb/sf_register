@@ -34,7 +34,17 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	/**
 	 * @var string
 	 */
+	protected $lgNameLocal;
+
+	/**
+	 * @var string
+	 */
 	protected $lgNameEn;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameDe;
 
 	/**
 	 * @return string
@@ -46,8 +56,22 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	/**
 	 * @return string
 	 */
+	public function getLgNameLocal() {
+		return $this->lgNameLocal;
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getLgNameEn() {
 		return $this->lgNameEn;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameDe() {
+		return $this->lgNameDe;
 	}
 }
 

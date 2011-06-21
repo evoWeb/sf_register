@@ -27,24 +27,39 @@
  */
 class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_AbstractEntity {
 	/**
-	 * @var string
+	 * @var 	string
 	 */
 	protected $cnIso2;
 
 	/**
-	 * @var string
+	 * @var 	string
 	 */
 	protected $cnIso3;
 
 	/**
-	 * @var integer
+	 * @var 	integer
 	 */
 	protected $cnIsoNr;
 
 	/**
-	 * @var string
+	 * @var 	string
+	 */
+	protected $cnOfficialNameLocal;
+
+	/**
+	 * @var 	string
 	 */
 	protected $cnOfficialNameEn;
+
+	/**
+	 * @var 	string
+	 */
+	protected $cnShortEn;
+
+	/**
+	 * @var 	string
+	 */
+	protected $cnShortDe;
 
 	/**
 	 * @return string
@@ -70,8 +85,29 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	/**
 	 * @return string
 	 */
+	public function getCnOfficialNameLocal() {
+		return $this->cnOfficialNameLocal;
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getCnOfficialNameEn() {
 		return $this->cnOfficialNameEn;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortEn() {
+		return $this->cnShortEn;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortDe() {
+		return $this->cnShortDe;
 	}
 }
 
