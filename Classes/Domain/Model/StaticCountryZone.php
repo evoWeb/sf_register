@@ -59,7 +59,67 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	/**
 	 * @var string
 	 */
+	protected $znNameDa;
+
+	/**
+	 * @var string
+	 */
 	protected $znNameDe;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameEs;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameFr;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameGl;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameIt;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameJa;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameKm;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameNl;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameNo;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameRu;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameSv;
+
+	/**
+	 * @var string
+	 */
+	protected $znNameUa;
 
 	/**
 	 * @return string
@@ -106,8 +166,92 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	/**
 	 * @return string
 	 */
+	public function getZnNameDa() {
+		return $this->znNameDa;
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getZnNameDe() {
 		return $this->znNameDe;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameEs() {
+		return $this->znNameEs;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameFr() {
+		return $this->znNameFr;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameGl() {
+		return $this->znNameGl;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameIt() {
+		return $this->znNameIt;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameJa() {
+		return $this->znNameJa;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameKm() {
+		return $this->znNameKm;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameNl() {
+		return $this->znNameNl;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameNo() {
+		return $this->znNameNo;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameRu() {
+		return $this->znNameRu;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameSv() {
+		return $this->znNameSv;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getZnNameUa() {
+		return $this->znNameUa;
 	}
 }
 

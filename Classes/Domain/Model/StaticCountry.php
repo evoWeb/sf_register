@@ -52,14 +52,74 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	protected $cnOfficialNameEn;
 
 	/**
-	 * @var 	string
+	 * @var string
 	 */
 	protected $cnShortEn;
 
 	/**
-	 * @var 	string
+	 * @var string
+	 */
+	protected $cnShortDa;
+
+	/**
+	 * @var string
 	 */
 	protected $cnShortDe;
+
+	/**
+	 * @var string
+	 */
+	protected $cnShortEs;
+
+	/**
+	 * @var string
+	 */
+	protected $cnShortFr;
+
+	/**
+	 * @var string
+	 */
+	protected $cnShortGl;
+
+	/**
+	 * @var string
+	 */
+	protected $cnShortIt;
+
+	/**
+	 * @var string
+	 */
+	protected $cnShortJa;
+
+	/**
+	 * @var string
+	 */
+	protected $cnShortKm;
+
+	/**
+	 * @var string
+	 */
+	protected $cnShortNl;
+
+	/**
+	 * @var string
+	 */
+	protected $cnShortNo;
+
+	/**
+	 * @var string
+	 */
+	protected $cnShortRu;
+
+	/**
+	 * @var string
+	 */
+	protected $cnShortSv;
+
+	/**
+	 * @var string
+	 */
+	protected $cnShortUa;
 
 	/**
 	 * @return string
@@ -106,8 +166,92 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	/**
 	 * @return string
 	 */
+	public function getCnShortDa() {
+		return $this->cnShortDa;
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getCnShortDe() {
 		return $this->cnShortDe;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortEs() {
+		return $this->cnShortEs;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortFr() {
+		return $this->cnShortFr;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortGl() {
+		return $this->cnShortGl;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortIt() {
+		return $this->cnShortIt;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortJa() {
+		return $this->cnShortJa;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortKm() {
+		return $this->cnShortKm;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortNl() {
+		return $this->cnShortNl;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortNo() {
+		return $this->cnShortNo;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortRu() {
+		return $this->cnShortRu;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortSv() {
+		return $this->cnShortSv;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCnShortUa() {
+		return $this->cnShortUa;
 	}
 }
 

@@ -44,7 +44,67 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	/**
 	 * @var string
 	 */
+	protected $lgNameDa;
+
+	/**
+	 * @var string
+	 */
 	protected $lgNameDe;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameEs;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameFr;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameGl;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameIt;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameJa;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameKm;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameNl;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameNo;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameRu;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameSv;
+
+	/**
+	 * @var string
+	 */
+	protected $lgNameUa;
 
 	/**
 	 * @return string
@@ -70,8 +130,92 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	/**
 	 * @return string
 	 */
+	public function getLgNameDa() {
+		return $this->lgNameDa;
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getLgNameDe() {
 		return $this->lgNameDe;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameEs() {
+		return $this->lgNameEs;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameFr() {
+		return $this->lgNameFr;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameGl() {
+		return $this->lgNameGl;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameIt() {
+		return $this->lgNameIt;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameJa() {
+		return $this->lgNameJa;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameKm() {
+		return $this->lgNameKm;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameNl() {
+		return $this->lgNameNl;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameNo() {
+		return $this->lgNameNo;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameRu() {
+		return $this->lgNameRu;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameSv() {
+		return $this->lgNameSv;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLgNameUa() {
+		return $this->lgNameUa;
 	}
 }
 
