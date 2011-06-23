@@ -76,19 +76,21 @@ plugin.tx_sfregister.settings {
 
 	validation.create {
 		username {
-			1 = StringLength(minimum = 1, maximum = 80)
-			2 = Tx_SfRegister_Domain_Validator_UniqueValidator
-			3 = Tx_SfRegister_Domain_Validator_UniqueValidator(global = 1)
+			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			2 = StringLength(minimum = 4, maximum = 80)
+			3 = Tx_SfRegister_Domain_Validator_UniqueValidator
+			4 = Tx_SfRegister_Domain_Validator_UniqueValidator(global = 1)
 		}
 		password {
-			1 = StringLength(minimum = 8, maximum = 40)
-			2 = Tx_SfRegister_Domain_Validator_BadWordValidator
+			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			2 = StringLength(minimum = 8, maximum = 40)
+			3 = Tx_SfRegister_Domain_Validator_BadWordValidator
 		}
 		passwordRepeat = Tx_SfRegister_Domain_Validator_RepeatValidator
-		title = StringLength(minimum = 2, maximum = 80)
-		company = StringLength(minimum = 2, maximum = 80)
-		firstName = StringLength(minimum = 2, maximum = 80)
-		lastName = StringLength(minimum = 2, maximum = 80)
+		title = Tx_SfRegister_Domain_Validator_RequiredValidator
+		company = Tx_SfRegister_Domain_Validator_RequiredValidator
+		firstName = Tx_SfRegister_Domain_Validator_RequiredValidator
+		lastName = Tx_SfRegister_Domain_Validator_RequiredValidator
 		email = EmailAddress
 		emailRepeat = Tx_SfRegister_Domain_Validator_RepeatValidator
 		gtc = Tx_SfRegister_Domain_Validator_IsTrueValidator
@@ -97,8 +99,8 @@ plugin.tx_sfregister.settings {
 	}
 
 	validation.edit {
-		firstName = StringLength(minimum = 2, maximum = 80)
-		lastName = StringLength(minimum = 2, maximum = 80)
+		firstName = Tx_SfRegister_Domain_Validator_RequiredValidator
+		lastName = Tx_SfRegister_Domain_Validator_RequiredValidator
 		email = EmailAddress
 		gtc = Tx_SfRegister_Domain_Validator_IsTrueValidator
 		image = Tx_SfRegister_Domain_Validator_ImageUploadValidator
@@ -106,16 +108,19 @@ plugin.tx_sfregister.settings {
 
 	validation.password {
 		password {
-			1 = StringLength(minimum = 2, maximum = 40)
-			2 = Tx_SfRegister_Domain_Validator_BadWordValidator
+			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			2 = StringLength(minimum = 2, maximum = 40)
+			3 = Tx_SfRegister_Domain_Validator_BadWordValidator
 		}
 		passwordRepeat {
-			1 = StringLength(minimum = 2, maximum = 40)
-			2 = Tx_SfRegister_Domain_Validator_RepeatValidator
+			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			2 = StringLength(minimum = 2, maximum = 40)
+			3 = Tx_SfRegister_Domain_Validator_RepeatValidator
 		}
 		oldPassword {
-			1 = StringLength(minimum = 2, maximum = 40)
-			2 = Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator
+			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			2 = StringLength(minimum = 2, maximum = 40)
+			3 = Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator
 		}
 	}
 

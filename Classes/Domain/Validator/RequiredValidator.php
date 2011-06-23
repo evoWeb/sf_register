@@ -23,11 +23,11 @@
  ***************************************************************/
 
 /**
- * A not empty validator this is used in validation of a new created user to ensure that the uid is empty
+ * A required validator to check that a value is set
  *
  * @scope singleton
  */
-class Tx_SfRegister_Domain_Validator_NotEmptyValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_SfRegister_Domain_Validator_RequiredValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
 	 * If the given value is empty
 	 *
@@ -37,8 +37,8 @@ class Tx_SfRegister_Domain_Validator_NotEmptyValidator extends Tx_Extbase_Valida
 	public function isValid($value) {
 		$result = TRUE;
 
-		if (!empty($value)) {
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notempty', 'SfRegister'), 1305008423);
+		if (empty($value)) {
+			$this->addError(Tx_Extbase_Utility_Localization::translate('error.required', 'SfRegister'), 1305008423);
 			$result = FALSE;
 		}
 

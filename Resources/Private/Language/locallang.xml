@@ -94,6 +94,7 @@
 			<label index="password.saved">password saved</label>
 
 			<label index="error.noteempty">The %1$s was not empty which it should have been</label>
+			<label index="error.required">The value of the required field %1$s was empty</label>
 			<label index="error.notequalcurrentuser">The %1$s does not equals your own user which is not allowed</label>
 			<label index="error.changepassword.notloggedin">You need to be logged in to change the password</label>
 			<label index="error.changepassword.notequal">The give password was not equal to the current password</label>
@@ -212,6 +213,7 @@
 			<label index="password.saved">password saved</label>
 
 			<label index="error.noteempty">The %1$s was not empty which it should have been</label>
+			<label index="error.required">Der Wert des Pflichtsfelds %1$s darf nicht leer sein</label>
 			<label index="error.notequalcurrentuser">The %1$s does not equals your own user which is not allowed</label>
 			<label index="error.changepassword.notloggedin">You need to be logged in to change the password</label>
 			<label index="error.changepassword.notequal">The give password was not equal to the current password</label>
