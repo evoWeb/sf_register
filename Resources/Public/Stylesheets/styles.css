@@ -14,3 +14,10 @@
 #bargraph.is80 { background-position: 0 -56px; }
 #bargraph.is90 { background-position: 0 -63px; }
 #bargraph.is100 { background-position: 0 -70px; }
+
+
+
+#sfrZone_loading {
+	background: transparent url(/typo3/sysext/t3skin/images/spinner/ffffff.gif) no-repeat 4px 1px;
+	padding-left: 24px;
+}

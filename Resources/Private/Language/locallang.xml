@@ -26,6 +26,8 @@
 			<label index="country">Country</label>
 			<label index="staticInfoCountry">Country</label>
 			<label index="zone">State/province</label>
+			<label index="no_zone_available">No zone available</label>
+			<label index="zone_loading">Loading Zones</label>
 			<label index="timezone">Timezone</label>
 			<label index="timezone.I.-12">UTC−12:00</label>
 			<label index="timezone.I.-11">UTC−11:00</label>
@@ -144,7 +146,9 @@
 			<label index="city">City</label>
 			<label index="country">Country</label>
 			<label index="staticInfoCountry">Country</label>
-			<label index="zone">State/province</label>
+			<label index="zone">Bundesland</label>
+			<label index="no_zone_available">Kein Bundesland verfügbar</label>
+			<label index="zone_loading">Bundesländer werden geladen</label>
 			<label index="timezone">Timezone</label>
 			<label index="timezone.I.-12">UTC−12:00</label>
 			<label index="timezone.I.-11">UTC−11:00</label>

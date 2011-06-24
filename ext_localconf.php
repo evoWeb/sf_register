@@ -19,4 +19,6 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	)
 );
 
+$TYPO3_CONF_VARS['FE']['eID_include']['sf_register'] = 'EXT:sf_register/Classes/Api/Ajax.php';
+
 ?>

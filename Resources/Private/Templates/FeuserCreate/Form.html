@@ -110,10 +110,10 @@ create Action
 		<f:render partial="fieldError" arguments="{field: 'user.country'}"/>
 		<f:if condition="{user.staticInfoCountry}">
 			<f:then>
-				<register:form.SelectStaticCountries property="staticInfoCountry"/>
+				<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry"/>
 			</f:then>
 			<f:else>
-				<register:form.SelectStaticCountries property="staticInfoCountry" value="US"/>
+				<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry" value="US"/>
 			</f:else>
 		</f:if></dd>
 
@@ -122,19 +122,14 @@ create Action
 		<f:render partial="fieldError" arguments="{field: 'user.zone'}"/>
 		<f:if condition="{user.staticInfoCountry}">
 			<f:then>
-				<f:if condition="{user.zone}">
-					<f:then>
-						<register:form.SelectStaticCountryZones property="zone" parent="{user.staticInfoCountry}"/>
-					</f:then>
-					<f:else>
-						<register:form.SelectStaticCountryZones property="zone" value="" parent="{user.staticInfoCountry}"/>
-					</f:else>
-				</f:if>
+				<register:form.SelectStaticCountryZones property="zone" id="sfrZone" parent="{user.staticInfoCountry}"/>
 			</f:then>
 			<f:else>
-				<register:form.SelectStaticCountryZones property="zone" value="" parent="US"/>
+				<register:form.SelectStaticCountryZones property="zone" id="sfrZone" parent="US"/>
 			</f:else>
-		</f:if></dd>
+		</f:if>
+		<div id="sfrZone_empty" style="display: none;"><f:translate key="no_zone_available"/></div>
+		<div id="sfrZone_loading" style="display: none;"><f:translate key="zone_loading"/></div></dd>
 
 	<dt><f:translate key="daylight"/><f:render partial="required" arguments="{field: 'daylight'}"/></dt>
 	<dd>
