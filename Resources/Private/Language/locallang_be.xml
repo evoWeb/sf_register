@@ -7,7 +7,9 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="tt_content.list_type_form">Feuser Register</label>
+			<label index="fe_users.div.registration">Registration</label>
 			<label index="fe_users.mailhash">Mailhash of confirmation mail</label>
+			<label index="fe_users.activated_on">Activated on</label>
 			<label index="fe_users.pseudonym">Pseudonym</label>
 			<label index="fe_users.gender">Mr/Ms:</label>
 			<label index="fe_users.gender.I.1">Mr</label>

@@ -3,6 +3,7 @@
 #
 CREATE TABLE fe_users (
 	mailhash varchar(60) DEFAULT '',
+	activated_on int(11) unsigned DEFAULT '0' NOT NULL,
 
 	pseudonym varchar(50) DEFAULT '',
 	gender int(11) unsigned DEFAULT '0' NOT NULL,

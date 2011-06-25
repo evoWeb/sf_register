@@ -95,6 +95,10 @@
 			<label index="newPassword2">repeated password</label>
 			<label index="password.saved">password saved</label>
 
+			<label index="account.not_found">The account you are trying to activate is unknow to the system.</label>
+			<label index="account.already_activated"><![CDATA[The account <b>%1$s</b> you try to activate is already active.]]></label>
+			<label index="account.active"><![CDATA[The account <b>%1$s</b> is now active.]]></label>
+
 			<label index="error.noteempty">The %1$s was not empty which it should have been</label>
 			<label index="error.required">The value of the required field %1$s was empty</label>
 			<label index="error.notequalcurrentuser">The %1$s does not equals your own user which is not allowed</label>

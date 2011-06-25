@@ -40,6 +40,16 @@ $tempColumns = array(
 		)
 	),
 
+	'activated_on' => array(
+		'exclude' => 1,
+		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.activated_on',
+		'config' => array(
+			'type' => 'input',
+			'readOnly' => TRUE,
+			'eval' => 'datetime',
+		)
+	),
+
 	'pseudonym' => array(
 		'exclude' => 0,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.pseudonym',
@@ -222,8 +232,8 @@ t3lib_extMgm::addToAllTCAtypes('fe_users', 'pseudonym', '', 'after:username');
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'date_of_birth, language, status', '', 'after:name');
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'zone, timezone, daylight', '', 'after:city');
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'mobilephone', '', 'after:telephone');
-t3lib_extMgm::addToAllTCAtypes('fe_users', 'mailhash, gtc, privacy');
 
+t3lib_extMgm::addToAllTCAtypes('fe_users', '--div--;LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.div.registration, mailhash, activated_on, gtc, privacy');
 t3lib_extMgm::addToAllTCAtypes('fe_users', 'by_invitation, comments, module_sys_dmail_html');
 
 if (t3lib_extMgm::isLoaded('static_info_tables')) {

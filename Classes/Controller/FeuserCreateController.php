@@ -133,24 +133,32 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	public function confirmAction($authCode) {
 		$user = $this->userRepository->findByMailhash($authCode);
 
-		if ($user instanceof Tx_SfRegister_Interfaces_FrontendUser) {
-			$user = $this->changeUsergroupPostActivation($user);
-			$user = $this->moveImageFile($user);
-			$user->setDisable(FALSE);
-			$user->setMailhash('');
-
-			$this->sendEmailsPostConfirm($user);
-
-			if ($this->settings['autologinPostActivation']) {
-				$this->persistAll();
-				$this->autoLogin($user);
-			}
-
-			if ($this->settings['redirectPostActivationPageId']) {
-				$this->redirectToPage($this->settings['redirectPostActivationPageId']);
-			}
+		if (!($user instanceof Tx_SfRegister_Interfaces_FrontendUser)) {
+			$this->view->assign('userNotFound', 1);
 		} else {
-			$this->view->assign('userNotFoundByAuthCode', 1);
+			$this->view->assign('user', $user);
+
+			if ($user->getActivatedOn()) {
+				$this->view->assign('userAlreadyActive', 1);
+			} else {
+				$user = $this->changeUsergroupPostActivation($user);
+				$user = $this->moveImageFile($user);
+				$user->setDisable(FALSE);
+				$user->setActivatedOn(new DateTime('now'));
+
+				$this->sendEmailsPostConfirm($user);
+
+				if ($this->settings['autologinPostActivation']) {
+					$this->persistAll();
+					$this->autoLogin($user);
+				}
+
+				if ($this->settings['redirectPostActivationPageId']) {
+					$this->redirectToPage($this->settings['redirectPostActivationPageId']);
+				}
+
+				$this->view->assign('userActivated', 1);
+			}
 		}
 	}
 

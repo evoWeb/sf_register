@@ -36,6 +36,11 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	protected $mailhash;
 
+	/**
+	 * @var DateTime date on which the account was activated
+	 */
+	protected $activatedOn;
+
 
 	/**
 	 *  virtual not stored in database
@@ -174,6 +179,20 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	public function getMailhash() {
 		return $this->mailhash;
+	}
+
+	/**
+	 * @param \DateTime $activatedOn
+	 */
+	public function setActivatedOn($activatedOn) {
+		$this->activatedOn = $activatedOn;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getActivatedOn() {
+		return $this->activatedOn;
 	}
 
 

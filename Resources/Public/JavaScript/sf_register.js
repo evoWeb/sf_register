@@ -35,6 +35,7 @@ function changeZone(event) {
 		zone.length = 0;
 		zone.style.display = 'none';
 
+		zoneEmpty.style.display = 'none';
 		zoneLoading.style.display = 'block';
 
 		ajaxRequest = new XMLHttpRequest();

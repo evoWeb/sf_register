@@ -1,6 +1,7 @@
-confirm Action
-
-
-<f:if condition="{userNotFoundByAuthCode}">
-	account is already active or not found
+<f:if condition="{userNotFound}">
+	<f:translate key="account.not_found"/>
+</f:if><f:if condition="{userAlreadyActive}">
+	<f:translate key="account.already_activated" arguments="{0: user.username}" htmlEscape="false"/>
+</f:if><f:if condition="{userActivated}">
+	<f:translate key="account.active" arguments="{0: user.username}" htmlEscape="false"/>
 </f:if>
