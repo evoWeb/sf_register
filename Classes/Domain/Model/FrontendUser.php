@@ -71,10 +71,27 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	protected $gender;
 
+
 	/**
 	 * @var  DateTime date of birth
 	 */
 	protected $dateOfBirth;
+
+	/**
+	 * @var  integer day of date of birth
+	 */
+	protected $dateOfBirthDay;
+
+	/**
+	 * @var  integer month of date of birth
+	 */
+	protected $dateOfBirthMonth;
+
+	/**
+	 * @var  integer year of date of birth
+	 */
+	protected $dateOfBirthYear;
+
 
 	/**
 	 * @var string of language
@@ -141,6 +158,36 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	protected $moduleSysDmailCategory;
 
+
+
+	/**
+	 * Constructs a new Front-End User
+	 *
+	 * @api
+	 */
+	public function __construct($username = '', $password = '') {
+		parent::__construct($username, $password);
+
+		$this->activatedOn = new DateTime();
+		$this->dateOfBirth = new DateTime();
+   }
+
+	/**
+	 * Initializes the date of birth if related values are set by request to argument mapping
+	 *
+	 * @return void
+	 */
+	public function prepareDateOfBirth() {
+		if ($this->dateOfBirthDay) {
+			$this->setDateOfBirthDay($this->dateOfBirthDay);
+		}
+		if ($this->dateOfBirthMonth) {
+			$this->setDateOfBirthMonth($this->dateOfBirthMonth);
+		}
+		if ($this->dateOfBirthYear) {
+			$this->setDateOfBirthYear($this->dateOfBirthYear);
+		}
+	}
 
 
 	/**
@@ -357,6 +404,7 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 		return $this->gender;
 	}
 
+
 	/**
 	 * Setter for dateOfBirth
 	 *
@@ -368,6 +416,39 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
+	 * Setter for day of dateOfBirth
+	 *
+	 * @param integer	$day
+	 * @return void
+	 */
+	public function setDateOfBirthDay($day) {
+		$this->dateOfBirthDay = $day;
+		$this->dateOfBirth->setDate($this->dateOfBirth->format('Y'), $this->dateOfBirth->format('m'), $day);
+	}
+
+	/**
+	 * Setter for month of dateOfBirth
+	 *
+	 * @param integer	$mont
+	 * @return void
+	 */
+	public function setDateOfBirthMonth($month) {
+		$this->dateOfBirthMonth = $month;
+		$this->dateOfBirth->setDate($this->dateOfBirth->format('Y'), $month, $this->dateOfBirth->format('d'));
+	}
+
+	/**
+	 * Setter for month of dateOfBirth
+	 *
+	 * @param integer	$year
+	 * @return void
+	 */
+	public function setDateOfBirthYear($year) {
+		$this->dateOfBirthYear = $year;
+		$this->dateOfBirth->setDate($year, $this->dateOfBirth->format('m'), $this->dateOfBirth->format('d'));
+	}
+
+	/**
 	 * Getter for dateOfBirth
 	 *
 	 * @return DateTime
@@ -375,6 +456,40 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	public function getDateOfBirth() {
 		return $this->dateOfBirth;
 	}
+
+	/**
+	 * Getter for day of dateOfBirth
+	 *
+	 * @return integer
+	 */
+	public function getDateOfBirthDay() {
+		if ($this->dateOfBirth instanceof DateTime) {
+			return $this->dateOfBirth->format('j');
+		}
+	}
+
+	/**
+	 * Getter for month of dateOfBirth
+	 *
+	 * @return integer
+	 */
+	public function getDateOfBirthMonth() {
+		if ($this->dateOfBirth instanceof DateTime) {
+			return $this->dateOfBirth->format('n');
+		}
+	}
+
+	/**
+	 * Getter for year of dateOfBirth
+	 * 
+	 * @return integer
+	 */
+	public function getDateOfBirthYear() {
+		if ($this->dateOfBirth instanceof DateTime) {
+			return $this->dateOfBirth->format('Y');
+		}
+	}
+
 
 	/**
 	 * Setter for mobilphone
