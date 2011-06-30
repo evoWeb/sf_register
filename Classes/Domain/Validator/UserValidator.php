@@ -39,6 +39,13 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	protected $settings = NULL;
 
 	/**
+	 * Configuration of the framework
+	 *
+	 * @var array
+	 */
+	protected $frameworkConfiguration = array();
+
+	/**
 	 * @var  Tx_SfRegister_Validation_ValidatorResolver
 	 */
 	protected $validatorResolver;
@@ -65,6 +72,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
 		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+		$this->frameworkConfiguration = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 	}
 
 	/**
@@ -155,12 +163,13 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 * @return array
 	 */
 	protected function getRulesFromSettings() {
-		$rules = $this->settings['validation'][$this->options['type']];
+		$mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));
+		$rules = $this->settings['validation'][$mode];
 
 		if ($this->model instanceof Tx_Extbase_Domain_Model_FrontendUser) {
-			if ($this->options['type'] == 'create') {
+			if ($mode == 'create') {
 				$rules = array_merge(array('uid' => 'Tx_SfRegister_Domain_Validator_EmptyValidator'), $rules);
-			} elseif ($this->options['type'] == 'edit') {
+			} elseif ($mode == 'edit') {
 				$rules = array_merge(array('uid' => 'Tx_SfRegister_Domain_Validator_EqualCurrentUserValidator'), $rules);
 			}
 		}
