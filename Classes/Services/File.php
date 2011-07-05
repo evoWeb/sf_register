@@ -27,51 +27,71 @@
  */
 class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	/**
+	 * Fieldname
+	 * 
 	 * @var string
 	 */
 	protected $fieldname;
 
 	/**
+	 * Configuration manager
+	 * 
 	 * @var Tx_Extbase_Configuration_ConfigurationManager
 	 */
 	protected $configurationManager;
 
 	/**
+	 * Settings
+	 *
 	 * @var array
 	 */
 	protected $settings = array();
 
 	/**
+	 * Namespace
+	 *
 	 * @var  string
 	 */
 	protected $namespace = '';
 
 	/**
+	 * Errors
+	 *
 	 * @var array
 	 */
 	protected $errors = array();
 
 	/**
+	 * Allowed file extensions
+	 *
 	 * @var string
 	 */
 	protected $allowedFileExtensions = '';
 
 	/**
+	 * Temporary folder
+	 *
 	 * @var string
 	 */
 	protected $tempFolder = 'typo3temp/sf_register';
 
 	/**
+	 * Upload folder
+	 *
 	 * @var string
 	 */
 	protected $uploadFolder = '';
 
 	/**
+	 * Maximal filesize
+	 *
 	 * @var integer
 	 */
 	protected $maxFilesize = 0;
 
 	/**
+	 * Injection of configuration manager
+	 *
 	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
 	 * @return void
 	 */

@@ -24,32 +24,44 @@
 
 abstract class Tx_SfRegister_Services_Captcha_AbstractAdapter implements Tx_SfRegister_Interfaces_Captcha {
 	/**
+	 * Captcha object
+	 *
 	 * @var object
 	 */
 	protected $captcha = NULL;
 
 	/**
+	 * Settings
+	 *
 	 * @var array
 	 */
 	protected $settings = array();
 
 	/**
+	 * Errors
+	 *
 	 * @var array
 	 */
 	protected $errors = array();
 
 	/**
+	 * Renders the output of an concrete captcha
+	 *
 	 * @return string
 	 */
 	public abstract function render();
 
 	/**
+	 * Returns if the result of the validation was valid or not
+	 *
 	 * @param string $value
 	 * @return bool
 	 */
 	public abstract function isValid($value);
 
 	/**
+	 * Setter for settings
+	 *
 	 * @param array $settings
 	 * @return void
 	 */
@@ -69,6 +81,8 @@ abstract class Tx_SfRegister_Services_Captcha_AbstractAdapter implements Tx_SfRe
 	}
 
 	/**
+	 * Getter for errors
+	 *
 	 * @return array
 	 */
 	public function getErrors() {

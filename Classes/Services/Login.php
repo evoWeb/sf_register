@@ -40,6 +40,8 @@ class Tx_SfRegister_Services_Login implements t3lib_Singleton {
 	}
 
 	/**
+	 * Initialize fe_user object
+	 * 
 	 * @param array $userdata
 	 * @return void
 	 */
@@ -63,6 +65,10 @@ class Tx_SfRegister_Services_Login implements t3lib_Singleton {
 		$userdata['is_online'] = $GLOBALS['EXEC_TIME'];
 		$feUser->user = $userdata;
 
+		$GLOBALS['TSFE']->fe_user = &$feUser;
+
+		$this->updateLastLogin($feUser);
+
 			// Call hook for possible manipulation of frontend user object
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['initFEuser'])) {
 			$parameters = array('pObj' => &$GLOBALS['TSFE']);
@@ -70,8 +76,15 @@ class Tx_SfRegister_Services_Login implements t3lib_Singleton {
 				t3lib_div::callUserFunction($functionReference, $parameters, $GLOBALS['TSFE']);
 			}
 		}
+	}
 
-			// For every 60 seconds the is_online timestamp is updated.
+	/**
+	 * For every 60 seconds the is_online timestamp is updated.
+	 *
+	 * @param 	tslib_feUserAuth	$feUser
+	 * @return	void
+	 */
+	protected function updateLastLogin(tslib_feUserAuth $feUser) {
 		$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
 			'fe_users',
 			'uid = ' . intval($feUser->user['uid']),
@@ -80,8 +93,6 @@ class Tx_SfRegister_Services_Login implements t3lib_Singleton {
 				'is_online' => $GLOBALS['EXEC_TIME']
 			)
 		);
-
-		$GLOBALS['TSFE']->fe_user = &$feUser;
 	}
 
 	/**

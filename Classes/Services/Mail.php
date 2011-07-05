@@ -27,21 +27,29 @@
  */
 class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
+	 * Object manager
+	 *
 	 * @var Tx_Extbase_Object_ObjectManagerInterface
 	 */
 	protected $objectManager;
 
 	/**
+	 * Configuration manager
+	 * 
 	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
 	 */
 	protected $configurationManager;
 
 	/**
+	 * Settings of the create controller
+	 * 
 	 * @var array
 	 */
 	protected $settings = array();
 
 	/**
+	 * Framework configurations
+	 * 
 	 * @var array
 	 */
 	protected $frameworkConfiguration = array();
@@ -54,8 +62,6 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 */
 	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
-
-		return $this;
 	}
 
 	/**
@@ -68,8 +74,6 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		$this->configurationManager = $configurationManager;
 		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 		$this->frameworkConfiguration = $configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-
-		return $this;
 	}
 
 
@@ -199,6 +203,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 
 	/**
+	 * Get translated version of the subject with replaced username and sitename
+	 * 
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @param string $labelIndex
 	 * @return string
@@ -212,11 +218,13 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	}
 
 	/**
+	 * Get the mailhash for the activation link based on time, username and email address
+	 * 
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return string
 	 */
 	protected function getMailHash(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		return md5($user->getUsername() . time() . $user->getEmail());
+		return md5($GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . $user->getUsername() . time() . $user->getEmail());
 	}
 
 	/**
@@ -237,9 +245,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getUserRecipient(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$name = '';
 		if ($user->getFirstName() || $user->getLastName()) {
 			$name = trim($user->getFirstName() . ' ' . $user->getLastName());
+		} else {
+			$name = trim($user->getUsername());
 		}
 
 		return array(
@@ -364,6 +373,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	}
 
 	/**
+	 * Process registered hooks
+	 * 
 	 * @return mixed
 	 */
 	protected function processHook($hookName) {

@@ -27,16 +27,22 @@
  */
 class Tx_SfRegister_Services_Captcha_CaptchaAdapterFactory {
 	/**
+	 * Object manager
+	 *
 	 * @var Tx_Extbase_Object_ObjectManagerInterface
 	 */
 	protected $objectManager;
 
 	/**
+	 * Configuration manager
+	 *
 	 * @var Tx_Extbase_Configuration_ConfigurationManager
 	 */
 	protected $configurationManager;
 
 	/**
+	 * Settings
+	 *
 	 * @var array
 	 */
 	protected $settings = array();
@@ -53,6 +59,8 @@ class Tx_SfRegister_Services_Captcha_CaptchaAdapterFactory {
 	}
 
 	/**
+	 * Inject configuration manager
+	 *
 	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
 	 * @return void
 	 */
@@ -62,11 +70,13 @@ class Tx_SfRegister_Services_Captcha_CaptchaAdapterFactory {
 	}
 
 	/**
+	 * Get an adapter for an captcha of given type
 	 * @param string $type
 	 * @return Tx_SfRegister_Interfaces_Captcha
 	 */
 	public function getCaptchaAdapter($type) {
 		$settings = array();
+
 		if (array_key_exists($type, $this->settings['captcha'])) {
 			$settings = is_array($this->settings['captcha'][$type]) ?
 				$this->settings['captcha'][$type] :

@@ -43,11 +43,15 @@
  */
 class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Services_Captcha_AbstractAdapter {
 	/**
+	 * Captcha object
+	 *
 	 * @var tx_srfreecap_pi2
 	 */
 	protected $captcha = NULL;
 
 	/**
+	 * Keys to be used as variables output
+	 *
 	 * @var array
 	 */
 	protected $keys = array(
@@ -70,6 +74,8 @@ class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Serv
 	}
 
 	/**
+	 * Rendering the output of the captcha
+	 *
 	 * @return string
 	 */
 	public function render() {
@@ -84,6 +90,8 @@ class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Serv
 	}
 
 	/**
+	 * Validate the captcha value from the request and output an error if not valid
+	 *
 	 * @param string $value
 	 * @return bool
 	 */

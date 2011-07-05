@@ -24,6 +24,8 @@
 
 class Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter extends Tx_SfRegister_Services_Captcha_AbstractAdapter {
 	/**
+	 * Captcha object
+	 *
 	 * @var tx_jmrecaptcha
 	 */
 	protected $captcha = NULL;
@@ -41,6 +43,8 @@ class Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter extends Tx_SfRegister_Se
 	}
 
 	/**
+	 * Rendering the output of the captcha
+	 *
 	 * @return string
 	 */
 	public function render() {
@@ -54,6 +58,8 @@ class Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter extends Tx_SfRegister_Se
 	}
 
 	/**
+	 * Validate the captcha value from the request and output an error if not valid
+	 *
 	 * @param string $value
 	 * @return bool
 	 */
