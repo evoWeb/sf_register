@@ -24,7 +24,6 @@ plugin.tx_sfregister.settings {
 
 	# string [md5|sha1]
 	encryptPassword = {$plugin.tx_sfregister.settings.encryptPassword}
-StringLength(minimum = 2, maximum = 80)
 	# boolean use encrypted filename to deny direct access on uploaded files
 	useEncryptedFilename = {$plugin.tx_sfregister.settings.useEncryptedFilename}
 
