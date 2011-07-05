@@ -22,8 +22,23 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * Viewhelper to render a selectbox with values of static info tables countries
+ *
+ * <code title="Usage">
+ * {namespace register=Tx_SfRegister_ViewHelpers}
+ * <register:form.SelectStaticCountries name="country" optionLabelField="cnShortDe"/>
+ * </code>
+ *
+ * <code title="Optional label field">
+ * {namespace register=Tx_SfRegister_ViewHelpers}
+ * <register:form.SelectStaticCountries name="country" optionLabelField="cnShortDe"/>
+ * </code>
+ */
 class Tx_SfRegister_ViewHelpers_Form_SelectStaticCountriesViewHelper extends Tx_SfRegister_ViewHelpers_Form_SelectStaticViewHelper {
 	/**
+	 * Repository that provides the country models
+	 * 
 	 * @var Tx_SfRegister_Domain_Repository_StaticCountryRepository
 	 */
 	protected $countryRepository;
@@ -59,6 +74,8 @@ class Tx_SfRegister_ViewHelpers_Form_SelectStaticCountriesViewHelper extends Tx_
 	}
 
 	/**
+	 * Override the initialize method to load all available countries before rendering
+	 * 
 	 * @return void
 	 */
 	public function initialize() {

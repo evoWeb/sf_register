@@ -22,13 +22,25 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * Viewhelper to output a captcha in a form
+ *
+ * <code title="Usage">
+ * {namespace register=Tx_SfRegister_ViewHelpers}
+ * <register:form.captcha type="jmrecaptcha"/>
+ * </code>
+ */
 class Tx_SfRegister_ViewHelpers_Form_CaptchaViewHelper extends Tx_Fluid_ViewHelpers_Form_AbstractFormFieldViewHelper {
 	/**
+	 * Factory to create a captcha that is used to render the output
+	 *
 	 * @var Tx_SfRegister_Services_Captcha_CaptchaAdapterFactory
 	 */
 	protected $captchaAdapterFactory;
 
 	/**
+	 * Injection of factory by object manager
+	 *
 	 * @param Tx_SfRegister_Services_Captcha_CaptchaAdapterFactory $captchaAdapterFactory
 	 * @return void
 	 */
@@ -43,13 +55,6 @@ class Tx_SfRegister_ViewHelpers_Form_CaptchaViewHelper extends Tx_Fluid_ViewHelp
 	 */
 	public function initializeArguments() {
 		$this->registerUniversalTagAttributes();
-		$this->registerTagAttribute('autocomplete', 'string', 'if set, the autocomplete of the browser will be turned of');
-		$this->registerTagAttribute('size', 'string', 'Size of input field');
-		$this->registerTagAttribute('disabled', 'string', 'Specifies that the input element should be disabled when the page loads');
-		$this->registerArgument('name', 'string', 'Name of input tag');
-		$this->registerArgument('value', 'mixed', 'Value of input tag');
-		$this->registerArgument('property', 'string', 'Name of Object Property. If used in conjunction with <f:form object="...">, "name" and "value" properties will be ignored.');
-		$this->registerArgument('errorClass', 'string', 'CSS class to set if there are errors for this view helper', FALSE, 'f3-form-error');
 	}
 
 	/**

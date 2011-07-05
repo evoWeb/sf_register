@@ -22,23 +22,39 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * Viewhelper to render a selectbox with values in given steps from start to end value
+ *
+ * <code title="Usage">
+ * {namespace register=Tx_SfRegister_ViewHelpers}
+ * <register:form.rangeSelect property="day" start="1" end="31"/>
+ * </code>
+ */
 class Tx_SfRegister_ViewHelpers_Form_RangeSelectViewHelper extends Tx_Fluid_ViewHelpers_Form_SelectViewHelper {
 	/**
+	 * Value to start range with
+	 *
 	 * @var integer
 	 */
 	protected $start = 0;
 
 	/**
+	 * Value to end range with
+	 *
 	 * @var integer
 	 */
 	protected $end = PHP_INT_MAX;
 
 	/**
+	 * Step to increase value of each option
+	 *
 	 * @var integer
 	 */
 	protected $step = 1;
 
 	/**
+	 * In case of a value lower then 10 and digits defined as 2 the label get prepended with a 0
+	 *
 	 * @var integer
 	 */
 	protected $digits = 2;
@@ -63,6 +79,8 @@ class Tx_SfRegister_ViewHelpers_Form_RangeSelectViewHelper extends Tx_Fluid_View
 	}
 
 	/**
+	 * Rendering of selectbox
+	 *
 	 * @param integer $start
 	 * @param integer $end
 	 * @param integer $step
@@ -79,7 +97,7 @@ class Tx_SfRegister_ViewHelpers_Form_RangeSelectViewHelper extends Tx_Fluid_View
 	}
 
 	/**
-	 * Render the option tags.
+	 * Get values and lables for the options
 	 *
 	 * @return array an associative array of options, key will be the value of the option tag
 	 */

@@ -22,23 +22,39 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * Viewhelper to render a selectbox with values in given steps from start to end value
+ *
+ * <code title="Usage">
+ * {namespace register=Tx_SfRegister_ViewHelpers}
+ * <register:form.required fieldName="'username"/>
+ * </code>
+ */
 class Tx_SfRegister_ViewHelpers_Form_RequiredViewHelper extends Tx_Fluid_ViewHelpers_Form_AbstractFormFieldViewHelper {
 	/**
+	 * Configuration manager to fetch settings from
+	 *
 	 * @var Tx_Extbase_Configuration_ConfigurationManager
 	 */
 	protected $configurationManager;
 
 	/**
+	 * Settings of the plugin
+	 *
 	 * @var array
 	 */
 	protected $settings = array();
 
 	/**
+	 * Configuration of the framework
+	 *
 	 * @var array
 	 */
 	protected $frameworkConfiguration = array();
 
 	/**
+	 * Injection of configuration manager
+	 *
 	 * @param	Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
 	 * @return void
 	 */
@@ -46,12 +62,10 @@ class Tx_SfRegister_ViewHelpers_Form_RequiredViewHelper extends Tx_Fluid_ViewHel
 		$this->configurationManager = $configurationManager;
 		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 		$this->frameworkConfiguration = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-
-		return $this;
 	}
 
 	/**
-	 * Render the captcha block
+	 * Render a special sign if the field is required 
 	 *
 	 * @param	string $fieldName Name of the field to render the requird marker to
 	 * @return	void

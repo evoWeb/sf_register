@@ -22,8 +22,18 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * Viewhelper to render a selectbox with values of static info tables country zones
+ *
+ * <code title="Usage">
+ * {namespace register=Tx_SfRegister_ViewHelpers}
+ * <register:form.SelectStaticCountryZones name="zone" parent="US"/>
+ * </code>
+ */
 class Tx_SfRegister_ViewHelpers_Form_SelectStaticCountryZonesViewHelper extends Tx_SfRegister_ViewHelpers_Form_SelectStaticViewHelper {
 	/**
+	 * Repository that provides the country zone models
+	 * 
 	 * @var Tx_SfRegister_Domain_Repository_StaticCountryZoneRepository
 	 */
 	protected $countryZonesRepository;
@@ -60,11 +70,15 @@ class Tx_SfRegister_ViewHelpers_Form_SelectStaticCountryZonesViewHelper extends 
 	}
 
 	/**
+	 * Override the initialize method to load all available country zones for a given parent country before rendering
+	 *
 	 * @return void
 	 */
 	public function initialize() {
 		parent::initialize();
-		if ($this->arguments->hasArgument('parent') && $this->arguments['parent'] != '' && t3lib_extMgm::isLoaded('static_info_tables')) {
+
+		if ($this->arguments->hasArgument('parent') && $this->arguments->offsetGet('parent') != '' &&
+				t3lib_extMgm::isLoaded('static_info_tables')) {
 			$this->options = $this->countryZonesRepository->findAllByIso2($this->arguments['parent']);
 		}
 	}

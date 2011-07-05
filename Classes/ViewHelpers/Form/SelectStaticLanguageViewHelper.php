@@ -22,8 +22,18 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * Viewhelper to render a selectbox with values of static info tables country zones
+ *
+ * <code title="Usage">
+ * {namespace register=Tx_SfRegister_ViewHelpers}
+ * <register:form.SelectStaticLanguage name="language"/>
+ * </code>
+ */
 class Tx_SfRegister_ViewHelpers_Form_SelectStaticLanguageViewHelper extends Tx_SfRegister_ViewHelpers_Form_SelectStaticViewHelper {
 	/**
+	 * Repository that provides the language models
+	 *
 	 * @var Tx_SfRegister_Domain_Repository_StaticLanguageRepository
 	 */
 	protected $languageRepository;
@@ -59,6 +69,8 @@ class Tx_SfRegister_ViewHelpers_Form_SelectStaticLanguageViewHelper extends Tx_S
 	}
 
 	/**
+	 * Override the initialize method to load all available languages before rendering
+	 *
 	 * @return void
 	 */
 	public function initialize() {
