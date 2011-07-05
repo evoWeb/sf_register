@@ -22,6 +22,9 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * A repository for static info tables country
+ */
 class Tx_SfRegister_Domain_Repository_StaticCountryRepository extends Tx_Extbase_Domain_Repository_FrontendUserRepository {
 	/**
 	 * Find all countries despecting the storage page
