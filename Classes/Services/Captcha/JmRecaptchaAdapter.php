@@ -66,15 +66,17 @@ class Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter extends Tx_SfRegister_Se
 	public function isValid($value) {
 		$validCaptcha = TRUE;
 
-		$_POST['recaptcha_response_field'] = $value;
-		$status = $this->captcha->validateReCaptcha();
+		if ($this->captcha !== null) {
+			$_POST['recaptcha_response_field'] = $value;
+			$status = $this->captcha->validateReCaptcha();
 
-		if ($status == FALSE || $status['error'] !== NULL) {
-			$validCaptcha = FALSE;
-			$this->errors[] = new Tx_Extbase_Validation_Error(
-				Tx_Extbase_Utility_Localization::translate('error.jmrecaptcha.' . $status['error'], 'SfRegister'),
-				1307421960
-			);
+			if ($status == FALSE || $status['error'] !== NULL) {
+				$validCaptcha = FALSE;
+				$this->errors[] = new Tx_Extbase_Validation_Error(
+					Tx_Extbase_Utility_Localization::translate('error.jmrecaptcha.' . $status['error'], 'SfRegister'),
+					1307421960
+				);
+			}
 		}
 
 		return $validCaptcha;
