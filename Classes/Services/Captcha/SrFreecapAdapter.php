@@ -79,7 +79,7 @@ class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Serv
 	 * @return string
 	 */
 	public function render() {
-		if ($this->captcha !== null) {
+		if ($this->captcha !== NULL) {
 			$values = array_values($this->captcha->makeCaptcha());
 			$output = array_combine($this->keys, $values);
 		} else {
@@ -98,7 +98,7 @@ class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Serv
 	public function isValid($value) {
 		$validCaptcha = TRUE;
 
-		if (!$this->captcha->checkWord($value)) {
+		if ($this->captcha !== NULL && !$this->captcha->checkWord($value)) {
 			$validCaptcha = FALSE;
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.captcha.notcorrect', 'SfRegister'), 1306910429);
 		}
