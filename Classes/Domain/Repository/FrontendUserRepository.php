@@ -58,7 +58,7 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 		$query = $this->createQuery();
 		$query->getQuerySettings()->setRespectEnableFields(FALSE);
 
-		$query
+		return $query
 			->matching(
 				$query->logicalAnd(
 					$query->equals($field, $value),
@@ -66,9 +66,8 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 				)
 			)
 			->setLimit(1)
-			->execute();
-
-		return $query->count();
+			->execute()
+			->count();
 	}
 
 	/**
@@ -83,7 +82,7 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 		$query->getQuerySettings()->setRespectEnableFields(FALSE);
 		$query->getQuerySettings()->setRespectStoragePage(FALSE);
 
-		$query
+		return $query
 			->matching(
 				$query->logicalAnd(
 					$query->equals($field, $value),
@@ -91,9 +90,8 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepository extends Tx_Extbase_
 				)
 			)
 			->setLimit(1)
-			->execute();
-
-		return $query->count();
+			->execute()
+			->count();
 	}
 }
 
