@@ -22,40 +22,42 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-$register = array(
-	'FeUser' => array(
-		array(
-			'GETvar' => 'tx_sfregister_form[controller]',
-			'valueMap' => array(
-				'Creation' => 'FeuserCreate',
-				'Editing' => 'FeuserEdit',
-				'Password' => 'FeuserPassword',
+if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
+	$register = array(
+		'FeUser' => array(
+			array(
+				'GETvar' => 'tx_sfregister_form[controller]',
+				'valueMap' => array(
+					'Creation' => 'FeuserCreate',
+					'Editing' => 'FeuserEdit',
+					'Password' => 'FeuserPassword',
+				),
+			),
+			array(
+				'GETvar' => 'tx_sfregister_form[action]',
 			),
 		),
-		array(
-			'GETvar' => 'tx_sfregister_form[action]',
+		'ac' => array(
+			array(
+				'GETvar' => 'tx_sfregister_form[authCode]',
+			),
 		),
-	),
-	'ac' => array(
-		array(
-			'GETvar' => 'tx_sfregister_form[authCode]',
-		),
-	),
-);
+	);
 
-foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'] as $domain => $config) {
-	if (is_array($config)) {
-		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'][$domain]['postVarSets']['_DEFAULT'] = array_merge(
-			$register,
-			(array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'][$domain]['postVarSets']['_DEFAULT']
-		);
+	foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'] as $domain => $config) {
+		if (is_array($config)) {
+			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'][$domain]['postVarSets']['_DEFAULT'] = array_merge(
+				$register,
+				(array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'][$domain]['postVarSets']['_DEFAULT']
+			);
+		}
+
+		unset($config);
 	}
 
-	unset($config);
+	unset($register);
+
+	reset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']);
 }
-
-unset($register);
-
-reset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']);
 
 ?>
