@@ -24,10 +24,6 @@
 
 /**
  * Validator resolver to automatically find a validator for a given subject
- *
- * @package Extbase
- * @subpackage Validation
- * @version $Id: ValidatorResolver.php 1790 2010-01-18 22:27:37Z jocrau $
  */
 class Tx_SfRegister_Validation_ValidatorResolver extends Tx_Extbase_Validation_ValidatorResolver {
 	/**
