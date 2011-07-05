@@ -8,7 +8,8 @@ if (!defined('TYPO3_MODE')) {
 
 $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$_EXTKEY]);
 
-if (!isset($extensionConfiguration['setRealurlConfigByDefault']) || $extensionConfiguration['setRealurlConfigByDefault'] == 1) {
+if (t3lib_extMgm::isLoaded('realurl') && (!isset($extensionConfiguration['setRealurlConfigByDefault']) ||
+		$extensionConfiguration['setRealurlConfigByDefault'] == 1)) {
 	require_once(t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/Realurl/realurl_conf.php');
 }
 
