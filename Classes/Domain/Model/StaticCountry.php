@@ -27,101 +27,141 @@
  */
 class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_AbstractEntity {
 	/**
+	 * ISO 3166-1 A2 Country code
+	 *
 	 * @var 	string
 	 */
 	protected $cnIso2;
 
 	/**
+	 * ISO 3166-1 A3 Country code
+	 *
 	 * @var 	string
 	 */
 	protected $cnIso3;
 
 	/**
+	 * ISO 3166-1 Nr Country code
+	 *
 	 * @var 	integer
 	 */
 	protected $cnIsoNr;
 
 	/**
+	 * Official name (local)
+	 *
 	 * @var 	string
 	 */
 	protected $cnOfficialNameLocal;
 
 	/**
+	 * Official name (EN)
+	 *
 	 * @var 	string
 	 */
 	protected $cnOfficialNameEn;
 
 	/**
+	 * Short name (EN)
+	 *
 	 * @var string
 	 */
 	protected $cnShortEn;
 
 	/**
+	 * Short name (DA)
+	 *
 	 * @var string
 	 */
 	protected $cnShortDa;
 
 	/**
+	 * Short name (DE)
+	 *
 	 * @var string
 	 */
 	protected $cnShortDe;
 
 	/**
+	 * Short name (ES)
+	 * 
 	 * @var string
 	 */
 	protected $cnShortEs;
 
 	/**
+	 * Short name (FR)
+	 *
 	 * @var string
 	 */
 	protected $cnShortFr;
 
 	/**
+	 * Short name (GL)
+	 *
 	 * @var string
 	 */
 	protected $cnShortGl;
 
 	/**
+	 * Short name (IT)
+	 *
 	 * @var string
 	 */
 	protected $cnShortIt;
 
 	/**
+	 * Short name (JA)
+	 *
 	 * @var string
 	 */
 	protected $cnShortJa;
 
 	/**
+	 * Short name (KM)
+	 *
 	 * @var string
 	 */
 	protected $cnShortKm;
 
 	/**
+	 * Short name (NL)
+	 *
 	 * @var string
 	 */
 	protected $cnShortNl;
 
 	/**
+	 * Short name (NO)
+	 *
 	 * @var string
 	 */
 	protected $cnShortNo;
 
 	/**
+	 * Short name (RU)
+	 *
 	 * @var string
 	 */
 	protected $cnShortRu;
 
 	/**
+	 * Short name (SV)
+	 *
 	 * @var string
 	 */
 	protected $cnShortSv;
 
 	/**
+	 * Short name (UA)
+	 *
 	 * @var string
 	 */
 	protected $cnShortUa;
 
 	/**
+	 * Getter for ISO 3166-1 A2 Country code
+	 *
 	 * @return string
 	 */
 	public function getCnIso2() {
@@ -129,6 +169,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for ISO 3166-1 A3 Country code
+	 *
 	 * @return string
 	 */
 	public function getCnIso3() {
@@ -136,6 +178,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for ISO 3166-1 Nr Country code
+	 *
 	 * @return string
 	 */
 	public function getCnIsoNr() {
@@ -143,6 +187,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Official name (local)
+	 *
 	 * @return string
 	 */
 	public function getCnOfficialNameLocal() {
@@ -150,6 +196,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Official name (EN)
+	 *
 	 * @return string
 	 */
 	public function getCnOfficialNameEn() {
@@ -157,6 +205,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (EN)
+	 *
 	 * @return string
 	 */
 	public function getCnShortEn() {
@@ -164,6 +214,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (DA)
+	 *
 	 * @return string
 	 */
 	public function getCnShortDa() {
@@ -171,6 +223,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (DE)
+	 *
 	 * @return string
 	 */
 	public function getCnShortDe() {
@@ -178,6 +232,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (ES)
+	 *
 	 * @return string
 	 */
 	public function getCnShortEs() {
@@ -185,6 +241,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (FR)
+	 *
 	 * @return string
 	 */
 	public function getCnShortFr() {
@@ -192,6 +250,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (GL)
+	 *
 	 * @return string
 	 */
 	public function getCnShortGl() {
@@ -199,6 +259,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (IT)
+	 *
 	 * @return string
 	 */
 	public function getCnShortIt() {
@@ -206,6 +268,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (JA)
+	 *
 	 * @return string
 	 */
 	public function getCnShortJa() {
@@ -213,6 +277,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (KM)
+	 *
 	 * @return string
 	 */
 	public function getCnShortKm() {
@@ -220,6 +286,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (NL)
+	 *
 	 * @return string
 	 */
 	public function getCnShortNl() {
@@ -227,6 +295,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (NO)
+	 *
 	 * @return string
 	 */
 	public function getCnShortNo() {
@@ -234,6 +304,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (RU)
+	 *
 	 * @return string
 	 */
 	public function getCnShortRu() {
@@ -241,6 +313,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (SV)
+	 *
 	 * @return string
 	 */
 	public function getCnShortSv() {
@@ -248,6 +322,8 @@ class Tx_SfRegister_Domain_Model_StaticCountry extends Tx_Extbase_DomainObject_A
 	}
 
 	/**
+	 * Getter for Short name (UA)
+	 *
 	 * @return string
 	 */
 	public function getCnShortUa() {

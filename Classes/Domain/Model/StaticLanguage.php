@@ -27,86 +27,120 @@
  */
 class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_AbstractEntity {
 	/**
+	 * ISO 639-1 A2 Language code
+	 *
 	 * @var string
 	 */
 	protected $lgIso2;
 
 	/**
+	 * Name
+	 *
 	 * @var string
 	 */
 	protected $lgNameLocal;
 
 	/**
+	 * Name (EN)
+	 *
 	 * @var string
 	 */
 	protected $lgNameEn;
 
 	/**
+	 * Name (DA)
+	 *
 	 * @var string
 	 */
 	protected $lgNameDa;
 
 	/**
+	 * Name (DE)
+	 *
 	 * @var string
 	 */
 	protected $lgNameDe;
 
 	/**
+	 * Name (ES)
+	 *
 	 * @var string
 	 */
 	protected $lgNameEs;
 
 	/**
+	 * Name (FR)
+	 *
 	 * @var string
 	 */
 	protected $lgNameFr;
 
 	/**
+	 * Name (GL)
+	 *
 	 * @var string
 	 */
 	protected $lgNameGl;
 
 	/**
+	 * Name (IT)
+	 *
 	 * @var string
 	 */
 	protected $lgNameIt;
 
 	/**
+	 * Name (JA)
+	 *
 	 * @var string
 	 */
 	protected $lgNameJa;
 
 	/**
+	 * Name (KM)
+	 *
 	 * @var string
 	 */
 	protected $lgNameKm;
 
 	/**
+	 * Name (NL)
+	 *
 	 * @var string
 	 */
 	protected $lgNameNl;
 
 	/**
+	 * Name (NO)
+	 *
 	 * @var string
 	 */
 	protected $lgNameNo;
 
 	/**
+	 * Name (RU)
+	 *
 	 * @var string
 	 */
 	protected $lgNameRu;
 
 	/**
+	 * Name (SV)
+	 *
 	 * @var string
 	 */
 	protected $lgNameSv;
 
 	/**
+	 * Name (UA)
+	 * 
 	 * @var string
 	 */
 	protected $lgNameUa;
 
 	/**
+	 * Getter for ISO 639-1 A2 Language code
+	 *
 	 * @return string
 	 */
 	public function getLgIso2() {
@@ -114,6 +148,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name
+	 *
 	 * @return string
 	 */
 	public function getLgNameLocal() {
@@ -121,6 +157,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (EN)
+	 *
 	 * @return string
 	 */
 	public function getLgNameEn() {
@@ -128,6 +166,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (DA)
+	 *
 	 * @return string
 	 */
 	public function getLgNameDa() {
@@ -135,6 +175,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (DE)
+	 *
 	 * @return string
 	 */
 	public function getLgNameDe() {
@@ -142,6 +184,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (ES)
+	 *
 	 * @return string
 	 */
 	public function getLgNameEs() {
@@ -149,6 +193,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (FR)
+	 *
 	 * @return string
 	 */
 	public function getLgNameFr() {
@@ -156,6 +202,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (GL)
+	 *
 	 * @return string
 	 */
 	public function getLgNameGl() {
@@ -163,6 +211,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (IT)
+	 *
 	 * @return string
 	 */
 	public function getLgNameIt() {
@@ -170,6 +220,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (JA)
+	 *
 	 * @return string
 	 */
 	public function getLgNameJa() {
@@ -177,6 +229,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (KM)
+	 *
 	 * @return string
 	 */
 	public function getLgNameKm() {
@@ -184,6 +238,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (NL)
+	 *
 	 * @return string
 	 */
 	public function getLgNameNl() {
@@ -191,6 +247,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (NO)
+	 *
 	 * @return string
 	 */
 	public function getLgNameNo() {
@@ -198,6 +256,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (RU)
+	 *
 	 * @return string
 	 */
 	public function getLgNameRu() {
@@ -205,6 +265,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (SV)
+	 *
 	 * @return string
 	 */
 	public function getLgNameSv() {
@@ -212,6 +274,8 @@ class Tx_SfRegister_Domain_Model_StaticLanguage extends Tx_Extbase_DomainObject_
 	}
 
 	/**
+	 * Getter for Name (UA)
+	 *
 	 * @return string
 	 */
 	public function getLgNameUa() {

@@ -27,134 +27,181 @@
  */
 class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_FrontendUser implements Tx_SfRegister_Interfaces_FrontendUser {
 	/**
-	 * @var boolean Flag if user is diable or not
+	 * If the account is diabled or not
+	 *
+	 * @var boolean
 	 */
 	protected $disable;
 
 	/**
-	 * @var string Hash for confirmation mail
+	 * Mailhash for activation by email
+	 *
+	 * @var string
 	 */
 	protected $mailhash;
 
 	/**
-	 * @var DateTime date on which the account was activated
+	 * Date on which the account was activated
+	 *
+	 * @var DateTime
 	 */
 	protected $activatedOn;
 
 
 	/**
 	 *  virtual not stored in database
+	 *
 	 * @var string
 	 */
 	protected $captcha;
 
 	/**
 	 *  virtual not stored in database
+	 *
 	 * @var string
 	 */
 	protected $passwordRepeat;
 
 	/**
 	 *  virtual not stored in database
+	 *
 	 * @var string
 	 */
 	protected $emailRepeat;
 
 
 	/**
+	 * Pseudonym
+	 *
 	 * @var string
 	 */
 	protected $pseudonym;
 
 	/**
-	 * @var  integer 1 or 2 for mr or mrs
+	 * Gender 1 or 2 for mr or mrs
+	 *
+	 * @var  integer
 	 */
 	protected $gender;
 
 
 	/**
-	 * @var  DateTime date of birth
+	 * Date of birth
+	 *
+	 * @var  DateTime
 	 */
 	protected $dateOfBirth;
 
 	/**
-	 * @var  integer day of date of birth
+	 * Day of date of birth
+	 *
+	 * @var  integer
 	 */
 	protected $dateOfBirthDay;
 
 	/**
-	 * @var  integer month of date of birth
+	 * Month of date of birth
+	 *
+	 * @var  integer
 	 */
 	protected $dateOfBirthMonth;
 
 	/**
-	 * @var  integer year of date of birth
+	 * Year of date of birth
+	 *
+	 * @var  integer
 	 */
 	protected $dateOfBirthYear;
 
 
 	/**
-	 * @var string of language
+	 * Language
+	 *
+	 * @var string
 	 */
 	protected $language;
 
 	/**
-	 * @var string code of zone
+	 * Code of state/province
+	 *
+	 * @var string
 	 */
 	protected $zone;
 
 	/**
+	 * Timezone
+	 *
 	 * @var float
 	 */
 	protected $timezone;
 
 	/**
-	 * @var boolean wether the daylight saving time must go into time calculation
+	 * Daylight saving time
+	 *
+	 * @var boolean
 	 */
 	protected $daylight;
 
 	/**
-	 * @var string two character iso code of country
+	 * Country with static info table code
+	 *
+	 * @var string
 	 */
 	protected $staticInfoCountry;
 
 	/**
-	 * @var string Number of mobilephone
+	 * Number of mobilephone
+	 *
+	 * @var string
 	 */
 	protected $mobilephone;
 
 	/**
-	 * @var boolean General terms and conditions accepted flag
+	 * General terms and conditions accepted flag
+	 *
+	 * @var boolean
 	 */
 	protected $gtc;
 
 	/**
-	 * @var boolean Privacy agreement accepted flag
+	 * Privacy agreement accepted flag
+	 *
+	 * @var boolean
 	 */
 	protected $privacy;
 
 	/**
-	 * @var integer of employee status
+	 * Status
+	 *
+	 * @var integer
 	 */
 	protected $status;
 
 	/**
-	 * @var boolean wether the user register by invitation
+	 * wether the user register by invitation
+	 *
+	 * @var boolean
 	 */
 	protected $byInvitation;
 
 	/**
-	 * @var string comment of user
+	 * comment of user
+	 *
+	 * @var string
 	 */
 	protected $comments;
 
 	/**
-	 * @var boolean if emails should be send as HTML or plain text
+	 * if emails should be send as HTML or plain text
+	 *
+	 * @var boolean
 	 */
 	protected $moduleSysDmailHtml;
 
 	/**
-	 * @var array of selected categories
+	 * selected dmail categories
+	 *
+	 * @var array
 	 */
 	protected $moduleSysDmailCategory;
 

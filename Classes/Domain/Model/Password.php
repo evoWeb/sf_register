@@ -27,16 +27,22 @@
  */
 class Tx_SfRegister_Domain_Model_Password extends Tx_Extbase_DomainObject_AbstractEntity {
 	/**
+	 * Password
+	 *
 	 * @var string
 	 */
 	protected $password;
 
 	/**
+	 * Password repeat
+	 *
 	 * @var string
 	 */
 	protected $passwordRepeat;
 
 	/**
+	 * Old password
+	 *
 	 * @var string
 	 */
 	protected $oldPassword;

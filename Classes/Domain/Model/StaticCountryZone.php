@@ -27,101 +27,141 @@
  */
 class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObject_AbstractEntity {
 	/**
+	 * ISO 3166-1 A2 Country code
+	 *
 	 * @var string
 	 */
 	protected $znCountryIso2;
 
 	/**
+	 * ISO 3166-1 A3 Country code
+	 *
 	 * @var string
 	 */
 	protected $znCountryIso3;
 
 	/**
+	 * ISO 3166-1 Nr Country code
+	 *
 	 * @var string
 	 */
 	protected $znCountryIsoNr;
 
 	/**
+	 * ISO 3166-2 Country Zone code
+	 *
 	 * @var string
 	 */
 	protected $znCode;
 
 	/**
+	 * Name
+	 *
 	 * @var string
 	 */
 	protected $znNameLocal;
 
 	/**
+	 * Name (EN)
+	 *
 	 * @var string
 	 */
 	protected $znNameEn;
 
 	/**
+	 * Name (DA)
+	 *
 	 * @var string
 	 */
 	protected $znNameDa;
 
 	/**
+	 * Name (DE)
+	 *
 	 * @var string
 	 */
 	protected $znNameDe;
 
 	/**
+	 * Name (ES)
+	 *
 	 * @var string
 	 */
 	protected $znNameEs;
 
 	/**
+	 * Name (FR)
+	 *
 	 * @var string
 	 */
 	protected $znNameFr;
 
 	/**
+	 * Name (GL)
+	 *
 	 * @var string
 	 */
 	protected $znNameGl;
 
 	/**
+	 * Name (IT)
+	 *
 	 * @var string
 	 */
 	protected $znNameIt;
 
 	/**
+	 * Name (JA)
+	 *
 	 * @var string
 	 */
 	protected $znNameJa;
 
 	/**
+	 * Name (KM)
+	 *
 	 * @var string
 	 */
 	protected $znNameKm;
 
 	/**
+	 * Name (NL)
+	 *
 	 * @var string
 	 */
 	protected $znNameNl;
 
 	/**
+	 * Name (NO)
+	 *
 	 * @var string
 	 */
 	protected $znNameNo;
 
 	/**
+	 * Name (RU)
+	 *
 	 * @var string
 	 */
 	protected $znNameRu;
 
 	/**
+	 * Name (SV)
+	 *
 	 * @var string
 	 */
 	protected $znNameSv;
 
 	/**
+	 * Name (UA)
+	 *
 	 * @var string
 	 */
 	protected $znNameUa;
 
 	/**
+	 * Getter for ISO 3166-1 A2 Country code
+	 *
 	 * @return string
 	 */
 	public function getZnCountryIso2() {
@@ -129,6 +169,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for ISO 3166-1 A3 Country code
+	 *
 	 * @return string
 	 */
 	public function getZnCountryIso3() {
@@ -136,6 +178,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for ISO 3166-1 Nr Country code
+	 *
 	 * @return string
 	 */
 	public function getZnCountryIsoNr() {
@@ -143,6 +187,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for ISO 3166-2 Country Zone code
+	 *
 	 * @return string
 	 */
 	public function getZnCode() {
@@ -150,6 +196,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name
+	 *
 	 * @return string
 	 */
 	public function getZnNameLocal() {
@@ -157,6 +205,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (EN)
+	 *
 	 * @return string
 	 */
 	public function getZnNameEn() {
@@ -164,6 +214,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (DA)
+	 *
 	 * @return string
 	 */
 	public function getZnNameDa() {
@@ -171,6 +223,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (DE)
+	 *
 	 * @return string
 	 */
 	public function getZnNameDe() {
@@ -178,6 +232,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (ES)
+	 *
 	 * @return string
 	 */
 	public function getZnNameEs() {
@@ -185,6 +241,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (FR)
+	 *
 	 * @return string
 	 */
 	public function getZnNameFr() {
@@ -192,6 +250,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (GL)
+	 *
 	 * @return string
 	 */
 	public function getZnNameGl() {
@@ -199,6 +259,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (IT)
+	 *
 	 * @return string
 	 */
 	public function getZnNameIt() {
@@ -206,6 +268,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (JA)
+	 *
 	 * @return string
 	 */
 	public function getZnNameJa() {
@@ -213,6 +277,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (KM)
+	 *
 	 * @return string
 	 */
 	public function getZnNameKm() {
@@ -220,6 +286,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (NL)
+	 *
 	 * @return string
 	 */
 	public function getZnNameNl() {
@@ -227,6 +295,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (NO)
+	 *
 	 * @return string
 	 */
 	public function getZnNameNo() {
@@ -234,6 +304,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (RU)
+	 *
 	 * @return string
 	 */
 	public function getZnNameRu() {
@@ -241,6 +313,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (SV)
+	 *
 	 * @return string
 	 */
 	public function getZnNameSv() {
@@ -248,6 +322,8 @@ class Tx_SfRegister_Domain_Model_StaticCountryZone extends Tx_Extbase_DomainObje
 	}
 
 	/**
+	 * Getter for Name (UA)
+	 *
 	 * @return string
 	 */
 	public function getZnNameUa() {
