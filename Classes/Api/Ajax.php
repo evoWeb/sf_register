@@ -24,49 +24,58 @@
 
 /**
  * Api to get informations via ajax calls
+ * Possible informations are static info tables country zones
+ *
+ * Call eid like
+ * ?eID=sf_register&tx_sfregister[action]=zones&tx_sfregister[parent]=DE
  */
 class Tx_SfRegister_Api_Ajax {
 	/**
-	 * @var	array|mixed
+	 * Request parameters from url
+	 *
+	 * @var	array
 	 */
-	protected $params = array();
+	protected $requestArguments = array();
 
 	/**
-	 * @var	string
-	 */
-	protected $action;
-
-	/**
+	 * Status of the request returned with every response
+	 *
 	 * @var	string
 	 */
 	protected $status = 'success';
 
 	/**
+	 * Message related to the status returned with every response
+	 *
 	 * @var	string
 	 */
 	protected $message = '';
 
 	/**
+	 * Result of every action that gets returned with every response
+	 *
 	 * @var	array
 	 */
 	protected $result = array();
 
 	/**
 	 * Constructor of the class
+	 *
 	 * @return	void
 	 */
 	public function __construct() {
 		tslib_eidtools::connectDB();
 
-		$this->params = t3lib_div::_GP('tx_sfregister');
-		$this->action = $this->params['action'];
+		$this->requestArguments = t3lib_div::_GP('tx_sfregister');
 	}
 
 	/**
+	 * Dispatch the given action and call the output rendering afterwards
+	 * 
 	 * @return	void
 	 */
 	public function dispatch() {
-		switch ($this->action) {
+		switch ($this->requestArguments['action']) {
 			case 'zones':
 				$this->getZonesByParent();
 				break;
@@ -81,6 +90,8 @@ class Tx_SfRegister_Api_Ajax {
 	}
 
 	/**
+	 * Render the status, message and result as json encoded array as response
+	 *
 	 * @return	string
 	 */
 	protected function output() {
@@ -94,11 +105,13 @@ class Tx_SfRegister_Api_Ajax {
 	}
 
 	/**
+	 * Query the static info table country zones to get all zones for the given parent if any
+	 *
 	 * @return	void
 	 */
 	protected function getZonesByParent() {
 		$zones = array();
-		$parent = strtoupper(preg_replace('/[^A-Za-z]/', '', $this->params['parent']));
+		$parent = strtoupper(preg_replace('/[^A-Za-z]/', '', $this->requestArguments['parent']));
 
 		if (strlen($parent)) {
 			$queryResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
