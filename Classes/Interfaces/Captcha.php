@@ -22,7 +22,16 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * Interface to be implemented by every captcha adapter that should get used with this registration
+ */
 interface Tx_SfRegister_Interfaces_Captcha {
+	/**
+	 * Getter for errors that needs to be implemented in every adapter
+	 *
+	 * @abstract
+	 * @return void
+	 */
 	public function getErrors();
 }
 

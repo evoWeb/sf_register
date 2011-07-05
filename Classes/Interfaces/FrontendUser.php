@@ -22,8 +22,10 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * Interface to be implemented by every frontenduser model that should be used with this registration
+ */
 interface Tx_SfRegister_Interfaces_FrontendUser {
-	
 }
 
 ?>
