@@ -4,11 +4,11 @@ Preview Action
 	<dt><f:translate key="username"/>*</dt>
 	<dd><f:form.hidden property="username" />{user.username}</dd>
 
-	<dt><f:translate key="newPassword1"/>*</dt>
+	<dt><f:translate key="password"/>*</dt>
 	<dd><f:form.hidden property="password" />********</dd>
 
-	<dt><f:translate key="newPassword2"/>*</dt>
-	<dd><f:form.hidden name="passwordAgain" />********</dd>
+	<dt><f:translate key="passwordRepeat"/>*</dt>
+	<dd><f:form.hidden property="passwordRepeat" />********</dd>
 </dl>
 <dl>
 	<dt><f:translate key="title"/></dt>
@@ -25,6 +25,9 @@ Preview Action
 
 	<dt><f:translate key="email"/></dt>
 	<dd><f:form.hidden property="email" />{user.email}</dd>
+
+	<dt><f:translate key="emailRepeat"/></dt>
+	<dd><f:form.hidden property="emailRepeat" />{user.emailRepeat}</dd>
 
 	<dt><f:translate key="telephone"/></dt>
 	<dd><f:form.hidden property="telephone" />{user.telephone}</dd>
