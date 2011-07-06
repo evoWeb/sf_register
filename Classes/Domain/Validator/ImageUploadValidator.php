@@ -23,19 +23,21 @@
  ***************************************************************/
 
 /**
- * Abstract validator
+ * Validator to check if the uploaded image could be handled
  *
- * @package Extbase
- * @subpackage Validation\Validator
  * @scope singleton
  */
 class Tx_SfRegister_Domain_Validator_ImageUploadValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * Service to handle files
+	 *
 	 * @var Tx_SfRegister_Services_File
 	 */
 	protected $fileService;
 
 	/**
+	 * Inject of the file service
+	 *
 	 * @param Tx_SfRegister_Services_File $fileService
 	 * @return void
 	 */

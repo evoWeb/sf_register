@@ -23,22 +23,28 @@
  ***************************************************************/
 
 /**
- * A Passwordvalidator
+ * A password validator
  *
  * @scope singleton
  */
 class Tx_SfRegister_Domain_Validator_BadWordValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * Configuration Manager
+	 *
 	 * @var Tx_Extbase_Configuration_ConfigurationManager
 	 */
 	protected $configurationManager;
 
 	/**
+	 * Settings
+	 *
 	 * @var array
 	 */
 	protected $settings = array();
 
 	/**
+	 * Inject of the configuration manager
+	 *
 	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
 	 * @return void
 	 */
@@ -48,7 +54,7 @@ class Tx_SfRegister_Domain_Validator_BadWordValidator extends Tx_Extbase_Validat
 	}
 
 	/**
-	 * If the given passwords are valid
+	 * If the given password is valid in kind of not on the bad list
 	 *
 	 * @param string $value The value
 	 * @return boolean

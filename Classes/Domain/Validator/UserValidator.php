@@ -29,11 +29,15 @@
  */
 class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * Configuration manager
+	 *
 	 * @var Tx_Extbase_Configuration_ConfigurationManager
 	 */
 	protected $configurationManager;
 
 	/**
+	 * Settings
+	 *
 	 * @var array
 	 */
 	protected $settings = NULL;
@@ -46,26 +50,36 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	protected $frameworkConfiguration = array();
 
 	/**
+	 * Validator resolver
+	 *
 	 * @var  Tx_SfRegister_Validation_ValidatorResolver
 	 */
 	protected $validatorResolver;
 
 	/**
+	 * Name of the current field to validate
+	 *
 	 * @var string
 	 */
 	protected $currentFieldName = '';
 
 	/**
+	 * Options for the current validation
+	 *
 	 * @var array
 	 */
 	protected $currentValidatorOptions = array();
 
 	/**
+	 * Model that gets validated currently
+	 *
 	 * @var object
 	 */
 	protected $model;
 
 	/**
+	 * Inject of configuration manager
+	 *
 	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
 	 * @return void
 	 */
@@ -157,7 +171,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 
 	/**
 	 * Get validation rules from settings
-	 * Warning: Dont remove the added validators
+	 * Warning: Dont remove the validators added in this method
 	 *          These prevent that editing others data is possible
 	 *
 	 * @return array
@@ -216,9 +230,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 			$validator->setFieldname($this->currentFieldName);
 		}
 
-		if ($validator instanceof Tx_Extbase_Validation_Validator_ValidatorInterface AND
-				!$validator->isValid($value)) {
-
+		if ($validator instanceof Tx_Extbase_Validation_Validator_ValidatorInterface AND !$validator->isValid($value)) {
 			$this->mergeErrorsIntoLocalErrors($validator->getErrors());
 			$result = FALSE;
 		}
@@ -277,6 +289,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 */
 	protected function parseRule($rule) {
 		$parsedRules = $this->validatorResolver->getParsedValidatorAnnotation($rule);
+
 		return current($parsedRules['validators']);
 	}
 }

@@ -23,10 +23,8 @@
  ***************************************************************/
 
 /**
- * Abstract validator
+ * Validator to check if a given value is equal to true
  *
- * @package Extbase
- * @subpackage Validation\Validator
  * @scope singleton
  */
 class Tx_SfRegister_Domain_Validator_IsTrueValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {

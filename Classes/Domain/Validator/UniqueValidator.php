@@ -29,16 +29,22 @@
  */
 class Tx_SfRegister_Domain_Validator_UniqueValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * Frontend user repository
+	 *
 	 * @var Tx_SfRegister_Domain_Repository_FrontendUserRepository
 	 */
 	protected $userRepository = NULL;
 
 	/**
+	 * Fieldname
+	 *
 	 * @var string
 	 */
 	protected $fieldname = '';
 
 	/**
+	 * Inject frontend user repository
+	 *
 	 * @param Tx_SfRegister_Domain_Repository_FrontendUserRepository $repository
 	 * @return void
 	 */

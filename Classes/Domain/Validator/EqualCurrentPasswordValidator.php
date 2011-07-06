@@ -23,29 +23,35 @@
  ***************************************************************/
 
 /**
- * Abstract validator
+ * Validator to check against current password
  *
- * @package Extbase
- * @subpackage Validation\Validator
  * @scope singleton
  */
 class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * Configuration manager
+	 *
 	 * @var Tx_Extbase_Configuration_ConfigurationManager
 	 */
 	protected $configurationManager;
 
 	/**
+	 * Settings
+	 *
 	 * @var array
 	 */
 	protected $settings = array();
 
 	/**
+	 * Frontend user repository
+	 *
 	 * @var Tx_SfRegister_Domain_Repository_FrontendUserRepository
 	 */
 	protected $userRepository = NULL;
 
 	/**
+	 * Inject a configuration manager
+	 *
 	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
 	 * @return void
 	 */
@@ -55,6 +61,8 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 	}
 
 	/**
+	 * Inject the frontend user repository
+	 *
 	 * @param Tx_SfRegister_Domain_Repository_FrontendUserRepository $repository
 	 * @return void
 	 */

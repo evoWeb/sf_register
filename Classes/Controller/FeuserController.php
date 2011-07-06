@@ -27,16 +27,22 @@
  */
 class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controller_ActionController {
 	/**
+	 * User repository
+	 *
 	 * @var Tx_SfRegister_Domain_Model_FrontendUserRepository
 	 */
 	protected $userRepository = NULL;
 
 	/**
+	 * File service
+	 *
 	 * @var Tx_SfRegister_Services_File
 	 */
 	protected $fileService;
 
 	/**
+	 * Inject an frontenduser repository object
+	 *
 	 * @param Tx_SfRegister_Domain_Repository_FrontendUserRepository $repository
 	 * @return void
 	 */
@@ -61,6 +67,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
+	 * Inject an view object to be able to set templateRootPath from flexform
+	 *
 	 * @param Tx_Extbase_MVC_View_ViewInterface $view
 	 * @return void
 	 */
@@ -131,6 +139,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
+	 * Remove an image from user object and request object
+	 *
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
@@ -153,6 +163,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
+	 * Check if a file is only temporary uploaded
+	 *
 	 * @return boolean
 	 */
 	protected function fileIsTemporary() {

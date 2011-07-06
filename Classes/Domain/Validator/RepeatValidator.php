@@ -29,11 +29,15 @@
  */
 class Tx_SfRegister_Domain_Validator_RepeatValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * Model to take repeated value of
+	 *
 	 * @var mixed
 	 */
 	protected $model;
 
 	/**
+	 * Fieldname
+	 *
 	 * @var string
 	 */
 	protected $fieldname;
@@ -59,7 +63,7 @@ class Tx_SfRegister_Domain_Validator_RepeatValidator extends Tx_Extbase_Validati
 	}
 
 	/**
-	 * If the given passwords are valid
+	 * If the given value is equal to the repeatition
 	 *
 	 * @param string $value The value
 	 * @return boolean

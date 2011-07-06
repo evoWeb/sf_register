@@ -23,7 +23,7 @@
  ***************************************************************/
 
 /**
- * A not empty validator
+ * A validator to check if the userid is equal to the id of the logged in user
  *
  * @scope singleton
  */

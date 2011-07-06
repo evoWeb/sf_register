@@ -27,6 +27,8 @@
  */
 class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Controller_FeuserController {
 	/**
+	 * Usergroup repository
+	 *
 	 * @var Tx_Extbase_Domain_Repository_FrontendUserGroupRepository
 	 */
 	protected $userGroupRepository = NULL;
@@ -184,8 +186,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return void
 	 */
 	protected function persistAll() {
-		$persistenceManager = $this->objectManager->get('Tx_Extbase_Persistence_Manager');
-		$persistenceManager->persistAll();
+		$this->objectManager->get('Tx_Extbase_Persistence_Manager')->persistAll();
 	}
 
 	/**
@@ -195,8 +196,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return void
 	 */
 	protected function autoLogin(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$loginService = $this->objectManager->get('Tx_SfRegister_Services_Login');
-		$loginService->loginUserById($user->getUid());
+		$this->objectManager->get('Tx_SfRegister_Services_Login')->loginUserById($user->getUid());
 	}
 
 

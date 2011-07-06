@@ -23,17 +23,21 @@
  ***************************************************************/
 
 /**
- * A Uservalidator
+ * A captcha validator
  *
  * @scope singleton
  */
 class Tx_SfRegister_Domain_Validator_CaptchaValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
+	 * Captcha adapter factory
+	 *
 	 * @var Tx_SfRegister_Services_Captcha_CaptchaAdapterFactory
 	 */
 	protected $captchaAdapterFactory;
 
 	/**
+	 * Inject of captcha adapter factory
+	 *
 	 * @param Tx_SfRegister_Services_Captcha_CaptchaAdapterFactory $captchaAdapterFactory
 	 * @return void
 	 */
@@ -42,7 +46,7 @@ class Tx_SfRegister_Domain_Validator_CaptchaValidator extends Tx_Extbase_Validat
 	}
 
 	/**
-	 * If the given user are valid
+	 * If the given captcha is valid
 	 *
 	 * @param object $object
 	 * @return boolean
