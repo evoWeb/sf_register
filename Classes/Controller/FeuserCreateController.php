@@ -91,6 +91,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 *
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return void
+	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
 	 */
 	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$user->setPassword($this->encryptPassword($user->getPassword()));

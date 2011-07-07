@@ -39,7 +39,7 @@ class Tx_SfRegister_Controller_FeuserPasswordController extends Tx_SfRegister_Co
 	 *
 	 * @param Tx_SfRegister_Domain_Model_Password $password
 	 * @return void
-	 * @validate $password Tx_SfRegister_Domain_Validator_UserValidator(type = password)
+	 * @validate $password Tx_SfRegister_Domain_Validator_UserValidator
 	 */
 	public function saveAction(Tx_SfRegister_Domain_Model_Password $password) {
 		if ($this->isUserLoggedIn()) {
