@@ -86,9 +86,7 @@ abstract class Tx_SfRegister_Services_Captcha_AbstractAdapter implements Tx_SfRe
 	 * @return array
 	 */
 	public function getErrors() {
-		$errors = $this->errors;
-
-		return $errors;
+		return $this->errors;
 	}
 
 }

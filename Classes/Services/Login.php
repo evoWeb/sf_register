@@ -102,7 +102,7 @@ class Tx_SfRegister_Services_Login implements t3lib_Singleton {
 	 * @return array
 	 */
 	protected function fetchUserdata($uid) {
-		return current($GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'fe_users', 'uid = ' . $uid));
+		return current($GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'fe_users', 'uid = ' . (int) $uid));
 	}
 }
 
