@@ -44,7 +44,6 @@ class Tx_SfRegister_Domain_Validator_IsTrueValidator extends Tx_Extbase_Validati
 
 		return $result;
 	}
-
 }
 
 ?>
