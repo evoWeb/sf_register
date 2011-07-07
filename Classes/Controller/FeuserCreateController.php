@@ -44,7 +44,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 		if ($user === NULL ||
 				$user instanceof Tx_SfRegister_Interfaces_FrontendUser &&
 				$user->getUid()) {
-			$user = $this->objectManager->get('Tx_SfRegister_Domain_Model_FrontendUser');
+			$user = $this->objectManager->get('Tx_SfRegister_Interfaces_FrontendUser');
 		} else {
 			$user = $this->moveTempFile($user);
 		}
