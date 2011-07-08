@@ -25,6 +25,10 @@
 			<label index="maximal.notifyPostActivationToUser">whether the user should get notified about the activation of his user account</label>
 			<label index="maximal.notifyToAdmin">whether the admin get an notification about the creation of an user account. If an activation email was send this wont be send afterwards.</label>
 			<label index="maximal.notifyToUser">whether the user get an notification about the creation of the account. If an activation email was send this wont be send afterwards.</label>
+			<label index="maximal.notifyPostEditingToUser">wether the admin get an notification about the change of an user</label>
+			<label index="maximal.notifyPostEditingToAdmin">wether the user get an notification about the change of an user</label>
+			<label index="maximal.notifyActivationPostEditingToUser">whether the user needs to activate the user account after edit</label>
+			<label index="maximal.notifyActivationPostEditingToAdmin">whether the admin needs to activate the user account after edit</label>
 			<label index="maximal.autologinPostRegistration">whether the user should get logged in after registration</label>
 			<label index="maximal.autologinPostActivation">whether the user should get logged in after activation</label>
 			<label index="maximal.usergroupPreActivation">usergroup set if an account waits for activation</label>
