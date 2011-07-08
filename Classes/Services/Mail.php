@@ -203,6 +203,91 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 
 	/**
+	 * Send an email after edit to activate the user by admin
+	 *
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 */
+	public function sendAdminActivationMailAfterEdit(Tx_SfRegister_Interfaces_FrontendUser $user) {
+		$type = str_replace('send', '', __FUNCTION__);
+		$variables = array('user' => $user);
+
+		$user->setMailhash($this->getMailHash($user));
+
+		$mailResult = $this->sendEmail(
+			$this->getUserRecipient($user),
+			'userEmail',
+			$this->getSubject($user, 'subject' . $type),
+			$this->renderFileTemplate('FeuserCreate', 'confirm', $type, $variables)
+		);
+
+		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
+	}
+
+	/**
+	 * Send an email after edit to activate the user by user
+	 *
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 */
+	public function sendUserActivationMailAfterEdit(Tx_SfRegister_Interfaces_FrontendUser $user) {
+		$type = str_replace('send', '', __FUNCTION__);
+		$variables = array('user' => $user);
+
+		$user->setMailhash($this->getMailHash($user));
+
+		$mailResult = $this->sendEmail(
+			$this->getUserRecipient($user),
+			'userEmail',
+			$this->getSubject($user, 'subject' . $type),
+			$this->renderFileTemplate('FeuserCreate', 'confirm', $type, $variables)
+		);
+
+		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
+	}
+
+	/**
+	 * Send an email after edit to notify the admin
+	 *
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 */
+	public function sendAdminNotificationMailAfterEdit(Tx_SfRegister_Interfaces_FrontendUser $user) {
+		$type = str_replace('send', '', __FUNCTION__);
+		$variables = array('user' => $user);
+
+		$mailResult = $this->sendEmail(
+			$this->getAdminRecipient(),
+			'adminEmail',
+			$this->getSubject($user, 'subject' . $type),
+			$this->renderFileTemplate('FeuserCreate', 'form', $type, $variables)
+		);
+
+		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
+	}
+
+	/**
+	 * Send an email after edit to notify the user
+	 *
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 */
+	public function sendUserNotificationMailAfterEdit(Tx_SfRegister_Interfaces_FrontendUser $user) {
+		$type = str_replace('send', '', __FUNCTION__);
+		$variables = array('user' => $user);
+
+		$mailResult = $this->sendEmail(
+			$this->getAdminRecipient(),
+			'adminEmail',
+			$this->getSubject($user, 'subject' . $type),
+			$this->renderFileTemplate('FeuserCreate', 'form', $type, $variables)
+		);
+
+		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
+	}
+
+
+	/**
 	 * Get translated version of the subject with replaced username and sitename
 	 * 
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
