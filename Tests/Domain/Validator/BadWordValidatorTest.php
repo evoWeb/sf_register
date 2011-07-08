@@ -39,7 +39,7 @@ class Tx_SfRegister_Domain_Model_BadWordValidatorTest extends Tx_Extbase_Tests_U
 	public function setUp() {
 		$this->testingFramework = new Tx_Phpunit_Framework('fe_users');
 		$pageUid = $this->testingFramework->createFrontEndPage();
-		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/'));
+		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/maximal/'));
 		$this->testingFramework->createFakeFrontEnd($pageUid);
 
 		$this->fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_BadWordValidator', array('dummy'));

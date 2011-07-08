@@ -44,7 +44,7 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepositoryTest extends Tx_Extb
 
 		$extensionName = 'SfRegister';
 		$pluginName = 'Form';
-		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName]['modules'][$pluginName]['controllers']['FeuserEdit'] = array(
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName]['modules'][$pluginName]['controllers']['FeuserCreate'] = array(
 			'actions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'),
 			'nonCacheableActions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'),
 		);

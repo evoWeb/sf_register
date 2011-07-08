@@ -39,7 +39,7 @@ class Tx_SfRegister_Domain_Model_EqualCurrentPasswordValidatorTest extends Tx_Ex
 	public function setUp() {
 		$this->testingFramework = new Tx_Phpunit_Framework('fe_users');
 		$pageUid = $this->testingFramework->createFrontEndPage();
-		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/'));
+		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/maximal/'));
 		$this->testingFramework->createFakeFrontEnd($pageUid);
 
 		$this->fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator', array('dummy'));
