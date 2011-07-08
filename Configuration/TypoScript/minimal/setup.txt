@@ -36,6 +36,11 @@ plugin.tx_sfregister.settings {
 	notifyPreActivationToUser = 1
 	notifyPostActivationToUser = 0
 
+	notifyPostEditingToUser = 0
+	notifyPostEditingToAdmin = 0
+	notifyActivationPostEditingToUser = 0
+	notifyActivationPostEditingToAdmin = 0
+
 	# boolean if user should get logged in after registration
 	autologinPostRegistration =
 	# boolean if user should get logged in after activation

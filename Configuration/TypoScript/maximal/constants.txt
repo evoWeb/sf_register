@@ -33,6 +33,15 @@ plugin.tx_sfregister.settings {
 	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyToUser
 	notifyToUser = 0
 
+	# cat=sf_register.settings/enable/30; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyPostEditingToUser
+	notifyPostEditingToUser = 0
+	# cat=sf_register.settings/enable/30; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyPostEditingToAdmin
+	notifyPostEditingToAdmin = 0
+	# cat=sf_register.settings/enable/30; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyActivationPostEditingToUser
+	notifyActivationPostEditingToUser = 0
+	# cat=sf_register.settings/enable/30; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyActivationPostEditingToAdmin
+	notifyActivationPostEditingToAdmin = 0
+
 	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.autologinPostRegistration
 	autologinPostRegistration = 0
 	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.autologinPostActivation
