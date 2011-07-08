@@ -78,11 +78,110 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	 */
 	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$user = $this->moveImageFile($user);
+
+		if ($this->isDisabledAfterEdit()) {
+			$user->setDisable(TRUE);
+		}
+
+		$user = $this->sendEmailsPostEdit($user);
+
 		$this->userRepository->update($user);
 
 		if ($this->settings['forwardToEditAfterSave']) {
 			$this->forward('form');
 		}
+	}
+
+
+	/**
+	 * Send notification or activation email either to user or admin
+	 *
+	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 */
+	protected function sendEmailsPostEdit($user) {
+		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
+
+		if ($this->isNotifyActivationPostEditingToAdmin()) {
+			$user = $mailService->sendAdminActivationMailAfterEdit($user);
+		} elseif ($this->isNotifyActivationPostEditingToUser()) {
+			$user = $mailService->sendUserActivationMailAfterEdit($user);
+		}
+
+		if ($this->isNotifyPostEditingToAdmin()) {
+			$mailService->sendAdminNotificationMailAfterEdit($user);
+		}
+		if ($this->isNotifyPostEditingToUser()) {
+			$mailService->sendUserNotificationMailAfterEdit($user);
+		}
+
+		return $user;
+	}
+
+
+	/**
+	 * @return boolean
+	 */
+	protected function isDisabledAfterEdit() {
+		$result = FALSE;
+
+		if ($this->isNotifyActivationPostEditingToUser() || $this->isNotifyActivationPostEditingToAdmin()) {
+			$result = TRUE;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function isNotifyActivationPostEditingToUser() {
+		$result = FALSE;
+
+		if ($this->settings['notifyActivationPostEditingToUser']) {
+			$result = TRUE;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function isNotifyActivationPostEditingToAdmin() {
+		$result = FALSE;
+
+		if ($this->settings['notifyActivationPostEditingToAdmin']) {
+			$result = TRUE;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function isNotifyPostEditingToUser() {
+		$result = FALSE;
+
+		if (!$this->isNotifyActivationPostEditingToUser() && $this->settings['notifyPostEditingToUser']) {
+			$result = TRUE;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function isNotifyPostEditingToAdmin() {
+		$result = FALSE;
+
+		if ($this->isNotifyActivationPostEditingToAdmin() && $this->settings['notifyPostEditingToAdmin']) {
+			$result = TRUE;
+		}
+
+		return $result;
 	}
 }
 
