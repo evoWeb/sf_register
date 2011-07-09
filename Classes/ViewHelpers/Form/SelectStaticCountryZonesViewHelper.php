@@ -62,7 +62,7 @@ class Tx_SfRegister_ViewHelpers_Form_SelectStaticCountryZonesViewHelper extends 
 	/**
 	 * Injects the country repository
 	 *
-	 * @param Tx_SfRegister_Domain_Repository_StaticCountryRepository $countryRepository
+	 * @param Tx_SfRegister_Domain_Repository_StaticCountryZoneRepository $countryZonesRepository
 	 * @return void
 	 */
 	public function injectCountryZoneRepository(Tx_SfRegister_Domain_Repository_StaticCountryZoneRepository $countryZonesRepository) {

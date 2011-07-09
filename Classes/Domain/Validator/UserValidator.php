@@ -122,7 +122,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	/**
 	 * If the given user are valid
 	 *
-	 * @param object model
+	 * @param object $model
 	 * @return boolean
 	 */
 	public function isValid($model) {
@@ -286,7 +286,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 * Parse rule
 	 *
 	 * @param string $rule
-	 * @return void
+	 * @return array
 	 */
 	protected function parseRule($rule) {
 		$parsedRules = $this->validatorResolver->getParsedValidatorAnnotation($rule);

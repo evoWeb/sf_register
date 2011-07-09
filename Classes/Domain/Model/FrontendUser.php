@@ -210,7 +210,8 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	/**
 	 * Constructs a new Front-End User
 	 *
-	 * @api
+	 * @param string $username
+	 * @param string $password
 	 */
 	public function __construct($username = '', $password = '') {
 		parent::__construct($username, $password);

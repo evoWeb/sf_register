@@ -60,8 +60,6 @@ class Tx_SfRegister_Api_Ajax {
 
 	/**
 	 * Constructor of the class
-	 *
-	 * @return	void
 	 */
 	public function __construct() {
 		tslib_eidtools::connectDB();

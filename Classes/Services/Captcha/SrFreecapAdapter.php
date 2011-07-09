@@ -63,8 +63,6 @@ class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Serv
 
 	/**
 	 * class constuctor
-	 *
-	 * @return void
 	 */
 	public function __construct() {
 		if (t3lib_extMgm::isLoaded('sr_freecap')) {

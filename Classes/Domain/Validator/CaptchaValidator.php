@@ -48,7 +48,7 @@ class Tx_SfRegister_Domain_Validator_CaptchaValidator extends Tx_Extbase_Validat
 	/**
 	 * If the given captcha is valid
 	 *
-	 * @param object $object
+	 * @param string $value
 	 * @return boolean
 	 */
 	public function isValid($value) {

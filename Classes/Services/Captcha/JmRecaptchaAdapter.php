@@ -31,9 +31,7 @@ class Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter extends Tx_SfRegister_Se
 	protected $captcha = NULL;
 
 	/**
-	 * class constuctor
-	 *
-	 * @return void
+	 * The constructor of the class
 	 */
 	public function __construct() {
 		if (t3lib_extMgm::isLoaded('jm_recaptcha')) {

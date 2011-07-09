@@ -68,7 +68,7 @@ class Tx_SfRegister_ViewHelpers_Form_RequiredViewHelper extends Tx_Fluid_ViewHel
 	 * Render a special sign if the field is required 
 	 *
 	 * @param	string $fieldName Name of the field to render the requird marker to
-	 * @return	void
+	 * @return	string
 	 */
 	public function render($fieldName) {
 		$mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));

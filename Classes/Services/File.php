@@ -291,6 +291,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	/**
 	 * Move an temporary uploaded file to the upload folder
 	 *
+	 * @param string $filename
 	 * @return string
 	 */
 	public function moveFileFromTempFolderToUploadFolder($filename) {
@@ -322,7 +323,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 
 	/**
 	 * @param  $filename
-	 * @return void
+	 * @return string
 	 */
 	public function removeTemporaryFile($filename) {
 		return $this->removeFile($filename, $this->tempFolder);
@@ -355,7 +356,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 
 	/**
 	 * @param  $filename
-	 * @return void
+	 * @return string
 	 */
 	protected function getFilepath($filename) {
 		$filenameParts = t3lib_div::trimExplode('/', $filename, TRUE);
@@ -369,8 +370,8 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	}
 
 	/**
-	 * @param  $filename
-	 * @return void
+	 * @param string $filename
+	 * @return string
 	 */
 	protected function getFilename($filename) {
 		$filenameParts = t3lib_div::trimExplode('/', $filename, TRUE);

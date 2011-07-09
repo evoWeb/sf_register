@@ -46,6 +46,7 @@ class Tx_SfRegister_Services_Login implements t3lib_Singleton {
 	 * @return void
 	 */
 	protected function initFEuser(array $userdata) {
+		/** @var $feUser tslib_feUserAuth */
 		$feUser = t3lib_div::makeInstance('tslib_feUserAuth');
 
 		$feUser->lockIP = $GLOBALS['TYPO3_CONF_VARS']['FE']['lockIP'];

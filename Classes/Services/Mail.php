@@ -350,9 +350,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @param string $subject
 	 * @param string $bodyHTML
 	 * @param string $bodyPlain
-	 * @return void
+	 * @return integer the number of recipients who were accepted for delivery
 	 */
 	protected function sendEmail(array $recipient, $typeOfEmail, $subject, $bodyHTML, $bodyPlain = '') {
+		/** @var $mail t3lib_mail_Message */
 		$mail = t3lib_div::makeInstance('t3lib_mail_Message');
 		$mail
 			->setTo($recipient)
@@ -439,7 +440,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @param string $controller
 	 * @param string $action
 	 * @param string $type type of template
-	 * @param array $vars array of all variables you want to assgin to the view
+	 * @param array $variables array of all variables you want to assgin to the view
 	 * @return string of the rendered View.
 	 */
 	protected function renderFileTemplate($controller, $action, $type, array $variables) {
@@ -459,7 +460,8 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 	/**
 	 * Process registered hooks
-	 * 
+	 *
+	 * @param string $hookName
 	 * @return mixed
 	 */
 	protected function processHook($hookName) {

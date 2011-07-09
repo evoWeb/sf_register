@@ -142,6 +142,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * Remove an image from user object and request object
 	 *
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param string $removeImage
 	 * @return Tx_SfRegister_Interfaces_FrontendUser
 	 */
 	protected function removeImageFromUserAndRequest(Tx_SfRegister_Interfaces_FrontendUser $user, $removeImage) {
