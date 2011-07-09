@@ -27,6 +27,11 @@
  */
 class Tx_SfRegister_ViewHelpers_Form_SelectStaticViewHelper extends Tx_Fluid_ViewHelpers_Form_SelectViewHelper {
 	/**
+	 * @var array
+	 */
+	protected $options = array();
+
+	/**
 	 * Render the option tags.
 	 *
 	 * @return array an associative array of options, key will be the value of the option tag

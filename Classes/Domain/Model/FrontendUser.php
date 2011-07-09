@@ -477,7 +477,7 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	/**
 	 * Setter for month of dateOfBirth
 	 *
-	 * @param integer	$mont
+	 * @param integer	$month
 	 * @return void
 	 */
 	public function setDateOfBirthMonth($month) {
@@ -511,9 +511,13 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 * @return integer
 	 */
 	public function getDateOfBirthDay() {
+		$result = 0;
+
 		if ($this->dateOfBirth instanceof DateTime) {
-			return $this->dateOfBirth->format('j');
+			$result = $this->dateOfBirth->format('j');
 		}
+
+		return $result;
 	}
 
 	/**
@@ -522,9 +526,13 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 * @return integer
 	 */
 	public function getDateOfBirthMonth() {
+		$result = 0;
+
 		if ($this->dateOfBirth instanceof DateTime) {
-			return $this->dateOfBirth->format('n');
+			$result = $this->dateOfBirth->format('n');
 		}
+
+		return $result;
 	}
 
 	/**
@@ -533,9 +541,13 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 * @return integer
 	 */
 	public function getDateOfBirthYear() {
+		$result = 0;
+
 		if ($this->dateOfBirth instanceof DateTime) {
-			return $this->dateOfBirth->format('Y');
+			$result = $this->dateOfBirth->format('Y');
 		}
+
+		return $result;
 	}
 
 
