@@ -34,15 +34,17 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	 * @dontvalidate $user
 	 */
 	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL) {
-		if ($user == NULL && $GLOBALS['TSFE']->fe_user->user != FALSE ||
-				($user instanceof Tx_Extbase_Domain_Model_FrontendUser &&
+		if ($user == NULL && $this->isUserLoggedIn() ||
+				($user instanceof Tx_SfRegister_Interfaces_FrontendUser &&
 				 $user->getUid() != $GLOBALS['TSFE']->fe_user->user['uid'])) {
 			$user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
 
 			$user = $this->moveTempFile($user);
 		}
 
-		$user->prepareDateOfBirth();
+		if ($user instanceof Tx_SfRegister_Interfaces_FrontendUser) {
+			$user->prepareDateOfBirth();
+		}
 
 		if ($this->request->hasArgument('temporaryImage')) {
 			$this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
