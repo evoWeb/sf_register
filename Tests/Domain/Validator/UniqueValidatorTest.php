@@ -41,14 +41,12 @@ class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Un
 		$pageUid = $this->testingFramework->createFrontEndPage();
 		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/'));
 		$this->testingFramework->createFakeFrontEnd($pageUid);
-
-		$this->fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_UniqueValidator', array('dummy'));
 	}
 
 	public function tearDown() {
 		$this->testingFramework->cleanUp();
 
-		unset($this->fixture, $this->testingFramework);
+		unset($this->testingFramework);
 	}
 
 	/**
