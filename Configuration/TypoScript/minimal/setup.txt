@@ -196,7 +196,7 @@ plugin.tx_sfregister._LOCAL_LANG.default {
 module.tx_sfregister < plugin.tx_sfregister
 
 config.tx_extbase.objects {
-    Tx_SfRegister_Interfaces_FrontendUser {
-        className = Tx_SfRegister_Domain_Model_FrontendUser
-    }
+	Tx_SfRegister_Interfaces_FrontendUser {
+		className = Tx_SfRegister_Domain_Model_FrontendUser
+	}
 }
