@@ -58,18 +58,18 @@ class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Un
 		$fieldname = 'username';
 		$expected = 'myValue';
 
-		$this->fixture->setFieldname($fieldname);
-		$this->fixture->setOptions(array('global' => FALSE));
+		$fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_UniqueValidator', array('dummy'), array('global' => FALSE));
+		$fixture->setFieldname($fieldname);
 
 		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('countByField')
 			->with($fieldname, $expected)
 			->will($this->returnValue(0));
-		$this->fixture->injectUserRepository($repositoryMock);
+		$fixture->injectUserRepository($repositoryMock);
 
 		$this->assertTrue(
-			$this->fixture->isValid($expected)
+			$fixture->isValid($expected)
 		);
 	}
 
@@ -80,18 +80,18 @@ class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Un
 		$fieldname = 'username';
 		$expected = 'myValue';
 
-		$this->fixture->setFieldname($fieldname);
-		$this->fixture->setOptions(array('global' => FALSE));
+		$fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_UniqueValidator', array('dummy'), array('global' => FALSE));
+		$fixture->setFieldname($fieldname);
 
 		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('countByField')
 			->with($fieldname, $expected)
 			->will($this->returnValue(1));
-		$this->fixture->injectUserRepository($repositoryMock);
+		$fixture->injectUserRepository($repositoryMock);
 
 		$this->assertFalse(
-			$this->fixture->isValid($expected)
+			$fixture->isValid($expected)
 		);
 	}
 
@@ -102,8 +102,8 @@ class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Un
 		$fieldname = 'username';
 		$expected = 'myValue';
 
-		$this->fixture->setFieldname($fieldname);
-		$this->fixture->setOptions(array('global' => TRUE));
+		$fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_UniqueValidator', array('dummy'), array('global' => TRUE));
+		$fixture->setFieldname($fieldname);
 
 		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
@@ -114,10 +114,10 @@ class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Un
 			->method('countByFieldGlobal')
 			->with($fieldname, $expected)
 			->will($this->returnValue(0));
-		$this->fixture->injectUserRepository($repositoryMock);
+		$fixture->injectUserRepository($repositoryMock);
 
 		$this->assertTrue(
-			$this->fixture->isValid($expected)
+			$fixture->isValid($expected)
 		);
 	}
 
@@ -128,8 +128,8 @@ class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Un
 		$fieldname = 'username';
 		$expected = 'myValue';
 
-		$this->fixture->setFieldname($fieldname);
-		$this->fixture->setOptions(array('global' => TRUE));
+		$fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_UniqueValidator', array('dummy'), array('global' => TRUE));
+		$fixture->setFieldname($fieldname);
 
 		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
@@ -140,10 +140,10 @@ class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Un
 			->method('countByFieldGlobal')
 			->with($fieldname, $expected)
 			->will($this->returnValue(1));
-		$this->fixture->injectUserRepository($repositoryMock);
+		$fixture->injectUserRepository($repositoryMock);
 
 		$this->assertFalse(
-			$this->fixture->isValid($expected)
+			$fixture->isValid($expected)
 		);
 	}
 }
