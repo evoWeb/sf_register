@@ -61,7 +61,7 @@ class Tx_SfRegister_ViewHelpers_Form_CaptchaViewHelper extends Tx_Fluid_ViewHelp
 	 * Render the captcha block
 	 *
 	 * @param string $type Type of captcha to use (comes from hooked captchas in generell)
-	 * @return void
+	 * @return string
 	 */
 	public function render($type) {
 		return $this->captchaAdapterFactory->getCaptchaAdapter($type)->render();

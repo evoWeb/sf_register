@@ -102,7 +102,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	/**
 	 * Add an error with message and code to the property errors
 	 *
-	 * @param array $propertyName name of the property to add the error to
+	 * @param string $propertyName name of the property to add the error to
 	 * @param string $message Message to be shwon
 	 * @param string $code Error code to identify the error
 	 * @return void

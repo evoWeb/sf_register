@@ -112,6 +112,7 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 	 * @return string
 	 */
 	protected function encryptPassword($password) {
+			// @todo use static method from createController
 		if (t3lib_extMgm::isLoaded('saltedpasswords') && tx_saltedpasswords_div::isUsageEnabled('FE')) {
 			$saltObject = tx_saltedpasswords_salts_factory::getSaltingInstance(NULL);
 
