@@ -6,7 +6,10 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="tt_content.list_type_form">Feuser Register</label>
+			<label index="pi1_title">Feuser Register</label>
+			<label index="pi1_plus_wiz_description">Feuser Register</label>
+			<label index="tt_content.list_type_form">Registration plugin for create, editor or delete Frontend Users.</label>
+
 			<label index="fe_users.div.registration">Registration</label>
 			<label index="fe_users.mailhash">Mailhash of confirmation mail</label>
 			<label index="fe_users.activated_on">Activated on</label>

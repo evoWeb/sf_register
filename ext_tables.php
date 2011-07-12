@@ -291,4 +291,10 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_be.xml:tt_content.list_type_form'
 );
 
+	// add witzicon to 'add content element'
+if (TYPO3_MODE == 'BE') {
+	$GLOBALS['TBE_MODULES_EXT']['xMOD_db_new_content_el']['addElClasses']['Tx_SfRegister_Utility_WizardIcon'] =
+		t3lib_extMgm::extPath($_EXTKEY) . 'Classes/Utility/WizardIcon.php';
+}
+
 ?>
