@@ -31,7 +31,7 @@ class Tx_SfRegister_Services_Session implements t3lib_Singleton {
 	 *
 	 * @var string
 	 */
-	protected $sessionKey = '';
+	protected $sessionKey = 'sf_register';
 
 	/**
 	 * Values stored in session
