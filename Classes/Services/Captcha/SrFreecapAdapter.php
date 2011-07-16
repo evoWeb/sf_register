@@ -99,10 +99,16 @@ class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Serv
 	public function isValid($value) {
 		$validCaptcha = TRUE;
 
-		if ($this->captcha !== NULL && !$this->captcha->checkWord($value)) {
-			$validCaptcha = FALSE;
-			$this->addError(Tx_Extbase_Utility_Localization::translate('error.captcha.notcorrect', 'SfRegister'), 1306910429);
+		$session = t3lib_div::makeInstance('Tx_SfRegister_Services_Session');
+		$captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
+		if ($this->captcha !== NULL && $captchaWasValidPreviously !== TRUE) {
+			if (!$this->captcha->checkWord($value)) {
+				$validCaptcha = FALSE;
+				$this->addError(Tx_Extbase_Utility_Localization::translate('error.captcha.notcorrect', 'SfRegister'), 1306910429);
+			}
 		}
+
+		$session->set('captchaWasValidPreviously', $validCaptcha);
 
 		return $validCaptcha;
 	}

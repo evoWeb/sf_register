@@ -67,7 +67,9 @@ class Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter extends Tx_SfRegister_Se
 	public function isValid($value) {
 		$validCaptcha = TRUE;
 
-		if ($this->captcha !== null) {
+		$session = t3lib_div::makeInstance('Tx_SfRegister_Services_Session');
+		$captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
+		if ($this->captcha !== NULL && $captchaWasValidPreviously !== TRUE) {
 			$_POST['recaptcha_response_field'] = $value;
 			$status = $this->captcha->validateReCaptcha();
 
@@ -79,6 +81,8 @@ class Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter extends Tx_SfRegister_Se
 				);
 			}
 		}
+
+		$session->set('captchaWasValidPreviously', $validCaptcha);
 
 		return $validCaptcha;
 	}
