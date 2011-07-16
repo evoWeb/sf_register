@@ -90,8 +90,7 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 		$this->userRepository->update($user);
 
 		t3lib_div::makeInstance('Tx_SfRegister_Services_Session')
-			->remove('captchaWasValidPreviously')
-			->store();
+			->remove('captchaWasValidPreviously');
 
 		if ($this->settings['forwardToEditAfterSave']) {
 			$this->forward('form');

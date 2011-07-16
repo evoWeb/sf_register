@@ -50,8 +50,7 @@ class Tx_SfRegister_Controller_FeuserPasswordController extends Tx_SfRegister_Co
 			$this->userRepository->update($user);
 
 			t3lib_div::makeInstance('Tx_SfRegister_Services_Session')
-				->remove('captchaWasValidPreviously')
-				->store();
+				->remove('captchaWasValidPreviously');
 		}
 	}
 }
