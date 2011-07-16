@@ -112,7 +112,9 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 
 		$this->userRepository->add($user);
 
-		t3lib_div::makeInstance('Tx_SfRegister_Services_Session')->remove('captchaWasValidPreviously')->store();
+		t3lib_div::makeInstance('Tx_SfRegister_Services_Session')
+			->remove('captchaWasValidPreviously')
+			->store();
 
 		if ($this->settings['autologinPostRegistration']) {
 			$this->persistAll();
