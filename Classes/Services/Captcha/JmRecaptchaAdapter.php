@@ -46,6 +46,9 @@ class Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter extends Tx_SfRegister_Se
 	 * @return string
 	 */
 	public function render() {
+		t3lib_div::makeInstance('Tx_SfRegister_Services_Session')
+			->remove('captchaWasValidPreviously');
+
 		if ($this->captcha !== null) {
 			$output = $this->captcha->getReCaptcha($this->settings['error']);
 		} else {
