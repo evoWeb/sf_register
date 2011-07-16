@@ -48,6 +48,8 @@ class Tx_SfRegister_Controller_FeuserPasswordController extends Tx_SfRegister_Co
 			$user->setPassword($this->encryptPassword($password->getPassword()));
 
 			$this->userRepository->update($user);
+
+			t3lib_div::makeInstance('Tx_SfRegister_Services_Session')->remove('captchaWasValidPreviously')->store();
 		}
 	}
 }
