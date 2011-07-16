@@ -48,6 +48,13 @@ class Tx_SfRegister_Services_Session implements t3lib_Singleton {
 	}
 
 	/**
+	 * Destruct of the class
+	 */
+	public function __destruct() {
+		$this->store();
+	}
+
+	/**
 	 * Fetch all values from session
 	 *
 	 * @return Tx_SfRegister_Services_Session
