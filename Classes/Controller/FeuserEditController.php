@@ -87,6 +87,8 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 
 		$user = $this->sendEmailsPostEdit($user);
 
+		$user = Tx_SfRegister_Services_Hook::process('save', $user, $this->settings, $this->objectManager);
+
 		$this->userRepository->update($user);
 
 		t3lib_div::makeInstance('Tx_SfRegister_Services_Session')
