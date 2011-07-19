@@ -8,12 +8,12 @@ create Action
 	<dt><f:translate key="username"/><f:render partial="required" arguments="{field: 'username'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.username'}"/>
-		<f:form.textbox property="username"	 /></dd>
+		<f:form.textfield property="username"/></dd>
 
 	<dt><f:translate key="pseudonym"/><f:render partial="required" arguments="{field: 'pseudonym'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.pseudonym'}"/>
-		<f:form.textbox property="pseudonym"/></dd>
+		<f:form.textfield property="pseudonym"/></dd>
 
 	<dt><f:translate key="password"/><f:render partial="required" arguments="{field: 'password'}"/></dt>
 	<dd>
@@ -41,7 +41,7 @@ create Action
 	<dt><f:translate key="title"/><f:render partial="required" arguments="{field: 'title'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.title'}"/>
-		<f:form.textbox property="title"/>
+		<f:form.textfield property="title"/>
 		<f:form.select property="title" options="{
 				none: '{f:translate(key: \'title_none\')}',
 				dr: '{f:translate(key: \'title_dr\')}',
@@ -53,57 +53,57 @@ create Action
 	<dt><f:translate key="company"/><f:render partial="required" arguments="{field: 'company'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.company'}"/>
-		<f:form.textbox property="company"/></dd>
+		<f:form.textfield property="company"/></dd>
 
 	<dt><f:translate key="lastName"/><f:render partial="required" arguments="{field: 'lastName'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.lastName'}"/>
-		<f:form.textbox property="lastName"/></dd>
+		<f:form.textfield property="lastName"/></dd>
 
 	<dt><f:translate key="firstName"/><f:render partial="required" arguments="{field: 'firstName'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.firstName'}"/>
-		<f:form.textbox property="firstName"/></dd>
+		<f:form.textfield property="firstName"/></dd>
 
 	<dt><f:translate key="email"/><f:render partial="required" arguments="{field: 'email'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.email'}"/>
-		<f:form.textbox property="email"/></dd>
+		<f:form.textfield property="email"/></dd>
 
 	<dt><f:translate key="emailRepeat"/><f:render partial="required" arguments="{field: 'emailRepeat'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.emailRepeat'}"/>
-		<f:form.textbox property="emailRepeat"/></dd>
+		<f:form.textfield property="emailRepeat"/></dd>
 
 	<dt><f:translate key="telephone"/><f:render partial="required" arguments="{field: 'telephone'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.telephone'}"/>
-		<f:form.textbox property="telephone"/></dd>
+		<f:form.textfield property="telephone"/></dd>
 
 	<dt><f:translate key="mobilephone"/><f:render partial="required" arguments="{field: 'mobilephone'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.mobilephone'}"/>
-		<f:form.textbox property="mobilephone"/></dd>
+		<f:form.textfield property="mobilephone"/></dd>
 
 	<dt><f:translate key="fax"/><f:render partial="required" arguments="{field: 'fax'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.fax'}"/>
-		<f:form.textbox property="fax"/></dd>
+		<f:form.textfield property="fax"/></dd>
 
 	<dt><f:translate key="address"/><f:render partial="required" arguments="{field: 'address'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.address'}"/>
-		<f:form.textbox property="address"/></dd>
+		<f:form.textfield property="address"/></dd>
 
 	<dt><f:translate key="zip"/><f:render partial="required" arguments="{field: 'zip'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.zip'}"/>
-		<f:form.textbox property="zip"/></dd>
+		<f:form.textfield property="zip"/></dd>
 
 	<dt><f:translate key="city"/><f:render partial="required" arguments="{field: 'city'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.city'}"/>
-		<f:form.textbox property="city"/></dd>
+		<f:form.textfield property="city"/></dd>
 
 	<dt><f:translate key="country"/><f:render partial="required" arguments="{field: 'country'}"/></dt>
 	<dd>
@@ -179,7 +179,7 @@ create Action
 	<dt><f:translate key="dateOfBirth"/><f:render partial="required" arguments="{field: 'dateOfBirth'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.dateOfBirth'}"/>
-		<f:form.textbox property="dateOfBirth"/>
+		<f:form.textfield property="dateOfBirth"/>
 		<register:form.rangeSelect start="1" end="31" property="dateOfBirthDay"/>-<register:form.rangeSelect start="1" end="12" property="dateOfBirthMonth"/>-<register:form.rangeSelect start="1960" end="2011" property="dateOfBirthYear"/></dd>
 
 	<dt>&nbsp;</dt>
@@ -188,7 +188,7 @@ create Action
 		<f:render partial="captchaSrFreecap"/>
 
 		<f:render partial="fieldError" arguments="{field: 'user.captcha'}"/>
-		<f:form.textbox property="captcha" value="" id="iCaptcha" maxlength="15"/>
+		<f:form.textfield property="captcha" value="" id="iCaptcha" maxlength="15"/>
 	</dd>
 
 	<dt>&nbsp;</dt>
