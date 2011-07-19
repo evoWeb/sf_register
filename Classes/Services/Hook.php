@@ -25,13 +25,13 @@
 /**
  * Service to handle the hook calling
  */
-class Tx_SfRegister_Services_Hook implements t3lib_Singleton {
+class Tx_SfRegister_Services_Hook {
 	/**
 	 * Extension key
 	 *
 	 * @var string
 	 */
-	protected $extension = 'sf_register';
+	protected static $extension = 'sf_register';
 
 	/**
 	 * Process registered hooks
@@ -42,8 +42,8 @@ class Tx_SfRegister_Services_Hook implements t3lib_Singleton {
 	public function process($hookName) {
 		$result = func_get_arg(1);
 
-		$hooks = $this->getHooks();
-		if (count($hooks[$hookName])) {
+		$hooks = self::getHooks(get_called_class());
+		if (is_array($hooks[$hookName]) && count($hooks[$hookName])) {
 			$userObjectReferences = $hooks[$hookName];
 			$arguments = array_slice(func_get_args(), 2);
 
@@ -61,13 +61,11 @@ class Tx_SfRegister_Services_Hook implements t3lib_Singleton {
 	 *
 	 * @return array
 	 */
-	protected function getHooks() {
-		$className = get_called_class();
-
+	protected function getHooks($className) {
 		if ($className !== FALSE) {
-			$hooks = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extension][$className];
+			$hooks = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][self::$extension][$className];
 		} else {
-			$hooks = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extension];
+			$hooks = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][self::$extension];
 		}
 
 		return $hooks;
