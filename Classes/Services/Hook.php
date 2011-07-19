@@ -27,6 +27,13 @@
  */
 class Tx_SfRegister_Services_Hook implements t3lib_Singleton {
 	/**
+	 * Extension key
+	 *
+	 * @var string
+	 */
+	protected $extension = 'sf_register';
+
+	/**
 	 * Process registered hooks
 	 *
 	 * @param string $hookName
@@ -58,9 +65,9 @@ class Tx_SfRegister_Services_Hook implements t3lib_Singleton {
 		$className = get_called_class();
 
 		if ($className !== FALSE) {
-			$hooks = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register'][$className];
+			$hooks = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extension][$className];
 		} else {
-			$hooks = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register'];
+			$hooks = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extension];
 		}
 
 		return $hooks;
