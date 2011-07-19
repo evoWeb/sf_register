@@ -110,6 +110,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			$user->setUsername($user->getEmail());
 		}
 
+		$user = Tx_SfRegister_Services_Hook::process('save', $user, $this->settings, $this->objectManager);
+
 		$this->userRepository->add($user);
 
 		t3lib_div::makeInstance('Tx_SfRegister_Services_Session')
