@@ -47,6 +47,8 @@ class Tx_SfRegister_Controller_FeuserPasswordController extends Tx_SfRegister_Co
 
 			$user->setPassword($this->encryptPassword($password->getPassword()));
 
+			$user = Tx_SfRegister_Services_Hook::process('save', $user, $this->settings, $this->objectManager);
+
 			$this->userRepository->update($user);
 
 			t3lib_div::makeInstance('Tx_SfRegister_Services_Session')
