@@ -55,7 +55,7 @@ class Tx_SfRegister_Utility_WizardIcon {
 	 * @return array The array with language labels
 	 */
 	protected function includeLocalLang() {
-		$LOCAL_LANG = t3lib_div::makeInstance('tx_lang_parser_Llxml')->getParsedData(
+		$LOCAL_LANG = t3lib_div::makeInstance('t3lib_l10n_parser_llxml')->getParsedData(
 			t3lib_extMgm::extPath('sf_register') . 'Resources/Private/Language/locallang_be.xml',
 			$GLOBALS['LANG']->lang
 		);
