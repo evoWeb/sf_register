@@ -98,6 +98,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 
 		if ($this->isNotifyPreActivationToUser() || $this->isNotifyPreActivationToAdmin()) {
 			$user->setDisable(TRUE);
+			$user->setActivatedOn(new DateTime('1970-01-01'));
 			$user = $this->setUsergroupPreActivation($user);
 		} else {
 			$user = $this->moveImageFile($user);
