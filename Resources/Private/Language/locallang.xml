@@ -245,8 +245,8 @@
 			<label index="error.1296591069">The %1$s is global not unique</label>
 
 			<label index="subjectAdminNotificationMail">User %2$s registered at %1$s</label>
-			<label index="subjectAdminNotificationMailPostActivation">User %2$s registered at %1$s and is now activated</label>
-			<label index="subjectAdminNotificationMailPreActivation">User %2$s registered at %1$s and needs to be activated</label>
+			<label index="subjectAdminNotificationMailPostActivation">Benutzer %2$s Registrierung auf %1$s ist jetzt aktiviert</label>
+			<label index="subjectAdminNotificationMailPreActivation">Benutzer %2$s hat sich auf %1$s registriert und muss noch aktiviert werden</label>
 			<label index="subjectUserNotificationMail">You registered yourself at %1$s as %2$s</label>
 			<label index="subjectUserNotificationMailPostActivation">You activated account %2$s at %1$s</label>
 			<label index="subjectUserNotificationMailPreActivation">Ihre Registrierung des Account %2$s auf %1$s</label>
