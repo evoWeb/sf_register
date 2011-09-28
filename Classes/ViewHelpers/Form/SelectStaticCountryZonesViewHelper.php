@@ -77,7 +77,7 @@ class Tx_SfRegister_ViewHelpers_Form_SelectStaticCountryZonesViewHelper extends 
 	public function initialize() {
 		parent::initialize();
 
-		if ($this->arguments->hasArgument('parent') && $this->arguments->offsetGet('parent') != '' &&
+		if ($this->hasArgument('parent') && $this->arguments['parent'] != '' &&
 				t3lib_extMgm::isLoaded('static_info_tables')) {
 			$this->options = $this->countryZonesRepository->findAllByIso2($this->arguments['parent']);
 		}
