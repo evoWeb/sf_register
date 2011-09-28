@@ -24,14 +24,12 @@
 
 /**
  * A Uservalidator
- *
- * @scope singleton
  */
 class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
 	 * Configuration manager
 	 *
-	 * @var Tx_Extbase_Configuration_ConfigurationManager
+	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
 	 */
 	protected $configurationManager;
 
@@ -108,15 +106,14 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 * @return void
 	 */
 	protected function addErrorsForProperty($propertyName, $message, $code) {
-		if (!isset($this->errors[$propertyName])) {
-			$this->errors[$propertyName] = t3lib_div::makeInstance('Tx_Extbase_Validation_PropertyError', $propertyName);
+		if (!$this->result->forProperty($propertyName)->hasErrors()) {
+			/* @var Tx_Extbase_Validation_PropertyError */
+			$error = t3lib_div::makeInstance('Tx_Extbase_Validation_PropertyError', $propertyName);
+			$error->addErrors(array(
+				t3lib_div::makeInstance('Tx_Extbase_Validation_Error', $message, $code)
+			));
+			$this->result->addError($error);
 		}
-
-		$errors = array(
-			t3lib_div::makeInstance('Tx_Extbase_Validation_Error', $message, $code)
-		);
-
-		$this->errors[$propertyName]->addErrors($errors);
 	}
 
 	/**
@@ -128,7 +125,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	public function isValid($model) {
 		$this->model = $model;
 
-		if (!($model instanceof Tx_SfRegister_Interfaces_FrontendUser) &&
+		if (!($model instanceof Tx_SfRegister_Domain_Model_FrontendUser) &&
 				!($model instanceof Tx_SfRegister_Domain_Model_Password)) {
 			$this->addError(Tx_Extbase_Utility_Localization::translate('error.notvalidatable', 'SfRegister'), 1301599551);
 			$result = FALSE;
@@ -266,7 +263,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	protected function getValidator($rule) {
 		$currentValidator = $this->parseRule($rule);
 		$this->currentValidatorOptions = (array) $currentValidator['validatorOptions'];
-		
+
 		$validatorObject = $this->validatorResolver->createValidator(
 			$currentValidator['validatorName'],
 			$this->currentValidatorOptions
