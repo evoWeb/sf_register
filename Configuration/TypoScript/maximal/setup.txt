@@ -165,6 +165,10 @@ plugin.tx_sfregister.persistence {
 	}
 }
 
+plugin.tx_sfregister.features {
+	rewrittenPropertyMapper = 0
+}
+
 plugin.tx_sfregister.fieldError = TEXT
 plugin.tx_sfregister.fieldError {
 	current = 1
