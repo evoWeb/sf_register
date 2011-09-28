@@ -46,7 +46,7 @@ class Tx_SfRegister_ViewHelpers_Form_SelectStaticViewHelper extends Tx_Fluid_Vie
 		foreach ($optionsArgument as $key => $value) {
 			if (is_object($value)) {
 
-				if ($this->arguments->hasArgument('optionValueField')) {
+				if ($this->hasArgument('optionValueField')) {
 					$key = Tx_Extbase_Reflection_ObjectAccess::getProperty($value, $this->arguments['optionValueField']);
 					if (is_object($key)) {
 						if (method_exists($key, '__toString')) {
@@ -63,7 +63,7 @@ class Tx_SfRegister_ViewHelpers_Form_SelectStaticViewHelper extends Tx_Fluid_Vie
 					throw new Tx_Fluid_Core_ViewHelper_Exception('No identifying value for object of class "' . get_class($value) . '" found.' , 1247826696);
 				}
 
-				if ($this->arguments->hasArgument('optionLabelField')) {
+				if ($this->hasArgument('optionLabelField')) {
 					$value = Tx_Extbase_Reflection_ObjectAccess::getProperty($value, $this->arguments['optionLabelField']);
 					if (is_object($value)) {
 						if (method_exists($value, '__toString')) {
