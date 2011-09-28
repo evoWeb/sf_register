@@ -23,11 +23,11 @@
  ***************************************************************/
 
 /**
- * A not empty validator this is used in validation of a new created user to ensure that the uid is empty
+ * A empty validator this is used in validation of a new created user to ensure that the uid is empty
  *
  * @scope singleton
  */
-class Tx_SfRegister_Domain_Validator_NotEmptyValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_SfRegister_Domain_Validator_EmptyValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	/**
 	 * If the given value is empty
 	 *
