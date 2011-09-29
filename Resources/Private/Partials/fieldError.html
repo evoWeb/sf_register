@@ -1,3 +1,13 @@
-<f:form.errors for="{field}">
-	<div class="error errorMessage errorField field{field -> f:cObject(typoscriptObjectPath: 'plugin.tx_sfregister.fieldError')}">{error.message}</div>
-</f:form.errors>
+<f:form.validationResults for="user" as="validationResults">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<f:for each="{validationResults.flattenedErrors}" key="propertyPath" as="propertyErrors">
+			<f:for each="{propertyErrors}" as="propertyError">
+				<f:if condition="{propertyError.propertyName}=={field}">
+					<f:for each="{propertyError.errors}" as="error">
+						<div class="error errorMessage errorField field{field -> f:cObject(typoscriptObjectPath: 'plugin.tx_sfregister.fieldError')}">{error.message}</div>
+					</f:for>
+				</f:if>
+			</f:for>
+		</f:for>
+	</f:if>
+</f:form.validationResults>
