@@ -2,34 +2,34 @@
 create Action
 
 <f:form action="preview" name="user" object="{user}" enctype="multipart/form-data">
-<f:render partial="fieldError" arguments="{field: 'user.uid'}"/>
+<f:render partial="fieldError" arguments="{field: 'uid'}"/>
 
 <dl>
 	<dt><f:translate key="username"/><f:render partial="required" arguments="{field: 'username'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.username'}"/>
+		<f:render partial="fieldError" arguments="{field: 'username'}"/>
 		<f:form.textfield property="username"/></dd>
 
 	<dt><f:translate key="pseudonym"/><f:render partial="required" arguments="{field: 'pseudonym'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.pseudonym'}"/>
+		<f:render partial="fieldError" arguments="{field: 'pseudonym'}"/>
 		<f:form.textfield property="pseudonym"/></dd>
 
 	<dt><f:translate key="password"/><f:render partial="required" arguments="{field: 'password'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.password'}"/>
+		<f:render partial="fieldError" arguments="{field: 'password'}"/>
 		<f:form.password property="password" value="" id="sfrPassword"/>
 		<div id="bargraph" class="is0"></div></dd>
 
 	<dt><f:translate key="passwordRepeat"/><f:render partial="required" arguments="{field: 'passwordRepeat'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.passwordRepeat'}"/>
+		<f:render partial="fieldError" arguments="{field: 'passwordRepeat'}"/>
 		<f:form.password property="passwordRepeat" value=""/></dd>
 </dl>
 <dl>
 	<dt><f:translate key="gender"/><f:render partial="required" arguments="{field: 'gender'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.gender'}"/>
+		<f:render partial="fieldError" arguments="{field: 'gender'}"/>
 		<f:form.radio property="gender" value="1"/> <f:translate key="gender_male"/>
 		<f:form.radio property="gender" value="2"/> <f:translate key="gender_female"/><br/>
 		<f:form.select property="gender" options="{
@@ -40,7 +40,7 @@ create Action
 
 	<dt><f:translate key="title"/><f:render partial="required" arguments="{field: 'title'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.title'}"/>
+		<f:render partial="fieldError" arguments="{field: 'title'}"/>
 		<f:form.textfield property="title"/>
 		<f:form.select property="title" options="{
 				none: '{f:translate(key: \'title_none\')}',
@@ -52,63 +52,63 @@ create Action
 
 	<dt><f:translate key="company"/><f:render partial="required" arguments="{field: 'company'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.company'}"/>
+		<f:render partial="fieldError" arguments="{field: 'company'}"/>
 		<f:form.textfield property="company"/></dd>
 
 	<dt><f:translate key="lastName"/><f:render partial="required" arguments="{field: 'lastName'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.lastName'}"/>
+		<f:render partial="fieldError" arguments="{field: 'lastName'}"/>
 		<f:form.textfield property="lastName"/></dd>
 
 	<dt><f:translate key="firstName"/><f:render partial="required" arguments="{field: 'firstName'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.firstName'}"/>
+		<f:render partial="fieldError" arguments="{field: 'firstName'}"/>
 		<f:form.textfield property="firstName"/></dd>
 
 	<dt><f:translate key="email"/><f:render partial="required" arguments="{field: 'email'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.email'}"/>
+		<f:render partial="fieldError" arguments="{field: 'email'}"/>
 		<f:form.textfield property="email"/></dd>
 
 	<dt><f:translate key="emailRepeat"/><f:render partial="required" arguments="{field: 'emailRepeat'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.emailRepeat'}"/>
+		<f:render partial="fieldError" arguments="{field: 'emailRepeat'}"/>
 		<f:form.textfield property="emailRepeat"/></dd>
 
 	<dt><f:translate key="telephone"/><f:render partial="required" arguments="{field: 'telephone'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.telephone'}"/>
+		<f:render partial="fieldError" arguments="{field: 'telephone'}"/>
 		<f:form.textfield property="telephone"/></dd>
 
 	<dt><f:translate key="mobilephone"/><f:render partial="required" arguments="{field: 'mobilephone'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.mobilephone'}"/>
+		<f:render partial="fieldError" arguments="{field: 'mobilephone'}"/>
 		<f:form.textfield property="mobilephone"/></dd>
 
 	<dt><f:translate key="fax"/><f:render partial="required" arguments="{field: 'fax'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.fax'}"/>
+		<f:render partial="fieldError" arguments="{field: 'fax'}"/>
 		<f:form.textfield property="fax"/></dd>
 
 	<dt><f:translate key="address"/><f:render partial="required" arguments="{field: 'address'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.address'}"/>
+		<f:render partial="fieldError" arguments="{field: 'address'}"/>
 		<f:form.textfield property="address"/></dd>
 
 	<dt><f:translate key="zip"/><f:render partial="required" arguments="{field: 'zip'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.zip'}"/>
+		<f:render partial="fieldError" arguments="{field: 'zip'}"/>
 		<f:form.textfield property="zip"/></dd>
 
 	<dt><f:translate key="city"/><f:render partial="required" arguments="{field: 'city'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.city'}"/>
+		<f:render partial="fieldError" arguments="{field: 'city'}"/>
 		<f:form.textfield property="city"/></dd>
 
 	<dt><f:translate key="country"/><f:render partial="required" arguments="{field: 'country'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.country'}"/>
-		<f:if condition="{user.staticInfoCountry}">
+		<f:render partial="fieldError" arguments="{field: 'country'}"/>
+		<f:if condition="{staticInfoCountry}">
 			<f:then>
 				<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry"/>
 			</f:then>
@@ -119,10 +119,10 @@ create Action
 
 	<dt><f:translate key="zone"/><f:render partial="required" arguments="{field: 'zone'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.zone'}"/>
-		<f:if condition="{user.staticInfoCountry}">
+		<f:render partial="fieldError" arguments="{field: 'zone'}"/>
+		<f:if condition="{staticInfoCountry}">
 			<f:then>
-				<register:form.SelectStaticCountryZones property="zone" id="sfrZone" parent="{user.staticInfoCountry}"/>
+				<register:form.SelectStaticCountryZones property="zone" id="sfrZone" parent="{staticInfoCountry}"/>
 			</f:then>
 			<f:else>
 				<register:form.SelectStaticCountryZones property="zone" id="sfrZone" parent="US"/>
@@ -133,38 +133,38 @@ create Action
 
 	<dt><f:translate key="daylight"/><f:render partial="required" arguments="{field: 'daylight'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.daylight'}"/>
+		<f:render partial="fieldError" arguments="{field: 'daylight'}"/>
 		<f:form.checkbox property="daylight" value="1"/></dd>
 
 	<dt><f:translate key="timezone"/><f:render partial="required" arguments="{field: 'timezone'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.timezone'}"/>
+		<f:render partial="fieldError" arguments="{field: 'timezone'}"/>
 		<f:render partial="selectTimezone" arguments="{user: user}"/></dd>
 
 	<dt><f:translate key="gtc"/><f:render partial="required" arguments="{field: 'gtc'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.gtc'}"/>
+		<f:render partial="fieldError" arguments="{field: 'gtc'}"/>
 		<f:form.checkbox property="gtc" value="1"/></dd>
 
 	<dt><f:translate key="privacy"/><f:render partial="required" arguments="{field: 'privacy'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.privacy'}"/>
+		<f:render partial="fieldError" arguments="{field: 'privacy'}"/>
 		<f:form.checkbox property="privacy" value="1"/></dd>
 
 	<dt><f:translate key="image"/><f:render partial="required" arguments="{field: 'image'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.image'}"/>
-		<f:if condition="{user.image}">
+		<f:render partial="fieldError" arguments="{field: 'image'}"/>
+		<f:if condition="{image}">
 			<f:then>
 				<f:form.hidden property="image"/>
 				<f:form.hidden name="temporaryImage" value="{temporaryImage}"/>
-				<f:form.hidden name="imagefile" value="{user.image}"/>
+				<f:form.hidden name="imagefile" value="{image}"/>
 				<f:if condition="{temporaryImage}">
 					<f:then>
-						<f:image height="100" width="100c" src="typo3temp/sf_register/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}"/>
+						<f:image height="100" width="100c" src="typo3temp/sf_register/{image}" alt="{firstName} {lastName}" title="{firstName} {lastName}"/>
 					</f:then>
 					<f:else>
-						<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}"/>
+						<f:image height="100" width="100c" src="uploads/pics/{image}" alt="{firstName} {lastName}" title="{firstName} {lastName}"/>
 					</f:else>
 				</f:if>
 				<f:form.submit name="removeImage" value="{f:translate(key:'submit.removeImage')}"/>
@@ -178,7 +178,7 @@ create Action
 
 	<dt><f:translate key="dateOfBirth"/><f:render partial="required" arguments="{field: 'dateOfBirth'}"/></dt>
 	<dd>
-		<f:render partial="fieldError" arguments="{field: 'user.dateOfBirth'}"/>
+		<f:render partial="fieldError" arguments="{field: 'dateOfBirth'}"/>
 		<f:form.textfield property="dateOfBirth"/>
 		<register:form.rangeSelect start="1" end="31" property="dateOfBirthDay"/>-<register:form.rangeSelect start="1" end="12" property="dateOfBirthMonth"/>-<register:form.rangeSelect start="1960" end="2011" property="dateOfBirthYear"/></dd>
 
@@ -187,7 +187,7 @@ create Action
 		<f:render partial="captchaJmRecaptcha"/>
 		<f:render partial="captchaSrFreecap"/>
 
-		<f:render partial="fieldError" arguments="{field: 'user.captcha'}"/>
+		<f:render partial="fieldError" arguments="{field: 'captcha'}"/>
 		<f:form.textfield property="captcha" value="" id="iCaptcha" maxlength="15"/>
 	</dd>
 
