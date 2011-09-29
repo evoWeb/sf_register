@@ -33,14 +33,22 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 */
 	protected $userGroupRepository = NULL;
 
+ 	/**
+	 * @param Tx_Extbase_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository
+	 * @return void
+	 */
+	public function injectFrontendUserGroupRepository(Tx_Extbase_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository) {
+		$this->userGroupRepository = $frontendUserGroupRepository;
+	}
+
 	/**
 	 * Form action
 	 *
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return string An HTML form
-	 * @dontvalidate $user
+	 * @ignorevalidation $user
 	 */
-	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL) {
+	public function formAction(Tx_SfRegister_Interfaces_FrontendUser $user = NULL) {
 		if ($user === NULL ||
 				$user instanceof Tx_SfRegister_Interfaces_FrontendUser &&
 				$user->getUid()) {
@@ -51,9 +59,12 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 
 		$user->prepareDateOfBirth();
 
-		if ($this->request->hasArgument('temporaryImage')) {
-			$this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
+		$originalRequest = $this->request->getOriginalRequest();
+		if ($originalRequest->hasArgument('temporaryImage')) {
+			$this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
 		}
+
+		$user = Tx_SfRegister_Services_Hook::process('form', $user, $this->settings, $this->objectManager);
 
 		$this->view->assign('user', $user);
 	}
@@ -61,7 +72,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Preview action
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
 	 */
@@ -78,18 +89,9 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
-	 * Initialization of save action
-	 *
-	 * @return void
-	 */
-	protected function initializeSaveAction() {
-		$this->userGroupRepository = t3lib_div::makeInstance('Tx_Extbase_Domain_Repository_FrontendUserGroupRepository');
-	}
-
-	/**
 	 * Save action
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
 	 */
@@ -110,8 +112,6 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 		if ($this->settings['useEmailAddressAsUsername']) {
 			$user->setUsername($user->getEmail());
 		}
-
-		$user = Tx_SfRegister_Services_Hook::process('save', $user, $this->settings, $this->objectManager);
 
 		$this->userRepository->add($user);
 
@@ -138,7 +138,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
-	 * Comnfirm action
+	 * Confirm action
 	 *
 	 * @param string $authCode
 	 * @return void
@@ -146,7 +146,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	public function confirmAction($authCode) {
 		$user = $this->userRepository->findByMailhash($authCode);
 
-		if (!($user instanceof Tx_SfRegister_Interfaces_FrontendUser)) {
+		if (!($user instanceof Tx_SfRegister_Domain_Model_FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
 		} else {
 			$this->view->assign('user', $user);
@@ -183,8 +183,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return void
 	 */
 	protected function redirectToPage($pageId) {
-		$url = $GLOBALS['TSFE']->cObj->typoLink_URL(array('parameter' => $pageId));
-		t3lib_utility_Http::redirect($url, t3lib_utility_Http::HTTP_STATUS_200);
+		$url = $this->uriBuilder
+			->setTargetPageUid($pageId)
+			->build();
+		$this->redirectToUri($url);
 	}
 
 	/**
@@ -199,10 +201,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Login user with service
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
 	 */
-	protected function autoLogin(Tx_SfRegister_Interfaces_FrontendUser $user) {
+	protected function autoLogin(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$this->objectManager->get('Tx_SfRegister_Services_Login')->loginUserById($user->getUid());
 	}
 
@@ -210,11 +212,11 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Add usergroup to user
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @param integer $usergroupUid
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
-	protected function addUsergroup(Tx_SfRegister_Interfaces_FrontendUser $user, $usergroupUid) {
+	protected function addUsergroup(Tx_SfRegister_Domain_Model_FrontendUser $user, $usergroupUid) {
 		$usergroupToAdd = $this->userGroupRepository->findByUid($usergroupUid);
 		$user->addUsergroup($usergroupToAdd);
 
@@ -224,10 +226,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Set usergroup to user before activation
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
-	protected function setUsergroupPreActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
+	protected function setUsergroupPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		if (intval($this->settings['usergroupPreActivation']) > 0) {
 			$user = $this->addUsergroup($user, $this->settings['usergroupPreActivation']);
 		}
@@ -238,10 +240,10 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Change usergroup of user after activation
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
-	protected function changeUsergroupPostActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
+	protected function changeUsergroupPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		if (intval($this->settings['usergroupPostActivation']) > 0 &&
 				intval($this->settings['usergroupAfterActivation']) != intval($this->settings['usergroupPreActivation'])) {
 			$user = $this->addUsergroup($user, $this->settings['usergroupPostActivation']);
@@ -257,8 +259,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Send emails to user and/or to admin
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	protected function sendEmailsPreSave($user) {
 		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
@@ -282,8 +284,8 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Send emails to user and/or to admin
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	protected function sendEmailsPostConfirm($user) {
 		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
