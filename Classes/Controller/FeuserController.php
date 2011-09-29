@@ -51,6 +51,15 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
+	 * Disable Flashmessages
+	 *
+	 * @return boolean
+	 */
+	protected function getErrorFlashMessage() {
+		return FALSE;
+	}
+
+	/**
 	 * Initialize all actions
 	 *
 	 * @see Tx_Extbase_MVC_Controller_ActionController::initializeAction()
@@ -84,7 +93,7 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Proxy action
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
 	 */
@@ -112,12 +121,12 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Remove an image and forward to the action where it was called
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @param string $imagefile
 	 * @return void
-	 * @dontvalidate $user
+	 * @ignorevalidation $user
  	 */
-	protected function removeImageAction(Tx_SfRegister_Interfaces_FrontendUser $user, $imagefile) {
+	protected function removeImageAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $imagefile) {
 		if ($this->fileIsTemporary()) {
 			$removedImage = $this->fileService->removeTemporaryFile($imagefile);
 		} else {
@@ -132,20 +141,20 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 
 		$this->request->setArgument('removeImage', FALSE);
 
-		if ($this->request->hasArgument('__referrer')) {
-			$referrer = $this->request->getArgument('__referrer');
-			$this->forward($referrer['actionName'], $referrer['controllerName'], $referrer['extensionName'], $this->request->getArguments());
+		$referrer = $this->request->getInternalArgument('__referrer');
+		if ($referrer !== NULL) {
+			$this->forward($referrer['@action'], $referrer['@controller'], $referrer['@extension'], $this->request->getArguments());
 		}
 	}
 
 	/**
 	 * Remove an image from user object and request object
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @param string $removeImage
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
-	protected function removeImageFromUserAndRequest(Tx_SfRegister_Interfaces_FrontendUser $user, $removeImage) {
+	protected function removeImageFromUserAndRequest(Tx_SfRegister_Domain_Model_FrontendUser $user, $removeImage) {
 		if ($user->getUid() !== NULL) {
 			$localUser = $this->userRepository->findByUid($user->getUid());
 			$localUser->removeImage($removeImage);
@@ -181,8 +190,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Move uploaded image and add to user
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
  	 */
 	protected function moveTempFile($user) {
 		if ($imagePath = $this->fileService->moveTempFileToTempFolder()) {
@@ -195,8 +204,8 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Move uploaded image and add to user
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
  	 */
 	protected function moveImageFile($user) {
 		$oldFilename = $user->getImage();
