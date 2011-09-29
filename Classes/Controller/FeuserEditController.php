@@ -29,25 +29,26 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	/**
 	 * Form action
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return string An HTML form
-	 * @dontvalidate $user
+	 * @ignorevalidation $user
 	 */
-	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL) {
+	public function formAction(Tx_SfRegister_Interfaces_FrontendUser $user = NULL) {
 		if ($user == NULL && $this->isUserLoggedIn() ||
-				($user instanceof Tx_SfRegister_Interfaces_FrontendUser &&
+				($user instanceof Tx_SfRegister_Domain_Model_FrontendUser &&
 				 $user->getUid() != $GLOBALS['TSFE']->fe_user->user['uid'])) {
 			$user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
 
 			$user = $this->moveTempFile($user);
 		}
 
-		if ($user instanceof Tx_SfRegister_Interfaces_FrontendUser) {
+		if ($user instanceof Tx_SfRegister_Domain_Model_FrontendUser) {
 			$user->prepareDateOfBirth();
 		}
 
-		if ($this->request->hasArgument('temporaryImage')) {
-			$this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
+		$originalRequest = $this->request->getOriginalRequest();
+		if ($originalRequest->hasArgument('temporaryImage')) {
+			$this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
 		}
 		$this->view->assign('user', $user);
 	}
@@ -55,11 +56,11 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	/**
 	 * Preview action
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
 	 */
-	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	public function previewAction(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		$user = $this->moveTempFile($user);
 
 		$user->prepareDateOfBirth();
@@ -74,11 +75,11 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	/**
 	 * Save action
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
 	 */
-	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	public function saveAction(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		$user = $this->moveImageFile($user);
 
 		if ($this->isDisabledAfterEdit()) {
@@ -103,8 +104,8 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	/**
 	 * Send notification or activation email either to user or admin
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	protected function sendEmailsPostEdit($user) {
 		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
