@@ -27,6 +27,13 @@
  */
 class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Controller_FeuserController {
 	/**
+	 * User repository
+	 *
+	 * @var Tx_SfRegister_Domain_Model_FrontendUserRepository
+	 */
+	protected $userRepository = NULL;
+
+	/**
 	 * Usergroup repository
 	 *
 	 * @var Tx_Extbase_Domain_Repository_FrontendUserGroupRepository
@@ -44,11 +51,11 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Form action
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
 	 * @return string An HTML form
 	 * @ignorevalidation $user
 	 */
-	public function formAction(Tx_SfRegister_Interfaces_FrontendUser $user = NULL) {
+	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL) {
 		if ($user === NULL ||
 				$user instanceof Tx_SfRegister_Interfaces_FrontendUser &&
 				$user->getUid()) {
@@ -114,12 +121,12 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 		}
 
 		$this->userRepository->add($user);
+		$this->persistAll();
 
 		t3lib_div::makeInstance('Tx_SfRegister_Services_Session')
 			->remove('captchaWasValidPreviously');
 
 		if ($this->settings['autologinPostRegistration']) {
-			$this->persistAll();
 			$this->autoLogin($user);
 		}
 
@@ -134,6 +141,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return void
 	 */
 	protected function initializeConfirmAction() {
+		$this->userRepository = t3lib_div::makeInstance('Tx_SfRegister_Domain_Repository_FrontendUserRepository');
 		$this->userGroupRepository = t3lib_div::makeInstance('Tx_Extbase_Domain_Repository_FrontendUserGroupRepository');
 	}
 
@@ -263,6 +271,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	protected function sendEmailsPreSave($user) {
+		/** @var $mailService Tx_SfRegister_Services_Mail */
 		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
 
 		if ($this->isNotifyPreActivationToAdmin()) {
@@ -288,6 +297,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return Tx_SfRegister_Domain_Model_FrontendUser
 	 */
 	protected function sendEmailsPostConfirm($user) {
+		/** @var $mailService Tx_SfRegister_Services_Mail */
 		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
 
 		if ($this->isNotifyPostActivationToAdmin()) {

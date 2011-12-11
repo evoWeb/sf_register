@@ -39,7 +39,7 @@ class Tx_SfRegister_Services_Hook {
 	 * @param string $hookName
 	 * @return mixed
 	 */
-	public function process($hookName) {
+	public static function process($hookName) {
 		$result = func_get_arg(1);
 
 		$hooks = self::getHooks(get_called_class());
