@@ -55,7 +55,7 @@ class Tx_SfRegister_Utility_WizardIcon {
 	 * @return array The array with language labels
 	 */
 	protected function includeLocalLang() {
-		$LOCAL_LANG = t3lib_div::makeInstance('t3lib_l10n_parser_llxml')->getParsedData(
+		$LOCAL_LANG = t3lib_div::readLLXMLfile(
 			t3lib_extMgm::extPath('sf_register') . 'Resources/Private/Language/locallang_be.xml',
 			$GLOBALS['LANG']->lang
 		);
@@ -63,8 +63,6 @@ class Tx_SfRegister_Utility_WizardIcon {
 		return $LOCAL_LANG;
 	}
 }
-
-
 
 if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sf_register/Classes/Utility/WizardIcon.php']) {
 	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sf_register/Classes/Utility/WizardIcon.php']);
