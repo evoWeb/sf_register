@@ -67,7 +67,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 		$user->prepareDateOfBirth();
 
 		$originalRequest = $this->request->getOriginalRequest();
-		if ($originalRequest->hasArgument('temporaryImage')) {
+		if ($originalRequest !== NULL && $originalRequest->hasArgument('temporaryImage')) {
 			$this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
 		}
 
