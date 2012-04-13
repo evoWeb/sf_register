@@ -67,7 +67,7 @@ class Tx_SfRegister_Domain_Model_PasswordTest extends Tx_Extbase_Tests_Unit_Base
 	 */
 	public function passwordRepeatOnInitializeIsNull() {
 		$this->assertNull(
-			$this->fixture->getPasswordRepeat()
+			$this->fixture->getPasswordAgain()
 		);
 	}
 
@@ -75,13 +75,13 @@ class Tx_SfRegister_Domain_Model_PasswordTest extends Tx_Extbase_Tests_Unit_Base
 	 * @test
 	 */
 	public function passwordAgainReturnsStringSetBySetPassword() {
-		$expected = 'teststring';
+		$expected = 'testString';
 
-		$this->fixture->setPasswordRepeat($expected);
+		$this->fixture->setPasswordAgain($expected);
 
 		$this->assertSame(
 			$expected,
-			$this->fixture->getPasswordRepeat()
+			$this->fixture->getPasswordAgain()
 		);
 	}
 

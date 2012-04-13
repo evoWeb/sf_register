@@ -1,0 +1,1131 @@
+2012-01-06 10:52  sfischer
+
+	* ext_emconf.php: Lower requirements for branch 1.4.0
+
+2012-01-02 08:43  sfischer
+
+	* Classes/Utility/WizardIcon.php: Fix translation handling in
+	  wizard icon
+
+2011-09-18 13:11  sfischer
+
+	* .: Create branch for 4.5 from trunk
+
+2011-09-18 12:39  sfischer
+
+	* Add set activated on to 1.1.1970 to ensure activation is possible
+
+2011-09-18 12:36  sfischer
+
+	* Change german translation
+
+2011-09-18 12:32  sfischer
+
+	* Change labels for the confirmation step
+
+2011-08-31 13:23  sfischer
+
+	* Fix usage of language for wizard
+
+2011-07-24 14:56  sfischer
+
+	* Raise extbase and fluid requirements
+
+2011-07-19 07:50  sfischer
+
+	* Bugfix hook
+
+2011-07-19 07:38  sfischer
+
+	* Change textbox to textfield as textbox is deprecated in 4.6
+
+2011-07-19 07:37  sfischer
+
+	* Raise version and requirement to prevent extension gets loaded on
+	  systems that lead to errors
+
+2011-07-19 07:36  sfischer
+
+	* Add save hook to be able to manipulate the user object before it
+	  gets added
+
+2011-07-19 07:35  sfischer
+
+	* Add save hook to be able to manipulate the user object before it
+	  gets updated
+
+2011-07-19 06:48  sfischer
+
+	* Add save hook to password controller
+
+2011-07-19 06:45  sfischer
+
+	* Make hook service extendable for other extensions
+
+2011-07-19 06:43  sfischer
+
+	* Add advanced hooking service
+
+2011-07-16 08:27  sfischer
+
+	* Set sessionKey to sf_register
+
+2011-07-16 08:16  sfischer
+
+	* Remove call of store
+
+2011-07-16 08:16  sfischer
+
+	* Add auto store to remove of values
+
+2011-07-16 07:59  sfischer
+
+	* Auto store on destruct
+
+2011-07-16 07:38  sfischer
+
+	* Check if captchaWasValidPreviously was set to true previously
+	  If Check failed the captcha gets validated and the result is
+	  stored in session
+
+2011-07-16 07:29  sfischer
+
+	* Unset captchaWasValidPreviously on render of captcha
+
+2011-07-16 07:28  sfischer
+
+	* Format code
+
+2011-07-16 07:27  sfischer
+
+	* Unset captchaWasValidPreviously from session on store
+
+2011-07-16 06:40  sfischer
+
+	* Add session service
+
+2011-07-12 11:58  sfischer
+
+	* Add content element wizard icon
+	  Thanks go to Jonas Dübi for handing an patch as base for this
+	  feature
+
+2011-07-09 18:14  sfischer
+
+	* Fixes #28047 check for user model before prepareDateOfBirth gets
+	  called
+
+2011-07-09 18:00  sfischer
+
+	* fix whitespaces
+
+2011-07-09 15:56  sfischer
+
+	* Fix missing returns
+	  Fixing missing $options
+
+2011-07-09 15:48  sfischer
+
+	* Fix php doc headers
+
+2011-07-09 15:41  sfischer
+
+	* Replace password repeat with password again
+
+2011-07-09 15:20  sfischer
+
+	* Add semicolon to lines
+	  Add var to variable definition
+
+2011-07-09 15:18  sfischer
+
+	* Remove unused fixture
+
+2011-07-09 15:02  sfischer
+
+	* Remove usage of deprecated methods
+
+2011-07-09 14:43  sfischer
+
+	* Change from get object to create object
+
+2011-07-09 12:56  sfischer
+
+	* Correct phpdoc headers
+	  Remove comment
+
+2011-07-08 21:32  sfischer
+
+	* Add method to send emails
+	  Add boolean check if notification or activation email should be
+	  send to user or admin
+
+2011-07-08 21:30  sfischer
+
+	* Add methods to send emails to user or admin with notification or
+	  activation message
+
+2011-07-08 21:28  sfischer
+
+	* Add settings to enable email notifications after editing
+
+2011-07-08 21:25  sfischer
+
+	* Add labels for typoscript constants
+
+2011-07-08 20:50  sfischer
+
+	* Add templates for emails after edit to notify or activate
+
+2011-07-08 19:32  sfischer
+
+	* Fix existing unit tests after a lot of changes in extension
+
+2011-07-07 08:50  sfischer
+
+	* Change validation call for actions
+
+2011-07-07 08:46  sfischer
+
+	* Remove linebreak
+
+2011-07-07 08:46  sfischer
+
+	* Harding the sql query
+	  Shorten getter return
+
+2011-07-07 08:45  sfischer
+
+	* Change instanciating from concrete model to interface
+
+2011-07-06 08:50  sfischer
+
+	* Move setModel and setFieldname to getValidator method
+
+2011-07-06 08:38  sfischer
+
+	* Fix a template error after renaming of passwordAgain to
+	  passwordRepeat
+
+2011-07-06 08:17  sfischer
+
+	* Cleanup and documentation
+
+2011-07-05 15:15  sfischer
+
+	* Add comments to classes
+
+2011-07-05 15:12  sfischer
+
+	* Replace usage of deprecated methods
+
+2011-07-05 14:42  sfischer
+
+	* Display errors if the captcha is not installed but choosen
+
+2011-07-05 14:36  sfischer
+
+	* Fix fatal error on validate if jm_recaptcha is choosen but not
+	  installed
+
+2011-07-05 14:35  sfischer
+
+	* Fix fatal error on submit if sr_freecap is choosen as captcha but
+	  is not installed
+
+2011-07-05 14:26  sfischer
+
+	* Resolve #27859 Remove miss pasted line
+
+2011-07-05 11:55  sfischer
+
+	* Resolves: #27853 Change to only add settings if realurl
+	  configuration is present
+
+2011-07-05 11:50  sfischer
+
+	* Fixing load of realurl configuration from ext_tables to
+	  ext_localconf so it gets included every page load
+
+2011-07-05 10:37  sfischer
+
+	* Fixing include of realurl setting even though realurl is not
+	  available
+
+2011-07-05 10:32  sfischer
+
+	* Cleanup and documentation
+
+2011-07-05 09:38  sfischer
+
+	* Cleanup and documentation
+
+2011-07-05 09:38  sfischer
+
+	* Cleanup and documentation
+
+2011-07-05 09:36  sfischer
+
+	* Cleanup and documentation
+
+2011-07-05 09:35  sfischer
+
+	* Cleanup and documentation
+
+2011-07-05 09:35  sfischer
+
+	* Cleanup and a lot of documentation in PHPdoc headers
+
+2011-06-30 06:46  sfischer
+
+	* Remove type from uservalidation call because of previous commit
+
+2011-06-30 06:43  sfischer
+
+	* Decouple uservalidator from options and take framework
+	  configurations instead to determin what rules to validate with
+
+2011-06-28 06:55  sfischer
+
+	* Cleanup GPL phpdoc headers
+
+2011-06-25 11:40  sfischer
+
+	* Add getter and setter for dateOfBirth[Day|Month|Year] to be able
+	  to select the date of birth with selectboxes
+
+2011-06-25 07:41  sfischer
+
+	* Change to activation process to keep unknown, already activated
+	  and now active state apart
+
+2011-06-24 09:36  sfischer
+
+	* Add eid for ajax requests
+	  Add country zone replacement with ajax on country change
+
+2011-06-23 07:10  sfischer
+
+	* Add required viewhelper
+	  Change forms to use required viewhelper
+
+2011-06-22 04:54  sfischer
+
+	* Add attributes and getter for localized static_info_tables_*
+	  fields
+
+2011-06-21 19:57  sfischer
+
+	* Add german fields to static info table objects
+
+2011-06-20 20:16  sfischer
+
+	* Add german language labels
+
+2011-06-20 05:35  sfischer
+
+	* Change registration template
+
+2011-06-20 04:17  sfischer
+
+	* Add german labels
+
+2011-06-19 12:30  sfischer
+
+	* Add german translations
+	  Change label in template
+
+2011-06-19 11:27  sfischer
+
+	* Add is loaded check
+
+2011-06-17 06:33  sfischer
+
+	* Add fields for timezone, privacy agreement and daylight saving
+	  time
+	  Add language labels for fields
+
+2011-06-17 06:32  sfischer
+
+	* Add attributes with getter and setter for timezone, daylight
+	  saving time and privacy agreement
+
+2011-06-17 06:31  sfischer
+
+	* Cleanup of static table select viewhelpers
+
+2011-06-13 12:41  sfischer
+
+	* Change password repeat in password change process
+	  Remove special password again validator
+
+2011-06-13 12:31  sfischer
+
+	* Change password repeat validation
+
+2011-06-13 12:30  sfischer
+
+	* Changes for password and email repeat validation
+
+2011-06-13 12:21  sfischer
+
+	* Change captcha and repeatition settings
+
+2011-06-13 12:19  sfischer
+
+	* Added attributes for repeated fields
+
+2011-06-13 12:19  sfischer
+
+	* Changes to enable field repeat validation
+
+2011-06-10 05:22  sfischer
+
+	* Add pseudonym to model, persistence and view
+
+2011-06-10 05:00  sfischer
+
+	* 
+
+2011-06-09 06:34  sfischer
+
+	* Add setting that the email address gets used as username
+
+2011-06-09 05:35  sfischer
+
+	* Add example how to configure title with a selectbox instead of
+	  textfield
+
+2011-06-09 05:07  sfischer
+
+	* Remove lookup table because the model is not stored with mailhash
+	  before sending emails
+
+2011-06-09 04:59  sfischer
+
+	* Change realurl settings
+
+2011-06-09 04:56  sfischer
+
+	* Change copyright header
+
+2011-06-07 19:58  sfischer
+
+	* Add realurl settings
+	  Add conf template to config wether realurl settings should be
+	  automatic included or not
+
+2011-06-07 04:51  sfischer
+
+	* Change error handling in jmrecaptcha adapter from array to error
+	  object
+
+2011-06-06 20:01  sfischer
+
+	* Add translation of captcha not installed error
+	  Move captcha rendering to partials
+	  Add jm_recaptcha support
+
+2011-06-02 13:16  sfischer
+
+	* Add ts to format fieldname in error partial
+	  Add recaptcha to form
+	  Add error rendering for captcha field
+
+2011-06-02 13:13  sfischer
+
+	* Fix an error label
+
+2011-06-02 13:12  sfischer
+
+	* Change typoscript setup.
+	  - add maximal configuration
+	  - add minimal configuration which is default
+	  - remove old configuration
+	  - cleanup redirect settings
+
+2011-06-02 09:45  sfischer
+
+	* Add captcha with sr_freecap
+	  - viewhelper to display the captcha
+	  - validator to validate the entered string
+	  - field in user that doesn't get persisted
+	  - abstract adapter to implement further captcha
+	  - interface for captcha to check against
+
+2011-05-28 06:47  sfischer
+
+	* #27078 Add default extbaase type to usergroup so fe_groups will
+	  be found in FrontendUserGroup Repository
+
+2011-05-23 06:32  sfischer
+
+	* Fix an error with autologin
+	  Change an erronous setting
+	  Change saveAction type hint back to modelname
+
+2011-05-22 09:58  sfischer
+
+	* Change more appearance of model with interface
+
+2011-05-22 09:45  sfischer
+
+	* Add frontend user interface
+
+2011-05-22 09:44  sfischer
+
+	* Add implements to use interface
+
+2011-05-22 09:42  sfischer
+
+	* Add interface
+	  Change referencing model with interface where applicable
+
+2011-05-18 06:41  sfischer
+
+	* Rename redirect settings
+	  Add redirect to confirmAction
+
+2011-05-18 04:27  sfischer
+
+	* Add autologin to saveAction and confirmationAction
+
+2011-05-17 04:30  sfischer
+
+	* Language labels for login settings
+
+2011-05-17 04:30  sfischer
+
+	* Autologin configuration settings
+
+2011-05-10 06:39  sfischer
+
+	* Fixed an security issue where it was possible to edit others
+	  userdata
+
+2011-05-03 16:25  sfischer
+
+	* Add missing getter and setter
+	  Add phpdocheader
+
+2011-05-01 19:09  sfischer
+
+	* Fix js if no element is available no error is thrown
+
+2011-04-30 21:16  sfischer
+
+	* Add language select viewhelper
+
+2011-04-30 20:55  sfischer
+
+	* Add static country zone viewhelper
+
+2011-04-30 20:14  sfischer
+
+	* Add viewhelper für static info country
+
+2011-04-30 14:38  sfischer
+
+	* Add more fields
+
+2011-04-19 08:19  sfischer
+
+	* Change templateRootPath to add trailing slash if missing
+	  Change layoutRootPath to add trailing slash if missing
+	  Add mimetype to email content in sendMail
+	  Add plaintext adding to sendMail
+	  
+	  thanks to Steffen Ritter for helping with that.
+
+2011-04-19 06:56  sfischer
+
+	* Fix unittest of password equal validator
+
+2011-04-18 19:40  sfischer
+
+	* Add templateRootPath and layoutRootPath from flexform to
+	  getAbsolute*Path()
+
+2011-04-18 19:29  sfischer
+
+	* More cosmetic cleanups
+
+2011-04-18 19:04  sfischer
+
+	* Add layoutRootPath setting for email template
+	  Some cosmetic cleanups
+
+2011-04-18 18:35  sfischer
+
+	* Fix empty result if no hook present.
+
+2011-04-18 18:11  sfischer
+
+	* More comments to filename encrytion selection in constants editor
+
+2011-04-18 18:08  sfischer
+
+	* More comments to password encrytion selection in constants editor
+
+2011-04-18 16:41  sfischer
+
+	* Refactor validators
+	  Check mail service and generalize methods
+
+2011-04-18 06:46  sfischer
+
+	* Change validators to injection instead of creating configuration
+	  manager
+
+2011-04-17 10:12  sfischer
+
+	* Raise system requirements due to move the mail class to
+	  t3lib_mail_Message
+
+2011-04-17 10:06  sfischer
+
+	* Add hook for manipulating mail pre send
+	  Add hooks for manipulating user post send
+	  
+	  //$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['Tx_SfRegister_Services_Mail']['sendMailPreSend'][]
+	  =
+	  'EXT:sf_register/Classes/Services/Norealy.php:Tx_SfRegister_Services_Norealy';
+
+2011-04-16 20:29  sfischer
+
+	* Change mail class to t3lib_mail_Message
+
+2011-04-16 19:55  sfischer
+
+	* Finalizing the email cleanups
+
+2011-04-16 18:26  sfischer
+
+	* A lot of renaming
+
+2011-04-16 17:41  sfischer
+
+	* Add new and remove old templates
+
+2011-04-16 17:40  sfischer
+
+	* Add pre and post activation notification mails
+
+2011-04-16 15:08  sfischer
+
+	* Remove obsolete method call
+
+2011-04-16 14:57  sfischer
+
+	* Cleanup deprecated code
+
+2011-04-16 14:32  sfischer
+
+	* Cleanup of deprecated code
+
+2011-04-16 13:57  sfischer
+
+	* 
+
+2011-04-16 13:57  sfischer
+
+	* Change file service to use injection instead of setting
+
+2011-04-16 12:13  sfischer
+
+	* Add setting templates rootpath from plugin
+
+2011-04-16 11:06  sfischer
+
+	* Minor change to flexform
+	  Add translation for template root path field
+	  Raise requirements to extbase and fluid
+
+2011-04-15 21:11  sfischer
+
+	* Remove unneeded setRespectStoragePage from findByMailhash
+
+2011-04-15 21:10  sfischer
+
+	* Change unit test to assert on instance of
+
+2011-04-15 20:46  sfischer
+
+	* Fixed unit test by adding the correct settings and running
+	  bootstrap to prepare the object before create user repository
+	  fixture.
+
+2011-04-15 09:00  sfischer
+
+	* Add bootstrap initialize to get the mapper working
+
+2011-04-15 06:43  sfischer
+
+	* Implement first repository test with big problem concerning
+	  mapping
+
+2011-04-14 20:24  sfischer
+
+	* Add empty unittests for all files that didnt have one by now
+
+2011-04-14 19:59  sfischer
+
+	* Cleanup unittest of deprecated base class
+	  Cleanup user repository of unneeded methods
+
+2011-04-14 16:41  sfischer
+
+	* Bugfix repository for not using getFirst but using current which
+	  is not working
+
+2011-04-14 16:33  sfischer
+
+	* Bugfix repository for not using getFirst but using current which
+	  is not working
+
+2011-04-14 06:45  sfischer
+
+	* Some more constants.tx changes
+
+2011-04-13 19:17  sfischer
+
+	* Add constants and constants editor comments to every plain
+	  configurable field
+
+2011-04-13 18:28  sfischer
+
+	* Add constants.txt
+	  Sort setup.txt settings for relevants
+	  Set better default settings
+	  Add ts language file
+	  Remove recursiv and pages from exclude fields
+
+2011-04-12 16:32  sfischer
+
+	* Change unit test to use real model because the mock behave
+	  unexpected
+
+2011-04-12 06:47  sfischer
+
+	* Add test for feuser password controller
+
+2011-04-12 04:59  sfischer
+
+	* Add test for unique validator
+
+2011-04-09 14:50  sfischer
+
+	* Add test for password equals current password
+
+2011-04-09 13:02  sfischer
+
+	* Add equal current password validator test
+	  Remove debug command
+
+2011-04-09 10:22  sfischer
+
+	* Remove unneeded validator
+	  Add passwords equal validator test
+	  Add settings for template root path
+
+2011-04-09 06:41  sfischer
+
+	* Add unit test for isTrueValidator
+	  Change badwordlist unit test
+	  Change annotation of frontenduser test
+
+2011-04-08 16:59  sfischer
+
+	* Add unit test for bad word validator
+
+2011-04-08 14:39  sfischer
+
+	* Add unit tests for password and fe_user model
+	  Change extending of fe_user model
+	  Change get disable boolean evaluation
+
+2011-04-08 06:42  sfischer
+
+	* Fix some issues that came up after patching in compatability for
+	  4.5
+
+2011-04-07 17:43  sfischer
+
+	* Fix compatability to 4.5 for mail service and create controller
+
+2011-04-07 06:50  sfischer
+
+	* Add filename encryption
+
+2011-04-06 16:41  sfischer
+
+	* Add image remove method and check for temporary image
+
+2011-04-05 16:42  sfischer
+
+	* Change image removal
+
+2011-04-04 19:54  sfischer
+
+	* Finish image upload by moving the image from typo3temp to uploads
+
+2011-04-03 18:09  sfischer
+
+	* Change image upload to use temp folder for uploaded image until
+	  save action and then move to uploads
+	  Add remove of image
+
+2011-04-03 15:28  sfischer
+
+	* Fix broken file upload after renaming attribute
+
+2011-04-02 10:55  sfischer
+
+	* renamed an attribute to unify its usage
+
+2011-04-02 10:52  sfischer
+
+	* Seperate loading of typoscript setup for extbase 1.2 and 1.3
+	  Restore Validator that was erroneously deleted
+
+2011-04-02 10:18  sfischer
+
+	* Add javascript passwort meter
+
+2011-04-01 17:22  sfischer
+
+	* Change to integrate basic remove image action
+
+2011-03-31 20:22  sfischer
+
+	* Finish password validation refactoring
+
+2011-03-31 19:41  sfischer
+
+	* Cleanup of validation error messages and error codes
+
+2011-03-31 18:59  sfischer
+
+	* Rename validators
+
+2011-03-31 16:21  sfischer
+
+	* Change password change to handle attribute mapping and validation
+
+2011-03-29 20:30  sfischer
+
+	* Add some error handling for empty password
+
+2011-03-29 17:21  sfischer
+
+	* Add remove image action
+	  Change file service to suite codesniffer
+
+2011-03-29 04:52  sfischer
+
+	* Change settings validations
+	  Move previewAction to have user validators in create as well as
+	  in edit controller
+	  Change user validator to respect splitted settings
+
+2011-03-28 16:32  sfischer
+
+	* Change edit form to display image preview an field errors
+
+2011-03-28 06:34  sfischer
+
+	* Fix missing initialization of fileservice for proxy action
+
+2011-03-28 05:18  sfischer
+
+	* Add labels for errors
+	  Change preview of uploaded image
+
+2011-03-27 20:50  sfischer
+
+	* Add image upload to create action
+
+2011-03-27 13:17  sfischer
+
+	* Add Validator for is true
+	  Add output in create form and preview for gtc
+	  Add labels for gtc
+
+2011-03-27 10:46  sfischer
+
+	* Add gtc field to sql
+
+2011-03-24 07:45  sfischer
+
+	* Add general terms and conditions flag to feuser model
+
+2011-03-24 07:24  sfischer
+
+	* Change field error classes
+
+2011-03-22 07:41  sfischer
+
+	* Change user validator to gather errors by field
+	  Change create form template to render errors by the field
+	  Add field error partial
+	  Change form error partial
+
+2011-03-17 07:38  sfischer
+
+	* Move validation of multiple rules for one field into an extra
+	  method
+
+2011-03-17 07:31  sfischer
+
+	* Change comment
+
+2011-03-16 17:46  sfischer
+
+	* Change validator settings for username field
+
+2011-03-16 17:46  sfischer
+
+	* Add translations for validators
+
+2011-03-16 17:45  sfischer
+
+	* Change unique value handling
+
+2011-03-16 17:44  sfischer
+
+	* Add handling of multiple rules for one field
+
+2011-03-16 17:36  sfischer
+
+	* Fix count query due to not respecting settings made earlier
+	  everytime feusers got found
+
+2011-03-15 07:45  sfischer
+
+	* Add method to count by fieldname and value
+	  Add validator for unique value of fieldname
+	  Change uservalidator to set fieldname if set method exists
+
+2011-03-12 21:13  sfischer
+
+	* Fixes to satisfy codesniffer
+
+2011-03-10 20:34  sfischer
+
+	* Raise patch level version number
+	  Comment settings out
+
+2011-03-10 20:29  sfischer
+
+	* Add methods for getting admin or user recipient
+	  Set different recipient by concern
+
+2011-03-10 17:34  sfischer
+
+	* Change labels for subject creation
+
+2011-03-10 17:33  sfischer
+
+	* Change subject creation
+
+2011-03-10 07:07  sfischer
+
+	* Raise version number
+
+2011-03-10 07:07  sfischer
+
+	* Add check for conditions in save and confirm action
+	  Clean up actions
+
+2011-03-10 07:03  sfischer
+
+	* Add additional email send methods for admin activation, user
+	  notification and admin notification
+	  Clean up in sendEmail method
+
+2011-03-10 07:01  sfischer
+
+	* Reorder positions of settings
+	  Add admin email settings
+	  Rename confirmation settings
+	  Add notification settings
+	  Rename usergroup settings
+	  Add comments
+
+2011-03-10 06:59  sfischer
+
+	* Change name of action in template
+
+2011-03-10 06:57  sfischer
+
+	* Rename user activation email template
+	  Add admin activation email template
+	  Add user notification email template
+	  Add admin notification email template
+
+2011-03-04 09:27  sfischer
+
+	* Add assign if user could not be found
+
+2011-03-04 09:27  sfischer
+
+	* Add dummy text
+
+2011-03-04 09:24  sfischer
+
+	* Implement the confirm action
+
+2011-03-04 09:13  sfischer
+
+	* Add find by mailhash method
+
+2011-03-04 08:56  sfischer
+
+	* Change field for mailhash
+
+2011-03-04 08:56  sfischer
+
+	* Add activation link to email
+	  Add asteric to email field
+
+2011-03-03 17:04  sfischer
+
+	* Fix make instance not existing repository
+
+2011-03-03 16:19  sfischer
+
+	* Remove unnecessary get user for logged in user
+
+2011-03-03 16:17  sfischer
+
+	* Add missing controller name in render method call
+
+2011-03-03 16:16  sfischer
+
+	* Implement all methods to send a confirmation email
+
+2011-03-03 16:16  sfischer
+
+	* Implement all methods to send a confirmation email
+
+2011-03-03 15:37  sfischer
+
+	* Add settings for confirmation mail
+
+2011-03-03 15:36  sfischer
+
+	* Add method for sending email with content from fluid template
+
+2011-03-03 15:17  sfischer
+
+	* Add email subject label
+
+2011-03-03 15:17  sfischer
+
+	* Add template with dummy content
+
+2011-03-03 14:38  sfischer
+
+	* Extend user model with disable and mailhash property, getter and
+	  setter
+
+2011-03-03 14:31  sfischer
+
+	* Add mailhash for confirmation mail
+
+2011-03-03 14:05  sfischer
+
+	* Add usergroup setting for registraion without activation
+	  Cleanup
+
+2011-03-03 14:04  sfischer
+
+	* Add generic add usergroup method and use it
+
+2011-03-03 13:56  sfischer
+
+	* Split settings and persistence blocks
+	  Add settings to set usergroups on activation
+
+2011-03-03 13:55  sfischer
+
+	* Remove empty line
+
+2011-03-03 13:54  sfischer
+
+	* Add methods to set usergroups and use them
+
+2011-03-03 13:52  sfischer
+
+	* Add mail service for sending confirmation emails
+
+2011-03-03 13:44  sfischer
+
+	* Add email validation message
+
+2011-03-03 12:50  sfischer
+
+	* Replace output of password with stars
+
+2011-03-03 12:46  sfischer
+
+	* Change Templates for email field
+
+2011-03-03 12:11  sfischer
+
+	* Move encrypt method to general controller as password and create
+	  controller needs to access it.
+	  Removed pid recursiv method as this is possible by plugin
+	  configuration
+
+2011-02-13 18:29  sfischer
+
+	* Added encryption of password if available
+	  Added password again
+	  Activated adding to repository
+	  Added form and preview action
+
+2011-02-13 18:07  sfischer
+
+	* Change controller to use renamed validator
+
+2011-02-13 18:06  sfischer
+
+	* Changed model to remove field
+
+2011-02-13 18:04  sfischer
+
+	* Changed forms for current needs
+	  Added labels
+
+2011-02-13 18:00  sfischer
+
+	* Added Password again validator
+	  Renamed Password Array Validator
+
+2011-02-11 16:44  sfischer
+
+	* Added page id list method
+	  Set repositories to not respecting storage page
+
+2011-02-11 09:30  sfischer
+
+	* Fixed spelling error
+
+2011-02-03 16:22  sfischer
+
+	* Added password length check
+	  Added bad word list
+
+2011-02-03 15:29  sfischer
+
+	* Added forward after save configurable by settings
+
+2011-02-03 14:57  sfischer
+
+	* Initial import
+
+2011-02-01 06:13  www
+
+	* Initializing project sf_register (4/4)
+
