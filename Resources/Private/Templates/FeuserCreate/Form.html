@@ -30,8 +30,6 @@ create Action
 	<dt><f:translate key="gender"/><f:render partial="required" arguments="{field: 'gender'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.gender'}"/>
-		<f:form.radio property="gender" value="1"/> <f:translate key="gender_male"/>
-		<f:form.radio property="gender" value="2"/> <f:translate key="gender_female"/><br/>
 		<f:form.select property="gender" options="{
 				1: '{f:translate(key: \'gender_male\')}',
 				2: '{f:translate(key: \'gender_female\')}'
@@ -41,7 +39,6 @@ create Action
 	<dt><f:translate key="title"/><f:render partial="required" arguments="{field: 'title'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.title'}"/>
-		<f:form.textfield property="title"/>
 		<f:form.select property="title" options="{
 				none: '{f:translate(key: \'title_none\')}',
 				dr: '{f:translate(key: \'title_dr\')}',
@@ -179,13 +176,12 @@ create Action
 	<dt><f:translate key="dateOfBirth"/><f:render partial="required" arguments="{field: 'dateOfBirth'}"/></dt>
 	<dd>
 		<f:render partial="fieldError" arguments="{field: 'user.dateOfBirth'}"/>
-		<f:form.textfield property="dateOfBirth"/>
 		<register:form.rangeSelect start="1" end="31" property="dateOfBirthDay"/>-<register:form.rangeSelect start="1" end="12" property="dateOfBirthMonth"/>-<register:form.rangeSelect start="1960" end="2011" property="dateOfBirthYear"/></dd>
 
 	<dt>&nbsp;</dt>
 	<dd>
 		<f:render partial="captchaJmRecaptcha"/>
-		<f:render partial="captchaSrFreecap"/>
+		<!--<f:render partial="captchaSrFreecap"/>-->
 
 		<f:render partial="fieldError" arguments="{field: 'user.captcha'}"/>
 		<f:form.textfield property="captcha" value="" id="iCaptcha" maxlength="15"/>

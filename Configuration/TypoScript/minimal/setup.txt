@@ -96,11 +96,17 @@ plugin.tx_sfregister.settings {
 		company = Tx_SfRegister_Domain_Validator_RequiredValidator
 		firstName = Tx_SfRegister_Domain_Validator_RequiredValidator
 		lastName = Tx_SfRegister_Domain_Validator_RequiredValidator
-		email = EmailAddress
+		email {
+			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			2 = EmailAddress
+		}
 		emailRepeat = Tx_SfRegister_Domain_Validator_RepeatValidator
-		gtc = Tx_SfRegister_Domain_Validator_IsTrueValidator
+		gtc {
+			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			2 = Tx_SfRegister_Domain_Validator_IsTrueValidator
+		}
 		image = Tx_SfRegister_Domain_Validator_ImageUploadValidator
-		captcha = Tx_SfRegister_Domain_Validator_CaptchaValidator(type = srfreecap)
+		captcha = Tx_SfRegister_Domain_Validator_CaptchaValidator(type = jmrecaptcha)
 	}
 
 	validation.edit {
