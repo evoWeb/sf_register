@@ -33,7 +33,7 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	 * @return string An HTML form
 	 * @ignorevalidation $user
 	 */
-	public function formAction(Tx_SfRegister_Interfaces_FrontendUser $user = NULL) {
+	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL) {
 		if ($user == NULL && $this->isUserLoggedIn() ||
 				($user instanceof Tx_SfRegister_Domain_Model_FrontendUser &&
 				 $user->getUid() != $GLOBALS['TSFE']->fe_user->user['uid'])) {
@@ -60,7 +60,7 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
 	 */
-	public function previewAction(Tx_SfRegister_Interfaces_FrontendUser $user) {
+	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$user = $this->moveTempFile($user);
 
 		$user->prepareDateOfBirth();
@@ -79,7 +79,7 @@ class Tx_SfRegister_Controller_FeuserEditController extends Tx_SfRegister_Contro
 	 * @return void
 	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
 	 */
-	public function saveAction(Tx_SfRegister_Interfaces_FrontendUser $user) {
+	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
 		$user = $this->moveImageFile($user);
 
 		if ($this->isDisabledAfterEdit()) {
