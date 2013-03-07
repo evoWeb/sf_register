@@ -98,6 +98,16 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	}
 
 	/**
+	 * Initialize error result
+	 *
+	 * @param Tx_Extbase_Error_Result $result
+	 * @return void
+	 */
+	public function injectResult(Tx_Extbase_Error_Result $result) {
+		$this->result = $result;
+	}
+
+	/**
 	 * Add an error with message and code to the property errors
 	 *
 	 * @param string $propertyName name of the property to add the error to
@@ -107,7 +117,7 @@ class Tx_SfRegister_Domain_Validator_UserValidator extends Tx_Extbase_Validation
 	 */
 	protected function addErrorsForProperty($propertyName, $message, $code) {
 		if (!$this->result->forProperty($propertyName)->hasErrors()) {
-			/* @var Tx_Extbase_Validation_PropertyError */
+			/** @var $error Tx_Extbase_Validation_PropertyError */
 			$error = t3lib_div::makeInstance('Tx_Extbase_Validation_PropertyError', $propertyName);
 			$error->addErrors(array(
 				t3lib_div::makeInstance('Tx_Extbase_Validation_Error', $message, $code)
