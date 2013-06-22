@@ -1,4 +1,5 @@
 <?php
+namespace Evoweb\SfRegister\Tests\Domain\Model;
 /***************************************************************
 *  Copyright notice
 *
@@ -25,14 +26,14 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class Tx_SfRegister_Domain_Model_PasswordTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class PasswordTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var Tx_SfRegister_Domain_Model_Password
+	 * @var \Evoweb\SfRegister\Domain\Model\Password
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new Tx_SfRegister_Domain_Model_Password();
+		$this->fixture = new \Evoweb\SfRegister\Domain\Model\Password();
 	}
 
 	public function tearDown() {

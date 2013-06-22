@@ -1,42 +1,51 @@
 <?php
+namespace Evoweb\SfRegister\Services;
 /***************************************************************
- *  Copyright notice
+ * Copyright notice
  *
- *  (c) 2011 Sebastian Fischer <typo3@evoweb.de>
- *  All rights reserved
+ * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This copyright notice MUST APPEAR in all copies of the script!
+ * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
 /**
  * Service to handle file upload and deletion
  */
-class Tx_SfRegister_Services_File implements t3lib_Singleton {
+class File implements \TYPO3\CMS\Core\SingletonInterface {
+	/**
+	 * Object manager
+	 *
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+	 * @inject
+	 */
+	protected $objectManager;
+
 	/**
 	 * Fieldname
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $fieldname;
 
 	/**
 	 * Configuration manager
-	 * 
-	 * @var Tx_Extbase_Configuration_ConfigurationManager
+	 *
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
 	 */
 	protected $configurationManager;
 
@@ -89,15 +98,16 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	 */
 	protected $maxFilesize = 0;
 
+
 	/**
 	 * Injection of configuration manager
 	 *
-	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
 	 * @return void
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
+	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+		$this->settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 
 		if (isset($this->settings['filefieldname']) && !empty($this->settings['filefieldname'])) {
 			$this->setFieldname($this->settings['filefieldname']);
@@ -110,7 +120,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	 */
 	public function setFieldname($fieldname) {
 		if (!isset($GLOBALS['TCA']['fe_users']['columns'])) {
-			t3lib_div::loadTCA('fe_users');
+			\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('fe_users');
 		}
 
 		$this->fieldname = $fieldname;
@@ -121,11 +131,10 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		$this->maxFilesize = $fieldConfiguration['max_size'] * 1024;
 	}
 
-
 	/**
 	 * Returns an array of errors which occurred during the last isValid() call.
 	 *
-	 * @return array An array of Tx_Extbase_Validation_Error objects or an empty array if no errors occurred.
+	 * @return array An array of \TYPO3\CMS\Extbase\Validation\Error objects or an empty array if no errors occurred.
 	 */
 	public function getErrors() {
 		return $this->errors;
@@ -139,7 +148,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	 * @return void
 	 */
 	protected function addError($message, $code) {
-		$this->errors[] = t3lib_div::makeInstance('Tx_Extbase_Validation_Error', $message, $code);
+		$this->errors[] = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Validation\\Error', $message, $code);
 	}
 
 	/**
@@ -149,7 +158,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	 */
 	protected function getNamespace() {
 		if ($this->namespace === '') {
-			$frameworkSettings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+			$frameworkSettings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 			$this->namespace = strtolower('tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']);
 		}
 
@@ -172,9 +181,9 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 			$error = $uploadData['error'][$this->fieldname];
 			$size = $uploadData['size'][$this->fieldname];
 
-			if ($filename !== NULL && $filename !== '' && t3lib_div::validPathStr($filename)) {
+			if ($filename !== NULL && $filename !== '' && \TYPO3\CMS\Core\Utility\GeneralUtility::validPathStr($filename)) {
 				if ($this->settings['useEncryptedFilename']) {
-					$filenameParts = t3lib_div::trimExplode('.', $filename);
+					$filenameParts = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('.', $filename);
 					$extension = array_pop($filenameParts);
 					$filename = md5(mktime() . mt_rand() . $filename . $tmpName .
 						$GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) . '.' . $extension;
@@ -222,7 +231,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 
 		if ($filesize > $this->maxFilesize) {
 			$this->addError(
-				Tx_Extbase_Utility_Localization::translate('error.' . $this->fieldname . '.filesize', 'SfRegister'),
+				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_' . $this->fieldname . '_filesize', 'SfRegister'),
 				1296591064
 			);
 			$result = FALSE;
@@ -240,9 +249,9 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	protected function isAllowedFileExtension($fileExtension) {
 		$result = TRUE;
 
-		if ($fileExtension !== NULL && !t3lib_div::inList($this->allowedFileExtensions, strtolower($fileExtension))) {
+		if ($fileExtension !== NULL && !\TYPO3\CMS\Core\Utility\GeneralUtility::inList($this->allowedFileExtensions, strtolower($fileExtension))) {
 			$this->addError(
-				Tx_Extbase_Utility_Localization::translate('error.' . $this->fieldname . '.extension', 'SfRegister'),
+				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_' . $this->fieldname . '_extension', 'SfRegister'),
 				1296591064
 			);
 			$result = FALSE;
@@ -262,7 +271,8 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 		$fileData = $this->getUploadedFileInfo();
 
 		if (count($fileData)) {
-			$basicFileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+			/** @var $basicFileFunctions \TYPO3\CMS\Core\Utility\File\BasicFileUtility */
+			$basicFileFunctions = $this->objectManager->get('TYPO3\\CMS\\Core\\Utility\\File\\BasicFileUtility');
 
 			$filename = $basicFileFunctions->cleanFileName($fileData['filename']);
 			$uploadFolder = $basicFileFunctions->cleanDirectoryName(PATH_site . $this->tempFolder);
@@ -270,7 +280,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 
 			$this->createUploadFolderIfNotExist($uploadFolder);
 
-			if (t3lib_div::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
+			if (\TYPO3\CMS\Core\Utility\GeneralUtility::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
 				$result = basename($uniqueFilename);
 			}
 		}
@@ -284,7 +294,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	 */
 	protected function createUploadFolderIfNotExist($uploadFolder) {
 		if (!is_dir($uploadFolder)) {
-			t3lib_div::mkdir($uploadFolder);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir($uploadFolder);
 		}
 	}
 
@@ -292,7 +302,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	 * Move an temporary uploaded file to the upload folder
 	 *
 	 * @param string $filename
-	 * @return string
+	 * @return \TYPO3\CMS\Core\Resource\File
 	 */
 	public function moveFileFromTempFolderToUploadFolder($filename) {
 		$result = '';
@@ -303,19 +313,17 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 			$fileExtensions = (array) $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions'];
 			$fileExtensions['webspace']['allow'] = $this->allowedFileExtensions;
 
-			$extFileFunctions = t3lib_div::makeInstance('t3lib_extFileFunctions');
+			/** @var $extFileFunctions \Evoweb\SfRegister\Utility\File\ExtendedFileUtility */
+			$extFileFunctions = $this->objectManager->get('Evoweb\\SfRegister\\Utility\\File\\ExtendedFileUtility');
 			$extFileFunctions->init($allowedFolders, $fileExtensions);
 			$extFileFunctions->init_actionPerms(1);
 
-			$cmds = array(
+			$commands = array(
 				'data' => $this->tempFolder . '/' . $filename,
 				'target' => $this->uploadFolder,
 				'altName' => TRUE
 			);
-
-			$result = $extFileFunctions->func_move($cmds);
-			$resultParts = t3lib_div::trimExplode('/', $result);
-			$result = array_pop($resultParts);
+			$result = $extFileFunctions->funcMove($commands);
 		}
 
 		return $result;
@@ -359,7 +367,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getFilepath($filename) {
-		$filenameParts = t3lib_div::trimExplode('/', $filename, TRUE);
+		$filenameParts = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('/', $filename, TRUE);
 
 		$result = implode('/', array_slice($filenameParts, 0, -1));
 		if (!in_array($result, array($this->tempFolder, $this->uploadFolder))) {
@@ -374,7 +382,7 @@ class Tx_SfRegister_Services_File implements t3lib_Singleton {
 	 * @return string
 	 */
 	protected function getFilename($filename) {
-		$filenameParts = t3lib_div::trimExplode('/', $filename, TRUE);
+		$filenameParts = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('/', $filename, TRUE);
 
 		return array_pop($filenameParts);
 	}

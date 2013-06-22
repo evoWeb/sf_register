@@ -1,4 +1,5 @@
 <?php
+namespace Evoweb\SfRegister\Tests\Validation;
 /***************************************************************
 *  Copyright notice
 *
@@ -25,7 +26,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class Tx_SfRegister_Validation_ValidatorResolverTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class ValidatorResolverTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
 	 * @test
 	 */

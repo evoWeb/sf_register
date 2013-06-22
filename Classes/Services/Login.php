@@ -1,31 +1,59 @@
 <?php
+namespace Evoweb\SfRegister\Services;
 /***************************************************************
- *  Copyright notice
+ * Copyright notice
  *
- *  (c) 2011 Sebastian Fischer <typo3@evoweb.de>
- *  All rights reserved
+ * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This copyright notice MUST APPEAR in all copies of the script!
+ * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
 /**
  * Service to handle user logins
  */
-class Tx_SfRegister_Services_Login implements t3lib_Singleton {
+class Login implements \TYPO3\CMS\Core\SingletonInterface {
+	/**
+	 * Object manager
+	 *
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+	 * @inject
+	 */
+	protected $objectManager;
+
+	/**
+	 * @var \TYPO3\CMS\Core\Database\DatabaseConnection
+	 */
+	protected $database;
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+	 * @inject
+	 */
+	protected $signalSlotDispatcher;
+
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		$this->database = $GLOBALS['TYPO3_DB'];
+	}
+
 	/**
 	 * Login user by id
 	 *
@@ -34,25 +62,29 @@ class Tx_SfRegister_Services_Login implements t3lib_Singleton {
 	 */
 	public function loginUserById($userid) {
 		$this->initFEuser($this->fetchUserdata($userid));
-		$GLOBALS['TSFE']->fe_user->createUserSession($this->fetchUserdata($userid));
-		$GLOBALS['TSFE']->initUserGroups();
-		$GLOBALS['TSFE']->setSysPageWhereClause();
+
+		/** @var $frontend \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController */
+		$frontend = $GLOBALS['TSFE'];
+		$frontend->fe_user->createUserSession($this->fetchUserdata($userid));
+		$frontend->initUserGroups();
+		$frontend->setSysPageWhereClause();
 	}
 
 	/**
 	 * Initialize fe_user object
-	 * 
+	 *
 	 * @param array $userdata
 	 * @return void
 	 */
 	protected function initFEuser(array $userdata) {
-		/** @var $feUser tslib_feUserAuth */
-		$feUser = t3lib_div::makeInstance('tslib_feUserAuth');
+		/** @var $feUser \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication */
+		$feUser = $this->objectManager->get('TYPO3\\CMS\\Frontend\\Authentication\\FrontendUserAuthentication');
 
 		$feUser->lockIP = $GLOBALS['TYPO3_CONF_VARS']['FE']['lockIP'];
 		$feUser->checkPid = $GLOBALS['TYPO3_CONF_VARS']['FE']['checkFeUserPid'];
 		$feUser->lifetime = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['lifetime']);
-		$feUser->checkPid_value = $GLOBALS['TYPO3_DB']->cleanIntList(t3lib_div::_GP('pid'));	// List of pid's acceptable
+			// List of pid's acceptable
+		$feUser->checkPid_value = $this->database->cleanIntList(\TYPO3\CMS\Core\Utility\GeneralUtility::_GP('pid'));
 
 		if ($GLOBALS['TYPO3_CONF_VARS']['FE']['dontSetCookie']) {
 			$feUser->dontSetCookie = 1;
@@ -70,23 +102,23 @@ class Tx_SfRegister_Services_Login implements t3lib_Singleton {
 
 		$this->updateLastLogin($feUser);
 
-			// Call hook for possible manipulation of frontend user object
-		if (is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['initFEuser'])) {
-			$parameters = array('pObj' => &$GLOBALS['TSFE']);
-			foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['initFEuser'] as $functionReference) {
-				t3lib_div::callUserFunction($functionReference, $parameters, $GLOBALS['TSFE']);
-			}
-		}
+		$this->signalSlotDispatcher->dispatch(
+			__CLASS__,
+			'save',
+			array(
+				'frontend' => &$GLOBALS['TSFE'],
+			)
+		);
 	}
 
 	/**
 	 * For every 60 seconds the is_online timestamp is updated.
 	 *
-	 * @param 	tslib_feUserAuth	$feUser
-	 * @return	void
+	 * @param  \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $feUser
+	 * @return void
 	 */
-	protected function updateLastLogin(tslib_feUserAuth $feUser) {
-		$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+	protected function updateLastLogin(\TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $feUser) {
+		$this->database->exec_UPDATEquery(
 			'fe_users',
 			'uid = ' . intval($feUser->user['uid']),
 			array(
@@ -103,7 +135,18 @@ class Tx_SfRegister_Services_Login implements t3lib_Singleton {
 	 * @return array
 	 */
 	protected function fetchUserdata($uid) {
-		return current($GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'fe_users', 'uid = ' . (int) $uid));
+		return current($this->database->exec_SELECTgetRows('*', 'fe_users', 'uid = ' . (int) $uid));
+	}
+
+	/**
+	 * Check if the user is logged in
+	 *
+	 * @return boolean
+	 */
+	public static function isLoggedIn() {
+		/** @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser */
+		$frontendUser = $GLOBALS['TSFE']->fe_user;
+		return $frontendUser->user === FALSE ? FALSE : TRUE;
 	}
 }
 

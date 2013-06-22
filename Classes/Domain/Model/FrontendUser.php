@@ -1,31 +1,32 @@
 <?php
+namespace Evoweb\SfRegister\Domain\Model;
 /***************************************************************
- *  Copyright notice
+ * Copyright notice
  *
- *  (c) 2011 Sebastian Fischer <typo3@evoweb.de>
- *  All rights reserved
+ * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This copyright notice MUST APPEAR in all copies of the script!
+ * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
 /**
  * An extended frontend user with more attributes
  */
-class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_FrontendUser implements Tx_SfRegister_Interfaces_FrontendUser {
+class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implements \Evoweb\SfRegister\Interfaces\FrontendUser {
 	/**
 	 * If the account is diabled or not
 	 *
@@ -43,10 +44,9 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	/**
 	 * Date on which the account was activated
 	 *
-	 * @var DateTime
+	 * @var \DateTime
 	 */
 	protected $activatedOn;
-
 
 	/**
 	 *  virtual not stored in database
@@ -69,7 +69,6 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	protected $emailRepeat;
 
-
 	/**
 	 * Pseudonym
 	 *
@@ -80,39 +79,37 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	/**
 	 * Gender 1 or 2 for mr or mrs
 	 *
-	 * @var  integer
+	 * @var integer
 	 */
 	protected $gender;
-
 
 	/**
 	 * Date of birth
 	 *
-	 * @var  DateTime
+	 * @var \DateTime
 	 */
 	protected $dateOfBirth;
 
 	/**
 	 * Day of date of birth
 	 *
-	 * @var  integer
+	 * @var integer
 	 */
 	protected $dateOfBirthDay;
 
 	/**
 	 * Month of date of birth
 	 *
-	 * @var  integer
+	 * @var integer
 	 */
 	protected $dateOfBirthMonth;
 
 	/**
 	 * Year of date of birth
 	 *
-	 * @var  integer
+	 * @var integer
 	 */
 	protected $dateOfBirthYear;
-
 
 	/**
 	 * Language
@@ -206,6 +203,56 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	protected $moduleSysDmailCategory;
 
 
+	/**
+	 * @var string
+	 */
+	protected $custom0 = '';
+
+	/**
+	 * @var string
+	 */
+	protected $custom1 = '';
+
+	/**
+	 * @var string
+	 */
+	protected $custom2 = '';
+
+	/**
+	 * @var string
+	 */
+	protected $custom3 = '';
+
+	/**
+	 * @var string
+	 */
+	protected $custom4 = '';
+
+	/**
+	 * @var string
+	 */
+	protected $custom5 = '';
+
+	/**
+	 * @var string
+	 */
+	protected $custom6 = '';
+
+	/**
+	 * @var string
+	 */
+	protected $custom7 = '';
+
+	/**
+	 * @var string
+	 */
+	protected $custom8 = '';
+
+	/**
+	 * @var string
+	 */
+	protected $custom9 = '';
+
 
 	/**
 	 * Constructs a new Front-End User
@@ -216,9 +263,9 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	public function __construct($username = '', $password = '') {
 		parent::__construct($username, $password);
 
-		$this->activatedOn = new DateTime();
-		$this->dateOfBirth = new DateTime();
-   }
+		$this->activatedOn = new \DateTime();
+		$this->dateOfBirth = new \DateTime();
+	}
 
 	/**
 	 * Initializes the date of birth if related values are set by request to argument mapping
@@ -237,6 +284,14 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 		}
 	}
 
+	/**
+	 * Getter for disable
+	 *
+	 * @return boolean
+	 */
+	public function getDisable() {
+		return ($this->disable ? TRUE : FALSE);
+	}
 
 	/**
 	 * Setter for disable
@@ -249,12 +304,12 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * Getter for disable
+	 * Getter for mailhash
 	 *
-	 * @return boolean
+	 * @return string
 	 */
-	public function getDisable() {
-		return ($this->disable ? TRUE : FALSE);
+	public function getMailhash() {
+		return $this->mailhash;
 	}
 
 	/**
@@ -268,28 +323,28 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * Getter for mailhash
-	 *
-	 * @return string
-	 */
-	public function getMailhash() {
-		return $this->mailhash;
-	}
-
-	/**
-	 * @param \DateTime $activatedOn
-	 */
-	public function setActivatedOn($activatedOn) {
-		$this->activatedOn = $activatedOn;
-	}
-
-	/**
 	 * @return \DateTime
 	 */
 	public function getActivatedOn() {
 		return $this->activatedOn;
 	}
 
+	/**
+	 * @param \DateTime $activatedOn
+	 * @return void
+	 */
+	public function setActivatedOn($activatedOn) {
+		$this->activatedOn = $activatedOn;
+	}
+
+	/**
+	 * Getter for captcha
+	 *
+	 * @return string
+	 */
+	public function getCaptcha() {
+		return $this->captcha;
+	}
 
 	/**
 	 * Setter for captcha
@@ -302,12 +357,12 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * Getter for captcha
+	 * Getter for passwordRepeat
 	 *
 	 * @return string
 	 */
-	public function getCaptcha() {
-		return $this->captcha;
+	public function getPasswordRepeat() {
+		return $this->passwordRepeat;
 	}
 
 	/**
@@ -321,12 +376,12 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * Getter for passwordRepeat
+	 * Getter for emailRepeat
 	 *
 	 * @return string
 	 */
-	public function getPasswordRepeat() {
-		return $this->passwordRepeat;
+	public function getEmailRepeat() {
+		return $this->emailRepeat;
 	}
 
 	/**
@@ -337,35 +392,6 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	 */
 	public function setEmailRepeat($emailRepeat) {
 		$this->emailRepeat = trim($emailRepeat);
-	}
-
-	/**
-	 * Getter for emailRepeat
-	 *
-	 * @return string
-	 */
-	public function getEmailRepeat() {
-		return $this->emailRepeat;
-	}
-
-
-	/**
-	 * Set an image list
-	 *
-	 * @param array $imageList
-	 * @return void
-	 */
-	public function setImageList($imageList) {
-		$this->image = implode(',', $imageList);
-	}
-
-	/**
-	 * Get an image list
-	 *
-	 * @return array
-	 */
-	public function getImageList() {
-		return t3lib_div::trimExplode(',', $this->image, TRUE);
 	}
 
 	/**
@@ -400,7 +426,24 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 		$this->setImageList($imageList);
 	}
 
+	/**
+	 * Get an image list
+	 *
+	 * @return array
+	 */
+	public function getImageList() {
+		return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->image, TRUE);
+	}
 
+	/**
+	 * Set an image list
+	 *
+	 * @param array $imageList
+	 * @return void
+	 */
+	public function setImageList($imageList) {
+		$this->image = implode(',', $imageList);
+	}
 
 	/**
 	 * Setter for title
@@ -416,21 +459,31 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * Setter for pseudonym
-	 *
-	 * @param string $pseudonym
-	 */
-	public function setPseudonym($pseudonym) {
-		$this->pseudonym = $pseudonym;
-	}
-
-	/**
 	 * Getter for pseudonym
 	 *
 	 * @return string
 	 */
 	public function getPseudonym() {
 		return $this->pseudonym;
+	}
+
+	/**
+	 * Setter for pseudonym
+	 *
+	 * @param string $pseudonym
+	 * @return void
+	 */
+	public function setPseudonym($pseudonym) {
+		$this->pseudonym = $pseudonym;
+	}
+
+	/**
+	 * Getter for gender
+	 *
+	 * @return integer
+	 */
+	public function getGender() {
+		return $this->gender;
 	}
 
 	/**
@@ -444,14 +497,13 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * Getter for gender
+	 * Getter for dateOfBirth
 	 *
-	 * @return integer
+	 * @return \DateTime
 	 */
-	public function getGender() {
-		return $this->gender;
+	public function getDateOfBirth() {
+		return $this->dateOfBirth;
 	}
-
 
 	/**
 	 * Setter for dateOfBirth
@@ -464,48 +516,6 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * Setter for day of dateOfBirth
-	 *
-	 * @param integer	$day
-	 * @return void
-	 */
-	public function setDateOfBirthDay($day) {
-		$this->dateOfBirthDay = $day;
-		$this->dateOfBirth->setDate($this->dateOfBirth->format('Y'), $this->dateOfBirth->format('m'), $day);
-	}
-
-	/**
-	 * Setter for month of dateOfBirth
-	 *
-	 * @param integer	$month
-	 * @return void
-	 */
-	public function setDateOfBirthMonth($month) {
-		$this->dateOfBirthMonth = $month;
-		$this->dateOfBirth->setDate($this->dateOfBirth->format('Y'), $month, $this->dateOfBirth->format('d'));
-	}
-
-	/**
-	 * Setter for month of dateOfBirth
-	 *
-	 * @param integer	$year
-	 * @return void
-	 */
-	public function setDateOfBirthYear($year) {
-		$this->dateOfBirthYear = $year;
-		$this->dateOfBirth->setDate($year, $this->dateOfBirth->format('m'), $this->dateOfBirth->format('d'));
-	}
-
-	/**
-	 * Getter for dateOfBirth
-	 *
-	 * @return DateTime
-	 */
-	public function getDateOfBirth() {
-		return $this->dateOfBirth;
-	}
-
-	/**
 	 * Getter for day of dateOfBirth
 	 *
 	 * @return integer
@@ -513,11 +523,22 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	public function getDateOfBirthDay() {
 		$result = 0;
 
-		if ($this->dateOfBirth instanceof DateTime) {
+		if ($this->dateOfBirth instanceof \DateTime) {
 			$result = $this->dateOfBirth->format('j');
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Setter for day of dateOfBirth
+	 *
+	 * @param integer $day
+	 * @return void
+	 */
+	public function setDateOfBirthDay($day) {
+		$this->dateOfBirthDay = $day;
+		$this->dateOfBirth->setDate($this->dateOfBirth->format('Y'), $this->dateOfBirth->format('m'), $day);
 	}
 
 	/**
@@ -528,7 +549,7 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	public function getDateOfBirthMonth() {
 		$result = 0;
 
-		if ($this->dateOfBirth instanceof DateTime) {
+		if ($this->dateOfBirth instanceof \DateTime) {
 			$result = $this->dateOfBirth->format('n');
 		}
 
@@ -536,29 +557,40 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
+	 * Setter for month of dateOfBirth
+	 *
+	 * @param integer $month
+	 * @return void
+	 */
+	public function setDateOfBirthMonth($month) {
+		$this->dateOfBirthMonth = $month;
+		$this->dateOfBirth->setDate($this->dateOfBirth->format('Y'), $month, $this->dateOfBirth->format('d'));
+	}
+
+	/**
 	 * Getter for year of dateOfBirth
-	 * 
+	 *
 	 * @return integer
 	 */
 	public function getDateOfBirthYear() {
 		$result = 0;
 
-		if ($this->dateOfBirth instanceof DateTime) {
+		if ($this->dateOfBirth instanceof \DateTime) {
 			$result = $this->dateOfBirth->format('Y');
 		}
 
 		return $result;
 	}
 
-
 	/**
-	 * Setter for mobilphone
+	 * Setter for month of dateOfBirth
 	 *
-	 * @param string $mobilephone
+	 * @param integer $year
 	 * @return void
 	 */
-	public function setMobilephone($mobilephone) {
-		$this->mobilephone = $mobilephone;
+	public function setDateOfBirthYear($year) {
+		$this->dateOfBirthYear = $year;
+		$this->dateOfBirth->setDate($year, $this->dateOfBirth->format('m'), $this->dateOfBirth->format('d'));
 	}
 
 	/**
@@ -571,13 +603,13 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * Setter for zone
-	 * 
-	 * @param string $zone
+	 * Setter for mobilphone
+	 *
+	 * @param string $mobilephone
 	 * @return void
 	 */
-	public function setZone($zone) {
-		$this->zone = $zone;
+	public function setMobilephone($mobilephone) {
+		$this->mobilephone = $mobilephone;
 	}
 
 	/**
@@ -590,31 +622,60 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * @param integer $timezone
+	 * Setter for zone
+	 *
+	 * @param string $zone
+	 * @return void
 	 */
-	public function setTimezone($timezone) {
-		$this->timezone = ($timezone > 14 || $timezone < -12 ? $timezone / 10 : $timezone);
+	public function setZone($zone) {
+		$this->zone = $zone;
 	}
 
 	/**
-	 * @return integer
+	 * @return float
 	 */
 	public function getTimezone() {
-		return floor($this->timezone) != $this->timezone ? $this->timezone * 10 : $this->timezone;
+		return floor($this->timezone) != $this->timezone ?
+			$this->timezone * 10 :
+			$this->timezone;
 	}
 
 	/**
-	 * @param boolean $daylight
+	 * @param float $timezone
+	 * @return void
 	 */
-	public function setDaylight($daylight) {
-		$this->daylight = ($daylight ? TRUE : FALSE);
+	public function setTimezone($timezone) {
+		$this->timezone = ($timezone > 14 || $timezone < -12 ?
+			$timezone / 10 :
+			$timezone);
 	}
 
 	/**
 	 * @return boolean
 	 */
 	public function getDaylight() {
-		return $this->daylight ? TRUE : FALSE;
+		return $this->daylight ?
+			TRUE :
+			FALSE;
+	}
+
+	/**
+	 * @param boolean $daylight
+	 * @return void
+	 */
+	public function setDaylight($daylight) {
+		$this->daylight = ($daylight ?
+			TRUE :
+			FALSE);
+	}
+
+	/**
+	 * Getter for static info cpuntry
+	 *
+	 * @return string
+	 */
+	public function getStaticInfoCountry() {
+		return $this->staticInfoCountry;
 	}
 
 	/**
@@ -628,12 +689,12 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * Getter for static info cpuntry
-	 * 
-	 * @return string
+	 * Getter for gtc
+	 *
+	 * @return boolean
 	 */
-	public function getStaticInfoCountry() {
-		return $this->staticInfoCountry;
+	public function getGtc() {
+		return $this->gtc ? TRUE : FALSE;
 	}
 
 	/**
@@ -647,30 +708,247 @@ class Tx_SfRegister_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Fr
 	}
 
 	/**
-	 * Getter for gtc
-	 *
-	 * @return boolean
-	 */
-	public function getGtc() {
-		return $this->gtc ? TRUE : FALSE;
-	}
-
-	/**
-	 * Setter for privacy agreement flag
-	 *
-	 * @param boolean $privacy
-	 */
-	public function setPrivacy($privacy) {
-		$this->privacy = ($privacy ? TRUE : FALSE);
-	}
-
-	/**
 	 * Getter for privacy agreement flag
 	 *
 	 * @return boolean
 	 */
 	public function getPrivacy() {
 		return $this->privacy ? TRUE : FALSE;
+	}
+
+	/**
+	 * Setter for privacy agreement flag
+	 *
+	 * @param boolean $privacy
+	 * @return void
+	 */
+	public function setPrivacy($privacy) {
+		$this->privacy = ($privacy ? TRUE : FALSE);
+	}
+
+	/**
+	 * @param boolean $byInvitation
+	 */
+	public function setByInvitation($byInvitation) {
+		$this->byInvitation = $byInvitation;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getByInvitation() {
+		return $this->byInvitation;
+	}
+
+	/**
+	 * @param string $comments
+	 */
+	public function setComments($comments) {
+		$this->comments = $comments;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getComments() {
+		return $this->comments;
+	}
+
+	/**
+	 * @param string $language
+	 */
+	public function setLanguage($language) {
+		$this->language = $language;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLanguage() {
+		return $this->language;
+	}
+
+	/**
+	 * @param array $moduleSysDmailCategory
+	 */
+	public function setModuleSysDmailCategory($moduleSysDmailCategory) {
+		$this->moduleSysDmailCategory = $moduleSysDmailCategory;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getModuleSysDmailCategory() {
+		return $this->moduleSysDmailCategory;
+	}
+
+	/**
+	 * @param boolean $moduleSysDmailHtml
+	 */
+	public function setModuleSysDmailHtml($moduleSysDmailHtml) {
+		$this->moduleSysDmailHtml = $moduleSysDmailHtml;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getModuleSysDmailHtml() {
+		return $this->moduleSysDmailHtml;
+	}
+
+	/**
+	 * @param int $status
+	 */
+	public function setStatus($status) {
+		$this->status = $status;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getStatus() {
+		return $this->status;
+	}
+
+
+	/**
+	 * @param string $custom0
+	 */
+	public function setCustom0($custom0) {
+		$this->custom0 = $custom0;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCustom0() {
+		return $this->custom0;
+	}
+
+	/**
+	 * @param string $custom1
+	 */
+	public function setCustom1($custom1) {
+		$this->custom1 = $custom1;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCustom1() {
+		return $this->custom1;
+	}
+
+	/**
+	 * @param string $custom2
+	 */
+	public function setCustom2($custom2) {
+		$this->custom2 = $custom2;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCustom2() {
+		return $this->custom2;
+	}
+
+	/**
+	 * @param string $custom3
+	 */
+	public function setCustom3($custom3) {
+		$this->custom3 = $custom3;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCustom3() {
+		return $this->custom3;
+	}
+
+	/**
+	 * @param string $custom4
+	 */
+	public function setCustom4($custom4) {
+		$this->custom4 = $custom4;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCustom4() {
+		return $this->custom4;
+	}
+
+	/**
+	 * @param string $custom5
+	 */
+	public function setCustom5($custom5) {
+		$this->custom5 = $custom5;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCustom5() {
+		return $this->custom5;
+	}
+
+	/**
+	 * @param string $custom6
+	 */
+	public function setCustom6($custom6) {
+		$this->custom6 = $custom6;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCustom6() {
+		return $this->custom6;
+	}
+
+	/**
+	 * @param string $custom7
+	 */
+	public function setCustom7($custom7) {
+		$this->custom7 = $custom7;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCustom7() {
+		return $this->custom7;
+	}
+
+	/**
+	 * @param string $custom8
+	 */
+	public function setCustom8($custom8) {
+		$this->custom8 = $custom8;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCustom8() {
+		return $this->custom8;
+	}
+
+	/**
+	 * @param string $custom9
+	 */
+	public function setCustom9($custom9) {
+		$this->custom9 = $custom9;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCustom9() {
+		return $this->custom9;
 	}
 }
 

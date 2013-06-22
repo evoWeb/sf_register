@@ -1,40 +1,41 @@
 <?php
+namespace Evoweb\SfRegister\ViewHelpers\Form;
 /***************************************************************
- *  Copyright notice
+ * Copyright notice
  *
- *  (c) 2011 Sebastian Fischer <typo3@evoweb.de>
- *  All rights reserved
+ * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This copyright notice MUST APPEAR in all copies of the script!
+ * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
 /**
  * Viewhelper to render a selectbox with values in given steps from start to end value
  *
  * <code title="Usage">
- * {namespace register=Tx_SfRegister_ViewHelpers}
+ * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
  * <register:form.required fieldName="'username"/>
  * </code>
  */
-class Tx_SfRegister_ViewHelpers_Form_RequiredViewHelper extends Tx_Fluid_ViewHelpers_Form_AbstractFormFieldViewHelper {
+class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper {
 	/**
 	 * Configuration manager to fetch settings from
 	 *
-	 * @var Tx_Extbase_Configuration_ConfigurationManager
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
 	 */
 	protected $configurationManager;
 
@@ -55,17 +56,17 @@ class Tx_SfRegister_ViewHelpers_Form_RequiredViewHelper extends Tx_Fluid_ViewHel
 	/**
 	 * Injection of configuration manager
 	 *
-	 * @param	Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
+	 * @param	\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
 	 * @return void
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
+	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-		$this->frameworkConfiguration = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		$this->settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+		$this->frameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 	}
 
 	/**
-	 * Render a special sign if the field is required 
+	 * Render a special sign if the field is required
 	 *
 	 * @param	string $fieldName Name of the field to render the requird marker to
 	 * @return	string
@@ -73,12 +74,11 @@ class Tx_SfRegister_ViewHelpers_Form_RequiredViewHelper extends Tx_Fluid_ViewHel
 	public function render($fieldName) {
 		$mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));
 		$modeSettings = $this->settings['validation'][$mode];
+		$fieldSettings = isset($modeSettings[$fieldName]) ? $modeSettings[$fieldName] : FALSE;
 
 		$result = '';
-		if (array_key_exists($fieldName, $modeSettings) &&
-				($modeSettings[$fieldName] != '' || is_array($modeSettings[$fieldName])) &&
-				($modeSettings[$fieldName] == 'Tx_SfRegister_Domain_Validator_RequiredValidator' ||
-				array_search('Tx_SfRegister_Domain_Validator_RequiredValidator', $modeSettings[$fieldName]))) {
+		if ((is_array($fieldSettings) && in_array('Evoweb\SfRegister\Validation\Validator\RequiredValidator', $fieldSettings)) ||
+				(is_string($fieldSettings) && $fieldSettings == 'Evoweb\SfRegister\Validation\Validator\RequiredValidator')) {
 			$result = $this->renderChildren();
 		}
 

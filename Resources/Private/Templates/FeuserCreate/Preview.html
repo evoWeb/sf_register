@@ -1,4 +1,10 @@
-Preview Action
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+<head>
+	<title>Create preview template of registration</title>
+</head>
+<body>
 <f:form action="proxy" name="user" object="{user}">
 <dl>
 	<dt><f:translate key="username"/>*</dt>
@@ -51,7 +57,7 @@ Preview Action
 	<dd><f:form.hidden property="country" />{user.country}</dd>
 
 	<dt><f:translate key="gtc"/></dt>
-	<dd><f:form.hidden property="gtc" /><f:translate key="gtc.checked{user.gtc}"/></dd>
+	<dd><f:form.hidden property="gtc" /><f:translate key="gtc_checked{user.gtc}"/></dd>
 
 	<dt><f:translate key="image"/></dt>
 	<dd><f:form.hidden property="image" />
@@ -68,11 +74,30 @@ Preview Action
 				</f:if>
 			</f:then>
 			<f:else>
-				<f:translate key="image.none"/>
+				<f:translate key="image_none"/>
 			</f:else>
 		</f:if></dd>
 
-	<dt><f:form.submit name="form" value="{f:translate(key:'submit.change')}" /></dt>
-	<dd><f:form.submit name="save" value="{f:translate(key:'submit.save')}" /></dd>
+	<dt><f:translate key="dateOfBirth" /></dt>
+	<dd>
+		<f:if condition="{user.dateOfBirthDay}">
+			<f:then><f:form.hidden property="dateOfBirthDay"/></f:then>
+			<f:else><f:form.hidden property="dateOfBirthDay" value="{f:format.date(date: '{user.dateOfBirth}', format: 'd')}"/></f:else>
+		</f:if>
+		<f:if condition="{user.dateOfBirthMonth}">
+			<f:then><f:form.hidden property="dateOfBirthMonth"/></f:then>
+			<f:else><f:form.hidden property="dateOfBirthMonth" value="{f:format.date(date: '{user.dateOfBirth}', format: 'm')}"/></f:else>
+		</f:if>
+		<f:if condition="{user.dateOfBirthYear}">
+			<f:then><f:form.hidden property="dateOfBirthYear"/></f:then>
+			<f:else><f:form.hidden property="dateOfBirthYear" value="{f:format.date(date: '{user.dateOfBirth}', format: 'Y')}"/></f:else>
+		</f:if>
+		{f:format.date(date: '{user.dateOfBirth}', format: '{settings.dateFormat}')}
+	</dd>
+
+	<dt><f:form.submit name="form" value="{f:translate(key:'submit_change')}" /></dt>
+	<dd><f:form.submit name="save" value="{f:translate(key:'submit_save')}" /></dd>
 </dl>
 </f:form>
+</body>
+</html>

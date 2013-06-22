@@ -1,4 +1,5 @@
 <?php
+namespace Evoweb\SfRegister\Tests\Domain\Validator;
 /***************************************************************
 *  Copyright notice
 *
@@ -25,19 +26,19 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class UniqueValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var Tx_SfRegister_Domain_Validator_UniqueValidator
+	 * @var \Evoweb\SfRegister\Validation\Validator\UniqueValidator
 	 */
 	protected $fixture;
 
 	/**
-	 * @var Tx_Phpunit_Framework
+	 * @var \Tx_Phpunit_Framework
 	 */
 	private $testingFramework;
 
 	public function setUp() {
-		$this->testingFramework = new Tx_Phpunit_Framework('fe_users');
+		$this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
 		$pageUid = $this->testingFramework->createFrontEndPage();
 		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/'));
 		$this->testingFramework->createFakeFrontEnd($pageUid);
@@ -56,10 +57,10 @@ class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Un
 		$fieldname = 'username';
 		$expected = 'myValue';
 
-		$fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_UniqueValidator', array('dummy'), array('global' => FALSE));
+		$fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Domain\\Validator\\UniqueValidator', array('dummy'), array('global' => FALSE));
 		$fixture->setFieldname($fieldname);
 
-		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
+		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('countByField')
 			->with($fieldname, $expected)
@@ -78,10 +79,10 @@ class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Un
 		$fieldname = 'username';
 		$expected = 'myValue';
 
-		$fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_UniqueValidator', array('dummy'), array('global' => FALSE));
+		$fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Domain\\Validator\\UniqueValidator', array('dummy'), array('global' => FALSE));
 		$fixture->setFieldname($fieldname);
 
-		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
+		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('countByField')
 			->with($fieldname, $expected)
@@ -100,10 +101,10 @@ class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Un
 		$fieldname = 'username';
 		$expected = 'myValue';
 
-		$fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_UniqueValidator', array('dummy'), array('global' => TRUE));
+		$fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Domain\\Validator\\UniqueValidator', array('dummy'), array('global' => TRUE));
 		$fixture->setFieldname($fieldname);
 
-		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
+		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('countByField')
 			->with($fieldname, $expected)
@@ -126,10 +127,10 @@ class Tx_SfRegister_Domain_Model_UniqueValidatorTest extends Tx_Extbase_Tests_Un
 		$fieldname = 'username';
 		$expected = 'myValue';
 
-		$fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_UniqueValidator', array('dummy'), array('global' => TRUE));
+		$fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Domain\\Validator\\UniqueValidator', array('dummy'), array('global' => TRUE));
 		$fixture->setFieldname($fieldname);
 
-		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
+		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('countByField')
 			->with($fieldname, $expected)

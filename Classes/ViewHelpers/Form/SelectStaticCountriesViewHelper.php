@@ -1,47 +1,50 @@
 <?php
+namespace Evoweb\SfRegister\ViewHelpers\Form;
 /***************************************************************
- *  Copyright notice
+ * Copyright notice
  *
- *  (c) 2011 Sebastian Fischer <typo3@evoweb.de>
- *  All rights reserved
+ * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This copyright notice MUST APPEAR in all copies of the script!
+ * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
 /**
  * Viewhelper to render a selectbox with values of static info tables countries
  *
  * <code title="Usage">
- * {namespace register=Tx_SfRegister_ViewHelpers}
+ * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
  * <register:form.SelectStaticCountries name="country" optionLabelField="cnShortDe"/>
  * </code>
  *
  * <code title="Optional label field">
- * {namespace register=Tx_SfRegister_ViewHelpers}
+ * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
  * <register:form.SelectStaticCountries name="country" optionLabelField="cnShortDe"/>
  * </code>
  */
-class Tx_SfRegister_ViewHelpers_Form_SelectStaticCountriesViewHelper extends Tx_SfRegister_ViewHelpers_Form_SelectStaticViewHelper {
+class SelectStaticCountriesViewHelper extends SelectStaticViewHelper {
 	/**
 	 * Repository that provides the country models
-	 * 
-	 * @var Tx_SfRegister_Domain_Repository_StaticCountryRepository
+	 *
+	 * @var \Evoweb\SfRegister\Domain\Repository\StaticCountryRepository
+	 * @inject
 	 */
 	protected $countryRepository;
+
 
 	/**
 	 * Initialize arguments. Cant be moved to parent because of "private $argumentDefinitions = array();"
@@ -64,25 +67,15 @@ class Tx_SfRegister_ViewHelpers_Form_SelectStaticCountriesViewHelper extends Tx_
 	}
 
 	/**
-	 * Injects the country repository
-	 *
-	 * @param Tx_SfRegister_Domain_Repository_StaticCountryRepository $countryRepository
-	 * @return void
-	 */
-	public function injectCountryRepository(Tx_SfRegister_Domain_Repository_StaticCountryRepository $countryRepository) {
-		$this->countryRepository = $countryRepository;
-	}
-
-	/**
 	 * Override the initialize method to load all available countries before rendering
-	 * 
+	 *
 	 * @return void
 	 */
 	public function initialize() {
 		parent::initialize();
 
-		if (t3lib_extMgm::isLoaded('static_info_tables')) {
-			$this->options = $this->countryRepository->findAll();
+		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
+			$this->arguments['options'] = $this->countryRepository->findAll();
 		}
 	}
 }

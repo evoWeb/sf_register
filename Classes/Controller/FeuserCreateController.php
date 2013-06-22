@@ -1,77 +1,77 @@
 <?php
+namespace Evoweb\SfRegister\Controller;
 /***************************************************************
- *  Copyright notice
+ * Copyright notice
  *
- *  (c) 2011 Sebastian Fischer <typo3@evoweb.de>
- *  All rights reserved
+ * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This copyright notice MUST APPEAR in all copies of the script!
+ * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
 /**
  * An frontend user create controller
  */
-class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Controller_FeuserController {
-	/**
-	 * User repository
-	 *
-	 * @var Tx_SfRegister_Domain_Model_FrontendUserRepository
-	 */
-	protected $userRepository = NULL;
-
+class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserController {
 	/**
 	 * Usergroup repository
 	 *
-	 * @var Tx_Extbase_Domain_Repository_FrontendUserGroupRepository
+	 * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
+	 * @inject
 	 */
 	protected $userGroupRepository = NULL;
-
- 	/**
-	 * @param Tx_Extbase_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository
-	 * @return void
-	 */
-	public function injectFrontendUserGroupRepository(Tx_Extbase_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository) {
-		$this->userGroupRepository = $frontendUserGroupRepository;
-	}
 
 	/**
 	 * Form action
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return string An HTML form
-	 * @ignorevalidation $user
+	 * @return void
 	 */
-	public function formAction(Tx_SfRegister_Domain_Model_FrontendUser $user = NULL) {
-		if ($user === NULL ||
-				$user instanceof Tx_SfRegister_Interfaces_FrontendUser &&
-				$user->getUid()) {
-			$user = $this->objectManager->create('Tx_SfRegister_Domain_Model_FrontendUser');
-		} else {
+	public function formAction() {
+		/** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
+		$originalRequest = $this->request->getOriginalRequest();
+		if ($originalRequest !== NULL && $originalRequest->hasArgument('user')) {
+			$userData = $originalRequest->getArgument('user');
+			if (isset($userData['uid'])) {
+				unset($userData['uid']);
+			}
+
+			/** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
+			$propertyMapper = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Property\\PropertyMapper');
+			$user = $propertyMapper->convert($userData, 'Evoweb\\SfRegister\\Domain\\Model\\FrontendUser');
 			$user = $this->moveTempFile($user);
+		} else {
+			/** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+			$user = $this->objectManager->get('Evoweb\\SfRegister\\Domain\\Model\\FrontendUser');
 		}
 
 		$user->prepareDateOfBirth();
 
-		$originalRequest = $this->request->getOriginalRequest();
 		if ($originalRequest !== NULL && $originalRequest->hasArgument('temporaryImage')) {
 			$this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
 		}
 
-		$user = Tx_SfRegister_Services_Hook::process('form', $user, $this->settings, $this->objectManager);
+		$this->signalSlotDispatcher->dispatch(
+			__CLASS__,
+			__FUNCTION__,
+			array(
+				'user' => &$user,
+				'settings' => $this->settings,
+			)
+		);
 
 		$this->view->assign('user', $user);
 	}
@@ -79,11 +79,12 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	/**
 	 * Preview action
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
 	 * @return void
-	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
+	 * @validate $user Evoweb.SfRegister:User
+	 * -validate $user \Evoweb\SfRegister\Validation\Validator\UserValidator
 	 */
-	public function previewAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
+	public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user) {
 		$user = $this->moveTempFile($user);
 
 		$user->prepareDateOfBirth();
@@ -92,38 +93,59 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 			$this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
 		}
 
+		$this->signalSlotDispatcher->dispatch(
+			__CLASS__,
+			__FUNCTION__,
+			array(
+				'user' => &$user,
+				'settings' => $this->settings,
+			)
+		);
+
 		$this->view->assign('user', $user);
 	}
 
 	/**
 	 * Save action
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
 	 * @return void
-	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
+	 * @validate $user Evoweb.SfRegister:User
 	 */
-	public function saveAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$user->setPassword($this->encryptPassword($user->getPassword()));
+	public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user) {
+		$user->prepareDateOfBirth();
 
-		if ($this->isNotifyPreActivationToUser() || $this->isNotifyPreActivationToAdmin()) {
+		if ($this->isNotifyUser('PreConfirmation') || $this->isNotifyAdmin('PreConfirmation')) {
 			$user->setDisable(TRUE);
-			$user->setActivatedOn(new DateTime('1970-01-01'));
-			$user = $this->setUsergroupPreActivation($user);
+			$user->setActivatedOn(new \DateTime('1970-01-01'));
+			$user = $this->changeUsergroup($user, 0, $this->settings['usergroupPreConfirmation']);
 		} else {
 			$user = $this->moveImageFile($user);
-			$user = $this->addUsergroup($user, $this->settings['usergroup']);
+			$user = $this->changeUsergroup($user, 0, $this->settings['usergroup']);
 		}
-
-		$user = $this->sendEmailsPreSave($user);
 
 		if ($this->settings['useEmailAddressAsUsername']) {
 			$user->setUsername($user->getEmail());
 		}
 
+		$this->signalSlotDispatcher->dispatch(
+			__CLASS__,
+			__FUNCTION__,
+			array(
+				'user' => &$user,
+				'settings' => $this->settings,
+			)
+		);
+
+		$user = $this->sendEmails($user, 'PreConfirmation');
+
+		$user->setPassword($this->encryptPassword($user->getPassword(), $this->settings));
+
 		$this->userRepository->add($user);
 		$this->persistAll();
 
-		t3lib_div::makeInstance('Tx_SfRegister_Services_Session')
+		$this->objectManager
+			->get('Evoweb\\SfRegister\\Services\\Session')
 			->remove('captchaWasValidPreviously');
 
 		if ($this->settings['autologinPostRegistration']) {
@@ -141,12 +163,13 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 * @return void
 	 */
 	protected function initializeConfirmAction() {
-		$this->userRepository = t3lib_div::makeInstance('Tx_SfRegister_Domain_Repository_FrontendUserRepository');
-		$this->userGroupRepository = t3lib_div::makeInstance('Tx_Extbase_Domain_Repository_FrontendUserGroupRepository');
+		$this->userRepository = $this->objectManager->get('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository');
+		$this->userGroupRepository = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Domain\\Repository\\FrontendUserGroupRepository');
 	}
 
 	/**
-	 * Confirm action
+	 * Confirm registration process by user
+	 * Could be followed by acceptance of admin
 	 *
 	 * @param string $authCode
 	 * @return void
@@ -154,22 +177,37 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	public function confirmAction($authCode) {
 		$user = $this->userRepository->findByMailhash($authCode);
 
-		if (!($user instanceof Tx_SfRegister_Domain_Model_FrontendUser)) {
+		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
 		} else {
 			$this->view->assign('user', $user);
 
-			if ($user->getActivatedOn()) {
-				$this->view->assign('userAlreadyActive', 1);
+			if (!$user->getDisable()) {
+				$this->view->assign('userAlreadyConfirmed', 1);
 			} else {
-				$user = $this->changeUsergroupPostActivation($user);
+				$user = $this->changeUsergroup(
+					$user,
+					$this->settings['usergroupPreConfirmation'],
+					$this->settings['usergroupPostConfirmation']
+				);
 				$user = $this->moveImageFile($user);
 				$user->setDisable(FALSE);
-				$user->setActivatedOn(new DateTime('now'));
+				$user->setMailhash('');
 
-				$this->sendEmailsPostConfirm($user);
+				$this->signalSlotDispatcher->dispatch(
+					__CLASS__,
+					__FUNCTION__,
+					array(
+						'user' => &$user,
+						'settings' => $this->settings,
+					)
+				);
 
-				if ($this->settings['autologinPostActivation']) {
+				$this->userRepository->update($user);
+
+				$this->sendEmails($user, 'PostConfirmation');
+
+				if ($this->settings['autologinPostConfirmation']) {
 					$this->persistAll();
 					$this->autoLogin($user);
 				}
@@ -178,11 +216,127 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 					$this->redirectToPage($this->settings['redirectPostActivationPageId']);
 				}
 
-				$this->view->assign('userActivated', 1);
+				$this->view->assign('userConfirmed', 1);
 			}
 		}
 	}
 
+	/**
+	 * Refuse registration process by user with removing the user data
+	 *
+	 * @param string $authCode
+	 * @return void
+	 */
+	public function refuseAction($authCode) {
+		$user = $this->userRepository->findByMailhash($authCode);
+
+		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
+			$this->view->assign('userNotFound', 1);
+		} else {
+			$this->view->assign('user', $user);
+
+			$this->signalSlotDispatcher->dispatch(
+				__CLASS__,
+				__FUNCTION__,
+				array(
+					'user' => &$user,
+					'settings' => $this->settings,
+				)
+			);
+
+			$this->userRepository->remove($user);
+
+			$this->sendEmails($user, 'PostRefuse');
+
+			$this->view->assign('userRefused', 1);
+		}
+	}
+
+	/**
+	 * Accept registration process by admin after user confirmation
+	 *
+	 * @param string $authCode
+	 * @return void
+	 */
+	public function acceptAction($authCode) {
+		$user = $this->userRepository->findByMailhash($authCode);
+
+		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
+			$this->view->assign('userNotFound', 1);
+		} else {
+			$this->view->assign('user', $user);
+
+			if (!$user->getActivatedOn()) {
+				$this->view->assign('userAlreadyAccapted', 1);
+			} else {
+				$user = $this->changeUsergroup(
+					$user,
+					$this->settings['usergroupPreAcceptance'],
+					$this->settings['usergroupPostAcceptance']
+				);
+				$user->setActivatedOn(new \DateTime('now'));
+				$user->setMailhash('');
+
+				$this->signalSlotDispatcher->dispatch(
+					__CLASS__,
+					__FUNCTION__,
+					array(
+						'user' => &$user,
+						'settings' => $this->settings,
+					)
+				);
+
+				$this->userRepository->update($user);
+
+				$this->sendEmails($user, 'PostAccept');
+
+				$this->view->assign('userAccepted', 1);
+			}
+		}
+	}
+
+	/**
+	 * Decline registration process by admin with removing the user data
+	 *
+	 * @param string $authCode
+	 * @return void
+	 */
+	public function declineAction($authCode) {
+		$user = $this->userRepository->findByMailhash($authCode);
+
+		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
+			$this->view->assign('userNotFound', 1);
+		} else {
+			$this->view->assign('user', $user);
+
+			$this->signalSlotDispatcher->dispatch(
+				__CLASS__,
+				__FUNCTION__,
+				array(
+					'user' => &$user,
+					'settings' => $this->settings,
+				)
+			);
+
+			$this->userRepository->remove($user);
+
+			$this->sendEmails($user, 'PostDecline');
+
+			$this->view->assign('userDeclined', 1);
+		}
+	}
+
+	/**
+	 * Login user with service
+	 *
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @return void
+	 */
+	protected function autoLogin(\Evoweb\SfRegister\Domain\Model\FrontendUser $user) {
+		$this->objectManager
+			->get('TYPO3\\CMS\\SfRegister\\Services\\Login')
+			->loginUserById($user->getUid());
+	}
 
 	/**
 	 * Redirect to a page with given id
@@ -198,208 +352,28 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	}
 
 	/**
-	 * Persist all data that was not stored by now
-	 *
-	 * @return void
-	 */
-	protected function persistAll() {
-		$this->objectManager->get('Tx_Extbase_Persistence_Manager')->persistAll();
-	}
-
-	/**
-	 * Login user with service
-	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return void
-	 */
-	protected function autoLogin(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$this->objectManager->get('Tx_SfRegister_Services_Login')->loginUserById($user->getUid());
-	}
-
-
-	/**
-	 * Add usergroup to user
-	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @param integer $usergroupUid
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
-	 */
-	protected function addUsergroup(Tx_SfRegister_Domain_Model_FrontendUser $user, $usergroupUid) {
-		$usergroupToAdd = $this->userGroupRepository->findByUid($usergroupUid);
-		$user->addUsergroup($usergroupToAdd);
-
-		return $user;
-	}
-
-	/**
-	 * Set usergroup to user before activation
-	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
-	 */
-	protected function setUsergroupPreActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		if (intval($this->settings['usergroupPreActivation']) > 0) {
-			$user = $this->addUsergroup($user, $this->settings['usergroupPreActivation']);
-		}
-
-		return $user;
-	}
-
-	/**
 	 * Change usergroup of user after activation
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @param integer $usergroupIdToBeRemoved
+	 * @param integer $usergroupIdToAdd
+	 * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
 	 */
-	protected function changeUsergroupPostActivation(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		if (intval($this->settings['usergroupPostActivation']) > 0 &&
-				intval($this->settings['usergroupAfterActivation']) != intval($this->settings['usergroupPreActivation'])) {
-			$user = $this->addUsergroup($user, $this->settings['usergroupPostActivation']);
+	protected function changeUsergroup(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, $usergroupIdToBeRemoved, $usergroupIdToAdd) {
+		if (intval($usergroupIdToAdd) > 0 &&
+				intval($usergroupIdToAdd) != intval($usergroupIdToBeRemoved)) {
+			/** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup $usergroupToAdd */
+			$usergroupToAdd = $this->userGroupRepository->findByUid($usergroupIdToAdd);
+			$user->addUsergroup($usergroupToAdd);
 
-			$usergroupToRemove = $this->userGroupRepository->findByUid($this->settings['usergroupPreActivation']);
-			$user->removeUsergroup($usergroupToRemove);
+			if (intval($usergroupIdToBeRemoved) > 0) {
+				/** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup $usergroupToRemove */
+				$usergroupToRemove = $this->userGroupRepository->findByUid($usergroupIdToBeRemoved);
+				$user->removeUsergroup($usergroupToRemove);
+			}
 		}
 
 		return $user;
-	}
-
-
-	/**
-	 * Send emails to user and/or to admin
-	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
-	 */
-	protected function sendEmailsPreSave($user) {
-		/** @var $mailService Tx_SfRegister_Services_Mail */
-		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
-
-		if ($this->isNotifyPreActivationToAdmin()) {
-			$user = $mailService->sendAdminNotificationMailPreActivation($user);
-		} elseif ($this->isNotifyPreActivationToUser()) {
-			$user = $mailService->sendUserNotificationMailPreActivation($user);
-		}
-
-		if ($this->isNotifyToAdmin()) {
-			$mailService->sendAdminNotificationMail($user);
-		}
-		if ($this->isNotifyToUser()) {
-			$mailService->sendUserNotificationMail($user);
-		}
-
-		return $user;
-	}
-
-	/**
-	 * Send emails to user and/or to admin
-	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
-	 */
-	protected function sendEmailsPostConfirm($user) {
-		/** @var $mailService Tx_SfRegister_Services_Mail */
-		$mailService = $this->objectManager->get('Tx_SfRegister_Services_Mail');
-
-		if ($this->isNotifyPostActivationToAdmin()) {
-			$mailService->sendAdminNotificationMailPostActivation($user);
-		}
-		if ($this->isNotifyPostActivationToUser()) {
-			$mailService->sendUserNotificationMailPostActivation($user);
-		}
-
-		return $user;
-	}
-
-
-	/**
-	 * Check if the admin should get notified account registration
-	 *
-	 * @return boolean
-	 */
-	protected function isNotifyToAdmin() {
-		$result = FALSE;
-
-		if ($this->settings['notifyToAdmin'] && !$this->isNotifyPreActivationToAdmin()) {
-			$result = TRUE;
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Check if the admin should get notified about account activation
-	 *
-	 * @return boolean
-	 */
-	protected function isNotifyPostActivationToAdmin() {
-		$result = FALSE;
-
-		if ($this->settings['notifyPostActivationToAdmin']) {
-			$result = TRUE;
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Check if the admin need to activate the account
-	 *
-	 * @return boolean
-	 */
-	protected function isNotifyPreActivationToAdmin() {
-		$result = FALSE;
-
-		if ($this->settings['notifyPreActivationToAdmin']) {
-			$result = TRUE;
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Check if the user should get notified account registration
-	 *
-	 * @return boolean
-	 */
-	protected function isNotifyToUser() {
-		$result = FALSE;
-
-		if (($this->settings['notifyToUser'] && !$this->isNotifyPreActivationToUser()) ||
-				($this->settings['notifyToUser'] && $this->isNotifyPreActivationToAdmin())) {
-			$result = TRUE;
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Check if the user should get notified about account activation
-	 *
-	 * @return boolean
-	 */
-	protected function isNotifyPostActivationToUser() {
-		$result = FALSE;
-
-		if ($this->settings['notifyPostActivationToUser']) {
-			$result = TRUE;
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Check if the user need to activate the account
-	 *
-	 * @return boolean
-	 */
-	protected function isNotifyPreActivationToUser() {
-		$result = FALSE;
-
-		if ($this->settings['notifyPreActivationToUser']) {
-			$result = TRUE;
-		}
-
-		return $result;
 	}
 }
 
