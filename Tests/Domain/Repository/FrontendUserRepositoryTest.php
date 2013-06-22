@@ -1,4 +1,5 @@
 <?php
+namespace Evoweb\SfRegister\Tests\Domain\Repository;
 /***************************************************************
 *  Copyright notice
 *
@@ -25,19 +26,19 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class Tx_SfRegister_Domain_Repository_FrontendUserRepositoryTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class FrontendUserRepositoryTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var Tx_SfRegister_Domain_Validator_BadWordValidator
+	 * @var \Evoweb\SfRegister\Validation\Validator\BadWordValidator
 	 */
 	protected $fixture;
 
 	/**
-	 * @var Tx_Phpunit_Framework
+	 * @var \Tx_Phpunit_Framework
 	 */
 	private $testingFramework;
 
 	public function setUp() {
-		$this->testingFramework = new Tx_Phpunit_Framework('fe_users');
+		$this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
 		$pageUid = $this->testingFramework->createFrontEndPage();
 		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/'));
 		$this->testingFramework->createFakeFrontEnd($pageUid);
@@ -49,14 +50,14 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepositoryTest extends Tx_Extb
 			'nonCacheableActions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'),
 		);
 
-		$bootstrap = new Tx_Extbase_Core_Bootstrap();
+		$bootstrap = new \TYPO3\CMS\Extbase\Core\Bootstrap();
 		$bootstrap->run('', array(
-			'userFunc' => 'tx_extbase_core_bootstrap->run',
+			'userFunc' => '\TYPO3\CMS\Extbase\Core\Bootstrap->run',
 			'extensionName' => $extensionName,
 			'pluginName' => $pluginName,
 		));
 
-		$this->fixture = new Tx_SfRegister_Domain_Repository_FrontendUserRepository();
+		$this->fixture = new \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository();
 	}
 
 	public function tearDown() {
@@ -73,13 +74,10 @@ class Tx_SfRegister_Domain_Repository_FrontendUserRepositoryTest extends Tx_Extb
 
 		$this->testingFramework->createAndLoginFrontEndUser(
 			'',
-			array('tx_extbase_type' => 'Tx_Extbase_Domain_Model_FrontendUser', 'mailhash' => $expected)
+			array('tx_extbase_type' => 'TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser', 'mailhash' => $expected)
 		);
 
-		$this->assertInstanceOf(
-			'Tx_SfRegister_Domain_Model_FrontendUser',
-			$this->fixture->findByMailhash($expected)
-		);
+		$this->assertInstanceOf('Evoweb\\SfRegister\\Domain\\Model\\FrontendUser', $this->fixture->findByMailhash($expected));
 	}
 }
 

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-06-23T17:12:01Z" product-name="sf_register">
+		<header/>
+		<body>
+			<trans-unit id="pi1_title" xml:space="preserve">
+				<source>Feuser Register</source>
+			</trans-unit>
+			<trans-unit id="pi1_plus_wiz_description" xml:space="preserve">
+				<source>Feuser Register</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_form" xml:space="preserve">
+				<source>Registration plugin for create, editor or delete Frontend Users.</source>
+			</trans-unit>
+			<trans-unit id="fe_users.div.registration" xml:space="preserve">
+				<source>Registration</source>
+			</trans-unit>
+			<trans-unit id="fe_users.mailhash" xml:space="preserve">
+				<source>Mailhash of confirmation mail</source>
+			</trans-unit>
+			<trans-unit id="fe_users.activated_on" xml:space="preserve">
+				<source>Activated on</source>
+			</trans-unit>
+			<trans-unit id="fe_users.pseudonym" xml:space="preserve">
+				<source>Pseudonym</source>
+			</trans-unit>
+			<trans-unit id="fe_users.gender" xml:space="preserve">
+				<source>Mr/Ms:</source>
+			</trans-unit>
+			<trans-unit id="fe_users.gender.I.1" xml:space="preserve">
+				<source>Mr</source>
+			</trans-unit>
+			<trans-unit id="fe_users.gender.I.2" xml:space="preserve">
+				<source>Ms</source>
+			</trans-unit>
+			<trans-unit id="fe_users.date_of_birth" xml:space="preserve">
+				<source>Date of birth</source>
+			</trans-unit>
+			<trans-unit id="fe_users.language" xml:space="preserve">
+				<source>Language</source>
+			</trans-unit>
+			<trans-unit id="fe_users.zone" xml:space="preserve">
+				<source>State/province</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone" xml:space="preserve">
+				<source>Timezone</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-12" xml:space="preserve">
+				<source>UTC−12:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-11" xml:space="preserve">
+				<source>UTC−11:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-10" xml:space="preserve">
+				<source>UTC−10:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-9.5" xml:space="preserve">
+				<source>UTC−09:30</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-9" xml:space="preserve">
+				<source>UTC−09:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-8" xml:space="preserve">
+				<source>UTC−08:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-7" xml:space="preserve">
+				<source>UTC−07:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-6" xml:space="preserve">
+				<source>UTC−06:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-5" xml:space="preserve">
+				<source>UTC−05:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-4.5" xml:space="preserve">
+				<source>UTC−04:30</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-4" xml:space="preserve">
+				<source>UTC−04:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-3.5" xml:space="preserve">
+				<source>UTC−03:30</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-3" xml:space="preserve">
+				<source>UTC−03:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-2" xml:space="preserve">
+				<source>UTC−02:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.-1" xml:space="preserve">
+				<source>UTC−01:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.0" xml:space="preserve">
+				<source>UTC</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.1" xml:space="preserve">
+				<source>UTC+01:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.2" xml:space="preserve">
+				<source>UTC+02:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.3" xml:space="preserve">
+				<source>UTC+03:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.3.5" xml:space="preserve">
+				<source>UTC+03:30</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.4" xml:space="preserve">
+				<source>UTC+04:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.4.5" xml:space="preserve">
+				<source>UTC+04:30</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.5" xml:space="preserve">
+				<source>UTC+05:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.5.5" xml:space="preserve">
+				<source>UTC+05:30</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.5.75" xml:space="preserve">
+				<source>UTC+05:45</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.6" xml:space="preserve">
+				<source>UTC+06:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.6.5" xml:space="preserve">
+				<source>UTC+06:30</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.7" xml:space="preserve">
+				<source>UTC+07:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.8" xml:space="preserve">
+				<source>UTC+08:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.9" xml:space="preserve">
+				<source>UTC+09:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.9.5" xml:space="preserve">
+				<source>UTC+09:30</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.10" xml:space="preserve">
+				<source>UTC+10:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.11" xml:space="preserve">
+				<source>UTC+11:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.11.5" xml:space="preserve">
+				<source>UTC+11:30</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.12" xml:space="preserve">
+				<source>UTC+12:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.12.75" xml:space="preserve">
+				<source>UTC+12:45</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.13" xml:space="preserve">
+				<source>UTC+13:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.timezone.I.14" xml:space="preserve">
+				<source>UTC+14:00</source>
+			</trans-unit>
+			<trans-unit id="fe_users.daylight" xml:space="preserve">
+				<source>Daylight saving time</source>
+			</trans-unit>
+			<trans-unit id="fe_users.static_info_country" xml:space="preserve">
+				<source>Country Code</source>
+			</trans-unit>
+			<trans-unit id="fe_users.mobilephone" xml:space="preserve">
+				<source>Mobile phone:</source>
+			</trans-unit>
+			<trans-unit id="fe_users.gtc" xml:space="preserve">
+				<source>General terms and conditions accepted</source>
+			</trans-unit>
+			<trans-unit id="fe_users.privacy" xml:space="preserve">
+				<source>Privacy agreement</source>
+			</trans-unit>
+			<trans-unit id="fe_users.status" xml:space="preserve">
+				<source>Status:</source>
+			</trans-unit>
+			<trans-unit id="fe_users.status.I.1" xml:space="preserve">
+				<source>Student</source>
+			</trans-unit>
+			<trans-unit id="fe_users.status.I.2" xml:space="preserve">
+				<source>Job seeking full time</source>
+			</trans-unit>
+			<trans-unit id="fe_users.status.I.3" xml:space="preserve">
+				<source>Working</source>
+			</trans-unit>
+			<trans-unit id="fe_users.status.I.4" xml:space="preserve">
+				<source>Retired</source>
+			</trans-unit>
+			<trans-unit id="fe_users.status.I.5" xml:space="preserve">
+				<source>Job seeking half time</source>
+			</trans-unit>
+			<trans-unit id="fe_users.by_invitation" xml:space="preserve">
+				<source>Was invited</source>
+			</trans-unit>
+			<trans-unit id="fe_users.comments" xml:space="preserve">
+				<source>Comments</source>
+			</trans-unit>
+			<trans-unit id="fe_users.module_sys_dmail_html" xml:space="preserve">
+				<source>Receive emails in HTML format</source>
+			</trans-unit>
+			<trans-unit id="fe_users.module_sys_dmail_category" xml:space="preserve">
+				<source>Subscribe to categories</source>
+			</trans-unit>
+			<trans-unit id="form_flexform.sheet_general" xml:space="preserve">
+				<source>General settings</source>
+			</trans-unit>
+			<trans-unit id="form_flexform.switchableControllerAction" xml:space="preserve">
+				<source>What action should be taken?</source>
+			</trans-unit>
+			<trans-unit id="form_flexform.switchableControllerAction.create" xml:space="preserve">
+				<source>Create</source>
+			</trans-unit>
+			<trans-unit id="form_flexform.switchableControllerAction.edit" xml:space="preserve">
+				<source>Edit</source>
+			</trans-unit>
+			<trans-unit id="form_flexform.switchableControllerAction.password" xml:space="preserve">
+				<source>Password</source>
+			</trans-unit>
+			<trans-unit id="form_flexform.viewTemplateRootPath" xml:space="preserve">
+				<source>Template root path (EXT:sf_register/Resources/Private/Templates)</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -5,13 +5,13 @@ plugin.tx_sfregister.settings {
 	# cat=sf_register.settings//50; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:minimal.redirectPostActivationPageId
 	redirectPostActivationPageId =
 
-	# cat=sf_register.settings//55; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:minimal.autologinPostActivation
-	autologinPostActivation = 0
+	# cat=sf_register.settings//55; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:minimal.autologinPostConfirmation
+	autologinPostConfirmation = 0
 
-	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:minimal.usergroupPreActivation
-	usergroupPreActivation = 0
-	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:minimal.usergroupPostActivation
-	usergroupPostActivation = 0
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:minimal.usergroupPreConfirmation
+	usergroupPreConfirmation = 0
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:minimal.usergroupPostConfirmation
+	usergroupPostConfirmation = 0
 
 	# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:minimal.emailSitename
 	emailSitename = dummy Site

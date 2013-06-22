@@ -1,31 +1,32 @@
 <?php
+namespace Evoweb\SfRegister\Services\Captcha;
 /***************************************************************
- *  Copyright notice
+ * Copyright notice
  *
- *  (c) 2011 Sebastian Fischer <typo3@evoweb.de>
- *  All rights reserved
+ * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This copyright notice MUST APPEAR in all copies of the script!
+ * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
 /**
  *
  * = Examples =
- * 
+ *
  * <code title="Single alias">
  * <f:alias map="{x: '{register:form.captcha(type: \'freecap\')}'}">
  *	<f:format.html>{x.image}</f:format.html>
@@ -41,7 +42,15 @@
  * </output>
  *
  */
-class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Services_Captcha_AbstractAdapter {
+class SrFreecapAdapter extends \Evoweb\SfRegister\Services\Captcha\AbstractAdapter {
+	/**
+	 * Object manager
+	 *
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+	 * @inject
+	 */
+	protected $objectManager;
+
 	/**
 	 * Captcha object
 	 *
@@ -62,12 +71,13 @@ class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Serv
 	);
 
 	/**
-	 * class constuctor
+	 * Constuctor
 	 */
 	public function __construct() {
-		if (t3lib_extMgm::isLoaded('sr_freecap')) {
-			require_once(t3lib_extMgm::extPath('sr_freecap') . 'pi2/class.tx_srfreecap_pi2.php');
-			$this->captcha = t3lib_div::makeInstance('tx_srfreecap_pi2');
+		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('sr_freecap')) {
+			/** @noinspection PhpIncludeInspection */
+			require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('sr_freecap') . 'pi2/class.tx_srfreecap_pi2.php');
+			$this->captcha = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_srfreecap_pi2');
 		}
 	}
 
@@ -77,14 +87,13 @@ class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Serv
 	 * @return string
 	 */
 	public function render() {
-		t3lib_div::makeInstance('Tx_SfRegister_Services_Session')
-			->remove('captchaWasValidPreviously');
+		$this->objectManager->get('Evoweb\\SfRegister\\Services\\Session')->remove('captchaWasValidPreviously');
 
 		if ($this->captcha !== NULL) {
 			$values = array_values($this->captcha->makeCaptcha());
 			$output = array_combine($this->keys, $values);
 		} else {
-			$output = Tx_Extbase_Utility_Localization::translate('error.captcha.notinstalled', 'sf_register', array('sr_freecap'));
+			$output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_captcha_notinstalled', 'sf_register', array('sr_freecap'));
 		}
 
 		return $output;
@@ -99,12 +108,15 @@ class Tx_SfRegister_Services_Captcha_SrFreecapAdapter extends Tx_SfRegister_Serv
 	public function isValid($value) {
 		$validCaptcha = TRUE;
 
-		$session = t3lib_div::makeInstance('Tx_SfRegister_Services_Session');
+		$session = $this->objectManager->get('Evoweb\\SfRegister\\Services\\Session');
 		$captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
 		if ($this->captcha !== NULL && $captchaWasValidPreviously !== TRUE) {
 			if (!$this->captcha->checkWord($value)) {
 				$validCaptcha = FALSE;
-				$this->addError(Tx_Extbase_Utility_Localization::translate('error.captcha.notcorrect', 'SfRegister'), 1306910429);
+				$this->addError(
+					\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_captcha_notcorrect', 'SfRegister'),
+					1306910429
+				);
 			}
 		}
 

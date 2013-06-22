@@ -1,4 +1,5 @@
 <?php
+namespace Evoweb\SfRegister\Tests\Domain\Validator;
 /***************************************************************
 *  Copyright notice
 *
@@ -25,24 +26,24 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class Tx_SfRegister_Domain_Model_EqualCurrentPasswordValidatorTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class EqualCurrentPasswordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator
+	 * @var \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator
 	 */
 	protected $fixture;
 
 	/**
-	 * @var Tx_Phpunit_Framework
+	 * @var \Tx_Phpunit_Framework
 	 */
 	private $testingFramework;
 
 	public function setUp() {
-		$this->testingFramework = new Tx_Phpunit_Framework('fe_users');
+		$this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
 		$pageUid = $this->testingFramework->createFrontEndPage();
 		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/maximal/'));
 		$this->testingFramework->createFakeFrontEnd($pageUid);
 
-		$this->fixture = $this->getAccessibleMock('Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator', array('dummy'));
+		$this->fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Domain\\Validator\\EqualCurrentPasswordValidator', array('dummy'));
 	}
 
 	public function tearDown() {
@@ -94,12 +95,12 @@ class Tx_SfRegister_Domain_Model_EqualCurrentPasswordValidatorTest extends Tx_Ex
 
 		$userId = $this->testingFramework->createAndLoginFrontEndUser('', array('password' => $expected));
 
-		$userMock = $this->getMock('Tx_SfRegister_Domain_Model_FrontendUser');
+		$userMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Model\\FrontendUser');
 		$userMock->expects($this->once())
 			->method('getPassword')
 			->will($this->returnValue($expected));
 
-		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
+		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('findByUid')
 			->with($userId)
@@ -123,12 +124,12 @@ class Tx_SfRegister_Domain_Model_EqualCurrentPasswordValidatorTest extends Tx_Ex
 
 		$userId = $this->testingFramework->createAndLoginFrontEndUser('', array('password' => $expected));
 
-		$userMock = $this->getMock('Tx_SfRegister_Domain_Model_FrontendUser');
+		$userMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Model\\FrontendUser');
 		$userMock->expects($this->once())
 			->method('getPassword')
 			->will($this->returnValue(md5($expected)));
 
-		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
+		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('findByUid')
 			->with($userId)
@@ -142,4 +143,4 @@ class Tx_SfRegister_Domain_Model_EqualCurrentPasswordValidatorTest extends Tx_Ex
 }
 
 ?>
- 
+

@@ -1,301 +1,268 @@
 <?php
+namespace Evoweb\SfRegister\Services;
 /***************************************************************
- *  Copyright notice
+ * Copyright notice
  *
- *  (c) 2011 Sebastian Fischer <typo3@evoweb.de>
- *  All rights reserved
+ * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This copyright notice MUST APPEAR in all copies of the script!
+ * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
 /**
  * Service to handle mail sending
  */
-class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
+class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Object manager
 	 *
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+	 * @inject
 	 */
 	protected $objectManager;
 
 	/**
 	 * Configuration manager
-	 * 
-	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 *
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
 	 */
 	protected $configurationManager;
 
 	/**
 	 * Settings of the create controller
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $settings = array();
 
 	/**
 	 * Framework configurations
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $frameworkConfiguration = array();
 
 	/**
-	 * Inject object manager
+	 * Signal slot dispatcher
 	 *
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
-	 * @return Tx_SfRegister_Services_Mail
+	 * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+	 * @inject
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
-		$this->objectManager = $objectManager;
-	}
+	protected $signalSlotDispatcher;
+
 
 	/**
 	 * Inject configuration manager
 	 *
-	 * @param Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
-	 * @return Tx_SfRegister_Services_Mail
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
+	 * @return void
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
+	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-		$this->frameworkConfiguration = $configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		$this->settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+		$this->frameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 	}
 
 
 	/**
-	 * Send an email notification pre activation to the admin
+	 * Send an email notification for type to the admin
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
+	 * @param string $type
+	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
 	 */
-	public function sendAdminNotificationMail(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$type = str_replace('send', '', __FUNCTION__);
-		$variables = array('user' => $user);
+	public function sendAdminNotification(\Evoweb\SfRegister\Interfaces\FrontendUser $user, $type) {
+		if (method_exists($this, 'sendAdminNotification' . $type)) {
+			$user = $this->{'sendAdminNotification' . $type}($user);
+		} else {
+			$this->sendEmail(
+				$this->getAdminRecipient(),
+				'adminEmail',
+				$this->getSubject(__FUNCTION__ . $type, $user),
+				$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
+				$user
+			);
 
-		$mailResult = $this->sendEmail(
-			$this->getAdminRecipient(),
-			'adminEmail',
-			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserCreate', 'form', $type, $variables)
-		);
+			$user = $this->dispatchSlotSignal(__FUNCTION__ . $type . 'PostSend', $user);
+		}
 
-		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
+		return $user;
 	}
 
 	/**
-	 * Send an email notification post activation to the admin
+	 * Send an email notification for type to the user
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
+	 * @param string $type
+	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
 	 */
-	public function sendAdminNotificationMailPostActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$type = str_replace('send', '', __FUNCTION__);
-		$variables = array('user' => $user);
+	public function sendUserNotification(\Evoweb\SfRegister\Interfaces\FrontendUser $user, $type) {
+		if (method_exists($this, 'sendUserNotification' . $type)) {
+			$user = $this->{'sendUserNotification' . $type}($user);
+		} else {
+			$this->sendEmail(
+				$this->getUserRecipient($user),
+				'userEmail',
+				$this->getSubject(__FUNCTION__ . $type, $user),
+				$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
+				$user
+			);
 
-		$mailResult = $this->sendEmail(
-			$this->getAdminRecipient(),
-			'adminEmail',
-			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserEdit', 'form', $type, $variables)
-		);
+			$user = $this->dispatchSlotSignal(__FUNCTION__ . $type . 'PostSend', $user);
+		}
 
-		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
+		return $user;
 	}
 
-	/**
-	 * Send an email on registration request to activate the user by admin
-	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
-	 */
-	public function sendAdminNotificationMailPreActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$type = str_replace('send', '', __FUNCTION__);
-		$variables = array('user' => $user);
 
+	/**
+	 * Send an email notification pre confirmation to the admin
+	 *
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
+	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
+	 */
+	public function sendAdminNotificationPreConfirmation(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
 		$user->setMailhash($this->getMailHash($user));
 
-		$mailResult = $this->sendEmail(
+		$this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
-			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserCreate', 'confirm', $type, $variables)
+			$this->getSubject(__FUNCTION__, $user),
+			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
+			$user
 		);
 
-		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
+		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
 	}
 
 	/**
-	 * Send an email notification pre activation to the user
+	 * Send an email notification pre confirmation to the user
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
+	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
 	 */
-	public function sendUserNotificationMail(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$type = str_replace('send', '', __FUNCTION__);
-		$variables = array('user' => $user);
-
-		$mailResult = $this->sendEmail(
-			$this->getUserRecipient($user),
-			'userEmail',
-			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserCreate', 'form', $type, $variables)
-		);
-
-		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
-	}
-
-	/**
-	 * Send an email notification post activation to the user
-	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
-	 */
-	public function sendUserNotificationMailPostActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$type = str_replace('send', '', __FUNCTION__);
-		$variables = array('user' => $user);
-
-		$mailResult = $this->sendEmail(
-			$this->getUserRecipient($user),
-			'userEmail',
-			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserEdit', 'form', $type, $variables)
-		);
-
-		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
-	}
-
-	/**
-	 * Send an email on registration request to activate the user by user
-	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
-	 */
-	public function sendUserNotificationMailPreActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$type = str_replace('send', '', __FUNCTION__);
-		$variables = array('user' => $user);
-
+	public function sendUserNotificationPreConfirmation(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
 		$user->setMailhash($this->getMailHash($user));
 
-		$mailResult = $this->sendEmail(
+		$this->sendEmail(
 			$this->getUserRecipient($user),
 			'userEmail',
-			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserCreate', 'confirm', $type, $variables)
+			$this->getSubject(__FUNCTION__, $user),
+			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
+			$user
 		);
 
-		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
+		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
 	}
 
 
 	/**
-	 * Send an email after edit to activate the user by admin
+	 * Send an email notification post confirmation to the admin
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
+	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
 	 */
-	public function sendAdminActivationMailAfterEdit(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$type = str_replace('send', '', __FUNCTION__);
-		$variables = array('user' => $user);
-
+	public function sendAdminNotificationPostConfirmation(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
 		$user->setMailhash($this->getMailHash($user));
 
-		$mailResult = $this->sendEmail(
-			$this->getUserRecipient($user),
-			'userEmail',
-			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserCreate', 'confirm', $type, $variables)
-		);
-
-		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
-	}
-
-	/**
-	 * Send an email after edit to activate the user by user
-	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
-	 */
-	public function sendUserActivationMailAfterEdit(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$type = str_replace('send', '', __FUNCTION__);
-		$variables = array('user' => $user);
-
-		$user->setMailhash($this->getMailHash($user));
-
-		$mailResult = $this->sendEmail(
-			$this->getUserRecipient($user),
-			'userEmail',
-			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserCreate', 'confirm', $type, $variables)
-		);
-
-		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
-	}
-
-	/**
-	 * Send an email after edit to notify the admin
-	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
-	 */
-	public function sendAdminNotificationMailAfterEdit(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$type = str_replace('send', '', __FUNCTION__);
-		$variables = array('user' => $user);
-
-		$mailResult = $this->sendEmail(
+		$this->sendEmail(
 			$this->getAdminRecipient(),
 			'adminEmail',
-			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserCreate', 'form', $type, $variables)
+			$this->getSubject(__FUNCTION__, $user),
+			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
+			$user
 		);
 
-		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
+		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
 	}
 
 	/**
-	 * Send an email after edit to notify the user
+	 * Send an email notification post confirmation to the user
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @return Tx_SfRegister_Interfaces_FrontendUser
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
+	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
 	 */
-	public function sendUserNotificationMailAfterEdit(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		$type = str_replace('send', '', __FUNCTION__);
-		$variables = array('user' => $user);
+	public function sendUserNotificationPostConfirmation(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
+		$user->setMailhash($this->getMailHash($user));
 
-		$mailResult = $this->sendEmail(
-			$this->getAdminRecipient(),
-			'adminEmail',
-			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserCreate', 'form', $type, $variables)
+		$this->sendEmail(
+			$this->getUserRecipient($user),
+			'userEmail',
+			$this->getSubject(__FUNCTION__, $user),
+			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
+			$user
 		);
 
-		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
+		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
+	}
+
+
+	/**
+	 * Send an email notification post edit to the admin
+	 *
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
+	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
+	 */
+	public function sendAdminNotificationPostEdit(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
+		$user->setMailhash($this->getMailHash($user));
+
+		$this->sendEmail(
+			$this->getAdminRecipient(),
+			'adminEmail',
+			$this->getSubject(__FUNCTION__, $user),
+			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
+			$user
+		);
+
+		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
+	}
+
+	/**
+	 * Send an email notification post edit to the user
+	 *
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
+	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
+	 */
+	public function sendUserNotificationPostEdit(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
+		$user->setMailhash($this->getMailHash($user));
+
+		$this->sendEmail(
+			$this->getUserRecipient($user),
+			'userEmail',
+			$this->getSubject(__FUNCTION__, $user),
+			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
+			$user
+		);
+
+		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
 	}
 
 
 	/**
 	 * Get translated version of the subject with replaced username and sitename
-	 * 
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
-	 * @param string $labelIndex
+	 *
+	 * @param string $method
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
 	 * @return string
 	 */
-	protected function getSubject(Tx_SfRegister_Interfaces_FrontendUser $user, $labelIndex) {
-		return Tx_Extbase_Utility_Localization::translate(
+	protected function getSubject($method, \Evoweb\SfRegister\Interfaces\FrontendUser $user) {
+		$labelIndex = 'subject' . str_replace('send', '', $method);
+
+		return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
 			$labelIndex,
 			'sf_register',
 			array($this->settings['sitename'], $user->getUsername())
@@ -304,12 +271,12 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 	/**
 	 * Get the mailhash for the activation link based on time, username and email address
-	 * 
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 *
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
 	 * @return string
 	 */
-	protected function getMailHash(Tx_SfRegister_Interfaces_FrontendUser $user) {
-		return md5($GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . $user->getUsername() . time() . $user->getEmail());
+	protected function getMailHash(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
+		return md5($GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . $user->getUsername() . $GLOBALS['EXEC_TIME'] . $user->getEmail());
 	}
 
 	/**
@@ -326,10 +293,10 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	/**
 	 * Get user recipient
 	 *
-	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
 	 * @return string
 	 */
-	protected function getUserRecipient(Tx_SfRegister_Interfaces_FrontendUser $user) {
+	protected function getUserRecipient(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
 		if ($user->getFirstName() || $user->getLastName()) {
 			$name = trim($user->getFirstName() . ' ' . $user->getLastName());
 		} else {
@@ -350,11 +317,12 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 * @param string $subject
 	 * @param string $bodyHTML
 	 * @param string $bodyPlain
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
 	 * @return integer the number of recipients who were accepted for delivery
 	 */
-	protected function sendEmail(array $recipient, $typeOfEmail, $subject, $bodyHTML, $bodyPlain = '') {
-		/** @var $mail t3lib_mail_Message */
-		$mail = t3lib_div::makeInstance('t3lib_mail_Message');
+	protected function sendEmail(array $recipient, $typeOfEmail, $subject, $bodyHTML, $bodyPlain = '', $user) {
+		/** @var $mail \TYPO3\CMS\Core\Mail\MailMessage */
+		$mail = $this->objectManager->get('TYPO3\\CMS\\Core\\Mail\\MailMessage');
 		$mail
 			->setTo($recipient)
 			->setFrom(array($this->settings[$typeOfEmail]['fromEmail'] => $this->settings[$typeOfEmail]['fromName']))
@@ -368,7 +336,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 			$mail->addPart($bodyPlain, 'text/plain');
 		}
 
-		$mail = $this->processHook('sendMailPreSend', $mail, $this->settings, $this->objectManager);
+		$mail = $this->dispatchSlotSignal('sendMailPreSend', $mail, $user);
 
 		return $mail->send();
 	}
@@ -398,11 +366,11 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		}
 
 		if ($templateRootPath === '') {
-			$templateRootPath = t3lib_extMgm::extPath('sf_register') . 'Resources/Private/Templates/';
+			$templateRootPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('sf_register') . 'Resources/Private/Templates/';
 		}
 
-		$templateRootPath = t3lib_div::getFileAbsFileName($templateRootPath);
-		if (t3lib_div::isAllowedAbsPath($templateRootPath)) {
+		$templateRootPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($templateRootPath);
+		if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($templateRootPath)) {
 			$result = $templateRootPath . (substr($templateRootPath, -1) !== '/' ? '/' : '');
 		}
 
@@ -423,12 +391,12 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 		}
 
 		if ($layoutRootPath === '') {
-			$layoutRootPath = t3lib_extMgm::extPath('sf_register') . 'Resources/Private/Layout/';
+			$layoutRootPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('sf_register') . 'Resources/Private/Layout/';
 		}
 
-		$layoutRootPath = t3lib_div::getFileAbsFileName($layoutRootPath);
-		if (t3lib_div::isAllowedAbsPath($layoutRootPath)) {
-			$result = $layoutRootPath . (substr($layoutRootPath, -1) !== '/' ? '/' : '');
+		$layoutRootPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($layoutRootPath);
+		if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($layoutRootPath)) {
+			$result = trim($layoutRootPath, '/') . '/';
 		}
 
 		return $result;
@@ -439,12 +407,16 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	 *
 	 * @param string $controller
 	 * @param string $action
-	 * @param string $type type of template
-	 * @param array $variables array of all variables you want to assgin to the view
+	 * @param string $method method calling this function
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
 	 * @return string of the rendered View.
 	 */
-	protected function renderFileTemplate($controller, $action, $type, array $variables) {
-		$view = $this->objectManager->get('Tx_Fluid_View_StandaloneView');
+	protected function renderFileTemplate($controller, $action, $method, $user) {
+		$type = str_replace('send', '', $method);
+		$variables = array('user' => $user);
+
+		/** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
+		$view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
 		$view->setTemplatePathAndFilename($this->getTemplatePathAndFilename($type));
 		$view->setLayoutRootPath($this->getAbsoluteLayoutRootPath());
 		$view->assignMultiple($variables);
@@ -459,24 +431,26 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 	}
 
 	/**
-	 * Process registered hooks
+	 * Dispatch signal to registered slots
 	 *
-	 * @param string $hookName
+	 * @param string $signalName
+	 * @param object $result
 	 * @return mixed
 	 */
-	protected function processHook($hookName) {
-		$result = func_get_arg(1);
+	protected function dispatchSlotSignal($signalName, $result) {
+		$arguments = array_merge(
+			array_slice(func_get_args(), 2),
+			array($this->settings, $this->objectManager)
+		);
 
-		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['Tx_SfRegister_Services_Mail'][$hookName]) &&
-				count($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['Tx_SfRegister_Services_Mail'][$hookName])) {
-			$userObjectReferences = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['Tx_SfRegister_Services_Mail'][$hookName];
-			$arguments = array_slice(func_get_args(), 2);
-
-			foreach ($userObjectReferences as $userObjectReference) {
-				$hookObj =& t3lib_div::getUserObj($userObjectReference);
-				$result = $hookObj->{$hookName}($result, $arguments);
-			}
-		}
+		$this->signalSlotDispatcher->dispatch(
+			__CLASS__,
+			$signalName,
+			array(
+				'result' => &$result,
+				'arguments' => $arguments,
+			)
+		);
 
 		return $result;
 	}

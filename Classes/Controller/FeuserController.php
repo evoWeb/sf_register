@@ -1,53 +1,78 @@
 <?php
+namespace Evoweb\SfRegister\Controller;
 /***************************************************************
- *  Copyright notice
+ * Copyright notice
  *
- *  (c) 2011 Sebastian Fischer <typo3@evoweb.de>
- *  All rights reserved
+ * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This copyright notice MUST APPEAR in all copies of the script!
+ * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
 /**
  * An frontend user controller
  */
-class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controller_ActionController {
+class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	/**
 	 * User repository
 	 *
-	 * @var Tx_SfRegister_Domain_Model_FrontendUserRepository
+	 * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
+	 * @inject
 	 */
 	protected $userRepository = NULL;
 
 	/**
 	 * File service
 	 *
-	 * @var Tx_SfRegister_Services_File
+	 * @var \Evoweb\SfRegister\Services\File
 	 */
 	protected $fileService;
 
 	/**
-	 * Inject an frontenduser repository object
+	 * Signal slot dispatcher
 	 *
-	 * @param Tx_SfRegister_Domain_Repository_FrontendUserRepository $repository
-	 * @return void
+	 * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+	 * @inject
 	 */
-	public function injectUserRepository(Tx_SfRegister_Domain_Repository_FrontendUserRepository $repository) {
-		$this->userRepository = $repository;
+	protected $signalSlotDispatcher;
+
+	/**
+	 * The current view, as resolved by resolveView()
+	 *
+	 * @var \TYPO3\CMS\Fluid\View\TemplateView
+	 * @api
+	 */
+	protected $view;
+
+	/**
+	 * Proxy action
+	 *
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @return void
+	 * @validate $user Evoweb.SfRegister:User
+	 */
+	public function proxyAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user) {
+		$action = 'save';
+
+		if ($this->request->hasArgument('form')) {
+			$action = 'form';
+		}
+
+		$this->forward($action);
 	}
 
 	/**
@@ -62,11 +87,11 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Initialize all actions
 	 *
-	 * @see Tx_Extbase_MVC_Controller_ActionController::initializeAction()
+	 * @see \TYPO3\CMS\Extbase\Mvc\Controller\ActionController::initializeAction()
 	 * @return void
 	 */
 	protected function initializeAction() {
-		$this->fileService = $this->objectManager->get('Tx_SfRegister_Services_File');
+		$this->fileService = $this->objectManager->get('Evoweb\\SfRegister\\Services\\File');
 
 		if ($this->request->getControllerActionName() != 'removeImage' &&
 				$this->request->hasArgument('removeImage') &&
@@ -78,63 +103,38 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Inject an view object to be able to set templateRootPath from flexform
 	 *
-	 * @param Tx_Extbase_MVC_View_ViewInterface $view
+	 * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
 	 * @return void
 	 */
-	protected function initializeView(Tx_Extbase_MVC_View_ViewInterface $view) {
+	protected function initializeView(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view) {
 		if (isset($this->settings['templateRootPath']) && !empty($this->settings['templateRootPath'])) {
-			$templateRootPath = t3lib_div::getFileAbsFileName($this->settings['templateRootPath'], TRUE);
-			if (t3lib_div::isAllowedAbsPath($templateRootPath)) {
+			$templateRootPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($this->settings['templateRootPath'], TRUE);
+			if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($templateRootPath)) {
 				$this->view->setTemplateRootPath($templateRootPath);
 			}
 		}
 	}
 
-	/**
-	 * Proxy action
-	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return void
-	 * @validate $user Tx_SfRegister_Domain_Validator_UserValidator
-	 */
-	public function proxyAction(Tx_SfRegister_Domain_Model_FrontendUser $user) {
-		$action = 'save';
-
-		if ($this->request->hasArgument('form')) {
-			$action = 'form';
-		}
-
-		$this->forward($action);
-	}
-
-
-	/**
-	 * Check if the user is logged in
-	 *
-	 * @return boolean
-	 */
-	protected function isUserLoggedIn() {
-			// @TODO move this into a scope outside of controller
-		return $GLOBALS['TSFE']->fe_user->user === FALSE ? FALSE : TRUE;
-	}
 
 	/**
 	 * Remove an image and forward to the action where it was called
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
 	 * @param string $imagefile
 	 * @return void
 	 * @ignorevalidation $user
- 	 */
-	protected function removeImageAction(Tx_SfRegister_Domain_Model_FrontendUser $user, $imagefile) {
+	 */
+	protected function removeImageAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, $imagefile) {
 		if ($this->fileIsTemporary()) {
 			$removedImage = $this->fileService->removeTemporaryFile($imagefile);
 		} else {
 			$removedImage = $this->fileService->removeUploadedImage($imagefile);
 		}
+
 		$user = $this->removeImageFromUserAndRequest($user, $removedImage);
 			// @TODO can this get removed? testing
 		$user->removeImage($removedImage);
+
 		$requestUser = $this->request->getArgument('user');
 		$requestUser['image'] = $user->getImage();
 		$this->request->setArgument('user', $requestUser);
@@ -145,31 +145,6 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 		if ($referrer !== NULL) {
 			$this->forward($referrer['@action'], $referrer['@controller'], $referrer['@extension'], $this->request->getArguments());
 		}
-	}
-
-	/**
-	 * Remove an image from user object and request object
-	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @param string $removeImage
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
-	 */
-	protected function removeImageFromUserAndRequest(Tx_SfRegister_Domain_Model_FrontendUser $user, $removeImage) {
-		if ($user->getUid() !== NULL) {
-			$localUser = $this->userRepository->findByUid($user->getUid());
-			$localUser->removeImage($removeImage);
-			$this->userRepository->update($localUser);
-
-			$this->objectManager->get('Tx_Extbase_Persistence_Manager')->persistAll();
-		}
-
-		$user->removeImage($removeImage);
-
-		$requestUser = $this->request->getArgument('user');
-		$requestUser['image'] = $user->getImage();
-		$this->request->setArgument('user', $requestUser);
-
-		return $user;
 	}
 
 	/**
@@ -188,11 +163,36 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	}
 
 	/**
+	 * Remove an image from user object and request object
+	 *
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @param string $removeImage
+	 * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
+	 */
+	protected function removeImageFromUserAndRequest(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, $removeImage) {
+		if ($user->getUid() !== NULL) {
+			$localUser = $this->userRepository->findByUid($user->getUid());
+			$localUser->removeImage($removeImage);
+			$this->userRepository->update($localUser);
+
+			$this->persistAll();
+		}
+
+		$user->removeImage($removeImage);
+
+		$requestUser = $this->request->getArgument('user');
+		$requestUser['image'] = $user->getImage();
+		$this->request->setArgument('user', $requestUser);
+
+		return $user;
+	}
+
+	/**
 	 * Move uploaded image and add to user
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
- 	 */
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
+	 */
 	protected function moveTempFile($user) {
 		if ($imagePath = $this->fileService->moveTempFileToTempFolder()) {
 			$user->addImage($imagePath);
@@ -204,9 +204,9 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	/**
 	 * Move uploaded image and add to user
 	 *
-	 * @param Tx_SfRegister_Domain_Model_FrontendUser $user
-	 * @return Tx_SfRegister_Domain_Model_FrontendUser
- 	 */
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
+	 */
 	protected function moveImageFile($user) {
 		$oldFilename = $user->getImage();
 
@@ -221,21 +221,88 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 	 * Encrypt the password
 	 *
 	 * @param string $password
+	 * @param array $settings
 	 * @return string
 	 */
-	protected function encryptPassword($password) {
-		if (t3lib_extMgm::isLoaded('saltedpasswords') && tx_saltedpasswords_div::isUsageEnabled('FE')) {
-			$saltObject = tx_saltedpasswords_salts_factory::getSaltingInstance(NULL);
+	public static function encryptPassword($password, $settings) {
+		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords') &&
+				\TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility::isUsageEnabled('FE')) {
+			$saltObject = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance(NULL);
 			if (is_object($saltObject)) {
 				$password = $saltObject->getHashedPassword($password);
 			}
-		} elseif ($this->settings['encryptPassword'] === 'md5') {
+		} elseif ($settings['encryptPassword'] === 'md5') {
 			$password = md5($password);
-		} elseif ($this->settings['encryptPassword'] === 'sha1') {
+		} elseif ($settings['encryptPassword'] === 'sha1') {
 			$password = sha1($password);
 		}
 
 		return $password;
+	}
+
+	/**
+	 * Persist all data that was not stored by now
+	 *
+	 * @return void
+	 */
+	protected function persistAll() {
+		$this->objectManager
+			->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager')
+			->persistAll();
+	}
+
+	/**
+	 * Send emails to user and/or to admin
+	 *
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @param string $type
+	 * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
+	 */
+	protected function sendEmails($user, $type) {
+		/** @var $mailService \Evoweb\SfRegister\Services\Mail */
+		$mailService = $this->objectManager->get('Evoweb\\SfRegister\\Services\\Mail');
+
+		if ($this->isNotifyAdmin($type)) {
+			$user = $mailService->sendAdminNotification($user, $type);
+		}
+
+		if ($this->isNotifyUser($type)) {
+			$user = $mailService->sendUserNotification($user, $type);
+		}
+
+		return $user;
+	}
+
+	/**
+	 * Check if the admin need to activate the account
+	 *
+	 * @param string $type
+	 * @return boolean
+	 */
+	protected function isNotifyAdmin($type) {
+		$result = FALSE;
+
+		if ($this->settings['notifyAdmin' . $type]) {
+			$result = TRUE;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Check if the user need to activate the account
+	 *
+	 * @param string $type
+	 * @return boolean
+	 */
+	protected function isNotifyUser($type) {
+		$result = FALSE;
+
+		if ($this->settings['notifyUser' . $type]) {
+			$result = TRUE;
+		}
+
+		return $result;
 	}
 }
 

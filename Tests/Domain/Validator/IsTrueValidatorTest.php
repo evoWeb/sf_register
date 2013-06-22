@@ -1,4 +1,5 @@
 <?php
+namespace Evoweb\SfRegister\Tests\Domain\Validator;
 /***************************************************************
 *  Copyright notice
 *
@@ -25,14 +26,14 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class Tx_SfRegister_Domain_Model_IstrueValidatorTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class IstrueValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var Tx_SfRegister_Domain_Validator_IsTrueValidator
+	 * @var \Evoweb\SfRegister\Validation\Validator\IsTrueValidator
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new Tx_SfRegister_Domain_Validator_IsTrueValidator();
+		$this->fixture = new \Evoweb\SfRegister\Validation\Validator\IsTrueValidator();
 	}
 
 	public function tearDown() {

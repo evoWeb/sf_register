@@ -5,25 +5,25 @@ if (!defined('TYPO3_MODE')) {
 }
 
 
-
+/** @noinspection PhpUndefinedVariableInspection */
 $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$_EXTKEY]);
 
-switch($extensionConfiguration['typoscriptComplexity']) {
+switch ($extensionConfiguration['typoscriptComplexity']) {
 	case 'maximal':
-		t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/maximal/', 'Feuser Register [maximal]');
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript/maximal/', 'Feuser Register [maximal]');
 		break;
 	case 'minimal':
 	default:
-		t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/minimal/', 'Feuser Register [minimal]');
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript/minimal/', 'Feuser Register [minimal]');
 		break;
 }
 
 
 
-t3lib_div::loadTCA('fe_users');
-t3lib_extMgm::addPageTSConfig('
-TCAdefaults.fe_users.tx_extbase_type = Tx_Extbase_Domain_Model_FrontendUser
-TCAdefaults.fe_groups.tx_extbase_type = Tx_Extbase_Domain_Model_FrontendUserGroup
+\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('fe_users');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
+TCAdefaults.fe_users.tx_extbase_type = \\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser
+TCAdefaults.fe_groups.tx_extbase_type = \\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUserGroup
 ');
 
 $tempColumns = array(
@@ -222,17 +222,17 @@ $tempColumns = array(
 	),
 );
 
-t3lib_extMgm::addTCAcolumns('fe_users', $tempColumns, 1);
-t3lib_extMgm::addToAllTCAtypes('fe_users', 'gender', '', 'before:name');
-t3lib_extMgm::addToAllTCAtypes('fe_users', 'pseudonym', '', 'after:username');
-t3lib_extMgm::addToAllTCAtypes('fe_users', 'date_of_birth, language, status', '', 'after:name');
-t3lib_extMgm::addToAllTCAtypes('fe_users', 'zone, timezone, daylight', '', 'after:city');
-t3lib_extMgm::addToAllTCAtypes('fe_users', 'mobilephone', '', 'after:telephone');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns, 1);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'gender', '', 'before:name');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'pseudonym', '', 'after:username');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'date_of_birth, language, status', '', 'after:name');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'zone, timezone, daylight', '', 'after:city');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'mobilephone', '', 'after:telephone');
 
-t3lib_extMgm::addToAllTCAtypes('fe_users', '--div--;LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.div.registration, mailhash, activated_on, gtc, privacy');
-t3lib_extMgm::addToAllTCAtypes('fe_users', 'by_invitation, comments, module_sys_dmail_html');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', '--div--;LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.div.registration, mailhash, activated_on, gtc, privacy');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'by_invitation, comments, module_sys_dmail_html');
 
-if (t3lib_extMgm::isLoaded('static_info_tables')) {
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
 	$tempColumns = array(
 		'static_info_country' => array(
 			'exclude' => 0,
@@ -246,11 +246,11 @@ if (t3lib_extMgm::isLoaded('static_info_tables')) {
 			)
 		),
 	);
-	t3lib_extMgm::addTCAcolumns('fe_users', $tempColumns, 1);
-	t3lib_extMgm::addToAllTCAtypes('fe_users', 'static_info_country', '', 'after:zone');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns, 1);
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'static_info_country', '', 'after:zone');
 }
 
-if (t3lib_extMgm::isLoaded('direct_mail')) {
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('direct_mail')) {
 	$tempColumns = array(
 		'module_sys_dmail_category' => array(
 			'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.module_sys_dmail_group.category',
@@ -272,20 +272,18 @@ if (t3lib_extMgm::isLoaded('direct_mail')) {
 			)
 		)
 	);
-	t3lib_extMgm::addTCAcolumns('fe_users', $tempColumns, 1);
-	t3lib_extMgm::addToAllTCAtypes('fe_users', '--div--;Direct mail, module_sys_dmail_html, module_sys_dmail_category');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns, 1);
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', '--div--;Direct mail, module_sys_dmail_html, module_sys_dmail_category');
 }
 
 
 
-t3lib_div::loadTCA('tt_content');
-$TCA['tt_content']['types']['list']['subtypes_excludelist']['sfregister_form'] =
-	'layout, select_key';
-$TCA['tt_content']['types']['list']['subtypes_addlist']['sfregister_form'] =
-	'pi_flexform';
-t3lib_extMgm::addPiFlexFormValue('sfregister_form', 'FILE:EXT:sf_register/Configuration/FlexForms/form.xml');
+\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('tt_content');
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['sfregister_form'] = 'layout, select_key';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['sfregister_form'] = 'pi_flexform';
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('sfregister_form', 'FILE:EXT:sf_register/Configuration/FlexForms/form.xml');
 
-Tx_Extbase_Utility_Extension::registerPlugin(
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 	$_EXTKEY,
 	'Form',
 	'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_be.xml:tt_content.list_type_form'
@@ -293,8 +291,8 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 
 	// add witzicon to 'add content element'
 if (TYPO3_MODE == 'BE') {
-	$GLOBALS['TBE_MODULES_EXT']['xMOD_db_new_content_el']['addElClasses']['Tx_SfRegister_Utility_WizardIcon'] =
-		t3lib_extMgm::extPath($_EXTKEY) . 'Classes/Utility/WizardIcon.php';
+	$GLOBALS['TBE_MODULES_EXT']['xMOD_db_new_content_el']['addElClasses']['Evoweb\\SfRegister\\Utility\\WizardIcon'] =
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Classes/Utility/WizardIcon.php';
 }
 
 ?>

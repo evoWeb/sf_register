@@ -1,4 +1,5 @@
 <?php
+namespace Evoweb\SfRegister\Tests\Controller;
 /***************************************************************
 *  Copyright notice
 *
@@ -25,24 +26,24 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class Tx_SfRegister_Controller_FeuserPasswordControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class FeuserPasswordControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var Tx_SfRegister_Controller_FeuserPasswordController
+	 * @var \Evoweb\SfRegister\Controller\FeuserPasswordController
 	 */
 	protected $fixture;
 
 	/**
-	 * @var Tx_Phpunit_Framework
+	 * @var \Tx_Phpunit_Framework
 	 */
 	private $testingFramework;
 
 	public function setUp() {
-		$this->testingFramework = new Tx_Phpunit_Framework('fe_users');
+		$this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
 		$pageUid = $this->testingFramework->createFrontEndPage();
 		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/'));
 		$this->testingFramework->createFakeFrontEnd($pageUid);
-		
-		$this->fixture = $this->getAccessibleMock('Tx_SfRegister_Controller_FeuserPasswordController', array('dummy'));
+
+		$this->fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Controller\\FeuserPasswordController', array('dummy'));
 	}
 
 	public function tearDown() {
@@ -83,9 +84,9 @@ class Tx_SfRegister_Controller_FeuserPasswordControllerTest extends Tx_Extbase_T
 
 		$userId = $this->testingFramework->createAndLoginFrontEndUser('', array('password' => $expected));
 			// we need to clone the create object else the isClone param is not set and the both object wont match
-		$userMock = clone(new Tx_SfRegister_Domain_Model_FrontendUser());
+		$userMock = clone(new \Evoweb\SfRegister\Domain\Model\FrontendUser());
 
-		$repositoryMock = $this->getMock('Tx_SfRegister_Domain_Repository_FrontendUserRepository', array(), array(), '', FALSE);
+		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('findByUid')
 			->with($userId)
@@ -96,7 +97,7 @@ class Tx_SfRegister_Controller_FeuserPasswordControllerTest extends Tx_Extbase_T
 			->with($userMock);
 		$this->fixture->injectUserRepository($repositoryMock);
 
-		$passwordMock = $this->getMock('Tx_SfRegister_Domain_Model_Password');
+		$passwordMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Model\\Password');
 		$passwordMock->expects($this->once())
 			->method('getPassword')
 			->will($this->returnValue($expected));

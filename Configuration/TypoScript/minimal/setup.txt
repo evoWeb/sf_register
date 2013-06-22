@@ -11,6 +11,8 @@ plugin.tx_sfregister.settings {
 	# boolean defines in edit mode if the fields get filled with data of logged in user
 	useDataOfLoggedinFeuser = 1
 
+	dateFormat = d-m-Y
+
 	# comma separated list of words used in bad word validatorchro
 	badWordList = {$plugin.tx_sfregister.settings.badWordList}
 
@@ -29,29 +31,35 @@ plugin.tx_sfregister.settings {
 	useEncryptedFilename = md5
 
 	# boolean if user or admin need to activate or notified
-	notifyToAdmin = 0
-	notifyPreActivationToAdmin = 0
-	notifyPostActivationToAdmin = 1
-	notifyToUser = 0
-	notifyPreActivationToUser = 1
-	notifyPostActivationToUser = 0
+	notifyAdminPreConfirmation =
+	notifyUserPreConfirmation =
 
-	notifyPostEditingToUser = 0
-	notifyPostEditingToAdmin = 0
-	notifyActivationPostEditingToUser = 0
-	notifyActivationPostEditingToAdmin = 0
+	notifyAdminPostConfirmation =
+	notifyUserPostConfirmation =
+
+	notifyAdminPostRefuse =
+	notifyUserPostRefuse =
+
+	notifyAdminPostAccept =
+	notifyUserPostAccept =
+
+	notifyAdminPostDecline =
+	notifyUserPostDecline =
+
+	notifyAdminPostEdit =
+	notifyUserPostEdit =
 
 	# boolean if user should get logged in after registration
 	autologinPostRegistration =
 	# boolean if user should get logged in after activation
-	autologinPostActivation = {$plugin.tx_sfregister.settings.autologinPostActivation}
-
-	# integer usergroups set if activation is needed
-	usergroupPreActivation = {$plugin.tx_sfregister.settings.usergroupPreActivation}
-	usergroupPostActivation = {$plugin.tx_sfregister.settings.usergroupPostActivation}
+	autologinPostConfirmation = {$plugin.tx_sfregister.settings.autologinPostConfirmation}
 
 	# integer usergroup set if no activation is needed
-	usergroup =
+	usergroup = {$plugin.tx_sfregister.settings.usergroup}
+
+	# integer usergroups set if confirmation is needed
+	usergroupPreConfirmation = {$plugin.tx_sfregister.settings.usergroupPreConfirmation}
+	usergroupPostConfirmation = {$plugin.tx_sfregister.settings.usergroupPostConfirmation}
 
 	# string name of the site used in subject
 	sitename = {$plugin.tx_sfregister.settings.emailSitename}
@@ -62,8 +70,6 @@ plugin.tx_sfregister.settings {
 
 		replyName = {$plugin.tx_sfregister.settings.emailName}
 		replyEmail = {$plugin.tx_sfregister.settings.emailAddress}
-
-		returnPath = {$plugin.tx_sfregister.settings.emailAddress}
 	}
 
 	adminEmail {
@@ -75,88 +81,85 @@ plugin.tx_sfregister.settings {
 
 		replyName = {$plugin.tx_sfregister.settings.emailName}
 		replyEmail = {$plugin.tx_sfregister.settings.emailAddress}
-
-		returnPath = {$plugin.tx_sfregister.settings.emailAddress}
 	}
 
 	validation.create {
 		username {
-			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
 			2 = StringLength(minimum = 4, maximum = 80)
-			3 = Tx_SfRegister_Domain_Validator_UniqueValidator
-			4 = Tx_SfRegister_Domain_Validator_UniqueValidator(global = 1)
+			3 = Evoweb\SfRegister\Validation\Validator\UniqueValidator
+			4 = Evoweb\SfRegister\Validation\Validator\UniqueValidator(global = 1)
 		}
 		password {
-			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
 			2 = StringLength(minimum = 8, maximum = 40)
-			3 = Tx_SfRegister_Domain_Validator_BadWordValidator
+			3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
 		}
-		passwordRepeat = Tx_SfRegister_Domain_Validator_RepeatValidator
-		title = Tx_SfRegister_Domain_Validator_RequiredValidator
-		company = Tx_SfRegister_Domain_Validator_RequiredValidator
-		firstName = Tx_SfRegister_Domain_Validator_RequiredValidator
-		lastName = Tx_SfRegister_Domain_Validator_RequiredValidator
+		passwordRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
+		title = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+		company = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+		firstName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+		lastName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
 		email = EmailAddress
-		emailRepeat = Tx_SfRegister_Domain_Validator_RepeatValidator
-		gtc = Tx_SfRegister_Domain_Validator_IsTrueValidator
-		image = Tx_SfRegister_Domain_Validator_ImageUploadValidator
-		captcha = Tx_SfRegister_Domain_Validator_CaptchaValidator(type = srfreecap)
+		emailRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
+		gtc = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
+		image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
+		captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = srfreecap)
 	}
 
 	validation.edit {
-		firstName = Tx_SfRegister_Domain_Validator_RequiredValidator
-		lastName = Tx_SfRegister_Domain_Validator_RequiredValidator
+		firstName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+		lastName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
 		email = EmailAddress
-		gtc = Tx_SfRegister_Domain_Validator_IsTrueValidator
-		image = Tx_SfRegister_Domain_Validator_ImageUploadValidator
+		gtc = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
+		image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
 	}
 
 	validation.password {
 		password {
-			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
 			2 = StringLength(minimum = 2, maximum = 40)
-			3 = Tx_SfRegister_Domain_Validator_BadWordValidator
+			3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
 		}
 		passwordRepeat {
-			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
 			2 = StringLength(minimum = 2, maximum = 40)
-			3 = Tx_SfRegister_Domain_Validator_RepeatValidator
+			3 = Evoweb\SfRegister\Validation\Validator\RepeatValidator
 		}
 		oldPassword {
-			1 = Tx_SfRegister_Domain_Validator_RequiredValidator
+			1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
 			2 = StringLength(minimum = 2, maximum = 40)
-			3 = Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator
+			3 = Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator
 		}
 	}
 
 	filefieldname = image
 
 	captcha {
-		jmrecaptcha = Tx_SfRegister_Services_Captcha_JmRecaptchaAdapter
-		srfreecap = Tx_SfRegister_Services_Captcha_SrFreecapAdapter
+		jmrecaptcha = Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter
+		srfreecap = Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter
 	}
 }
 
 plugin.tx_sfregister.persistence {
 	classes {
-		Tx_SfRegister_Domain_Model_FrontendUser {
+		Evoweb\SfRegister\Domain\Model\FrontendUser {
 			mapping {
 				tableName = fe_users
-				recordType = Tx_Extbase_Domain_Model_FrontendUser
 			}
 		}
 
-		Tx_SfRegister_Domain_Model_StaticCountry {
+		Evoweb\SfRegister\Domain\Model\StaticCountry {
 			mapping {
 				tableName = static_countries
 			}
 		}
-		Tx_SfRegister_Domain_Model_StaticCountryZone {
+		Evoweb\SfRegister\Domain\Model\StaticCountryZone {
 			mapping {
 				tableName = static_country_zones
 			}
 		}
-		Tx_SfRegister_Domain_Model_StaticLanguage {
+		Evoweb\SfRegister\Domain\Model\StaticLanguage {
 			mapping {
 				tableName = static_languages
 			}
@@ -165,7 +168,7 @@ plugin.tx_sfregister.persistence {
 }
 
 plugin.tx_sfregister.features {
-        rewrittenPropertyMapper = 0
+	rewrittenPropertyMapper = 1
 }
 
 plugin.tx_sfregister.fieldError = TEXT
@@ -199,8 +202,10 @@ plugin.tx_sfregister._LOCAL_LANG.default {
 
 module.tx_sfregister < plugin.tx_sfregister
 
-config.tx_extbase.objects {
-	Tx_SfRegister_Interfaces_FrontendUser {
-		className = Tx_SfRegister_Domain_Model_FrontendUser
+config.tx_extbase {
+	objects {
+		Evoweb\SfRegister\Interfaces\FrontendUser {
+			className = Evoweb\SfRegister\Domain\Model\FrontendUser
+		}
 	}
 }
