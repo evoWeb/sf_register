@@ -1,17 +1,16 @@
 <?php
 
-########################################################################
-# Extension Manager/Repository config file for ext "sf_register".
-#
-# Auto generated 19-07-2011 09:32
-#
-# Manual updates:
-# Only the data in the array - everything else is removed by next
-# writing. "version" and "dependencies" must not be touched!
-########################################################################
+/***************************************************************
+ * Extension Manager/Repository config file for ext "sf_register".
+ *
+ * Auto generated 09-07-2013 12:52
+ *
+ * Manual updates:
+ * Only the data in the array - everything else is removed by next
+ * writing. "version" and "dependencies" must not be touched!
+ ***************************************************************/
 
-/** @noinspection PhpUndefinedVariableInspection */
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = array (
 	'title' => 'Frontend User Register',
 	'description' => 'Offers the possibility to maintain the fe_user data in frontend by the user self.',
 	'category' => 'plugin',
@@ -33,18 +32,18 @@ $EM_CONF[$_EXTKEY] = array(
 	'author_company' => 'evoweb',
 	'CGLcompliance' => '',
 	'CGLcompliance_note' => '',
-	'constraints' => array(
-		'depends' => array(
+	'constraints' => array (
+		'depends' => array (
 			'typo3' => '6.0.0-6.0.99',
 			'extbase' => '6.0.0-6.0.99',
 			'fluid' => '6.0.0-6.0.99',
 		),
-		'conflicts' => array(
+		'conflicts' => array (
 		),
-		'suggests' => array(
+		'suggests' => array (
 		),
 	),
-	'suggests' => array(
+	'suggests' => array (
 	),
 	'_md5_values_when_last_written' => '',
 );
