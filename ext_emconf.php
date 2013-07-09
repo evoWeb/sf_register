@@ -14,7 +14,7 @@
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'FeUser Register',
 	'description' => 'Offers the possibility to maintain the fe_user data in frontend by the user self.',
-	'category' => 'Sebastian Fischer',
+	'category' => 'plugin',
 	'shy' => 0,
 	'version' => '6.0.0',
 	'dependencies' => 'extbase,fluid',
@@ -22,7 +22,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'priority' => 'bottom',
 	'loadOrder' => '',
 	'module' => '',
-	'state' => 'beta',
+	'state' => 'stable',
 	'uploadfolder' => 0,
 	'createDirs' => 'typo3temp/sf_register',
 	'modify_tables' => 'fe_users',
