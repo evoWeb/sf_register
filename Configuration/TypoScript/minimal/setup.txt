@@ -31,23 +31,28 @@ plugin.tx_sfregister.settings {
 	useEncryptedFilename = md5
 
 	# boolean if user or admin need to activate or notified
-	notifyAdminPreConfirmation =
-	notifyUserPreConfirmation =
+	notifyAdminPostCreateSave =
+	notifyUserPostCreateSave =
 
-	notifyAdminPostConfirmation =
-	notifyUserPostConfirmation =
+	notifyAdminPostCreateConfirmation =
+	notifyUserPostCreateConfirmation =
 
-	notifyAdminPostRefuse =
-	notifyUserPostRefuse =
+	notifyAdminPostCreateRefuse =
+	notifyUserPostCreateRefuse =
 
-	notifyAdminPostAccept =
-	notifyUserPostAccept =
+	notifyAdminPostCreateAccept =
+	notifyUserPostCreateAccept =
 
-	notifyAdminPostDecline =
-	notifyUserPostDecline =
+	notifyAdminPostCreateDecline =
+	notifyUserPostCreateDecline =
 
-	notifyAdminPostEdit =
-	notifyUserPostEdit =
+	notifyAdminPostEditSave =
+	notifyUserPostEditSave =
+
+	notifyAdminPostEditConfirmation =
+	notifyUserPostEditConfirmation =
+
+	confirmEmailChangePostEdit =
 
 	# boolean if user should get logged in after registration
 	autologinPostRegistration =
@@ -96,13 +101,17 @@ plugin.tx_sfregister.settings {
 			3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
 		}
 		passwordRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
-		title = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-		company = Evoweb\SfRegister\Validation\Validator\RequiredValidator
 		firstName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
 		lastName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-		email = EmailAddress
+		email {
+			1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+			2 = EmailAddress
+		}
 		emailRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
-		gtc = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
+		gtc {
+			1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+			2 = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
+		}
 		image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
 		captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = srfreecap)
 	}

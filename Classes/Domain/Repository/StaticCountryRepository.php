@@ -40,6 +40,23 @@ class StaticCountryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository 
 
 		return $query->execute();
 	}
+
+	/**
+	 * Find countries by iso2 codes despection the storage page
+	 *
+	 * @param array $cnIso2
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
+	 */
+	public function findByCnIso2(array $cnIso2) {
+		$query = $this->createQuery();
+		$query
+			->getQuerySettings()
+			->setRespectStoragePage(FALSE);
+
+		$query->matching($query->in('cn_iso_2', $cnIso2));
+
+		return $query->execute();
+	}
 }
 
 ?>

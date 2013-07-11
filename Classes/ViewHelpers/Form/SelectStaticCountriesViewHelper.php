@@ -63,6 +63,7 @@ class SelectStaticCountriesViewHelper extends SelectStaticViewHelper {
 		$this->registerArgument('optionLabelField', 'string', 'If specified, will call the appropriate getter on each object to determine the label.', FALSE, 'cnOfficialNameEn');
 		$this->registerArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', FALSE, TRUE);
 		$this->registerArgument('selectAllByDefault', 'boolean', 'If specified options are selected if none was set before.', FALSE, FALSE);
+		$this->registerArgument('allowedCountries', 'array', 'Array with countries allowed to be displayed.', FALSE, array());
 		$this->registerArgument('errorClass', 'string', 'CSS class to set if there are errors for this view helper', FALSE, 'f3-form-error');
 	}
 
@@ -75,7 +76,11 @@ class SelectStaticCountriesViewHelper extends SelectStaticViewHelper {
 		parent::initialize();
 
 		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
-			$this->arguments['options'] = $this->countryRepository->findAll();
+			if ($this->hasArgument('allowedCountries') && count($this->arguments['allowedCountries'])) {
+				$this->arguments['options'] = $this->countryRepository->findByCnIso2($this->arguments['allowedCountries']);
+			} else {
+				$this->arguments['options'] = $this->countryRepository->findAll();
+			}
 		}
 	}
 }

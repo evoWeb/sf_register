@@ -5,6 +5,8 @@
 	<title>Create preview template of registration</title>
 </head>
 <body>
+<f:layout name="Default" />
+<f:section name="Main">
 <f:form action="proxy" name="user" object="{user}">
 <dl>
 	<dt><f:translate key="username"/>*</dt>
@@ -99,5 +101,6 @@
 	<dd><f:form.submit name="save" value="{f:translate(key:'submit_save')}" /></dd>
 </dl>
 </f:form>
+</f:section>
 </body>
 </html>

@@ -202,6 +202,13 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 */
 	protected $moduleSysDmailCategory;
 
+	/**
+	 * new email address before edit
+	 *
+	 * @var string
+	 */
+	protected $emailNew;
+
 
 	/**
 	 * @var string
@@ -808,6 +815,20 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 */
 	public function getStatus() {
 		return $this->status;
+	}
+
+	/**
+	 * @param string $emailNew
+	 */
+	public function setEmailNew($emailNew) {
+		$this->emailNew = $emailNew;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getEmailNew() {
+		return $this->emailNew;
 	}
 
 

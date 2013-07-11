@@ -21,10 +21,10 @@ switch ($extensionConfiguration['typoscriptComplexity']) {
 
 
 \TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('fe_users');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
+/*\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
 TCAdefaults.fe_users.tx_extbase_type = \\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser
 TCAdefaults.fe_groups.tx_extbase_type = \\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUserGroup
-');
+');*/
 
 $tempColumns = array(
 	'mailhash' => array(
@@ -213,6 +213,16 @@ $tempColumns = array(
 			'cols' => '48'
 		)
 	),
+	'email_new' => array(
+		'exclude' => 0,
+		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.email_new',
+		'config' => array(
+			'type' => 'input',
+			'size' => '20',
+			'max' => '80',
+			'eval' => 'trim',
+		)
+	),
 	'module_sys_dmail_html' => array(
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.module_sys_dmail_html',
 		'exclude' => '1',
@@ -228,6 +238,7 @@ $tempColumns = array(
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'date_of_birth, language, status', '', 'after:name');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'zone, timezone, daylight', '', 'after:city');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'mobilephone', '', 'after:telephone');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'email_new', '', 'after:email');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', '--div--;LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.div.registration, mailhash, activated_on, gtc, privacy');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'by_invitation, comments, module_sys_dmail_html');

@@ -5,6 +5,8 @@
 	<title>Edit preview template of registration</title>
 </head>
 <body>
+<f:layout name="Default" />
+<f:section name="Main">
 <f:form action="proxy" name="user" object="{user}">
 <dl>
 	<dt><f:translate key="title"/></dt>
@@ -20,7 +22,7 @@
 	<dd><f:form.hidden property="firstName" />{user.firstName}</dd>
 
 	<dt><f:translate key="email"/></dt>
-	<dd>{user.email}</dd>
+	<dd><f:form.hidden property="email" />{user.email}</dd>
 
 	<dt><f:translate key="telephone"/></dt>
 	<dd><f:form.hidden property="telephone" />{user.telephone}</dd>
@@ -83,5 +85,6 @@
 	<dd><f:form.submit name="save" value="{f:translate(key:'submit_save')}" /></dd>
 </dl>
 </f:form>
+</f:section>
 </body>
 </html>

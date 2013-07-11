@@ -7,6 +7,8 @@
 	<title>Create form template of registration</title>
 </head>
 <body>
+<f:layout name="Default" />
+<f:section name="Main">
 <f:form action="preview" name="user" object="{user}" enctype="multipart/form-data">
 	<f:render partial="FormErrors" section="Main" arguments="{for: 'user'}" />
 	<f:render partial="FieldError" section="Main" arguments="{field: 'uid'}" />
@@ -60,7 +62,6 @@
 			<f:translate key="gender_male" />
 			<f:form.radio property="gender" value="2" />
 			<f:translate key="gender_female" />-->
-			<br />
 			<f:form.select property="gender" options="{
 				1: '{f:translate(key: \'gender_male\')}',
 				2: '{f:translate(key: \'gender_female\')}'
@@ -189,11 +190,12 @@
 			<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'country'}" />
 			<f:if condition="{staticInfoCountry}">
 				<f:then>
-					<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry" />
+					<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry"
+						allowedCountries="{0: 'DE', 1: 'AT'}" />
 				</f:then>
 				<f:else>
-					<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry" value="US"
-														 optionLabelField="cnShortDe" />
+					<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry" value="DE"
+						allowedCountries="{0: 'DE', 1: 'AT'}" optionLabelField="cnShortDe" />
 				</f:else>
 			</f:if>
 		</dd>
@@ -209,7 +211,7 @@
 					<register:form.SelectStaticCountryZones property="zone" id="sfrZone" parent="{staticInfoCountry}" />
 				</f:then>
 				<f:else>
-					<register:form.SelectStaticCountryZones property="zone" id="sfrZone" parent="US" />
+					<register:form.SelectStaticCountryZones property="zone" id="sfrZone" parent="DE" />
 				</f:else>
 			</f:if>
 			<div id="sfrZone_empty" style="display: none;">
@@ -304,10 +306,9 @@
 		<dt>&nbsp;</dt>
 		<dd>
 			<f:render partial="CaptchaJmRecaptcha" section="Main" />
-			<!--<f:render partial="CaptchaSrFreecap" section="Main" />-->
 
 			<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'captcha'}" />
-			<f:form.textfield property="captcha" value="" id="iCaptcha" maxlength="15" />
+			<f:form.hidden property="captcha" value="" id="iCaptcha" />
 		</dd>
 
 		<dt>&nbsp;</dt>
@@ -319,5 +320,6 @@
 <div class="mandatory">
 	<f:translate key="info_mandatory_fields" htmlEscape="false" />
 </div>
+</f:section>
 </body>
 </html>
