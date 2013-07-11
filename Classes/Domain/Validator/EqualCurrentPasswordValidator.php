@@ -85,11 +85,23 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 		} else {
 			$user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
 
-			$password = $this->encryptPassword($password);
-
-			if ($user->getPassword() !== $password) {
-				$this->addError(Tx_Extbase_Utility_Localization::translate('error.changepassword.notequal', 'SfRegister'), 1301599507);
-				$result = FALSE;
+			if (t3lib_extMgm::isLoaded('saltedpasswords') && tx_saltedpasswords_div::isUsageEnabled('FE')) {
+					/** @var tx_saltedpasswords_salts $objInstanceSaltedPW */
+				$objInstanceSaltedPW = tx_saltedpasswords_salts_factory::getSaltingInstance($user->getPassword(), NULL);
+				if (!$objInstanceSaltedPW->checkPassword($password, $user->getPassword())) {
+					$this->addError(Tx_Extbase_Utility_Localization::translate('error_changepassword_notequal', 'SfRegister'), 1301599507);
+					$result = FALSE;
+				}
+			} elseif ($this->settings['encryptPassword'] === 'md5') {
+				if (md5($password) !== $user->getPassword()) {
+					$this->addError(Tx_Extbase_Utility_Localization::translate('error_changepassword_notequal', 'SfRegister'), 1301599507);
+					$result = FALSE;
+				}
+			} elseif ($this->settings['encryptPassword'] === 'sha1') {
+				if (sha1($password) !== $user->getPassword()) {
+					$this->addError(Tx_Extbase_Utility_Localization::translate('error_changepassword_notequal', 'SfRegister'), 1301599507);
+					$result = FALSE;
+				}
 			}
 		}
 
@@ -103,29 +115,6 @@ class Tx_SfRegister_Domain_Validator_EqualCurrentPasswordValidator extends Tx_Ex
 	 */
 	protected function isUserLoggedIn() {
 		return $GLOBALS['TSFE']->fe_user->user === FALSE ? FALSE : TRUE;
-	}
-
-	/**
-	 * Encrypt the password
-	 *
-	 * @param string $password
-	 * @return string
-	 */
-	protected function encryptPassword($password) {
-			// @todo use static method from createController
-		if (t3lib_extMgm::isLoaded('saltedpasswords') && tx_saltedpasswords_div::isUsageEnabled('FE')) {
-			$saltObject = tx_saltedpasswords_salts_factory::getSaltingInstance(NULL);
-
-			if (is_object($saltObject)) {
-				$password = $saltObject->getHashedPassword($password);
-			}
-		} elseif ($this->settings['encryptPassword'] === 'md5') {
-			$password = md5($password);
-		} elseif ($this->settings['encryptPassword'] === 'sha1') {
-			$password = sha1($password);
-		}
-
-		return $password;
 	}
 }
 

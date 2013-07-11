@@ -38,7 +38,7 @@ class Tx_SfRegister_Domain_Model_Password extends Tx_Extbase_DomainObject_Abstra
 	 *
 	 * @var string
 	 */
-	protected $passwordAgain;
+	protected $passwordRepeat;
 
 	/**
 	 * Old password
@@ -67,13 +67,13 @@ class Tx_SfRegister_Domain_Model_Password extends Tx_Extbase_DomainObject_Abstra
 	}
 
 	/**
-	 * Setter for passwordAgain
+	 * Setter for passwordRepeat
 	 *
-	 * @param string $passwordAgain
+	 * @param string $passwordRepeat
 	 * @return void
 	 */
-	public function setPasswordAgain($passwordAgain) {
-		$this->passwordAgain = $passwordAgain;
+	public function setPasswordRepeat($passwordRepeat) {
+		$this->passwordRepeat = $passwordRepeat;
 	}
 
 	/**
@@ -81,8 +81,8 @@ class Tx_SfRegister_Domain_Model_Password extends Tx_Extbase_DomainObject_Abstra
 	 *
 	 * @return string
 	 */
-	public function getPasswordAgain() {
-		return $this->passwordAgain;
+	public function getPasswordRepeat() {
+		return $this->passwordRepeat;
 	}
 
 	/**
