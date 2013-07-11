@@ -5,6 +5,8 @@
 	<title>Password form template of registration</title>
 </head>
 <body>
+<f:layout name="Default" />
+<f:section name="Main">
 <f:form action="save" name="password">
 	<f:render partial="FormErrors" section="Main" arguments="{for: 'password'}" />
 	<dl>
@@ -42,5 +44,6 @@
 		</dd>
 	</dl>
 </f:form>
+</f:section>
 </body>
 </html>

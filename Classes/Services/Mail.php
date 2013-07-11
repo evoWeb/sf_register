@@ -90,11 +90,11 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 			$user = $this->{'sendAdminNotification' . $type}($user);
 		} else {
 			$this->sendEmail(
+				$user,
 				$this->getAdminRecipient(),
 				'adminEmail',
 				$this->getSubject(__FUNCTION__ . $type, $user),
-				$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
-				$user
+				$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__ . $type, $user)
 			);
 
 			$user = $this->dispatchSlotSignal(__FUNCTION__ . $type . 'PostSend', $user);
@@ -115,11 +115,11 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 			$user = $this->{'sendUserNotification' . $type}($user);
 		} else {
 			$this->sendEmail(
+				$user,
 				$this->getUserRecipient($user),
 				'userEmail',
 				$this->getSubject(__FUNCTION__ . $type, $user),
-				$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
-				$user
+				$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__ . $type, $user)
 			);
 
 			$user = $this->dispatchSlotSignal(__FUNCTION__ . $type . 'PostSend', $user);
@@ -135,15 +135,17 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
 	 */
-	public function sendAdminNotificationPreConfirmation(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
-		$user->setMailhash($this->getMailHash($user));
+	public function sendAdminNotificationPostCreateSave(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
+		if ($this->settings['acceptEmailPostCreate']) {
+			$user->setMailhash($this->getMailHash($user));
+		}
 
 		$this->sendEmail(
+			$user,
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
-			$user
+			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user)
 		);
 
 		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -155,20 +157,21 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
 	 */
-	public function sendUserNotificationPreConfirmation(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
-		$user->setMailhash($this->getMailHash($user));
+	public function sendUserNotificationPostCreateSave(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
+		if ($this->settings['confirmEmailChangePostEdit']) {
+			$user->setMailhash($this->getMailHash($user));
+		}
 
 		$this->sendEmail(
+			$user,
 			$this->getUserRecipient($user),
 			'userEmail',
 			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
-			$user
+			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user)
 		);
 
 		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
 	}
-
 
 	/**
 	 * Send an email notification post confirmation to the admin
@@ -176,35 +179,17 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
 	 */
-	public function sendAdminNotificationPostConfirmation(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
-		$user->setMailhash($this->getMailHash($user));
+	public function sendAdminNotificationPostCreateConfirm(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
+		if ($this->settings['acceptEmailPostCreate']) {
+			$user->setMailhash($this->getMailHash($user));
+		}
 
 		$this->sendEmail(
+			$user,
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
-			$user
-		);
-
-		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
-	}
-
-	/**
-	 * Send an email notification post confirmation to the user
-	 *
-	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
-	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
-	 */
-	public function sendUserNotificationPostConfirmation(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
-		$user->setMailhash($this->getMailHash($user));
-
-		$this->sendEmail(
-			$this->getUserRecipient($user),
-			'userEmail',
-			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
-			$user
+			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user)
 		);
 
 		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -217,15 +202,17 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
 	 */
-	public function sendAdminNotificationPostEdit(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
-		$user->setMailhash($this->getMailHash($user));
+	public function sendAdminNotificationPostEditSave(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
+		if ($this->settings['acceptEmailPostEdit']) {
+			$user->setMailhash($this->getMailHash($user));
+		}
 
 		$this->sendEmail(
+			$user,
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
-			$user
+			$this->renderFileTemplate('FeuserEdit', 'form', __FUNCTION__, $user)
 		);
 
 		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -237,15 +224,39 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
 	 */
-	public function sendUserNotificationPostEdit(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
-		$user->setMailhash($this->getMailHash($user));
+	public function sendUserNotificationPostEditSave(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
+		if ($this->settings['confirmEmailPostEdit']) {
+			$user->setMailhash($this->getMailHash($user));
+		}
 
 		$this->sendEmail(
+			$user,
 			$this->getUserRecipient($user),
 			'userEmail',
 			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user),
-			$user
+			$this->renderFileTemplate('FeuserEdit', 'form', __FUNCTION__, $user)
+		);
+
+		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
+	}
+
+	/**
+	 * Send an email notification post confirmation to the admin
+	 *
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
+	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
+	 */
+	public function sendAdminNotificationPostEditConfirm(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
+		if ($this->settings['acceptEmailPostEdit']) {
+			$user->setMailhash($this->getMailHash($user));
+		}
+
+		$this->sendEmail(
+			$user,
+			$this->getAdminRecipient(),
+			'adminEmail',
+			$this->getSubject(__FUNCTION__, $user),
+			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user)
 		);
 
 		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -320,7 +331,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param \Evoweb\SfRegister\Interfaces\FrontendUser $user
 	 * @return integer the number of recipients who were accepted for delivery
 	 */
-	protected function sendEmail(array $recipient, $typeOfEmail, $subject, $bodyHTML, $bodyPlain = '', $user) {
+	protected function sendEmail($user, array $recipient, $typeOfEmail, $subject, $bodyHTML, $bodyPlain = '') {
 		/** @var $mail \TYPO3\CMS\Core\Mail\MailMessage */
 		$mail = $this->objectManager->get('TYPO3\\CMS\\Core\\Mail\\MailMessage');
 		$mail
@@ -391,12 +402,12 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 
 		if ($layoutRootPath === '') {
-			$layoutRootPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('sf_register') . 'Resources/Private/Layout/';
+			$layoutRootPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('sf_register') . 'Resources/Private/Layouts/';
 		}
 
 		$layoutRootPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($layoutRootPath);
 		if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($layoutRootPath)) {
-			$result = trim($layoutRootPath, '/') . '/';
+			$result = rtrim($layoutRootPath, '/') . '/';
 		}
 
 		return $result;
@@ -413,7 +424,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	protected function renderFileTemplate($controller, $action, $method, $user) {
 		$type = str_replace('send', '', $method);
-		$variables = array('user' => $user);
+		$variables = array('user' => $user, 'settings' => $this->settings);
 
 		/** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
 		$view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');

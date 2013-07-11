@@ -30,23 +30,35 @@ plugin.tx_sfregister.settings {
 	useEncryptedFilename = {$plugin.tx_sfregister.settings.useEncryptedFilename}
 
 	# boolean if user or admin need to activate or notified
-	notifyAdminPreConfirmation = {$plugin.tx_sfregister.settings.notifyAdminPreConfirmation}
-	notifyUserPreConfirmation = {$plugin.tx_sfregister.settings.notifyUserPreConfirmation}
+	notifyAdminPostCreateSave = {$plugin.tx_sfregister.settings.notifyAdminPostCreateSave}
+	notifyUserPostCreateSave = {$plugin.tx_sfregister.settings.notifyUserPostCreateSave}
 
-	notifyAdminPostConfirmation = {$plugin.tx_sfregister.settings.notifyAdminPostConfirmation}
-	notifyUserPostConfirmation = {$plugin.tx_sfregister.settings.notifyUserPostConfirmation}
+	notifyAdminPostCreateConfirm = {$plugin.tx_sfregister.settings.notifyAdminPostCreateConfirm}
+	notifyUserPostCreateConfirm = {$plugin.tx_sfregister.settings.notifyUserPostCreateConfirm}
 
-	notifyAdminPostRefuse = {$plugin.tx_sfregister.settings.notifyAdminPostRefuse}
-	notifyUserPostRefuse = {$plugin.tx_sfregister.settings.notifyUserPostRefuse}
+	notifyAdminPostCreateRefuse = {$plugin.tx_sfregister.settings.notifyAdminPostCreateRefuse}
+	notifyUserPostCreateRefuse = {$plugin.tx_sfregister.settings.notifyUserPostCreateRefuse}
 
-	notifyAdminPostAccept = {$plugin.tx_sfregister.settings.notifyAdminPostAccept}
-	notifyUserPostAccept = {$plugin.tx_sfregister.settings.notifyUserPostAccept}
+	notifyAdminPostCreateAccept = {$plugin.tx_sfregister.settings.notifyAdminPostCreateAccept}
+	notifyUserPostCreateAccept = {$plugin.tx_sfregister.settings.notifyUserPostCreateAccept}
 
-	notifyAdminPostDecline = {$plugin.tx_sfregister.settings.notifyAdminPostDecline}
-	notifyUserPostDecline = {$plugin.tx_sfregister.settings.notifyUserPostDecline}
+	notifyAdminPostCreateDecline = {$plugin.tx_sfregister.settings.notifyAdminPostCreateDecline}
+	notifyUserPostCreateDecline = {$plugin.tx_sfregister.settings.notifyUserPostCreateDecline}
 
-	notifyAdminPostEdit = {$plugin.tx_sfregister.settings.notifyAdminPostEdit}
-	notifyUserPostEdit = {$plugin.tx_sfregister.settings.notifyUserPostEdit}
+	confirmEmailPostCreate = {$plugin.tx_sfregister.settings.confirmEmailPostCreate}
+	acceptEmailPostCreate = {$plugin.tx_sfregister.settings.acceptEmailPostCreate}
+
+	notifyAdminPostEditSave = {$plugin.tx_sfregister.settings.notifyAdminPostEditSave}
+	notifyUserPostEditSave = {$plugin.tx_sfregister.settings.notifyUserPostEditSave}
+
+	notifyAdminPostEditConfirm = {$plugin.tx_sfregister.settings.notifyAdminPostEditConfirm}
+	notifyUserPostEditConfirm = {$plugin.tx_sfregister.settings.notifyUserPostEditConfirm}
+
+	notifyAdminPostEditAccept = {$plugin.tx_sfregister.settings.notifyAdminPostEditAccept}
+	notifyUserPostEditAccept = {$plugin.tx_sfregister.settings.notifyUserPostEditAccept}
+
+	confirmEmailPostEdit = {$plugin.tx_sfregister.settings.confirmEmailPostEdit}
+	acceptEmailPostEdit = {$plugin.tx_sfregister.settings.acceptEmailPostEdit}
 
 
 	# boolean if user should get logged in after registration
@@ -58,8 +70,9 @@ plugin.tx_sfregister.settings {
 	usergroup = {$plugin.tx_sfregister.settings.usergroup}
 
 	# integer usergroups set if activation is needed
-	usergroupPreConfirmation = {$plugin.tx_sfregister.settings.usergroupPreConfirmation}
-	usergroupPostConfirmation = {$plugin.tx_sfregister.settings.usergroupPostConfirmation}
+	usergroupPostSave = {$plugin.tx_sfregister.settings.usergroupPostSave}
+	usergroupPostConfirm = {$plugin.tx_sfregister.settings.usergroupPostConfirm}
+	usergroupPostAccept = {$plugin.tx_sfregister.settings.usergroupPostAccept}
 
 	# string name of the site used in subject
 	sitename = {$plugin.tx_sfregister.settings.sitename}
@@ -96,13 +109,17 @@ plugin.tx_sfregister.settings {
 			3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
 		}
 		passwordRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
-		title = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-		company = Evoweb\SfRegister\Validation\Validator\RequiredValidator
 		firstName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
 		lastName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-		email = EmailAddress
+		email {
+			1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+			2 = EmailAddress
+		}
 		emailRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
-		gtc = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
+		gtc {
+			1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+			2 = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
+		}
 		image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
 		captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = srfreecap)
 	}

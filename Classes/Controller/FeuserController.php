@@ -252,6 +252,19 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	}
 
 	/**
+	 * Redirect to a page with given id
+	 *
+	 * @param integer $pageId
+	 * @return void
+	 */
+	protected function redirectToPage($pageId) {
+		$url = $this->uriBuilder
+			->setTargetPageUid($pageId)
+			->build();
+		$this->redirectToUri($url);
+	}
+
+	/**
 	 * Send emails to user and/or to admin
 	 *
 	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user

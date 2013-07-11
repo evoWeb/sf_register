@@ -10,7 +10,7 @@
 				<source>Feuser Register</source>
 			</trans-unit>
 			<trans-unit id="tt_content.list_type_form" xml:space="preserve">
-				<source>Registration plugin for create, editor or delete Frontend Users.</source>
+				<source>Registration for create, edit or delete Frontend Users</source>
 			</trans-unit>
 			<trans-unit id="fe_users.div.registration" xml:space="preserve">
 				<source>Registration</source>
@@ -203,6 +203,9 @@
 			</trans-unit>
 			<trans-unit id="fe_users.module_sys_dmail_category" xml:space="preserve">
 				<source>Subscribe to categories</source>
+			</trans-unit>
+			<trans-unit id="fe_users.email_new" xml:space="preserve">
+				<source>Email after confirming the change:</source>
 			</trans-unit>
 			<trans-unit id="form_flexform.sheet_general" xml:space="preserve">
 				<source>General settings</source>

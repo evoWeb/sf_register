@@ -1,95 +1,116 @@
 plugin.tx_sfregister.settings {
-	# cat=sf_register.settings/enable/40; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.useDataOfLoggedinFeuser
+	# cat=sf_register.settings/enable/40; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.useDataOfLoggedinFeuser
 	useDataOfLoggedinFeuser = 1
 
-	# cat=sf_register.settings//40; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.badWordList
+	# cat=sf_register.settings//40; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.badWordList
 	badWordList = god, sex, password
 
-	# cat=sf_register.settings/enable/40; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.redirectPostRegistrationPageId
+	# cat=sf_register.settings/enable/40; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.redirectPostRegistrationPageId
 	redirectPostRegistrationPageId =
-	# cat=sf_register.settings/enable/40; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.redirectPostActivationPageId
+	# cat=sf_register.settings/enable/40; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.redirectPostActivationPageId
 	redirectPostActivationPageId =
 
-	# cat=sf_register.settings/enable/40; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.useEmailAddressAsUsername
+	# cat=sf_register.settings/enable/40; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.useEmailAddressAsUsername
 	useEmailAddressAsUsername =
 
-	# cat=sf_register.settings/enable/40; type=options[LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.encryptPassword.0=,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.encryptPassword.1=md5,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.encryptPassword.2=sha1]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.encryptPassword
+	# cat=sf_register.settings/enable/40; type=options[LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.encryptPassword.0=,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.encryptPassword.1=md5,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.encryptPassword.2=sha1]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.encryptPassword
 	encryptPassword =
 
-	# cat=sf_register.settings/enable/40; type=options[LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.encryptPassword.0=,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.encryptPassword.1=md5,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.encryptPassword.2=sha1]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.useEncryptedFilename
+	# cat=sf_register.settings/enable/40; type=options[LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.encryptPassword.0=,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.encryptPassword.1=md5,LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.encryptPassword.2=sha1]; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.useEncryptedFilename
 	useEncryptedFilename =
 
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyAdminPreConfirmation
-	notifyAdminPreConfirmation =
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyUserPreConfirmation
-	notifyUserPreConfirmation =
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyAdminPostConfirmation
-	notifyAdminPostConfirmation =
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyUserPostConfirmation
-	notifyUserPostConfirmation =
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyAdminPostRefuse
-	notifyAdminPostRefuse =
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyUserPostRefuse
-	notifyUserPostRefuse =
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyAdminPostAccept
-	notifyAdminPostAccept =
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyUserPostAccept
-	notifyUserPostAccept =
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyAdminPostDecline
-	notifyAdminPostDecline =
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyUserPostDecline
-	notifyUserPostDecline =
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyAdminPostEdit
-	notifyAdminPostEdit =
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.notifyUserPostEdit
-	notifyUserPostEdit =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostCreateSave
+	notifyAdminPostCreateSave =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostCreateSave
+	notifyUserPostCreateSave =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostCreateConfirm
+	notifyAdminPostCreateConfirm =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostCreateConfirm
+	notifyUserPostCreateConfirm =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostCreateRefuse
+	notifyAdminPostCreateRefuse =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostCreateRefuse
+	notifyUserPostCreateRefuse =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostCreateAccept
+	notifyAdminPostCreateAccept =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostCreateAccept
+	notifyUserPostCreateAccept =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostCreateDecline
+	notifyAdminPostCreateDecline =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostCreateDecline
+	notifyUserPostCreateDecline =
 
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.autologinPostRegistration
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.confirmEmailPostCreate
+	confirmEmailPostCreate =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.acceptEmailPostCreate
+	acceptEmailPostCreate =
+
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostEditSave
+	notifyAdminPostEditSave =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostEditSave
+	notifyUserPostEditSave =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostEditConfirm
+	notifyAdminPostEditConfirm =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostEditConfirm
+	notifyUserPostEditConfirm =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostEditAccept
+	notifyAdminPostEditAccept =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostEditAccept
+	notifyUserPostEditAccept =
+
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.confirmEmailPostEdit
+	confirmEmailPostEdit =
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.acceptEmailPostEdit
+	acceptEmailPostEdit =
+
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.autologinPostRegistration
 	autologinPostRegistration = 0
-	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.autologinPostConfirmation
+	# cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.autologinPostConfirmation
 	autologinPostConfirmation = 0
 
-	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.usergroupPreConfirmation
-	usergroupPreConfirmation = 0
-	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.usergroupPostConfirmation
-	usergroupPostConfirmation = 0
-	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.usergroup
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.usergroupPostSave
+	usergroupPostSave = 0
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.usergroupPostConfirm
+	usergroupPostConfirm = 0
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.usergroupPostAccept
+	usergroupPostAccept = 0
+	# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.usergroup
 	usergroup = 0
 
-	# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.sitename
+	# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.sitename
 	sitename = dummy Site
 
 	userEmail {
-		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.userEmail.fromName
+		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.userEmail.fromName
 		fromName = userEmail from
-		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.userEmail.fromEmail
+		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.userEmail.fromEmail
 		fromEmail = userEmailfrom@test.local
 
-		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.userEmail.replyName
+		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.userEmail.replyName
 		replyName = userEmail reply
-		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.userEmail.replyEmail
+		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.userEmail.replyEmail
 		replyEmail = userEmailreply@test.local
 	}
 
 	adminEmail {
-		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.adminEmail.toName
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.adminEmail.toName
 		toName = adminEmail to
-		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.adminEmail.toEmail
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.adminEmail.toEmail
 		toEmail = adminToEmail@test.local
 
-		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.adminEmail.fromName
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.adminEmail.fromName
 		fromName = adminEmail from
-		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.adminEmail.fromEmail
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.adminEmail.fromEmail
 		fromEmail = adminEmailfrom@test.local
 
-		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.adminEmail.replyName
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.adminEmail.replyName
 		replyName = adminEmail reply
-		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.adminEmail.replyEmail
+		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.adminEmail.replyEmail
 		replyEmail = adminEmailreply@test.local
 	}
 }
 
 plugin.tx_sfregister.persistence {
-	# cat=sf_register.settings//10; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xml:maximal.storagePid
+	# cat=sf_register.settings//10; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.storagePid
 	storagePid =
 }

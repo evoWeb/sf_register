@@ -115,10 +115,11 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 	public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user) {
 		$user->prepareDateOfBirth();
 
-		if ($this->isNotifyUser('PreConfirmation') || $this->isNotifyAdmin('PreConfirmation')) {
+		if ($this->isNotifyUser('PostCreateSave') || $this->isNotifyAdmin('PostCreateSave') &&
+				($this->settings['confirmEmailPostCreate'] || $this->settings['acceptEmailPostCreate'])) {
 			$user->setDisable(TRUE);
 			$user->setActivatedOn(new \DateTime('1970-01-01'));
-			$user = $this->changeUsergroup($user, 0, $this->settings['usergroupPreConfirmation']);
+			$user = $this->changeUsergroup($user, 0, $this->settings['usergroupPostSave']);
 		} else {
 			$user = $this->moveImageFile($user);
 			$user = $this->changeUsergroup($user, 0, $this->settings['usergroup']);
@@ -137,7 +138,7 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 			)
 		);
 
-		$user = $this->sendEmails($user, 'PreConfirmation');
+		$user = $this->sendEmails($user, 'PostCreateSave');
 
 		$user->setPassword($this->encryptPassword($user->getPassword(), $this->settings));
 
@@ -187,12 +188,15 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 			} else {
 				$user = $this->changeUsergroup(
 					$user,
-					$this->settings['usergroupPreConfirmation'],
-					$this->settings['usergroupPostConfirmation']
+					$this->settings['usergroupPostSave'],
+					$this->settings['usergroupPostConfirm']
 				);
 				$user = $this->moveImageFile($user);
-				$user->setDisable(FALSE);
 				$user->setMailhash('');
+
+				if (!$this->settings['acceptEmailPostCreate']) {
+					$user->setDisable(FALSE);
+				}
 
 				$this->signalSlotDispatcher->dispatch(
 					__CLASS__,
@@ -205,7 +209,7 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 
 				$this->userRepository->update($user);
 
-				$this->sendEmails($user, 'PostConfirmation');
+				$this->sendEmails($user, 'PostCreateConfirm');
 
 				if ($this->settings['autologinPostConfirmation']) {
 					$this->persistAll();
@@ -246,7 +250,7 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 
 			$this->userRepository->remove($user);
 
-			$this->sendEmails($user, 'PostRefuse');
+			$this->sendEmails($user, 'PostCreateRefuse');
 
 			$this->view->assign('userRefused', 1);
 		}
@@ -271,10 +275,11 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 			} else {
 				$user = $this->changeUsergroup(
 					$user,
-					$this->settings['usergroupPreAcceptance'],
-					$this->settings['usergroupPostAcceptance']
+					$this->settings['usergroupPostConfirm'],
+					$this->settings['usergroupPostAccept']
 				);
 				$user->setActivatedOn(new \DateTime('now'));
+				$user->setDisable(FALSE);
 				$user->setMailhash('');
 
 				$this->signalSlotDispatcher->dispatch(
@@ -288,7 +293,7 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 
 				$this->userRepository->update($user);
 
-				$this->sendEmails($user, 'PostAccept');
+				$this->sendEmails($user, 'PostCreateAccept');
 
 				$this->view->assign('userAccepted', 1);
 			}
@@ -320,7 +325,7 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 
 			$this->userRepository->remove($user);
 
-			$this->sendEmails($user, 'PostDecline');
+			$this->sendEmails($user, 'PostCreateDecline');
 
 			$this->view->assign('userDeclined', 1);
 		}
@@ -336,19 +341,6 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 		$this->objectManager
 			->get('TYPO3\\CMS\\SfRegister\\Services\\Login')
 			->loginUserById($user->getUid());
-	}
-
-	/**
-	 * Redirect to a page with given id
-	 *
-	 * @param integer $pageId
-	 * @return void
-	 */
-	protected function redirectToPage($pageId) {
-		$url = $this->uriBuilder
-			->setTargetPageUid($pageId)
-			->build();
-		$this->redirectToUri($url);
 	}
 
 	/**
