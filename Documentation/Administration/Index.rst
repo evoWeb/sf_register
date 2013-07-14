@@ -3,8 +3,7 @@
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
 
-.. include:: Includes.txt
-.. include:: Images.txt
+.. include:: ../Includes.txt
 
 
 Administration

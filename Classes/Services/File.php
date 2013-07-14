@@ -308,7 +308,10 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 		$result = '';
 
 		if ($filename) {
-			$allowedFolders = array(1 => array('path' => $this->tempFolder), 2 => array('path' => $this->uploadFolder));
+			$allowedFolders = array(
+				1 => array('path' => $this->tempFolder),
+				2 => array('path' => $this->uploadFolder)
+			);
 
 			$fileExtensions = (array) $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions'];
 			$fileExtensions['webspace']['allow'] = $this->allowedFileExtensions;

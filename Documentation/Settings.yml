@@ -4,8 +4,8 @@
 
 ---
 conf.py:
-  copyright: 2013
+  copyright: 2010-2013
   project: sf_register
   version: 2.0
-  release: 2.0.0
+  release: 2.0.2
 ...
