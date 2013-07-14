@@ -2,3 +2,7 @@
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
+
+
+Breaking Changes
+================

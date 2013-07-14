@@ -1,7 +1,7 @@
-.. |img-1|      image:: Main/Images/background_devider.gif
+.. |img-1|      image:: Images/background_devider.gif
 .. :align: LEFT
 
-.. |img-2|      image:: Main/Images/logo_typo3.png
+.. |img-logo|      image:: Images/logo_typo3.png
 .. :height: 21
 .. :width: 87
 .. :border: 0

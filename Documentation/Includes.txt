@@ -8,7 +8,7 @@
 
 
 .. ==================================================
-.. DEFINE SOME TEXT ROLES
+.. DEFINE SOME TEXTROLES
 .. --------------------------------------------------
 
 .. role::   typoscript(code)
@@ -18,4 +18,4 @@
 
 .. role::   php(code)
 
-.. highlight:: guess
+.. highlight:: php

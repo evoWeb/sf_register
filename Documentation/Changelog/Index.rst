@@ -3,16 +3,8 @@
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
 
-.. include:: Includes.txt
-.. include:: Images.txt
 
-Users manual
-============
+ChangeLog
+=========
 
-Nothing to do here.
-
-
-FAQ
----
-
-- Possible subsections: FAQ
+- Changelog is in the extension files

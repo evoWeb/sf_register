@@ -3,8 +3,7 @@
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
 
-.. include:: Includes.txt
-.. include:: Images.txt
+.. include:: ../Includes.txt
 
 
 Tutorial
@@ -19,7 +18,7 @@ confirmations with admin acceptance. So if its possible to have different approc
 
 
 Simple like peanut butter jelly sandwich:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - In the Extension Manager
 
   - install the extension
@@ -56,3 +55,10 @@ Simple like peanut butter jelly sandwich:
 
   - activate and set the remembered usergroup id in the field 'usergroup set if no activation is needed':
     (the result in constants field is plugin.tx_sfregister.settings.usergroup = 3)
+
+Somewhat like creme bruleé:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Your christmas stuffed Turkey:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
