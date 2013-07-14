@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "sf_register".
  *
- * Auto generated 09-07-2013 12:52
+ * Auto generated 14-07-2013 18:43
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'description' => 'Offers the possibility to maintain the fe_user data in frontend by the user self.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '6.0.0',
+	'version' => '6.0.2',
 	'dependencies' => 'extbase,fluid',
 	'conflicts' => '',
 	'priority' => 'bottom',
@@ -32,18 +32,23 @@ $EM_CONF[$_EXTKEY] = array (
 	'author_company' => 'evoweb',
 	'CGLcompliance' => '',
 	'CGLcompliance_note' => '',
-	'constraints' => array (
-		'depends' => array (
+	'constraints' => 
+	array (
+		'depends' => 
+		array (
 			'typo3' => '6.0.0-6.0.99',
 			'extbase' => '6.0.0-6.0.99',
 			'fluid' => '6.0.0-6.0.99',
 		),
-		'conflicts' => array (
+		'conflicts' => 
+		array (
 		),
-		'suggests' => array (
+		'suggests' => 
+		array (
 		),
 	),
-	'suggests' => array (
+	'suggests' => 
+	array (
 	),
 	'_md5_values_when_last_written' => '',
 );
