@@ -118,12 +118,14 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 		t3lib_div::makeInstance('Tx_SfRegister_Services_Session')
 			->remove('captchaWasValidPreviously');
 
+
 		if ($this->settings['autologinPostRegistration']) {
 			$this->persistAll();
 			$this->autoLogin($user);
 		}
 
 		if ($this->settings['redirectPostRegistrationPageId']) {
+			$this->persistAll();
 			$this->redirectToPage($this->settings['redirectPostRegistrationPageId']);
 		}
 	}
@@ -167,6 +169,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 				}
 
 				if ($this->settings['redirectPostActivationPageId']) {
+					$this->persistAll();
 					$this->redirectToPage($this->settings['redirectPostActivationPageId']);
 				}
 
