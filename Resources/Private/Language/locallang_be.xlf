@@ -3,13 +3,10 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2013-06-23T17:12:01Z" product-name="sf_register">
 		<header/>
 		<body>
-			<trans-unit id="pi1_title" xml:space="preserve">
-				<source>Feuser Register</source>
-			</trans-unit>
-			<trans-unit id="pi1_plus_wiz_description" xml:space="preserve">
-				<source>Feuser Register</source>
-			</trans-unit>
 			<trans-unit id="tt_content.list_type_form" xml:space="preserve">
+				<source>Feuser Register</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_form_description" xml:space="preserve">
 				<source>Registration for create, edit or delete Frontend Users</source>
 			</trans-unit>
 			<trans-unit id="fe_users.div.registration" xml:space="preserve">

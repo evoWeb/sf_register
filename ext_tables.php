@@ -19,12 +19,13 @@ switch ($extensionConfiguration['typoscriptComplexity']) {
 }
 
 
+/**
+ * Page TypoScript for mod wizards
+ */
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+	'<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $_EXTKEY . '/Configuration/PageTypoScript/ModWizards.ts">'
+);
 
-\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('fe_users');
-/*\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
-TCAdefaults.fe_users.tx_extbase_type = \\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUser
-TCAdefaults.fe_groups.tx_extbase_type = \\TYPO3\\CMS\\Extbase\\Domain\\Model\\FrontendUserGroup
-');*/
 
 $tempColumns = array(
 	'mailhash' => array(
@@ -289,7 +290,6 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('direct_mail'))
 
 
 
-\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('tt_content');
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['sfregister_form'] = 'layout, select_key';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['sfregister_form'] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('sfregister_form', 'FILE:EXT:sf_register/Configuration/FlexForms/form.xml');
@@ -299,11 +299,5 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['sfregister_f
 	'Form',
 	'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_be.xml:tt_content.list_type_form'
 );
-
-	// add witzicon to 'add content element'
-if (TYPO3_MODE == 'BE') {
-	$GLOBALS['TBE_MODULES_EXT']['xMOD_db_new_content_el']['addElClasses']['Evoweb\\SfRegister\\Utility\\WizardIcon'] =
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Classes/Utility/WizardIcon.php';
-}
 
 ?>

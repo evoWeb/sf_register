@@ -12,9 +12,9 @@
 
 /** @noinspection PhpUndefinedVariableInspection */
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'FeUser Register',
+	'title' => 'Frontend User Register',
 	'description' => 'Offers the possibility to maintain the fe_user data in frontend by the user self.',
-	'category' => 'Sebastian Fischer',
+	'category' => 'plugin',
 	'shy' => 0,
 	'version' => '2.0.0',
 	'dependencies' => 'extbase,fluid',
@@ -35,9 +35,9 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.0.0-6.0.99',
-			'extbase' => '6.0.0-6.0.99',
-			'fluid' => '6.0.0-6.0.99',
+			'typo3' => '6.0.0-6.2.99',
+			'extbase' => '6.0.0-6.2.99',
+			'fluid' => '6.0.0-6.2.99',
 		),
 		'conflicts' => array(
 		),
