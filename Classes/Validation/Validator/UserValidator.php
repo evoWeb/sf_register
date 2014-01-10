@@ -27,6 +27,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * A Uservalidator
  */
 class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+	 */
+	static protected $instancesCurrentlyUnderValidation;
+
 	/**
 	 * Object manager
 	 *
