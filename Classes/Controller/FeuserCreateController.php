@@ -339,7 +339,7 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 	 */
 	protected function autoLogin(\Evoweb\SfRegister\Domain\Model\FrontendUser $user) {
 		$this->objectManager
-			->get('TYPO3\\CMS\\SfRegister\\Services\\Login')
+			->get('Evoweb\\SfRegister\\Services\\Login')
 			->loginUserById($user->getUid());
 	}
 
