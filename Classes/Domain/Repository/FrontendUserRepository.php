@@ -37,8 +37,8 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
 		$query = $this->createQuery();
 
 		$querySettings = $query->getQuerySettings();
+		$querySettings->setRespectStoragePage(TRUE);
 		$querySettings->setIgnoreEnableFields(TRUE);
-		$querySettings->setEnableFieldsToBeIgnored(array('disable'));
 
 		$user = $query
 			->matching($query->equals('mailhash', $mailhash))
@@ -62,7 +62,6 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
 		$querySettings = $query->getQuerySettings();
 		$querySettings->setRespectStoragePage($respectStoragePage);
 		$querySettings->setIgnoreEnableFields(TRUE);
-		$querySettings->setEnableFieldsToBeIgnored(array('disable'));
 
 		return $query
 			->matching($query->equals($field, $value))
