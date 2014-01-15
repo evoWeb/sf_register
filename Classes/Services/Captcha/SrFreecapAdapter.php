@@ -93,7 +93,7 @@ class SrFreecapAdapter extends \Evoweb\SfRegister\Services\Captcha\AbstractAdapt
 			$values = array_values($this->captcha->makeCaptcha());
 			$output = array_combine($this->keys, $values);
 		} else {
-			$output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_captcha_notinstalled', 'sf_register', array('sr_freecap'));
+			$output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_captcha_notinstalled', 'SfRegister', array('sr_freecap'));
 		}
 
 		return $output;

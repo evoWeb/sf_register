@@ -275,7 +275,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 
 		return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
 			$labelIndex,
-			'sf_register',
+			'SfRegister',
 			array($this->settings['sitename'], $user->getUsername())
 		);
 	}

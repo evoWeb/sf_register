@@ -61,7 +61,7 @@ class JmRecaptchaAdapter extends \Evoweb\SfRegister\Services\Captcha\AbstractAda
 		if ($this->captcha !== null) {
 			$output = $this->captcha->getReCaptcha($this->settings['error']);
 		} else {
-			$output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_captcha.notinstalled', 'sf_register', array('jm_recaptcha'));
+			$output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_captcha.notinstalled', 'SfRegister', array('jm_recaptcha'));
 		}
 
 		return $output;
