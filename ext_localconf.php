@@ -22,12 +22,12 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl') &&
 	'Form',
 	array(
 		'FeuserCreate' => 'form, preview, proxy, save, confirm, removeImage',
-		'FeuserEdit' => 'form, preview, proxy, save, removeImage',
+		'FeuserEdit' => 'form, preview, proxy, save, confirm, removeImage',
 		'FeuserPassword' => 'form, save',
 	),
 	array(
 		'FeuserCreate' => 'form, preview, proxy, save, confirm, removeImage',
-		'FeuserEdit' => 'form, preview, proxy, save, removeImage',
+		'FeuserEdit' => 'form, preview, proxy, save, confirm, removeImage',
 		'FeuserPassword' => 'form, save',
 	)
 );

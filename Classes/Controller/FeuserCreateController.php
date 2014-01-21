@@ -175,8 +175,11 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 	 * @param string $authCode
 	 * @return void
 	 */
-	public function confirmAction($authCode) {
-		$user = $this->userRepository->findByMailhash($authCode);
+	public function confirmAction($authCode = NULL) {
+		$user = NULL;
+		if (strlen($authCode)) {
+			$user = $this->userRepository->findByMailhash($authCode);
+		}
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
@@ -329,18 +332,6 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 
 			$this->view->assign('userDeclined', 1);
 		}
-	}
-
-	/**
-	 * Login user with service
-	 *
-	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-	 * @return void
-	 */
-	protected function autoLogin(\Evoweb\SfRegister\Domain\Model\FrontendUser $user) {
-		$this->objectManager
-			->get('Evoweb\\SfRegister\\Services\\Login')
-			->loginUserById($user->getUid());
 	}
 
 	/**

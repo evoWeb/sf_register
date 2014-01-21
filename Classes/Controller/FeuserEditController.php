@@ -139,6 +139,7 @@ class FeuserEditController extends \Evoweb\SfRegister\Controller\FeuserControlle
 		if ($this->settings['forwardToEditAfterSave']) {
 			$this->forward('form');
 		}
+		$this->view->assign('user', $user);
 	}
 
 	/**
@@ -148,8 +149,11 @@ class FeuserEditController extends \Evoweb\SfRegister\Controller\FeuserControlle
 	 * @param string $authCode
 	 * @return void
 	 */
-	public function confirmAction($authCode) {
-		$user = $this->userRepository->findByMailhash($authCode);
+	public function confirmAction($authCode = NULL) {
+		$user = NULL;
+		if (strlen($authCode)) {
+			$user = $this->userRepository->findByMailhash($authCode);
+		}
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
@@ -178,6 +182,11 @@ class FeuserEditController extends \Evoweb\SfRegister\Controller\FeuserControlle
 				$this->userRepository->update($user);
 
 				$this->sendEmails($user, 'PostEditConfirm');
+
+				if ($this->settings['autologinPostConfirmation']) {
+					$this->persistAll();
+					$this->autoLogin($user);
+				}
 
 				if ($this->settings['redirectPostActivationPageId']) {
 					$this->redirectToPage($this->settings['redirectPostActivationPageId']);

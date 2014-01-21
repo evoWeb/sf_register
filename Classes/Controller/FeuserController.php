@@ -317,6 +317,18 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
 		return $result;
 	}
+
+	/**
+	 * Login user with service
+	 *
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @return void
+	 */
+	protected function autoLogin(\Evoweb\SfRegister\Domain\Model\FrontendUser $user) {
+		$this->objectManager
+			->get('Evoweb\\SfRegister\\Services\\Login')
+			->loginUserById($user->getUid());
+	}
 }
 
 ?>
