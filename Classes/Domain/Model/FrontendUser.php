@@ -189,6 +189,13 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	protected $comments;
 
 	/**
+	 * if Dmail should be enabled
+	 *
+	 * @var boolean
+	 */
+	protected $moduleSysDmailNewsletter;
+
+	/**
 	 * if emails should be send as HTML or plain text
 	 *
 	 * @var boolean
@@ -787,6 +794,24 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 */
 	public function getModuleSysDmailCategory() {
 		return $this->moduleSysDmailCategory;
+	}
+
+	/**
+	 * Set moduleSysDmailNewsletter
+	 *
+	 * @param boolean $moduleSysDmailNewsletter
+	 */
+	public function setModuleSysDmailNewsletter($moduleSysDmailNewsletter) {
+		$this->moduleSysDmailNewsletter = $moduleSysDmailNewsletter;
+	}
+
+	/**
+	 * Get moduleSysDmailNewsletter
+	 *
+	 * @return boolean
+	 */
+	public function getModuleSysDmailNewsletter() {
+		return $this->moduleSysDmailNewsletter;
 	}
 
 	/**

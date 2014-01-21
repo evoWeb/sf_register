@@ -19,6 +19,7 @@ CREATE TABLE fe_users (
 	status int(11) unsigned DEFAULT '0' NOT NULL,
 	by_invitation tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	comments text NOT NULL,
+	module_sys_dmail_newsletter tinyint(3) unsigned DEFAULT '0' NOT NULL,
 	module_sys_dmail_html tinyint(3) unsigned DEFAULT '0' NOT NULL
 	module_sys_dmail_category int(10) unsigned DEFAULT '0' NOT NULL,
 	email_new varchar(80) DEFAULT '' NOT NULL,

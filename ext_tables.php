@@ -224,6 +224,13 @@ $tempColumns = array(
 			'eval' => 'trim',
 		)
 	),
+	'module_sys_dmail_newsletter' => array(
+		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.module_sys_dmail_newsletter',
+		'exclude' => '1',
+		'config' => array(
+			'type'=>'check'
+		)
+	),
 	'module_sys_dmail_html' => array(
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.module_sys_dmail_html',
 		'exclude' => '1',

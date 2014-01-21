@@ -195,6 +195,9 @@
 			<trans-unit id="fe_users.comments" xml:space="preserve">
 				<source>Comments</source>
 			</trans-unit>
+			<trans-unit id="fe_users.module_sys_dmail_newsletter" xml:space="preserve">
+				<source>Activate Newsletter</source>
+			</trans-unit>
 			<trans-unit id="fe_users.module_sys_dmail_html" xml:space="preserve">
 				<source>Receive emails in HTML format</source>
 			</trans-unit>
