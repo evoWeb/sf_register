@@ -10,10 +10,10 @@
 				<source>Gender</source>
 			</trans-unit>
 			<trans-unit id="gender_male" xml:space="preserve">
-				<source>Herr</source>
+				<source>Mr</source>
 			</trans-unit>
 			<trans-unit id="gender_female" xml:space="preserve">
-				<source>Frau</source>
+				<source>Mrs</source>
 			</trans-unit>
 			<trans-unit id="title" xml:space="preserve">
 				<source>Title</source>
@@ -23,6 +23,9 @@
 			</trans-unit>
 			<trans-unit id="lastName" xml:space="preserve">
 				<source>Last Name</source>
+			</trans-unit>
+			<trans-unit id="middleName" xml:space="preserve">
+				<source>Middle Name</source>
 			</trans-unit>
 			<trans-unit id="firstName" xml:space="preserve">
 				<source>First Name</source>
@@ -34,7 +37,7 @@
 				<source>Email</source>
 			</trans-unit>
 			<trans-unit id="emailRepeat" xml:space="preserve">
-				<source>Email repeatition</source>
+				<source>Email repetition</source>
 			</trans-unit>
 			<trans-unit id="telephone" xml:space="preserve">
 				<source>Phone</source>
@@ -44,6 +47,9 @@
 			</trans-unit>
 			<trans-unit id="fax" xml:space="preserve">
 				<source>Fax</source>
+			</trans-unit>
+			<trans-unit id="www" xml:space="preserve">
+				<source>Website</source>
 			</trans-unit>
 			<trans-unit id="address" xml:space="preserve">
 				<source>Street / House Number</source>
@@ -193,7 +199,7 @@
 				<source>Password</source>
 			</trans-unit>
 			<trans-unit id="passwordRepeat" xml:space="preserve">
-				<source>Password repeatition</source>
+				<source>Password repetition</source>
 			</trans-unit>
 			<trans-unit id="gtc" xml:space="preserve">
 				<source>General terms and conditions</source>

@@ -12,11 +12,11 @@
 				<target>Gender</target>
 			</trans-unit>
 			<trans-unit id="gender_male" xml:space="preserve" approved="yes">
-				<source>Herr</source>
+				<source>Mr</source>
 				<target>Herr</target>
 			</trans-unit>
 			<trans-unit id="gender_female" xml:space="preserve" approved="yes">
-				<source>Frau</source>
+				<source>Mrs</source>
 				<target>Frau</target>
 			</trans-unit>
 			<trans-unit id="title" xml:space="preserve" approved="yes">
@@ -25,11 +25,15 @@
 			</trans-unit>
 			<trans-unit id="company" xml:space="preserve" approved="yes">
 				<source>Company</source>
-				<target>Company</target>
+				<target>Firma</target>
 			</trans-unit>
 			<trans-unit id="lastName" xml:space="preserve" approved="yes">
 				<source>Last Name</source>
 				<target>Nachname</target>
+			</trans-unit>
+			<trans-unit id="middleName" xml:space="preserve">
+				<source>Middle Name</source>
+				<target>Mittelname</target>
 			</trans-unit>
 			<trans-unit id="firstName" xml:space="preserve" approved="yes">
 				<source>First Name</source>
@@ -41,43 +45,47 @@
 			</trans-unit>
 			<trans-unit id="email" xml:space="preserve" approved="yes">
 				<source>Email</source>
-				<target>Email</target>
+				<target>E-Mail</target>
 			</trans-unit>
 			<trans-unit id="emailRepeat" xml:space="preserve" approved="yes">
-				<source>Email repeatition</source>
-				<target>Email repeatition</target>
+				<source>Email repetition</source>
+				<target>E-Mail-Wiederholung</target>
 			</trans-unit>
 			<trans-unit id="telephone" xml:space="preserve" approved="yes">
 				<source>Phone</source>
-				<target>Phone</target>
+				<target>Telefon</target>
 			</trans-unit>
 			<trans-unit id="mobilephone" xml:space="preserve" approved="yes">
 				<source>Mobile-Phone</source>
-				<target>Mobile-Phone</target>
+				<target>Mobil-Telefon</target>
 			</trans-unit>
 			<trans-unit id="fax" xml:space="preserve" approved="yes">
 				<source>Fax</source>
 				<target>Fax</target>
 			</trans-unit>
+			<trans-unit id="www" xml:space="preserve">
+				<source>Website</source>
+				<target>Webseite</target>
+			</trans-unit>
 			<trans-unit id="address" xml:space="preserve" approved="yes">
 				<source>Street / House Number</source>
-				<target>Street / House Number</target>
+				<target>Straße / Hausnummer</target>
 			</trans-unit>
 			<trans-unit id="zip" xml:space="preserve" approved="yes">
 				<source>Zip</source>
-				<target>Zip</target>
+				<target>Postleitzahl</target>
 			</trans-unit>
 			<trans-unit id="city" xml:space="preserve" approved="yes">
 				<source>City</source>
-				<target>City</target>
+				<target>Ort</target>
 			</trans-unit>
 			<trans-unit id="country" xml:space="preserve" approved="yes">
 				<source>Country</source>
-				<target>Country</target>
+				<target>Land</target>
 			</trans-unit>
 			<trans-unit id="staticInfoCountry" xml:space="preserve" approved="yes">
 				<source>Country</source>
-				<target>Country</target>
+				<target>Land</target>
 			</trans-unit>
 			<trans-unit id="zone" xml:space="preserve" approved="yes">
 				<source>State/province</source>
@@ -93,7 +101,7 @@
 			</trans-unit>
 			<trans-unit id="timezone" xml:space="preserve" approved="yes">
 				<source>Timezone</source>
-				<target>Timezone</target>
+				<target>Zeitzone</target>
 			</trans-unit>
 			<trans-unit id="timezone_I_-12" xml:space="preserve" approved="yes">
 				<source>UTC−12:00</source>
@@ -256,7 +264,7 @@
 				<target>Passwort</target>
 			</trans-unit>
 			<trans-unit id="passwordRepeat" xml:space="preserve" approved="yes">
-				<source>Password repeatition</source>
+				<source>Password repetition</source>
 				<target>Passwortwiederholung</target>
 			</trans-unit>
 			<trans-unit id="gtc" xml:space="preserve" approved="yes">
@@ -265,19 +273,19 @@
 			</trans-unit>
 			<trans-unit id="gtc_checked" xml:space="preserve" approved="yes">
 				<source>not accepted</source>
-				<target>not accepted</target>
+				<target>nicht akzeptiert</target>
 			</trans-unit>
 			<trans-unit id="gtc_checked1" xml:space="preserve" approved="yes">
 				<source>accepted</source>
-				<target>accepted</target>
+				<target>akzeptiert</target>
 			</trans-unit>
 			<trans-unit id="privacy" xml:space="preserve" approved="yes">
 				<source>Privacy agreement</source>
-				<target>Privacy agreement</target>
+				<target>Datenschutzeinverständnis</target>
 			</trans-unit>
 			<trans-unit id="dateOfBirth" xml:space="preserve" approved="yes">
 				<source>Birth date</source>
-				<target>Birth date</target>
+				<target>Geburtsdatum</target>
 			</trans-unit>
 			<trans-unit id="image" xml:space="preserve" approved="yes">
 				<source>Profilimage</source>
@@ -285,15 +293,15 @@
 			</trans-unit>
 			<trans-unit id="image_none" xml:space="preserve" approved="yes">
 				<source>Profilimage not uploaded</source>
-				<target>Profilimage not uploaded</target>
+				<target>Profilimage nicht hochgeladen</target>
 			</trans-unit>
 			<trans-unit id="edit_saved" xml:space="preserve" approved="yes">
 				<source>Userdata updated</source>
-				<target>Userdata updated</target>
+				<target>Benutzerdaten aktualisiert</target>
 			</trans-unit>
 			<trans-unit id="create_saved" xml:space="preserve" approved="yes">
 				<source>User created</source>
-				<target>User created</target>
+				<target>Benutzer erstellt</target>
 			</trans-unit>
 			<trans-unit id="info_mandatory_fields" xml:space="preserve" approved="yes">
 				<source>Fields with &lt;span&gt;*&lt;/span&gt; are mandatory</source>
@@ -317,7 +325,7 @@
 			</trans-unit>
 			<trans-unit id="submit_removeImage" xml:space="preserve" approved="yes">
 				<source>remove</source>
-				<target>remove</target>
+				<target>entfernen</target>
 			</trans-unit>
 			<trans-unit id="username" xml:space="preserve" approved="yes">
 				<source>Username</source>
