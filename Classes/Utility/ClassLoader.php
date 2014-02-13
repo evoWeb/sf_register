@@ -23,7 +23,7 @@
  ***************************************************************/
 
 /** @noinspection PhpIncludeInspection */
-require(t3lib_extmgm::extPath('extbase') . 'Classes/Utility/ClassLoader.php');
+require_once(t3lib_extmgm::extPath('extbase') . 'Classes/Utility/ClassLoader.php');
 
 class Tx_SfRegister_Utility_ClassLoader extends Tx_Extbase_Utility_ClassLoader {
 	/**
@@ -34,7 +34,7 @@ class Tx_SfRegister_Utility_ClassLoader extends Tx_Extbase_Utility_ClassLoader {
 	static protected $extensionKey = 'sf_register';
 
 	/**
-	 * Name space of the Domain Model of StaticInfoTables
+	 * Name space of the Domain Model of SfRegister
 	 *
 	 * @var string
 	 */

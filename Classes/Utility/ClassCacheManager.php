@@ -100,7 +100,7 @@ class Tx_SfRegister_Utility_ClassCacheManager {
 		foreach ($entities as $entity => $extensionsConfiguration) {
 			$key = 'Domain/Model/' . $entity;
 
-				// Get the file from static_info_tables itself, this needs to be loaded as first
+				// Get the file from sf_register itself, this needs to be loaded as first
 			$path = t3lib_extMgm::extPath($this->extensionKey) . 'Classes/' . $key . '.php';
 			if (!is_file($path)) {
 				throw new Exception('given file "' . $path . '" does not exist');

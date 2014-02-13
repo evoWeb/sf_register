@@ -59,6 +59,7 @@ class Tx_SfRegister_Services_Hook {
 	/**
 	 * Get all registered hooks based on class or global scope
 	 *
+	 * @param string $className
 	 * @return array
 	 */
 	protected function getHooks($className) {
