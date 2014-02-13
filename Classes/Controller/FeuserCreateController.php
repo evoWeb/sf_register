@@ -246,7 +246,7 @@ class Tx_SfRegister_Controller_FeuserCreateController extends Tx_SfRegister_Cont
 	 */
 	protected function changeUsergroupPostActivation(Tx_SfRegister_Interfaces_FrontendUser $user) {
 		if (intval($this->settings['usergroupPostActivation']) > 0 &&
-				intval($this->settings['usergroupAfterActivation']) != intval($this->settings['usergroupPreActivation'])) {
+				intval($this->settings['usergroupPostActivation']) != intval($this->settings['usergroupPreActivation'])) {
 			$user = $this->addUsergroup($user, $this->settings['usergroupPostActivation']);
 
 			$usergroupToRemove = $this->userGroupRepository->findByUid($this->settings['usergroupPreActivation']);

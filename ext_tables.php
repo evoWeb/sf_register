@@ -5,7 +5,7 @@ if (!defined('TYPO3_MODE')) {
 }
 
 
-
+/** @noinspection PhpUndefinedVariableInspection */
 $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$_EXTKEY]);
 
 switch($extensionConfiguration['typoscriptComplexity']) {
@@ -56,6 +56,7 @@ $tempColumns = array(
 			'eval' => 'trim',
 		)
 	),
+
 	'gender' => array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.gender',
@@ -67,6 +68,7 @@ $tempColumns = array(
 			),
 		)
 	),
+
 	'date_of_birth' => array(
 		'exclude' => 0,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.date_of_birth',
@@ -79,6 +81,7 @@ $tempColumns = array(
 			'default' => ''
 		)
 	),
+
 	'language' => array(
 		'exclude' => 0,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.language',
@@ -90,6 +93,7 @@ $tempColumns = array(
 			'default' => ''
 		)
 	),
+
 	'zone' => array(
 		'exclude' => 0,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.zone',
@@ -101,6 +105,7 @@ $tempColumns = array(
 			'default' => ''
 		)
 	),
+
 	'timezone' => array(
 		'exclude' => 0,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone',
@@ -151,6 +156,7 @@ $tempColumns = array(
 			'default' => 0,
 		)
 	),
+
 	'daylight' => array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.daylight',
@@ -158,6 +164,7 @@ $tempColumns = array(
 			'type' => 'check'
 		)
 	),
+
 	'mobilephone' => array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.mobilephone',
@@ -166,6 +173,7 @@ $tempColumns = array(
 			'size' => 20,
 		)
 	),
+
 	'gtc' => array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.gtc',
@@ -173,6 +181,7 @@ $tempColumns = array(
 			'type' => 'check'
 		)
 	),
+
 	'privacy' => array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.privacy',
@@ -180,6 +189,7 @@ $tempColumns = array(
 			'type' => 'check'
 		)
 	),
+
 	'status' => array(
 		'exclude' => 0,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.status',
@@ -196,6 +206,7 @@ $tempColumns = array(
 			'maxitems' => 1,
 		)
 	),
+
 	'by_invitation' => array(
 		'exclude' => 0,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.by_invitation',
@@ -204,6 +215,7 @@ $tempColumns = array(
 			'default' => '0'
 		)
 	),
+
 	'comments' => array(
 		'exclude' => 0,
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.comments',
@@ -213,11 +225,12 @@ $tempColumns = array(
 			'cols' => '48'
 		)
 	),
+
 	'module_sys_dmail_html' => array(
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.module_sys_dmail_html',
 		'exclude' => '1',
 		'config' => array(
-			'type'=>'check'
+			'type' => 'check'
 		)
 	),
 );
@@ -295,6 +308,26 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 if (TYPO3_MODE == 'BE') {
 	$GLOBALS['TBE_MODULES_EXT']['xMOD_db_new_content_el']['addElClasses']['Tx_SfRegister_Utility_WizardIcon'] =
 		t3lib_extMgm::extPath($_EXTKEY) . 'Classes/Utility/WizardIcon.php';
+}
+
+try {
+	t3lib_cache::initializeCachingFramework();
+
+	/** @var t3lib_cache_Manager $cacheManager */
+	$cacheManager = $GLOBALS['typo3CacheManager'];
+		// Reflection cache
+	if (!$cacheManager->hasCache(SFREGISTERCACHEIDENTIFIER)) {
+		/** @var t3lib_cache_Factory $typo3CacheFactory */
+		$typo3CacheFactory = $GLOBALS['typo3CacheFactory'];
+		$typo3CacheFactory->create(
+			SFREGISTERCACHEIDENTIFIER,
+			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER]['frontend'],
+			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER]['backend'],
+			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER]['options']
+		);
+	}
+} catch (Exception $exeption) {
+	t3lib_div::devLog('Can not create cache ' . SFREGISTERCACHEIDENTIFIER, $_EXTKEY, 2);
 }
 
 ?>

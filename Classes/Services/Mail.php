@@ -35,21 +35,21 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 	/**
 	 * Configuration manager
-	 * 
+	 *
 	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
 	 */
 	protected $configurationManager;
 
 	/**
 	 * Settings of the create controller
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $settings = array();
 
 	/**
 	 * Framework configurations
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $frameworkConfiguration = array();
@@ -111,7 +111,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserEdit', 'form', $type, $variables)
+			$this->renderFileTemplate('FeuserCreate', 'form', $type, $variables)
 		);
 
 		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
@@ -173,7 +173,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 			$this->getUserRecipient($user),
 			'userEmail',
 			$this->getSubject($user, 'subject' . $type),
-			$this->renderFileTemplate('FeuserEdit', 'form', $type, $variables)
+			$this->renderFileTemplate('FeuserCreate', 'form', $type, $variables)
 		);
 
 		return $this->processHook('send' . $type . 'PostSend', $user, $this->settings, $this->objectManager);
@@ -289,7 +289,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 	/**
 	 * Get translated version of the subject with replaced username and sitename
-	 * 
+	 *
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @param string $labelIndex
 	 * @return string
@@ -304,7 +304,7 @@ class Tx_SfRegister_Services_Mail implements t3lib_Singleton {
 
 	/**
 	 * Get the mailhash for the activation link based on time, username and email address
-	 * 
+	 *
 	 * @param Tx_SfRegister_Interfaces_FrontendUser $user
 	 * @return string
 	 */
