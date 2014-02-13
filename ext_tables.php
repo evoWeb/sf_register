@@ -228,14 +228,14 @@ $tempColumns = array(
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.module_sys_dmail_newsletter',
 		'exclude' => '1',
 		'config' => array(
-			'type'=>'check'
+			'type' => 'check'
 		)
 	),
 	'module_sys_dmail_html' => array(
 		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.module_sys_dmail_html',
 		'exclude' => '1',
 		'config' => array(
-			'type'=>'check'
+			'type' => 'check'
 		)
 	),
 );
@@ -306,5 +306,26 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['sfregister_f
 	'Form',
 	'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_be.xml:tt_content.list_type_form'
 );
+
+
+try {
+	\TYPO3\CMS\Core\Cache\Cache::initializeCachingFramework();
+
+	/** @var t3lib_cache_Manager $cacheManager */
+	$cacheManager = $GLOBALS['typo3CacheManager'];
+		// Reflection cache
+	if (!$cacheManager->hasCache(SFREGISTERCACHEIDENTIFIER)) {
+		/** @var t3lib_cache_Factory $typo3CacheFactory */
+		$typo3CacheFactory = $GLOBALS['typo3CacheFactory'];
+		$typo3CacheFactory->create(
+			SFREGISTERCACHEIDENTIFIER,
+			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER]['frontend'],
+			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER]['backend'],
+			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER]['options']
+		);
+	}
+} catch (Exception $exeption) {
+	\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Can not create cache ' . SFREGISTERCACHEIDENTIFIER, $_EXTKEY, 2);
+}
 
 ?>
