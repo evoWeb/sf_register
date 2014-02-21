@@ -12,11 +12,11 @@
 
 /** @noinspection PhpUndefinedVariableInspection */
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'Frontend User Register',
+	'title' => 'Frontend User Registration',
 	'description' => 'Offers the possibility to maintain the fe_user data in frontend by the user self.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '2.0.0',
+	'version' => '6.0.3',
 	'dependencies' => 'extbase,fluid',
 	'conflicts' => '',
 	'priority' => 'bottom',
