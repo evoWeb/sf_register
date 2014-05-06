@@ -156,6 +156,8 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 		if ($this->settings['redirectPostRegistrationPageId']) {
 			$this->redirectToPage($this->settings['redirectPostRegistrationPageId']);
 		}
+
+		$this->view->assign('user', $user);
 	}
 
 	/**

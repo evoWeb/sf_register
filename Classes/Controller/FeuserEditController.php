@@ -139,6 +139,7 @@ class FeuserEditController extends \Evoweb\SfRegister\Controller\FeuserControlle
 		if ($this->settings['forwardToEditAfterSave']) {
 			$this->forward('form');
 		}
+
 		$this->view->assign('user', $user);
 	}
 
