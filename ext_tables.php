@@ -13,9 +13,9 @@ switch ($extensionConfiguration['typoscriptComplexity']) {
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript/maximal/', 'Feuser Register [maximal]');
 		break;
 	case 'minimal':
+		// fall through intended
 	default:
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript/minimal/', 'Feuser Register [minimal]');
-		break;
 }
 
 
@@ -240,7 +240,7 @@ $tempColumns = array(
 	),
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns, 1);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'gender', '', 'before:name');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'pseudonym', '', 'after:username');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'date_of_birth, language, status', '', 'after:name');
@@ -265,7 +265,7 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_ta
 			)
 		),
 	);
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns, 1);
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'static_info_country', '', 'after:zone');
 }
 
@@ -291,7 +291,7 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('direct_mail'))
 			)
 		)
 	);
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns, 1);
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', '--div--;Direct mail, module_sys_dmail_html, module_sys_dmail_category');
 }
 
@@ -311,12 +311,12 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['sfregister_f
 try {
 	\TYPO3\CMS\Core\Cache\Cache::initializeCachingFramework();
 
-	/** @var t3lib_cache_Manager $cacheManager */
-	$cacheManager = $GLOBALS['typo3CacheManager'];
+	/** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
+	$cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
 		// Reflection cache
 	if (!$cacheManager->hasCache(SFREGISTERCACHEIDENTIFIER)) {
-		/** @var t3lib_cache_Factory $typo3CacheFactory */
-		$typo3CacheFactory = $GLOBALS['typo3CacheFactory'];
+		/** @var \TYPO3\CMS\Core\Cache\CacheFactory $typo3CacheFactory */
+		$typo3CacheFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheFactory');
 		$typo3CacheFactory->create(
 			SFREGISTERCACHEIDENTIFIER,
 			$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER]['frontend'],
@@ -327,5 +327,3 @@ try {
 } catch (Exception $exeption) {
 	\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Can not create cache ' . SFREGISTERCACHEIDENTIFIER, $_EXTKEY, 2);
 }
-
-?>

@@ -43,8 +43,8 @@ define('SFREGISTERCACHEIDENTIFIER', 'cache_' . $_EXTKEY . '_extending');
 
 	// Register cache sf_register
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER] = array(
-	'frontend' => 't3lib_cache_frontend_PhpFrontend',
-	'backend' => 't3lib_cache_backend_FileBackend',
+	'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\PhpFrontend',
+	'backend' => 'TYPO3\\CMS\\Core\\Cache\\Backend\\FileBackend',
 	'options' => array(),
 );
 

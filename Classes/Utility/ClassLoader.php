@@ -87,11 +87,11 @@ class ClassLoader extends \TYPO3\CMS\Core\Core\ClassLoader {
 	static public function initializeCache($cacheIdentifier) {
 		try {
 			/** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
-			$cacheManager = $GLOBALS['typo3CacheManager'];
+			$cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
 			$cacheInstance = $cacheManager->getCache($cacheIdentifier);
 		} catch (\TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException $e) {
 			/** @var \TYPO3\CMS\Core\Cache\CacheFactory $typo3CacheFactory */
-			$typo3CacheFactory = $GLOBALS['typo3CacheFactory'];
+			$typo3CacheFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheFactory');
 			$cacheInstance = $typo3CacheFactory->create(
 				$cacheIdentifier,
 				$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$cacheIdentifier]['frontend'],
