@@ -184,16 +184,16 @@ class FeuserEditController extends \Evoweb\SfRegister\Controller\FeuserControlle
 
 				$this->sendEmails($user, 'PostEditConfirm');
 
-				if ($this->settings['autologinPostConfirmation']) {
-					$this->persistAll();
-					$this->autoLogin($user);
-				}
-
-				if ($this->settings['redirectPostActivationPageId']) {
-					$this->redirectToPage($this->settings['redirectPostActivationPageId']);
-				}
-
 				$this->view->assign('userConfirmed', 1);
+			}
+
+			if ($this->settings['autologinPostConfirmation']) {
+				$this->persistAll();
+				$this->autoLogin($user);
+			}
+
+			if ($this->settings['redirectPostActivationPageId']) {
+				$this->redirectToPage($this->settings['redirectPostActivationPageId']);
 			}
 		}
 	}
