@@ -269,34 +269,6 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_ta
 	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'static_info_country', '', 'after:zone');
 }
 
-if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('direct_mail')) {
-	$tempColumns = array(
-		'module_sys_dmail_category' => array(
-			'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.module_sys_dmail_group.category',
-			'exclude' => '1',
-			'config' => array(
-				'type' => 'select',
-				'foreign_table' => 'sys_dmail_category',
-				'foreign_table_where' => 'AND sys_dmail_category.l18n_parent=0 AND sys_dmail_category.pid IN (###PAGE_TSCONFIG_IDLIST###) ORDER BY sys_dmail_category.uid',
-				'itemsProcFunc' => 'tx_directmail_select_categories->get_localized_categories',
-				'itemsProcFunc_config' => array(
-					'table' => 'sys_dmail_category',
-					'indexField' => 'uid',
-				),
-				'size' => 5,
-				'minitems' => 0,
-				'maxitems' => 60,
-				'renderMode' => 'checkbox',
-				'MM' => 'sys_dmail_feuser_category_mm',
-			)
-		)
-	);
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', '--div--;Direct mail, module_sys_dmail_html, module_sys_dmail_category');
-}
-
-
-
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['sfregister_form'] = 'layout, select_key';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['sfregister_form'] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('sfregister_form', 'FILE:EXT:sf_register/Configuration/FlexForms/form.xml');
