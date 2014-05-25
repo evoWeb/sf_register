@@ -114,15 +114,30 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 	}
 
+
+	/**
+	 * Getter for temporary folder
+	 *
+	 * @return string
+	 */
+	public function getTempFolder() {
+		return $this->tempFolder;
+	}
+
+	/**
+	 * Getter for upload folder
+	 *
+	 * @return string
+	 */
+	public function getUploadFolder() {
+		return $this->uploadFolder;
+	}
+
 	/**
 	 * @param string $fieldname
 	 * @return void
 	 */
 	public function setFieldname($fieldname) {
-		if (!isset($GLOBALS['TCA']['fe_users']['columns'])) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('fe_users');
-		}
-
 		$this->fieldname = $fieldname;
 
 		$fieldConfiguration = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config'];
@@ -275,10 +290,11 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 			$basicFileFunctions = $this->objectManager->get('TYPO3\\CMS\\Core\\Utility\\File\\BasicFileUtility');
 
 			$filename = $basicFileFunctions->cleanFileName($fileData['filename']);
-			$uploadFolder = $basicFileFunctions->cleanDirectoryName(PATH_site . $this->tempFolder);
-			$uniqueFilename = $basicFileFunctions->getUniqueName($filename, $uploadFolder);
+			$uploadFolder = \TYPO3\CMS\Core\Utility\PathUtility::getCanonicalPath(PATH_site . $this->tempFolder);
 
 			$this->createUploadFolderIfNotExist($uploadFolder);
+
+			$uniqueFilename = $basicFileFunctions->getUniqueName($filename, $uploadFolder);
 
 			if (\TYPO3\CMS\Core\Utility\GeneralUtility::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
 				$result = basename($uniqueFilename);
@@ -301,35 +317,50 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Move an temporary uploaded file to the upload folder
 	 *
-	 * @param string $filename
-	 * @return \TYPO3\CMS\Core\Resource\File
+	 * @param string &$filename
+	 * @return void
 	 */
-	public function moveFileFromTempFolderToUploadFolder($filename) {
-		$result = '';
-
+	public function moveFileFromTempFolderToUploadFolder(&$filename) {
 		if ($filename) {
-			$allowedFolders = array(
-				1 => array('path' => $this->tempFolder),
-				2 => array('path' => $this->uploadFolder)
-			);
-
-			$fileExtensions = (array) $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions'];
-			$fileExtensions['webspace']['allow'] = $this->allowedFileExtensions;
-
-			/** @var $extFileFunctions \Evoweb\SfRegister\Utility\File\ExtendedFileUtility */
-			$extFileFunctions = $this->objectManager->get('Evoweb\\SfRegister\\Utility\\File\\ExtendedFileUtility');
-			$extFileFunctions->init($allowedFolders, $fileExtensions);
-			$extFileFunctions->init_actionPerms(1);
-
-			$commands = array(
-				'data' => $this->tempFolder . '/' . $filename,
-				'target' => $this->uploadFolder,
-				'altName' => TRUE
-			);
-			$result = $extFileFunctions->funcMove($commands);
+			return;
 		}
 
-		return $result;
+		$this->createUploadFolderIfNotExist($this->uploadFolder);
+
+		$fileExtensions = (array) $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions'];
+		$fileExtensions['webspace']['allow'] = $this->allowedFileExtensions;
+
+		$fileCommands = array(0 => array(
+			'data' => $this->tempFolder . '/' . $filename,
+			'target' => $this->uploadFolder,
+			'altName' => TRUE
+		));
+
+		/** @var $extFileFunctions \Evoweb\SfRegister\Utility\File\ExtendedFileUtility */
+		$extFileFunctions = $this->objectManager->get('Evoweb\\SfRegister\\Utility\\File\\ExtendedFileUtility');
+
+		if (version_compare(TYPO3_branch, '6.2', '<')) {
+			$extFileFunctions->init(array(), $fileExtensions);
+			$extFileFunctions->init_actionPerms(1);
+			$extFileFunctions->start($fileCommands);
+
+			$result = $extFileFunctions->processData();
+			$filename = $result['move'][0];
+		} else {
+			$extFileFunctions->setActionPermissions(array(
+				'addFile' => TRUE,
+				'moveFile' => TRUE,
+				'copyFile' => TRUE,
+				'renameFile' => TRUE,
+				'readFile' => TRUE,
+			));
+			$extFileFunctions->start($fileCommands);
+
+			$result = $extFileFunctions->processData();
+			/** @var \TYPO3\CMS\Core\Resource\File $file */
+			$file = $result['move'][0];
+			$filename = $file->getIdentifier();
+		}
 	}
 
 	/**

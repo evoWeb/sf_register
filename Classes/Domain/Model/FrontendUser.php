@@ -23,6 +23,8 @@ namespace Evoweb\SfRegister\Domain\Model;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * An extended frontend user with more attributes
  */
@@ -678,9 +680,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return void
 	 */
 	public function setDaylight($daylight) {
-		$this->daylight = ($daylight ?
-			TRUE :
-			FALSE);
+		$this->daylight = ($daylight ? TRUE : FALSE);
 	}
 
 	/**
@@ -861,6 +861,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @param string $custom0
 	 */
 	public function setCustom0($custom0) {
+		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
 		$this->custom0 = $custom0;
 	}
 
@@ -868,6 +869,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return string
 	 */
 	public function getCustom0() {
+		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
 		return $this->custom0;
 	}
 
@@ -875,6 +877,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @param string $custom1
 	 */
 	public function setCustom1($custom1) {
+		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
 		$this->custom1 = $custom1;
 	}
 
@@ -882,6 +885,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return string
 	 */
 	public function getCustom1() {
+		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
 		return $this->custom1;
 	}
 
@@ -889,6 +893,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @param string $custom2
 	 */
 	public function setCustom2($custom2) {
+		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
 		$this->custom2 = $custom2;
 	}
 
@@ -896,6 +901,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return string
 	 */
 	public function getCustom2() {
+		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
 		return $this->custom2;
 	}
 
@@ -903,6 +909,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @param string $custom3
 	 */
 	public function setCustom3($custom3) {
+		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
 		$this->custom3 = $custom3;
 	}
 
@@ -910,6 +917,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return string
 	 */
 	public function getCustom3() {
+		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
 		return $this->custom3;
 	}
 
@@ -917,6 +925,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @param string $custom4
 	 */
 	public function setCustom4($custom4) {
+		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
 		$this->custom4 = $custom4;
 	}
 
@@ -924,6 +933,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return string
 	 */
 	public function getCustom4() {
+		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
 		return $this->custom4;
 	}
 
@@ -931,6 +941,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @param string $custom5
 	 */
 	public function setCustom5($custom5) {
+		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
 		$this->custom5 = $custom5;
 	}
 
@@ -938,6 +949,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return string
 	 */
 	public function getCustom5() {
+		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
 		return $this->custom5;
 	}
 
@@ -945,6 +957,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @param string $custom6
 	 */
 	public function setCustom6($custom6) {
+		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
 		$this->custom6 = $custom6;
 	}
 
@@ -952,6 +965,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return string
 	 */
 	public function getCustom6() {
+		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
 		return $this->custom6;
 	}
 
@@ -959,6 +973,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @param string $custom7
 	 */
 	public function setCustom7($custom7) {
+		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
 		$this->custom7 = $custom7;
 	}
 
@@ -966,6 +981,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return string
 	 */
 	public function getCustom7() {
+		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
 		return $this->custom7;
 	}
 
@@ -973,6 +989,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @param string $custom8
 	 */
 	public function setCustom8($custom8) {
+		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
 		$this->custom8 = $custom8;
 	}
 
@@ -980,6 +997,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return string
 	 */
 	public function getCustom8() {
+		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
 		return $this->custom8;
 	}
 
@@ -987,6 +1005,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @param string $custom9
 	 */
 	public function setCustom9($custom9) {
+		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
 		$this->custom9 = $custom9;
 	}
 
@@ -994,6 +1013,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return string
 	 */
 	public function getCustom9() {
+		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
 		return $this->custom9;
 	}
 }

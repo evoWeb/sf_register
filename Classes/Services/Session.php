@@ -61,7 +61,7 @@ class Session implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function fetch() {
 		if ($this->values === NULL) {
-			$this->values = unserialize($this->frontendUser->getKey('ses', $this->sessionKey));
+			$this->values = (array) unserialize($this->frontendUser->getKey('ses', $this->sessionKey));
 		}
 
 		return $this;
