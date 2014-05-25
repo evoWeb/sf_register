@@ -279,8 +279,21 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	public function __construct($username = '', $password = '') {
 		parent::__construct($username, $password);
 
-		$this->activatedOn = new \DateTime();
-		$this->dateOfBirth = new \DateTime();
+		$this->initializeObject();
+	}
+
+	/**
+	 * Is called after wake up and after construct
+	 *
+	 * @return void
+	 */
+	public function initializeObject() {
+		if (!$this->activatedOn instanceof \DateTime) {
+			$this->activatedOn = new \DateTime();
+		}
+		if (!$this->dateOfBirth instanceof \DateTime) {
+			$this->dateOfBirth = new \DateTime();
+		}
 	}
 
 	/**
