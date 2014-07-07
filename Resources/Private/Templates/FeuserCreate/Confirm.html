@@ -9,10 +9,10 @@
 <f:section name="Main">
 <f:if condition="{userNotFound}">
 	<f:translate key="account_not_found"/>
-</f:if><f:if condition="{userAlreadyActive}">
+</f:if><f:if condition="{userAlreadyConfirmed}">
 	<f:translate key="account_already_activated" arguments="{0: user.username}" htmlEscape="false"/>
-</f:if><f:if condition="{userActivated}">
-	<f:translate key="account_active" arguments="{0: user.username}" htmlEscape="false"/>
+</f:if><f:if condition="{userConfirmed}">
+	<f:translate key="account_successful_activated" arguments="{0: user.username}" htmlEscape="false"/>
 </f:if>
 </f:section>
 </body>

@@ -183,14 +183,12 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 	 * Confirm registration process by user
 	 * Could be followed by acceptance of admin
 	 *
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
 	 * @param string $authCode
 	 * @return void
 	 */
-	public function confirmAction($authCode = NULL) {
-		$user = NULL;
-		if (strlen($authCode)) {
-			$user = $this->userRepository->findByMailhash($authCode);
-		}
+	public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $authCode = NULL) {
+		$user = $this->determineFrontendUser($user, $authCode);
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
@@ -199,7 +197,7 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 
 			if (!$user->getDisable()) {
 				$this->view->assign('userAlreadyConfirmed', 1);
-			} else {
+			} elseif ($user->getMailhash() === $authCode) {
 				$user = $this->changeUsergroup(
 					$user,
 					$this->settings['usergroupPostSave'],
@@ -242,15 +240,16 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 	/**
 	 * Refuse registration process by user with removing the user data
 	 *
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
 	 * @param string $authCode
 	 * @return void
 	 */
-	public function refuseAction($authCode) {
-		$user = $this->userRepository->findByMailhash($authCode);
+	public function refuseAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $authCode = NULL) {
+		$user = $this->determineFrontendUser($user, $authCode);
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
-		} else {
+		} elseif ($user->getMailhash() === $authCode) {
 			$this->view->assign('user', $user);
 
 			$this->signalSlotDispatcher->dispatch(
@@ -273,11 +272,12 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 	/**
 	 * Accept registration process by admin after user confirmation
 	 *
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
 	 * @param string $authCode
 	 * @return void
 	 */
-	public function acceptAction($authCode) {
-		$user = $this->userRepository->findByMailhash($authCode);
+	public function acceptAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $authCode = NULL) {
+		$user = $this->determineFrontendUser($user, $authCode);
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
@@ -286,7 +286,7 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 
 			if (!$user->getActivatedOn()) {
 				$this->view->assign('userAlreadyAccapted', 1);
-			} else {
+			} elseif ($user->getMailhash() === $authCode) {
 				$user = $this->changeUsergroup(
 					$user,
 					$this->settings['usergroupPostConfirm'],
@@ -317,15 +317,16 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 	/**
 	 * Decline registration process by admin with removing the user data
 	 *
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
 	 * @param string $authCode
 	 * @return void
 	 */
-	public function declineAction($authCode) {
-		$user = $this->userRepository->findByMailhash($authCode);
+	public function declineAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $authCode = NULL) {
+		$user = $this->determineFrontendUser($user, $authCode);
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
-		} else {
+		} elseif ($user->getMailhash() === $authCode) {
 			$this->view->assign('user', $user);
 
 			$this->signalSlotDispatcher->dispatch(
@@ -343,6 +344,26 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 
 			$this->view->assign('userDeclined', 1);
 		}
+	}
+
+	/**
+	 * Determines the frontend user, either if it's
+	 * already submitted, or by looking up the mail hash code.
+	 *
+	 * @param NULL|\Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @param NULL|string $authCode
+	 * @return NULL|\Evoweb\SfRegister\Domain\Model\FrontendUser
+	 */
+	protected function determineFrontendUser(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $authCode = NULL) {
+		if ($user !== NULL) {
+			return $user;
+		}
+
+		if (!empty($authCode)) {
+			$user = $this->userRepository->findByMailhash($authCode);
+		}
+
+		return $user;
 	}
 
 	/**

@@ -37,6 +37,11 @@ if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
 				'GETvar' => 'tx_sfregister_form[action]',
 			),
 		),
+		'user' => array(
+			array(
+				'GETvar' => 'tx_sfregister_form[user]',
+			),
+		),
 		'ac' => array(
 			array(
 				'GETvar' => 'tx_sfregister_form[authCode]',
