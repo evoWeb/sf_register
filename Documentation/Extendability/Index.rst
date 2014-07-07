@@ -19,11 +19,67 @@ Extendability
 Adding custom fields
 --------------------
 
-Due to lacking support from extbase to extend models its currently not possible
-to add custom fields. To provide a replacement for this there are a bunch of
-fields without any configuration. These fields are named custom[0-9] and are of
-type string to have brought value support. Still these are not able to have
-objects assigned to them.
+Since late the frontend user domain model can be extended. This can be done the extension 'extender'
+which sole purpose is to extend extbase domain models.
+
+If you run into problems extending please be aware that the only solution supported is by the use of 'extender'.
+
+In this example its noteworthy that the last array key is not required but adviced.
+
+The path to the file matches extension key and extbase compatible path to the domain model.
+
+For highlighting purpose its adviced to let the domain model extend from \\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser
+
+**ext_localconf.php**::
+
+	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['extender']['FrontendUser']['sfregister_extended'] =
+	'EXT:ew_sfregister_extended/Classes/Domain/Model/FrontendUser.php';
+
+
+Beside extending the domain model with property and get-/set-method a field needs to be
+created for sql and registered in TCA.
+
+**ext_tables.sql**::
+
+	#
+	# Table structure for table 'fe_users'
+	#
+	CREATE TABLE fe_users (
+		extending varchar(60) DEFAULT '',
+	);
+
+
+**ext_tables.php**::
+
+	$temporaryColumns = array(
+		'extending' => array(
+			'exclude' => 1,
+			'label' => 'extending',
+			'config' => array(
+				'type' => 'input',
+				'readOnly' => TRUE,
+			)
+		),
+	);
+
+	t3lib_extMgm::addTCAcolumns('fe_users', $temporaryColumns, 1);
+	t3lib_extMgm::addToAllTCAtypes('fe_users', 'extending');
+
+
+Note of compatabilty
+____________________
+
+There is an internal extending solution which will be deleted in early 2015. There for the example provided
+here is only for documentation and should not be used.
+
+**ext_localconf.php**::
+	
+	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['entities']['FrontendUser']['sfregister_extended'] =
+	'EXT:sfregister_extended/Classes/Domain/Model/FrontendUser.php';
+
+
+Since extending the model is possible now the field custom0 to custom9 will be dropped early 2015.
+Please switch to extending the domain model if you need custom fields.
 
 
 .. _SignalSlotDispatcher:
