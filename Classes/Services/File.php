@@ -321,7 +321,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return void
 	 */
 	public function moveFileFromTempFolderToUploadFolder(&$filename) {
-		if ($filename) {
+		if ($filename === '') {
 			return;
 		}
 
