@@ -138,11 +138,20 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 			)
 		);
 
+		// Persist user to get valid uid
+		$plainPassword = $user->getPassword();
+		// Avoid plain password being persisted
+		$user->setPassword('');
+		$this->userRepository->add($user);
+		$this->persistAll();
+
+		// Write back plain password
+		$user->setPassword($plainPassword);
 		$user = $this->sendEmails($user, 'PostCreateSave');
 
+		// Encrypt plain password
 		$user->setPassword($this->encryptPassword($user->getPassword(), $this->settings));
-
-		$this->userRepository->add($user);
+		$this->userRepository->update($user);
 		$this->persistAll();
 
 		$this->objectManager
