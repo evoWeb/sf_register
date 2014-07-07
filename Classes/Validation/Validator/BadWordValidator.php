@@ -29,6 +29,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * @scope singleton
  */
 class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+
 	/**
 	 * Configuration Manager
 	 *

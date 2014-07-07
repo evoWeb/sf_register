@@ -31,6 +31,11 @@ namespace Evoweb\SfRegister\Validation\Validator;
 class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
 
 	/**
+	 * @var bool
+	 */
+	protected $acceptsEmptyValues = FALSE;
+
+	/**
 	 * @var array
 	 */
 	protected $supportedOptions = array(

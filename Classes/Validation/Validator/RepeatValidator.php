@@ -29,6 +29,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * @scope singleton
  */
 class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+
+	/**
+	 * @var bool
+	 */
+	protected $acceptsEmptyValues = FALSE;
+
 	/**
 	 * Model to take repeated value of
 	 *

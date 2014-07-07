@@ -29,6 +29,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * @scope singleton
  */
 class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+
+	/**
+	 * @var bool
+	 */
+	protected $acceptsEmptyValues = FALSE;
+
 	/**
 	 * Configuration manager
 	 *
