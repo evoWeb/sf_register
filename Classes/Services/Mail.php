@@ -158,7 +158,12 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUser
 	 */
 	public function sendUserNotificationPostCreateSave(\Evoweb\SfRegister\Interfaces\FrontendUser $user) {
-		if ($this->settings['confirmEmailChangePostEdit']) {
+		if ($this->settings['confirmEmailPostCreate']) {
+			$user->setMailhash($this->getMailHash($user));
+		} elseif ($this->settings['confirmEmailChangePostEdit']) {
+			\TYPO3\CMS\Core\Utility\GeneralUtility::logDeprecatedFunction(
+				'TypoScript settings.confirmEmailChangePostEdit is deprecated, use settings.confirmEmailPostCreate instead.'
+			);
 			$user->setMailhash($this->getMailHash($user));
 		}
 

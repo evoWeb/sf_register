@@ -52,7 +52,7 @@ plugin.tx_sfregister.settings {
 	notifyAdminPostEditConfirmation =
 	notifyUserPostEditConfirmation =
 
-	confirmEmailChangePostEdit =
+	confirmEmailPostCreate =
 
 	# boolean if user should get logged in after registration
 	autologinPostRegistration =
