@@ -37,6 +37,12 @@ class CaptchaValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
 	 */
 	protected $captchaAdapterFactory;
 
+	/**
+	 * @var array
+	 */
+	protected $supportedOptions = array(
+		'type' => array('srfreecap', 'Captcha adapter to be used', 'string'),
+	);
 
 	/**
 	 * If the given captcha is valid

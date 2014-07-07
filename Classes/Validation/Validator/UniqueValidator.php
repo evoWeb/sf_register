@@ -29,6 +29,14 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * @scope singleton
  */
 class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+
+	/**
+	 * @var array
+	 */
+	protected $supportedOptions = array(
+		'global' => array(TRUE, 'Whether to check uniqueness globally', 'boolean'),
+	);
+
 	/**
 	 * Frontend user repository
 	 *
