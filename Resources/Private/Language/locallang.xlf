@@ -339,6 +339,9 @@
 			<trans-unit id="subjectAdminNotificationMail" xml:space="preserve">
 				<source>User %2$s registered at %1$s</source>
 			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostCreateSave" xml:space="preserve">
+				<source>User %2$s registered at %1$s</source>
+			</trans-unit>
 			<trans-unit id="subjectAdminNotificationMailPostActivation" xml:space="preserve">
 				<source>User %2$s registered at %1$s and is now activated</source>
 			</trans-unit>
@@ -346,6 +349,9 @@
 				<source>User %2$s registered at %1$s and needs to be activated</source>
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationMail" xml:space="preserve">
+				<source>You registered yourself at %1$s as %2$s</source>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostCreateSave" xml:space="preserve">
 				<source>You registered yourself at %1$s as %2$s</source>
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationMailPostActivation" xml:space="preserve">
