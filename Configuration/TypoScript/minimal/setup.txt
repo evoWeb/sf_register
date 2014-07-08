@@ -63,8 +63,8 @@ plugin.tx_sfregister.settings {
 	usergroup = {$plugin.tx_sfregister.settings.usergroup}
 
 	# integer usergroups set if confirmation is needed
-	usergroupPreConfirmation = {$plugin.tx_sfregister.settings.usergroupPreConfirmation}
-	usergroupPostConfirmation = {$plugin.tx_sfregister.settings.usergroupPostConfirmation}
+	usergroupPostSave = {$plugin.tx_sfregister.settings.usergroupPostSave}
+	usergroupPostConfirm = {$plugin.tx_sfregister.settings.usergroupPostConfirm}
 
 	# string name of the site used in subject
 	sitename = {$plugin.tx_sfregister.settings.emailSitename}
@@ -213,7 +213,7 @@ module.tx_sfregister < plugin.tx_sfregister
 
 config.tx_extbase {
 	objects {
-		Evoweb\SfRegister\Interfaces\FrontendUser {
+		Evoweb\SfRegister\Interfaces\FrontendUserInterface {
 			className = Evoweb\SfRegister\Domain\Model\FrontendUser
 		}
 	}

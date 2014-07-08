@@ -1,15 +1,5 @@
 <?php
 
-########################################################################
-# Extension Manager/Repository config file for ext "sf_register".
-#
-# Auto generated 19-07-2011 09:32
-#
-# Manual updates:
-# Only the data in the array - everything else is removed by next
-# writing. "version" and "dependencies" must not be touched!
-########################################################################
-
 /** @noinspection PhpUndefinedVariableInspection */
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Frontend User Registration',
@@ -35,9 +25,9 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.0.0-6.2.99',
-			'extbase' => '6.0.0-6.2.99',
-			'fluid' => '6.0.0-6.2.99',
+			'typo3' => '6.2.0-6.2.99',
+			'extbase' => '6.2.0-6.2.99',
+			'fluid' => '6.2.0-6.2.99',
 		),
 		'conflicts' => array(
 		),
@@ -48,5 +38,3 @@ $EM_CONF[$_EXTKEY] = array(
 	),
 	'_md5_values_when_last_written' => '',
 );
-
-?>

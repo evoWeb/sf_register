@@ -52,7 +52,9 @@ class ExtendedFileUtility extends \TYPO3\CMS\Core\Utility\File\ExtendedFileUtili
 	protected function getFileObject($identifier) {
 		$object = $this->fileFactory->retrieveFileOrFolderObject($identifier);
 		if (!is_object($object)) {
-			throw new \TYPO3\CMS\Core\Resource\Exception\InvalidFileException('The item ' . $identifier . ' was not a file or directory!!', 1320122453);
+			throw new \TYPO3\CMS\Core\Resource\Exception\InvalidFileException(
+				'The item ' . $identifier . ' was not a file or directory!!', 1320122453
+			);
 		}
 
 		// early escape for fe_users path
@@ -65,10 +67,10 @@ class ExtendedFileUtility extends \TYPO3\CMS\Core\Utility\File\ExtendedFileUtili
 
 		// continue like the original one....
 		if ($object->getStorage()->getUid() === 0) {
-			throw new \TYPO3\CMS\Core\Resource\Exception\InsufficientFileAccessPermissionsException('You are not allowed to access files outside your storages', 1375889830);
+			throw new \TYPO3\CMS\Core\Resource\Exception\InsufficientFileAccessPermissionsException(
+				'You are not allowed to access files outside your storages', 1375889830
+			);
 		}
 		return $object;
- 	}
+	}
 }
-
-?>

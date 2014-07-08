@@ -28,7 +28,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  *
  * @scope singleton
  */
-class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
 
 	/**
 	 * @var bool
@@ -52,5 +53,3 @@ class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
 		return $result;
 	}
 }
-
-?>

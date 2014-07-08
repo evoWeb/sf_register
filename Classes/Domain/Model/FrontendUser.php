@@ -28,7 +28,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * An extended frontend user with more attributes
  */
-class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implements \Evoweb\SfRegister\Interfaces\FrontendUser {
+class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
+	implements \Evoweb\SfRegister\Interfaces\FrontendUserInterface {
 	/**
 	 * If the account is diabled or not
 	 *
@@ -297,7 +298,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	}
 
 	/**
-	 * Initializes the date of birth if related values are set by request to argument mapping
+	 * Initializes the date of birth if related values
+	 * are set by request to argument mapping
 	 *
 	 * @return void
 	 */
@@ -755,6 +757,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param boolean $byInvitation
+	 * @return void
 	 */
 	public function setByInvitation($byInvitation) {
 		$this->byInvitation = $byInvitation;
@@ -769,6 +772,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $comments
+	 * @return void
 	 */
 	public function setComments($comments) {
 		$this->comments = $comments;
@@ -783,6 +787,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $language
+	 * @return void
 	 */
 	public function setLanguage($language) {
 		$this->language = $language;
@@ -797,6 +802,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param array $moduleSysDmailCategory
+	 * @return void
 	 */
 	public function setModuleSysDmailCategory($moduleSysDmailCategory) {
 		$this->moduleSysDmailCategory = $moduleSysDmailCategory;
@@ -813,6 +819,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * Set moduleSysDmailNewsletter
 	 *
 	 * @param boolean $moduleSysDmailNewsletter
+	 * @return void
 	 */
 	public function setModuleSysDmailNewsletter($moduleSysDmailNewsletter) {
 		$this->moduleSysDmailNewsletter = $moduleSysDmailNewsletter;
@@ -829,6 +836,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param boolean $moduleSysDmailHtml
+	 * @return void
 	 */
 	public function setModuleSysDmailHtml($moduleSysDmailHtml) {
 		$this->moduleSysDmailHtml = $moduleSysDmailHtml;
@@ -843,6 +851,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param int $status
+	 * @return void
 	 */
 	public function setStatus($status) {
 		$this->status = $status;
@@ -857,6 +866,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $emailNew
+	 * @return void
 	 */
 	public function setEmailNew($emailNew) {
 		$this->emailNew = $emailNew;
@@ -872,6 +882,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $custom0
+	 * @return void
 	 */
 	public function setCustom0($custom0) {
 		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
@@ -888,6 +899,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $custom1
+	 * @return void
 	 */
 	public function setCustom1($custom1) {
 		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
@@ -904,6 +916,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $custom2
+	 * @return void
 	 */
 	public function setCustom2($custom2) {
 		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
@@ -920,6 +933,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $custom3
+	 * @return void
 	 */
 	public function setCustom3($custom3) {
 		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
@@ -936,6 +950,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $custom4
+	 * @return void
 	 */
 	public function setCustom4($custom4) {
 		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
@@ -952,6 +967,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $custom5
+	 * @return void
 	 */
 	public function setCustom5($custom5) {
 		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
@@ -968,6 +984,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $custom6
+	 * @return void
 	 */
 	public function setCustom6($custom6) {
 		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
@@ -984,6 +1001,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $custom7
+	 * @return void
 	 */
 	public function setCustom7($custom7) {
 		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
@@ -1000,6 +1018,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $custom8
+	 * @return void
 	 */
 	public function setCustom8($custom8) {
 		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
@@ -1016,6 +1035,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
 	/**
 	 * @param string $custom9
+	 * @return void
 	 */
 	public function setCustom9($custom9) {
 		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
@@ -1030,5 +1050,3 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 		return $this->custom9;
 	}
 }
-
-?>

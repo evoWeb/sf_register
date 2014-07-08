@@ -44,5 +44,3 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
 			->execute();
 	}
 }
-
-?>

@@ -331,5 +331,3 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		return $this->cnShortUa;
 	}
 }
-
-?>

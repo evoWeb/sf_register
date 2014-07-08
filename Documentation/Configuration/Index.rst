@@ -209,7 +209,7 @@ plugin.tx\_sfregister.settings:
 
 
  - :Property:
-         usergroupPreConfirmation
+         usergroupPostSave
 
    :Data type:
          Int
@@ -222,7 +222,7 @@ plugin.tx\_sfregister.settings:
 
 
  - :Property:
-         usergroupPostConfirmation
+         usergroupPostConfirm
 
    :Data type:
          Int

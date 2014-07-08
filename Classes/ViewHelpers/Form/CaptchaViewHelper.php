@@ -53,12 +53,10 @@ class CaptchaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFi
 	/**
 	 * Render the captcha block
 	 *
-	 * @param string $type Type of captcha to use (comes from adapted captchas in generel)
+	 * @param string $type Type of captcha to use
 	 * @return string
 	 */
 	public function render($type) {
 		return $this->captchaAdapterFactory->getCaptchaAdapter($type)->render();
 	}
 }
-
-?>

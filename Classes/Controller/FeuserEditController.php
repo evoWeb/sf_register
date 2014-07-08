@@ -26,7 +26,7 @@ namespace Evoweb\SfRegister\Controller;
 /**
  * An frontend user edit controller
  */
-class FeuserEditController extends \Evoweb\SfRegister\Controller\FeuserController {
+class FeuserEditController extends FeuserController {
 	/**
 	 * Form action
 	 *
@@ -243,5 +243,3 @@ class FeuserEditController extends \Evoweb\SfRegister\Controller\FeuserControlle
 		}
 	}
 }
-
-?>

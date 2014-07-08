@@ -194,7 +194,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
 	 */
 	protected function moveTempFile($user) {
-		if ($imagePath = $this->fileService->moveTempFileToTempFolder()) {
+		if (($imagePath = $this->fileService->moveTempFileToTempFolder())) {
 			$user->addImage($imagePath);
 		}
 
@@ -330,5 +330,3 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			->loginUserById($user->getUid());
 	}
 }
-
-?>

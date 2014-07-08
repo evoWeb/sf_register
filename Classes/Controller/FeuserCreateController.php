@@ -26,7 +26,7 @@ namespace Evoweb\SfRegister\Controller;
 /**
  * An frontend user create controller
  */
-class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserController {
+class FeuserCreateController extends FeuserController {
 	/**
 	 * Usergroup repository
 	 *
@@ -374,7 +374,11 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 	 * @param integer $usergroupIdToAdd
 	 * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
 	 */
-	protected function changeUsergroup(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, $usergroupIdToBeRemoved, $usergroupIdToAdd) {
+	protected function changeUsergroup(
+		\Evoweb\SfRegister\Domain\Model\FrontendUser $user,
+		$usergroupIdToBeRemoved,
+		$usergroupIdToAdd
+	) {
 		if (intval($usergroupIdToAdd) > 0 &&
 				intval($usergroupIdToAdd) != intval($usergroupIdToBeRemoved)) {
 			/** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup $usergroupToAdd */
@@ -391,5 +395,3 @@ class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserControl
 		return $user;
 	}
 }
-
-?>

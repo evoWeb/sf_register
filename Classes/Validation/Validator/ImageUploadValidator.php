@@ -28,7 +28,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  *
  * @scope singleton
  */
-class ImageUploadValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class ImageUploadValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
 	/**
 	 * Service to handle files
 	 *
@@ -57,5 +58,3 @@ class ImageUploadValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstr
 		return $result;
 	}
 }
-
-?>

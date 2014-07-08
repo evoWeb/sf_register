@@ -24,13 +24,10 @@ namespace Evoweb\SfRegister\Interfaces;
  ***************************************************************/
 
 /**
- * Interface to be implemented by every frontenduser model that should be used with this registration
+ * Interface to be implemented by every frontenduser
+ * model that should be used with this registration
  */
-interface FrontendUser {
-	/**
-	 * @return integer
-	 */
-	public function getUid();
+interface FrontendUserInterface {
 
 	/**
 	 * @param string $mailhash
@@ -58,5 +55,3 @@ interface FrontendUser {
 	 */
 	public function getEmail();
 }
-
-?>

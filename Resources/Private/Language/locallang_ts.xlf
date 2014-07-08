@@ -173,9 +173,6 @@
 			<trans-unit id="minimal.usergroupPostSave" xml:space="preserve">
 				<source>usergroup set if an account waits for activation</source>
 			</trans-unit>
-			<trans-unit id="minimal.usergroupPostConfirmation" xml:space="preserve">
-				<source>usergroup set if the account was activate</source>
-			</trans-unit>
 			<trans-unit id="minimal.usergroup" xml:space="preserve">
 				<source>usergroup set if no activation is needed</source>
 			</trans-unit>

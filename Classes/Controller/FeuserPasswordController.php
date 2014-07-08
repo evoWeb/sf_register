@@ -26,11 +26,11 @@ namespace Evoweb\SfRegister\Controller;
 /**
  * An frontend user password controller
  */
-class FeuserPasswordController extends \Evoweb\SfRegister\Controller\FeuserController {
+class FeuserPasswordController extends FeuserController {
 	/**
 	 * Form action
 	 *
-	 * @return string An HTML form
+	 * @return void
 	 */
 	public function formAction() {
 		$this->signalSlotDispatcher->dispatch(
@@ -72,5 +72,3 @@ class FeuserPasswordController extends \Evoweb\SfRegister\Controller\FeuserContr
 		}
 	}
 }
-
-?>

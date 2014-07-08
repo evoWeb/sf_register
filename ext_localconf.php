@@ -1,22 +1,21 @@
 <?php
+defined('TYPO3_MODE') or die();
 
-if (!defined('TYPO3_MODE')) {
-	die('Access denied.');
-}
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 
 /** @noinspection PhpUndefinedVariableInspection */
 $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$_EXTKEY]);
 
 if (
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')
+	ExtensionManagementUtility::isLoaded('realurl')
 	&& (
 		!isset($extensionConfiguration['setRealurlConfigByDefault'])
 		|| $extensionConfiguration['setRealurlConfigByDefault'] == 1
 	)
 ) {
 	/** @noinspection PhpIncludeInspection */
-	require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/Realurl/realurl_conf.php');
+	require_once(ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/Realurl/realurl_conf.php');
 }
 
 
@@ -55,5 +54,3 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clea
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter('Evoweb\\SfRegister\\Property\\TypeConverter\\FrontendUserConverter');
 
 \Evoweb\SfRegister\Utility\ClassLoader::registerAutoloader();
-
-?>

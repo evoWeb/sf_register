@@ -24,9 +24,10 @@ namespace Evoweb\SfRegister\Interfaces;
  ***************************************************************/
 
 /**
- * Interface to be implemented by every captcha adapter that should get used with this registration
+ * Interface to be implemented by every captcha
+ * adapter that should get used with this registration
  */
-interface Captcha {
+interface CaptchaInterface {
 	/**
 	 * Getter for errors that needs to be implemented in every adapter
 	 *
@@ -35,5 +36,3 @@ interface Captcha {
 	 */
 	public function getErrors();
 }
-
-?>

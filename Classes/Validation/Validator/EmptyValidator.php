@@ -24,11 +24,13 @@ namespace Evoweb\SfRegister\Validation\Validator;
  ***************************************************************/
 
 /**
- * A empty validator this is used in validation of a new created user to ensure that the uid is empty
+ * A empty validator this is used in validation of a new created user
+ * to ensure that the uid is empty
  *
  * @scope singleton
  */
-class EmptyValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class EmptyValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
 
 	/**
 	 * @var bool
@@ -52,5 +54,3 @@ class EmptyValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVal
 		return $result;
 	}
 }
-
-?>

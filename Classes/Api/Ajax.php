@@ -62,8 +62,6 @@ class Ajax {
 	 * Constructor of the class
 	 */
 	public function __construct() {
-		\TYPO3\CMS\Frontend\Utility\EidUtility::connectDB();
-
 		$this->requestArguments = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_sfregister');
 	}
 
@@ -81,14 +79,14 @@ class Ajax {
 			default:
 				$this->status = 'error';
 				$this->message = 'unknown action';
-				break;
 		}
 
 		$this->output();
 	}
 
 	/**
-	 * Query the static info table country zones to get all zones for the given parent if any
+	 * Query the static info table country zones to
+	 * get all zones for the given parent if any
 	 *
 	 * @return void
 	 */
@@ -99,13 +97,19 @@ class Ajax {
 		if (strlen($parent)) {
 			/** @var $database \TYPO3\CMS\Core\Database\DatabaseConnection */
 			$database = & $GLOBALS['TYPO3_DB'];
-			$queryResult = $database->exec_SELECTquery('zn_code as value, zn_name_local as label', 'static_country_zones', 'zn_country_iso_2 = \'' . $parent . '\'', '', 'zn_name_local');
+			$queryResult = $database->exec_SELECTquery(
+				'zn_code as value, zn_name_local as label',
+				'static_country_zones',
+				'zn_country_iso_2 = \'' . $parent . '\'',
+				'',
+				'zn_name_local'
+			);
 
 			if (!$database->sql_num_rows($queryResult)) {
 				$this->status = 'error';
 				$this->message = 'no zones';
 			} else {
-				while ($rows = $database->sql_fetch_assoc($queryResult)) {
+				while (($rows = $database->sql_fetch_assoc($queryResult))) {
 					$zones[] = $rows;
 				}
 			}
@@ -117,7 +121,7 @@ class Ajax {
 	/**
 	 * Render the status, message and result as json encoded array as response
 	 *
-	 * @return string
+	 * @return void
 	 */
 	protected function output() {
 		$result = array(
@@ -133,5 +137,3 @@ class Ajax {
 if (\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('eID')) {
 	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Evoweb\\SfRegister\\Api\\Ajax')->dispatch();
 }
-
-?>

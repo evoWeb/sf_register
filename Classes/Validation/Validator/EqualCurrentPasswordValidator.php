@@ -28,7 +28,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  *
  * @scope singleton
  */
-class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
 
 	/**
 	 * @var bool
@@ -66,34 +67,44 @@ class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Valida
 	 */
 	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+		$this->settings = $this->configurationManager->getConfiguration(
+			\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+		);
 	}
 
 	public function isValid($password) {
 		$result = TRUE;
 
 		if (!\Evoweb\SfRegister\Services\Login::isLoggedIn()) {
-			$this->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_changepassword_notloggedin', 'SfRegister'), 1301599489);
+			$this->addError(
+				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_changepassword_notloggedin', 'SfRegister'), 1301599489
+			);
 			$result = FALSE;
 		} else {
 			$user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
 
 			if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords') &&
 					\TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility::isUsageEnabled('FE')) {
-				/** @var \TYPO3\CMS\Saltedpasswords\Salt\SaltInterface $objInstanceSaltedPW */
-				$objInstanceSaltedPW = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance($user->getPassword(), NULL);
-				if (!$objInstanceSaltedPW->checkPassword($password, $user->getPassword())) {
-					$this->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_changepassword_notequal', 'SfRegister'), 1301599507);
+				/** @var \TYPO3\CMS\Saltedpasswords\Salt\SaltInterface $saltedPassword */
+				$saltedPassword = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance($user->getPassword(), NULL);
+				if (!$saltedPassword->checkPassword($password, $user->getPassword())) {
+					$this->addError(
+						\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_changepassword_notequal', 'SfRegister'), 1301599507
+					);
 					$result = FALSE;
 				}
 			} elseif ($this->settings['encryptPassword'] === 'md5') {
 				if (md5($password) !== $user->getPassword()) {
-					$this->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_changepassword_notequal', 'SfRegister'), 1301599507);
+					$this->addError(
+						\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_changepassword_notequal', 'SfRegister'), 1301599507
+					);
 					$result = FALSE;
 				}
 			} elseif ($this->settings['encryptPassword'] === 'sha1') {
 				if (sha1($password) !== $user->getPassword()) {
-					$this->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_changepassword_notequal', 'SfRegister'), 1301599507);
+					$this->addError(
+						\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_changepassword_notequal', 'SfRegister'), 1301599507
+					);
 					$result = FALSE;
 				}
 			}
@@ -102,5 +113,3 @@ class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Valida
 		return $result;
 	}
 }
-
-?>

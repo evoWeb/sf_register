@@ -107,7 +107,9 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+		$this->settings = $this->configurationManager->getConfiguration(
+			\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+		);
 
 		if (isset($this->settings['filefieldname']) && !empty($this->settings['filefieldname'])) {
 			$this->setFieldname($this->settings['filefieldname']);
@@ -149,7 +151,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Returns an array of errors which occurred during the last isValid() call.
 	 *
-	 * @return array An array of \TYPO3\CMS\Extbase\Validation\Error objects or an empty array if no errors occurred.
+	 * @return array An array of \TYPO3\CMS\Extbase\Validation\Error objects
 	 */
 	public function getErrors() {
 		return $this->errors;
@@ -173,7 +175,9 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	protected function getNamespace() {
 		if ($this->namespace === '') {
-			$frameworkSettings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+			$frameworkSettings = $this->configurationManager->getConfiguration(
+				\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+			);
 			$this->namespace = strtolower('tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']);
 		}
 
@@ -264,7 +268,10 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	protected function isAllowedFileExtension($fileExtension) {
 		$result = TRUE;
 
-		if ($fileExtension !== NULL && !\TYPO3\CMS\Core\Utility\GeneralUtility::inList($this->allowedFileExtensions, strtolower($fileExtension))) {
+		if (
+			$fileExtension !== NULL &&
+			!\TYPO3\CMS\Core\Utility\GeneralUtility::inList($this->allowedFileExtensions, strtolower($fileExtension))
+		) {
 			$this->addError(
 				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_' . $this->fieldname . '_extension', 'SfRegister'),
 				1296591064
@@ -421,5 +428,3 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 		return array_pop($filenameParts);
 	}
 }
-
-?>

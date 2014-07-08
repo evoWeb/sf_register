@@ -24,25 +24,41 @@ namespace Evoweb\SfRegister\Services\Captcha;
  ***************************************************************/
 
 /**
- *
  * = Examples =
  *
  * <code title="Single alias">
  * <f:alias map="{x: '{register:form.captcha(type: \'freecap\')}'}">
- *	<f:format.html>{x.image}</f:format.html>
- *	<f:format.html>{x.notice}</f:format.html>
- *	<f:format.html>{x.cantRead}</f:format.html>
- *	<f:format.html>{x.accessible}</f:format.html>
+ * 	<f:format.html>{x.image}</f:format.html>
+ * 	<f:format.html>{x.notice}</f:format.html>
+ * 	<f:format.html>{x.cantRead}</f:format.html>
+ * 	<f:format.html>{x.accessible}</f:format.html>
  * </f:alias>
  * </code>
- * <output>
- * <p class="bodytext"><img class="tx-srfreecap-pi2-image" id="tx_srfreecap_pi2_captcha_image_50a3f" src="http://dev45.dev.mobil/index.php?eID=sr_freecap_captcha&amp;id=185" alt="CAPTCHA image for SPAM prevention "/></p>
- * <p class="bodytext">Please enter here the word as displayed in the picture. This is to prevent spamming.</p>
- * <p class="bodytext"><span class="tx-srfreecap-pi2-cant-read">If you can't read the word, <a href="#" onclick="this.blur();newFreeCap('50a3f', 'Sorry, we cannot autoreload a new image. Submit the form and a new image will be loaded.');return false;">click here</a>.</span></p>
- * </output>
  *
+ * <output>
+ * <p class="bodytext">
+ * 	<img class="tx-srfreecap-pi2-image" id="tx_srfreecap_pi2_captcha_image_50a3f"
+ * 		src="http://dev45.dev.mobil/index.php?eID=sr_freecap_captcha&amp;id=185"
+ * 		alt="CAPTCHA image for SPAM prevention "/>
+ * </p>
+ * <p class="bodytext">Please enter here the word as displayed in the picture.
+ * 		This is to prevent spamming.</p>
+ * <p class="bodytext">
+ * 	<span class="tx-srfreecap-pi2-cant-read">If you can't read the word,
+ * 		<a href="#" onclick="
+ * 			this.blur();
+ * 			newFreeCap(
+ * 				'50a3f',
+ * 				'Sorry, we cannot autoreload a new image. ' +
+ * 					'Submit the form and a new image will be loaded.'
+ * 			);
+ * 			return false;
+ * 		">click here</a>.
+ * 	</span>
+ * </p>
+ * </output>
  */
-class SrFreecapAdapter extends \Evoweb\SfRegister\Services\Captcha\AbstractAdapter {
+class SrFreecapAdapter extends AbstractAdapter {
 	/**
 	 * Object manager
 	 *
@@ -90,10 +106,13 @@ class SrFreecapAdapter extends \Evoweb\SfRegister\Services\Captcha\AbstractAdapt
 		$this->objectManager->get('Evoweb\\SfRegister\\Services\\Session')->remove('captchaWasValidPreviously');
 
 		if ($this->captcha !== NULL) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			$values = array_values($this->captcha->makeCaptcha());
 			$output = array_combine($this->keys, $values);
 		} else {
-			$output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_captcha_notinstalled', 'SfRegister', array('sr_freecap'));
+			$output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+				'error_captcha_notinstalled', 'SfRegister', array('sr_freecap')
+			);
 		}
 
 		return $output;
@@ -111,6 +130,7 @@ class SrFreecapAdapter extends \Evoweb\SfRegister\Services\Captcha\AbstractAdapt
 		$session = $this->objectManager->get('Evoweb\\SfRegister\\Services\\Session');
 		$captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
 		if ($this->captcha !== NULL && $captchaWasValidPreviously !== TRUE) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			if (!$this->captcha->checkWord($value)) {
 				$validCaptcha = FALSE;
 				$this->addError(
@@ -125,5 +145,3 @@ class SrFreecapAdapter extends \Evoweb\SfRegister\Services\Captcha\AbstractAdapt
 		return $validCaptcha;
 	}
 }
-
-?>

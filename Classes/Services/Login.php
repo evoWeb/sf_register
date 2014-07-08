@@ -61,7 +61,7 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return void
 	 */
 	public function loginUserById($userid) {
-		$this->initFEuser($this->fetchUserdata($userid));
+		$this->initFrontendEuser($this->fetchUserdata($userid));
 
 		/** @var $frontend \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController */
 		$frontend = $GLOBALS['TSFE'];
@@ -76,7 +76,7 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param array $userdata
 	 * @return void
 	 */
-	protected function initFEuser(array $userdata) {
+	protected function initFrontendEuser(array $userdata) {
 		/** @var $feUser \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication */
 		$feUser = $this->objectManager->get('TYPO3\\CMS\\Frontend\\Authentication\\FrontendUserAuthentication');
 
@@ -149,5 +149,3 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface {
 		return $frontendUser->user === FALSE ? FALSE : TRUE;
 	}
 }
-
-?>

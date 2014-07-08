@@ -105,5 +105,3 @@ class Password extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		$this->oldPassword = $oldPassword;
 	}
 }
-
-?>

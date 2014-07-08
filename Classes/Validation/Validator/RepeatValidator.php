@@ -28,7 +28,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  *
  * @scope singleton
  */
-class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
 
 	/**
 	 * @var bool
@@ -95,5 +96,3 @@ class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
 		return $result;
 	}
 }
-
-?>

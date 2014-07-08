@@ -26,7 +26,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /**
  * A Uservalidator
  */
-class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator
+	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
@@ -106,8 +107,12 @@ class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\GenericObjec
 	 */
 	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-		$this->frameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		$this->settings = $this->configurationManager->getConfiguration(
+			\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+		);
+		$this->frameworkConfiguration = $this->configurationManager->getConfiguration(
+			\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+		);
 	}
 
 	/**
@@ -123,7 +128,9 @@ class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\GenericObjec
 			return $messages;
 		}
 		if (!$this->canValidate($object)) {
-			$messages->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_notvalidatable', 'SfRegister'), 1301599551);
+			$messages->addError(
+				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_notvalidatable', 'SfRegister'), 1301599551
+			);
 			return $messages;
 		}
 		if (self::$instancesCurrentlyUnderValidation->contains($object)) {
@@ -155,7 +162,7 @@ class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\GenericObjec
 	 *
 	 * @param mixed $value The value to be validated
 	 * @param array $validatorNames Contains an array with validator names
-	 * @param \TYPO3\CMS\Extbase\Error\Result $messages the result object to which the validation errors should be added
+	 * @param \TYPO3\CMS\Extbase\Error\Result $messages the result object
 	 * @return void
 	 */
 	protected function checkProperty($value, $validatorNames, \TYPO3\CMS\Extbase\Error\Result $messages) {
@@ -207,19 +214,22 @@ class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\GenericObjec
 		$currentValidator = $this->parseRule($rule);
 		$this->currentValidatorOptions = (array) $currentValidator['validatorOptions'];
 
-		/** @var $validatorObject \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator */
-		$validatorObject = $this->validatorResolver->createValidator($currentValidator['validatorName'], $this->currentValidatorOptions);
+		/** @var $validator \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator */
+		$validator = $this->validatorResolver->createValidator(
+			$currentValidator['validatorName'],
+			$this->currentValidatorOptions
+		);
 
-		if (method_exists($validatorObject, 'setModel')) {
+		if (method_exists($validator, 'setModel')) {
 			/** @noinspection PhpUndefinedMethodInspection */
-			$validatorObject->setModel($this->model);
+			$validator->setModel($this->model);
 		}
-		if (method_exists($validatorObject, 'setPropertyName')) {
+		if (method_exists($validator, 'setPropertyName')) {
 			/** @noinspection PhpUndefinedMethodInspection */
-			$validatorObject->setPropertyName($this->currentPropertyName);
+			$validator->setPropertyName($this->currentPropertyName);
 		}
 
-		return $validatorObject;
+		return $validator;
 	}
 
 	/**
@@ -233,47 +243,4 @@ class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\GenericObjec
 
 		return current($parsedRules['validators']);
 	}
-
-	/**
-	 * Merge error into local errors
-	 *
-	 * @param array $errors
-	 * @return void
-	 */
-	protected function ___mergeErrors($errors) {
-		/** @var $error \TYPO3\CMS\Extbase\Validation\Error */
-		foreach ($errors as $error) {
-			$localizedFieldName = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->currentPropertyName, 'SfRegister');
-
-			$errorMessage = $error->getMessage();
-			$localizedErrorCode = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_' . $error->getCode(), 'SfRegister');
-			$localizedErrorMessage = $localizedErrorCode ? $localizedErrorCode : $errorMessage;
-
-			$markers = array_merge((array) $localizedFieldName, $this->currentValidatorOptions);
-			$messageWithReplacedMarkers = vsprintf($localizedErrorMessage, $markers);
-
-			$this->___addErrorForProperty($this->currentPropertyName, $messageWithReplacedMarkers, $error->getCode());
-		}
-	}
-
-	/**
-	 * Add an error with message and code to the property errors
-	 *
-	 * @param string $propertyName name of the property to add the error to
-	 * @param string $message Message to be shwon
-	 * @param string $code Error code to identify the error
-	 * @return void
-	 */
-	protected function ___addErrorForProperty($propertyName, $message, $code) {
-		if (!$this->result->forProperty($propertyName)->hasErrors()) {
-			/** @var $error \TYPO3\CMS\Extbase\Validation\PropertyError */
-			$error = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Validation\\PropertyError', $propertyName);
-			$error->addErrors(array(
-				$this->objectManager->get('TYPO3\CMS\\Extbase\\Validation\\Error', $message, $code)
-			));
-			$this->result->addError($error);
-		}
-	}
 }
-
-?>

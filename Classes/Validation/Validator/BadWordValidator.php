@@ -28,7 +28,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  *
  * @scope singleton
  */
-class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
 
 	/**
 	 * Configuration Manager
@@ -53,7 +54,9 @@ class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
 	 */
 	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+		$this->settings = $this->configurationManager->getConfiguration(
+			\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+		);
 	}
 
 	/**
@@ -68,12 +71,12 @@ class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
 		$badWordItems = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['badWordList']);
 
 		if (in_array(strtolower($value), $badWordItems)) {
-			$this->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_badword', 'SfRegister', $this->options), 1301599720);
+			$this->addError(
+				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_badword', 'SfRegister', $this->options), 1301599720
+			);
 			$result = FALSE;
 		}
 
 		return $result;
 	}
 }
-
-?>

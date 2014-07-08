@@ -28,7 +28,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  *
  * @scope singleton
  */
-class EqualCurrentUserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class EqualCurrentUserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
 
 	/**
 	 * @var bool
@@ -45,12 +46,12 @@ class EqualCurrentUserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\
 		$result = TRUE;
 
 		if ($value != $GLOBALS['TSFE']->fe_user->user['uid']) {
-			$this->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_notequalcurrentuser', 'SfRegister'), 1305009260);
+			$this->addError(
+				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_notequalcurrentuser', 'SfRegister'), 1305009260
+			);
 			$result = FALSE;
 		}
 
 		return $result;
 	}
 }
-
-?>

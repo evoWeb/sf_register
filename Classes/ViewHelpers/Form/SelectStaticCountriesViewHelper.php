@@ -28,12 +28,14 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  *
  * <code title="Usage">
  * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
- * <register:form.SelectStaticCountries name="country" optionLabelField="cnShortDe"/>
+ * <register:form.SelectStaticCountries
+ * 	name="country" optionLabelField="cnShortDe"/>
  * </code>
  *
  * <code title="Optional label field">
  * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
- * <register:form.SelectStaticCountries name="country" optionLabelField="cnShortDe"/>
+ * <register:form.SelectStaticCountries
+ * 	name="country" optionLabelField="cnShortDe"/>
  * </code>
  */
 class SelectStaticCountriesViewHelper extends SelectStaticViewHelper {
@@ -47,7 +49,8 @@ class SelectStaticCountriesViewHelper extends SelectStaticViewHelper {
 
 
 	/**
-	 * Initialize arguments. Cant be moved to parent because of "private $argumentDefinitions = array();"
+	 * Initialize arguments. Cant be moved to parent because
+	 * of "private $argumentDefinitions = array();"
 	 *
 	 * @return void
 	 */
@@ -58,17 +61,46 @@ class SelectStaticCountriesViewHelper extends SelectStaticViewHelper {
 		$this->registerTagAttribute('disabled', 'string', 'Specifies that the input element should be disabled when the page loads');
 		$this->registerArgument('name', 'string', 'Name of input tag');
 		$this->registerArgument('value', 'mixed', 'Value of input tag');
-		$this->registerArgument('property', 'string', 'Name of Object Property. If used in conjunction with <f:form object="...">, "name" and "value" properties will be ignored.');
-		$this->registerArgument('optionValueField', 'string', 'If specified, will call the appropriate getter on each object to determine the value.', FALSE, 'cnIso2');
-		$this->registerArgument('optionLabelField', 'string', 'If specified, will call the appropriate getter on each object to determine the label.', FALSE, 'cnOfficialNameEn');
 		$this->registerArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', FALSE, TRUE);
-		$this->registerArgument('selectAllByDefault', 'boolean', 'If specified options are selected if none was set before.', FALSE, FALSE);
 		$this->registerArgument('allowedCountries', 'array', 'Array with countries allowed to be displayed.', FALSE, array());
-		$this->registerArgument('errorClass', 'string', 'CSS class to set if there are errors for this view helper', FALSE, 'f3-form-error');
+		$this->registerArgument(
+			'property',
+			'string',
+			'Name of Object Property. If used in conjunction with <f:form object="...">, "name" and "value" properties will be ignored.'
+		);
+		$this->registerArgument(
+			'optionValueField',
+			'string',
+			'If specified, will call the appropriate getter on each object to determine the value.',
+			FALSE,
+			'cnIso2'
+		);
+		$this->registerArgument(
+			'optionLabelField',
+			'string',
+			'If specified, will call the appropriate getter on each object to determine the label.',
+			FALSE,
+			'cnOfficialNameEn'
+		);
+		$this->registerArgument(
+			'selectAllByDefault',
+			'boolean',
+			'If specified options are selected if none was set before.',
+			FALSE,
+			FALSE
+		);
+		$this->registerArgument(
+			'errorClass',
+			'string',
+			'CSS class to set if there are errors for this view helper',
+			FALSE,
+			'f3-form-error'
+		);
 	}
 
 	/**
-	 * Override the initialize method to load all available countries before rendering
+	 * Override the initialize method to load all
+	 * available countries before rendering
 	 *
 	 * @return void
 	 */
@@ -84,5 +116,3 @@ class SelectStaticCountriesViewHelper extends SelectStaticViewHelper {
 		}
 	}
 }
-
-?>

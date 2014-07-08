@@ -23,7 +23,12 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class JmRecaptchaAdapter extends \Evoweb\SfRegister\Services\Captcha\AbstractAdapter {
+/**
+ * Class JmRecaptchaAdapter
+ *
+ * @package Evoweb\SfRegister\Services\Captcha
+ */
+class JmRecaptchaAdapter extends AbstractAdapter {
 	/**
 	 * Object manager
 	 *
@@ -58,10 +63,13 @@ class JmRecaptchaAdapter extends \Evoweb\SfRegister\Services\Captcha\AbstractAda
 	public function render() {
 		$this->objectManager->get('Evoweb\\SfRegister\\Services\\Session')->remove('captchaWasValidPreviously');
 
-		if ($this->captcha !== null) {
+		if ($this->captcha !== NULL) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			$output = $this->captcha->getReCaptcha($this->settings['error']);
 		} else {
-			$output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_captcha.notinstalled', 'SfRegister', array('jm_recaptcha'));
+			$output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+				'error_captcha.notinstalled', 'SfRegister', array('jm_recaptcha')
+			);
 		}
 
 		return $output;
@@ -80,6 +88,7 @@ class JmRecaptchaAdapter extends \Evoweb\SfRegister\Services\Captcha\AbstractAda
 		$captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
 		if ($this->captcha !== NULL && $captchaWasValidPreviously !== TRUE) {
 			$_POST['recaptcha_response_field'] = $value;
+			/** @noinspection PhpUndefinedMethodInspection */
 			$status = $this->captcha->validateReCaptcha();
 
 			if ($status == FALSE || $status['error'] !== NULL) {
@@ -96,5 +105,3 @@ class JmRecaptchaAdapter extends \Evoweb\SfRegister\Services\Captcha\AbstractAda
 		return $validCaptcha;
 	}
 }
-
-?>

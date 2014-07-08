@@ -23,6 +23,11 @@ namespace Evoweb\SfRegister\Utility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * Class ClassCacheManager
+ *
+ * @package Evoweb\SfRegister\Utility
+ */
 class ClassCacheManager {
 	/**
 	 * Extension key
@@ -106,14 +111,14 @@ class ClassCacheManager {
 			foreach ($entities as $entity => $extensionsConfiguration) {
 				$key = 'Domain/Model/' . $entity;
 
-					// Get the file from sf_register itself, this needs to be loaded as first
+				// Get the file from sf_register itself, this needs to be loaded as first
 				$path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extensionKey) . 'Classes/' . $key . '.php';
 				if (!is_file($path)) {
 					throw new \Exception('given file "' . $path . '" does not exist');
 				}
 				$code = $this->parseSingleFile($path, FALSE);
 
-					// Get the files from all other extensions that are extending this domain model class
+				// Get the files from all other extensions that are extending this domain model
 				if (is_array($extensionsConfiguration) && count($extensionsConfiguration) > 0) {
 					$extensionsWithThisClass = array_keys($extensionsConfiguration);
 					foreach ($extensionsWithThisClass as $extension) {
@@ -212,5 +217,3 @@ class ClassCacheManager {
 		return $code . LF . '}';
 	}
 }
-
-?>

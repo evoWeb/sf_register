@@ -23,7 +23,12 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\Captcha {
+/**
+ * Class AbstractAdapter
+ *
+ * @package Evoweb\SfRegister\Services\Captcha
+ */
+abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaInterface {
 	/**
 	 * Captcha object
 	 *
@@ -90,5 +95,3 @@ abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\Captcha 
 		return $this->errors;
 	}
 }
-
-?>

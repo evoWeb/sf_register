@@ -223,7 +223,7 @@ module.tx_sfregister < plugin.tx_sfregister
 
 config.tx_extbase {
 	objects {
-		Evoweb\SfRegister\Interfaces\FrontendUser {
+		Evoweb\SfRegister\Interfaces\FrontendUserInterface {
 			className = Evoweb\SfRegister\Domain\Model\FrontendUser
 		}
 	}

@@ -331,5 +331,3 @@ class StaticCountryZone extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		return $this->znNameUa;
 	}
 }
-
-?>

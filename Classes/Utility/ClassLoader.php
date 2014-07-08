@@ -23,6 +23,11 @@ namespace Evoweb\SfRegister\Utility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * Class ClassLoader
+ *
+ * @package Evoweb\SfRegister\Utility
+ */
 class ClassLoader extends \TYPO3\CMS\Core\Core\ClassLoader {
 	/**
 	 * Extension key
@@ -46,7 +51,8 @@ class ClassLoader extends \TYPO3\CMS\Core\Core\ClassLoader {
 	}
 
 	/**
-	 * Loads php files containing classes or interfaces part of the classes directory of an extension.
+	 * Loads php files containing classes or interfaces part of the classes
+	 * directory of an extension.
 	 *
 	 * @param string $className: Name of the class/interface to load
 	 * @return void
@@ -59,16 +65,17 @@ class ClassLoader extends \TYPO3\CMS\Core\Core\ClassLoader {
 				&& isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][self::$extensionKey]['entities'])
 				&& is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][self::$extensionKey]['entities'])
 			) {
-					// Lookup the class in the array of register entities and check its presence in the class cache
+				// Lookup the class in the array of register entities and check its presence
 				$entities = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][self::$extensionKey]['entities'];
-				foreach ($entities as $entity => $entityExtensions) {
+				foreach (array_keys($entities) as $entity) {
 					if ($className === self::$namespace . $entity) {
 						$entryIdentifier = 'DomainModel' . $entity;
 
 						$classCache = self::initializeCache(SFREGISTERCACHEIDENTIFIER);
 						if (!$classCache->has($entryIdentifier)) {
 							/** @var ClassCacheManager $classCacheManager */
-							$classCacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Evoweb\\SfRegister\\Utility\\ClassCacheManager');
+							$classCacheManager =
+								\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Evoweb\\SfRegister\\Utility\\ClassCacheManager');
 							$classCacheManager->reBuild();
 						}
 
@@ -103,5 +110,3 @@ class ClassLoader extends \TYPO3\CMS\Core\Core\ClassLoader {
 		return $cacheInstance;
 	}
 }
-
-?>

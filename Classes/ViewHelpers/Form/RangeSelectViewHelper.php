@@ -24,7 +24,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  ***************************************************************/
 
 /**
- * Viewhelper to render a selectbox with values in given steps from start to end value
+ * Viewhelper to render a selectbox with values
+ * in given steps from start to end value
  *
  * <code title="Usage">
  * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
@@ -54,7 +55,8 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
 	protected $step = 1;
 
 	/**
-	 * In case of a value lower then 10 and digits defined as 2 the label get prepended with a 0
+	 * In case of a value lower then 10 and digits
+	 * defined as 2 the label get prepended with a 0
 	 *
 	 * @var integer
 	 */
@@ -64,19 +66,33 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
 	 * Initialize arguments.
 	 *
 	 * @return void
-	 * @author Sebastian Kurfürst <sebastian@typo3.org>
-	 * @api
 	 */
 	public function initializeArguments() {
 		$this->registerUniversalTagAttributes();
 		$this->registerArgument('name', 'string', 'Name of input tag');
 		$this->registerArgument('value', 'mixed', 'Value of input tag');
-		$this->registerArgument('property', 'string', 'Name of Object Property. If used in conjunction with <f:form object="...">, "name" and "value" properties will be ignored.');
 		$this->registerTagAttribute('multiple', 'string', 'if set, multiple select field');
 		$this->registerTagAttribute('size', 'string', 'Size of input field');
 		$this->registerTagAttribute('disabled', 'string', 'Specifies that the input element should be disabled when the page loads');
-		$this->registerArgument('selectAllByDefault', 'boolean', 'If specified options are selected if none was set before.', FALSE, FALSE);
-		$this->registerArgument('errorClass', 'string', 'CSS class to set if there are errors for this view helper', FALSE, 'f3-form-error');
+		$this->registerArgument(
+			'property',
+			'string',
+			'Name of Object Property. If used in conjunction with <f:form object="...">, "name" and "value" properties will be ignored.'
+		);
+		$this->registerArgument(
+			'selectAllByDefault',
+			'boolean',
+			'If specified options are selected if none was set before.',
+			FALSE,
+			FALSE
+		);
+		$this->registerArgument(
+			'errorClass',
+			'string',
+			'CSS class to set if there are errors for this view helper',
+			FALSE,
+			'f3-form-error'
+		);
 	}
 
 	/**
@@ -100,13 +116,13 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
 	/**
 	 * Get values and lables for the options
 	 *
-	 * @return array an associative array of options, key will be the value of the option tag
+	 * @return array an associative array of options
 	 */
 	protected function getOptions() {
 		$options = array();
 
 		for ($current = $this->start; $current < $this->end;) {
-			$options[$current] = sprintf("%0" . $this->digits . "s",   $current);
+			$options[$current] = sprintf('%0' . $this->digits . 's', $current);
 
 			$current += $this->step;
 
@@ -118,5 +134,3 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
 		return $options;
 	}
 }
-
-?>
