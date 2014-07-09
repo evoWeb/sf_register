@@ -87,9 +87,9 @@ plugin.tx_sfregister.settings {
 		fromEmail = userEmailfrom@test.local
 
 		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.userEmail.replyName
-		replyName = userEmail reply
+		replyName =
 		# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.userEmail.replyEmail
-		replyEmail = userEmailreply@test.local
+		replyEmail =
 	}
 
 	adminEmail {
@@ -104,9 +104,9 @@ plugin.tx_sfregister.settings {
 		fromEmail = adminEmailfrom@test.local
 
 		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.adminEmail.replyName
-		replyName = adminEmail reply
+		replyName =
 		# cat=sf_register.settings//35; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.adminEmail.replyEmail
-		replyEmail = adminEmailreply@test.local
+		replyEmail =
 	}
 }
 

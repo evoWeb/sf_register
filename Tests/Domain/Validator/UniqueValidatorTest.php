@@ -26,7 +26,10 @@ namespace Evoweb\SfRegister\Tests\Domain\Validator;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class UniqueValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+/**
+ * Class UniqueValidatorTest
+ */
+class UniqueValidatorTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @var \Evoweb\SfRegister\Validation\Validator\UniqueValidator
 	 */
@@ -37,13 +40,26 @@ class UniqueValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 */
 	private $testingFramework;
 
+	/**
+	 * @return void
+	 */
 	public function setUp() {
 		$this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
 		$pageUid = $this->testingFramework->createFrontEndPage();
 		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/'));
 		$this->testingFramework->createFakeFrontEnd($pageUid);
+
+		/** @var \Evoweb\SfRegister\Validation\Validator\UniqueValidator $fixture */
+		$this->fixture = $this->getAccessibleMock(
+			'Evoweb\\SfRegister\\Validation\\Validator\\UniqueValidator',
+			array('dummy'),
+			array('global' => FALSE)
+		);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function tearDown() {
 		$this->testingFramework->cleanUp();
 
@@ -52,58 +68,50 @@ class UniqueValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isValidReturnsTrueIfCountOfValueInFieldReturnsZeroForLocalSearch() {
 		$fieldname = 'username';
 		$expected = 'myValue';
 
-		$fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Domain\\Validator\\UniqueValidator', array('dummy'), array('global' => FALSE));
-		$fixture->setFieldname($fieldname);
-
 		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('countByField')
 			->with($fieldname, $expected)
 			->will($this->returnValue(0));
-		$fixture->injectUserRepository($repositoryMock);
+		$this->fixture->injectUserRepository($repositoryMock);
+		$this->fixture->setPropertyName($fieldname);
 
-		$this->assertTrue(
-			$fixture->isValid($expected)
-		);
+		$this->assertTrue($this->fixture->isValid($expected));
 	}
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isValidReturnsFalseIfCountOfValueInFieldReturnsHigherThenZeroForLocalSearch() {
 		$fieldname = 'username';
 		$expected = 'myValue';
 
-		$fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Domain\\Validator\\UniqueValidator', array('dummy'), array('global' => FALSE));
-		$fixture->setFieldname($fieldname);
-
 		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('countByField')
 			->with($fieldname, $expected)
 			->will($this->returnValue(1));
-		$fixture->injectUserRepository($repositoryMock);
+		$this->fixture->injectUserRepository($repositoryMock);
+		$this->fixture->setPropertyName($fieldname);
 
-		$this->assertFalse(
-			$fixture->isValid($expected)
-		);
+		$this->assertFalse($this->fixture->isValid($expected));
 	}
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isValidReturnsTrueIfCountOfValueInFieldReturnsZeroForLocalAndGlobalSearch() {
 		$fieldname = 'username';
 		$expected = 'myValue';
 
-		$fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Domain\\Validator\\UniqueValidator', array('dummy'), array('global' => TRUE));
-		$fixture->setFieldname($fieldname);
-
 		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
 			->method('countByField')
@@ -113,22 +121,19 @@ class UniqueValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 			->method('countByFieldGlobal')
 			->with($fieldname, $expected)
 			->will($this->returnValue(0));
-		$fixture->injectUserRepository($repositoryMock);
+		$this->fixture->injectUserRepository($repositoryMock);
+		$this->fixture->setPropertyName($fieldname);
 
-		$this->assertTrue(
-			$fixture->isValid($expected)
-		);
+		$this->assertTrue($this->fixture->isValid($expected));
 	}
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isValidReturnsFalseIfCountOfValueInFieldReturnsZeroForLocalAndHigherThenZeroForGlobalSearch() {
 		$fieldname = 'username';
 		$expected = 'myValue';
-
-		$fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Domain\\Validator\\UniqueValidator', array('dummy'), array('global' => TRUE));
-		$fixture->setFieldname($fieldname);
 
 		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
 		$repositoryMock->expects($this->once())
@@ -139,13 +144,9 @@ class UniqueValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 			->method('countByFieldGlobal')
 			->with($fieldname, $expected)
 			->will($this->returnValue(1));
-		$fixture->injectUserRepository($repositoryMock);
+		$this->fixture->injectUserRepository($repositoryMock);
+		$this->fixture->setPropertyName($fieldname);
 
-		$this->assertFalse(
-			$fixture->isValid($expected)
-		);
+		$this->assertFalse($this->fixture->isValid($expected));
 	}
 }
-
-?>
-

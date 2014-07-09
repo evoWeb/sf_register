@@ -26,9 +26,12 @@ namespace Evoweb\SfRegister\Tests\Domain\Validator;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class EqualCurrentPasswordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+/**
+ * Class EqualCurrentPasswordValidatorTest
+ */
+class EqualCurrentPasswordValidatorTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
-	 * @var \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator
+	 * @var \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator|\TYPO3\CMS\Core\Tests\AccessibleObjectInterface
 	 */
 	protected $fixture;
 
@@ -37,15 +40,27 @@ class EqualCurrentPasswordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\Ba
 	 */
 	private $testingFramework;
 
+	/**
+	 * @return void
+	 */
 	public function setUp() {
 		$this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
 		$pageUid = $this->testingFramework->createFrontEndPage();
-		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/maximal/'));
+		$this->testingFramework->createTemplate(
+			$pageUid,
+			array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/maximal/')
+		);
 		$this->testingFramework->createFakeFrontEnd($pageUid);
 
-		$this->fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Domain\\Validator\\EqualCurrentPasswordValidator', array('dummy'));
+		$this->fixture = $this->getAccessibleMock(
+			'Evoweb\\SfRegister\\Domain\\Validator\\EqualCurrentPasswordValidator',
+			array('dummy')
+		);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function tearDown() {
 		$this->testingFramework->cleanUp();
 
@@ -54,6 +69,7 @@ class EqualCurrentPasswordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\Ba
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function settingsContainsValidTyposcriptSettings() {
 		$this->assertArrayHasKey(
@@ -64,6 +80,7 @@ class EqualCurrentPasswordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\Ba
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isUserLoggedInReturnsFalseIfNotLoggedIn() {
 		$this->assertFalse(
@@ -73,6 +90,7 @@ class EqualCurrentPasswordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\Ba
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isUserLoggedInReturnsTrueIfLoggedIn() {
 		$this->testingFramework->createAndLoginFrontEndUser('', array('password' => 'testOld'));
@@ -84,6 +102,7 @@ class EqualCurrentPasswordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\Ba
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function loggedinUserFoundInDbHasEqualUnencryptedPassword() {
 		if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'])) {
@@ -114,6 +133,7 @@ class EqualCurrentPasswordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\Ba
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function loggedinUserFoundInDbHasEqualMd5EncryptedPassword() {
 		$GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'] = 'md5';
@@ -141,6 +161,3 @@ class EqualCurrentPasswordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\Ba
 		);
 	}
 }
-
-?>
-

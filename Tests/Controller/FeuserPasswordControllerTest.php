@@ -26,9 +26,12 @@ namespace Evoweb\SfRegister\Tests\Controller;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class FeuserPasswordControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+/**
+ * Class FeuserPasswordControllerTest
+ */
+class FeuserPasswordControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
-	 * @var \Evoweb\SfRegister\Controller\FeuserPasswordController
+	 * @var \Evoweb\SfRegister\Controller\FeuserPasswordController|\TYPO3\CMS\Core\Tests\AccessibleObjectInterface
 	 */
 	protected $fixture;
 
@@ -37,6 +40,9 @@ class FeuserPasswordControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTes
 	 */
 	private $testingFramework;
 
+	/**
+	 * @return void
+	 */
 	public function setUp() {
 		$this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
 		$pageUid = $this->testingFramework->createFrontEndPage();
@@ -46,6 +52,9 @@ class FeuserPasswordControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTes
 		$this->fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Controller\\FeuserPasswordController', array('dummy'));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function tearDown() {
 		$this->testingFramework->cleanUp();
 
@@ -54,6 +63,7 @@ class FeuserPasswordControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTes
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isUserLoggedInReturnsFalseIfNotLoggedIn() {
 		$this->assertFalse(
@@ -63,6 +73,7 @@ class FeuserPasswordControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTes
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isUserLoggedInReturnsTrueIfLoggedIn() {
 		$this->testingFramework->createAndLoginFrontEndUser('', array('password' => 'testOld'));
@@ -74,6 +85,7 @@ class FeuserPasswordControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTes
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserrepository() {
 			// we dont want to test the encryption here
@@ -83,7 +95,8 @@ class FeuserPasswordControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTes
 		$expected = 'myPassword';
 
 		$userId = $this->testingFramework->createAndLoginFrontEndUser('', array('password' => $expected));
-			// we need to clone the create object else the isClone param is not set and the both object wont match
+		// we need to clone the create object else the isClone param
+		// is not set and the both object wont match
 		$userMock = clone(new \Evoweb\SfRegister\Domain\Model\FrontendUser());
 
 		$repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
@@ -97,6 +110,7 @@ class FeuserPasswordControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTes
 			->with($userMock);
 		$this->fixture->injectUserRepository($repositoryMock);
 
+		/** @var \Evoweb\SfRegister\Domain\Model\Password|\PHPUnit_Framework_MockObject_MockObject $passwordMock */
 		$passwordMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Model\\Password');
 		$passwordMock->expects($this->once())
 			->method('getPassword')
@@ -104,5 +118,3 @@ class FeuserPasswordControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTes
 		$this->fixture->saveAction($passwordMock);
 	}
 }
-
-?>

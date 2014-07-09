@@ -73,8 +73,8 @@ plugin.tx_sfregister.settings {
 		fromName = {$plugin.tx_sfregister.settings.emailName}
 		fromEmail = {$plugin.tx_sfregister.settings.emailAddress}
 
-		replyName = {$plugin.tx_sfregister.settings.emailName}
-		replyEmail = {$plugin.tx_sfregister.settings.emailAddress}
+		replyName =
+		replyEmail =
 	}
 
 	adminEmail {
@@ -84,8 +84,8 @@ plugin.tx_sfregister.settings {
 		fromName = {$plugin.tx_sfregister.settings.emailName}
 		fromEmail = {$plugin.tx_sfregister.settings.emailAddress}
 
-		replyName = {$plugin.tx_sfregister.settings.emailName}
-		replyEmail = {$plugin.tx_sfregister.settings.emailAddress}
+		replyName =
+		replyEmail =
 	}
 
 	validation.create {

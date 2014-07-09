@@ -26,13 +26,15 @@ namespace Evoweb\SfRegister\Tests\Services;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class MailTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+/**
+ * Class MailTest
+ */
+class MailTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function findByMailhash() {
 		$this->markTestIncomplete('not implemented by now');
 	}
 }
-
-?>

@@ -26,22 +26,32 @@ namespace Evoweb\SfRegister\Tests\Domain\Model;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+/**
+ * Class FrontendUserTest
+ */
+class FrontendUserTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @var \Evoweb\SfRegister\Domain\Model\FrontendUser
 	 */
 	protected $fixture;
 
+	/**
+	 * @return void
+	 */
 	public function setUp() {
 		$this->fixture = new \Evoweb\SfRegister\Domain\Model\FrontendUser();
 	}
 
+	/**
+	 * @return void
+	 */
 	public function tearDown() {
 		unset($this->fixture);
 	}
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function disableDefaultToFalseOnInitialize() {
 		$this->assertFalse(
@@ -55,13 +65,15 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	public function notEmptyDataProvider() {
 		return array(
 			'integerGreaterZero' => array(1),
-			'booleanTrue' => array(true),
+			'booleanTrue' => array(TRUE),
 			'notEmptyString' => array('a'),
 		);
 	}
 
 	/**
+	 * @param mixed $input
 	 * @test
+	 * @return void
 	 * @dataProvider notEmptyDataProvider
 	 */
 	public function disableReturnsTrueIfSetNotEmpty($input) {
@@ -74,6 +86,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function mailhashOnInitializeIsNull() {
 		$this->assertNull(
@@ -83,6 +96,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function mailhashValueGetsTrimmedOnSet() {
 		$expected = 'Test ';
@@ -97,6 +111,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function imageContainsEmptyStringOnInitialize() {
 		$this->assertSame(
@@ -107,6 +122,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function imageReturnsStringSetBySetImage() {
 		$expected = 'teststring';
@@ -121,6 +137,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function getImagelistReturnsArray() {
 		$this->assertInternalType(
@@ -131,6 +148,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function setImagelistSetsArrayAsListInImage() {
 		$expected1 = 'foo.gif';
@@ -145,6 +163,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function imageAsImageListAddFilenameToImage() {
 		$expected1 = 'foo.gif';
@@ -161,6 +180,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function imageAsImageListRemoveFilenameFromImage() {
 		$expected1 = 'foo.gif';
@@ -177,6 +197,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function gtcDefaultToFalseOnInitialize() {
 		$this->assertFalse(
@@ -185,7 +206,9 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	}
 
 	/**
+	 * @param mixed $input
 	 * @test
+	 * @return void
 	 * @dataProvider notEmptyDataProvider
 	 */
 	public function gtcReturnsTrueIfSetNotEmpty($input) {
@@ -198,6 +221,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function mobilphoneOnInitializeIsNull() {
 		$this->assertNull(
@@ -207,6 +231,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function getMobilephoneReturnsStringSetBySetMobilphone() {
 		$expected = 'teststring';
@@ -219,5 +244,3 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		);
 	}
 }
-
-?>

@@ -64,5 +64,3 @@ if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
 
 	reset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']);
 }
-
-?>

@@ -26,13 +26,15 @@ namespace Evoweb\SfRegister\Tests\Validation;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class ValidatorResolverTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+/**
+ * Class ValidatorResolverTest
+ */
+class ValidatorResolverTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function getParsedValidatorAnnotation() {
 		$this->markTestIncomplete('not implemented by now');
 	}
 }
-
-?>

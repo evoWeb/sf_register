@@ -26,7 +26,10 @@ namespace Evoweb\SfRegister\Tests\Domain\Validator;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class BadWordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+/**
+ * Class BadWordValidatorTest
+ */
+class BadWordValidatorTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @var \Evoweb\SfRegister\Validation\Validator\BadWordValidator
 	 */
@@ -37,16 +40,26 @@ class BadWordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 */
 	private $testingFramework;
 
+	/**
+	 * @return void
+	 */
 	public function setUp() {
 		$this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
 		$pageUid = $this->testingFramework->createFrontEndPage();
-		$this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/maximal/'));
+		$this->testingFramework->createTemplate(
+			$pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/maximal/')
+		);
 		$this->testingFramework->createFakeFrontEnd($pageUid);
 
-		$this->fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Domain\\Validator\\BadWordValidator', array('dummy'));
-		$this->fixture->_set('settings', $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
+		/** @var \Evoweb\SfRegister\Validation\Validator\BadWordValidator|\TYPO3\CMS\Core\Tests\AccessibleObjectInterface $fixture */
+		$fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Validation\\Validator\\BadWordValidator', array('dummy'));
+		$fixture->_set('settings', $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
+		$this->fixture = $fixture;
 	}
 
+	/**
+	 * @return void
+	 */
 	public function tearDown() {
 		$this->testingFramework->cleanUp();
 
@@ -55,6 +68,7 @@ class BadWordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function settingsContainsValidTyposcriptSettings() {
 		$this->assertArrayHasKey(
@@ -65,6 +79,7 @@ class BadWordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isValidReturnsFalseForWordOnBadwordlist() {
 		$words = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
@@ -79,6 +94,7 @@ class BadWordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isValidReturnsTrueForGoodPassword() {
 		$this->assertTrue(
@@ -86,5 +102,3 @@ class BadWordValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		);
 	}
 }
-
-?>

@@ -26,13 +26,15 @@ namespace Evoweb\SfRegister\Tests\Domain\Validator;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class UserValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+/**
+ * Class UserValidatorTest
+ */
+class UserValidatorTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isValid() {
 		$this->markTestIncomplete('not implemented by now');
 	}
 }
-
-?>

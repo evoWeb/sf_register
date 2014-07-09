@@ -26,22 +26,32 @@ namespace Evoweb\SfRegister\Tests\Domain\Model;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class PasswordTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+/**
+ * Class PasswordTest
+ */
+class PasswordTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @var \Evoweb\SfRegister\Domain\Model\Password
 	 */
 	protected $fixture;
 
+	/**
+	 * @return void
+	 */
 	public function setUp() {
 		$this->fixture = new \Evoweb\SfRegister\Domain\Model\Password();
 	}
 
+	/**
+	 * @return void
+	 */
 	public function tearDown() {
 		unset($this->fixture);
 	}
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function passwordOnInitializeIsNull() {
 		$this->assertNull(
@@ -51,6 +61,7 @@ class PasswordTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function passwordReturnsStringSetBySetPassword() {
 		$expected = 'teststring';
@@ -65,6 +76,7 @@ class PasswordTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function passwordRepeatOnInitializeIsNull() {
 		$this->assertNull(
@@ -74,6 +86,7 @@ class PasswordTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function passwordAgainReturnsStringSetBySetPassword() {
 		$expected = 'teststring';
@@ -88,6 +101,7 @@ class PasswordTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function oldPasswordOnInitializeIsNull() {
 		$this->assertNull(
@@ -97,6 +111,7 @@ class PasswordTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function oldPasswordReturnsStringSetBySetPassword() {
 		$expected = 'teststring';
@@ -109,5 +124,3 @@ class PasswordTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		);
 	}
 }
-
-?>

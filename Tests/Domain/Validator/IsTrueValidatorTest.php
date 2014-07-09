@@ -26,22 +26,32 @@ namespace Evoweb\SfRegister\Tests\Domain\Validator;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class IstrueValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+/**
+ * Class IsTrueValidatorTest
+ */
+class IsTrueValidatorTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @var \Evoweb\SfRegister\Validation\Validator\IsTrueValidator
 	 */
 	protected $fixture;
 
+	/**
+	 * @return void
+	 */
 	public function setUp() {
 		$this->fixture = new \Evoweb\SfRegister\Validation\Validator\IsTrueValidator();
 	}
 
+	/**
+	 * @return void
+	 */
 	public function tearDown() {
 		unset($this->fixture);
 	}
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function isValidReturnsTrueIfTrueWasUsed() {
 		$this->assertTrue(
@@ -61,14 +71,12 @@ class IstrueValidatorTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	}
 
 	/**
+	 * @param mixed $input
 	 * @test
+	 * @return void
 	 * @dataProvider isValidNonTrueDataProvider
 	 */
 	public function isValidReturnsFalseIfNonTrueWasUsed($input) {
-		$this->assertFalse(
-			$this->fixture->isValid($input)
-		);
+		$this->assertFalse($this->fixture->isValid($input));
 	}
 }
-
-?>

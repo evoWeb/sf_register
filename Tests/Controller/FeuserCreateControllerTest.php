@@ -26,13 +26,15 @@ namespace Evoweb\SfRegister\Tests\Controller;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class FeuserCreateControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+/**
+ * Class FeuserCreateControllerTest
+ */
+class FeuserCreateControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function findByMailhash() {
 		$this->markTestIncomplete('not implemented by now');
 	}
 }
-
-?>

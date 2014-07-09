@@ -26,9 +26,14 @@ namespace Evoweb\SfRegister\Tests\Domain\Repository;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class FrontendUserRepositoryTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+/**
+ * Class FrontendUserRepositoryTest
+ */
+class FrontendUserRepositoryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
-	 * @var \Evoweb\SfRegister\Validation\Validator\BadWordValidator
+	 * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
 	 */
 	protected $fixture;
 
@@ -37,6 +42,9 @@ class FrontendUserRepositoryTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestC
 	 */
 	private $testingFramework;
 
+	/**
+	 * @return void
+	 */
 	public function setUp() {
 		$this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
 		$pageUid = $this->testingFramework->createFrontEndPage();
@@ -45,7 +53,8 @@ class FrontendUserRepositoryTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestC
 
 		$extensionName = 'SfRegister';
 		$pluginName = 'Form';
-		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName]['modules'][$pluginName]['controllers']['FeuserCreate'] = array(
+		$extensionSettings = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName];
+		$extensionSettings['modules'][$pluginName]['controllers']['FeuserCreate'] = array(
 			'actions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'),
 			'nonCacheableActions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'),
 		);
@@ -57,9 +66,15 @@ class FrontendUserRepositoryTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestC
 			'pluginName' => $pluginName,
 		));
 
-		$this->fixture = new \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository();
+		/** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
+		$objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+
+		$this->fixture = new \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository($objectManager);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function tearDown() {
 		$this->testingFramework->cleanUp();
 
@@ -68,6 +83,7 @@ class FrontendUserRepositoryTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestC
 
 	/**
 	 * @test
+	 * @return void
 	 */
 	public function findByMailhashReturnsUserThatShouldGetActivated() {
 		$expected = 'testHash';
@@ -80,5 +96,3 @@ class FrontendUserRepositoryTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestC
 		$this->assertInstanceOf('Evoweb\\SfRegister\\Domain\\Model\\FrontendUser', $this->fixture->findByMailhash($expected));
 	}
 }
-
-?>
