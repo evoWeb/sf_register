@@ -34,8 +34,8 @@ plugin.tx_sfregister.settings {
 	notifyAdminPostCreateSave =
 	notifyUserPostCreateSave =
 
-	notifyAdminPostCreateConfirmation =
-	notifyUserPostCreateConfirmation =
+	notifyAdminPostCreateConfirm =
+	notifyUserPostCreateConfirm =
 
 	notifyAdminPostCreateRefuse =
 	notifyUserPostCreateRefuse =
