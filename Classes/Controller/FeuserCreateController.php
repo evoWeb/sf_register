@@ -284,8 +284,8 @@ class FeuserCreateController extends FeuserController {
 		} else {
 			$this->view->assign('user', $user);
 
-			if (!$user->getActivatedOn()) {
-				$this->view->assign('userAlreadyAccapted', 1);
+			if ($user->getActivatedOn()) {
+				$this->view->assign('userAlreadyAccepted', 1);
 			} elseif ($user->getMailhash() === $authCode) {
 				$user = $this->changeUsergroup(
 					$user,
