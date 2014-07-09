@@ -27,6 +27,28 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * A repository for feusers
  */
 class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository {
+
+	/**
+	 * Finds an object matching the given identifier.
+	 *
+	 * @param mixed $identifier The identifier of the object to find
+	 * @param bool $ignoreHidden Whether to ignore hidden state
+	 * @return NULL|\Evoweb\SfRegister\Interfaces\FrontendUserInterface
+	 */
+	public function findByIdentifier($identifier, $ignoreHidden = FALSE) {
+		if ($ignoreHidden) {
+			return parent::findByIdentifier($identifier);
+		}
+
+		$query = $this->createQuery();
+		$query->getQuerySettings()->setRespectStoragePage(FALSE);
+		$query->getQuerySettings()->setRespectSysLanguage(FALSE);
+		$query->getQuerySettings()->setIgnoreEnableFields(TRUE);
+		$query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled'));
+		$object = $query->matching($query->equals('uid', $identifier))->execute()->getFirst();
+		return $object;
+	}
+
 	/**
 	 * Find user by mailhash
 	 *
