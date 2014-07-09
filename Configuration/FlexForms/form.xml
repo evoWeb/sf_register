@@ -18,11 +18,11 @@
 								<items type="array">
 									<numIndex index="0" type="array">
 											<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.switchableControllerAction.create</numIndex>
-											<numIndex index="1">FeuserCreate->form;FeuserCreate->preview;FeuserCreate->proxy;FeuserCreate->save;FeuserCreate->confirm;FeuserCreate->removeImage</numIndex>
+											<numIndex index="1">FeuserCreate->form;FeuserCreate->preview;FeuserCreate->proxy;FeuserCreate->save;FeuserCreate->confirm;FeuserCreate->accept;FeuserCreate->removeImage</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
 											<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.switchableControllerAction.edit</numIndex>
-											<numIndex index="1">FeuserEdit->form;FeuserEdit->preview;FeuserEdit->proxy;FeuserEdit->save;FeuserEdit->confirm;FeuserEdit->removeImage</numIndex>
+											<numIndex index="1">FeuserEdit->form;FeuserEdit->preview;FeuserEdit->proxy;FeuserEdit->save;FeuserEdit->confirm;FeuserEdit->accept;FeuserEdit->removeImage</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
 											<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.switchableControllerAction.password</numIndex>
