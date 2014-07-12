@@ -1,6 +1,8 @@
+{namespace register=Evoweb\SfRegister\ViewHelpers}
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+	  xmlns:register="http://www.evoweb.de/ns/SfRegister/ViewHelpers">
 <head>
 	<title>Admin notification mail post edit confirmation template of registration</title>
 </head>
@@ -11,7 +13,7 @@
 
 <f:translate key="email_admin_account_activated" arguments="{0: user.username}" htmlEscape="false"/>
 
-<f:link.action arguments="{user: user.uid, authCode: user.mailhash}" action="accept" absolute="true" noCacheHash="true"><f:translate key="email_admin_activate_link" htmlEscape="false"/></f:link.action>
+<register:link.action arguments="{user: user.uid}" action="accept" absolute="true" noCacheHash="true"><f:translate key="email_admin_activate_link" htmlEscape="false"/></register:link.action>
 </f:section>
 </body>
 </html>

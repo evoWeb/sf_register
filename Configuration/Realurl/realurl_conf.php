@@ -42,6 +42,12 @@ if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
 				'GETvar' => 'tx_sfregister_form[user]',
 			),
 		),
+		'hash' => array(
+			array(
+				'GETvar' => 'tx_sfregister_form[hash]',
+			),
+		),
+		// @deprecated authCode is still there for backward compatibility
 		'ac' => array(
 			array(
 				'GETvar' => 'tx_sfregister_form[authCode]',

@@ -32,6 +32,7 @@ interface FrontendUserInterface {
 	/**
 	 * @param string $mailhash
 	 * @return void
+	 * @deprecated
 	 */
 	public function setMailhash($mailhash);
 

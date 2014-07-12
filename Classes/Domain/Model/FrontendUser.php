@@ -338,6 +338,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 * Getter for mailhash
 	 *
 	 * @return string
+	 * @deprecated
 	 */
 	public function getMailhash() {
 		return $this->mailhash;
@@ -348,6 +349,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 *
 	 * @param string $mailhash
 	 * @return void
+	 * @deprecated
 	 */
 	public function setMailhash($mailhash) {
 		$this->mailhash = trim($mailhash);

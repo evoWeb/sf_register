@@ -184,20 +184,20 @@ class FeuserCreateController extends FeuserController {
 	 * Could be followed by acceptance of admin
 	 *
 	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-	 * @param string $authCode
+	 * @param string $hash
 	 * @return void
 	 */
-	public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $authCode = NULL) {
-		$user = $this->determineFrontendUser($user, $authCode);
+	public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $hash = NULL) {
+		$user = $this->determineFrontendUser($user, $hash);
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
 		} else {
 			$this->view->assign('user', $user);
 
-			if (!$user->getDisable()) {
+			if (!$user->getDisable() || $this->isUserInUserGroups($user, $this->getFollowingUserGroups($this->settings['usergroupPostConfirm']))) {
 				$this->view->assign('userAlreadyConfirmed', 1);
-			} elseif ($user->getMailhash() === $authCode) {
+			} else {
 				$user = $this->changeUsergroup(
 					$user,
 					$this->settings['usergroupPostSave'],
@@ -241,15 +241,15 @@ class FeuserCreateController extends FeuserController {
 	 * Refuse registration process by user with removing the user data
 	 *
 	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-	 * @param string $authCode
+	 * @param string $hash
 	 * @return void
 	 */
-	public function refuseAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $authCode = NULL) {
-		$user = $this->determineFrontendUser($user, $authCode);
+	public function refuseAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $hash = NULL) {
+		$user = $this->determineFrontendUser($user, $hash);
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
-		} elseif ($user->getMailhash() === $authCode) {
+		} else {
 			$this->view->assign('user', $user);
 
 			$this->signalSlotDispatcher->dispatch(
@@ -273,20 +273,20 @@ class FeuserCreateController extends FeuserController {
 	 * Accept registration process by admin after user confirmation
 	 *
 	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-	 * @param string $authCode
+	 * @param string $hash
 	 * @return void
 	 */
-	public function acceptAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $authCode = NULL) {
-		$user = $this->determineFrontendUser($user, $authCode);
+	public function acceptAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $hash = NULL) {
+		$user = $this->determineFrontendUser($user, $hash);
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
 		} else {
 			$this->view->assign('user', $user);
 
-			if ($user->getActivatedOn()) {
+			if ($user->getActivatedOn() || $this->isUserInUserGroups($user, $this->getFollowingUserGroups($this->settings['usergroupPostAccept']))) {
 				$this->view->assign('userAlreadyAccepted', 1);
-			} elseif ($user->getMailhash() === $authCode) {
+			} else {
 				$user = $this->changeUsergroup(
 					$user,
 					$this->settings['usergroupPostConfirm'],
@@ -318,15 +318,15 @@ class FeuserCreateController extends FeuserController {
 	 * Decline registration process by admin with removing the user data
 	 *
 	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-	 * @param string $authCode
+	 * @param string $hash
 	 * @return void
 	 */
-	public function declineAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $authCode = NULL) {
-		$user = $this->determineFrontendUser($user, $authCode);
+	public function declineAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $hash = NULL) {
+		$user = $this->determineFrontendUser($user, $hash);
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
-		} elseif ($user->getMailhash() === $authCode) {
+		} else {
 			$this->view->assign('user', $user);
 
 			$this->signalSlotDispatcher->dispatch(
@@ -351,19 +351,24 @@ class FeuserCreateController extends FeuserController {
 	 * already submitted, or by looking up the mail hash code.
 	 *
 	 * @param NULL|\Evoweb\SfRegister\Domain\Model\FrontendUser $user
-	 * @param NULL|string $authCode
+	 * @param NULL|string $hash
 	 * @return NULL|\Evoweb\SfRegister\Domain\Model\FrontendUser
 	 */
-	protected function determineFrontendUser(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $authCode = NULL) {
-		if ($user !== NULL) {
-			return $user;
+	protected function determineFrontendUser(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $hash = NULL) {
+		$frontendUser = NULL;
+
+		$requestArguments = $this->request->getArguments();
+		if ($user !== NULL && $hash !== NULL) {
+			$calculatedHash = \TYPO3\CMS\Core\Utility\GeneralUtility::hmac($requestArguments['action'] . '::' . $user->getUid());
+			if ($hash === $calculatedHash) {
+				$frontendUser = $user;
+			}
+		// @deprecated authCode is still there for backward compatibility
+		} elseif (!empty($requestArguments['authCode'])) {
+			$frontendUser = $this->userRepository->findByMailhash($requestArguments['authCode']);
 		}
 
-		if (!empty($authCode)) {
-			$user = $this->userRepository->findByMailhash($authCode);
-		}
-
-		return $user;
+		return $frontendUser;
 	}
 
 	/**

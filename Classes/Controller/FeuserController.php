@@ -319,6 +319,83 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	}
 
 	/**
+	 * Determines whether a user is in a given user group.
+	 *
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup|string|int $userGroup
+	 * @return bool
+	 */
+	protected function isUserInUserGroup(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, $userGroup) {
+		if ($userGroup instanceof \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup) {
+			return $user->getUsergroup()->contains($userGroup);
+		} elseif (!empty($userGroup)) {
+			$userGroupUids = $this->getEntityUids($user->getUsergroup()->toArray());
+			return in_array($userGroup, $userGroupUids);
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Determines whether a user is in a given user group.
+	 *
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @param array|\TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup[] $userGroups
+	 * @return bool
+	 */
+	protected function isUserInUserGroups(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, array $userGroups) {
+		foreach ($userGroups as $userGroup) {
+			if ($this->isUserInUserGroup($user, $userGroup)) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
+	/**
+	 * @param int $currentUserGroup
+	 * @param bool $excludeCurrentUserGroup
+	 * @return array
+	 */
+	protected function getFollowingUserGroups($currentUserGroup, $excludeCurrentUserGroup = FALSE) {
+		$followingUserGroups = array();
+		$userGroups = $this->getUserGroups();
+		$currentIndex = array_search((int)$currentUserGroup, $userGroups);
+		$additionalIndex = ($excludeCurrentUserGroup ? 1 : 0);
+		if ($currentUserGroup !== FALSE && $currentUserGroup < count($userGroups)) {
+			$followingUserGroups = array_slice($userGroups, $currentIndex + $additionalIndex);
+		}
+		return $followingUserGroups;
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getUserGroups() {
+		$userGroups = array();
+		$settingNames = array('usergroupPostSave', 'usergroup', 'usergroupPostConfirm', 'usergroupPostAccept');
+		foreach ($settingNames as $settingName) {
+			if (!empty($this->settings[$settingName])) {
+				$userGroups[] = (int)$this->settings[$settingName];
+			}
+		}
+		return $userGroups;
+	}
+
+	/**
+	 * Gets the uid of each given entity.
+	 *
+	 * @param array|\TYPO3\CMS\Extbase\DomainObject\AbstractEntity[] $entities
+	 * @return array
+	 */
+	protected function getEntityUids(array $entities) {
+		$entityUids = array();
+		foreach ($entities as $entity) {
+			$entityUids[] = $entity->getUid();
+		}
+		return $entityUids;
+	}
+
+	/**
 	 * Login user with service
 	 *
 	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
