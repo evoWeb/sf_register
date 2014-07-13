@@ -124,7 +124,7 @@ class FeuserEditController extends FeuserController {
 			__FUNCTION__,
 			array(
 				'user' => &$user,
-				'settings' => $this->settings,
+				'settings' => &$this->settings,
 			)
 		);
 

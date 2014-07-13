@@ -132,8 +132,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		}
 
 		$user = $this->removeImageFromUserAndRequest($user, $removedImage);
-			// @TODO can this get removed? testing
-		$user->removeImage($removedImage);
 
 		$requestUser = $this->request->getArgument('user');
 		$requestUser['image'] = $user->getImage();

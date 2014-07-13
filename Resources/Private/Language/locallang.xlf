@@ -273,6 +273,7 @@
 			<trans-unit id="account_successful_activated" xml:space="preserve">
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is now active.</source>
 			</trans-unit>
+
 			<trans-unit id="error_noteempty" xml:space="preserve">
 				<source>The %1$s was not empty which it should have been</source>
 			</trans-unit>
@@ -322,7 +323,7 @@
 				<source>The entered captcha is incorrect</source>
 			</trans-unit>
 			<trans-unit id="error_captcha_notinstalled" xml:space="preserve">
-				<source>Captcha extension '%1$s' not installed error</source>
+				<source>CAPTCHA extension '%1$s' not installed error</source>
 			</trans-unit>
 			<trans-unit id="error_jmrecaptcha_incorrect-captcha-sol" xml:space="preserve">
 				<source>Incorrect captcha</source>
@@ -336,30 +337,57 @@
 			<trans-unit id="error_1296591069" xml:space="preserve">
 				<source>The %1$s is global not unique</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationMail" xml:space="preserve">
-				<source>User %2$s registered at %1$s</source>
-			</trans-unit>
+
 			<trans-unit id="subjectAdminNotificationPostCreateSave" xml:space="preserve">
-				<source>User %2$s registered at %1$s</source>
+				<source>User %2$s registered on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationMailPostActivation" xml:space="preserve">
-				<source>User %2$s registered at %1$s and is now activated</source>
+			<trans-unit id="subjectAdminNotificationPostCreateConfirm" xml:space="preserve">
+				<source>User %2$s confirmed registration on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationMailPreActivation" xml:space="preserve">
-				<source>User %2$s registered at %1$s and needs to be activated</source>
+			<trans-unit id="subjectAdminNotificationPostCreateRefuse" xml:space="preserve">
+				<source>User %2$s refused the registration on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationMail" xml:space="preserve">
-				<source>You registered yourself at %1$s as %2$s</source>
+			<trans-unit id="subjectAdminNotificationPostCreateAccept" xml:space="preserve">
+				<source>User %2$s was accepted on site %1$s</source>
 			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostCreateDecline" xml:space="preserve">
+				<source>User %2$s was declined on site %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostEditSave" xml:space="preserve">
+				<source>User %2$s has edited informations on site %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostEditConfirm" xml:space="preserve">
+				<source>User %2$s has confirmed the change of informations on site %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostEditAccept" xml:space="preserve">
+				<source>User %2$s change of informations was accepted on site %1$s</source>
+			</trans-unit>
+
 			<trans-unit id="subjectUserNotificationPostCreateSave" xml:space="preserve">
 				<source>You registered yourself at %1$s as %2$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationMailPostActivation" xml:space="preserve">
+			<trans-unit id="subjectUserNotificationPostCreateConfirm" xml:space="preserve">
+				<source>Thank you for confirming your account %2$s at %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostCreateRefuse" xml:space="preserve">
+				<source>Sorry your refused your registration with account %2$s on site %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostCreateAccept" xml:space="preserve">
+				<source>You registration with account %2$s on site %1$s was accepted</source>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostCreateDecline" xml:space="preserve">
 				<source>You activated account %2$s at %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationMailPreActivation" xml:space="preserve">
-				<source>You registered your account %2$s at %1$s</source>
+			<trans-unit id="subjectUserNotificationPostEditSave" xml:space="preserve">
+				<source>You %2$s changed your information on site %1$s</source>
 			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostEditConfirm" xml:space="preserve">
+				<source>Thank you %2$s for confirming the change of informations on site %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostEditAccept" xml:space="preserve">
+				<source>Your change of informations for account %2$s on site %1$s was accepted</source>
+			</trans-unit>
+
 			<trans-unit id="email_admin_salutation" xml:space="preserve">
 				<source>dear admin</source>
 			</trans-unit>

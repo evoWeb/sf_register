@@ -20,7 +20,7 @@ CREATE TABLE fe_users (
 	by_invitation tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	comments text NOT NULL,
 	module_sys_dmail_newsletter tinyint(3) unsigned DEFAULT '0' NOT NULL,
-	module_sys_dmail_html tinyint(3) unsigned DEFAULT '0' NOT NULL
+	module_sys_dmail_html tinyint(3) unsigned DEFAULT '0' NOT NULL,
 	module_sys_dmail_category int(10) unsigned DEFAULT '0' NOT NULL,
 	email_new varchar(80) DEFAULT '' NOT NULL,
 
@@ -33,5 +33,5 @@ CREATE TABLE fe_users (
 	custom6 varchar(1) DEFAULT '',
 	custom7 varchar(1) DEFAULT '',
 	custom8 varchar(1) DEFAULT '',
-	custom9 varchar(1) DEFAULT '',
+	custom9 varchar(1) DEFAULT ''
 );
