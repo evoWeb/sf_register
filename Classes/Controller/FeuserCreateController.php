@@ -118,7 +118,6 @@ class FeuserCreateController extends FeuserController {
 		if ($this->isNotifyUser('PostCreateSave') || $this->isNotifyAdmin('PostCreateSave') &&
 				($this->settings['confirmEmailPostCreate'] || $this->settings['acceptEmailPostCreate'])) {
 			$user->setDisable(TRUE);
-			$user->setActivatedOn(new \DateTime('1970-01-01'));
 			$user = $this->changeUsergroup($user, 0, $this->settings['usergroupPostSave']);
 		} else {
 			$user = $this->moveImageFile($user);

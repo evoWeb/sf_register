@@ -47,7 +47,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	/**
 	 * Date on which the account was activated
 	 *
-	 * @var \DateTime
+	 * @var \DateTime|NULL
 	 */
 	protected $activatedOn;
 
@@ -279,22 +279,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 */
 	public function __construct($username = '', $password = '') {
 		parent::__construct($username, $password);
-
-		$this->initializeObject();
-	}
-
-	/**
-	 * Is called after wake up and after construct
-	 *
-	 * @return void
-	 */
-	public function initializeObject() {
-		if (!$this->activatedOn instanceof \DateTime) {
-			$this->activatedOn = new \DateTime();
-		}
-		if (!$this->dateOfBirth instanceof \DateTime) {
-			$this->dateOfBirth = new \DateTime();
-		}
 	}
 
 	/**
@@ -304,15 +288,14 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 * @return void
 	 */
 	public function prepareDateOfBirth() {
-		if ($this->dateOfBirthDay) {
-			$this->setDateOfBirthDay($this->dateOfBirthDay);
+		if ($this->dateOfBirth === NULL) {
+			$this->dateOfBirth = new \DateTime();
 		}
-		if ($this->dateOfBirthMonth) {
-			$this->setDateOfBirthMonth($this->dateOfBirthMonth);
-		}
-		if ($this->dateOfBirthYear) {
-			$this->setDateOfBirthYear($this->dateOfBirthYear);
-		}
+		$this->dateOfBirth->setDate(
+			$this->dateOfBirthYear,
+			$this->dateOfBirthMonth,
+			$this->dateOfBirthDay
+		);
 	}
 
 	/**
@@ -356,17 +339,17 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
-	 * @return \DateTime
+	 * @return \DateTime|NULL
 	 */
 	public function getActivatedOn() {
 		return $this->activatedOn;
 	}
 
 	/**
-	 * @param \DateTime $activatedOn
+	 * @param \DateTime|NULL $activatedOn
 	 * @return void
 	 */
-	public function setActivatedOn($activatedOn) {
+	public function setActivatedOn(\DateTime $activatedOn = NULL) {
 		$this->activatedOn = $activatedOn;
 	}
 
@@ -532,7 +515,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	/**
 	 * Getter for dateOfBirth
 	 *
-	 * @return \DateTime
+	 * @return \DateTime|NULL
 	 */
 	public function getDateOfBirth() {
 		return $this->dateOfBirth;
@@ -541,10 +524,10 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	/**
 	 * Setter for dateOfBirth
 	 *
-	 * @param string $dateOfBirth
+	 * @param \DateTime|NULL $dateOfBirth
 	 * @return void
 	 */
-	public function setDateOfBirth($dateOfBirth) {
+	public function setDateOfBirth(\DateTime $dateOfBirth = NULL) {
 		$this->dateOfBirth = $dateOfBirth;
 	}
 
@@ -571,7 +554,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 */
 	public function setDateOfBirthDay($day) {
 		$this->dateOfBirthDay = $day;
-		$this->dateOfBirth->setDate($this->dateOfBirth->format('Y'), $this->dateOfBirth->format('m'), $day);
+		$this->prepareDateOfBirth();
 	}
 
 	/**
@@ -597,7 +580,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 */
 	public function setDateOfBirthMonth($month) {
 		$this->dateOfBirthMonth = $month;
-		$this->dateOfBirth->setDate($this->dateOfBirth->format('Y'), $month, $this->dateOfBirth->format('d'));
+		$this->prepareDateOfBirth();
 	}
 
 	/**
@@ -623,7 +606,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 */
 	public function setDateOfBirthYear($year) {
 		$this->dateOfBirthYear = $year;
-		$this->dateOfBirth->setDate($year, $this->dateOfBirth->format('m'), $this->dateOfBirth->format('d'));
+		$this->prepareDateOfBirth();
 	}
 
 	/**
