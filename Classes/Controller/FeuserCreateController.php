@@ -346,31 +346,6 @@ class FeuserCreateController extends FeuserController {
 	}
 
 	/**
-	 * Determines the frontend user, either if it's
-	 * already submitted, or by looking up the mail hash code.
-	 *
-	 * @param NULL|\Evoweb\SfRegister\Domain\Model\FrontendUser $user
-	 * @param NULL|string $hash
-	 * @return NULL|\Evoweb\SfRegister\Domain\Model\FrontendUser
-	 */
-	protected function determineFrontendUser(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $hash = NULL) {
-		$frontendUser = NULL;
-
-		$requestArguments = $this->request->getArguments();
-		if ($user !== NULL && $hash !== NULL) {
-			$calculatedHash = \TYPO3\CMS\Core\Utility\GeneralUtility::hmac($requestArguments['action'] . '::' . $user->getUid());
-			if ($hash === $calculatedHash) {
-				$frontendUser = $user;
-			}
-		// @deprecated authCode is still there for backward compatibility
-		} elseif (!empty($requestArguments['authCode'])) {
-			$frontendUser = $this->userRepository->findByMailhash($requestArguments['authCode']);
-		}
-
-		return $frontendUser;
-	}
-
-	/**
 	 * Change usergroup of user after activation
 	 *
 	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user

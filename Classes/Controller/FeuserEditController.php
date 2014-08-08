@@ -147,14 +147,12 @@ class FeuserEditController extends FeuserController {
 	 * Confirm registration process by user
 	 * Could be followed by acceptance of admin
 	 *
-	 * @param string $authCode
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @param string $hash
 	 * @return void
 	 */
-	public function confirmAction($authCode = NULL) {
-		$user = NULL;
-		if (strlen($authCode)) {
-			$user = $this->userRepository->findByMailhash($authCode);
-		}
+	public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $hash = NULL) {
+		$user = $this->determineFrontendUser($user, $hash);
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
@@ -202,11 +200,12 @@ class FeuserEditController extends FeuserController {
 	 * Confirm registration process by user
 	 * Could be followed by acceptance of admin
 	 *
-	 * @param string $authCode
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+	 * @param string $hash
 	 * @return void
 	 */
-	public function acceptAction($authCode) {
-		$user = $this->userRepository->findByMailhash($authCode);
+	public function acceptAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = NULL, $hash = NULL) {
+		$user = $this->determineFrontendUser($user, $hash);
 
 		if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
 			$this->view->assign('userNotFound', 1);
