@@ -161,6 +161,13 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $cnShortUa;
 
 	/**
+	 * Short name local
+	 *
+	 * @var string
+	 */
+	protected $cnShortLocal;
+
+	/**
 	 * Getter for ISO 3166-1 A2 Country code
 	 *
 	 * @return string
@@ -329,5 +336,23 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function getCnShortUa() {
 		return $this->cnShortUa;
+	}
+
+	/**
+	 * Set cnShortLocal
+	 *
+	 * @param string $cnShortLocal
+	 */
+	public function setCnShortLocal($cnShortLocal) {
+		$this->cnShortLocal = $cnShortLocal;
+	}
+
+	/**
+	 * Get cnShortLocal
+	 *
+	 * @return string
+	 */
+	public function getCnShortLocal() {
+		return $this->cnShortLocal;
 	}
 }
