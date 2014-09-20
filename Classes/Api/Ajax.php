@@ -73,7 +73,11 @@ class Ajax {
 	public function dispatch() {
 		switch ($this->requestArguments['action']) {
 			case 'zones':
-				$this->getZonesByParent();
+				if (intval($this->requestArguments['parent']) == $this->requestArguments['parent']) {
+					$this->getZonesByParentId();
+				} else {
+					$this->getZonesByParentIso2Code();
+				}
 				break;
 
 			default:
@@ -90,7 +94,42 @@ class Ajax {
 	 *
 	 * @return void
 	 */
-	protected function getZonesByParent() {
+	protected function getZonesByParentId() {
+		$zones = array();
+		$parent = (int) $this->requestArguments['parent'];
+
+		if ($parent) {
+			/** @var $database \TYPO3\CMS\Core\Database\DatabaseConnection */
+			$database = & $GLOBALS['TYPO3_DB'];
+			$queryResult = $database->exec_SELECTquery(
+				'z.uid as value, z.zn_name_local as label',
+				'static_country_zones AS z
+					INNER JOIN static_countries AS c ON z.zn_country_iso_2 = c.cn_iso_2',
+				'c.uid = ' . $parent . ' AND z.deleted = 0 AND c.deleted = 0',
+				'',
+				'z.zn_name_local'
+			);
+
+			if (!$database->sql_num_rows($queryResult)) {
+				$this->status = 'error';
+				$this->message = 'no zones';
+			} else {
+				while (($rows = $database->sql_fetch_assoc($queryResult))) {
+					$zones[] = $rows;
+				}
+			}
+		}
+
+		$this->result = $zones;
+	}
+
+	/**
+	 * Query the static info table country zones to
+	 * get all zones for the given parent if any
+	 *
+	 * @return void
+	 */
+	protected function getZonesByParentIso2Code() {
 		$zones = array();
 		$parent = strtoupper(preg_replace('/[^A-Za-z]/', '', $this->requestArguments['parent']));
 
@@ -100,7 +139,7 @@ class Ajax {
 			$queryResult = $database->exec_SELECTquery(
 				'zn_code as value, zn_name_local as label',
 				'static_country_zones',
-				'zn_country_iso_2 = \'' . $parent . '\'',
+				'zn_country_iso_2 = \'' . $parent . '\' AND z.deleted = 0',
 				'',
 				'zn_name_local'
 			);
@@ -135,5 +174,7 @@ class Ajax {
 }
 
 if (\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('eID')) {
-	\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Evoweb\\SfRegister\\Api\\Ajax')->dispatch();
+	/** @var \Evoweb\SfRegister\Api\Ajax $ajax */
+	$ajax = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Evoweb\\SfRegister\\Api\\Ajax');
+	$ajax->dispatch();
 }
