@@ -34,13 +34,14 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
 	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
 	 */
 	public function findAllByIso2($iso2) {
+		/** @var \TYPO3\CMS\Extbase\Persistence\Generic\Query $query */
 		$query = $this->createQuery();
 		$query
 			->getQuerySettings()
 			->setRespectStoragePage(FALSE);
 
-		return $query
-			->matching($query->equals('zn_country_iso_2', $iso2))
-			->execute();
+		$query->statement('SELECT * FROM static_country_zones WHERE zn_country_iso_2 = ? AND deleted = 0', array($iso2));
+
+		return $query->execute();
 	}
 }
