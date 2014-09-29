@@ -111,6 +111,8 @@ class FeuserCreateController extends FeuserController {
 	 * @validate $user Evoweb.SfRegister:User
 	 */
 	public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user) {
+		// if preview step is skiped the temp file isn't moved yet
+		$user = $this->moveTempFile($user);
 
 		if ($this->isNotifyUser('PostCreateSave') || $this->isNotifyAdmin('PostCreateSave') &&
 				($this->settings['confirmEmailPostCreate'] || $this->settings['acceptEmailPostCreate'])) {

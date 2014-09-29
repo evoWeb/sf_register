@@ -23,6 +23,10 @@ namespace Evoweb\SfRegister\Services;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+
 /**
  * Service to handle file upload and deletion
  */
@@ -200,9 +204,9 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 			$error = $uploadData['error'][$this->fieldname];
 			$size = $uploadData['size'][$this->fieldname];
 
-			if ($filename !== NULL && $filename !== '' && \TYPO3\CMS\Core\Utility\GeneralUtility::validPathStr($filename)) {
+			if ($filename !== NULL && $filename !== '' && GeneralUtility::validPathStr($filename)) {
 				if ($this->settings['useEncryptedFilename']) {
-					$filenameParts = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('.', $filename);
+					$filenameParts = GeneralUtility::trimExplode('.', $filename);
 					$extension = array_pop($filenameParts);
 					$filename = md5(mktime() . mt_rand() . $filename . $tmpName .
 						$GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) . '.' . $extension;
@@ -250,7 +254,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 
 		if ($filesize > $this->maxFilesize) {
 			$this->addError(
-				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_' . $this->fieldname . '_filesize', 'SfRegister'),
+				LocalizationUtility::translate('error_' . $this->fieldname . '_filesize', 'SfRegister'),
 				1296591064
 			);
 			$result = FALSE;
@@ -270,10 +274,10 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 
 		if (
 			$fileExtension !== NULL &&
-			!\TYPO3\CMS\Core\Utility\GeneralUtility::inList($this->allowedFileExtensions, strtolower($fileExtension))
+			!GeneralUtility::inList($this->allowedFileExtensions, strtolower($fileExtension))
 		) {
 			$this->addError(
-				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_' . $this->fieldname . '_extension', 'SfRegister'),
+				LocalizationUtility::translate('error_' . $this->fieldname . '_extension', 'SfRegister'),
 				1296591064
 			);
 			$result = FALSE;
@@ -303,7 +307,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 
 			$uniqueFilename = $basicFileFunctions->getUniqueName($filename, $uploadFolder);
 
-			if (\TYPO3\CMS\Core\Utility\GeneralUtility::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
+			if (GeneralUtility::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
 				$result = basename($uniqueFilename);
 			}
 		}
@@ -317,7 +321,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	protected function createUploadFolderIfNotExist($uploadFolder) {
 		if (!is_dir($uploadFolder)) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir($uploadFolder);
+			GeneralUtility::mkdir($uploadFolder);
 		}
 	}
 
@@ -332,42 +336,21 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 			return;
 		}
 
-		$this->createUploadFolderIfNotExist($this->uploadFolder);
+		$fileNames = GeneralUtility::trimExplode(',', $filename);
+		$newFilename = array_pop($fileNames);
 
-		$fileExtensions = (array) $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions'];
-		$fileExtensions['webspace']['allow'] = $this->allowedFileExtensions;
-
-		$fileCommands = array(0 => array(
-			'data' => $this->tempFolder . '/' . $filename,
-			'target' => $this->uploadFolder,
-			'altName' => TRUE
-		));
-
-		/** @var $extFileFunctions \Evoweb\SfRegister\Utility\File\ExtendedFileUtility */
-		$extFileFunctions = $this->objectManager->get('Evoweb\\SfRegister\\Utility\\File\\ExtendedFileUtility');
-
-		if (version_compare(TYPO3_branch, '6.2', '<')) {
-			$extFileFunctions->init(array(), $fileExtensions);
-			$extFileFunctions->init_actionPerms(1);
-			$extFileFunctions->start($fileCommands);
-
-			$result = $extFileFunctions->processData();
-			$filename = $result['move'][0];
-		} else {
-			$extFileFunctions->setActionPermissions(array(
-				'addFile' => TRUE,
-				'moveFile' => TRUE,
-				'copyFile' => TRUE,
-				'renameFile' => TRUE,
-				'readFile' => TRUE,
-			));
-			$extFileFunctions->start($fileCommands);
-
-			$result = $extFileFunctions->processData();
-			/** @var \TYPO3\CMS\Core\Resource\File $file */
-			$file = $result['move'][0];
-			$filename = $file->getIdentifier();
+		// delete old images
+		foreach ($fileNames as $tmpName) {
+			$this->removeFile($tmpName, $this->uploadFolder);
 		}
+
+		$this->createUploadFolderIfNotExist($this->uploadFolder);
+		/** @var \TYPO3\CMS\Core\Resource\Folder $folder */
+		$folder = ResourceFactory::getInstance()->getFolderObjectFromCombinedIdentifier($this->uploadFolder);
+
+		/** @var \TYPO3\CMS\Core\Resource\File $file */
+		$file = $folder->addFile($this->tempFolder . '/' . $newFilename, NULL, 'changeName');
+		$filename = str_replace($folder->getIdentifier(), '', $file->getIdentifier());
 	}
 
 	/**
@@ -408,7 +391,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return string
 	 */
 	protected function getFilepath($filename) {
-		$filenameParts = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('/', $filename, TRUE);
+		$filenameParts = GeneralUtility::trimExplode('/', $filename, TRUE);
 
 		$result = implode('/', array_slice($filenameParts, 0, -1));
 		if (!in_array($result, array($this->tempFolder, $this->uploadFolder))) {
@@ -423,7 +406,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return string
 	 */
 	protected function getFilename($filename) {
-		$filenameParts = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('/', $filename, TRUE);
+		$filenameParts = GeneralUtility::trimExplode('/', $filename, TRUE);
 
 		return array_pop($filenameParts);
 	}

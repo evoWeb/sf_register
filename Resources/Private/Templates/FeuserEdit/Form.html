@@ -143,19 +143,19 @@
 		</dt>
 		<dd>
 			<f:render partial="FieldError" section="Main" arguments="{field: 'image'}" />
-			<f:if condition="{image}">
+			<f:if condition="{user.image}">
 				<f:then>
 					<f:form.hidden property="image" />
 					<f:form.hidden name="temporaryImage" value="{temporaryImage}" />
-					<f:form.hidden name="imagefile" value="{image}" />
+					<f:form.hidden name="imagefile" value="{user.image}" />
 					<f:if condition="{temporaryImage}">
 						<f:then>
-							<f:image height="100" width="100c" src="typo3temp/sf_register/{image}" alt="{firstName} {lastName}"
-									 title="{firstName} {lastName}" />
+							<f:image height="100" width="100c" src="typo3temp/sf_register/{user.image}" alt="{user.firstName} {user.lastName}"
+									 title="{user.firstName} {user.lastName}" />
 						</f:then>
 						<f:else>
-							<f:image height="100" width="100c" src="uploads/pics/{image}" alt="{firstName} {lastName}"
-									 title="{firstName} {lastName}" />
+							<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}"
+									 title="{user.firstName} {user.lastName}" />
 						</f:else>
 					</f:if>
 					<f:form.submit name="removeImage" value="{f:translate(key:'submit_removeImage')}" />
