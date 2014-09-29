@@ -344,13 +344,17 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 			$this->removeFile($tmpName, $this->uploadFolder);
 		}
 
-		$this->createUploadFolderIfNotExist($this->uploadFolder);
-		/** @var \TYPO3\CMS\Core\Resource\Folder $folder */
-		$folder = ResourceFactory::getInstance()->getFolderObjectFromCombinedIdentifier($this->uploadFolder);
+		if (file_exists($this->tempFolder . '/' . $newFilename)) {
+			$this->createUploadFolderIfNotExist($this->uploadFolder);
+			/** @var \TYPO3\CMS\Core\Resource\Folder $folder */
+			$folder = ResourceFactory::getInstance()->getFolderObjectFromCombinedIdentifier($this->uploadFolder);
 
-		/** @var \TYPO3\CMS\Core\Resource\File $file */
-		$file = $folder->addFile($this->tempFolder . '/' . $newFilename, NULL, 'changeName');
-		$filename = str_replace($folder->getIdentifier(), '', $file->getIdentifier());
+			/** @var \TYPO3\CMS\Core\Resource\File $file */
+			$file = $folder->addFile($this->tempFolder . '/' . $newFilename, NULL, 'changeName');
+			$filename = str_replace($folder->getIdentifier(), '', $file->getIdentifier());
+		} else {
+			$filename = $newFilename;
+		}
 	}
 
 	/**
