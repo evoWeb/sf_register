@@ -80,8 +80,6 @@ class FeuserEditController extends FeuserController {
 	public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user) {
 		$user = $this->moveTempFile($user);
 
-		$user->prepareDateOfBirth();
-
 		if ($this->request->hasArgument('temporaryImage')) {
 			$this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
 		}

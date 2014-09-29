@@ -58,8 +58,6 @@ class FeuserCreateController extends FeuserController {
 			$user = $this->objectManager->get('Evoweb\\SfRegister\\Domain\\Model\\FrontendUser');
 		}
 
-		$user->prepareDateOfBirth();
-
 		if ($originalRequest !== NULL && $originalRequest->hasArgument('temporaryImage')) {
 			$this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
 		}
@@ -113,7 +111,6 @@ class FeuserCreateController extends FeuserController {
 	 * @validate $user Evoweb.SfRegister:User
 	 */
 	public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user) {
-		$user->prepareDateOfBirth();
 
 		if ($this->isNotifyUser('PostCreateSave') || $this->isNotifyAdmin('PostCreateSave') &&
 				($this->settings['confirmEmailPostCreate'] || $this->settings['acceptEmailPostCreate'])) {
