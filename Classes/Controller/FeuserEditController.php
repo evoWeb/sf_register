@@ -115,6 +115,8 @@ class FeuserEditController extends FeuserController {
 
 			$user->setEmailNew($user->getEmail());
 			$user->setEmail($userBeforeEdit->getEmail());
+		} elseif ($this->settings['useEmailAddressAsUsername']) {
+			$user->setUsername($user->getEmail());
 		}
 
 		$user->prepareDateOfBirth();
@@ -167,6 +169,10 @@ class FeuserEditController extends FeuserController {
 				if (!$this->settings['acceptEmailPostEdit']) {
 					$user->setEmail($user->getEmailNew());
 					$user->setEmailNew('');
+
+					if ($this->settings['useEmailAddressAsUsername']) {
+						$user->setUsername($user->getEmail());
+					}
 				}
 
 				$this->signalSlotDispatcher->dispatch(
@@ -219,6 +225,10 @@ class FeuserEditController extends FeuserController {
 
 				$user->setEmail($user->getEmailNew());
 				$user->setEmailNew('');
+
+				if ($this->settings['useEmailAddressAsUsername']) {
+					$user->setUsername($user->getEmail());
+				}
 
 				$this->signalSlotDispatcher->dispatch(
 					__CLASS__,
