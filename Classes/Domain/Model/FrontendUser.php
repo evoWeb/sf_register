@@ -288,14 +288,21 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 * @return void
 	 */
 	public function prepareDateOfBirth() {
-		if ($this->dateOfBirth === NULL) {
-			$this->dateOfBirth = new \DateTime();
+		if ($this->dateOfBirthDay !== NULL
+			&& $this->dateOfBirthMonth !== NULL
+			&& $this->dateOfBirthYear !== NULL
+		) {
+			if ($this->dateOfBirth === NULL) {
+				$this->dateOfBirth = new \DateTime();
+			}
+			$this->dateOfBirth->setDate(
+				$this->dateOfBirthYear,
+				$this->dateOfBirthMonth,
+				$this->dateOfBirthDay
+			);
+		} else {
+			$this->dateOfBirth = NULL;
 		}
-		$this->dateOfBirth->setDate(
-			$this->dateOfBirthYear,
-			$this->dateOfBirthMonth,
-			$this->dateOfBirthDay
-		);
 	}
 
 	/**
@@ -537,7 +544,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 * @return integer
 	 */
 	public function getDateOfBirthDay() {
-		$result = 0;
+		$result = NULL;
 
 		if ($this->dateOfBirth instanceof \DateTime) {
 			$result = $this->dateOfBirth->format('j');
@@ -563,7 +570,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 * @return integer
 	 */
 	public function getDateOfBirthMonth() {
-		$result = 0;
+		$result = NULL;
 
 		if ($this->dateOfBirth instanceof \DateTime) {
 			$result = $this->dateOfBirth->format('n');
@@ -589,7 +596,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 * @return integer
 	 */
 	public function getDateOfBirthYear() {
-		$result = 0;
+		$result = NULL;
 
 		if ($this->dateOfBirth instanceof \DateTime) {
 			$result = $this->dateOfBirth->format('Y');
