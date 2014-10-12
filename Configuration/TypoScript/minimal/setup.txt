@@ -148,6 +148,8 @@ plugin.tx_sfregister.settings {
 		jmrecaptcha = Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter
 		srfreecap = Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter
 	}
+
+	processInitializeActionSignal = 0
 }
 
 plugin.tx_sfregister.persistence {

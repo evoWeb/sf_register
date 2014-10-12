@@ -93,6 +93,17 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	protected function initializeAction() {
 		$this->fileService = $this->objectManager->get('Evoweb\\SfRegister\\Services\\File');
 
+		if ($this->settings['processInitializeActionSignal']) {
+			$this->signalSlotDispatcher->dispatch(
+				__CLASS__,
+				'initializeAction',
+				array(
+					'controller' => $this,
+					'settings' => $this->settings,
+				)
+			);
+		}
+
 		if ($this->request->getControllerActionName() != 'removeImage' &&
 				$this->request->hasArgument('removeImage') &&
 				$this->request->getArgument('removeImage')) {
