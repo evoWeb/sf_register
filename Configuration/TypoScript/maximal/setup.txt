@@ -158,6 +158,12 @@ plugin.tx_sfregister.settings {
 	}
 
 	processInitializeActionSignal = 0
+
+	redirectSignal {
+		controller = FeuserCreate
+		action = form
+		page = {$plugin.tx_sfregister.settings.redirect.page}
+	}
 }
 
 plugin.tx_sfregister.persistence {

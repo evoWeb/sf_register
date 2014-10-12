@@ -158,6 +158,11 @@
 			<trans-unit id="maximal.storagePid" xml:space="preserve">
 				<source>Sysfolder that contains the usergroups and users if not set zero or a selected value in the plugin will be used for storing the user</source>
 			</trans-unit>
+
+			<trans-unit id="maximal.redirect.page" xml:space="preserve">
+				<source>Page to redirect to if create form is a different page then the edit form</source>
+			</trans-unit>
+
 			<trans-unit id="minimal.badWordList" xml:space="preserve">
 				<source>comma separated list of words used in bad word validator</source>
 			</trans-unit>

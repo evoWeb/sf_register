@@ -146,6 +146,6 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface {
 	public static function isLoggedIn() {
 		/** @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser */
 		$frontendUser = $GLOBALS['TSFE']->fe_user;
-		return $frontendUser->user === FALSE ? FALSE : TRUE;
+		return is_array($frontendUser->user);
 	}
 }

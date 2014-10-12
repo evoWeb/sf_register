@@ -56,3 +56,13 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clea
 );
 
 \Evoweb\SfRegister\Utility\ClassLoader::registerAutoloader();
+
+
+if (TYPO3_MODE === 'FE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
+	$signalSlotDispatcher->connect(
+		'Evoweb\\SfRegister\\Controller\\FeuserController',
+		'initializeAction',
+		'Evoweb\\SfRegister\\Signal\\FeuserControllerSignal',
+		'initializeAction'
+	);
+}
