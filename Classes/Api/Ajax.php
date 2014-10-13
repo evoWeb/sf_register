@@ -3,7 +3,7 @@ namespace Evoweb\SfRegister\Api;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-14 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -73,7 +73,7 @@ class Ajax {
 	public function dispatch() {
 		switch ($this->requestArguments['action']) {
 			case 'zones':
-				if (intval($this->requestArguments['parent']) == $this->requestArguments['parent']) {
+				if ((string) intval($this->requestArguments['parent']) === $this->requestArguments['parent']) {
 					$this->getZonesByParentId();
 				} else {
 					$this->getZonesByParentIso2Code();
@@ -139,7 +139,7 @@ class Ajax {
 			$queryResult = $database->exec_SELECTquery(
 				'zn_code as value, zn_name_local as label',
 				'static_country_zones',
-				'zn_country_iso_2 = \'' . $parent . '\' AND z.deleted = 0',
+				'zn_country_iso_2 = \'' . $parent . '\' AND deleted = 0',
 				'',
 				'zn_name_local'
 			);
