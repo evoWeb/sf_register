@@ -118,6 +118,7 @@ class Ajax {
 					$zones[] = $rows;
 				}
 			}
+			$database->sql_free_result($queryResult);
 		}
 
 		$this->result = $zones;
@@ -152,6 +153,7 @@ class Ajax {
 					$zones[] = $rows;
 				}
 			}
+			$database->sql_free_result($queryResult);
 		}
 
 		$this->result = $zones;
