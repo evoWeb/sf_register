@@ -26,7 +26,7 @@ switch ($extensionConfiguration['typoscriptComplexity']) {
  * Page TypoScript for mod wizards
  */
 ExtensionManagementUtility::addPageTSConfig(
-	'<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $_EXTKEY . '/Configuration/PageTypoScript/ModWizards.ts">'
+	'<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $_EXTKEY . '/Configuration/TsConfig/ModWizards.ts">'
 );
 
 
