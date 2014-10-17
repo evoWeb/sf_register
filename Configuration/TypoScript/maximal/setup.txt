@@ -168,30 +168,6 @@ plugin.tx_sfregister.settings {
 
 plugin.tx_sfregister.persistence {
 	storagePid = {$plugin.tx_sfregister.persistence.storagePid}
-
-	classes {
-		Evoweb\SfRegister\Domain\Model\FrontendUser {
-			mapping {
-				tableName = fe_users
-			}
-		}
-
-		Evoweb\SfRegister\Domain\Model\StaticCountry {
-			mapping {
-				tableName = static_countries
-			}
-		}
-		Evoweb\SfRegister\Domain\Model\StaticCountryZone {
-			mapping {
-				tableName = static_country_zones
-			}
-		}
-		Evoweb\SfRegister\Domain\Model\StaticLanguage {
-			mapping {
-				tableName = static_languages
-			}
-		}
-	}
 }
 
 plugin.tx_sfregister.features {
@@ -233,6 +209,28 @@ config.tx_extbase {
 	objects {
 		Evoweb\SfRegister\Interfaces\FrontendUserInterface {
 			className = Evoweb\SfRegister\Domain\Model\FrontendUser
+		}
+	}
+	persistence.classes {
+		Evoweb\SfRegister\Domain\Model\FrontendUser {
+			mapping {
+				tableName = fe_users
+			}
+		}
+		Evoweb\SfRegister\Domain\Model\StaticCountry {
+			mapping {
+				tableName = static_countries
+			}
+		}
+		Evoweb\SfRegister\Domain\Model\StaticCountryZone {
+			mapping {
+				tableName = static_country_zones
+			}
+		}
+		Evoweb\SfRegister\Domain\Model\StaticLanguage {
+			mapping {
+				tableName = static_languages
+			}
 		}
 	}
 }
