@@ -121,7 +121,7 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
 	protected function getOptions() {
 		$options = array();
 
-		for ($current = $this->start; $current < $this->end;) {
+		for ($current = $this->start; $current <= $this->end;) {
 			$options[$current] = sprintf('%0' . $this->digits . 's', $current);
 
 			$current += $this->step;
