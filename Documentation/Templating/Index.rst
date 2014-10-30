@@ -24,14 +24,16 @@ Per default, all templates are stored in
 
 ::
 
-   typo3conf/ext/sf_register/Resouces/Private.
+   typo3conf/ext/sf_register/Resources/Private/
 
 Copy this Folder into the fileadmin and edit the templates you want to
 change. Don't forget to set the path to this new templates folder with
 
 ::
 
-   plugin.tx_sfregister.templateRootPath = fileadmin/extension_templates/sf_register/Private
+   plugin.tx_sfregister.view.templateRootPath = fileadmin/extension_templates/sf_register/Private/Templates/
+   plugin.tx_sfregister.view.partialRootPath = fileadmin/extension_templates/sf_register/Private/Partials/
+   plugin.tx_sfregister.view.layoutRootPath = fileadmin/extension_templates/sf_register/Private/Layouts/
 
 The Plugins can take the path as well.
 
