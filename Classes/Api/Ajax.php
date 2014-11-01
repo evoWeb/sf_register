@@ -73,7 +73,7 @@ class Ajax {
 	public function dispatch() {
 		switch ($this->requestArguments['action']) {
 			case 'zones':
-				if ((string) intval($this->requestArguments['parent']) === $this->requestArguments['parent']) {
+				if (\TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($this->requestArguments['parent'])) {
 					$this->getZonesByParentId();
 				} else {
 					$this->getZonesByParentIso2Code();
