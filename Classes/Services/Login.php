@@ -101,6 +101,7 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface {
 		$GLOBALS['TSFE']->fe_user = &$feUser;
 
 		$this->updateLastLogin($feUser);
+		$feUser->setKey('ses', 'SfRegisterAutoLoginUser', TRUE);
 
 		$this->signalSlotDispatcher->dispatch(
 			__CLASS__,
