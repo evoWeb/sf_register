@@ -65,6 +65,7 @@ plugin.tx_sfregister.settings {
 	# integer usergroups set if confirmation is needed
 	usergroupPostSave = {$plugin.tx_sfregister.settings.usergroupPostSave}
 	usergroupPostConfirm = {$plugin.tx_sfregister.settings.usergroupPostConfirm}
+	usergroupPostAccept = {$plugin.tx_sfregister.settings.usergroupPostAccept}
 
 	# string name of the site used in subject
 	sitename = {$plugin.tx_sfregister.settings.emailSitename}

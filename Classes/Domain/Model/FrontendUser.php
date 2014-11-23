@@ -23,7 +23,6 @@ namespace Evoweb\SfRegister\Domain\Model;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * An extended frontend user with more attributes
@@ -221,61 +220,11 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 
 
 	/**
-	 * @var string
-	 */
-	protected $custom0 = '';
-
-	/**
-	 * @var string
-	 */
-	protected $custom1 = '';
-
-	/**
-	 * @var string
-	 */
-	protected $custom2 = '';
-
-	/**
-	 * @var string
-	 */
-	protected $custom3 = '';
-
-	/**
-	 * @var string
-	 */
-	protected $custom4 = '';
-
-	/**
-	 * @var string
-	 */
-	protected $custom5 = '';
-
-	/**
-	 * @var string
-	 */
-	protected $custom6 = '';
-
-	/**
-	 * @var string
-	 */
-	protected $custom7 = '';
-
-	/**
-	 * @var string
-	 */
-	protected $custom8 = '';
-
-	/**
-	 * @var string
-	 */
-	protected $custom9 = '';
-
-
-	/**
 	 * Constructs a new Front-End User
 	 *
 	 * @param string $username
 	 * @param string $password
+	 * @return self
 	 */
 	public function __construct($username = '', $password = '') {
 		parent::__construct($username, $password);
@@ -346,6 +295,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Getter for activatedOn
+	 *
 	 * @return \DateTime|NULL
 	 */
 	public function getActivatedOn() {
@@ -353,6 +304,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Setter for activatedOn
+	 *
 	 * @param \DateTime|NULL $activatedOn
 	 * @return void
 	 */
@@ -655,6 +608,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Getter for timezone
+	 *
 	 * @return float
 	 */
 	public function getTimezone() {
@@ -664,6 +619,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Setter for timezone
+	 *
 	 * @param float $timezone
 	 * @return void
 	 */
@@ -674,6 +631,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Getter for daylight
+	 *
 	 * @return boolean
 	 */
 	public function getDaylight() {
@@ -683,6 +642,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Setter for daylight
+	 *
 	 * @param boolean $daylight
 	 * @return void
 	 */
@@ -748,6 +709,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Setter for byInvitation
+	 *
 	 * @param boolean $byInvitation
 	 * @return void
 	 */
@@ -756,6 +719,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Getter for byInvitation
+	 *
 	 * @return boolean
 	 */
 	public function getByInvitation() {
@@ -763,6 +728,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Setter for comments
+	 *
 	 * @param string $comments
 	 * @return void
 	 */
@@ -771,6 +738,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Getter for comments
+	 *
 	 * @return string
 	 */
 	public function getComments() {
@@ -778,6 +747,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Setter language
+	 *
 	 * @param string $language
 	 * @return void
 	 */
@@ -786,6 +757,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Getter for language
+	 *
 	 * @return string
 	 */
 	public function getLanguage() {
@@ -793,6 +766,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Setter for moduleSysDmailCategory
+	 *
 	 * @param array $moduleSysDmailCategory
 	 * @return void
 	 */
@@ -801,6 +776,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Getter for moduleSysDmailCategory
+	 *
 	 * @return array
 	 */
 	public function getModuleSysDmailCategory() {
@@ -827,6 +804,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Setter for moduleSysDmailHtml
+	 *
 	 * @param boolean $moduleSysDmailHtml
 	 * @return void
 	 */
@@ -835,6 +814,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Getter for moduleSysDmailHtml
+	 *
 	 * @return boolean
 	 */
 	public function getModuleSysDmailHtml() {
@@ -842,6 +823,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Setter for status
+	 *
 	 * @param int $status
 	 * @return void
 	 */
@@ -850,6 +833,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Getter for status
+	 *
 	 * @return int
 	 */
 	public function getStatus() {
@@ -857,6 +842,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Setter for emailNew
+	 *
 	 * @param string $emailNew
 	 * @return void
 	 */
@@ -865,180 +852,11 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	}
 
 	/**
+	 * Getter for emailNew
+	 *
 	 * @return string
 	 */
 	public function getEmailNew() {
 		return $this->emailNew;
-	}
-
-
-	/**
-	 * @param string $custom0
-	 * @return void
-	 */
-	public function setCustom0($custom0) {
-		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
-		$this->custom0 = $custom0;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCustom0() {
-		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
-		return $this->custom0;
-	}
-
-	/**
-	 * @param string $custom1
-	 * @return void
-	 */
-	public function setCustom1($custom1) {
-		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
-		$this->custom1 = $custom1;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCustom1() {
-		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
-		return $this->custom1;
-	}
-
-	/**
-	 * @param string $custom2
-	 * @return void
-	 */
-	public function setCustom2($custom2) {
-		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
-		$this->custom2 = $custom2;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCustom2() {
-		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
-		return $this->custom2;
-	}
-
-	/**
-	 * @param string $custom3
-	 * @return void
-	 */
-	public function setCustom3($custom3) {
-		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
-		$this->custom3 = $custom3;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCustom3() {
-		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
-		return $this->custom3;
-	}
-
-	/**
-	 * @param string $custom4
-	 * @return void
-	 */
-	public function setCustom4($custom4) {
-		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
-		$this->custom4 = $custom4;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCustom4() {
-		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
-		return $this->custom4;
-	}
-
-	/**
-	 * @param string $custom5
-	 * @return void
-	 */
-	public function setCustom5($custom5) {
-		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
-		$this->custom5 = $custom5;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCustom5() {
-		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
-		return $this->custom5;
-	}
-
-	/**
-	 * @param string $custom6
-	 * @return void
-	 */
-	public function setCustom6($custom6) {
-		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
-		$this->custom6 = $custom6;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCustom6() {
-		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
-		return $this->custom6;
-	}
-
-	/**
-	 * @param string $custom7
-	 * @return void
-	 */
-	public function setCustom7($custom7) {
-		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
-		$this->custom7 = $custom7;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCustom7() {
-		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
-		return $this->custom7;
-	}
-
-	/**
-	 * @param string $custom8
-	 * @return void
-	 */
-	public function setCustom8($custom8) {
-		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
-		$this->custom8 = $custom8;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCustom8() {
-		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
-		return $this->custom8;
-	}
-
-	/**
-	 * @param string $custom9
-	 * @return void
-	 */
-	public function setCustom9($custom9) {
-		GeneralUtility::logDeprecatedFunction('setCustomX will get removed in 2 versions, please use proper class extension instead.');
-		$this->custom9 = $custom9;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCustom9() {
-		GeneralUtility::logDeprecatedFunction('getCustomX will get removed in 2 versions, please use proper class extension instead.');
-		return $this->custom9;
 	}
 }

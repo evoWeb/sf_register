@@ -361,6 +361,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	}
 
 	/**
+	 * Check if a user has a given usergroup currently set
+	 *
 	 * @param int $currentUserGroup
 	 * @param bool $excludeCurrentUserGroup
 	 * @return array
@@ -377,6 +379,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	}
 
 	/**
+	 * Get all configured usergroups
+	 *
 	 * @return array
 	 */
 	protected function getUserGroups() {

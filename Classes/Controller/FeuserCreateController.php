@@ -204,7 +204,6 @@ class FeuserCreateController extends FeuserController {
 					$this->settings['usergroupPostConfirm']
 				);
 				$user = $this->moveImageFile($user);
-				$user->setMailhash('');
 
 				if (!$this->settings['acceptEmailPostCreate']) {
 					$user->setDisable(FALSE);
@@ -294,7 +293,6 @@ class FeuserCreateController extends FeuserController {
 				);
 				$user->setActivatedOn(new \DateTime('now'));
 				$user->setDisable(FALSE);
-				$user->setMailhash('');
 
 				$this->signalSlotDispatcher->dispatch(
 					__CLASS__,

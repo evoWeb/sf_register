@@ -142,10 +142,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
 	 */
 	public function sendAdminNotificationPostCreateSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user) {
-		if ($this->settings['acceptEmailPostCreate']) {
-			$user->setMailhash($this->getMailHash($user));
-		}
-
 		$this->sendEmail(
 			$user,
 			$this->getAdminRecipient(),
@@ -164,15 +160,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
 	 */
 	public function sendUserNotificationPostCreateSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user) {
-		if ($this->settings['confirmEmailPostCreate']) {
-			$user->setMailhash($this->getMailHash($user));
-		} elseif ($this->settings['confirmEmailChangePostEdit']) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::logDeprecatedFunction(
-				'TypoScript settings.confirmEmailChangePostEdit is deprecated, use settings.confirmEmailPostCreate instead.'
-			);
-			$user->setMailhash($this->getMailHash($user));
-		}
-
 		$this->sendEmail(
 			$user,
 			$this->getUserRecipient($user),
@@ -191,10 +178,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
 	 */
 	public function sendAdminNotificationPostCreateConfirm(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user) {
-		if ($this->settings['acceptEmailPostCreate']) {
-			$user->setMailhash($this->getMailHash($user));
-		}
-
 		$this->sendEmail(
 			$user,
 			$this->getAdminRecipient(),
@@ -214,10 +197,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
 	 */
 	public function sendAdminNotificationPostEditSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user) {
-		if ($this->settings['acceptEmailPostEdit']) {
-			$user->setMailhash($this->getMailHash($user));
-		}
-
 		$this->sendEmail(
 			$user,
 			$this->getAdminRecipient(),
@@ -236,10 +215,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
 	 */
 	public function sendUserNotificationPostEditSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user) {
-		if ($this->settings['confirmEmailPostEdit']) {
-			$user->setMailhash($this->getMailHash($user));
-		}
-
 		$this->sendEmail(
 			$user,
 			$this->getUserRecipient($user),
@@ -258,10 +233,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
 	 */
 	public function sendAdminNotificationPostEditConfirm(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user) {
-		if ($this->settings['acceptEmailPostEdit']) {
-			$user->setMailhash($this->getMailHash($user));
-		}
-
 		$this->sendEmail(
 			$user,
 			$this->getAdminRecipient(),
@@ -336,12 +307,12 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Send email
 	 *
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
 	 * @param array $recipient
 	 * @param string $typeOfEmail
 	 * @param string $subject
 	 * @param string $bodyHtml
 	 * @param string $bodyPlain
-	 * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
 	 * @return integer the number of recipients who were accepted for delivery
 	 */
 	protected function sendEmail($user, array $recipient, $typeOfEmail, $subject, $bodyHtml, $bodyPlain = '') {
@@ -443,7 +414,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 		/** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
 		$view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
 		$view->setTemplatePathAndFilename($this->getTemplatePathAndFilename($type));
-		$view->setLayoutRootPath($this->getAbsoluteLayoutRootPath());
+		$view->setLayoutRootPaths($this->getAbsoluteLayoutRootPath());
 		$view->assignMultiple($variables);
 
 		$request = $view->getRequest();

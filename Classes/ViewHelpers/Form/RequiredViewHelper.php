@@ -75,8 +75,8 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
 	/**
 	 * Render a special sign if the field is required
 	 *
-	 * @param	string $fieldName Name of the field to render the requird marker to
-	 * @return	string
+	 * @param string $fieldName Name of the field to render the requird marker to
+	 * @return string
 	 */
 	public function render($fieldName) {
 		$mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));

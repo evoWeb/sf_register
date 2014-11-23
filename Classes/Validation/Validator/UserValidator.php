@@ -116,6 +116,8 @@ class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\GenericObjec
 	}
 
 	/**
+	 * Validation method
+	 *
 	 * @param mixed $object
 	 * @return boolean|\TYPO3\CMS\Extbase\Error\Result
 	 */
@@ -172,6 +174,8 @@ class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\GenericObjec
 	}
 
 	/**
+	 * Checks if validator can validate the object
+	 *
 	 * @param object $object
 	 * @return boolean
 	 */

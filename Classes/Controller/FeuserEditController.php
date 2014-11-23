@@ -166,8 +166,6 @@ class FeuserEditController extends FeuserController {
 			if (!$user->getDisable()) {
 				$this->view->assign('userAlreadyConfirmed', 1);
 			} else {
-				$user->setMailhash('');
-
 				if (!$this->settings['acceptEmailPostEdit']) {
 					$user->setEmail($user->getEmailNew());
 					$user->setEmailNew('');
@@ -223,8 +221,6 @@ class FeuserEditController extends FeuserController {
 			if (!$user->getDisable()) {
 				$this->view->assign('userAlreadyConfirmed', 1);
 			} else {
-				$user->setMailhash('');
-
 				$user->setEmail($user->getEmailNew());
 				$user->setEmailNew('');
 

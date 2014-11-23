@@ -44,6 +44,8 @@ class ClassLoader extends \TYPO3\CMS\Core\Core\ClassLoader {
 	static protected $namespace = 'Evoweb\\SfRegister\\Domain\\Model\\';
 
 	/**
+	 * Register autoloader
+	 *
 	 * @return boolean
 	 */
 	static public function registerAutoloader() {
@@ -54,7 +56,7 @@ class ClassLoader extends \TYPO3\CMS\Core\Core\ClassLoader {
 	 * Loads php files containing classes or interfaces part of the classes
 	 * directory of an extension.
 	 *
-	 * @param string $className: Name of the class/interface to load
+	 * @param string $className Name of the class/interface to load
 	 * @return void
 	 */
 	static public function autoload($className) {
@@ -88,6 +90,8 @@ class ClassLoader extends \TYPO3\CMS\Core\Core\ClassLoader {
 	}
 
 	/**
+	 * Initialize the cache
+	 *
 	 * @param string $cacheIdentifier
 	 * @return \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend
 	 */

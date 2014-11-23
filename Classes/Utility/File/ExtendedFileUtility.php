@@ -34,6 +34,8 @@ class ExtendedFileUtility extends \TYPO3\CMS\Core\Utility\File\ExtendedFileUtili
 	protected $fileService;
 
 	/**
+	 * Move file function
+	 *
 	 * @param array $commands
 	 * @return \TYPO3\CMS\Core\Resource\File
 	 */

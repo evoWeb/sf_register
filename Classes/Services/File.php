@@ -140,6 +140,8 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
+	 * Setter for fieldname
+	 *
 	 * @param string $fieldname
 	 * @return void
 	 */
@@ -316,7 +318,9 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param  $uploadFolder
+	 * Create upload folder if not exists
+	 *
+	 * @param string $uploadFolder
 	 * @return void
 	 */
 	protected function createUploadFolderIfNotExist($uploadFolder) {
@@ -358,7 +362,9 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param  $filename
+	 * Remove temporary file
+	 *
+	 * @param string $filename
 	 * @return string
 	 */
 	public function removeTemporaryFile($filename) {
@@ -366,7 +372,9 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param  $filename
+	 * Remove uploaded images
+	 *
+	 * @param string $filename
 	 * @return string
 	 */
 	public function removeUploadedImage($filename) {
@@ -391,7 +399,9 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * @param  $filename
+	 * Getter for filepath
+	 *
+	 * @param string $filename
 	 * @return string
 	 */
 	protected function getFilepath($filename) {
@@ -406,6 +416,8 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
+	 * Getter for filename
+	 *
 	 * @param string $filename
 	 * @return string
 	 */

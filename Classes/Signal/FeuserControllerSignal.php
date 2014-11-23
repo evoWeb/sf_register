@@ -31,7 +31,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @package Evoweb\SfRegister\Signal
  */
 class FeuserControllerSignal {
+
 	/**
+	 * Initialize action settings
+	 *
 	 * @param \Evoweb\SfRegister\Controller\FeuserController $controller
 	 * @param array $settings
 	 * @return void
@@ -56,7 +59,9 @@ class FeuserControllerSignal {
 	 * @return bool
 	 */
 	public function userIsLoggedIn() {
-		/** @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser */
+		/**
+		 * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser
+		 */
 		$frontendUser = $GLOBALS['TSFE']->fe_user;
 		return is_array($frontendUser->user);
 	}
@@ -76,5 +81,4 @@ class FeuserControllerSignal {
 			->build();
 		\TYPO3\CMS\Core\Utility\HttpUtility::redirect($url);
 	}
-
 }

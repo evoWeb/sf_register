@@ -30,28 +30,29 @@ namespace Evoweb\SfRegister\Interfaces;
 interface FrontendUserInterface {
 
 	/**
-	 * @param string $mailhash
-	 * @return void
-	 * @deprecated
-	 */
-	public function setMailhash($mailhash);
-
-	/**
+	 * Getter for username
+	 *
 	 * @return string
 	 */
 	public function getUsername();
 
 	/**
+	 * Getter for first name
+	 *
 	 * @return string
 	 */
 	public function getFirstName();
 
 	/**
+	 * Getter for last name
+	 *
 	 * @return string
 	 */
 	public function getLastName();
 
 	/**
+	 * Getter for email
+	 *
 	 * @return string
 	 */
 	public function getEmail();

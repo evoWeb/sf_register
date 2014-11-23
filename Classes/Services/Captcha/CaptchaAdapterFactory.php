@@ -65,6 +65,7 @@ class CaptchaAdapterFactory {
 
 	/**
 	 * Get an adapter for an captcha of given type
+	 *
 	 * @param string $type
 	 * @return \Evoweb\SfRegister\Services\Captcha\AbstractAdapter
 	 */

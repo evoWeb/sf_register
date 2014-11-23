@@ -342,6 +342,7 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * Set cnShortLocal
 	 *
 	 * @param string $cnShortLocal
+	 * @return void
 	 */
 	public function setCnShortLocal($cnShortLocal) {
 		$this->cnShortLocal = $cnShortLocal;

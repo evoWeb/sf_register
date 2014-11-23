@@ -72,6 +72,12 @@ class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Valida
 		);
 	}
 
+	/**
+	 * Validation method
+	 *
+	 * @param mixed $password
+	 * @return bool
+	 */
 	public function isValid($password) {
 		$result = TRUE;
 

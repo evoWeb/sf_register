@@ -62,9 +62,9 @@ class UniqueExcludeCurrentValidator extends \TYPO3\CMS\Extbase\Validation\Valida
 	/**
 	 * model
 	 *
-	 * @var string
+	 * @var \Evoweb\SfRegister\Domain\Model\FrontendUser
 	 */
-	protected $model = '';
+	protected $model;
 
 	/**
 	 * Setter for propertyName
@@ -79,7 +79,8 @@ class UniqueExcludeCurrentValidator extends \TYPO3\CMS\Extbase\Validation\Valida
 	/**
 	 * Setter for model
 	 *
-	 * @param $model
+	 * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $model
+	 * @return void
 	 */
 	public function setModel($model) {
 		$this->model = $model;

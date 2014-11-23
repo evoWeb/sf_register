@@ -63,7 +63,9 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface {
 	public function loginUserById($userid) {
 		$this->initFrontendEuser($this->fetchUserdata($userid));
 
-		/** @var $frontend \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController */
+		/**
+		 * @var $frontend \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+		 */
 		$frontend = $GLOBALS['TSFE'];
 		$frontend->fe_user->createUserSession($this->fetchUserdata($userid));
 		$frontend->initUserGroups();
@@ -77,13 +79,15 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return void
 	 */
 	protected function initFrontendEuser(array $userdata) {
-		/** @var $feUser \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication */
+		/**
+		 * @var $feUser \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication
+		 */
 		$feUser = $this->objectManager->get('TYPO3\\CMS\\Frontend\\Authentication\\FrontendUserAuthentication');
 
 		$feUser->lockIP = $GLOBALS['TYPO3_CONF_VARS']['FE']['lockIP'];
 		$feUser->checkPid = $GLOBALS['TYPO3_CONF_VARS']['FE']['checkFeUserPid'];
 		$feUser->lifetime = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['lifetime']);
-			// List of pid's acceptable
+		// List of pid's acceptable
 		$feUser->checkPid_value = $this->database->cleanIntList(\TYPO3\CMS\Core\Utility\GeneralUtility::_GP('pid'));
 
 		if ($GLOBALS['TYPO3_CONF_VARS']['FE']['dontSetCookie']) {
@@ -103,13 +107,7 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface {
 		$this->updateLastLogin($feUser);
 		$feUser->setKey('ses', 'SfRegisterAutoLoginUser', TRUE);
 
-		$this->signalSlotDispatcher->dispatch(
-			__CLASS__,
-			'save',
-			array(
-				'frontend' => &$GLOBALS['TSFE'],
-			)
-		);
+		$this->signalSlotDispatcher->dispatch(__CLASS__, 'save', array('frontend' => &$GLOBALS['TSFE']));
 	}
 
 	/**
@@ -145,7 +143,9 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return boolean
 	 */
 	public static function isLoggedIn() {
-		/** @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser */
+		/**
+		 * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser
+		 */
 		$frontendUser = $GLOBALS['TSFE']->fe_user;
 		return is_array($frontendUser->user);
 	}

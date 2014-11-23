@@ -76,7 +76,10 @@ class ClassCacheManager {
 	 */
 	public function clear() {
 		$this->cacheInstance->flush();
-		/** @var \TYPO3\CMS\Core\Authentication\BackendUserAuthentication $backendUser */
+
+		/**
+		 * @var \TYPO3\CMS\Core\Authentication\BackendUserAuthentication $backendUser
+		 */
 		$backendUser = $GLOBALS['BE_USER'];
 		if (isset($backendUser)) {
 			$backendUser->writelog(3, 1, 0, 0, '[SfRegister]: User %s has cleared the class cache', array($backendUser->user['username']));
@@ -84,6 +87,8 @@ class ClassCacheManager {
 	}
 
 	/**
+	 * Recreate cache folder
+	 *
 	 * @return void
 	 */
 	public function recreateCacheFolder() {
@@ -162,6 +167,8 @@ class ClassCacheManager {
 	}
 
 	/**
+	 * Modifies code comming from php file and removes all unwanted parts
+	 *
 	 * @param string $code
 	 * @param string $filePath
 	 * @param boolean $removeClassDefinition
@@ -177,23 +184,22 @@ class ClassCacheManager {
 		$code = str_replace(array('<?php', '?>'), '', $code);
 		$code = trim($code);
 
-			// Remove everything before 'class ', including namespaces,
-			// comments and require-statements.
+		// Remove everything before 'class ', including namespaces,
+		// comments and require-statements.
 		if ($removeClassDefinition) {
 			$pos = strpos($code, 'class ');
 			$pos2 = strpos($code, '{', $pos);
-
 			$code = substr($code, $pos2 + 1);
 		}
 
 		$code = trim($code);
 
-			// Add some information for each partial
+		// Add some information for each partial
 		if ($renderPartialInfo) {
 			$code = $this->getPartialInfo($filePath) . $code;
 		}
 
-			// Remove last }
+		// Remove last }
 		$pos = strrpos($code, '}');
 		$code = substr($code, 0, $pos);
 		$code = trim($code);
@@ -201,15 +207,18 @@ class ClassCacheManager {
 	}
 
 	/**
+	 * Add information from which file the partial is taken
+	 *
 	 * @param string $filePath
 	 * @return string
 	 */
 	protected function getPartialInfo($filePath) {
-		return '/*' . str_repeat('*', 70) . LF .
-			' * this is partial from: ' . $filePath . LF . str_repeat('*', 70) . '*/' . LF . TAB;
+		return '/*' . str_repeat('*', 70) . LF . ' * this is partial from: ' . $filePath . LF . str_repeat('*', 70) . '*/' . LF . TAB;
 	}
 
 	/**
+	 * Add class closing part
+	 *
 	 * @param string $code
 	 * @return string
 	 */
