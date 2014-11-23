@@ -121,7 +121,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		if (isset($this->settings['templateRootPath']) && !empty($this->settings['templateRootPath'])) {
 			$templateRootPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($this->settings['templateRootPath'], TRUE);
 			if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($templateRootPath)) {
-				$this->view->setTemplateRootPath($templateRootPath);
+				$this->view->setTemplateRootPaths(array($templateRootPath));
 			}
 		}
 	}
