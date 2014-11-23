@@ -105,155 +105,155 @@
 			</trans-unit>
 			<trans-unit id="timezone_I_-12" xml:space="preserve" approved="yes">
 				<source>UTC−12:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-11" xml:space="preserve" approved="yes">
 				<source>UTC−11:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-10" xml:space="preserve" approved="yes">
 				<source>UTC−10:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-9_5" xml:space="preserve" approved="yes">
 				<source>UTC−09:30</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-9" xml:space="preserve" approved="yes">
 				<source>UTC−09:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-8" xml:space="preserve" approved="yes">
 				<source>UTC−08:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-7" xml:space="preserve" approved="yes">
 				<source>UTC−07:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-6" xml:space="preserve" approved="yes">
 				<source>UTC−06:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-5" xml:space="preserve" approved="yes">
 				<source>UTC−05:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-4_5" xml:space="preserve" approved="yes">
 				<source>UTC−04:30</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-4" xml:space="preserve" approved="yes">
 				<source>UTC−04:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-3_5" xml:space="preserve" approved="yes">
 				<source>UTC−03:30</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-3" xml:space="preserve" approved="yes">
 				<source>UTC−03:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-2" xml:space="preserve" approved="yes">
 				<source>UTC−02:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_-1" xml:space="preserve" approved="yes">
 				<source>UTC−01:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_0" xml:space="preserve" approved="yes">
 				<source>UTC 0</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_1" xml:space="preserve" approved="yes">
 				<source>UTC+01:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_2" xml:space="preserve" approved="yes">
 				<source>UTC+02:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_3" xml:space="preserve" approved="yes">
 				<source>UTC+03:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_3_5" xml:space="preserve" approved="yes">
 				<source>UTC+03:30</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_4" xml:space="preserve" approved="yes">
 				<source>UTC+04:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_4_5" xml:space="preserve" approved="yes">
 				<source>UTC+04:30</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_5" xml:space="preserve" approved="yes">
 				<source>UTC+05:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_5_5" xml:space="preserve" approved="yes">
 				<source>UTC+05:30</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_5_75" xml:space="preserve" approved="yes">
 				<source>UTC+05:45</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_6" xml:space="preserve" approved="yes">
 				<source>UTC+06:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_6_5" xml:space="preserve" approved="yes">
 				<source>UTC+06:30</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_7" xml:space="preserve" approved="yes">
 				<source>UTC+07:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_8" xml:space="preserve" approved="yes">
 				<source>UTC+08:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_9" xml:space="preserve" approved="yes">
 				<source>UTC+09:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_9_5" xml:space="preserve" approved="yes">
 				<source>UTC+09:30</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_10" xml:space="preserve" approved="yes">
 				<source>UTC+10:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_11" xml:space="preserve" approved="yes">
 				<source>UTC+11:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_11_5" xml:space="preserve" approved="yes">
 				<source>UTC+11:30</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_12" xml:space="preserve" approved="yes">
 				<source>UTC+12:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_12_75" xml:space="preserve" approved="yes">
 				<source>UTC+12:45</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_13" xml:space="preserve" approved="yes">
 				<source>UTC+13:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="timezone_I_14" xml:space="preserve" approved="yes">
 				<source>UTC+14:00</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="daylight" xml:space="preserve" approved="yes">
 				<source>Daylight saving time</source>
@@ -397,11 +397,11 @@
 			</trans-unit>
 			<trans-unit id="error_notunique_local" xml:space="preserve" approved="yes">
 				<source>The %1$s is not unique</source>
-				<target>Das Feld %1$s ist nicth einmalig</target>
+				<target>Das Feld %1$s ist nicht einmalig</target>
 			</trans-unit>
 			<trans-unit id="error_notunique_global" xml:space="preserve" approved="yes">
 				<source>The %1$s is not unique</source>
-				<target>Das Feld %1$s ist nicth einmalig</target>
+				<target>Das Feld %1$s ist nicht einmalig</target>
 			</trans-unit>
 			<trans-unit id="error_notvalidatable" xml:space="preserve" approved="yes">
 				<source>The given form does not contain data that can be validated</source>
