@@ -37,9 +37,11 @@ class FeuserEditController extends FeuserController {
 
 		/** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
 		$originalRequest = $this->request->getOriginalRequest();
-		if ($originalRequest !== NULL && $originalRequest->hasArgument('user') &&
+		if (($this->request->hasArgument('user') || ($originalRequest !== NULL && $originalRequest->hasArgument('user'))) &&
 				\Evoweb\SfRegister\Services\Login::isLoggedIn()) {
-			$userData = $originalRequest->getArgument('user');
+			$userData = $this->request->hasArgument('user') ?
+				$this->request->getArgument('user') :
+				$originalRequest->getArgument('user');
 
 			if ($userData['uid'] == $GLOBALS['TSFE']->fe_user->user['uid']) {
 				/** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */

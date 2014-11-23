@@ -43,8 +43,10 @@ class FeuserCreateController extends FeuserController {
 	public function formAction() {
 		/** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
 		$originalRequest = $this->request->getOriginalRequest();
-		if ($originalRequest !== NULL && $originalRequest->hasArgument('user')) {
-			$userData = $originalRequest->getArgument('user');
+		if ($this->request->hasArgument('user') || ($originalRequest !== NULL && $originalRequest->hasArgument('user'))) {
+			$userData = $this->request->hasArgument('user') ?
+				$this->request->getArgument('user') :
+				$originalRequest->getArgument('user');
 			if (isset($userData['uid'])) {
 				unset($userData['uid']);
 			}
