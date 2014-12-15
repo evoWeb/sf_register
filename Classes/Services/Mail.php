@@ -324,7 +324,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 			->setSubject($subject);
 
 		if ($this->settings[$typeOfEmail]['replyEmail']) {
-			$mail->setReplyTo(array($this->settings[$typeOfEmail]['replyEmail'] => $this->settings[$typeOfEmail]['replyName']))
+			$mail->setReplyTo(array($this->settings[$typeOfEmail]['replyEmail'] => $this->settings[$typeOfEmail]['replyName']));
 		}
 
 		if ($bodyHtml !== '') {
