@@ -100,7 +100,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 				$this->getAdminRecipient(),
 				'adminEmail',
 				$this->getSubject(__FUNCTION__ . $type, $user),
-				$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__ . $type, $user)
+				$this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__ . $type, $user),
+				$this->renderPlainBody('FeuserCreate', 'form', __FUNCTION__ . $type, $user)
 			);
 
 			$user = $this->dispatchSlotSignal(__FUNCTION__ . $type . 'PostSend', $user);
@@ -125,7 +126,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 				$this->getUserRecipient($user),
 				'userEmail',
 				$this->getSubject(__FUNCTION__ . $type, $user),
-				$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__ . $type, $user)
+				$this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__ . $type, $user),
+				$this->renderPlainBody('FeuserCreate', 'form', __FUNCTION__ . $type, $user)
 			);
 
 			$user = $this->dispatchSlotSignal(__FUNCTION__ . $type . 'PostSend', $user);
@@ -147,7 +149,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user)
+			$this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__, $user),
+			$this->renderPlainBody('FeuserCreate', 'form', __FUNCTION__, $user)
 		);
 
 		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -165,7 +168,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 			$this->getUserRecipient($user),
 			'userEmail',
 			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user)
+			$this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__, $user),
+			$this->renderPlainBody('FeuserCreate', 'form', __FUNCTION__, $user)
 		);
 
 		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -183,7 +187,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user)
+			$this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__, $user),
+			$this->renderPlainBody('FeuserCreate', 'form', __FUNCTION__, $user)
 		);
 
 		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -202,7 +207,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserEdit', 'form', __FUNCTION__, $user)
+			$this->renderHtmlBody('FeuserEdit', 'form', __FUNCTION__, $user),
+			$this->renderPlainBody('FeuserEdit', 'form', __FUNCTION__, $user)
 		);
 
 		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -220,7 +226,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 			$this->getUserRecipient($user),
 			'userEmail',
 			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserEdit', 'form', __FUNCTION__, $user)
+			$this->renderHtmlBody('FeuserEdit', 'form', __FUNCTION__, $user),
+			$this->renderPlainBody('FeuserEdit', 'form', __FUNCTION__, $user)
 		);
 
 		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -238,7 +245,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 			$this->getAdminRecipient(),
 			'adminEmail',
 			$this->getSubject(__FUNCTION__, $user),
-			$this->renderFileTemplate('FeuserCreate', 'form', __FUNCTION__, $user)
+			$this->renderHtmlBody('FeuserEdit', 'form', __FUNCTION__, $user),
+			$this->renderPlainBody('FeuserEdit', 'form', __FUNCTION__, $user)
 		);
 
 		return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -346,8 +354,22 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param string $templateName
 	 * @return string
 	 */
-	protected function getTemplatePathAndFilename($templateName) {
-		return $this->getAbsoluteTemplateRootPath() . 'Email/' . $templateName . '.html';
+	protected function getHtmlTemplatePathAndFilename($templateName) {
+		$filePath = $this->getAbsoluteTemplateRootPath() . 'Email/' . $templateName . '.html';
+
+		return @is_file($filePath) ? $filePath : '';
+	}
+
+	/**
+	 * Get template path and filename
+	 *
+	 * @param string $templateName
+	 * @return string
+	 */
+	protected function getPlainTemplatePathAndFilename($templateName) {
+		$filePath = $this->getAbsoluteTemplateRootPath() . 'Email/' . $templateName . '.txt';
+
+		return @is_file($filePath) ? $filePath : '';
 	}
 
 	/**
@@ -401,6 +423,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 		return $result;
 	}
 
+
 	/**
 	 * renders the given Template file via fluid rendering engine.
 	 *
@@ -410,24 +433,66 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
 	 * @return string of the rendered View.
 	 */
-	protected function renderFileTemplate($controller, $action, $method, $user) {
+	protected function renderHtmlBody($controller, $action, $method, $user) {
 		$type = str_replace('send', '', $method);
 		$variables = array('user' => $user, 'settings' => $this->settings);
 
-		/** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
-		$view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
-		$view->setTemplatePathAndFilename($this->getTemplatePathAndFilename($type));
-		$view->setLayoutRootPaths(array($this->getAbsoluteLayoutRootPath()));
-		$view->assignMultiple($variables);
+		$filePath = $this->getHtmlTemplatePathAndFilename($type);
+		$htmlBody = '';
+		if ($filePath) {
+			/** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
+			$view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+			$view->setTemplatePathAndFilename($filePath);
+			$view->setLayoutRootPaths(array($this->getAbsoluteLayoutRootPath()));
+			$view->assignMultiple($variables);
 
-		$request = $view->getRequest();
-		$request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
-		$request->setPluginName($this->frameworkConfiguration['pluginName']);
-		$request->setControllerName($controller);
-		$request->setControllerActionName($action);
+			$request = $view->getRequest();
+			$request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
+			$request->setPluginName($this->frameworkConfiguration['pluginName']);
+			$request->setControllerName($controller);
+			$request->setControllerActionName($action);
 
-		return $view->render();
+			$htmlBody = $view->render();
+		}
+
+		return $htmlBody;
 	}
+
+	/**
+	 * renders the given Template file via fluid rendering engine.
+	 *
+	 * @param string $controller
+	 * @param string $action
+	 * @param string $method method calling this function
+	 * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
+	 * @return string of the rendered View.
+	 */
+	protected function renderPlainBody($controller, $action, $method, $user) {
+		$type = str_replace('send', '', $method);
+		$variables = array('user' => $user, 'settings' => $this->settings);
+
+		$filePath = $this->getPlainTemplatePathAndFilename($type);
+		$plainBody = '';
+		if ($filePath) {
+			/** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
+			$view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+			$view->setTemplatePathAndFilename($filePath);
+			$view->setLayoutRootPaths($this->getAbsoluteLayoutRootPath());
+			$view->assignMultiple($variables);
+
+			$request = $view->getRequest();
+			$request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
+			$request->setPluginName($this->frameworkConfiguration['pluginName']);
+			$request->setControllerName($controller);
+			$request->setControllerActionName($action);
+			$request->setFormat('txt');
+
+			$plainBody = $view->render();
+		}
+
+		return $plainBody;
+	}
+
 
 	/**
 	 * Dispatch signal to registered slots
