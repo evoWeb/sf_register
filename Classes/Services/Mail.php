@@ -417,7 +417,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface {
 		/** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
 		$view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
 		$view->setTemplatePathAndFilename($this->getTemplatePathAndFilename($type));
-		$view->setLayoutRootPaths($this->getAbsoluteLayoutRootPath());
+		$view->setLayoutRootPaths(array($this->getAbsoluteLayoutRootPath()));
 		$view->assignMultiple($variables);
 
 		$request = $view->getRequest();
