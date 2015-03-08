@@ -524,7 +524,7 @@
 			</trans-unit>
 			<trans-unit id="email_admin_activate_link" xml:space="preserve" approved="yes">
 				<source>activate user account</source>
-				<target>Nuter Account aktivieren</target>
+				<target>Nutzer Account aktivieren</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_available" xml:space="preserve" approved="yes">
 				<source>the account %1$s is available</source>
