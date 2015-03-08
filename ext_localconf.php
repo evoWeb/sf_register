@@ -23,12 +23,12 @@ if (
 	'Evoweb.' . $_EXTKEY,
 	'Form',
 	array(
-		'FeuserCreate' => 'form, preview, proxy, save, confirm, accept, removeImage',
+		'FeuserCreate' => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
 		'FeuserEdit' => 'form, preview, proxy, save, confirm, accept, removeImage',
 		'FeuserPassword' => 'form, save',
 	),
 	array(
-		'FeuserCreate' => 'form, preview, proxy, save, confirm, accept, removeImage',
+		'FeuserCreate' => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
 		'FeuserEdit' => 'form, preview, proxy, save, confirm, accept, removeImage',
 		'FeuserPassword' => 'form, save',
 	)
