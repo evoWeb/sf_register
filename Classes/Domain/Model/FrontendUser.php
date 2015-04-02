@@ -30,7 +30,7 @@ namespace Evoweb\SfRegister\Domain\Model;
 class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	implements \Evoweb\SfRegister\Interfaces\FrontendUserInterface {
 	/**
-	 * If the account is diabled or not
+	 * If the account is disabled or not
 	 *
 	 * @var boolean
 	 */
