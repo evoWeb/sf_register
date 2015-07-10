@@ -1,10 +1,7 @@
 <?php
 defined('TYPO3_MODE') or die();
 
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-
-
-ExtensionManagementUtility::addPlugin(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
 	array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:tt_content.list_type_form', 'sfregister_form'),
 	'list_type',
 	'sf_register'
@@ -13,6 +10,6 @@ ExtensionManagementUtility::addPlugin(
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['sfregister_form'] = 'layout, select_key';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['sfregister_form'] = 'pi_flexform';
 
-ExtensionManagementUtility::addPiFlexFormValue(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
 	'sfregister_form', 'FILE:EXT:sf_register/Configuration/FlexForms/form.xml'
 );
