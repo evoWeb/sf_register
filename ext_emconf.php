@@ -6,7 +6,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Offers the possibility to maintain the fe_user data in frontend by the user self.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '6.2.6',
+	'version' => '6.2.7',
 	'dependencies' => 'extbase,fluid',
 	'conflicts' => '',
 	'priority' => 'bottom',
@@ -32,6 +32,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'conflicts' => array(
 		),
 		'suggests' => array(
+			'extender' => '6.3.0-',
 		),
 	),
 	'suggests' => array(

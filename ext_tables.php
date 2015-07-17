@@ -31,11 +31,9 @@ ExtensionManagementUtility::addPageTSConfig(
 
 
 try {
-	\TYPO3\CMS\Core\Cache\Cache::initializeCachingFramework();
-
 	/** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
 	$cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
-		// Reflection cache
+	// Reflection cache
 	if (!$cacheManager->hasCache(SFREGISTERCACHEIDENTIFIER)) {
 		/** @var \TYPO3\CMS\Core\Cache\CacheFactory $typo3CacheFactory */
 		$typo3CacheFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheFactory');

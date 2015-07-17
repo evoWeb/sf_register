@@ -353,11 +353,11 @@
 			</trans-unit>
 			<trans-unit id="account_not_found" xml:space="preserve" approved="yes">
 				<source>The account you are trying to activate is unknow to the system.</source>
-				<target>Der Account den Sie aktivieren wollen ist dem System unbekannt.</target>
+				<target>Der Account, den Sie aktivieren wollen, ist dem System unbekannt.</target>
 			</trans-unit>
 			<trans-unit id="account_already_activated" xml:space="preserve" approved="yes">
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; you try to activate is already active.</source>
-				<target>Der Account &lt;b&gt;%1$s&lt;/b&gt; den Sie versuchen zu aktivieren ist bereits aktiv.</target>
+				<target>Der Account &lt;b&gt;%1$s&lt;/b&gt;, den Sie versuchen zu aktivieren, ist bereits aktiv.</target>
 			</trans-unit>
 			<trans-unit id="account_successful_activated" xml:space="preserve" approved="yes">
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is now active.</source>
@@ -369,15 +369,15 @@
 			</trans-unit>
 			<trans-unit id="error_required" xml:space="preserve" approved="yes">
 				<source>The value of the required field %1$s was empty</source>
-				<target>Der Wert des Pflichtsfelds %1$s darf nicht leer sein</target>
+				<target>Der Wert des Pflichtfelds %1$s darf nicht leer sein</target>
 			</trans-unit>
 			<trans-unit id="error_notequalcurrentuser" xml:space="preserve" approved="yes">
 				<source>The %1$s does not equals your own user which is not allowed</source>
-				<target>Das Feld %1$s entspricht nicht Ihrem Nutzer obwohl es das hätte müssen</target>
+				<target>Das Feld %1$s entspricht nicht Ihrem Nutzer, obwohl es das hätte müssen</target>
 			</trans-unit>
 			<trans-unit id="error_changepassword_notloggedin" xml:space="preserve" approved="yes">
 				<source>You need to be logged in to change the password</source>
-				<target>Sie müssen eingeloggt sein um das Passwort zu ändern</target>
+				<target>Sie müssen eingeloggt sein, um das Passwort zu ändern</target>
 			</trans-unit>
 			<trans-unit id="error_changepassword_notequal" xml:space="preserve" approved="yes">
 				<source>The give password was not equal to the current password</source>
@@ -385,7 +385,7 @@
 			</trans-unit>
 			<trans-unit id="error_badword" xml:space="preserve" approved="yes">
 				<source>The password you entered is on the disallowed list</source>
-				<target>Das Passwort das Sie eingegeben haben ist nicht erlaubt</target>
+				<target>Das Passwort, das Sie eingegeben haben, ist nicht erlaubt</target>
 			</trans-unit>
 			<trans-unit id="error_nottrue" xml:space="preserve" approved="yes">
 				<source>The %1$s was not accepted</source>
@@ -483,7 +483,7 @@
 
 			<trans-unit id="subjectUserNotificationPostCreateSave" xml:space="preserve">
 				<source>You registered yourself at %1$s as %2$s</source>
-				<target>Sie habe sich als %2$s auf Seite %1$s registriert</target>
+				<target>Sie haben sich als %2$s auf Seite %1$s registriert</target>
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationPostCreateConfirm" xml:space="preserve">
 				<source>Thank you for confirming your account %2$s at %1$s</source>
@@ -491,7 +491,7 @@
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationPostCreateRefuse" xml:space="preserve">
 				<source>Sorry your refused your registration with account %2$s on site %1$s</source>
-				<target>Schade das Sie Ihre Registerung as %2$s auf Seite %1$s abgelehnt haben</target>
+				<target>Schade, dass Sie Ihre Registerung als %2$s auf Seite %1$s abgelehnt haben</target>
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationPostCreateAccept" xml:space="preserve">
 				<source>You registration with account %2$s on site %1$s was accepted</source>
@@ -560,7 +560,7 @@
 			</trans-unit>
 			<trans-unit id="email_user_account_edited" xml:space="preserve" approved="yes">
 				<source>you have edited your account %1$s</source>
-				<target>Sie haben Ihr Account %1$s bearbeitet</target>
+				<target>Sie haben Ihren Account %1$s bearbeitet</target>
 			</trans-unit>
 		</body>
 	</file>

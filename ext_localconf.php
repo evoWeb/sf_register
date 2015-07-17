@@ -47,15 +47,10 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERC
 	'options' => array(),
 );
 
-	// Configure clear cache post processing for extended domain model
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] =
-	'EXT:' . $_EXTKEY . '/Classes/Utility/ClassCacheManager.php:\Evoweb\SfRegister\Utility\ClassCacheManager->reBuild';
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
 	'Evoweb\\SfRegister\\Property\\TypeConverter\\FrontendUserConverter'
 );
-
-\Evoweb\SfRegister\Utility\ClassLoader::registerAutoloader();
 
 
 if (TYPO3_MODE === 'FE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
