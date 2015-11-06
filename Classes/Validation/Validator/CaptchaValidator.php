@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Validation\Validator;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,51 +24,54 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
+
 /**
  * A captcha validator
  *
  * @scope singleton
  */
-class CaptchaValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
-	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class CaptchaValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
+{
+    /**
+     * @var bool
+     */
+    protected $acceptsEmptyValues = false;
 
-	/**
-	 * @var bool
-	 */
-	protected $acceptsEmptyValues = FALSE;
+    /**
+     * Captcha adapter factory
+     *
+     * @var \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory
+     * @inject
+     */
+    protected $captchaAdapterFactory;
 
-	/**
-	 * Captcha adapter factory
-	 *
-	 * @var \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory
-	 * @inject
-	 */
-	protected $captchaAdapterFactory;
+    /**
+     * @var array
+     */
+    protected $supportedOptions = array(
+        'type' => array('srfreecap', 'Captcha adapter to be used', 'string'),
+    );
 
-	/**
-	 * @var array
-	 */
-	protected $supportedOptions = array(
-		'type' => array('srfreecap', 'Captcha adapter to be used', 'string'),
-	);
+    /**
+     * If the given captcha is valid
+     *
+     * @param string $value
+     *
+     * @return boolean
+     */
+    public function isValid($value)
+    {
+        $result = true;
 
-	/**
-	 * If the given captcha is valid
-	 *
-	 * @param string $value
-	 * @return boolean
-	 */
-	public function isValid($value) {
-		$result = TRUE;
+        $captchaAdapter = $this->captchaAdapterFactory->getCaptchaAdapter($this->options['type']);
+        if (!$captchaAdapter->isValid($value)) {
+            $result = false;
+            foreach ($captchaAdapter->getErrors() as $error) {
+                $this->result->addError($error);
+            }
+        }
 
-		$captchaAdapter = $this->captchaAdapterFactory->getCaptchaAdapter($this->options['type']);
-		if (!$captchaAdapter->isValid($value)) {
-			$result = FALSE;
-			foreach ($captchaAdapter->getErrors() as $error) {
-				$this->result->addError($error);
-			}
-		}
-
-		return $result;
-	}
+        return $result;
+    }
 }

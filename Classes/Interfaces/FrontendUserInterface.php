@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Interfaces;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,33 +28,33 @@ namespace Evoweb\SfRegister\Interfaces;
  * Interface to be implemented by every frontenduser
  * model that should be used with this registration
  */
-interface FrontendUserInterface {
+interface FrontendUserInterface
+{
+    /**
+     * Getter for username
+     *
+     * @return string
+     */
+    public function getUsername();
 
-	/**
-	 * Getter for username
-	 *
-	 * @return string
-	 */
-	public function getUsername();
+    /**
+     * Getter for first name
+     *
+     * @return string
+     */
+    public function getFirstName();
 
-	/**
-	 * Getter for first name
-	 *
-	 * @return string
-	 */
-	public function getFirstName();
+    /**
+     * Getter for last name
+     *
+     * @return string
+     */
+    public function getLastName();
 
-	/**
-	 * Getter for last name
-	 *
-	 * @return string
-	 */
-	public function getLastName();
-
-	/**
-	 * Getter for email
-	 *
-	 * @return string
-	 */
-	public function getEmail();
+    /**
+     * Getter for email
+     *
+     * @return string
+     */
+    public function getEmail();
 }

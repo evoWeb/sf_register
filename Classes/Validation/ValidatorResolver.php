@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Validation;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,14 +27,17 @@ namespace Evoweb\SfRegister\Validation;
 /**
  * Validator resolver to automatically find a validator for a given subject
  */
-class ValidatorResolver extends \TYPO3\CMS\Extbase\Validation\ValidatorResolver {
-	/**
-	 * Get the parsed options given in @validate annotations.
-	 *
-	 * @param string $validateValue
-	 * @return array
-	 */
-	public function getParsedValidatorAnnotation($validateValue) {
-		return $this->parseValidatorAnnotation($validateValue);
-	}
+class ValidatorResolver extends \TYPO3\CMS\Extbase\Validation\ValidatorResolver
+{
+    /**
+     * Get the parsed options given in @validate annotations.
+     *
+     * @param string $validateValue
+     *
+     * @return array
+     */
+    public function getParsedValidatorAnnotation($validateValue)
+    {
+        return $this->parseValidatorAnnotation($validateValue);
+    }
 }

@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Domain\Repository;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,18 +27,18 @@ namespace Evoweb\SfRegister\Domain\Repository;
 /**
  * A repository for static info tables language
  */
-class StaticLanguageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
-	/**
-	 * Find all languages
-	 *
-	 * @return integer
-	 */
-	public function findAll() {
-		$query = $this->createQuery();
-		$query
-			->getQuerySettings()
-			->setRespectStoragePage(FALSE);
+class StaticLanguageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+{
+    /**
+     * Find all languages
+     *
+     * @return integer
+     */
+    public function findAll()
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
 
-		return $query->execute();
-	}
+        return $query->execute();
+    }
 }

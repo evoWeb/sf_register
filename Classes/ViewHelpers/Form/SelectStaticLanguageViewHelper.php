@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\ViewHelpers\Form;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,82 +27,89 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 /**
  * Viewhelper to render a selectbox with values
  * of static info tables country zones
- *
  * <code title="Usage">
  * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
  * <register:form.SelectStaticLanguage name="language"/>
  * </code>
  */
-class SelectStaticLanguageViewHelper extends SelectStaticViewHelper {
-	/**
-	 * Repository that provides the language models
-	 *
-	 * @var \Evoweb\SfRegister\Domain\Repository\StaticLanguageRepository
-	 * @inject
-	 */
-	protected $languageRepository;
+class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
+{
+    /**
+     * Repository that provides the language models
+     *
+     * @var \Evoweb\SfRegister\Domain\Repository\StaticLanguageRepository
+     * @inject
+     */
+    protected $languageRepository;
 
 
-	/**
-	 * Initialize arguments. Cant be moved to parent because
-	 * of "private $argumentDefinitions = array();"
-	 *
-	 * @return void
-	 */
-	public function initializeArguments() {
-		$this->registerUniversalTagAttributes();
-		$this->registerTagAttribute('multiple', 'string', 'if set, multiple select field');
-		$this->registerTagAttribute('size', 'string', 'Size of input field');
-		$this->registerTagAttribute('disabled', 'string', 'Specifies that the input element should be disabled when the page loads');
-		$this->registerArgument('name', 'string', 'Name of input tag');
-		$this->registerArgument('value', 'mixed', 'Value of input tag');
-		$this->registerArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', FALSE, TRUE);
-		$this->registerArgument(
-			'property',
-			'string',
-			'Name of Object Property. If used in conjunction with <f:form object="...">, "name" and "value" properties will be ignored.'
-		);
-		$this->registerArgument(
-			'optionValueField',
-			'string',
-			'If specified, will call the appropriate getter on each object to determine the value.',
-			FALSE,
-			'lgIso2'
-		);
-		$this->registerArgument(
-			'optionLabelField',
-			'string',
-			'If specified, will call the appropriate getter on each object to determine the label.',
-			FALSE,
-			'lgNameEn'
-		);
-		$this->registerArgument(
-			'selectAllByDefault',
-			'boolean',
-			'If specified options are selected if none was set before.',
-			FALSE,
-			FALSE
-		);
-		$this->registerArgument(
-			'errorClass',
-			'string',
-			'CSS class to set if there are errors for this view helper',
-			FALSE,
-			'f3-form-error'
-		);
-	}
+    /**
+     * Initialize arguments. Cant be moved to parent because
+     * of "private $argumentDefinitions = array();"
+     *
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerUniversalTagAttributes();
+        $this->registerTagAttribute('multiple', 'string', 'if set, multiple select field');
+        $this->registerTagAttribute('size', 'string', 'Size of input field');
+        $this->registerTagAttribute(
+            'disabled',
+            'string',
+            'Specifies that the input element should be disabled when the page loads'
+        );
+        $this->registerArgument('name', 'string', 'Name of input tag');
+        $this->registerArgument('value', 'mixed', 'Value of input tag');
+        $this->registerArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', false, true);
+        $this->registerArgument(
+            'property',
+            'string',
+            'Name of Object Property. If used in conjunction with <f:form object="...">,
+            "name" and "value" properties will be ignored.'
+        );
+        $this->registerArgument(
+            'optionValueField',
+            'string',
+            'If specified, will call the appropriate getter on each object to determine the value.',
+            false,
+            'lgIso2'
+        );
+        $this->registerArgument(
+            'optionLabelField',
+            'string',
+            'If specified, will call the appropriate getter on each object to determine the label.',
+            false,
+            'lgNameEn'
+        );
+        $this->registerArgument(
+            'selectAllByDefault',
+            'boolean',
+            'If specified options are selected if none was set before.',
+            false,
+            false
+        );
+        $this->registerArgument(
+            'errorClass',
+            'string',
+            'CSS class to set if there are errors for this view helper',
+            false,
+            'f3-form-error'
+        );
+    }
 
-	/**
-	 * Override the initialize method to load all
-	 * available languages before rendering
-	 *
-	 * @return void
-	 */
-	public function initialize() {
-		parent::initialize();
+    /**
+     * Override the initialize method to load all
+     * available languages before rendering
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
 
-		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
-			$this->arguments['options'] = $this->languageRepository->findAll();
-		}
-	}
+        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
+            $this->arguments['options'] = $this->languageRepository->findAll();
+        }
+    }
 }

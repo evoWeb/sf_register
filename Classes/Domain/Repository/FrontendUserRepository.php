@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Domain\Repository;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,80 +27,83 @@ namespace Evoweb\SfRegister\Domain\Repository;
 /**
  * A repository for feusers
  */
-class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository {
+class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository
+{
 
-	/**
-	 * Finds an object matching the given identifier.
-	 *
-	 * @param mixed $identifier The identifier of the object to find
-	 * @param bool $ignoreHidden Whether to ignore hidden state
-	 * @return NULL|\Evoweb\SfRegister\Interfaces\FrontendUserInterface
-	 */
-	public function findByIdentifier($identifier, $ignoreHidden = FALSE) {
-		if ($ignoreHidden) {
-			return parent::findByIdentifier($identifier);
-		}
+    /**
+     * Finds an object matching the given identifier.
+     *
+     * @param mixed $identifier The identifier of the object to find
+     * @param bool $ignoreHidden Whether to ignore hidden state
+     *
+     * @return NULL|\Evoweb\SfRegister\Interfaces\FrontendUserInterface
+     */
+    public function findByIdentifier($identifier, $ignoreHidden = false)
+    {
+        if ($ignoreHidden) {
+            return parent::findByIdentifier($identifier);
+        }
 
-		$query = $this->createQuery();
-		$query->getQuerySettings()->setRespectStoragePage(FALSE);
-		$query->getQuerySettings()->setRespectSysLanguage(FALSE);
-		$query->getQuerySettings()->setIgnoreEnableFields(TRUE);
-		$query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled'));
-		$object = $query->matching($query->equals('uid', $identifier))->execute()->getFirst();
-		return $object;
-	}
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()->setRespectSysLanguage(false);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled'));
+        $object = $query->matching($query->equals('uid', $identifier))->execute()->getFirst();
 
-	/**
-	 * Find user by mailhash
-	 *
-	 * @param string $mailhash
-	 * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
-	 */
-	public function findByMailhash($mailhash) {
-		$query = $this->createQuery();
+        return $object;
+    }
 
-		$querySettings = $query->getQuerySettings();
-		$querySettings->setRespectStoragePage(TRUE);
-		$querySettings->setIgnoreEnableFields(TRUE);
+    /**
+     * Find user by mailhash
+     *
+     * @param string $mailhash
+     *
+     * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
+     */
+    public function findByMailhash($mailhash)
+    {
+        $query = $this->createQuery();
 
-		$user = $query
-			->matching($query->equals('mailhash', $mailhash))
-			->execute()
-			->getFirst();
+        $querySettings = $query->getQuerySettings();
+        $querySettings->setRespectStoragePage(true);
+        $querySettings->setIgnoreEnableFields(true);
 
-		return $user;
-	}
+        $user = $query->matching($query->equals('mailhash', $mailhash))->execute()->getFirst();
 
-	/**
-	 * Count users in storagefolder which have a field that contains the value
-	 *
-	 * @param string $field
-	 * @param string $value
-	 * @param boolean $respectStoragePage
-	 * @return integer
-	 */
-	public function countByField($field, $value, $respectStoragePage = TRUE) {
-		$query = $this->createQuery();
+        return $user;
+    }
 
-		$querySettings = $query->getQuerySettings();
-		$querySettings->setRespectStoragePage($respectStoragePage);
-		$querySettings->setIgnoreEnableFields(TRUE);
+    /**
+     * Count users in storagefolder which have a field that contains the value
+     *
+     * @param string $field
+     * @param string $value
+     * @param boolean $respectStoragePage
+     *
+     * @return integer
+     */
+    public function countByField($field, $value, $respectStoragePage = true)
+    {
+        $query = $this->createQuery();
 
-		return $query
-			->matching($query->equals($field, $value))
-			->setLimit(1)
-			->execute()
-			->count();
-	}
+        $querySettings = $query->getQuerySettings();
+        $querySettings->setRespectStoragePage($respectStoragePage);
+        $querySettings->setIgnoreEnableFields(true);
 
-	/**
-	 * Count users installationwide which have a field that contains the value
-	 *
-	 * @param string $field
-	 * @param string $value
-	 * @return integer
-	 */
-	public function countByFieldGlobal($field, $value) {
-		return $this->countByField($field, $value, FALSE);
-	}
+        return $query->matching($query->equals($field, $value))->setLimit(1)->execute()->count();
+    }
+
+    /**
+     * Count users installationwide which have a field that contains the value
+     *
+     * @param string $field
+     * @param string $value
+     *
+     * @return integer
+     */
+    public function countByFieldGlobal($field, $value)
+    {
+        return $this->countByField($field, $value, false);
+    }
 }
