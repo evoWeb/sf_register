@@ -226,7 +226,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @param string $username
      * @param string $password
-     *
      * @return self
      */
     public function __construct($username = '', $password = '')
@@ -242,10 +241,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     public function prepareDateOfBirth()
     {
-        if ($this->dateOfBirthDay !== null
-            && $this->dateOfBirthMonth !== null
-            && $this->dateOfBirthYear !== null
-        ) {
+        if ($this->dateOfBirthDay !== null && $this->dateOfBirthMonth !== null && $this->dateOfBirthYear !== null) {
             if ($this->dateOfBirth === null) {
                 $this->dateOfBirth = new \DateTime();
             }
@@ -262,19 +258,22 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     public function getDisable()
     {
-        return ($this->disable ? true : false);
+        return ($this->disable ?
+            true :
+            false);
     }
 
     /**
      * Setter for disable
      *
      * @param boolean $disable
-     *
      * @return void
      */
     public function setDisable($disable)
     {
-        $this->disable = ($disable ? true : false);
+        $this->disable = ($disable ?
+            true :
+            false);
     }
 
     /**
@@ -292,7 +291,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for mailhash
      *
      * @param string $mailhash
-     *
      * @return void
      * @deprecated
      */
@@ -315,7 +313,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for activatedOn
      *
      * @param \DateTime|NULL $activatedOn
-     *
      * @return void
      */
     public function setActivatedOn(\DateTime $activatedOn = null)
@@ -337,7 +334,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for captcha
      *
      * @param string $captcha
-     *
      * @return void
      */
     public function setCaptcha($captcha)
@@ -359,7 +355,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for passwordRepeat
      *
      * @param string $passwordRepeat
-     *
      * @return void
      */
     public function setPasswordRepeat($passwordRepeat)
@@ -381,7 +376,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for emailRepeat
      *
      * @param string $emailRepeat
-     *
      * @return void
      */
     public function setEmailRepeat($emailRepeat)
@@ -393,7 +387,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Add an image to the imagelist
      *
      * @param string $image
-     *
      * @return void
      */
     public function addImage($image)
@@ -411,7 +404,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Remove an image from the imagelist
      *
      * @param string $image
-     *
      * @return void
      */
     public function removeImage($image)
@@ -439,7 +431,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Set an image list
      *
      * @param array $imageList
-     *
      * @return void
      */
     public function setImageList($imageList)
@@ -451,7 +442,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for title
      *
      * @param string $title
-     *
      * @return void
      */
     public function setTitle($title)
@@ -476,7 +466,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for pseudonym
      *
      * @param string $pseudonym
-     *
      * @return void
      */
     public function setPseudonym($pseudonym)
@@ -498,7 +487,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for gender
      *
      * @param integer $gender
-     *
      * @return void
      */
     public function setGender($gender)
@@ -520,7 +508,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for dateOfBirth
      *
      * @param \DateTime|NULL $dateOfBirth
-     *
      * @return void
      */
     public function setDateOfBirth(\DateTime $dateOfBirth = null)
@@ -548,7 +535,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for day of dateOfBirth
      *
      * @param integer $day
-     *
      * @return void
      */
     public function setDateOfBirthDay($day)
@@ -577,7 +563,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for month of dateOfBirth
      *
      * @param integer $month
-     *
      * @return void
      */
     public function setDateOfBirthMonth($month)
@@ -606,7 +591,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for month of dateOfBirth
      *
      * @param integer $year
-     *
      * @return void
      */
     public function setDateOfBirthYear($year)
@@ -629,7 +613,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for mobilphone
      *
      * @param string $mobilephone
-     *
      * @return void
      */
     public function setMobilephone($mobilephone)
@@ -651,7 +634,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for zone
      *
      * @param string $zone
-     *
      * @return void
      */
     public function setZone($zone)
@@ -666,19 +648,22 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     public function getTimezone()
     {
-        return floor($this->timezone) != $this->timezone ? $this->timezone * 10 : $this->timezone;
+        return floor($this->timezone) != $this->timezone ?
+            $this->timezone * 10 :
+            $this->timezone;
     }
 
     /**
      * Setter for timezone
      *
      * @param float $timezone
-     *
      * @return void
      */
     public function setTimezone($timezone)
     {
-        $this->timezone = ($timezone > 14 || $timezone < -12 ? $timezone / 10 : $timezone);
+        $this->timezone = ($timezone > 14 || $timezone < -12 ?
+            $timezone / 10 :
+            $timezone);
     }
 
     /**
@@ -688,19 +673,22 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     public function getDaylight()
     {
-        return $this->daylight ? true : false;
+        return $this->daylight ?
+            true :
+            false;
     }
 
     /**
      * Setter for daylight
      *
      * @param boolean $daylight
-     *
      * @return void
      */
     public function setDaylight($daylight)
     {
-        $this->daylight = ($daylight ? true : false);
+        $this->daylight = ($daylight ?
+            true :
+            false);
     }
 
     /**
@@ -717,7 +705,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter got static info country
      *
      * @param string $staticInfoCountry
-     *
      * @return void
      */
     public function setStaticInfoCountry($staticInfoCountry)
@@ -732,19 +719,22 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     public function getGtc()
     {
-        return $this->gtc ? true : false;
+        return $this->gtc ?
+            true :
+            false;
     }
 
     /**
      * Setter for gtc
      *
      * @param boolean $gtc
-     *
      * @return void
      */
     public function setGtc($gtc)
     {
-        $this->gtc = ($gtc ? true : false);
+        $this->gtc = ($gtc ?
+            true :
+            false);
     }
 
     /**
@@ -754,26 +744,28 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     public function getPrivacy()
     {
-        return $this->privacy ? true : false;
+        return $this->privacy ?
+            true :
+            false;
     }
 
     /**
      * Setter for privacy agreement flag
      *
      * @param boolean $privacy
-     *
      * @return void
      */
     public function setPrivacy($privacy)
     {
-        $this->privacy = ($privacy ? true : false);
+        $this->privacy = ($privacy ?
+            true :
+            false);
     }
 
     /**
      * Setter for byInvitation
      *
      * @param boolean $byInvitation
-     *
      * @return void
      */
     public function setByInvitation($byInvitation)
@@ -795,7 +787,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for comments
      *
      * @param string $comments
-     *
      * @return void
      */
     public function setComments($comments)
@@ -817,7 +808,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter language
      *
      * @param string $language
-     *
      * @return void
      */
     public function setLanguage($language)
@@ -839,7 +829,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for moduleSysDmailCategory
      *
      * @param array $moduleSysDmailCategory
-     *
      * @return void
      */
     public function setModuleSysDmailCategory($moduleSysDmailCategory)
@@ -861,7 +850,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Set moduleSysDmailNewsletter
      *
      * @param boolean $moduleSysDmailNewsletter
-     *
      * @return void
      */
     public function setModuleSysDmailNewsletter($moduleSysDmailNewsletter)
@@ -883,7 +871,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for moduleSysDmailHtml
      *
      * @param boolean $moduleSysDmailHtml
-     *
      * @return void
      */
     public function setModuleSysDmailHtml($moduleSysDmailHtml)
@@ -905,7 +892,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for status
      *
      * @param int $status
-     *
      * @return void
      */
     public function setStatus($status)
@@ -927,7 +913,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for emailNew
      *
      * @param string $emailNew
-     *
      * @return void
      */
     public function setEmailNew($emailNew)
