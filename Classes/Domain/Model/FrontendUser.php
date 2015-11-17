@@ -23,7 +23,6 @@ namespace Evoweb\SfRegister\Domain\Model;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
  * An extended frontend user with more attributes
  */
@@ -218,6 +217,11 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 */
 	protected $emailNew;
 
+	/**
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Evoweb\SfRegister\Domain\Model\FileReference>
+	 */
+	protected $image;
+
 
 	/**
 	 * Constructs a new Front-End User
@@ -228,6 +232,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 */
 	public function __construct($username = '', $password = '') {
 		parent::__construct($username, $password);
+		$this->image = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 	}
 
 	/**
@@ -373,52 +378,28 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	/**
 	 * Add an image to the imagelist
 	 *
-	 * @param string $image
+	 * @param \Evoweb\SfRegister\Domain\Model\FileReference $image
 	 * @return void
 	 */
 	public function addImage($image) {
-		$imageList = $this->getImageList();
+		$this->image->attach($image);
+	}
 
-		if (!in_array($image, $imageList)) {
-			$imageList = array_merge($imageList, array($image));
-		}
-
-		$this->setImageList($imageList);
+	/**
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+	 */
+	public function getImages() {
+		return $this->image;
 	}
 
 	/**
 	 * Remove an image from the imagelist
 	 *
-	 * @param string $image
+	 * @param \Evoweb\SfRegister\Domain\Model\FileReference $image
 	 * @return void
 	 */
 	public function removeImage($image) {
-		$imageList = $this->getImageList();
-
-		if (in_array($image, $imageList)) {
-			$imageList = array_diff($imageList, array($image));
-		}
-
-		$this->setImageList($imageList);
-	}
-
-	/**
-	 * Get an image list
-	 *
-	 * @return array
-	 */
-	public function getImageList() {
-		return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->image, TRUE);
-	}
-
-	/**
-	 * Set an image list
-	 *
-	 * @param array $imageList
-	 * @return void
-	 */
-	public function setImageList($imageList) {
-		$this->image = implode(',', $imageList);
+		$this->image->detach($image);
 	}
 
 	/**

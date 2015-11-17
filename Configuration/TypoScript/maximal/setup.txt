@@ -150,7 +150,7 @@ plugin.tx_sfregister.settings {
 		}
 	}
 
-	filefieldname = image
+	imageFolder = 1:frontendusers
 
 	captcha {
 		jmrecaptcha = Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter
@@ -230,6 +230,11 @@ config.tx_extbase {
 		Evoweb\SfRegister\Domain\Model\StaticLanguage {
 			mapping {
 				tableName = static_languages
+			}
+		}
+		Evoweb\SfRegister\Domain\Model\FileReference {
+			mapping {
+				tableName = sys_file_reference
 			}
 		}
 	}

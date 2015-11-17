@@ -23,7 +23,11 @@ namespace Evoweb\SfRegister\Services;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Evoweb\SfRegister\Domain\Model\FileReference;
+use TYPO3\CMS\Core\FormProtection\Exception;
+use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -102,6 +106,11 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	protected $maxFilesize = 0;
 
+	/**
+	 * @var Folder
+	 */
+	protected $imageFolder;
+
 
 	/**
 	 * Injection of configuration manager
@@ -115,8 +124,8 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 			\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
 		);
 
-		if (isset($this->settings['filefieldname']) && !empty($this->settings['filefieldname'])) {
-			$this->setFieldname($this->settings['filefieldname']);
+		if (isset($this->settings['imageFolder']) && !empty($this->settings['imageFolder'])) {
+			$this->setImageFolder($this->settings['imageFolder']);
 		}
 	}
 
@@ -142,15 +151,24 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Setter for fieldname
 	 *
-	 * @param string $fieldname
+	 * @param string $imageFolder
 	 * @return void
 	 */
-	public function setFieldname($fieldname) {
-		$this->fieldname = $fieldname;
+	public function setImageFolder($imageFolder) {
+		list($storageUid, $folderIdentifier) = GeneralUtility::trimExplode(':', $imageFolder);
+		/** @var ResourceFactory $resourceFactory */
+		$resourceFactory = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\ResourceFactory');
+		$storage = $resourceFactory->getStorageObject($storageUid);
+		if ($storage->hasFolder($folderIdentifier)) {
+			$folder = $storage->getFolderByIdentifier($folderIdentifier);
+		} else {
+			$folder = $storage->createFolder($folderIdentifier);
+		}
 
-		$fieldConfiguration = $GLOBALS['TCA']['fe_users']['columns'][$this->fieldname]['config'];
+		$this->imageFolder = $folder;
+
+		$fieldConfiguration = $GLOBALS['TCA']['fe_users']['columns']['image']['config'];
 		$this->allowedFileExtensions = $fieldConfiguration['allowed'];
-		$this->uploadFolder = $fieldConfiguration['uploadfolder'];
 		$this->maxFilesize = $fieldConfiguration['max_size'] * 1024;
 	}
 
@@ -200,11 +218,11 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 		$fileData = array();
 
 		if (is_array($uploadData) && count($uploadData) > 0) {
-			$filename = str_replace(chr(0), '', $uploadData['name'][$this->fieldname]);
-			$type = $uploadData['type'][$this->fieldname];
-			$tmpName = $uploadData['tmp_name'][$this->fieldname];
-			$error = $uploadData['error'][$this->fieldname];
-			$size = $uploadData['size'][$this->fieldname];
+			$filename = str_replace(chr(0), '', $uploadData['name']['image']);
+			$type = $uploadData['type']['image'];
+			$tmpName = $uploadData['tmp_name']['image'];
+			$error = $uploadData['error']['image'];
+			$size = $uploadData['size']['image'];
 
 			if ($filename !== NULL && $filename !== '' && GeneralUtility::validPathStr($filename)) {
 				if ($this->settings['useEncryptedFilename']) {
@@ -256,7 +274,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 
 		if ($filesize > $this->maxFilesize) {
 			$this->addError(
-				LocalizationUtility::translate('error_' . $this->fieldname . '_filesize', 'SfRegister'),
+				LocalizationUtility::translate('error_image_filesize', 'SfRegister'),
 				1296591064
 			);
 			$result = FALSE;
@@ -279,7 +297,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 			!GeneralUtility::inList($this->allowedFileExtensions, strtolower($fileExtension))
 		) {
 			$this->addError(
-				LocalizationUtility::translate('error_' . $this->fieldname . '_extension', 'SfRegister'),
+				LocalizationUtility::translate('error_image_extension', 'SfRegister'),
 				1296591064
 			);
 			$result = FALSE;
@@ -292,10 +310,10 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Move an temporary uploaded file to the upload folder
 	 *
-	 * @return string
+	 * @return \TYPO3\CMS\Core\Resource\File|NULL
 	 */
 	public function moveTempFileToTempFolder() {
-		$result = '';
+		$result = NULL;
 		$fileData = $this->getUploadedFileInfo();
 
 		if (count($fileData)) {
@@ -310,7 +328,9 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 			$uniqueFilename = $basicFileFunctions->getUniqueName($filename, $uploadFolder);
 
 			if (GeneralUtility::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
-				$result = basename($uniqueFilename);
+				/** @var ResourceFactory $resourceFactory */
+				$resourceFactory = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\ResourceFactory');
+				$result = $resourceFactory->retrieveFileOrFolderObject($uniqueFilename);
 			}
 		}
 
@@ -332,32 +352,22 @@ class File implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Move an temporary uploaded file to the upload folder
 	 *
-	 * @param string &$filename
+	 * @param array &$imagesToMove
 	 * @return void
 	 */
-	public function moveFileFromTempFolderToUploadFolder(&$filename) {
-		if ($filename === '') {
+	public function moveFileFromTempFolderToUploadFolder(&$imagesToMove) {
+		if (!count($imagesToMove)) {
 			return;
 		}
 
-		$fileNames = GeneralUtility::trimExplode(',', $filename);
-		$newFilename = array_pop($fileNames);
-
-		// delete old images
-		foreach ($fileNames as $tmpName) {
-			$this->removeFile($tmpName, $this->uploadFolder);
-		}
-
-		if (file_exists($this->tempFolder . '/' . $newFilename)) {
-			$this->createUploadFolderIfNotExist($this->uploadFolder);
-			/** @var \TYPO3\CMS\Core\Resource\Folder $folder */
-			$folder = ResourceFactory::getInstance()->getFolderObjectFromCombinedIdentifier($this->uploadFolder);
-
-			/** @var \TYPO3\CMS\Core\Resource\File $file */
-			$file = $folder->addFile($this->tempFolder . '/' . $newFilename, NULL, 'changeName');
-			$filename = str_replace($folder->getIdentifier(), '', $file->getIdentifier());
-		} else {
-			$filename = $newFilename;
+		/** @var FileReference $image */
+		foreach ($imagesToMove as $image) {
+			$file = $image->getOriginalResource()->getOriginalFile();
+			try {
+				$file->getStorage()->moveFile($file, $this->imageFolder);
+			} catch (\Exception $e) {
+				GeneralUtility::devLog('Image ' . $file->getName() . ' could not be moved', 'sf_register');
+			}
 		}
 	}
 

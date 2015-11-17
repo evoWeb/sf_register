@@ -23,6 +23,10 @@ namespace Evoweb\SfRegister\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Evoweb\SfRegister\Domain\Model\FileReference;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * An frontend user controller
  */
@@ -203,8 +207,20 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
 	 */
 	protected function moveTempFile($user) {
-		if (($imagePath = $this->fileService->moveTempFileToTempFolder())) {
-			$user->addImage($imagePath);
+		if (($file = $this->fileService->moveTempFileToTempFolder())) {
+			/** @var ResourceFactory $resourceFactory */
+			$resourceFactory = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\ResourceFactory');
+			$fileReference = $resourceFactory->createFileReferenceObject(
+				array(
+					'uid_local' => $file->getUid(),
+					'uid_foreign' => uniqid('NEW_'),
+					'uid' => uniqid('NEW_'),
+				)
+			);
+			/** @var $image \Evoweb\SfRegister\Domain\Model\FileReference */
+			$image = $this->objectManager->get('Evoweb\\SfRegister\\Domain\\Model\\FileReference');
+			$image->setOriginalResource($fileReference);
+			$user->addImage($image);
 		}
 
 		return $user;
@@ -217,11 +233,17 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
 	 */
 	protected function moveImageFile($user) {
-		$oldFilename = $user->getImage();
+		$images = $user->getImages();
 
-		$this->fileService->moveFileFromTempFolderToUploadFolder($oldFilename);
+		$imagesToMove = array();
+		/** @var FileReference $image */
+		foreach ($images as $image) {
+			if ($image->getOriginalResource()->getStorage()->getUid() == 0) {
+				$imagesToMove[] = $image;
+			}
+		}
 
-		$user->setImage($oldFilename);
+		$this->fileService->moveFileFromTempFolderToUploadFolder($imagesToMove);
 
 		return $user;
 	}

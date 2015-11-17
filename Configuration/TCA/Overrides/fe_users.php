@@ -215,6 +215,24 @@ $temporaryColumns = array(
 			'type' => 'check'
 		)
 	),
+	'image' => array(
+		'exclude' => 1,
+		'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.image',
+		'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+			'image',
+			array(
+				'appearance' => array(
+					'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference'
+				),
+				'foreign_match_fields' => array(
+					'fieldname' => 'image',
+					'tablenames' => 'fe_users',
+					'table_local' => 'sys_file',
+				),
+			),
+			$GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+		),
+	),
 );
 
 ExtensionManagementUtility::addTCAcolumns('fe_users', $temporaryColumns);

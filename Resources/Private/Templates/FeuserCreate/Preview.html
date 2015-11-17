@@ -62,18 +62,12 @@
 	<dd><f:form.hidden property="gtc" /><f:translate key="gtc_checked{user.gtc}"/></dd>
 
 	<dt><f:translate key="image"/></dt>
-	<dd><f:form.hidden property="image" />
-		<f:if condition="{user.image}">
+	<dd><f:if condition="{user.images}">
 			<f:then>
 				<f:form.hidden name="temporaryImage" value="{temporaryImage}" />
-				<f:if condition="{temporaryImage}">
-					<f:then>
-						<f:image height="100" width="100c" src="typo3temp/sf_register/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
-					</f:then>
-					<f:else>
-						<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
-					</f:else>
-				</f:if>
+				<f:for each="{user.images}" as="image">
+					<f:image height="100" width="100c" image="{image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
+				</f:for>
 			</f:then>
 			<f:else>
 				<f:translate key="image_none"/>
