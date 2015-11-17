@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\ViewHelpers\Form;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,38 +26,41 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 /**
  * Viewhelper to output a captcha in a form
- *
  * <code title="Usage">
  * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
  * <register:form.captcha type="jmrecaptcha"/>
  * </code>
  */
-class CaptchaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper {
-	/**
-	 * Factory to create a captcha that is used to render the output
-	 *
-	 * @var \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory
-	 * @inject
-	 */
-	protected $captchaAdapterFactory;
+class CaptchaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper
+{
+    /**
+     * Factory to create a captcha that is used to render the output
+     *
+     * @var \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory
+     * @inject
+     */
+    protected $captchaAdapterFactory;
 
 
-	/**
-	 * Initialize arguments.
-	 *
-	 * @return void
-	 */
-	public function initializeArguments() {
-		$this->registerUniversalTagAttributes();
-	}
+    /**
+     * Initialize arguments.
+     *
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerUniversalTagAttributes();
+    }
 
-	/**
-	 * Render the captcha block
-	 *
-	 * @param string $type Type of captcha to use
-	 * @return string
-	 */
-	public function render($type) {
-		return $this->captchaAdapterFactory->getCaptchaAdapter($type)->render();
-	}
+    /**
+     * Render the captcha block
+     *
+     * @param string $type Type of captcha to use
+     *
+     * @return string
+     */
+    public function render($type)
+    {
+        return $this->captchaAdapterFactory->getCaptchaAdapter($type)->render();
+    }
 }

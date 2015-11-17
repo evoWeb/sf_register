@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Interfaces;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,12 +28,13 @@ namespace Evoweb\SfRegister\Interfaces;
  * Interface to be implemented by every captcha
  * adapter that should get used with this registration
  */
-interface CaptchaInterface {
-	/**
-	 * Getter for errors that needs to be implemented in every adapter
-	 *
-	 * @abstract
-	 * @return void
-	 */
-	public function getErrors();
+interface CaptchaInterface
+{
+    /**
+     * Getter for errors that needs to be implemented in every adapter
+     *
+     * @abstract
+     * @return void
+     */
+    public function getErrors();
 }

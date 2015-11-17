@@ -30,7 +30,8 @@ function changeZone(event) {
 			event.type == 'change') &&
 			loading != true) {
 		loading = true;
-		var countrySelectedValue = event.srcElement.options[event.srcElement.selectedIndex].value;
+		var target = event.target || event.srcElement;
+		var countrySelectedValue = target.options[target.selectedIndex].value;
 
 		zone.length = 0;
 		zone.style.display = 'none';

@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Validation\Validator;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,34 +23,39 @@ namespace Evoweb\SfRegister\Validation\Validator;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * A required validator to check that a value is set
  *
  * @scope singleton
  */
-class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
-	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
+{
+    /**
+     * @var bool
+     */
+    protected $acceptsEmptyValues = false;
 
-	/**
-	 * @var bool
-	 */
-	protected $acceptsEmptyValues = FALSE;
+    /**
+     * If the given value is empty
+     *
+     * @param string $value The value
+     *
+     * @return boolean
+     */
+    public function isValid($value)
+    {
+        $result = true;
 
-	/**
-	 * If the given value is empty
-	 *
-	 * @param string $value The value
-	 * @return boolean
-	 */
-	public function isValid($value) {
-		$result = TRUE;
+        if (empty($value)) {
+            $this->addError(
+                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_required', 'SfRegister'),
+                1305008423
+            );
+            $result = false;
+        }
 
-		if (empty($value)) {
-			$this->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_required', 'SfRegister'), 1305008423);
-			$result = FALSE;
-		}
-
-		return $result;
-	}
+        return $result;
+    }
 }

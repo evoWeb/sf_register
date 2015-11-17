@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Validation\Validator;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,35 +24,44 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
+
 /**
  * A validator to check if the userid is equal to the id of the logged in user
  *
  * @scope singleton
  */
-class EqualCurrentUserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
-	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class EqualCurrentUserValidator extends AbstractValidator implements ValidatorInterface
+{
 
-	/**
-	 * @var bool
-	 */
-	protected $acceptsEmptyValues = FALSE;
+    /**
+     * @var bool
+     */
+    protected $acceptsEmptyValues = false;
 
-	/**
-	 * If the given value is empty
-	 *
-	 * @param string $value The value
-	 * @return boolean
-	 */
-	public function isValid($value) {
-		$result = TRUE;
+    /**
+     * If the given value is empty
+     *
+     * @param string $value The value
+     *
+     * @return boolean
+     */
+    public function isValid($value)
+    {
+        $result = true;
 
-		if ($value != $GLOBALS['TSFE']->fe_user->user['uid']) {
-			$this->addError(
-				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_notequalcurrentuser', 'SfRegister'), 1305009260
-			);
-			$result = FALSE;
-		}
+        if ($value != $GLOBALS['TSFE']->fe_user->user['uid']) {
+            $this->addError(
+                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                    'error_notequalcurrentuser',
+                    'SfRegister'
+                ),
+                1305009260
+            );
+            $result = false;
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 }

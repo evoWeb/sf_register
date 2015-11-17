@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Services\Captcha;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,70 +29,77 @@ namespace Evoweb\SfRegister\Services\Captcha;
  *
  * @package Evoweb\SfRegister\Services\Captcha
  */
-abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaInterface {
-	/**
-	 * Captcha object
-	 *
-	 * @var object
-	 */
-	protected $captcha = NULL;
+abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaInterface
+{
+    /**
+     * Captcha object
+     *
+     * @var object
+     */
+    protected $captcha = null;
 
-	/**
-	 * Settings
-	 *
-	 * @var array
-	 */
-	protected $settings = array();
+    /**
+     * Settings
+     *
+     * @var array
+     */
+    protected $settings = array();
 
-	/**
-	 * Errors
-	 *
-	 * @var array
-	 */
-	protected $errors = array();
+    /**
+     * Errors
+     *
+     * @var array
+     */
+    protected $errors = array();
 
-	/**
-	 * Renders the output of an concrete captcha
-	 *
-	 * @return string
-	 */
-	public abstract function render();
+    /**
+     * Renders the output of an concrete captcha
+     *
+     * @return string
+     */
+    abstract public function render();
 
-	/**
-	 * Returns if the result of the validation was valid or not
-	 *
-	 * @param string $value
-	 * @return bool
-	 */
-	public abstract function isValid($value);
+    /**
+     * Returns if the result of the validation was valid or not
+     *
+     * @param string $value
+     *
+     * @return bool
+     */
+    abstract public function isValid($value);
 
-	/**
-	 * Setter for settings
-	 *
-	 * @param array $settings
-	 * @return void
-	 */
-	public function setSettings(array $settings) {
-		$this->settings = $settings;
-	}
+    /**
+     * Setter for settings
+     *
+     * @param array $settings
+     *
+     * @return void
+     */
+    public function setSettings(array $settings)
+    {
+        $this->settings = $settings;
+    }
 
-	/**
-	 * Creates a new validation error object and adds it to $this->errors
-	 *
-	 * @param string $message The error message
-	 * @param integer $code The error code (a unix timestamp)
-	 * @return void
-	 */
-	protected function addError($message, $code) {
-		$this->errors[] = new \TYPO3\CMS\Extbase\Validation\Error($message, $code);
-	}
+    /**
+     * Creates a new validation error object and adds it to $this->errors
+     *
+     * @param string $message The error message
+     * @param integer $code The error code (a unix timestamp)
+     *
+     * @return void
+     */
+    protected function addError($message, $code)
+    {
+        $this->errors[] = new \TYPO3\CMS\Extbase\Validation\Error($message, $code);
+    }
 
-	/**
-	 * Getter for errors
-	 *
-	 * @return array
-	 */
-	public function getErrors() {
-		return $this->errors;
-	}
+    /**
+     * Getter for errors
+     *
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
 }

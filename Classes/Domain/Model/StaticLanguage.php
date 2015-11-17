@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Domain\Model;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,260 +27,277 @@ namespace Evoweb\SfRegister\Domain\Model;
 /**
  * A static language
  */
-class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
-	/**
-	 * ISO 639-1 A2 Language code
-	 *
-	 * @var string
-	 */
-	protected $lgIso2;
+class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+{
+    /**
+     * ISO 639-1 A2 Language code
+     *
+     * @var string
+     */
+    protected $lgIso2;
 
-	/**
-	 * Name
-	 *
-	 * @var string
-	 */
-	protected $lgNameLocal;
+    /**
+     * Name
+     *
+     * @var string
+     */
+    protected $lgNameLocal;
 
-	/**
-	 * Name (EN)
-	 *
-	 * @var string
-	 */
-	protected $lgNameEn;
+    /**
+     * Name (EN)
+     *
+     * @var string
+     */
+    protected $lgNameEn;
 
-	/**
-	 * Name (DA)
-	 *
-	 * @var string
-	 */
-	protected $lgNameDa;
+    /**
+     * Name (DA)
+     *
+     * @var string
+     */
+    protected $lgNameDa;
 
-	/**
-	 * Name (DE)
-	 *
-	 * @var string
-	 */
-	protected $lgNameDe;
+    /**
+     * Name (DE)
+     *
+     * @var string
+     */
+    protected $lgNameDe;
 
-	/**
-	 * Name (ES)
-	 *
-	 * @var string
-	 */
-	protected $lgNameEs;
+    /**
+     * Name (ES)
+     *
+     * @var string
+     */
+    protected $lgNameEs;
 
-	/**
-	 * Name (FR)
-	 *
-	 * @var string
-	 */
-	protected $lgNameFr;
+    /**
+     * Name (FR)
+     *
+     * @var string
+     */
+    protected $lgNameFr;
 
-	/**
-	 * Name (GL)
-	 *
-	 * @var string
-	 */
-	protected $lgNameGl;
+    /**
+     * Name (GL)
+     *
+     * @var string
+     */
+    protected $lgNameGl;
 
-	/**
-	 * Name (IT)
-	 *
-	 * @var string
-	 */
-	protected $lgNameIt;
+    /**
+     * Name (IT)
+     *
+     * @var string
+     */
+    protected $lgNameIt;
 
-	/**
-	 * Name (JA)
-	 *
-	 * @var string
-	 */
-	protected $lgNameJa;
+    /**
+     * Name (JA)
+     *
+     * @var string
+     */
+    protected $lgNameJa;
 
-	/**
-	 * Name (KM)
-	 *
-	 * @var string
-	 */
-	protected $lgNameKm;
+    /**
+     * Name (KM)
+     *
+     * @var string
+     */
+    protected $lgNameKm;
 
-	/**
-	 * Name (NL)
-	 *
-	 * @var string
-	 */
-	protected $lgNameNl;
+    /**
+     * Name (NL)
+     *
+     * @var string
+     */
+    protected $lgNameNl;
 
-	/**
-	 * Name (NO)
-	 *
-	 * @var string
-	 */
-	protected $lgNameNo;
+    /**
+     * Name (NO)
+     *
+     * @var string
+     */
+    protected $lgNameNo;
 
-	/**
-	 * Name (RU)
-	 *
-	 * @var string
-	 */
-	protected $lgNameRu;
+    /**
+     * Name (RU)
+     *
+     * @var string
+     */
+    protected $lgNameRu;
 
-	/**
-	 * Name (SV)
-	 *
-	 * @var string
-	 */
-	protected $lgNameSv;
+    /**
+     * Name (SV)
+     *
+     * @var string
+     */
+    protected $lgNameSv;
 
-	/**
-	 * Name (UA)
-	 *
-	 * @var string
-	 */
-	protected $lgNameUa;
+    /**
+     * Name (UA)
+     *
+     * @var string
+     */
+    protected $lgNameUa;
 
-	/**
-	 * Getter for ISO 639-1 A2 Language code
-	 *
-	 * @return string
-	 */
-	public function getLgIso2() {
-		return $this->lgIso2;
-	}
+    /**
+     * Getter for ISO 639-1 A2 Language code
+     *
+     * @return string
+     */
+    public function getLgIso2()
+    {
+        return $this->lgIso2;
+    }
 
-	/**
-	 * Getter for Name
-	 *
-	 * @return string
-	 */
-	public function getLgNameLocal() {
-		return $this->lgNameLocal;
-	}
+    /**
+     * Getter for Name
+     *
+     * @return string
+     */
+    public function getLgNameLocal()
+    {
+        return $this->lgNameLocal;
+    }
 
-	/**
-	 * Getter for Name (EN)
-	 *
-	 * @return string
-	 */
-	public function getLgNameEn() {
-		return $this->lgNameEn;
-	}
+    /**
+     * Getter for Name (EN)
+     *
+     * @return string
+     */
+    public function getLgNameEn()
+    {
+        return $this->lgNameEn;
+    }
 
-	/**
-	 * Getter for Name (DA)
-	 *
-	 * @return string
-	 */
-	public function getLgNameDa() {
-		return $this->lgNameDa;
-	}
+    /**
+     * Getter for Name (DA)
+     *
+     * @return string
+     */
+    public function getLgNameDa()
+    {
+        return $this->lgNameDa;
+    }
 
-	/**
-	 * Getter for Name (DE)
-	 *
-	 * @return string
-	 */
-	public function getLgNameDe() {
-		return $this->lgNameDe;
-	}
+    /**
+     * Getter for Name (DE)
+     *
+     * @return string
+     */
+    public function getLgNameDe()
+    {
+        return $this->lgNameDe;
+    }
 
-	/**
-	 * Getter for Name (ES)
-	 *
-	 * @return string
-	 */
-	public function getLgNameEs() {
-		return $this->lgNameEs;
-	}
+    /**
+     * Getter for Name (ES)
+     *
+     * @return string
+     */
+    public function getLgNameEs()
+    {
+        return $this->lgNameEs;
+    }
 
-	/**
-	 * Getter for Name (FR)
-	 *
-	 * @return string
-	 */
-	public function getLgNameFr() {
-		return $this->lgNameFr;
-	}
+    /**
+     * Getter for Name (FR)
+     *
+     * @return string
+     */
+    public function getLgNameFr()
+    {
+        return $this->lgNameFr;
+    }
 
-	/**
-	 * Getter for Name (GL)
-	 *
-	 * @return string
-	 */
-	public function getLgNameGl() {
-		return $this->lgNameGl;
-	}
+    /**
+     * Getter for Name (GL)
+     *
+     * @return string
+     */
+    public function getLgNameGl()
+    {
+        return $this->lgNameGl;
+    }
 
-	/**
-	 * Getter for Name (IT)
-	 *
-	 * @return string
-	 */
-	public function getLgNameIt() {
-		return $this->lgNameIt;
-	}
+    /**
+     * Getter for Name (IT)
+     *
+     * @return string
+     */
+    public function getLgNameIt()
+    {
+        return $this->lgNameIt;
+    }
 
-	/**
-	 * Getter for Name (JA)
-	 *
-	 * @return string
-	 */
-	public function getLgNameJa() {
-		return $this->lgNameJa;
-	}
+    /**
+     * Getter for Name (JA)
+     *
+     * @return string
+     */
+    public function getLgNameJa()
+    {
+        return $this->lgNameJa;
+    }
 
-	/**
-	 * Getter for Name (KM)
-	 *
-	 * @return string
-	 */
-	public function getLgNameKm() {
-		return $this->lgNameKm;
-	}
+    /**
+     * Getter for Name (KM)
+     *
+     * @return string
+     */
+    public function getLgNameKm()
+    {
+        return $this->lgNameKm;
+    }
 
-	/**
-	 * Getter for Name (NL)
-	 *
-	 * @return string
-	 */
-	public function getLgNameNl() {
-		return $this->lgNameNl;
-	}
+    /**
+     * Getter for Name (NL)
+     *
+     * @return string
+     */
+    public function getLgNameNl()
+    {
+        return $this->lgNameNl;
+    }
 
-	/**
-	 * Getter for Name (NO)
-	 *
-	 * @return string
-	 */
-	public function getLgNameNo() {
-		return $this->lgNameNo;
-	}
+    /**
+     * Getter for Name (NO)
+     *
+     * @return string
+     */
+    public function getLgNameNo()
+    {
+        return $this->lgNameNo;
+    }
 
-	/**
-	 * Getter for Name (RU)
-	 *
-	 * @return string
-	 */
-	public function getLgNameRu() {
-		return $this->lgNameRu;
-	}
+    /**
+     * Getter for Name (RU)
+     *
+     * @return string
+     */
+    public function getLgNameRu()
+    {
+        return $this->lgNameRu;
+    }
 
-	/**
-	 * Getter for Name (SV)
-	 *
-	 * @return string
-	 */
-	public function getLgNameSv() {
-		return $this->lgNameSv;
-	}
+    /**
+     * Getter for Name (SV)
+     *
+     * @return string
+     */
+    public function getLgNameSv()
+    {
+        return $this->lgNameSv;
+    }
 
-	/**
-	 * Getter for Name (UA)
-	 *
-	 * @return string
-	 */
-	public function getLgNameUa() {
-		return $this->lgNameUa;
-	}
+    /**
+     * Getter for Name (UA)
+     *
+     * @return string
+     */
+    public function getLgNameUa()
+    {
+        return $this->lgNameUa;
+    }
 }

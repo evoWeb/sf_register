@@ -3,26 +3,25 @@ defined('TYPO3_MODE') or die();
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-
 $temporaryColumns = array(
-	'mailhash' => array(
-		'exclude' => 1,
-		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.mailhash',
-		'config' => array(
-			'type' => 'input',
-			'readOnly' => TRUE,
-		)
-	),
+    'mailhash' => array(
+        'exclude' => 1,
+        'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.mailhash',
+        'config' => array(
+            'type' => 'input',
+            'readOnly' => true,
+        )
+    ),
 
-	'activated_on' => array(
-		'exclude' => 1,
-		'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.activated_on',
-		'config' => array(
-			'type' => 'input',
-			'readOnly' => TRUE,
-			'eval' => 'datetime',
-		)
-	),
+    'activated_on' => array(
+        'exclude' => 1,
+        'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.activated_on',
+        'config' => array(
+            'type' => 'input',
+            'readOnly' => true,
+            'eval' => 'datetime',
+        )
+    ),
 
 	'pseudonym' => array(
 		'exclude' => 0,
@@ -243,26 +242,25 @@ ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'zone, timezone, daylig
 ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'mobilephone', '', 'after:telephone');
 ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'email_new', '', 'after:email');
 ExtensionManagementUtility::addToAllTCAtypes(
-	'fe_users',
-	'--div--;LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.div.registration,
-		mailhash, activated_on, gtc, privacy, by_invitation, comments, module_sys_dmail_html'
+    'fe_users',
+    '--div--;LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.div.registration,
+    mailhash, activated_on, gtc, privacy, by_invitation, comments, module_sys_dmail_html'
 );
 
-
 if (ExtensionManagementUtility::isLoaded('static_info_tables')) {
-	$tempColumns = array(
-		'static_info_country' => array(
-			'exclude' => 0,
-			'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.static_info_country',
-			'config' => array(
-				'type' => 'input',
-				'size' => '5',
-				'max' => '3',
-				'eval' => '',
-				'default' => ''
-			)
-		),
-	);
-	ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
-	ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'static_info_country', '', 'after:zone');
+    $tempColumns = array(
+        'static_info_country' => array(
+            'exclude' => 0,
+            'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.static_info_country',
+            'config' => array(
+                'type' => 'input',
+                'size' => '5',
+                'max' => '3',
+                'eval' => '',
+                'default' => ''
+            )
+        ),
+    );
+    ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'static_info_country', '', 'after:zone');
 }

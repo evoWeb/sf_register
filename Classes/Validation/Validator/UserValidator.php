@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Validation\Validator;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,228 +24,263 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
+
 /**
  * A Uservalidator
  */
-class UserValidator extends \TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator
-	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class UserValidator extends GenericObjectValidator implements ValidatorInterface
+{
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-	 */
-	static protected $instancesCurrentlyUnderValidation;
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    static protected $instancesCurrentlyUnderValidation;
 
-	/**
-	 * Object manager
-	 *
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-	 * @inject
-	 */
-	protected $objectManager;
+    /**
+     * Object manager
+     *
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     * @inject
+     */
+    protected $objectManager;
 
-	/**
-	 * Configuration manager
-	 *
-	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-	 */
-	protected $configurationManager;
+    /**
+     * Configuration manager
+     *
+     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+     */
+    protected $configurationManager;
 
-	/**
-	 * Settings
-	 *
-	 * @var array
-	 */
-	protected $settings = NULL;
+    /**
+     * Settings
+     *
+     * @var array
+     */
+    protected $settings = null;
 
-	/**
-	 * Configuration of the framework
-	 *
-	 * @var array
-	 */
-	protected $frameworkConfiguration = array();
+    /**
+     * Configuration of the framework
+     *
+     * @var array
+     */
+    protected $frameworkConfiguration = array();
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Error\Result
-	 * @inject
-	 */
-	protected $result;
+    /**
+     * @var \TYPO3\CMS\Extbase\Error\Result
+     * @inject
+     */
+    protected $result;
 
-	/**
-	 * Validator resolver
-	 *
-	 * @var \Evoweb\SfRegister\Validation\ValidatorResolver
-	 * @inject
-	 */
-	protected $validatorResolver;
+    /**
+     * Validator resolver
+     *
+     * @var \Evoweb\SfRegister\Validation\ValidatorResolver
+     * @inject
+     */
+    protected $validatorResolver;
 
-	/**
-	 * Name of the current field to validate
-	 *
-	 * @var string
-	 */
-	protected $currentPropertyName = '';
+    /**
+     * Name of the current field to validate
+     *
+     * @var string
+     */
+    protected $currentPropertyName = '';
 
-	/**
-	 * Options for the current validation
-	 *
-	 * @var array
-	 */
-	protected $currentValidatorOptions = array();
+    /**
+     * Options for the current validation
+     *
+     * @var array
+     */
+    protected $currentValidatorOptions = array();
 
-	/**
-	 * Model that gets validated currently
-	 *
-	 * @var object
-	 */
-	protected $model;
+    /**
+     * Model that gets validated currently
+     *
+     * @var object
+     */
+    protected $model;
 
 
-	/**
-	 * Inject of configuration manager
-	 *
-	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
-	 * @return void
-	 */
-	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager) {
-		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(
-			\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
-		);
-		$this->frameworkConfiguration = $this->configurationManager->getConfiguration(
-			\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-		);
-	}
+    /**
+     * Inject of configuration manager
+     *
+     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
+     *
+     * @return void
+     */
+    public function injectConfigurationManager(
+        \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
+    ) {
+        $this->configurationManager = $configurationManager;
+        $this->settings = $this->configurationManager->getConfiguration(
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+        );
+        $this->frameworkConfiguration = $this->configurationManager->getConfiguration(
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+        );
+    }
 
-	/**
-	 * Validation method
-	 *
-	 * @param mixed $object
-	 * @return boolean|\TYPO3\CMS\Extbase\Error\Result
-	 */
-	public function validate($object) {
-		$messages = new \TYPO3\CMS\Extbase\Error\Result();
-		if (self::$instancesCurrentlyUnderValidation === NULL) {
-			self::$instancesCurrentlyUnderValidation = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-		}
-		if ($object === NULL) {
-			return $messages;
-		}
-		if (!$this->canValidate($object)) {
-			$messages->addError(
-				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_notvalidatable', 'SfRegister'), 1301599551
-			);
-			return $messages;
-		}
-		if (self::$instancesCurrentlyUnderValidation->contains($object)) {
-			return $messages;
-		} else {
-			self::$instancesCurrentlyUnderValidation->attach($object);
-		}
+    /**
+     * Validation method
+     *
+     * @param mixed $object
+     *
+     * @return boolean|\TYPO3\CMS\Extbase\Error\Result
+     */
+    public function validate($object)
+    {
+        $messages = new \TYPO3\CMS\Extbase\Error\Result();
+        if (self::$instancesCurrentlyUnderValidation === null) {
+            self::$instancesCurrentlyUnderValidation = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        }
+        if ($object === null) {
+            return $messages;
+        }
+        if (!$this->canValidate($object)) {
+            $messages->addError(
+                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                    'error_notvalidatable',
+                    'SfRegister'
+                ),
+                1301599551
+            );
 
-		$this->model = $object;
+            return $messages;
+        }
+        if (self::$instancesCurrentlyUnderValidation->contains($object)) {
+            return $messages;
+        } else {
+            self::$instancesCurrentlyUnderValidation->attach($object);
+        }
 
-		$propertyValidators = $this->getValidationRulesFromSettings();
-		foreach ($propertyValidators as $propertyName => $validatorsNames) {
-			if (!property_exists($object, $propertyName)) {
-				$messages->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_notexists', 'SfRegister'), 1301599575);
-			} else {
-				$this->currentPropertyName = $propertyName;
-				$propertyValue = $this->getPropertyValue($object, $propertyName);
-				$this->checkProperty($propertyValue, (array) $validatorsNames, $messages->forProperty($propertyName));
-			}
-		}
+        $this->model = $object;
 
-		self::$instancesCurrentlyUnderValidation->detach($object);
-		return $messages;
-	}
+        $propertyValidators = $this->getValidationRulesFromSettings();
+        foreach ($propertyValidators as $propertyName => $validatorsNames) {
+            if (!property_exists($object, $propertyName)) {
+                $messages->addError(
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                        'error_notexists',
+                        'SfRegister'
+                    ),
+                    1301599575
+                );
+            } else {
+                $this->currentPropertyName = $propertyName;
+                $propertyValue = $this->getPropertyValue($object, $propertyName);
+                $this->checkProperty($propertyValue, (array) $validatorsNames, $messages->forProperty($propertyName));
+            }
+        }
 
-	/**
-	 * Checks if the specified property of the given object is valid, and adds
-	 * found errors to the $messages object.
-	 *
-	 * @param mixed $value The value to be validated
-	 * @param array $validatorNames Contains an array with validator names
-	 * @param \TYPO3\CMS\Extbase\Error\Result $messages the result object
-	 * @return void
-	 */
-	protected function checkProperty($value, $validatorNames, \TYPO3\CMS\Extbase\Error\Result $messages) {
-		foreach ($validatorNames as $validatorName) {
-			$messages->merge($this->getValidator($validatorName)->validate($value));
-		}
-	}
+        self::$instancesCurrentlyUnderValidation->detach($object);
 
-	/**
-	 * Checks if validator can validate the object
-	 *
-	 * @param object $object
-	 * @return boolean
-	 */
-	public function canValidate($object) {
-		return ($object instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser ||
-			$object instanceof \Evoweb\SfRegister\Domain\Model\Password);
-	}
+        return $messages;
+    }
 
-	/**
-	 * Get validation rules from settings
-	 * Warning: Dont remove the validators added in this method
-	 *          These prevent that editing others data is possible
-	 *
-	 * @return array
-	 */
-	protected function getValidationRulesFromSettings() {
-		$mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));
-		$rules = $this->settings['validation'][$mode];
+    /**
+     * Checks if the specified property of the given object is valid, and adds
+     * found errors to the $messages object.
+     *
+     * @param mixed $value The value to be validated
+     * @param array $validatorNames Contains an array with validator names
+     * @param \TYPO3\CMS\Extbase\Error\Result $messages the result object
+     *
+     * @return void
+     */
+    protected function checkProperty($value, $validatorNames, \TYPO3\CMS\Extbase\Error\Result $messages)
+    {
+        foreach ($validatorNames as $validatorName) {
+            $messages->merge($this->getValidator($validatorName)->validate($value));
+        }
+    }
 
-		if ($this->model instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser) {
-			if ($mode == 'create') {
-					// uid needs to be emtpy if FrontendUser should be valid on creation
-				$rules = array_merge(array('uid' => '\\Evoweb\\SfRegister\\Validation\\Validator\\EmptyValidator'), $rules);
-			} elseif ($mode == 'edit') {
-					// add validation that the user to be edited is logged in
-				$rules = array_merge(array('uid' => '\\Evoweb\\SfRegister\\Validation\\Validator\\EqualCurrentUserValidator'), $rules);
-			}
-		}
+    /**
+     * Checks if validator can validate the object
+     *
+     * @param object $object
+     *
+     * @return boolean
+     */
+    public function canValidate($object)
+    {
+        return ($object instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser
+            || $object instanceof \Evoweb\SfRegister\Domain\Model\Password);
+    }
 
-		return $rules;
-	}
+    /**
+     * Get validation rules from settings
+     * Warning: Dont remove the validators added in this method
+     *          These prevent that editing others data is possible
+     *
+     * @return array
+     */
+    protected function getValidationRulesFromSettings()
+    {
+        $mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));
+        $rules = $this->settings['validation'][$mode];
 
-	/**
-	 * Parse the rule and instanciate an validator with the name and the options
-	 *
-	 * @param string $rule
-	 * @return \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
-	 */
-	protected function getValidator($rule) {
-		$currentValidator = $this->parseRule($rule);
-		$this->currentValidatorOptions = (array) $currentValidator['validatorOptions'];
+        if ($this->model instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser) {
+            if ($mode == 'create') {
+                // uid needs to be emtpy if FrontendUser should be valid on creation
+                $rules = array_merge(
+                    array('uid' => '\\Evoweb\\SfRegister\\Validation\\Validator\\EmptyValidator'),
+                    $rules
+                );
+            } elseif ($mode == 'edit') {
+                // add validation that the user to be edited is logged in
+                $rules = array_merge(
+                    array('uid' => '\\Evoweb\\SfRegister\\Validation\\Validator\\EqualCurrentUserValidator'),
+                    $rules
+                );
+            }
+        }
 
-		/** @var $validator \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator */
-		$validator = $this->validatorResolver->createValidator(
-			$currentValidator['validatorName'],
-			$this->currentValidatorOptions
-		);
+        return $rules;
+    }
 
-		if (method_exists($validator, 'setModel')) {
-			/** @noinspection PhpUndefinedMethodInspection */
-			$validator->setModel($this->model);
-		}
-		if (method_exists($validator, 'setPropertyName')) {
-			/** @noinspection PhpUndefinedMethodInspection */
-			$validator->setPropertyName($this->currentPropertyName);
-		}
+    /**
+     * Parse the rule and instanciate an validator with the name and the options
+     *
+     * @param string $rule
+     *
+     * @return \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+     */
+    protected function getValidator($rule)
+    {
+        $currentValidator = $this->parseRule($rule);
+        $this->currentValidatorOptions = (array) $currentValidator['validatorOptions'];
 
-		return $validator;
-	}
+        /** @var $validator \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator */
+        $validator = $this->validatorResolver->createValidator(
+            $currentValidator['validatorName'],
+            $this->currentValidatorOptions
+        );
 
-	/**
-	 * Parse rule
-	 *
-	 * @param string $rule
-	 * @return array
-	 */
-	protected function parseRule($rule) {
-		$parsedRules = $this->validatorResolver->getParsedValidatorAnnotation($rule);
+        if (method_exists($validator, 'setModel')) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            $validator->setModel($this->model);
+        }
+        if (method_exists($validator, 'setPropertyName')) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            $validator->setPropertyName($this->currentPropertyName);
+        }
 
-		return current($parsedRules['validators']);
-	}
+        return $validator;
+    }
+
+    /**
+     * Parse rule
+     *
+     * @param string $rule
+     *
+     * @return array
+     */
+    protected function parseRule($rule)
+    {
+        $parsedRules = $this->validatorResolver->getParsedValidatorAnnotation($rule);
+
+        return current($parsedRules['validators']);
+    }
 }

@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Domain\Repository;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,35 +27,35 @@ namespace Evoweb\SfRegister\Domain\Repository;
 /**
  * A repository for static info tables country
  */
-class StaticCountryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
-	/**
-	 * Find all countries despecting the storage page
-	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
-	 */
-	public function findAll() {
-		$query = $this->createQuery();
-		$query
-			->getQuerySettings()
-			->setRespectStoragePage(FALSE);
+class StaticCountryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+{
+    /**
+     * Find all countries despecting the storage page
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
+     */
+    public function findAll()
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
 
-		return $query->execute();
-	}
+        return $query->execute();
+    }
 
-	/**
-	 * Find countries by iso2 codes despection the storage page
-	 *
-	 * @param array $cnIso2
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
-	 */
-	public function findByCnIso2(array $cnIso2) {
-		$query = $this->createQuery();
-		$query
-			->getQuerySettings()
-			->setRespectStoragePage(FALSE);
+    /**
+     * Find countries by iso2 codes despection the storage page
+     *
+     * @param array $cnIso2
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
+     */
+    public function findByCnIso2(array $cnIso2)
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
 
-		$query->matching($query->in('cn_iso_2', $cnIso2));
+        $query->matching($query->in('cn_iso_2', $cnIso2));
 
-		return $query->execute();
-	}
+        return $query->execute();
+    }
 }

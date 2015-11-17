@@ -1,9 +1,10 @@
 <?php
 namespace Evoweb\SfRegister\Validation\Validator;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-13 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,76 +24,84 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
+
 /**
  * A repeated value validator
  *
  * @scope singleton
  */
-class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
-	implements \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface {
+class RepeatValidator extends AbstractValidator implements ValidatorInterface
+{
+    /**
+     * @var bool
+     */
+    protected $acceptsEmptyValues = false;
 
-	/**
-	 * @var bool
-	 */
-	protected $acceptsEmptyValues = FALSE;
+    /**
+     * Model to take repeated value of
+     *
+     * @var mixed
+     */
+    protected $model;
 
-	/**
-	 * Model to take repeated value of
-	 *
-	 * @var mixed
-	 */
-	protected $model;
+    /**
+     * propertyName
+     *
+     * @var string
+     */
+    protected $propertyName;
 
-	/**
-	 * propertyName
-	 *
-	 * @var string
-	 */
-	protected $propertyName;
+    /**
+     * Setter for model
+     *
+     * @param mixed $model
+     *
+     * @return void
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
 
-	/**
-	 * Setter for model
-	 *
-	 * @param mixed $model
-	 * @return void
-	 */
-	public function setModel($model) {
-		$this->model = $model;
-	}
+    /**
+     * Setter for propertyName
+     *
+     * @param string $propertyName
+     *
+     * @return void
+     */
+    public function setPropertyName($propertyName)
+    {
+        $this->propertyName = $propertyName;
+    }
 
-	/**
-	 * Setter for propertyName
-	 *
-	 * @param string $propertyName
-	 * @return void
-	 */
-	public function setPropertyName($propertyName) {
-		$this->propertyName = $propertyName;
-	}
+    /**
+     * If the given value is equal to the repeatition
+     *
+     * @param string $value The value
+     *
+     * @return boolean
+     */
+    public function isValid($value)
+    {
+        $result = true;
 
-	/**
-	 * If the given value is equal to the repeatition
-	 *
-	 * @param string $value The value
-	 * @return boolean
-	 */
-	public function isValid($value) {
-		$result = TRUE;
+        $propertyName = str_replace('Repeat', '', $this->propertyName);
+        $getterMethod = 'get' . ucfirst($propertyName);
+        if ($value != $this->model->{$getterMethod}()) {
+            $this->addError(
+                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                    'error_repeatitionwasnotequal',
+                    'SfRegister',
+                    array(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($propertyName, 'SfRegister'))
+                ),
+                1307965971
+            );
+            $result = false;
+        }
 
-		$propertyName = str_replace('Repeat', '', $this->propertyName);
-		$getterMethod = 'get' . ucfirst($propertyName);
-		if ($value != $this->model->{$getterMethod}()) {
-			$this->addError(
-				\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-					'error_repeatitionwasnotequal',
-					'SfRegister',
-					array(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($propertyName, 'SfRegister'))
-				),
-				1307965971
-			);
-			$result = FALSE;
-		}
-
-		return $result;
-	}
+        return $result;
+    }
 }
