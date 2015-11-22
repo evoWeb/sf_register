@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2015-10-22T13:39:50Z" product-name="sf_register">
+		<header/>
+		<body>
+			<trans-unit id="uid" xml:space="preserve" approved="yes">
+				<source>Userid</source>
+				<target>UtilisateurId</target>
+			</trans-unit>
+			<trans-unit id="gender" xml:space="preserve" approved="yes">
+				<source>Gender</source>
+				<target>Genre</target>
+			</trans-unit>
+			<trans-unit id="gender_male" xml:space="preserve" approved="yes">
+				<source>Mr</source>
+				<target>Monsieur</target>
+			</trans-unit>
+			<trans-unit id="gender_female" xml:space="preserve" approved="yes">
+				<source>Mrs</source>
+				<target>Madame</target>
+			</trans-unit>
+			<trans-unit id="title" xml:space="preserve" approved="yes">
+				<source>Title</source>
+				<target>Titre</target>
+			</trans-unit>
+			<trans-unit id="company" xml:space="preserve" approved="yes">
+				<source>Company</source>
+				<target>Entreprise</target>
+			</trans-unit>
+			<trans-unit id="lastName" xml:space="preserve" approved="yes">
+				<source>Last Name</source>
+				<target>Nom</target>
+			</trans-unit>
+			<trans-unit id="middleName" xml:space="preserve">
+				<source>Middle Name</source>
+				<target>Deuxième nom</target>
+			</trans-unit>
+			<trans-unit id="firstName" xml:space="preserve" approved="yes">
+				<source>First Name</source>
+				<target>Prénom</target>
+			</trans-unit>
+			<trans-unit id="position" xml:space="preserve" approved="yes">
+				<source>Position</source>
+				<target>Position</target>
+			</trans-unit>
+			<trans-unit id="email" xml:space="preserve" approved="yes">
+				<source>Email</source>
+				<target>Email</target>
+			</trans-unit>
+			<trans-unit id="emailRepeat" xml:space="preserve" approved="yes">
+				<source>Email repetition</source>
+				<target>Email répétition</target>
+			</trans-unit>
+			<trans-unit id="telephone" xml:space="preserve" approved="yes">
+				<source>Phone</source>
+				<target>Téléphone</target>
+			</trans-unit>
+			<trans-unit id="mobilephone" xml:space="preserve" approved="yes">
+				<source>Mobile-Phone</source>
+				<target>Téléphone mobile</target>
+			</trans-unit>
+			<trans-unit id="fax" xml:space="preserve" approved="yes">
+				<source>Fax</source>
+				<target>Fax</target>
+			</trans-unit>
+			<trans-unit id="www" xml:space="preserve">
+				<source>Website</source>
+				<target>Site web</target>
+			</trans-unit>
+			<trans-unit id="address" xml:space="preserve" approved="yes">
+				<source>Street / House Number</source>
+				<target>Rue / Numéro</target>
+			</trans-unit>
+			<trans-unit id="zip" xml:space="preserve" approved="yes">
+				<source>Zip</source>
+				<target>NPA</target>
+			</trans-unit>
+			<trans-unit id="city" xml:space="preserve" approved="yes">
+				<source>City</source>
+				<target>Ville</target>
+			</trans-unit>
+			<trans-unit id="country" xml:space="preserve" approved="yes">
+				<source>Country</source>
+				<target>Pays</target>
+			</trans-unit>
+			<trans-unit id="staticInfoCountry" xml:space="preserve" approved="yes">
+				<source>Country</source>
+				<target>Pays</target>
+			</trans-unit>
+			<trans-unit id="zone" xml:space="preserve" approved="yes">
+				<source>State/province</source>
+				<target>Canton/province</target>
+			</trans-unit>
+			<trans-unit id="no_zone_available" xml:space="preserve" approved="yes">
+				<source>No zone available</source>
+				<target>Pas de zone disponible</target>
+			</trans-unit>
+			<trans-unit id="zone_loading" xml:space="preserve" approved="yes">
+				<source>Loading Zones</source>
+				<target>Les zones sont en chargement</target>
+			</trans-unit>
+			<trans-unit id="timezone" xml:space="preserve" approved="yes">
+				<source>Timezone</source>
+				<target>Fuseau horaire</target>
+			</trans-unit>
+			<trans-unit id="timezone_I_-12" xml:space="preserve" approved="yes">
+				<source>UTC−12:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-11" xml:space="preserve" approved="yes">
+				<source>UTC−11:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-10" xml:space="preserve" approved="yes">
+				<source>UTC−10:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-9_5" xml:space="preserve" approved="yes">
+				<source>UTC−09:30</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-9" xml:space="preserve" approved="yes">
+				<source>UTC−09:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-8" xml:space="preserve" approved="yes">
+				<source>UTC−08:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-7" xml:space="preserve" approved="yes">
+				<source>UTC−07:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-6" xml:space="preserve" approved="yes">
+				<source>UTC−06:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-5" xml:space="preserve" approved="yes">
+				<source>UTC−05:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-4_5" xml:space="preserve" approved="yes">
+				<source>UTC−04:30</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-4" xml:space="preserve" approved="yes">
+				<source>UTC−04:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-3_5" xml:space="preserve" approved="yes">
+				<source>UTC−03:30</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-3" xml:space="preserve" approved="yes">
+				<source>UTC−03:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-2" xml:space="preserve" approved="yes">
+				<source>UTC−02:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_-1" xml:space="preserve" approved="yes">
+				<source>UTC−01:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_0" xml:space="preserve" approved="yes">
+				<source>UTC 0</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_1" xml:space="preserve" approved="yes">
+				<source>UTC+01:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_2" xml:space="preserve" approved="yes">
+				<source>UTC+02:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_3" xml:space="preserve" approved="yes">
+				<source>UTC+03:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_3_5" xml:space="preserve" approved="yes">
+				<source>UTC+03:30</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_4" xml:space="preserve" approved="yes">
+				<source>UTC+04:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_4_5" xml:space="preserve" approved="yes">
+				<source>UTC+04:30</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_5" xml:space="preserve" approved="yes">
+				<source>UTC+05:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_5_5" xml:space="preserve" approved="yes">
+				<source>UTC+05:30</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_5_75" xml:space="preserve" approved="yes">
+				<source>UTC+05:45</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_6" xml:space="preserve" approved="yes">
+				<source>UTC+06:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_6_5" xml:space="preserve" approved="yes">
+				<source>UTC+06:30</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_7" xml:space="preserve" approved="yes">
+				<source>UTC+07:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_8" xml:space="preserve" approved="yes">
+				<source>UTC+08:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_9" xml:space="preserve" approved="yes">
+				<source>UTC+09:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_9_5" xml:space="preserve" approved="yes">
+				<source>UTC+09:30</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_10" xml:space="preserve" approved="yes">
+				<source>UTC+10:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_11" xml:space="preserve" approved="yes">
+				<source>UTC+11:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_11_5" xml:space="preserve" approved="yes">
+				<source>UTC+11:30</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_12" xml:space="preserve" approved="yes">
+				<source>UTC+12:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_12_75" xml:space="preserve" approved="yes">
+				<source>UTC+12:45</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_13" xml:space="preserve" approved="yes">
+				<source>UTC+13:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="timezone_I_14" xml:space="preserve" approved="yes">
+				<source>UTC+14:00</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="daylight" xml:space="preserve" approved="yes">
+				<source>Daylight saving time</source>
+				<target>Heure d'été</target>
+			</trans-unit>
+			<trans-unit id="password" xml:space="preserve" approved="yes">
+				<source>Password</source>
+				<target>Mot de passe</target>
+			</trans-unit>
+			<trans-unit id="passwordRepeat" xml:space="preserve" approved="yes">
+				<source>Password repetition</source>
+				<target>Répétition du mot de passe</target>
+			</trans-unit>
+			<trans-unit id="gtc" xml:space="preserve" approved="yes">
+				<source>General terms and conditions</source>
+				<target>Conditions générales</target>
+			</trans-unit>
+			<trans-unit id="gtc_checked" xml:space="preserve" approved="yes">
+				<source>not accepted</source>
+				<target>pas acceptées</target>
+			</trans-unit>
+			<trans-unit id="gtc_checked1" xml:space="preserve" approved="yes">
+				<source>accepted</source>
+				<target>acceptées</target>
+			</trans-unit>
+			<trans-unit id="privacy" xml:space="preserve" approved="yes">
+				<source>Privacy agreement</source>
+				<target>Accord de confidentialité</target>
+			</trans-unit>
+			<trans-unit id="dateOfBirth" xml:space="preserve" approved="yes">
+				<source>Birth date</source>
+				<target>Date de naissance</target>
+			</trans-unit>
+			<trans-unit id="image" xml:space="preserve" approved="yes">
+				<source>Profilimage</source>
+				<target>Image de profil</target>
+			</trans-unit>
+			<trans-unit id="image_none" xml:space="preserve" approved="yes">
+				<source>Profilimage not uploaded</source>
+				<target>Image de profil pas chargée</target>
+			</trans-unit>
+			<trans-unit id="edit_saved" xml:space="preserve" approved="yes">
+				<source>Userdata updated</source>
+				<target>Données de l'utilisateur mises à jour</target>
+			</trans-unit>
+			<trans-unit id="create_saved" xml:space="preserve" approved="yes">
+				<source>User created</source>
+				<target>Utilisateur créé</target>
+			</trans-unit>
+			<trans-unit id="info_mandatory_fields" xml:space="preserve" approved="yes">
+				<source>Fields with &lt;span&gt;*&lt;/span&gt; are mandatory</source>
+				<target>Les champs avec &lt;span&gt;*&lt;/span&gt; sont obligatoires.</target>
+			</trans-unit>
+			<trans-unit id="submit_create" xml:space="preserve" approved="yes">
+				<source>create</source>
+				<target>créer</target>
+			</trans-unit>
+			<trans-unit id="submit_change" xml:space="preserve" approved="yes">
+				<source>change</source>
+				<target>changer</target>
+			</trans-unit>
+			<trans-unit id="submit_save" xml:space="preserve" approved="yes">
+				<source>save</source>
+				<target>enregistrer</target>
+			</trans-unit>
+			<trans-unit id="submit_update" xml:space="preserve" approved="yes">
+				<source>update</source>
+				<target>mettre à jour</target>
+			</trans-unit>
+			<trans-unit id="submit_removeImage" xml:space="preserve" approved="yes">
+				<source>remove</source>
+				<target>supprimer</target>
+			</trans-unit>
+			<trans-unit id="username" xml:space="preserve" approved="yes">
+				<source>Username</source>
+				<target>Nom d'utilisateur</target>
+			</trans-unit>
+			<trans-unit id="pseudonym" xml:space="preserve" approved="yes">
+				<source>Pseudonym</source>
+				<target>Pseudonyme</target>
+			</trans-unit>
+			<trans-unit id="oldPassword" xml:space="preserve" approved="yes">
+				<source>Old password</source>
+				<target>Ancien mot de passse</target>
+			</trans-unit>
+			<trans-unit id="newPassword1" xml:space="preserve" approved="yes">
+				<source>New password</source>
+				<target>Nouveu mot de passe</target>
+			</trans-unit>
+			<trans-unit id="newPassword2" xml:space="preserve" approved="yes">
+				<source>repeated password</source>
+				<target>mot de passe répété</target>
+			</trans-unit>
+			<trans-unit id="password_saved" xml:space="preserve" approved="yes">
+				<source>password saved</source>
+				<target>mot de passe enregistré</target>
+			</trans-unit>
+			<trans-unit id="account_not_found" xml:space="preserve" approved="yes">
+				<source>The account you are trying to activate is unknow to the system.</source>
+				<target>Le compte que vous essayez d'activer est inconnu par le système.</target>
+			</trans-unit>
+			<trans-unit id="account_already_activated" xml:space="preserve" approved="yes">
+				<source>The account &lt;b&gt;%1$s&lt;/b&gt; you try to activate is already active.</source>
+				<target>Le compte &lt;b&gt;%1$s&lt;/b&gt;, que vous essayez d'activer est déjà actif.</target>
+			</trans-unit>
+			<trans-unit id="account_successful_activated" xml:space="preserve" approved="yes">
+				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is now active.</source>
+				<target>Le compte &lt;b&gt;%1$s&lt;/b&gt; est maintenant actif.</target>
+			</trans-unit>
+			<trans-unit id="error_noteempty" xml:space="preserve" approved="yes">
+				<source>The %1$s was not empty which it should have been</source>
+				<target>Le %1$s n'est pas vide comme il devrait l'être</target>
+			</trans-unit>
+			<trans-unit id="error_required" xml:space="preserve" approved="yes">
+				<source>The value of the required field %1$s was empty</source>
+				<target>La valeur du champ requis %1$s est vide</target>
+			</trans-unit>
+			<trans-unit id="error_notequalcurrentuser" xml:space="preserve" approved="yes">
+				<source>The %1$s does not equals your own user which is not allowed</source>
+				<target>Le %1$s n'est pas votre utilisateur qui est celui autorisé</target>
+			</trans-unit>
+			<trans-unit id="error_changepassword_notloggedin" xml:space="preserve" approved="yes">
+				<source>You need to be logged in to change the password</source>
+				<target>Vous devez être connecté pour changer le mot de passe</target>
+			</trans-unit>
+			<trans-unit id="error_changepassword_notequal" xml:space="preserve" approved="yes">
+				<source>The give password was not equal to the current password</source>
+				<target>Le mot de passe donné ne doit pas être égal au mot de passe actuel</target>
+			</trans-unit>
+			<trans-unit id="error_badword" xml:space="preserve" approved="yes">
+				<source>The password you entered is on the disallowed list</source>
+				<target>Le mot de passe entré est dans la liste des refusés</target>
+			</trans-unit>
+			<trans-unit id="error_nottrue" xml:space="preserve" approved="yes">
+				<source>The %1$s was not accepted</source>
+				<target>Le %1$s n'est pas accepté</target>
+			</trans-unit>
+			<trans-unit id="error_passwordagain_notequal" xml:space="preserve" approved="yes">
+				<source>Password fields are not equal</source>
+				<target>Les mots de passe ne sont pas égaux/target>
+			</trans-unit>
+			<trans-unit id="error_notunique_local" xml:space="preserve" approved="yes">
+				<source>The %1$s is not unique</source>
+				<target>Le %1$s n'est pas unique</target>
+			</trans-unit>
+			<trans-unit id="error_notunique_global" xml:space="preserve" approved="yes">
+				<source>The %1$s is not unique</source>
+				<target>Le %1$s n'est pas unique</target>
+			</trans-unit>
+			<trans-unit id="error_notvalidatable" xml:space="preserve" approved="yes">
+				<source>The given form does not contain data that can be validated</source>
+				<target>Le formulaire ne contient pas de données pouvant être validées</target>
+			</trans-unit>
+			<trans-unit id="error_notexists" xml:space="preserve" approved="yes">
+				<source>Attribute does not exists</source>
+				<target>L'attribut n'existe pas</target>
+			</trans-unit>
+			<trans-unit id="error_image_filesize" xml:space="preserve" approved="yes">
+				<source>The file was bigger than the maximum allowed filesize</source>
+				<target>Le fichier est plus grand que la taille du fichier maximale autorisée</target>
+			</trans-unit>
+			<trans-unit id="error_image_extension" xml:space="preserve" approved="yes">
+				<source>The file was not of an allowed image extension</source>
+				<target>Le fichier n'a pas une extension d'image autorisée</target>
+			</trans-unit>
+			<trans-unit id="error_repeatitionwasnotequal" xml:space="preserve" approved="yes">
+				<source>The repeatition of %1$s was not equal</source>
+				<target>La répétition de %1$s n'est pas égale</target>
+			</trans-unit>
+			<trans-unit id="error_captcha_notcorrect" xml:space="preserve" approved="yes">
+				<source>The entered captcha is incorrect</source>
+				<target>Le captcha entré est incorrect</target>
+			</trans-unit>
+			<trans-unit id="error_captcha_notinstalled" xml:space="preserve" approved="yes">
+				<source>CAPTCHA extension '%1$s' not installed error</source>
+				<target>L'extension CAPTCHA '%1$s' n'est pas installée</target>
+			</trans-unit>
+			<trans-unit id="error_jmrecaptcha_incorrect-captcha-sol" xml:space="preserve" approved="yes">
+				<source>Incorrect captcha</source>
+				<target>Captcha incorrect</target>
+			</trans-unit>
+			<trans-unit id="error_1238108067" xml:space="preserve" approved="yes">
+				<source>The length of %1$s was not between %2$s and %3$s characters</source>
+				<target>La longueur de %1$s n'est pas comprise entre %2$s et %3$s caractères</target>
+			</trans-unit>
+			<trans-unit id="error_1221559976" xml:space="preserve" approved="yes">
+				<source>The %1$s has no valid email adress format</source>
+				<target>Le %1$s n'a pas de format d'adresse email valide</target>
+			</trans-unit>
+			<trans-unit id="error_1296591069" xml:space="preserve" approved="yes">
+				<source>The %1$s is global not unique</source>
+				<target>Le %1$s est global pas unique</target>
+			</trans-unit>
+
+			<trans-unit id="subjectAdminNotificationPostCreateSave" xml:space="preserve">
+				<source>User %2$s registered on site %1$s</source>
+				<target>L'utilisateur %2$s est enregistré sur %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostCreateConfirm" xml:space="preserve">
+				<source>User %2$s confirmed registration on site %1$s</source>
+				<target>L'utilisateur %2$s a confirmé son enregistrement sur le site %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostCreateRefuse" xml:space="preserve">
+				<source>User %2$s refused the registration on site %1$s</source>
+				<target>L'utilisateur %2$s a refusé l'enregistrement sur le site %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostCreateAccept" xml:space="preserve">
+				<source>User %2$s was accepted on site %1$s</source>
+				<target>L'utilisateur %2$s a été accepté sur le site %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostCreateDecline" xml:space="preserve">
+				<source>User %2$s was declined on site %1$s</source>
+				<target>L'utilisateur %2$s a été refusé sur le site %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostEditSave" xml:space="preserve">
+				<source>User %2$s has edited informations on site %1$s</source>
+				<target>L'utilisateur %2$s a édité des informations sur le site %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostEditConfirm" xml:space="preserve">
+				<source>User %2$s has confirmed the change of informations on site %1$s</source>
+				<target>L'utilisateur %2$s a confirmé le changement d'informations sur le site %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostEditAccept" xml:space="preserve">
+				<source>User %2$s change of informations was accepted on site %1$s</source>
+				<target>Les modifications de l'utilisateur %2$s ont été acceptées sur le site %1$s</target>
+			</trans-unit>
+
+			<trans-unit id="subjectUserNotificationPostCreateSave" xml:space="preserve">
+				<source>You registered yourself at %1$s as %2$s</source>
+				<target>Vous vous êtes enregistré sur %1$s comme %2$s</target>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostCreateConfirm" xml:space="preserve">
+				<source>Thank you for confirming your account %2$s at %1$s</source>
+				<target>Merci de confirmer votre compte %2$s sur %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostCreateRefuse" xml:space="preserve">
+				<source>Sorry your refused your registration with account %2$s on site %1$s</source>
+				<target>Désolé, nous avons refusé votre inscription de %2$s sur le site %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostCreateAccept" xml:space="preserve">
+				<source>You registration with account %2$s on site %1$s was accepted</source>
+				<target>Votre enregistrement avec le compte %2$s sur le site %1$s a été accepté</target>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostCreateDecline" xml:space="preserve">
+				<source>You activated account %2$s at %1$s</source>
+				<target>Malheureusement votre enregistrement avec le compte %2$s sur le site %1$s a été rejeté</target>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostEditSave" xml:space="preserve">
+				<source>You %2$s changed your information on site %1$s</source>
+				<target>Vous avez modifié les informations du compte %2$s sur le site %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostEditConfirm" xml:space="preserve">
+				<source>Thank you %2$s for confirming the change of informations on site %1$s</source>
+				<target>Merci de confimer les modifications du compte %2$s sur la page %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostEditAccept" xml:space="preserve">
+				<source>Your change of informations for account %2$s on site %1$s was accepted</source>
+				<target>Vos modifications pour le compte %2$s sur le site %1$s ont été acceptées</target>
+			</trans-unit>
+
+			<trans-unit id="email_admin_salutation" xml:space="preserve" approved="yes">
+				<source>dear admin</source>
+				<target>cher admin</target>
+			</trans-unit>
+			<trans-unit id="email_admin_activate_message" xml:space="preserve" approved="yes">
+				<source>please activate the account %1$s</source>
+				<target>s'il-vous-plaît activez le compte %1$s</target>
+			</trans-unit>
+			<trans-unit id="email_admin_activate_link" xml:space="preserve" approved="yes">
+				<source>activate user account</source>
+				<target>activation du compte utilisateur</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_available" xml:space="preserve" approved="yes">
+				<source>the account %1$s is available</source>
+				<target>le compte %1$s est disponible</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_activated" xml:space="preserve" approved="yes">
+				<source>the account %1$s was activated</source>
+				<target>le compte %1$s a été activé</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_edited" xml:space="preserve" approved="yes">
+				<source>the account %1$s was edited</source>
+				<target>le compte %1$s a été édité</target>
+			</trans-unit>
+			<trans-unit id="email_user_salutation" xml:space="preserve" approved="yes">
+				<source>dear user</source>
+				<target>cher utilisateur</target>
+			</trans-unit>
+			<trans-unit id="email_user_activate_message" xml:space="preserve" approved="yes">
+				<source>please activate your account %1$s</source>
+				<target>s'il-vous-plaît activez votre compte %1$s</target>
+			</trans-unit>
+			<trans-unit id="email_user_activate_link" xml:space="preserve" approved="yes">
+				<source>activate your account</source>
+				<target>activer votre compte</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_available" xml:space="preserve" approved="yes">
+				<source>your account %1$s is now available</source>
+				<target>votre compte %1$s est maitenant disponible</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_activated" xml:space="preserve" approved="yes">
+				<source>your account %1$s is now active</source>
+				<target>votre compte %1$s est maintenant activé</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_edited" xml:space="preserve" approved="yes">
+				<source>you have edited your account %1$s</source>
+				<target>vous avez édité votre compte %1$s</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
