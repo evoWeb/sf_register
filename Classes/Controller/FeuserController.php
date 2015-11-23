@@ -38,6 +38,14 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected $userRepository = null;
 
     /**
+     * Usergroup repository
+     *
+     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
+     * @inject
+     */
+    protected $userGroupRepository = null;
+
+    /**
      * File service
      *
      * @var \Evoweb\SfRegister\Services\File
@@ -97,7 +105,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function initializeAction()
     {
-        $this->fileService = $this->objectManager->get('Evoweb\\SfRegister\\Services\\File');
+        $this->fileService = $this->objectManager->get(\Evoweb\SfRegister\Services\File::class);
 
         if ($this->settings['processInitializeActionSignal']) {
             $this->signalSlotDispatcher->dispatch(__CLASS__, 'initializeAction', array(
@@ -280,7 +288,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function persistAll()
     {
-        $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager')
+        $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class)
             ->persistAll();
     }
 
@@ -309,7 +317,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function sendEmails($user, $type)
     {
         /** @var $mailService \Evoweb\SfRegister\Services\Mail */
-        $mailService = $this->objectManager->get('Evoweb\\SfRegister\\Services\\Mail');
+        $mailService = $this->objectManager->get(\Evoweb\SfRegister\Services\Mail::class);
 
         if ($this->isNotifyAdmin($type)) {
             $user = $mailService->sendAdminNotification($user, $type);
@@ -411,7 +419,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function getFollowingUserGroups($currentUserGroup, $excludeCurrentUserGroup = false)
     {
         $followingUserGroups = array();
-        $userGroups = $this->getUserGroups();
+        $userGroups = $this->getUserGroupIds();
         $currentIndex = array_search((int) $currentUserGroup, $userGroups);
         $additionalIndex = ($excludeCurrentUserGroup ?
             1 :
@@ -428,13 +436,14 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @return array
      */
-    protected function getUserGroups()
+    protected function getUserGroupIds()
     {
         $userGroups = array();
-        $settingNames = array('usergroupPostSave', 'usergroup', 'usergroupPostConfirm', 'usergroupPostAccept');
-        foreach ($settingNames as $settingName) {
-            if (!empty($this->settings[$settingName])) {
-                $userGroups[] = (int) $this->settings[$settingName];
+        $settingsUserGroupKeys = array('usergroup', 'usergroupPostSave', 'usergroupPostConfirm', 'usergroupPostAccept');
+        foreach ($settingsUserGroupKeys as $settingsUserGroupKey) {
+            $userGroup = (int) $this->settings[$settingsUserGroupKey];
+            if ($userGroup) {
+                $userGroups[] = $userGroup;
             }
         }
 
@@ -467,7 +476,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function autoLogin(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        $this->objectManager->get('Evoweb\\SfRegister\\Services\\Login')
+        $this->objectManager->get(\Evoweb\SfRegister\Services\Login::class)
             ->loginUserById($user->getUid());
     }
 
@@ -498,5 +507,60 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
 
         return $frontendUser;
+    }
+
+    /**
+     * Change usergroup of user after activation
+     *
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param integer $usergroupIdToBeRemoved
+     * @param integer $usergroupIdToAdd
+     *
+     * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
+     */
+    protected function changeUsergroup(
+        \Evoweb\SfRegister\Domain\Model\FrontendUser $user,
+        $usergroupIdToAdd,
+        $usergroupIdToBeRemoved = 0
+    ) {
+        $this->userGroupRepository = $this->objectManager->get(
+            'TYPO3\\CMS\\Extbase\\Domain\\Repository\\FrontendUserGroupRepository'
+        );
+
+        // cover deprecated behaviour
+        if ($usergroupIdToBeRemoved) {
+            \TYPO3\CMS\Core\Utility\GeneralUtility::deprecationLog(
+                'Usage of $usergroupIdToBeRemoved and $usergroupIdToAdd is deprecated
+                please use only $usergroupIdToAdd as all groups previously set get removed'
+            );
+            $usergroupIdToAdd = $usergroupIdToBeRemoved;
+        }
+
+        $this->removePreviousUserGroups($user);
+
+        $usergroupIdToAdd = (int) $usergroupIdToAdd;
+        if ($usergroupIdToAdd) {
+            /** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup $usergroupToAdd */
+            $usergroupToAdd = $this->userGroupRepository->findByUid($usergroupIdToAdd);
+            $user->addUsergroup($usergroupToAdd);
+        }
+
+        return $user;
+    }
+
+    /**
+     * Removes all frontend usergroups that were set in previous actions
+     *
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @return void
+     */
+    protected function removePreviousUserGroups(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
+    {
+        $userGroupIds = $this->getUserGroupIds();
+        foreach ($userGroupIds as $userGroupId) {
+            /** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup $usergroupToRemove */
+            $usergroupToRemove = $this->userGroupRepository->findByUid($userGroupId);
+            $user->removeUsergroup($usergroupToRemove);
+        }
     }
 }

@@ -30,14 +30,6 @@ namespace Evoweb\SfRegister\Controller;
 class FeuserCreateController extends FeuserController
 {
     /**
-     * Usergroup repository
-     *
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
-     * @inject
-     */
-    protected $userGroupRepository = null;
-
-    /**
      * Form action
      *
      * @return void
@@ -122,10 +114,10 @@ class FeuserCreateController extends FeuserController
             && ($this->settings['confirmEmailPostCreate'] || $this->settings['acceptEmailPostCreate'])
         ) {
             $user->setDisable(true);
-            $user = $this->changeUsergroup($user, 0, (int) $this->settings['usergroupPostSave']);
+            $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostSave']);
         } else {
             $user = $this->moveImageFile($user);
-            $user = $this->changeUsergroup($user, 0, (int) $this->settings['usergroup']);
+            $user = $this->changeUsergroup($user, (int) $this->settings['usergroup']);
         }
 
         if ($this->settings['useEmailAddressAsUsername']) {
@@ -176,9 +168,6 @@ class FeuserCreateController extends FeuserController
         $this->userRepository = $this->objectManager->get(
             'Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository'
         );
-        $this->userGroupRepository = $this->objectManager->get(
-            'TYPO3\\CMS\\Extbase\\Domain\\Repository\\FrontendUserGroupRepository'
-        );
     }
 
     /**
@@ -207,11 +196,7 @@ class FeuserCreateController extends FeuserController
             ) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
-                $user = $this->changeUsergroup(
-                    $user,
-                    (int) $this->settings['usergroupPostSave'],
-                    (int) $this->settings['usergroupPostConfirm']
-                );
+                $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostConfirm']);
                 $user = $this->moveImageFile($user);
 
                 if (!$this->settings['acceptEmailPostCreate']) {
@@ -296,11 +281,7 @@ class FeuserCreateController extends FeuserController
             ) {
                 $this->view->assign('userAlreadyAccepted', 1);
             } else {
-                $user = $this->changeUsergroup(
-                    $user,
-                    (int) $this->settings['usergroupPostConfirm'],
-                    (int) $this->settings['usergroupPostAccept']
-                );
+                $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostAccept']);
                 $user->setActivatedOn(new \DateTime('now'));
                 $user->setDisable(false);
 
@@ -346,34 +327,5 @@ class FeuserCreateController extends FeuserController
 
             $this->view->assign('userDeclined', 1);
         }
-    }
-
-    /**
-     * Change usergroup of user after activation
-     *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-     * @param integer $usergroupIdToBeRemoved
-     * @param integer $usergroupIdToAdd
-     *
-     * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
-     */
-    protected function changeUsergroup(
-        \Evoweb\SfRegister\Domain\Model\FrontendUser $user,
-        $usergroupIdToBeRemoved,
-        $usergroupIdToAdd
-    ) {
-        if (intval($usergroupIdToAdd) > 0 && intval($usergroupIdToAdd) != intval($usergroupIdToBeRemoved)) {
-            /** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup $usergroupToAdd */
-            $usergroupToAdd = $this->userGroupRepository->findByUid($usergroupIdToAdd);
-            $user->addUsergroup($usergroupToAdd);
-
-            if (intval($usergroupIdToBeRemoved) > 0) {
-                /** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup $usergroupToRemove */
-                $usergroupToRemove = $this->userGroupRepository->findByUid($usergroupIdToBeRemoved);
-                $user->removeUsergroup($usergroupToRemove);
-            }
-        }
-
-        return $user;
     }
 }
