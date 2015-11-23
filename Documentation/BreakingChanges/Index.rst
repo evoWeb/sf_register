@@ -4,8 +4,8 @@
 .. -*- coding: utf-8 -*- with BOM.
 
 
-Potentialy Breaking Changes
-===========================
+Breaking Changes
+================
 
 - Method 'changeUsergroup' got pulled up from FeuserCreateController to FeuserController. If a controller extends
   FeuserCreateController the change in changeUsergroup needs to be copied.
