@@ -27,7 +27,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 /**
  * Viewhelper to output a captcha in a form
  * <code title="Usage">
- * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
+ * {namespace register=Evoweb\SfRegister\ViewHelpers}
  * <register:form.captcha type="jmrecaptcha"/>
  * </code>
  */

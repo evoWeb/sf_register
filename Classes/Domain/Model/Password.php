@@ -64,7 +64,6 @@ class Password extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Setter for password
      *
      * @param string $password
-     *
      * @return void
      */
     public function setPassword($password)
@@ -86,7 +85,6 @@ class Password extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Setter for passwordRepeat
      *
      * @param string $passwordRepeat
-     *
      * @return void
      */
     public function setPasswordRepeat($passwordRepeat)
@@ -108,7 +106,6 @@ class Password extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Setter for oldPassword
      *
      * @param string $oldPassword
-     *
      * @return void
      */
     public function setOldPassword($oldPassword)

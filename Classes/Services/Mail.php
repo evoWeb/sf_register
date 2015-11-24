@@ -3,21 +3,27 @@ namespace Evoweb\SfRegister\Services;
 
 /***************************************************************
  * Copyright notice
+ *
  * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
+ *
  * This script is part of the TYPO3 project. The TYPO3 project is
  * free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
+ *
  * The GNU General Public License can be found at
  * http://www.gnu.org/copyleft/gpl.html.
+ *
  * This script is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
@@ -45,14 +51,14 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * Framework configurations
      *
      * @var array
      */
-    protected $frameworkConfiguration = array();
+    protected $frameworkConfiguration = [];
 
     /**
      * Signal slot dispatcher
@@ -289,8 +295,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     protected function getMailHash(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
     {
         return md5(
-            $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . $user->getUsername(
-            ) . $GLOBALS['EXEC_TIME'] . $user->getEmail()
+            $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . $user->getUsername() .
+            $GLOBALS['EXEC_TIME'] . $user->getEmail()
         );
     }
 
@@ -340,7 +346,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     protected function sendEmail($user, array $recipient, $typeOfEmail, $subject, $bodyHtml, $bodyPlain)
     {
         /** @var $mail \TYPO3\CMS\Core\Mail\MailMessage */
-        $mail = $this->objectManager->get('TYPO3\\CMS\\Core\\Mail\\MailMessage');
+        $mail = $this->objectManager->get(\TYPO3\CMS\Core\Mail\MailMessage::class);
         $mail->setTo($recipient)
             ->setFrom(array($this->settings[$typeOfEmail]['fromEmail'] => $this->settings[$typeOfEmail]['fromName']))
             ->setSubject($subject);
@@ -380,7 +386,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         $variables = array('user' => $user, 'settings' => $this->settings);
 
         /** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
-        $view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+        $view = $this->objectManager->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
 
         $request = $view->getRequest();
         $request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
@@ -429,8 +435,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         if (empty($templateRootPaths)) {
-            $templateRootPaths[] = ExtensionManagementUtility::extPath('sf_register') .
-                'Resources/Private/Templates/';
+            $templateRootPaths[] = ExtensionManagementUtility::extPath('sf_register') . 'Resources/Private/Templates/';
         }
 
         $result = [];
@@ -499,10 +504,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             $signalName,
-            array(
-                'result' => &$result,
-                'arguments' => $arguments,
-            )
+            array('result' => &$result, 'arguments' => $arguments)
         );
 
         return $result;

@@ -29,7 +29,6 @@ namespace Evoweb\SfRegister\Domain\Repository;
  */
 class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository
 {
-
     /**
      * Finds an object matching the given identifier.
      *
@@ -45,11 +44,16 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
         }
 
         $query = $this->createQuery();
-        $query->getQuerySettings()->setRespectStoragePage(false);
-        $query->getQuerySettings()->setRespectSysLanguage(false);
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
-        $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled'));
-        $object = $query->matching($query->equals('uid', $identifier))->execute()->getFirst();
+
+        $querySettings = $query->getQuerySettings();
+        $querySettings->setRespectStoragePage(false);
+        $querySettings->setRespectSysLanguage(false);
+        $querySettings->setIgnoreEnableFields(true);
+        $querySettings->setEnableFieldsToBeIgnored(array('disabled'));
+
+        $object = $query->matching($query->equals('uid', $identifier))
+            ->execute()
+            ->getFirst();
 
         return $object;
     }
@@ -69,7 +73,9 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
         $querySettings->setRespectStoragePage(true);
         $querySettings->setIgnoreEnableFields(true);
 
-        $user = $query->matching($query->equals('mailhash', $mailhash))->execute()->getFirst();
+        $user = $query->matching($query->equals('mailhash', $mailhash))
+            ->execute()
+            ->getFirst();
 
         return $user;
     }
@@ -91,7 +97,10 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
         $querySettings->setRespectStoragePage($respectStoragePage);
         $querySettings->setIgnoreEnableFields(true);
 
-        return $query->matching($query->equals($field, $value))->setLimit(1)->execute()->count();
+        return $query->matching($query->equals($field, $value))
+            ->setLimit(1)
+            ->execute()
+            ->count();
     }
 
     /**

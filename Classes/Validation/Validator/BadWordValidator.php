@@ -45,7 +45,7 @@ class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
      *
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * Inject of the configuration manager

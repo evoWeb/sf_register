@@ -53,8 +53,8 @@ class JmRecaptchaAdapter extends AbstractAdapter
     {
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('jm_recaptcha')) {
             /** @noinspection PhpIncludeInspection */
-            require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('jm_recaptcha')
-                . 'class.tx_jmrecaptcha.php');
+            require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('jm_recaptcha') .
+                'class.tx_jmrecaptcha.php');
             $this->captcha = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_jmrecaptcha');
         }
     }
@@ -66,7 +66,8 @@ class JmRecaptchaAdapter extends AbstractAdapter
      */
     public function render()
     {
-        $this->objectManager->get('Evoweb\\SfRegister\\Services\\Session')->remove('captchaWasValidPreviously');
+        $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)
+            ->remove('captchaWasValidPreviously');
 
         if ($this->captcha !== null) {
             /** @noinspection PhpUndefinedMethodInspection */
@@ -93,7 +94,7 @@ class JmRecaptchaAdapter extends AbstractAdapter
     {
         $validCaptcha = true;
 
-        $session = $this->objectManager->get('Evoweb\\SfRegister\\Services\\Session');
+        $session = $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class);
         $captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
         if ($this->captcha !== null && $captchaWasValidPreviously !== true) {
             $_POST['recaptcha_response_field'] = $value;
@@ -102,8 +103,13 @@ class JmRecaptchaAdapter extends AbstractAdapter
 
             if ($status == false || $status['error'] !== null) {
                 $validCaptcha = false;
-                $this->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_jmrecaptcha_'
-                    . $status['error'], 'SfRegister'), 1307421960);
+                $this->addError(
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                        'error_jmrecaptcha_' . $status['error'],
+                        'SfRegister'
+                    ),
+                    1307421960
+                );
             }
         }
 

@@ -1,23 +1,28 @@
 <?php
 namespace Evoweb\SfRegister\Controller;
 
-    /***************************************************************
-     * Copyright notice
-     * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
-     * All rights reserved
-     * This script is part of the TYPO3 project. The TYPO3 project is
-     * free software; you can redistribute it and/or modify
-     * it under the terms of the GNU General Public License as published by
-     * the Free Software Foundation; either version 2 of the License, or
-     * (at your option) any later version.
-     * The GNU General Public License can be found at
-     * http://www.gnu.org/copyleft/gpl.html.
-     * This script is distributed in the hope that it will be useful,
-     * but WITHOUT ANY WARRANTY; without even the implied warranty of
-     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     * GNU General Public License for more details.
-     * This copyright notice MUST APPEAR in all copies of the script!
-     ***************************************************************/
+/***************************************************************
+ * Copyright notice
+ *
+ * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * All rights reserved
+ *
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
+ *
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * An frontend user create controller
@@ -33,9 +38,8 @@ class FeuserCreateController extends FeuserController
     {
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
         $originalRequest = $this->request->getOriginalRequest();
-        if ($this->request->hasArgument('user') || ($originalRequest !== null && $originalRequest->hasArgument(
-                    'user'
-                ))
+        if ($this->request->hasArgument('user')
+            || ($originalRequest !== null && $originalRequest->hasArgument('user'))
         ) {
             $userData = $this->request->hasArgument('user') ?
                 $this->request->getArgument('user') :
@@ -45,12 +49,12 @@ class FeuserCreateController extends FeuserController
             }
 
             /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
-            $propertyMapper = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Property\\PropertyMapper');
-            $user = $propertyMapper->convert($userData, 'Evoweb\\SfRegister\\Domain\\Model\\FrontendUser');
+            $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
+            $user = $propertyMapper->convert($userData, \Evoweb\SfRegister\Domain\Model\FrontendUser::class);
             $user = $this->moveTempFile($user);
         } else {
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
-            $user = $this->objectManager->get('Evoweb\\SfRegister\\Domain\\Model\\FrontendUser');
+            $user = $this->objectManager->get(\Evoweb\SfRegister\Domain\Model\FrontendUser::class);
         }
 
         if ($originalRequest !== null && $originalRequest->hasArgument('temporaryImage')) {
@@ -90,10 +94,7 @@ class FeuserCreateController extends FeuserController
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
-            array(
-                'user' => &$user,
-                'settings' => $this->settings,
-            )
+            array('user' => &$user, 'settings' => $this->settings)
         );
 
         $this->view->assign('user', $user);
@@ -132,10 +133,7 @@ class FeuserCreateController extends FeuserController
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
-            array(
-                'user' => &$user,
-                'settings' => $this->settings,
-            )
+            array('user' => &$user, 'settings' => $this->settings)
         );
 
         // Persist user to get valid uid
@@ -154,8 +152,7 @@ class FeuserCreateController extends FeuserController
         $this->userRepository->update($user);
         $this->persistAll();
 
-        $this->objectManager->get('Evoweb\\SfRegister\\Services\\Session')
-            ->remove('captchaWasValidPreviously');
+        $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)->remove('captchaWasValidPreviously');
 
         if ($this->settings['autologinPostRegistration']) {
             $this->autoLogin($user);
@@ -176,7 +173,7 @@ class FeuserCreateController extends FeuserController
     protected function initializeConfirmAction()
     {
         $this->userRepository = $this->objectManager->get(
-            'Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository'
+            \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class
         );
     }
 
@@ -198,10 +195,9 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('user', $user);
 
             if (!$user->getDisable() || $this->isUserInUserGroups(
-                    $user,
-                    $this->getFollowingUserGroups((int) $this->settings['usergroupPostConfirm'])
-                )
-            ) {
+                $user,
+                $this->getFollowingUserGroups((int) $this->settings['usergroupPostConfirm'])
+            )) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
                 $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostConfirm']);
@@ -214,10 +210,7 @@ class FeuserCreateController extends FeuserController
                 $this->signalSlotDispatcher->dispatch(
                     __CLASS__,
                     __FUNCTION__,
-                    array(
-                        'user' => &$user,
-                        'settings' => $this->settings,
-                    )
+                    array('user' => &$user, 'settings' => $this->settings)
                 );
 
                 $this->userRepository->update($user);
@@ -257,10 +250,7 @@ class FeuserCreateController extends FeuserController
             $this->signalSlotDispatcher->dispatch(
                 __CLASS__,
                 __FUNCTION__,
-                array(
-                    'user' => &$user,
-                    'settings' => $this->settings,
-                )
+                array('user' => &$user, 'settings' => $this->settings)
             );
 
             $this->userRepository->remove($user);
@@ -288,10 +278,9 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('user', $user);
 
             if ($user->getActivatedOn() || $this->isUserInUserGroups(
-                    $user,
-                    $this->getFollowingUserGroups((int) $this->settings['usergroupPostAccept'])
-                )
-            ) {
+                $user,
+                $this->getFollowingUserGroups((int) $this->settings['usergroupPostAccept'])
+            )) {
                 $this->view->assign('userAlreadyAccepted', 1);
             } else {
                 $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostAccept']);
@@ -301,10 +290,7 @@ class FeuserCreateController extends FeuserController
                 $this->signalSlotDispatcher->dispatch(
                     __CLASS__,
                     __FUNCTION__,
-                    array(
-                        'user' => &$user,
-                        'settings' => $this->settings,
-                    )
+                    array('user' => &$user, 'settings' => $this->settings)
                 );
 
                 $this->userRepository->update($user);
@@ -335,10 +321,7 @@ class FeuserCreateController extends FeuserController
             $this->signalSlotDispatcher->dispatch(
                 __CLASS__,
                 __FUNCTION__,
-                array(
-                    'user' => &$user,
-                    'settings' => $this->settings,
-                )
+                array('user' => &$user, 'settings' => $this->settings)
             );
 
             $this->userRepository->remove($user);
