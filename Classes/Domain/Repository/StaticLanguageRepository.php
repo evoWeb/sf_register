@@ -37,7 +37,8 @@ class StaticLanguageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function findAll()
     {
         $query = $this->createQuery();
-        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()
+            ->setRespectStoragePage(false);
 
         return $query->execute();
     }

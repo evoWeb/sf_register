@@ -28,7 +28,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * Viewhelper to render a selectbox with values
  * in given steps from start to end value
  * <code title="Usage">
- * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
+ * {namespace register=Evoweb\SfRegister\ViewHelpers}
  * <register:form.required fieldName="'username"/>
  * </code>
  */
@@ -46,14 +46,14 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
      *
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * Configuration of the framework
      *
      * @var array
      */
-    protected $frameworkConfiguration = array();
+    protected $frameworkConfiguration = [];
 
     /**
      * Injection of configuration manager
@@ -88,10 +88,14 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
         $fieldSettings = isset($modeSettings[$fieldName]) ? $modeSettings[$fieldName] : false;
 
         $result = '';
-        if ((is_array($fieldSettings)
-                && in_array('Evoweb\SfRegister\Validation\Validator\RequiredValidator', $fieldSettings))
-            || (is_string($fieldSettings)
-                && $fieldSettings == 'Evoweb\SfRegister\Validation\Validator\RequiredValidator')
+        if ((
+                is_array($fieldSettings)
+                && in_array('Evoweb\SfRegister\Validation\Validator\RequiredValidator', $fieldSettings)
+            )
+            || (
+                is_string($fieldSettings)
+                && $fieldSettings == 'Evoweb\SfRegister\Validation\Validator\RequiredValidator'
+            )
         ) {
             $result = $this->renderChildren();
         }

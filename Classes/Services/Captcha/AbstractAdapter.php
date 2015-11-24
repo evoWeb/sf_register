@@ -43,14 +43,14 @@ abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaI
      *
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * Errors
      *
      * @var array
      */
-    protected $errors = array();
+    protected $errors = [];
 
     /**
      * Renders the output of an concrete captcha

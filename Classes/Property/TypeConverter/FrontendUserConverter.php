@@ -45,7 +45,7 @@ class FrontendUserConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\Ab
     /**
      * @var string
      */
-    protected $targetType = 'Evoweb\\SfRegister\\Domain\\Model\\FrontendUser';
+    protected $targetType = \Evoweb\SfRegister\Domain\Model\FrontendUser::class;
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
@@ -72,7 +72,7 @@ class FrontendUserConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\Ab
     public function convertFrom(
         $source,
         $targetType,
-        array $convertedChildProperties = array(),
+        array $convertedChildProperties = [],
         \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration = null
     ) {
         return $this->frontendUserRepository->findByUid($source);

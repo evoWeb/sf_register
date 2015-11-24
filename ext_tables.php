@@ -37,7 +37,7 @@ try {
      *
      * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
      */
-    $cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
+    $cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
     // Reflection cache
     if (!$cacheManager->hasCache(SFREGISTERCACHEIDENTIFIER)) {
         /**
@@ -46,7 +46,7 @@ try {
          * @var \TYPO3\CMS\Core\Cache\CacheFactory $typo3CacheFactory
          */
         $typo3CacheFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            'TYPO3\\CMS\\Core\\Cache\\CacheFactory'
+            \TYPO3\CMS\Core\Cache\CacheFactory::class
         );
         $typo3CacheFactory->create(
             SFREGISTERCACHEIDENTIFIER,

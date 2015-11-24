@@ -93,8 +93,8 @@ class SrFreecapAdapter extends AbstractAdapter
     {
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('sr_freecap')) {
             /** @noinspection PhpIncludeInspection */
-            require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('sr_freecap')
-                . 'pi2/class.tx_srfreecap_pi2.php');
+            require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('sr_freecap') .
+                'pi2/class.tx_srfreecap_pi2.php');
             $this->captcha = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_srfreecap_pi2');
         }
     }
@@ -106,7 +106,8 @@ class SrFreecapAdapter extends AbstractAdapter
      */
     public function render()
     {
-        $this->objectManager->get('Evoweb\\SfRegister\\Services\\Session')->remove('captchaWasValidPreviously');
+        $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)
+            ->remove('captchaWasValidPreviously');
 
         if ($this->captcha !== null) {
             /** @noinspection PhpUndefinedMethodInspection */
@@ -134,7 +135,7 @@ class SrFreecapAdapter extends AbstractAdapter
     {
         $validCaptcha = true;
 
-        $session = $this->objectManager->get('Evoweb\\SfRegister\\Services\\Session');
+        $session = $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class);
         $captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
         if ($this->captcha !== null && $captchaWasValidPreviously !== true) {
             /** @noinspection PhpUndefinedMethodInspection */

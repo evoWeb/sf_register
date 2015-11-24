@@ -51,7 +51,7 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
      *
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * Frontend user repository

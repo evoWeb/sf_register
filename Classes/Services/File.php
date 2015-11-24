@@ -60,7 +60,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * Namespace
@@ -74,7 +74,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var array
      */
-    protected $errors = array();
+    protected $errors = [];
 
     /**
      * Allowed file extensions
@@ -183,7 +183,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function addError($message, $code)
     {
-        $this->errors[] = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Validation\\Error', $message, $code);
+        $this->errors[] = $this->objectManager->get(\TYPO3\CMS\Extbase\Validation\Error::class, $message, $code);
     }
 
     /**
@@ -197,8 +197,9 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
             $frameworkSettings = $this->configurationManager->getConfiguration(
                 \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
             );
-            $this->namespace = strtolower('tx_' . $frameworkSettings['extensionName'] . '_'
-                . $frameworkSettings['pluginName']);
+            $this->namespace = strtolower(
+                'tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']
+            );
         }
 
         return $this->namespace;
@@ -212,7 +213,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
     protected function getUploadedFileInfo()
     {
         $uploadData = $_FILES[$this->getNamespace()];
-        $fileData = array();
+        $fileData = [];
 
         if (is_array($uploadData) && count($uploadData) > 0) {
             $filename = str_replace(chr(0), '', $uploadData['name'][$this->fieldname]);
@@ -226,7 +227,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
                     $filenameParts = GeneralUtility::trimExplode('.', $filename);
                     $extension = array_pop($filenameParts);
                     $filename = md5(mktime() . mt_rand() . $filename . $tmpName
-                            . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) . '.' . $extension;
+                        . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) . '.' . $extension;
                 }
 
                 $fileData = array(
@@ -255,8 +256,12 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
         $fileData = $this->getUploadedFileInfo();
         $filePathinfo = pathinfo($fileData['filename']);
 
-        $result = $this->isAllowedFilesize($fileData['size']) && $result ? true : false;
-        $result = $this->isAllowedFileExtension($filePathinfo['extension']) && $result ? true : false;
+        $result = $this->isAllowedFilesize($fileData['size']) && $result ?
+            true :
+            false;
+        $result = $this->isAllowedFileExtension($filePathinfo['extension']) && $result ?
+            true :
+            false;
 
         return $result;
     }
@@ -326,7 +331,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
 
         if (count($fileData)) {
             /** @var $basicFileFunctions \TYPO3\CMS\Core\Utility\File\BasicFileUtility */
-            $basicFileFunctions = $this->objectManager->get('TYPO3\\CMS\\Core\\Utility\\File\\BasicFileUtility');
+            $basicFileFunctions = $this->objectManager->get(\TYPO3\CMS\Core\Utility\File\BasicFileUtility::Class);
 
             $filename = $basicFileFunctions->cleanFileName($fileData['filename']);
             $uploadFolder = \TYPO3\CMS\Core\Utility\PathUtility::getCanonicalPath(PATH_site . $this->tempFolder);
@@ -381,7 +386,8 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
         if (file_exists($this->tempFolder . '/' . $newFilename)) {
             $this->createUploadFolderIfNotExist($this->uploadFolder);
             /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
-            $folder = ResourceFactory::getInstance()->getFolderObjectFromCombinedIdentifier($this->uploadFolder);
+            $folder = ResourceFactory::getInstance()
+                ->getFolderObjectFromCombinedIdentifier($this->uploadFolder);
 
             /** @var \TYPO3\CMS\Core\Resource\File $file */
             $file = $folder->addFile($this->tempFolder . '/' . $newFilename, null, 'changeName');

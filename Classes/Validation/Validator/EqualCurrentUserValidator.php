@@ -34,7 +34,6 @@ use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
  */
 class EqualCurrentUserValidator extends AbstractValidator implements ValidatorInterface
 {
-
     /**
      * @var bool
      */

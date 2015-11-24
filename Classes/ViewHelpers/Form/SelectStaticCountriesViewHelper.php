@@ -27,12 +27,12 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 /**
  * Viewhelper to render a selectbox with values of static info tables countries
  * <code title="Usage">
- * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
+ * {namespace register=Evoweb\SfRegister\ViewHelpers}
  * <register:form.SelectStaticCountries
  *    name="country" optionLabelField="cnShortDe"/>
  * </code>
  * <code title="Optional label field">
- * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
+ * {namespace register=Evoweb\SfRegister\ViewHelpers}
  * <register:form.SelectStaticCountries
  *    name="country" optionLabelField="cnShortDe"/>
  * </code>
@@ -50,7 +50,7 @@ class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\
 
     /**
      * Initialize arguments. Cant be moved to parent because
-     * of "private $argumentDefinitions = array();"
+     * of "private $argumentDefinitions = [];"
      *
      * @return void
      */
@@ -72,7 +72,7 @@ class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\
             'array',
             'Array with countries allowed to be displayed.',
             false,
-            array()
+            []
         );
         $this->registerArgument(
             'property',

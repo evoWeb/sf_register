@@ -46,7 +46,8 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
          * @var \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
          */
         $query = $this->createQuery();
-        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()
+            ->setRespectStoragePage(false);
 
         $query->matching($query->equals('zn_country_iso_2', $iso2));
 
