@@ -195,7 +195,7 @@
 				</f:then>
 				<f:else>
 					<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry" value="DE"
-						allowedCountries="{0: 'DE', 1: 'AT'}" optionLabelField="cnShortEn" />
+						allowedCountries="{0: 'DE', 1: 'AT'}" optionLabelField="cnShort{register:languageKey(type: 'countries') -> f:format.case(mode: 'capital')}" />
 				</f:else>
 			</f:if>
 		</dd>
@@ -220,6 +220,16 @@
 			<div id="sfrZone_loading" style="display: none;">
 				<f:translate key="zone_loading" />
 			</div>
+		</dd>
+
+		<dt>
+			<f:translate key="language" />
+			<f:render partial="Required" section="Main" arguments="{field: 'language'}" />
+		</dt>
+		<dd>
+			<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'language'}" />
+			<register:form.selectStaticLanguage property="language" value="DE"
+				allowedLanguages="{0: 'de_DE', 1: 'fr_FR'}" optionLabelField="lgName{register:languageKey(type: 'languages') -> f:format.case(mode: 'capital')}" />
 		</dd>
 
 		<dt>

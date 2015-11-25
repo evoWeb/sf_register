@@ -66,6 +66,9 @@
 			<trans-unit id="staticInfoCountry" xml:space="preserve">
 				<source>Country</source>
 			</trans-unit>
+			<trans-unit id="language" xml:space="preserve">
+				<source>Language</source>
+			</trans-unit>
 			<trans-unit id="zone" xml:space="preserve">
 				<source>State/Province</source>
 			</trans-unit>

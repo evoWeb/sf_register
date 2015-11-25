@@ -44,7 +44,7 @@ class StaticCountryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
     /**
-     * Find countries by iso2 codes despection the storage page
+     * Find countries by iso2 codes despecting the storage page
      *
      * @param array $cnIso2
      *
