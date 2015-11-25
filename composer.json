@@ -8,7 +8,7 @@
     "typo3/cms-core": ">=6.2.0,<8.0"
   },
   "replace": {
-    "sf-register": "self.version",
+    "sf_register": "self.version",
     "typo3-ter/sf-register": "self.version"
   },
   "autoload": {
