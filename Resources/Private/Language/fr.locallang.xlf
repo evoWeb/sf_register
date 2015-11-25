@@ -87,6 +87,10 @@
 				<source>Country</source>
 				<target>Pays</target>
 			</trans-unit>
+			<trans-unit id="language" xml:space="preserve">
+				<source>Language</source>
+				<target>Langue</target>
+			</trans-unit>
 			<trans-unit id="zone" xml:space="preserve" approved="yes">
 				<source>State/province</source>
 				<target>Canton/province</target>

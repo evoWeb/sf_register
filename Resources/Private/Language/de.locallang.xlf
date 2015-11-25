@@ -87,6 +87,10 @@
 				<source>Country</source>
 				<target>Land</target>
 			</trans-unit>
+			<trans-unit id="language" xml:space="preserve">
+				<source>Language</source>
+				<target>Sprache</target>
+			</trans-unit>
 			<trans-unit id="zone" xml:space="preserve" approved="yes">
 				<source>State/province</source>
 				<target>Bundesland</target>
