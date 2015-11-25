@@ -431,6 +431,10 @@
 				<source>CAPTCHA extension '%1$s' not installed error</source>
 				<target>Die CAPTCHA Extension '%1$s' ist nicht installiert</target>
 			</trans-unit>
+			<trans-unit id="error_jmrecaptcha" xml:space="preserve" approved="yes">
+				<source>Complete the captcha</source>
+				<target>Sie haben das CAPTCHA nicht korrekt ausgefüllt.</target>
+			</trans-unit>
 			<trans-unit id="error_jmrecaptcha_incorrect-captcha-sol" xml:space="preserve" approved="yes">
 				<source>Incorrect captcha</source>
 				<target>Sie haben das CAPTCHA nicht korrekt eingegeben.</target>

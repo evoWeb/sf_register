@@ -325,6 +325,9 @@
 			<trans-unit id="error_captcha_notinstalled" xml:space="preserve">
 				<source>CAPTCHA extension '%1$s' not installed error</source>
 			</trans-unit>
+			<trans-unit id="error_jmrecaptcha" xml:space="preserve">
+				<source>Complete the captcha</source>
+			</trans-unit>
 			<trans-unit id="error_jmrecaptcha_incorrect-captcha-sol" xml:space="preserve">
 				<source>Incorrect captcha</source>
 			</trans-unit>
