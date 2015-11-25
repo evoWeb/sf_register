@@ -102,8 +102,8 @@ class JmRecaptchaAdapter extends AbstractAdapter
 
             if ($status == false || $status['error'] !== null) {
                 $validCaptcha = false;
-                $this->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_jmrecaptcha_'
-                    . $status['error'], 'SfRegister'), 1307421960);
+                $this->addError(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_jmrecaptcha'
+                    . (isset($status['error']) ? '_' . $status['error'] : ''), 'SfRegister'), 1307421960);
             }
         }
 
