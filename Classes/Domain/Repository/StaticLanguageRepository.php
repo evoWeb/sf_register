@@ -37,7 +37,26 @@ class StaticLanguageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function findAll()
     {
         $query = $this->createQuery();
-        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()
+            ->setRespectStoragePage(false);
+
+        return $query->execute();
+    }
+
+    /**
+     * Find languages by collate locale codes despecting the storage page
+     *
+     * @param array $lgCollateLocale
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
+     */
+    public function findByLgCollateLocale(array $lgCollateLocale)
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()
+            ->setRespectStoragePage(false);
+
+        $query->matching($query->in('lg_collate_locale', $lgCollateLocale));
 
         return $query->execute();
     }

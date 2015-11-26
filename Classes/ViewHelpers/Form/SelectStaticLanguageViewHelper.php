@@ -28,8 +28,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * Viewhelper to render a selectbox with values
  * of static info tables country zones
  * <code title="Usage">
- * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
- * <register:form.SelectStaticLanguage name="language"/>
+ * {namespace register=Evoweb\SfRegister\ViewHelpers}
+ * <register:form.SelectStaticLanguage name="language" allowedLanguages="{0: 'de_DE', 1: 'fr_FR'}"/>
  * </code>
  */
 class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
@@ -45,7 +45,7 @@ class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\S
 
     /**
      * Initialize arguments. Cant be moved to parent because
-     * of "private $argumentDefinitions = array();"
+     * of "private $argumentDefinitions = [];"
      *
      * @return void
      */
@@ -62,6 +62,13 @@ class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\S
         $this->registerArgument('name', 'string', 'Name of input tag');
         $this->registerArgument('value', 'mixed', 'Value of input tag');
         $this->registerArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', false, true);
+        $this->registerArgument(
+            'allowedLanguages',
+            'array',
+            'Array with languages allowed to be displayed.',
+            false,
+            []
+        );
         $this->registerArgument(
             'property',
             'string',
@@ -109,7 +116,13 @@ class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\S
         parent::initialize();
 
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
-            $this->arguments['options'] = $this->languageRepository->findAll();
+            if ($this->hasArgument('allowedLanguages') && count($this->arguments['allowedLanguages'])) {
+                $this->arguments['options'] = $this->languageRepository->findByLgCollateLocale(
+                    $this->arguments['allowedLanguages']
+                );
+            } else {
+                $this->arguments['options'] = $this->languageRepository->findAll();
+            }
         }
     }
 }

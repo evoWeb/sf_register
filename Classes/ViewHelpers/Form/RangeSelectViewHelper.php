@@ -28,7 +28,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * Viewhelper to render a selectbox with values
  * in given steps from start to end value
  * <code title="Usage">
- * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
+ * {namespace register=Evoweb\SfRegister\ViewHelpers}
  * <register:form.rangeSelect property="day" start="1" end="31"/>
  * </code>
  */
@@ -129,13 +129,12 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
      */
     protected function getOptions()
     {
-        $options = array();
+        $options = [];
 
         for ($current = $this->start; $current <= $this->end;) {
             $options[$current] = sprintf('%0' . $this->digits . 's', $current);
 
             $current += $this->step;
-
             if ($current > $this->end) {
                 break;
             }

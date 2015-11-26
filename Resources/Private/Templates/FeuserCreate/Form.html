@@ -195,7 +195,7 @@
 				</f:then>
 				<f:else>
 					<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry" value="DE"
-						allowedCountries="{0: 'DE', 1: 'AT'}" optionLabelField="cnShortEn" />
+						allowedCountries="{0: 'DE', 1: 'AT'}" optionLabelField="cnShort{register:languageKey(type: 'countries') -> f:format.case(mode: 'capital')}" />
 				</f:else>
 			</f:if>
 		</dd>
@@ -220,6 +220,16 @@
 			<div id="sfrZone_loading" style="display: none;">
 				<f:translate key="zone_loading" />
 			</div>
+		</dd>
+
+		<dt>
+			<f:translate key="language" />
+			<f:render partial="Required" section="Main" arguments="{field: 'language'}" />
+		</dt>
+		<dd>
+			<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'language'}" />
+			<register:form.selectStaticLanguage property="language" value="DE"
+				allowedLanguages="{0: 'de_DE', 1: 'fr_FR'}" optionLabelField="lgName{register:languageKey(type: 'languages') -> f:format.case(mode: 'capital')}" />
 		</dd>
 
 		<dt>
@@ -266,19 +276,12 @@
 			<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'image'}" />
 			<f:if condition="{user.image}">
 				<f:then>
-					<f:form.hidden property="image" />
+					<f:form.hidden name="tx_sfregister_form[user][lastName]" value="{user.image.0.uidLocal}" />
 					<f:form.hidden name="temporaryImage" value="{temporaryImage}" />
-					<f:form.hidden name="imagefile" value="{user.image}" />
-					<f:if condition="{temporaryImage}">
-						<f:then>
-							<f:image height="100" width="100c" src="typo3temp/sf_register/{user.image}" alt="{user.firstName} {user.lastName}"
-									 title="{user.firstName} {user.lastName}" />
-						</f:then>
-						<f:else>
-							<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}"
-									 title="{user.firstName} {user.lastName}" />
-						</f:else>
-					</f:if>
+					<f:form.hidden name="imagefile" value="{user.image.0}" />
+					<f:image height="100" width="100c" treatIdAsReference="1"
+						image="{f:if(condition: temporaryImage, then: temporaryImage, else: user.image.0.uidLocal)}"
+						alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
 					<f:form.submit name="removeImage" value="{f:translate(key:'submit_removeImage')}" />
 				</f:then>
 				<f:else>
@@ -295,7 +298,7 @@
 		</dt>
 		<dd>
 			<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'dateOfBirth'}" />
-			<!--<f:form.textfield property="dateOfBirth" />-->
+			<f:form.textfield name="tx_sfregister_form[user][dateOfBirth]" value="{f:format.date(date: '{user.dateOfBirth}', format: '{settings.dateFormat}')}" /><br/>
 			<register:form.rangeSelect start="1" end="31" property="dateOfBirthDay" />
 			-
 			<register:form.rangeSelect start="1" end="12" property="dateOfBirthMonth" />

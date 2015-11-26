@@ -24,6 +24,8 @@ namespace Evoweb\SfRegister\Services;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
 /**
  * Service to handle mail sending
  */
@@ -49,14 +51,14 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * Framework configurations
      *
      * @var array
      */
-    protected $frameworkConfiguration = array();
+    protected $frameworkConfiguration = [];
 
     /**
      * Signal slot dispatcher
@@ -71,7 +73,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * Inject configuration manager
      *
      * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
-     *
      * @return void
      */
     public function injectConfigurationManager(
@@ -92,24 +93,24 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
      * @param string $type
-     *
      * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
      */
     public function sendAdminNotification(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user, $type)
     {
-        if (method_exists($this, 'sendAdminNotification' . $type)) {
-            $user = $this->{'sendAdminNotification' . $type}($user);
+        $method = __FUNCTION__ . $type;
+        if (method_exists($this, $method)) {
+            $user = $this->{$method}($user);
         } else {
             $this->sendEmail(
                 $user,
                 $this->getAdminRecipient(),
                 'adminEmail',
-                $this->getSubject(__FUNCTION__ . $type, $user),
-                $this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__ . $type, $user),
-                $this->renderPlainBody('FeuserCreate', 'form', __FUNCTION__ . $type, $user)
+                $this->getSubject($method, $user),
+                $this->renderBody('FeuserCreate', 'form', $method, $user, 'html'),
+                $this->renderBody('FeuserCreate', 'form', $method, $user, 'txt')
             );
 
-            $user = $this->dispatchSlotSignal(__FUNCTION__ . $type . 'PostSend', $user);
+            $user = $this->dispatchSlotSignal($method . 'PostSend', $user);
         }
 
         return $user;
@@ -120,24 +121,24 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
      * @param string $type
-     *
      * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
      */
     public function sendUserNotification(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user, $type)
     {
-        if (method_exists($this, 'sendUserNotification' . $type)) {
-            $user = $this->{'sendUserNotification' . $type}($user);
+        $method = __FUNCTION__ . $type;
+        if (method_exists($this, $method)) {
+            $user = $this->{$method}($user);
         } else {
             $this->sendEmail(
                 $user,
                 $this->getUserRecipient($user),
                 'userEmail',
-                $this->getSubject(__FUNCTION__ . $type, $user),
-                $this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__ . $type, $user),
-                $this->renderPlainBody('FeuserCreate', 'form', __FUNCTION__ . $type, $user)
+                $this->getSubject($method, $user),
+                $this->renderBody('FeuserCreate', 'form', $method, $user, 'html'),
+                $this->renderBody('FeuserCreate', 'form', $method, $user, 'txt')
             );
 
-            $user = $this->dispatchSlotSignal(__FUNCTION__ . $type . 'PostSend', $user);
+            $user = $this->dispatchSlotSignal($method . 'PostSend', $user);
         }
 
         return $user;
@@ -148,7 +149,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * Send an email notification pre confirmation to the admin
      *
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
      * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
      */
     public function sendAdminNotificationPostCreateSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
@@ -158,8 +158,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             $this->getAdminRecipient(),
             'adminEmail',
             $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__, $user),
-            $this->renderPlainBody('FeuserCreate', 'form', __FUNCTION__, $user)
+            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'html'),
+            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'txt')
         );
 
         return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -169,7 +169,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * Send an email notification pre confirmation to the user
      *
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
      * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
      */
     public function sendUserNotificationPostCreateSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
@@ -179,8 +178,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             $this->getUserRecipient($user),
             'userEmail',
             $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__, $user),
-            $this->renderPlainBody('FeuserCreate', 'form', __FUNCTION__, $user)
+            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'html'),
+            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'txt')
         );
 
         return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -190,7 +189,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * Send an email notification post confirmation to the admin
      *
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
      * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
      */
     public function sendAdminNotificationPostCreateConfirm(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
@@ -200,8 +198,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             $this->getAdminRecipient(),
             'adminEmail',
             $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__, $user),
-            $this->renderPlainBody('FeuserCreate', 'form', __FUNCTION__, $user)
+            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'html'),
+            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'txt')
         );
 
         return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -212,7 +210,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * Send an email notification post edit to the admin
      *
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
      * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
      */
     public function sendAdminNotificationPostEditSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
@@ -222,8 +219,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             $this->getAdminRecipient(),
             'adminEmail',
             $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserEdit', 'form', __FUNCTION__, $user),
-            $this->renderPlainBody('FeuserEdit', 'form', __FUNCTION__, $user)
+            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'html'),
+            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'txt')
         );
 
         return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -233,7 +230,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * Send an email notification post edit to the user
      *
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
      * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
      */
     public function sendUserNotificationPostEditSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
@@ -243,8 +239,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             $this->getUserRecipient($user),
             'userEmail',
             $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserEdit', 'form', __FUNCTION__, $user),
-            $this->renderPlainBody('FeuserEdit', 'form', __FUNCTION__, $user)
+            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'html'),
+            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'txt')
         );
 
         return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -254,7 +250,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * Send an email notification post confirmation to the admin
      *
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
      * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
      */
     public function sendAdminNotificationPostEditConfirm(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
@@ -264,8 +259,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             $this->getAdminRecipient(),
             'adminEmail',
             $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserEdit', 'form', __FUNCTION__, $user),
-            $this->renderPlainBody('FeuserEdit', 'form', __FUNCTION__, $user)
+            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'html'),
+            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'txt')
         );
 
         return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
@@ -277,7 +272,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param string $method
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
      * @return string
      */
     protected function getSubject($method, \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
@@ -296,13 +290,14 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * username and email address
      *
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
      * @return string
      */
     protected function getMailHash(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
     {
-        return md5($GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . $user->getUsername() . $GLOBALS['EXEC_TIME']
-            . $user->getEmail());
+        return md5(
+            $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . $user->getUsername() .
+            $GLOBALS['EXEC_TIME'] . $user->getEmail()
+        );
     }
 
     /**
@@ -321,7 +316,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * Get user recipient
      *
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
      * @return string
      */
     protected function getUserRecipient(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
@@ -347,13 +341,12 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * @param string $subject
      * @param string $bodyHtml
      * @param string $bodyPlain
-     *
      * @return integer the number of recipients who were accepted for delivery
      */
-    protected function sendEmail($user, array $recipient, $typeOfEmail, $subject, $bodyHtml, $bodyPlain = '')
+    protected function sendEmail($user, array $recipient, $typeOfEmail, $subject, $bodyHtml, $bodyPlain)
     {
         /** @var $mail \TYPO3\CMS\Core\Mail\MailMessage */
-        $mail = $this->objectManager->get('TYPO3\\CMS\\Core\\Mail\\MailMessage');
+        $mail = $this->objectManager->get(\TYPO3\CMS\Core\Mail\MailMessage::class);
         $mail->setTo($recipient)
             ->setFrom(array($this->settings[$typeOfEmail]['fromEmail'] => $this->settings[$typeOfEmail]['fromName']))
             ->setSubject($subject);
@@ -378,55 +371,79 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
 
     /**
-     * Get template path and filename
+     * renders the given Template file via fluid rendering engine.
      *
-     * @param string $templateName
-     *
-     * @return string
+     * @param string $controller
+     * @param string $action
+     * @param string $method method calling this function
+     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
+     * @param string $fileExtension
+     * @return string of the rendered View.
      */
-    protected function getHtmlTemplatePathAndFilename($templateName)
+    protected function renderBody($controller, $action, $method, $user, $fileExtension = 'html')
     {
-        $filePath = $this->getAbsoluteTemplateRootPath() . 'Email/' . $templateName . '.html';
+        $templateName = 'Email/' . str_replace('send', '', $method);
+        $variables = array('user' => $user, 'settings' => $this->settings);
 
-        return @is_file($filePath) ? $filePath : '';
+        /** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
+        $view = $this->objectManager->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
+
+        $request = $view->getRequest();
+        $request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
+        $request->setPluginName($this->frameworkConfiguration['pluginName']);
+        $request->setControllerName($controller);
+        $request->setControllerActionName($action);
+        $request->setFormat($fileExtension);
+
+        $view->setLayoutRootPaths($this->getAbsoluteLayoutRootPath());
+        $view->setTemplateRootPaths($this->getAbsoluteTemplateRootPaths());
+        try {
+            $view->setTemplate($templateName);
+            $view->assignMultiple($variables);
+
+            $body = $view->render();
+        } catch (\TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException $e) {
+            $body = '';
+        }
+
+        return $body;
     }
 
     /**
-     * Get template path and filename
+     * Get absolute template root paths
      *
-     * @param string $templateName
-     *
-     * @return string
+     * @return array
      */
-    protected function getPlainTemplatePathAndFilename($templateName)
+    protected function getAbsoluteTemplateRootPaths()
     {
-        $filePath = $this->getAbsoluteTemplateRootPath() . 'Email/' . $templateName . '.txt';
-
-        return @is_file($filePath) ? $filePath : '';
-    }
-
-    /**
-     * Get absolute template root path
-     *
-     * @return string
-     */
-    protected function getAbsoluteTemplateRootPath()
-    {
-        $result = '';
-        $templateRootPath = trim($this->settings['templateRootPath']);
-
-        if ($templateRootPath === '') {
-            $templateRootPath = trim($this->frameworkConfiguration['view']['templateRootPath']);
+        $templateRootPaths = [];
+        if ($this->settings['templateRootPath']) {
+            $templateRootPaths[] = trim($this->settings['templateRootPath']);
         }
 
-        if ($templateRootPath === '') {
-            $templateRootPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('sf_register')
-                . 'Resources/Private/Templates/';
+        if (isset($this->frameworkConfiguration['view'])) {
+            if (isset($this->frameworkConfiguration['view']['templateRootPath'])) {
+                $templateRootPaths[] = $this->frameworkConfiguration['view']['templateRootPath'];
+            }
+
+            if (isset($this->frameworkConfiguration['view']['templateRootPaths'])) {
+                $templateRootPaths = array_merge(
+                    $templateRootPaths,
+                    $this->frameworkConfiguration['view']['templateRootPaths']
+                );
+            }
         }
 
-        $templateRootPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($templateRootPath);
-        if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($templateRootPath)) {
-            $result = $templateRootPath . (substr($templateRootPath, -1) !== '/' ? '/' : '');
+        if (empty($templateRootPaths)) {
+            $templateRootPaths[] = ExtensionManagementUtility::extPath('sf_register') . 'Resources/Private/Templates/';
+        }
+
+        $result = [];
+        foreach ($templateRootPaths as $key => $value) {
+            $value = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName(trim($value));
+            if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($value)) {
+                $result[] = rtrim(trim($value), '/') . '/';
+            }
         }
 
         return $result;
@@ -439,98 +456,37 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function getAbsoluteLayoutRootPath()
     {
-        $result = '';
-        $layoutRootPath = trim($this->settings['layoutRootPath']);
-
-        if ($layoutRootPath === '') {
-            $layoutRootPath = trim($this->frameworkConfiguration['view']['layoutRootPath']);
+        $layoutRootPaths = [];
+        if ($this->settings['layoutRootPath']) {
+            $layoutRootPaths = trim($this->settings['layoutRootPath']);
         }
 
-        if ($layoutRootPath === '') {
-            $layoutRootPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('sf_register')
-                . 'Resources/Private/Layouts/';
+        if (isset($this->frameworkConfiguration['view'])) {
+            if (isset($this->frameworkConfiguration['view']['layoutRootPath'])) {
+                $layoutRootPaths[] = $this->frameworkConfiguration['view']['layoutRootPath'];
+            }
+
+            if (isset($this->frameworkConfiguration['view']['layoutRootPaths'])) {
+                $layoutRootPaths = array_merge(
+                    $layoutRootPaths,
+                    $this->frameworkConfiguration['view']['layoutRootPaths']
+                );
+            }
         }
 
-        $layoutRootPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($layoutRootPath);
-        if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($layoutRootPath)) {
-            $result = rtrim($layoutRootPath, '/') . '/';
+        if (empty($layoutRootPaths)) {
+            $layoutRootPaths[] = ExtensionManagementUtility::extPath('sf_register') . 'Resources/Private/Layouts/';
+        }
+
+        $result = [];
+        foreach ($layoutRootPaths as $key => $value) {
+            $value = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName(trim($value));
+            if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($value)) {
+                $result[] = rtrim(trim($value), '/') . '/';
+            }
         }
 
         return $result;
-    }
-
-
-    /**
-     * renders the given Template file via fluid rendering engine.
-     *
-     * @param string $controller
-     * @param string $action
-     * @param string $method method calling this function
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
-     * @return string of the rendered View.
-     */
-    protected function renderHtmlBody($controller, $action, $method, $user)
-    {
-        $type = str_replace('send', '', $method);
-        $variables = array('user' => $user, 'settings' => $this->settings);
-
-        $filePath = $this->getHtmlTemplatePathAndFilename($type);
-        $htmlBody = '';
-        if ($filePath) {
-            /** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
-            $view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
-            $view->setTemplatePathAndFilename($filePath);
-            $view->setLayoutRootPaths(array($this->getAbsoluteLayoutRootPath()));
-            $view->assignMultiple($variables);
-
-            $request = $view->getRequest();
-            $request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
-            $request->setPluginName($this->frameworkConfiguration['pluginName']);
-            $request->setControllerName($controller);
-            $request->setControllerActionName($action);
-
-            $htmlBody = $view->render();
-        }
-
-        return $htmlBody;
-    }
-
-    /**
-     * renders the given Template file via fluid rendering engine.
-     *
-     * @param string $controller
-     * @param string $action
-     * @param string $method method calling this function
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
-     * @return string of the rendered View.
-     */
-    protected function renderPlainBody($controller, $action, $method, $user)
-    {
-        $type = str_replace('send', '', $method);
-        $variables = array('user' => $user, 'settings' => $this->settings);
-
-        $filePath = $this->getPlainTemplatePathAndFilename($type);
-        $plainBody = '';
-        if ($filePath) {
-            /** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
-            $view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
-            $view->setTemplatePathAndFilename($filePath);
-            $view->setLayoutRootPaths($this->getAbsoluteLayoutRootPath());
-            $view->assignMultiple($variables);
-
-            $request = $view->getRequest();
-            $request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
-            $request->setPluginName($this->frameworkConfiguration['pluginName']);
-            $request->setControllerName($controller);
-            $request->setControllerActionName($action);
-            $request->setFormat('txt');
-
-            $plainBody = $view->render();
-        }
-
-        return $plainBody;
     }
 
 
@@ -539,17 +495,17 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param string $signalName
      * @param object $result
-     *
      * @return mixed
      */
     protected function dispatchSlotSignal($signalName, $result)
     {
         $arguments = array_merge(array_slice(func_get_args(), 2), array($this->settings, $this->objectManager));
 
-        $this->signalSlotDispatcher->dispatch(__CLASS__, $signalName, array(
-                'result' => &$result,
-                'arguments' => $arguments,
-            ));
+        $this->signalSlotDispatcher->dispatch(
+            __CLASS__,
+            $signalName,
+            array('result' => &$result, 'arguments' => $arguments)
+        );
 
         return $result;
     }

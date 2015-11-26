@@ -220,23 +220,24 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     protected $emailNew;
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Evoweb\SfRegister\Domain\Model\FileReference>
-	 */
-	protected $image;
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Evoweb\SfRegister\Domain\Model\FileReference>
+     */
+    protected $image;
 
 
-	/**
-	 * Constructs a new Front-End User
-	 *
-	 * @param string $username
-	 * @param string $password
-	 * @return self
-	 */
-	public function __construct($username = '', $password = '') {
-		parent::__construct($username, $password);
-		$this->image = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-	}
+    /**
+     * Constructs a new Front-End User
+     *
+     * @param string $username
+     * @param string $password
+     * @return self
+     */
+    public function __construct($username = '', $password = '')
+    {
+        parent::__construct($username, $password);
+        $this->image = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
 
     /**
      * Initializes the date of birth if related values
@@ -263,9 +264,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     public function getDisable()
     {
-        return ($this->disable ?
-            true :
-            false);
+        return ($this->disable ? true : false);
     }
 
     /**
@@ -276,9 +275,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     public function setDisable($disable)
     {
-        $this->disable = ($disable ?
-            true :
-            false);
+        $this->disable = ($disable ? true : false);
     }
 
     /**
@@ -388,32 +385,35 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         $this->emailRepeat = trim($emailRepeat);
     }
 
-	/**
-	 * Add an image to the imagelist
-	 *
-	 * @param \Evoweb\SfRegister\Domain\Model\FileReference $image
-	 * @return void
-	 */
-	public function addImage($image) {
-		$this->image->attach($image);
-	}
+    /**
+     * Add an image to the imagelist
+     *
+     * @param \Evoweb\SfRegister\Domain\Model\FileReference|\TYPO3\CMS\Core\Resource\FileReference $image
+     * @return void
+     */
+    public function addImage($image)
+    {
+        $this->image->attach($image);
+    }
 
-	/**
-	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-	 */
-	public function getImages() {
-		return $this->image;
-	}
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getImages()
+    {
+        return $this->image;
+    }
 
-	/**
-	 * Remove an image from the imagelist
-	 *
-	 * @param \Evoweb\SfRegister\Domain\Model\FileReference $image
-	 * @return void
-	 */
-	public function removeImage($image) {
-		$this->image->detach($image);
-	}
+    /**
+     * Remove an image from the imagelist
+     *
+     * @param \Evoweb\SfRegister\Domain\Model\FileReference $image
+     * @return void
+     */
+    public function removeImage($image)
+    {
+        $this->image->detach($image);
+    }
 
     /**
      * Setter for title

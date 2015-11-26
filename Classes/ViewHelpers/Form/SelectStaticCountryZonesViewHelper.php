@@ -28,7 +28,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * Viewhelper to render a selectbox with values
  * of static info tables country zones
  * <code title="Usage">
- * {namespace register=\\Evoweb\\SfRegister\\ViewHelpers}
+ * {namespace register=Evoweb\SfRegister\ViewHelpers}
  * <register:form.SelectStaticCountryZones name="zone" parent="US"/>
  * </code>
  */
@@ -45,7 +45,7 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
 
     /**
      * Initialize arguments. Cant be moved to parent because
-     * of "private $argumentDefinitions = array();"
+     * of "private $argumentDefinitions = [];"
      *
      * @return void
      */

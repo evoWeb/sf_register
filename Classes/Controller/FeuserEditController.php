@@ -42,10 +42,7 @@ class FeuserEditController extends FeuserController
         $originalRequest = $this->request->getOriginalRequest();
         if ((
                 $this->request->hasArgument('user')
-                || (
-                    $originalRequest !== null
-                    && $originalRequest->hasArgument('user')
-                )
+                || ($originalRequest !== null && $originalRequest->hasArgument('user'))
             )
             && \Evoweb\SfRegister\Services\Login::isLoggedIn()
         ) {
@@ -55,8 +52,8 @@ class FeuserEditController extends FeuserController
 
             if ($userData['uid'] == $GLOBALS['TSFE']->fe_user->user['uid']) {
                 /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
-                $propertyMapper = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Property\\PropertyMapper');
-                $user = $propertyMapper->convert($userData, 'Evoweb\\SfRegister\\Domain\\Model\\FrontendUser');
+                $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
+                $user = $propertyMapper->convert($userData, \Evoweb\SfRegister\Domain\Model\FrontendUser::class);
                 $user = $this->moveTempFile($user);
             }
         }
@@ -70,10 +67,11 @@ class FeuserEditController extends FeuserController
             $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
         }
 
-        $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
-                'user' => &$user,
-                'settings' => $this->settings,
-            ));
+        $this->signalSlotDispatcher->dispatch(
+            __CLASS__,
+            __FUNCTION__,
+            array('user' => &$user, 'settings' => $this->settings)
+        );
 
         $this->view->assign('user', $user);
     }
@@ -83,7 +81,6 @@ class FeuserEditController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @validate $user Evoweb.SfRegister:User
-     *
      * @return void
      */
     public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
@@ -94,10 +91,11 @@ class FeuserEditController extends FeuserController
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
 
-        $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
-                'user' => &$user,
-                'settings' => $this->settings,
-            ));
+        $this->signalSlotDispatcher->dispatch(
+            __CLASS__,
+            __FUNCTION__,
+            array('user' => &$user, 'settings' => $this->settings)
+        );
 
         $this->view->assign('user', $user);
     }
@@ -106,7 +104,6 @@ class FeuserEditController extends FeuserController
      * Save action
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-     *
      * @return void
      * @validate $user Evoweb.SfRegister:User
      */
@@ -116,13 +113,8 @@ class FeuserEditController extends FeuserController
         $user = $this->moveTempFile($user);
         $user = $this->moveImageFile($user);
 
-        if ((
-                $this->isNotifyAdmin('PostEditSave')
-                || $this->isNotifyUser('PostEditSave')
-            ) && (
-                $this->settings['confirmEmailPostEdit']
-                || $this->settings['acceptEmailPostEdit']
-            )
+        if (($this->isNotifyAdmin('PostEditSave') || $this->isNotifyUser('PostEditSave'))
+            && ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit'])
         ) {
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $userBeforeEdit */
             $userBeforeEdit = $this->userRepository->findByUid($user->getUid());
@@ -135,16 +127,17 @@ class FeuserEditController extends FeuserController
 
         $user->prepareDateOfBirth();
 
-        $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
-                'user' => &$user,
-                'settings' => &$this->settings,
-            ));
+        $this->signalSlotDispatcher->dispatch(
+            __CLASS__,
+            __FUNCTION__,
+            array('user' => &$user, 'settings' => $this->settings)
+        );
 
         $user = $this->sendEmails($user, 'PostEditSave');
 
         $this->userRepository->update($user);
 
-        $this->objectManager->get('Evoweb\\SfRegister\\Services\\Session')
+        $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)
             ->remove('captchaWasValidPreviously');
 
         if ($this->settings['forwardToEditAfterSave']) {
@@ -160,7 +153,6 @@ class FeuserEditController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
-     *
      * @return void
      */
     public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)
@@ -184,10 +176,11 @@ class FeuserEditController extends FeuserController
                     }
                 }
 
-                $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
-                        'user' => &$user,
-                        'settings' => $this->settings,
-                    ));
+                $this->signalSlotDispatcher->dispatch(
+                    __CLASS__,
+                    __FUNCTION__,
+                    array('user' => &$user, 'settings' => $this->settings)
+                );
 
                 $this->userRepository->update($user);
 
@@ -213,7 +206,6 @@ class FeuserEditController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
-     *
      * @return void
      */
     public function acceptAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)
@@ -235,10 +227,11 @@ class FeuserEditController extends FeuserController
                     $user->setUsername($user->getEmail());
                 }
 
-                $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
-                        'user' => &$user,
-                        'settings' => $this->settings,
-                    ));
+                $this->signalSlotDispatcher->dispatch(
+                    __CLASS__,
+                    __FUNCTION__,
+                    array('user' => &$user, 'settings' => $this->settings)
+                );
 
                 $this->userRepository->update($user);
 

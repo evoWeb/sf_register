@@ -66,6 +66,9 @@
 			<trans-unit id="staticInfoCountry" xml:space="preserve">
 				<source>Country</source>
 			</trans-unit>
+			<trans-unit id="language" xml:space="preserve">
+				<source>Language</source>
+			</trans-unit>
 			<trans-unit id="zone" xml:space="preserve">
 				<source>State/Province</source>
 			</trans-unit>
@@ -324,6 +327,9 @@
 			</trans-unit>
 			<trans-unit id="error_captcha_notinstalled" xml:space="preserve">
 				<source>CAPTCHA extension '%1$s' not installed error</source>
+			</trans-unit>
+			<trans-unit id="error_jmrecaptcha" xml:space="preserve">
+				<source>Complete the captcha</source>
 			</trans-unit>
 			<trans-unit id="error_jmrecaptcha_incorrect-captcha-sol" xml:space="preserve">
 				<source>Incorrect captcha</source>

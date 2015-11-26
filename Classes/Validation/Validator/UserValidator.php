@@ -65,7 +65,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
      *
      * @var array
      */
-    protected $frameworkConfiguration = array();
+    protected $frameworkConfiguration = [];
 
     /**
      * @var \TYPO3\CMS\Extbase\Error\Result
@@ -93,7 +93,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
      *
      * @var array
      */
-    protected $currentValidatorOptions = array();
+    protected $currentValidatorOptions = [];
 
     /**
      * Model that gets validated currently
@@ -131,7 +131,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
      */
     public function validate($object)
     {
-        $messages = new \TYPO3\CMS\Extbase\Error\Result();
+        $messages = $this->objectManager->get(\TYPO3\CMS\Extbase\Error\Result::class);
         if (self::$instancesCurrentlyUnderValidation === null) {
             self::$instancesCurrentlyUnderValidation = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         }
@@ -139,13 +139,16 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
             return $messages;
         }
         if (!$this->canValidate($object)) {
-            $messages->addError(
+            /** @var \TYPO3\CMS\Extbase\Error\Error $error */
+            $error = $this->objectManager->get(
+                \TYPO3\CMS\Extbase\Error\Error::class,
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     'error_notvalidatable',
                     'SfRegister'
                 ),
                 1301599551
             );
+            $messages->addError($error);
 
             return $messages;
         }
@@ -160,13 +163,16 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
         $propertyValidators = $this->getValidationRulesFromSettings();
         foreach ($propertyValidators as $propertyName => $validatorsNames) {
             if (!property_exists($object, $propertyName)) {
-                $messages->addError(
+                /** @var \TYPO3\CMS\Extbase\Error\Error $error */
+                $error = $this->objectManager->get(
+                    \TYPO3\CMS\Extbase\Error\Error::class,
                     \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                         'error_notexists',
                         'SfRegister'
                     ),
                     1301599575
                 );
+                $messages->addError($error);
             } else {
                 $this->currentPropertyName = $propertyName;
                 $propertyValue = $this->getPropertyValue($object, $propertyName);
@@ -192,7 +198,8 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
     protected function checkProperty($value, $validatorNames, \TYPO3\CMS\Extbase\Error\Result $messages)
     {
         foreach ($validatorNames as $validatorName) {
-            $messages->merge($this->getValidator($validatorName)->validate($value));
+            $messages->merge($this->getValidator($validatorName)
+                ->validate($value));
         }
     }
 
@@ -205,8 +212,10 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
      */
     public function canValidate($object)
     {
-        return ($object instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser
-            || $object instanceof \Evoweb\SfRegister\Domain\Model\Password);
+        return (
+            $object instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser
+            || $object instanceof \Evoweb\SfRegister\Domain\Model\Password
+        );
     }
 
     /**
@@ -225,13 +234,13 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
             if ($mode == 'create') {
                 // uid needs to be emtpy if FrontendUser should be valid on creation
                 $rules = array_merge(
-                    array('uid' => '\\Evoweb\\SfRegister\\Validation\\Validator\\EmptyValidator'),
+                    array('uid' => \Evoweb\SfRegister\Validation\Validator\EmptyValidator::class),
                     $rules
                 );
             } elseif ($mode == 'edit') {
                 // add validation that the user to be edited is logged in
                 $rules = array_merge(
-                    array('uid' => '\\Evoweb\\SfRegister\\Validation\\Validator\\EqualCurrentUserValidator'),
+                    array('uid' => \Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator::class),
                     $rules
                 );
             }

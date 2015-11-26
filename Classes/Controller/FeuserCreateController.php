@@ -30,14 +30,6 @@ namespace Evoweb\SfRegister\Controller;
 class FeuserCreateController extends FeuserController
 {
     /**
-     * Usergroup repository
-     *
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
-     * @inject
-     */
-    protected $userGroupRepository = null;
-
-    /**
      * Form action
      *
      * @return void
@@ -57,22 +49,26 @@ class FeuserCreateController extends FeuserController
             }
 
             /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
-            $propertyMapper = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Property\\PropertyMapper');
-            $user = $propertyMapper->convert($userData, 'Evoweb\\SfRegister\\Domain\\Model\\FrontendUser');
+            $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
+            $user = $propertyMapper->convert($userData, \Evoweb\SfRegister\Domain\Model\FrontendUser::class);
             $user = $this->moveTempFile($user);
         } else {
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
-            $user = $this->objectManager->get('Evoweb\\SfRegister\\Domain\\Model\\FrontendUser');
+            $user = $this->objectManager->get(\Evoweb\SfRegister\Domain\Model\FrontendUser::class);
         }
 
         if ($originalRequest !== null && $originalRequest->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
         }
 
-        $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
+        $this->signalSlotDispatcher->dispatch(
+            __CLASS__,
+            __FUNCTION__,
+            array(
                 'user' => &$user,
                 'settings' => $this->settings,
-            ));
+            )
+        );
 
         $this->view->assign('user', $user);
     }
@@ -81,7 +77,6 @@ class FeuserCreateController extends FeuserController
      * Preview action
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-     *
      * @return void
      * @validate $user Evoweb.SfRegister:User
      * -validate $user \Evoweb\SfRegister\Validation\Validator\UserValidator
@@ -96,10 +91,11 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
 
-        $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
-                'user' => &$user,
-                'settings' => $this->settings,
-            ));
+        $this->signalSlotDispatcher->dispatch(
+            __CLASS__,
+            __FUNCTION__,
+            array('user' => &$user, 'settings' => $this->settings)
+        );
 
         $this->view->assign('user', $user);
     }
@@ -108,7 +104,6 @@ class FeuserCreateController extends FeuserController
      * Save action
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-     *
      * @return void
      * @validate $user Evoweb.SfRegister:User
      */
@@ -117,25 +112,29 @@ class FeuserCreateController extends FeuserController
         // if preview step is skiped the temp file isn't moved yet
         $user = $this->moveTempFile($user);
 
-        if ($this->isNotifyUser('PostCreateSave')
-            || $this->isNotifyAdmin('PostCreateSave')
-            && ($this->settings['confirmEmailPostCreate'] || $this->settings['acceptEmailPostCreate'])
-        ) {
+        if ($this->isNotifyUser('PostCreateSave') && $this->settings['confirmEmailPostCreate']) {
             $user->setDisable(true);
-            $user = $this->changeUsergroup($user, 0, (int) $this->settings['usergroupPostSave']);
+            $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostSave']);
+            $type = 'PostCreateConfirm';
+        } elseif ($this->isNotifyAdmin('PostCreateSave') && $this->settings['acceptEmailPostCreate']) {
+            $user->setDisable(true);
+            $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostSave']);
+            $type = 'PostCreateAccept';
         } else {
             $user = $this->moveImageFile($user);
-            $user = $this->changeUsergroup($user, 0, (int) $this->settings['usergroup']);
+            $user = $this->changeUsergroup($user, (int) $this->settings['usergroup']);
+            $type = 'PostCreateSave';
         }
 
         if ($this->settings['useEmailAddressAsUsername']) {
             $user->setUsername($user->getEmail());
         }
 
-        $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
-                'user' => &$user,
-                'settings' => $this->settings,
-            ));
+        $this->signalSlotDispatcher->dispatch(
+            __CLASS__,
+            __FUNCTION__,
+            array('user' => &$user, 'settings' => $this->settings)
+        );
 
         // Persist user to get valid uid
         $plainPassword = $user->getPassword();
@@ -146,14 +145,14 @@ class FeuserCreateController extends FeuserController
 
         // Write back plain password
         $user->setPassword($plainPassword);
-        $user = $this->sendEmails($user, 'PostCreateSave');
+        $user = $this->sendEmails($user, $type);
 
         // Encrypt plain password
         $user->setPassword($this->encryptPassword($user->getPassword(), $this->settings));
         $this->userRepository->update($user);
         $this->persistAll();
 
-        $this->objectManager->get('Evoweb\\SfRegister\\Services\\Session')->remove('captchaWasValidPreviously');
+        $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)->remove('captchaWasValidPreviously');
 
         if ($this->settings['autologinPostRegistration']) {
             $this->autoLogin($user);
@@ -176,9 +175,6 @@ class FeuserCreateController extends FeuserController
         $this->userRepository = $this->objectManager->get(
             'Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository'
         );
-        $this->userGroupRepository = $this->objectManager->get(
-            'TYPO3\\CMS\\Extbase\\Domain\\Repository\\FrontendUserGroupRepository'
-        );
     }
 
     /**
@@ -187,7 +183,6 @@ class FeuserCreateController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
-     *
      * @return void
      */
     public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)
@@ -199,29 +194,24 @@ class FeuserCreateController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            if (!$user->getDisable()
-                || $this->isUserInUserGroups(
-                    $user,
-                    $this->getFollowingUserGroups((int) $this->settings['usergroupPostConfirm'])
-                )
-            ) {
+            if (!$user->getDisable() || $this->isUserInUserGroups(
+                $user,
+                $this->getFollowingUserGroups((int) $this->settings['usergroupPostConfirm'])
+            )) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
-                $user = $this->changeUsergroup(
-                    $user,
-                    (int) $this->settings['usergroupPostSave'],
-                    (int) $this->settings['usergroupPostConfirm']
-                );
+                $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostConfirm']);
                 $user = $this->moveImageFile($user);
 
                 if (!$this->settings['acceptEmailPostCreate']) {
                     $user->setDisable(false);
                 }
 
-                $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
-                        'user' => &$user,
-                        'settings' => $this->settings,
-                    ));
+                $this->signalSlotDispatcher->dispatch(
+                    __CLASS__,
+                    __FUNCTION__,
+                    array('user' => &$user, 'settings' => $this->settings)
+                );
 
                 $this->userRepository->update($user);
 
@@ -246,7 +236,6 @@ class FeuserCreateController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
-     *
      * @return void
      */
     public function refuseAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)
@@ -258,10 +247,11 @@ class FeuserCreateController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
-                    'user' => &$user,
-                    'settings' => $this->settings,
-                ));
+            $this->signalSlotDispatcher->dispatch(
+                __CLASS__,
+                __FUNCTION__,
+                array('user' => &$user, 'settings' => $this->settings)
+            );
 
             $this->userRepository->remove($user);
 
@@ -276,7 +266,6 @@ class FeuserCreateController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
-     *
      * @return void
      */
     public function acceptAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)
@@ -288,26 +277,21 @@ class FeuserCreateController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            if ($user->getActivatedOn()
-                || $this->isUserInUserGroups(
-                    $user,
-                    $this->getFollowingUserGroups((int) $this->settings['usergroupPostAccept'])
-                )
-            ) {
+            if ($user->getActivatedOn() || $this->isUserInUserGroups(
+                $user,
+                $this->getFollowingUserGroups((int) $this->settings['usergroupPostAccept'])
+            )) {
                 $this->view->assign('userAlreadyAccepted', 1);
             } else {
-                $user = $this->changeUsergroup(
-                    $user,
-                    (int) $this->settings['usergroupPostConfirm'],
-                    (int) $this->settings['usergroupPostAccept']
-                );
+                $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostAccept']);
                 $user->setActivatedOn(new \DateTime('now'));
                 $user->setDisable(false);
 
-                $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
-                        'user' => &$user,
-                        'settings' => $this->settings,
-                    ));
+                $this->signalSlotDispatcher->dispatch(
+                    __CLASS__,
+                    __FUNCTION__,
+                    array('user' => &$user, 'settings' => $this->settings)
+                );
 
                 $this->userRepository->update($user);
 
@@ -323,7 +307,6 @@ class FeuserCreateController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
-     *
      * @return void
      */
     public function declineAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)
@@ -335,10 +318,11 @@ class FeuserCreateController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            $this->signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, array(
-                    'user' => &$user,
-                    'settings' => $this->settings,
-                ));
+            $this->signalSlotDispatcher->dispatch(
+                __CLASS__,
+                __FUNCTION__,
+                array('user' => &$user, 'settings' => $this->settings)
+            );
 
             $this->userRepository->remove($user);
 
@@ -346,34 +330,5 @@ class FeuserCreateController extends FeuserController
 
             $this->view->assign('userDeclined', 1);
         }
-    }
-
-    /**
-     * Change usergroup of user after activation
-     *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-     * @param integer $usergroupIdToBeRemoved
-     * @param integer $usergroupIdToAdd
-     *
-     * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
-     */
-    protected function changeUsergroup(
-        \Evoweb\SfRegister\Domain\Model\FrontendUser $user,
-        $usergroupIdToBeRemoved,
-        $usergroupIdToAdd
-    ) {
-        if (intval($usergroupIdToAdd) > 0 && intval($usergroupIdToAdd) != intval($usergroupIdToBeRemoved)) {
-            /** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup $usergroupToAdd */
-            $usergroupToAdd = $this->userGroupRepository->findByUid($usergroupIdToAdd);
-            $user->addUsergroup($usergroupToAdd);
-
-            if (intval($usergroupIdToBeRemoved) > 0) {
-                /** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup $usergroupToRemove */
-                $usergroupToRemove = $this->userGroupRepository->findByUid($usergroupIdToBeRemoved);
-                $user->removeUsergroup($usergroupToRemove);
-            }
-        }
-
-        return $user;
     }
 }

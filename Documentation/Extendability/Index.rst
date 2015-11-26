@@ -107,9 +107,15 @@ After you read that introduction, here is a short example:
 **ext_localconf.php**::
 
 	/** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
-	$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager')
-		->get('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
-	$signalSlotDispatcher->connect('Evoweb\\SfRegister\\Controller\\FeuserCreateController', 'formAction', 'ExampleClassName', 'ExampleMethodName', TRUE);
+	$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class)
+		->get(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+	$signalSlotDispatcher->connect(
+		\Evoweb\SfRegister\Controller\FeuserCreateController::class,
+		'formAction',
+		'ExampleClassName',
+		'ExampleMethodName',
+		TRUE
+	);
 
 
 The code above show how to get an instance of the signal slot dispatcher and

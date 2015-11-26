@@ -37,7 +37,7 @@ class Ajax
      *
      * @var array
      */
-    protected $requestArguments = array();
+    protected $requestArguments = [];
 
     /**
      * Status of the request returned with every response
@@ -58,7 +58,7 @@ class Ajax
      *
      * @var array
      */
-    protected $result = array();
+    protected $result = [];
 
     /**
      * Constructor of the class
@@ -102,7 +102,7 @@ class Ajax
      */
     protected function getZonesByParentId()
     {
-        $zones = array();
+        $zones = [];
         $parent = (int) $this->requestArguments['parent'];
 
         if ($parent) {
@@ -143,7 +143,7 @@ class Ajax
      */
     protected function getZonesByParentIso2Code()
     {
-        $zones = array();
+        $zones = [];
         $parent = strtoupper(preg_replace('/[^A-Za-z]/', '', $this->requestArguments['parent']));
 
         if (strlen($parent)) {
@@ -194,6 +194,6 @@ class Ajax
 
 if (\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('eID')) {
     /** @var \Evoweb\SfRegister\Api\Ajax $ajax */
-    $ajax = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Evoweb\\SfRegister\\Api\\Ajax');
+    $ajax = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Evoweb\SfRegister\Api\Ajax::class);
     $ajax->dispatch();
 }

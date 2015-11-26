@@ -49,7 +49,7 @@ class CaptchaAdapterFactory
      *
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
 
     /**
@@ -77,13 +77,14 @@ class CaptchaAdapterFactory
      */
     public function getCaptchaAdapter($type)
     {
-        $settings = array();
+        $settings = [];
 
         if (array_key_exists($type, $this->settings['captcha'])) {
-            $settings = is_array($this->settings['captcha'][$type]) ? $this->settings['captcha'][$type] : array();
+            $settings = is_array($this->settings['captcha'][$type]) ? $this->settings['captcha'][$type] : [];
 
             $type = is_array($this->settings['captcha'][$type]) ?
-                $this->settings['captcha'][$type]['_typoScriptNodeValue'] : $this->settings['captcha'][$type];
+                $this->settings['captcha'][$type]['_typoScriptNodeValue'] :
+                $this->settings['captcha'][$type];
         } elseif (strpos($type, '_') === false) {
             $type = 'Evoweb\\SfRegister\\Services\\Captcha\\' . ucfirst(strtolower($type)) . 'Adapter';
         }
