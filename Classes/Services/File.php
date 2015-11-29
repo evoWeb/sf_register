@@ -3,19 +3,24 @@ namespace Evoweb\SfRegister\Services;
 
 /***************************************************************
  * Copyright notice
+ *
  * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
+ *
  * This script is part of the TYPO3 project. The TYPO3 project is
  * free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
+ *
  * The GNU General Public License can be found at
  * http://www.gnu.org/copyleft/gpl.html.
+ *
  * This script is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
@@ -84,14 +89,14 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var string
      */
-    protected $tempFolder = 'typo3temp/sf_register';
+    protected $tempFolder = 'sf_register/_temp_/';
 
     /**
      * Upload folder
      *
      * @var string
      */
-    protected $uploadFolder = '';
+    protected $uploadFolder = 'sf_register/';
 
     /**
      * Maximal filesize
@@ -128,36 +133,27 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
 
 
     /**
-     * Getter for temporary folder
-     *
-     * @return string
+     * @return \TYPO3\CMS\Core\Resource\Folder
      */
-    public function getTempFolder()
+    public function getTempFolderObject()
     {
-        return $this->tempFolder;
+        $this->createFolderIfNotExist($this->tempFolder);
+
+        /** @var ResourceFactory $resourceFactory */
+        $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
+        return $resourceFactory->retrieveFileOrFolderObject('1:' . $this->tempFolder);
     }
 
     /**
      * @return \TYPO3\CMS\Core\Resource\Folder
      */
-    public function getTempFolderObject()
+    public function getUploadFolderObject()
     {
-        $uploadFolder = \TYPO3\CMS\Core\Utility\PathUtility::getCanonicalPath(PATH_site . $this->tempFolder);
-        $this->createUploadFolderIfNotExist($uploadFolder);
+        $this->createFolderIfNotExist($this->uploadFolder);
 
         /** @var ResourceFactory $resourceFactory */
         $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
-        return $resourceFactory->retrieveFileOrFolderObject($this->tempFolder);
-    }
-
-    /**
-     * Getter for upload folder
-     *
-     * @return string
-     */
-    public function getUploadFolder()
-    {
-        return $this->uploadFolder;
+        return $resourceFactory->retrieveFileOrFolderObject($this->uploadFolder);
     }
 
     /**
@@ -367,10 +363,10 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
 
             $fileExtension = pathinfo($fileData['filename'], PATHINFO_EXTENSION);
             $filename = uniqid('sf_register') . '.' .  $fileExtension;
+
+            $this->createFolderIfNotExist($this->tempFolder);
+
             $uploadFolder = \TYPO3\CMS\Core\Utility\PathUtility::getCanonicalPath(PATH_site . $this->tempFolder);
-
-            $this->createUploadFolderIfNotExist($uploadFolder);
-
             $uniqueFilename = $basicFileFunctions->getUniqueName($filename, $uploadFolder);
 
             if (GeneralUtility::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
@@ -390,10 +386,11 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return void
      */
-    protected function createUploadFolderIfNotExist($uploadFolder)
+    protected function createFolderIfNotExist($uploadFolder)
     {
+        $uploadFolder = \TYPO3\CMS\Core\Utility\PathUtility::getCanonicalPath($uploadFolder);
         if (!is_dir($uploadFolder)) {
-            GeneralUtility::mkdir($uploadFolder);
+            GeneralUtility::mkdir_deep(PATH_site . 'fileadmin/', $uploadFolder);
         }
     }
 
@@ -410,13 +407,13 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
             return;
         }
 
-            $file = $image->getOriginalResource()->getOriginalFile();
-            try {
-                $file->getStorage()->moveFile($file, $this->imageFolder);
-            } catch (\Exception $e) {
-                GeneralUtility::devLog('Image ' . $file->getName() . ' could not be moved', 'sf_register');
-            }
+        $file = $image->getOriginalResource()->getOriginalFile();
+        try {
+            $file->getStorage()->moveFile($file, $this->imageFolder);
+        } catch (\Exception $e) {
+            GeneralUtility::devLog('Image ' . $file->getName() . ' could not be moved', 'sf_register');
         }
+    }
 
     /**
      * Return image from upload folder
