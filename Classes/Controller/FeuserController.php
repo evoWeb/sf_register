@@ -24,7 +24,8 @@ namespace Evoweb\SfRegister\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Evoweb\SfRegister\Domain\Model\FileReference;
+use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
+use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -109,6 +110,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function initializeAction()
     {
         $this->fileService = $this->objectManager->get(\Evoweb\SfRegister\Services\File::class);
+        if ($this->request->hasArgument('user')) {
+            $this->setTypeConverterConfigurationForImageUpload('user');
+        }
 
         if ($this->settings['processInitializeActionSignal']) {
             $this->signalSlotDispatcher->dispatch(
@@ -150,23 +154,13 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * Remove an image and forward to the action where it was called
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-     * @param string $imagefile
      * @return void
      * @ignorevalidation $user
      */
-    protected function removeImageAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, $imagefile)
+    protected function removeImageAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        if ($this->fileIsTemporary()) {
-            $removedImage = $this->fileService->removeTemporaryFile($imagefile);
-        } else {
-            $removedImage = $this->fileService->removeUploadedImage($imagefile);
-        }
-
-        $user = $this->removeImageFromUserAndRequest($user, $removedImage);
-
-        $requestUser = $this->request->getArgument('user');
-        $requestUser['image'] = $user->getImage();
-        $this->request->setArgument('user', $requestUser);
+        $this->fileService->removeFile($user->getImage());
+        $this->removeImageFromUserAndRequest($user);
 
         $this->request->setArgument('removeImage', false);
 
@@ -201,20 +195,20 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * Remove an image from user object and request object
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-     * @param string $removeImage
      * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
      */
-    protected function removeImageFromUserAndRequest(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, $removeImage)
+    protected function removeImageFromUserAndRequest(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
         if ($user->getUid() !== null) {
+            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $localUser */
             $localUser = $this->userRepository->findByUid($user->getUid());
-            $localUser->removeImage($removeImage);
+            $localUser->removeImage();
             $this->userRepository->update($localUser);
 
             $this->persistAll();
         }
 
-        $user->removeImage($removeImage);
+        $user->removeImage();
 
         $requestUser = $this->request->getArgument('user');
         $requestUser['image'] = $user->getImage();
@@ -229,12 +223,13 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      *
      * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
+     * @deprecated
      */
     protected function moveTempFile($user)
     {
         if (($file = $this->fileService->moveTempFileToTempFolder())) {
             /** @var ResourceFactory $resourceFactory */
-            $resourceFactory = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\ResourceFactory');
+            $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
             $fileReference = $resourceFactory->createFileReferenceObject(array(
                 // uid of image
                 'uid_local' => $file->getUid(),
@@ -244,9 +239,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 'uid' => uniqid('NEW_'),
             ));
             /** @var $image \Evoweb\SfRegister\Domain\Model\FileReference */
-            /*$image = $this->objectManager->get('Evoweb\\SfRegister\\Domain\\Model\\FileReference');
-            $image->setOriginalResource($fileReference);*/
-            $user->addImage($fileReference);
+            $image = $this->objectManager->get(\Evoweb\SfRegister\Domain\Model\FileReference::class);
+            $image->setOriginalResource($fileReference);
+            $user->setImage($image);
         }
 
         return $user;
@@ -258,22 +253,38 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      *
      * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
+     * @deprecated
      */
     protected function moveImageFile($user)
     {
-        $images = $user->getImages();
+        $image = $user->getImage();
 
-        $imagesToMove = array();
-        /** @var FileReference $image */
-        foreach ($images as $image) {
             if ($image->getOriginalResource()->getStorage()->getUid() == 0) {
-                $imagesToMove[] = $image;
+            $this->fileService->moveFileFromTempFolderToUploadFolder($image);
             }
-        }
-
-        $this->fileService->moveFileFromTempFolderToUploadFolder($imagesToMove);
 
         return $user;
+        }
+
+    /**
+     * @param string $argumentName
+     */
+    protected function setTypeConverterConfigurationForImageUpload($argumentName)
+    {
+        /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
+        $folder = $this->fileService->getTempFolderObject();
+
+        /** @var PropertyMappingConfiguration $newExampleConfiguration */
+        $newExampleConfiguration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
+        $newExampleConfiguration->forProperty('image')
+            ->setTypeConverterOptions(
+                UploadedFileReferenceConverter::class,
+                array(
+                    UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
+                        $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
+                    UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER => '1:/content/',
+                )
+            );
     }
 
     /**

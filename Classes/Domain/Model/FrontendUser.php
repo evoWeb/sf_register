@@ -221,23 +221,10 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     protected $emailNew;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Evoweb\SfRegister\Domain\Model\FileReference>
+     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
     protected $image;
 
-
-    /**
-     * Constructs a new Front-End User
-     *
-     * @param string $username
-     * @param string $password
-     * @return self
-     */
-    public function __construct($username = '', $password = '')
-    {
-        parent::__construct($username, $password);
-        $this->image = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-    }
 
     /**
      * Initializes the date of birth if related values
@@ -386,33 +373,34 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     }
 
     /**
-     * Add an image to the imagelist
+     * Get an image
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FileReference|\TYPO3\CMS\Core\Resource\FileReference $image
-     * @return void
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
-    public function addImage($image)
-    {
-        $this->image->attach($image);
-    }
-
-    /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    public function getImages()
+    public function getImage()
     {
         return $this->image;
     }
 
     /**
-     * Remove an image from the imagelist
+     * Set an image
      *
      * @param \Evoweb\SfRegister\Domain\Model\FileReference $image
      * @return void
      */
-    public function removeImage($image)
+    public function setImage($image)
     {
-        $this->image->detach($image);
+        $this->image = $image;
+    }
+
+    /**
+     * Remove an image
+     *
+     * @return void
+     */
+    public function removeImage()
+    {
+        $this->image = null;
     }
 
     /**

@@ -228,6 +228,7 @@ $temporaryColumns = array(
                 'appearance' => array(
                     'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference'
                 ),
+                'maxitems' => 1,
                 'foreign_match_fields' => array(
                     'fieldname' => 'image',
                     'tablenames' => 'fe_users',

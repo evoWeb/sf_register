@@ -274,22 +274,11 @@
 		</dt>
 		<dd>
 			<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'image'}" />
-			<f:if condition="{user.image}">
-				<f:then>
-					<f:form.hidden name="tx_sfregister_form[user][lastName]" value="{user.image.0.uidLocal}" />
-					<f:form.hidden name="temporaryImage" value="{temporaryImage}" />
-					<f:form.hidden name="imagefile" value="{user.image.0}" />
-					<f:image height="100" width="100c" treatIdAsReference="1"
-						image="{f:if(condition: temporaryImage, then: temporaryImage, else: user.image.0.uidLocal)}"
-						alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
-					<f:form.submit name="removeImage" value="{f:translate(key:'submit_removeImage')}" />
-				</f:then>
-				<f:else>
-					<f:form.hidden property="image" value="" />
-					<f:form.hidden name="temporaryImage" value="1" />
-					<f:form.upload name="image" />
-				</f:else>
-			</f:if>
+			<register:form.upload property="image">
+				<f:if condition="{resource}">
+					<f:image image="{resource}" alt="" width="50"/>
+				</f:if>
+			</register:form.upload>
 		</dd>
 
 		<dt>

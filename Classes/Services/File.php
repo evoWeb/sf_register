@@ -19,7 +19,6 @@ namespace Evoweb\SfRegister\Services;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Evoweb\SfRegister\Domain\Model\FileReference;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -139,6 +138,19 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * @return \TYPO3\CMS\Core\Resource\Folder
+     */
+    public function getTempFolderObject()
+    {
+        $uploadFolder = \TYPO3\CMS\Core\Utility\PathUtility::getCanonicalPath(PATH_site . $this->tempFolder);
+        $this->createUploadFolderIfNotExist($uploadFolder);
+
+        /** @var ResourceFactory $resourceFactory */
+        $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
+        return $resourceFactory->retrieveFileOrFolderObject($this->tempFolder);
+    }
+
+    /**
      * Getter for upload folder
      *
      * @return string
@@ -159,7 +171,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
     {
         list($storageUid, $folderIdentifier) = GeneralUtility::trimExplode(':', $imageFolder);
         /** @var ResourceFactory $resourceFactory */
-        $resourceFactory = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\ResourceFactory');
+        $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
         /** @var \TYPO3\CMS\Core\Resource\ResourceStorage $storage */
         $storage = $resourceFactory->getStorageObject($storageUid);
         if ($storage->hasFolder($folderIdentifier)) {
@@ -363,7 +375,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
 
             if (GeneralUtility::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
                 /** @var ResourceFactory $resourceFactory */
-                $resourceFactory = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\ResourceFactory');
+                $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
                 $result = $resourceFactory->retrieveFileOrFolderObject($uniqueFilename);
             }
         }
@@ -388,18 +400,16 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Move an temporary uploaded file to the upload folder
      *
-     * @param array &$imagesToMove
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
      *
      * @return void
      */
-    public function moveFileFromTempFolderToUploadFolder(&$imagesToMove)
+    public function moveFileFromTempFolderToUploadFolder($image)
     {
-        if (!count($imagesToMove)) {
+        if (empty($image)) {
             return;
         }
 
-        /** @var FileReference $image */
-        foreach ($imagesToMove as $image) {
             $file = $image->getOriginalResource()->getOriginalFile();
             try {
                 $file->getStorage()->moveFile($file, $this->imageFolder);
@@ -407,42 +417,18 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
                 GeneralUtility::devLog('Image ' . $file->getName() . ' could not be moved', 'sf_register');
             }
         }
-    }
-
-    /**
-     * Remove temporary file
-     *
-     * @param string $filename
-     *
-     * @return string
-     */
-    public function removeTemporaryFile($filename)
-    {
-        return $this->removeFile($filename, $this->tempFolder);
-    }
-
-    /**
-     * Remove uploaded images
-     *
-     * @param string $filename
-     *
-     * @return string
-     */
-    public function removeUploadedImage($filename)
-    {
-        return $this->removeFile($filename, $this->uploadFolder);
-    }
 
     /**
      * Return image from upload folder
      *
-     * @param string $filename name of the file to remove
-     * @param string $filepath path where the image is stored
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileReference name of the file to remove
      *
      * @return string
      */
-    protected function removeFile($filename, $filepath)
+    public function removeFile($fileReference)
     {
+        $image = $fileReference->getOriginalResource()->getOriginalFile();
+        $folder = $image->getParentFolder();
         $imageNameAndPath = PATH_site . $filepath . '/' . $filename;
 
         if (@file_exists($imageNameAndPath)) {

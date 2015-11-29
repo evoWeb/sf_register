@@ -54,7 +54,8 @@ class FeuserEditController extends FeuserController
                 /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
                 $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
                 $user = $propertyMapper->convert($userData, \Evoweb\SfRegister\Domain\Model\FrontendUser::class);
-                $user = $this->moveTempFile($user);
+                // @todo check if removable
+                //$user = $this->moveTempFile($user);
             }
         }
 
@@ -85,7 +86,8 @@ class FeuserEditController extends FeuserController
      */
     public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        $user = $this->moveTempFile($user);
+        // @todo check if removable
+        // $user = $this->moveTempFile($user);
 
         if ($this->request->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
@@ -110,8 +112,9 @@ class FeuserEditController extends FeuserController
     public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
         // if preview step is skiped the temp file isn't moved yet
-        $user = $this->moveTempFile($user);
-        $user = $this->moveImageFile($user);
+        // @todo check if removable
+        //$user = $this->moveTempFile($user);
+        //$user = $this->moveImageFile($user);
 
         if (($this->isNotifyAdmin('PostEditSave') || $this->isNotifyUser('PostEditSave'))
             && ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit'])
