@@ -40,7 +40,6 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
  */
 class UploadedFileReferenceConverter extends AbstractTypeConverter
 {
-
     /**
      * Folder where the file upload should go to (including storage).
      */

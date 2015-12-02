@@ -51,6 +51,9 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERC
     \Evoweb\SfRegister\Property\TypeConverter\FrontendUserConverter::class
 );
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
+    \Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter::class
+);
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
     \Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter::class
 );
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(

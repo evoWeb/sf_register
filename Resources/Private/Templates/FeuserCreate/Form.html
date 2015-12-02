@@ -287,7 +287,7 @@
 		</dt>
 		<dd>
 			<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'dateOfBirth'}" />
-			<f:form.textfield name="tx_sfregister_form[user][dateOfBirth]" value="{f:format.date(date: '{user.dateOfBirth}', format: '{settings.dateFormat}')}" /><br/>
+			<f:form.textfield name="user[dateOfBirth]" value="{f:format.date(date: '{user.dateOfBirth}', format: '{settings.dateFormat}')}" /><br/>
 			<register:form.rangeSelect start="1" end="31" property="dateOfBirthDay" />
 			-
 			<register:form.rangeSelect start="1" end="12" property="dateOfBirthMonth" />

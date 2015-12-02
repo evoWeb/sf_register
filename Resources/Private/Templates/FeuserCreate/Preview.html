@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+	  xmlns:register="http://www.evoweb.de/ns/SfRegister/ViewHelpers"
 	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 <head>
 	<title>Create preview template of registration</title>
@@ -62,17 +63,11 @@
 	<dd><f:form.hidden property="gtc" /><f:translate key="gtc_checked{user.gtc}"/></dd>
 
 	<dt><f:translate key="image"/></dt>
-	<dd><f:if condition="{user.images}">
-			<f:then>
-				<f:form.hidden name="temporaryImage" value="{temporaryImage}" />
-				<f:for each="{user.images}" as="image">
-					<f:image height="100" width="100c" image="{image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
-				</f:for>
-			</f:then>
-			<f:else>
-				<f:translate key="image_none"/>
-			</f:else>
-		</f:if></dd>
+	<dd><register:form.upload property="image" disabled="disabled">
+			<f:if condition="{resource}">
+				<f:image image="{resource}" alt="" width="50"/>
+			</f:if>
+		</register:form.upload></dd>
 
 	<dt><f:translate key="dateOfBirth" /></dt>
 	<dd>

@@ -24,6 +24,7 @@ namespace Evoweb\SfRegister\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -110,9 +111,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function initializeAction()
     {
         $this->fileService = $this->objectManager->get(\Evoweb\SfRegister\Services\File::class);
-        if ($this->request->hasArgument('user')) {
-            $this->setTypeConverterConfigurationForImageUpload('user');
-        }
+        $this->setTypeConverter('user');
 
         if ($this->settings['processInitializeActionSignal']) {
             $this->signalSlotDispatcher->dispatch(
@@ -269,23 +268,34 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * @param string $argumentName
      */
-    protected function setTypeConverterConfigurationForImageUpload($argumentName)
+    protected function setTypeConverter($argumentName)
     {
-        /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
-        $folder = $this->fileService->getTempFolderObject();
+        if ($this->request->hasArgument($argumentName)) {
+            /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
+            $folder = $this->objectManager->get(\Evoweb\SfRegister\Services\File::class)->getTempFolderObject();
 
-        /** @var PropertyMappingConfiguration $newExampleConfiguration */
-        $newExampleConfiguration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
-        $newExampleConfiguration->forProperty('image')
-            ->setTypeConverterOptions(
-                UploadedFileReferenceConverter::class,
-                array(
-                    UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
-                        $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
-                    UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
-                        $folder->getStorage()->getUid() . ':' . $folder->getIdentifier(),
-                )
-            );
+            /** @var PropertyMappingConfiguration $configuration */
+            $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
+            $configuration->forProperty('image')
+                ->setTypeConverterOptions(
+                    UploadedFileReferenceConverter::class,
+                    array(
+                        UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
+                            $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
+                        UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
+                            $folder->getStorage()->getUid() . ':' . $folder->getIdentifier(),
+                    )
+                );
+
+            $configuration->forProperty('dateOfBirth')
+                ->setTypeConverterOptions(
+                    DateTimeConverter::class,
+                    array(
+                        DateTimeConverter::CONFIGURATION_USER_MODEL =>
+                            $this->request->getArgument($argumentName)
+                    )
+                );
+        }
     }
 
     /**

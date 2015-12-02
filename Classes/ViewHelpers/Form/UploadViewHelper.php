@@ -32,7 +32,6 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  */
 class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelper
 {
-
     /**
      * @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService
      * @inject
@@ -44,6 +43,18 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
      * @inject
      */
     protected $propertyMapper;
+
+    /**
+     * Initialize the arguments.
+     *
+     * @return void
+     * @api
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerTagAttribute('alwaysShowUpload', 'string', 'Wether the upload button should be always shown.');
+    }
 
     /**
      * Render the upload field including possible resource pointer
@@ -65,10 +76,11 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
             if ($resourcePointerValue === null) {
                 // Newly created file reference which is not persisted yet.
                 // Use the file UID instead, but prefix it with "file:" to communicate this to the type converter
-                $resourcePointerValue = 'file:' . $resource->getOriginalResource()
-                        ->getOriginalFile()
-                        ->getUid();
+                $resourcePointerValue = 'file:' . $resource->getOriginalResource()->getOriginalFile()->getUid();
             }
+
+            $this->registerFieldNameForFormTokenGeneration($this->getName() . '[submittedFile][resourcePointer]');
+
             $output .= '<input type="hidden" name="' . $this->getName()
                 . '[submittedFile][resourcePointer]" value="'
                 . htmlspecialchars($this->hashService->appendHmac((string)$resourcePointerValue))
@@ -79,11 +91,12 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
             $this->templateVariableContainer->remove('resource');
         }
 
-        $output .= parent::render();
+        if ($resource === null || ($this->hasArgument('alwaysShowUpload') && $this->arguments['alwaysShowUpload'])) {
+            $output .= parent::render();
+        }
 
         return $output;
     }
-
 
     /**
      * Return a previously uploaded resource.
