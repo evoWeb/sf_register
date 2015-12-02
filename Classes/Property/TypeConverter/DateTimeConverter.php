@@ -37,7 +37,7 @@ class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTi
     /**
      * @var int
      */
-    protected $priority = 50;
+    protected $priority = 0;
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
