@@ -28,11 +28,11 @@
 	</div>
 
 	<div class="form-group">
-		<label for="password"><f:translate key="password" /></label>
+		<label for="sfrPassword"><f:translate key="password" /></label>
 		<f:render partial="Required" section="Main" arguments="{field: 'password'}" />
 		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'password'}" /><br/>
-		<f:form.textfield property="password" id="password" class="form-control" />
-		<div id="bargraph" class="is0"></div>
+		<f:form.textfield property="password" id="sfrPassword" class="form-control" />
+		<iframe frameborder="none" src="/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg" id="bargraph"></iframe>
 	</div>
 
 	<div class="form-group">
@@ -257,11 +257,11 @@
 
 	<div class="clear"></div>
 
-	<div class="form-group">
+	<div class="form-group dateOfBirth">
 		<label for="dateOfBirth"><f:translate key="dateOfBirth" /></label>
 		<f:render partial="Required" section="Main" arguments="{field: 'dateOfBirth'}" />
 		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'dateOfBirth'}" /><br/>
-		<!--<f:form.textfield property="dateOfBirth" />-->
+
 		<register:form.rangeSelect start="1" end="31" property="dateOfBirthDay" />
 		-
 		<register:form.rangeSelect start="1" end="12" property="dateOfBirthMonth" />

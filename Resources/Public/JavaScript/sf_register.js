@@ -9,13 +9,21 @@ function attachToElement(id, event, func) {
 }
 
 function callTestPassword() {
-	var meter = testPassword(this.value);
-
+	var bargraph = document.getElementById('bargraph'),
+		meter = testPassword(this.value),
 		// calculating percent score for sprite
-	var percentScore = Math.min((Math.floor((meter.intScore / 3.4)) * 10), 100);
+		percentScore = Math.min((Math.floor((meter.intScore / 3.4)) * 10), 100) / 10;
 
-		// displaying the sprite
-	document.getElementById("bargraph").className = 'is' + percentScore;
+	// displaying the sprite
+	var count = 0,
+		blinds = (bargraph.contentDocument || bargraph.contentWindow.document).getElementsByClassName('blind');
+
+	for (blindKey in blinds) {
+		if (blinds.hasOwnProperty(blindKey)) {
+			blinds[blindKey].style.display = count < percentScore ? 'none' : 'inherit';
+			count++;
+		}
+	}
 }
 
 var loading = false,
@@ -25,10 +33,13 @@ var loading = false,
 	ajaxRequest;
 
 function changeZone(event) {
-	if (((event.type == 'keyup' && event.keyCode == 40) ||
-			(event.type == 'keyup' && event.keyCode == 38) ||
-			event.type == 'change') &&
-			loading != true) {
+	if ((
+			(event.type == 'keyup' && event.keyCode == 40)
+			|| (event.type == 'keyup' && event.keyCode == 38)
+			|| event.type == 'change'
+		)
+		&& loading != true
+	) {
 		loading = true;
 		var target = event.target || event.srcElement;
 		var countrySelectedValue = target.options[target.selectedIndex].value;
