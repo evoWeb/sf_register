@@ -15,9 +15,81 @@
 #bargraph.is90 { background-position: 0 -63px; }
 #bargraph.is100 { background-position: 0 -70px; }
 
-
-
 #sfrZone_loading {
 	background: transparent url(/typo3/sysext/t3skin/images/spinner/ffffff.gif) no-repeat 4px 1px;
 	padding-left: 24px;
+}
+
+
+.tx_evoweb_sfregister form {
+	overflow: hidden;
+	width: 100%;
+	max-width: 800px;
+}
+
+.tx_evoweb_sfregister .form-group {
+	float: left;
+	width: 48%;
+	margin: 0;
+	min-height: 70px;
+}
+
+.tx_evoweb_sfregister .clear {
+	clear: left;
+	width: 100%;
+	height: 1px;
+}
+
+.tx_evoweb_sfregister .form-group label {
+	float: left;
+}
+
+.tx_evoweb_sfregister .form-control {
+	display: block;
+	width: 90%;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.tx_evoweb_sfregister select.form-control {
+	width: 97%;
+}
+
+.tx_evoweb_sfregister .form-group.checkbox :first-child {
+	margin-top: 18px;
+}
+
+.tx_evoweb_sfregister .form-group.address {
+	width: 34%;
+}
+.tx_evoweb_sfregister .form-group.city {
+	width: 34%;
+	margin-left: 10px;
+}
+
+.tx_evoweb_sfregister .form-group.housenumber {
+	width: 12%;
+	margin-left: 10px;
+}
+.tx_evoweb_sfregister .form-group.zip {
+	width: 12%;
+}
+
+.tx_evoweb_sfregister .form-group.address input,
+.tx_evoweb_sfregister .form-group.city input {
+	width: 87%;
+}
+.tx_evoweb_sfregister .form-group.housenumber input,
+.tx_evoweb_sfregister .form-group.zip input {
+	width: 80%;
+}
+
+.tx_evoweb_sfregister .form-group.captcha {
+	min-height: inherit;
 }
