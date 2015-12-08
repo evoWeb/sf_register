@@ -31,7 +31,7 @@
 		<label for="sfrPassword"><f:translate key="password" /></label>
 		<f:render partial="Required" section="Main" arguments="{field: 'password'}" />
 		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'password'}" /><br/>
-		<f:form.textfield property="password" id="sfrPassword" class="form-control" />
+		<f:form.password property="password" id="sfrPassword" class="form-control" />
 		<iframe frameborder="none" src="/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg" id="bargraph"></iframe>
 	</div>
 
@@ -39,7 +39,7 @@
 		<label for="passwordRepeat"><f:translate key="passwordRepeat" /></label>
 		<f:render partial="Required" section="Main" arguments="{field: 'passwordRepeat'}" />
 		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'passwordRepeat'}" /><br/>
-		<f:form.textfield property="passwordRepeat" id="passwordRepeat" class="form-control" />
+		<f:form.password property="passwordRepeat" id="passwordRepeat" class="form-control" />
 	</div>
 
 	<div class="form-group">
@@ -160,11 +160,11 @@
 		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'country'}" /><br/>
 		<f:if condition="{staticInfoCountry}">
 			<f:then>
-				<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control"
+				<register:form.selectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control"
 					allowedCountries="{0: 'DE', 1: 'AT'}" />
 			</f:then>
 			<f:else>
-				<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control" value="DE"
+				<register:form.selectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control" value="DE"
 					allowedCountries="{0: 'DE', 1: 'AT'}" optionLabelField="cnShort{register:languageKey(type: 'countries') -> f:format.case(mode: 'capital')}" />
 			</f:else>
 		</f:if>
@@ -176,10 +176,10 @@
 		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'zone'}" /><br/>
 		<f:if condition="{staticInfoCountry}">
 			<f:then>
-				<register:form.SelectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="{staticInfoCountry}" />
+				<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="{staticInfoCountry}" />
 			</f:then>
 			<f:else>
-				<register:form.SelectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="DE" />
+				<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="DE" />
 			</f:else>
 		</f:if>
 		<div id="sfrZone_empty" class="form-control-static" style="display: none;">
@@ -226,7 +226,7 @@
 
 	<div class="clear"></div>
 
-	<div class="form-group">
+	<div class="form-group upload">
 		<label for="image"><f:translate key="image" /></label>
 		<f:render partial="Required" section="Main" arguments="{field: 'image'}" />
 		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'image'}" /><br/>
@@ -244,7 +244,7 @@
 		<f:render partial="Required" section="Main" arguments="{field: 'dateOfBirth'}" />
 		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'dateOfBirth'}" /><br/>
 
-		<register:form.rangeSelect start="1" end="31" property="dateOfBirthDay" />
+		<register:form.rangeSelect start="1" end="31" property="dateOfBirthDay" id="dateOfBirth" />
 		-
 		<register:form.rangeSelect start="1" end="12" property="dateOfBirthMonth" />
 		-
@@ -283,7 +283,7 @@
 	<div class="clear"></div>
 
 	<div class="form-group">
-		<f:form.submit class="submit" value="{f:translate(key:'submit_create')}" />
+		<f:form.submit value="{f:translate(key:'submit_create')}" class="btn btn-primary" />
 	</div>
 
 </f:form>

@@ -225,6 +225,12 @@
 			<trans-unit id="image_none" xml:space="preserve">
 				<source>Profile image not uploaded</source>
 			</trans-unit>
+			<trans-unit id="choose_file" xml:space="preserve">
+				<source>Choose File</source>
+			</trans-unit>
+			<trans-unit id="upload" xml:space="preserve">
+				<source>upload</source>
+			</trans-unit>
 			<trans-unit id="edit_saved" xml:space="preserve">
 				<source>Your account was successfully updated</source>
 			</trans-unit>

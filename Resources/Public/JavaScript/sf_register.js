@@ -85,6 +85,10 @@ function XHRResponseSuccess(data) {
 	zone.style.display = 'block';
 }
 
+function uploadFile() {
+	document.getElementById('uploadFile').value = this.value;
+}
+
 function attachEvents() {
 	attachToElement('sfrPassword', 'keyup', callTestPassword);
 
@@ -93,5 +97,6 @@ function attachEvents() {
 	zoneLoading = document.getElementById('sfrZone_loading');
 	attachToElement('sfrCountry', 'change', changeZone);
 	attachToElement('sfrCountry', 'keyup', changeZone);
+	attachToElement('uploadButton', 'change', uploadFile);
 }
 attachEvents();
