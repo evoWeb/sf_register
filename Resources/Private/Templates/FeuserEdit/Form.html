@@ -26,6 +26,8 @@
 		}" />
 	</div>
 
+	<div class="clear"></div>
+
 	<div class="form-group">
 		<label for="firstName"><f:translate key="firstName" /></label>
 		<f:render partial="Required" section="Main" arguments="{field: 'firstName'}" />
@@ -46,6 +48,8 @@
 		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'company'}" /><br/>
 		<f:form.textfield property="company" id="company" class="form-control" />
 	</div>
+
+	<div class="clear"></div>
 
 	<div class="form-group">
 		<label for="email"><f:translate key="email" /></label>
@@ -170,7 +174,7 @@
 	<div class="clear"></div>
 
 	<div class="form-group">
-		<f:form.submit value="{f:translate(key:'submit_create')}" class="btn btn-primary" />
+		<f:form.submit value="{f:translate(key:'submit_update')}" class="btn btn-primary" />
 	</div>
 </f:form>
 <div class="mandatory">
