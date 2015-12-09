@@ -9,40 +9,37 @@
 <f:section name="Main">
 <f:form action="save" name="password">
 	<f:render partial="FormErrors" section="Main" arguments="{for: 'password'}" />
-	<dl>
-		<dt>
-			<f:translate key="oldPassword" />
-			<f:render partial="Required" section="Main" arguments="{field: 'oldPassword'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'password.oldPassword'}" />
-			<f:form.password property="oldPassword" />
-		</dd>
 
-		<dt>
-			<f:translate key="newPassword1" />
-			<f:render partial="Required" section="Main" arguments="{field: 'newPassword1'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'password.password'}" />
-			<f:form.password property="password" value="" id="sfrPassword" />
-			<div id="bargraph" class="is0"></div>
-		</dd>
+	<div class="form-group">
+		<label for="oldPassword"><f:translate key="oldPassword" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'oldPassword'}" />
+		<f:render partial="FieldError" section="Main" arguments="{field: 'password.oldPassword'}" /><br/>
+		<f:form.textfield property="oldPassword" id="oldPassword" class="form-control" />
+	</div>
 
-		<dt>
-			<f:translate key="newPassword2" />
-			<f:render partial="Required" section="Main" arguments="{field: 'newPassword2'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'password.passwordRepeat'}" />
-			<f:form.password property="passwordRepeat" value="" />
-		</dd>
+	<div class="clear"></div>
 
-		<dt>&nbsp;</dt>
-		<dd>
-			<f:form.submit class="submit" value="{f:translate(key:'submit_update')}" />
-		</dd>
-	</dl>
+	<div class="form-group">
+		<label for="sfrPassword"><f:translate key="newPassword1" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'newPassword1'}" />
+		<f:render partial="FieldError" section="Main" arguments="{field: 'password.password'}" /><br/>
+		<f:form.password property="password" value="" id="sfrPassword" class="form-control" />
+		<iframe frameborder="none" src="/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg" id="bargraph"></iframe>
+	</div>
+
+	<div class="form-group">
+		<label for="newPassword2"><f:translate key="newPassword2" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'newPassword2'}" />
+		<f:render partial="FieldError" section="Main" arguments="{field: 'password.newPassword2'}" /><br/>
+		<f:form.password property="passwordRepeat" value="" id="newPassword2" />
+	</div>
+
+	<div class="clear"></div>
+
+	<div class="form-group">
+		<f:form.submit value="{f:translate(key:'submit_update')}" class="btn btn-primary" />
+	</div>
+
 </f:form>
 </f:section>
 </body>

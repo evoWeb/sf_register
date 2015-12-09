@@ -13,167 +13,169 @@
 	<f:render partial="FormErrors" section="Main" arguments="{for: 'user'}" />
 	<f:render partial="FieldError" section="Main" arguments="{field: 'uid'}" />
 
-	<dl>
-		<dt>
-			<f:translate key="title" />
-			<f:render partial="Required" section="Main" arguments="{field: 'title'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'title'}" />
-			<f:form.textfield property="title" />
-		</dd>
+	<div class="form-group">
+		<label for="title"><f:translate key="title" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'title'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'title'}" /><br/>
+		<!--<f:form.textfield property="title" />-->
+		<f:form.select property="title" id="title" class="form-control" options="{
+			none: '{f:translate(key: \'title_none\')}',
+			dr: '{f:translate(key: \'title_dr\')}',
+			prof: '{f:translate(key: \'title_prof\')}',
+			profdr: '{f:translate(key: \'title_profdr\')}'
+		}" />
+	</div>
 
-		<dt>
-			<f:translate key="company" />
-			<f:render partial="Required" section="Main" arguments="{field: 'company'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'company'}" />
-			<f:form.textfield property="company" />
-		</dd>
+	<div class="clear"></div>
 
-		<dt>
-			<f:translate key="lastName" />
-			<f:render partial="Required" section="Main" arguments="{field: 'lastName'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'lastName'}" />
-			<f:form.textfield property="lastName" />
-		</dd>
+	<div class="form-group">
+		<label for="firstName"><f:translate key="firstName" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'firstName'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'firstName'}" /><br/>
+		<f:form.textfield property="firstName" id="firstName" class="form-control" />
+	</div>
 
-		<dt>
-			<f:translate key="firstName" />
-			<f:render partial="Required" section="Main" arguments="{field: 'firstName'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'firstName'}" />
-			<f:form.textfield property="firstName" />
-		</dd>
+	<div class="form-group">
+		<label for="lastName"><f:translate key="lastName" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'lastName'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'lastName'}" /><br/>
+		<f:form.textfield property="lastName" id="lastName" class="form-control" />
+	</div>
 
-		<dt>
-			<f:translate key="email" />
-			<f:render partial="Required" section="Main" arguments="{field: 'email'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'email'}" />
-			<f:form.textfield property="email" />
-		</dd>
+	<div class="form-group">
+		<label for="company"><f:translate key="company" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'company'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'company'}" /><br/>
+		<f:form.textfield property="company" id="company" class="form-control" />
+	</div>
 
-		<dt>
-			<f:translate key="telephone" />
-			<f:render partial="Required" section="Main" arguments="{field: 'telephone'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'telephone'}" />
-			<f:form.textfield property="telephone" />
-		</dd>
+	<div class="clear"></div>
 
-		<dt>
-			<f:translate key="mobilephone" />
-			<f:render partial="Required" section="Main" arguments="{field: 'mobilephone'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'mobilephone'}" />
-			<f:form.textfield property="mobilephone" />
-		</dd>
+	<div class="form-group">
+		<label for="email"><f:translate key="email" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'email'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'email'}" /><br/>
+		<f:form.textfield property="email" id="email" class="form-control" />
+	</div>
 
-		<dt>
-			<f:translate key="fax" />
-			<f:render partial="Required" section="Main" arguments="{field: 'fax'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'fax'}" />
-			<f:form.textfield property="fax" />
-		</dd>
+	<div class="form-group">
+		<label for="telephone"><f:translate key="telephone" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'telephone'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'telephone'}" /><br/>
+		<f:form.textfield property="telephone" id="telephone" class="form-control" />
+	</div>
 
-		<dt>
-			<f:translate key="address" />
-			<f:render partial="Required" section="Main" arguments="{field: 'address'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'address'}" />
-			<f:form.textfield property="address" />
-		</dd>
+	<div class="form-group">
+		<label for="mobilephone"><f:translate key="mobilephone" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'mobilephone'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'mobilephone'}" /><br/>
+		<f:form.textfield property="mobilephone" id="mobilephone" class="form-control" />
+	</div>
 
-		<dt>
-			<f:translate key="zip" />
-			<f:render partial="Required" section="Main" arguments="{field: 'zip'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'zip'}" />
-			<f:form.textfield property="zip" />
-		</dd>
+	<div class="form-group">
+		<label for="fax"><f:translate key="fax" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'fax'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'fax'}" /><br/>
+		<f:form.textfield property="fax" id="fax" class="form-control" />
+	</div>
 
-		<dt>
-			<f:translate key="city" />
-			<f:render partial="Required" section="Main" arguments="{field: 'city'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'city'}" />
-			<f:form.textfield property="city" />
-		</dd>
+	<div class="clear"></div>
 
-		<dt>
-			<f:translate key="country" />
-			<f:render partial="Required" section="Main" arguments="{field: 'country'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'country'}" />
-			<register:form.SelectStaticCountries property="staticInfoCountry" id="sfrCountry"
-				allowedCountries="{0: 'DE', 1: 'AT'}" />
-		</dd>
+	<div class="form-group">
+		<label for="address"><f:translate key="address" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'address'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'address'}" /><br/>
+		<f:form.textfield property="address" id="address" class="form-control" />
+	</div>
 
-		<dt>
-			<f:translate key="zone" />
-			<f:render partial="Required" section="Main" arguments="{field: 'zone'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'zone'}" />
-			<register:form.SelectStaticCountryZones property="zone" id="sfrZone" parent="{staticInfoCountry}" />
-			<div id="sfrZone_empty" style="display: none;">
-				<f:translate key="no_zone_available" />
-			</div>
-			<div id="sfrZone_loading" style="display: none;">
-				<f:translate key="zone_loading" />
-			</div>
-		</dd>
+	<div class="form-group zip">
+		<label for="zip"><f:translate key="zip" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'zip'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'zip'}" /><br/>
+		<f:form.textfield property="zip" id="zip" class="form-control" />
+	</div>
 
-		<dt>
-			<f:translate key="image" />
-			<f:render partial="Required" section="Main" arguments="{field: 'image'}" />
-		</dt>
-		<dd>
-			<f:render partial="FieldError" section="Main" arguments="{field: 'image'}" />
-			<f:if condition="{user.image}">
-				<f:then>
-					<f:form.hidden property="image" />
-					<f:form.hidden name="temporaryImage" value="{temporaryImage}" />
-					<f:form.hidden name="imagefile" value="{user.image}" />
-					<f:if condition="{temporaryImage}">
-						<f:then>
-							<f:image height="100" width="100c" src="typo3temp/sf_register/{user.image}" alt="{user.firstName} {user.lastName}"
-									 title="{user.firstName} {user.lastName}" />
-						</f:then>
-						<f:else>
-							<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}"
-									 title="{user.firstName} {user.lastName}" />
-						</f:else>
-					</f:if>
-					<f:form.submit name="removeImage" value="{f:translate(key:'submit_removeImage')}" />
-				</f:then>
-				<f:else>
-					<f:form.hidden property="image" value="" />
-					<f:form.hidden name="temporaryImage" value="1" />
-					<f:form.upload name="image" />
-				</f:else>
-			</f:if>
-		</dd>
+	<div class="form-group city">
+		<label for="city"><f:translate key="city" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'city'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'city'}" /><br/>
+		<f:form.textfield property="city" id="city" class="form-control" />
+	</div>
 
-		<dt>&nbsp;</dt>
-		<dd>
-			<f:form.submit class="submit" value="{f:translate(key:'submit_update')}" />
-		</dd>
-	</dl>
+	<div class="form-group">
+		<label for="sfrCountry"><f:translate key="country" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'country'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'country'}" /><br/>
+		<f:if condition="{staticInfoCountry}">
+			<f:then>
+				<register:form.selectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control"
+					allowedCountries="{0: 'DE', 1: 'AT'}" />
+			</f:then>
+			<f:else>
+				<register:form.selectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control" value="DE"
+					allowedCountries="{0: 'DE', 1: 'AT'}" optionLabelField="cnShort{register:languageKey(type: 'countries') -> f:format.case(mode: 'capital')}" />
+			</f:else>
+		</f:if>
+	</div>
+
+	<div class="form-group">
+		<label for="sfrZone"><f:translate key="zone" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'zone'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'zone'}" /><br/>
+		<f:if condition="{staticInfoCountry}">
+			<f:then>
+				<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="{staticInfoCountry}" />
+			</f:then>
+			<f:else>
+				<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="DE" />
+			</f:else>
+		</f:if>
+		<div id="sfrZone_empty" class="form-control-static" style="display: none;">
+			<f:translate key="no_zone_available" />
+		</div>
+		<div id="sfrZone_loading" class="form-control-static" style="display: none;">
+			<f:translate key="zone_loading" />
+		</div>
+	</div>
+
+	<div class="form-group upload">
+		<label for="image"><f:translate key="image" /></label>
+		<f:render partial="Required" section="Main" arguments="{field: 'image'}" />
+		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'image'}" /><br/>
+		<f:if condition="{user.image}">
+			<f:then>
+				<f:form.hidden property="image" />
+				<f:form.hidden name="temporaryImage" value="{temporaryImage}" />
+				<f:form.hidden name="imagefile" value="{user.image}" />
+				<f:if condition="{temporaryImage}">
+					<f:then>
+						<f:image height="100" width="100c" src="typo3temp/sf_register/{user.image}" alt="{user.firstName} {user.lastName}"
+								 title="{user.firstName} {user.lastName}" />
+					</f:then>
+					<f:else>
+						<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}"
+								 title="{user.firstName} {user.lastName}" />
+					</f:else>
+				</f:if>
+				<f:form.submit name="removeImage" value="{f:translate(key:'submit_removeImage')}" />
+			</f:then>
+			<f:else>
+				<f:form.hidden property="image" value="" />
+				<f:form.hidden name="temporaryImage" value="1" />
+				<div class="btn btn-primary file-upload">
+					<span>{f:translate(key: 'upload')}</span>
+					<f:form.upload name="image" class="upload" id="uploadButton" />
+				</div>
+				<input id="uploadFile" placeholder="{f:translate(key: 'choose_file')}" disabled="disabled" class="form-control" />
+			</f:else>
+		</f:if>
+	</div>
+
+	<div class="clear"></div>
+
+	<div class="form-group">
+		<f:form.submit value="{f:translate(key:'submit_update')}" class="btn btn-primary" />
+	</div>
 </f:form>
 <div class="mandatory">
 	<f:translate key="info_mandatory_fields" htmlEscape="false" />

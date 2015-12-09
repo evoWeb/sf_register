@@ -299,6 +299,14 @@
 				<source>Profilimage not uploaded</source>
 				<target>Profilbild nicht hochgeladen</target>
 			</trans-unit>
+			<trans-unit id="choose_file" xml:space="preserve">
+				<source>Choose File</source>
+				<target>Datei auswählen</target>
+			</trans-unit>
+			<trans-unit id="upload" xml:space="preserve">
+				<source>upload</source>
+				<target>hochladen</target>
+			</trans-unit>
 			<trans-unit id="edit_saved" xml:space="preserve" approved="yes">
 				<source>Userdata updated</source>
 				<target>Benutzerdaten aktualisiert</target>
