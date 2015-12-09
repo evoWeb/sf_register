@@ -314,3 +314,18 @@ fieldset[disabled] .btn-primary.focus {
 	float: left;
 	width: 61%;
 }
+
+.form-control-static {
+	min-height: 34px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	margin-bottom: 0;
+}
+
+.pull-right {
+	float: right !important;
+}
+
+.pull-left {
+	float: left !important;
+}
