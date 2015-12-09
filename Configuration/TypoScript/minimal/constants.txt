@@ -23,3 +23,8 @@ plugin.tx_sfregister.settings {
 	# cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.emailAddress
 	emailAddress = userEmailfrom@test.local
 }
+
+plugin.tx_sfregister.view {
+	# cat=sf_register.settings/enable/100; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.useOldTemplates
+	useOldTemplates = 0
+}
