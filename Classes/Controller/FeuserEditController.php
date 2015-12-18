@@ -115,6 +115,7 @@ class FeuserEditController extends FeuserController
         // @todo check if removable
         //$user = $this->moveTempFile($user);
         //$user = $this->moveImageFile($user);
+        //$user->prepareDateOfBirth();
 
         if (($this->isNotifyAdmin('PostEditSave') || $this->isNotifyUser('PostEditSave'))
             && ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit'])
@@ -127,8 +128,6 @@ class FeuserEditController extends FeuserController
         } elseif ($this->settings['useEmailAddressAsUsername']) {
             $user->setUsername($user->getEmail());
         }
-
-        $user->prepareDateOfBirth();
 
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,

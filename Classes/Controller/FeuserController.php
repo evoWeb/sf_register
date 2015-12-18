@@ -89,7 +89,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             $action = 'form';
         }
 
-        $this->forward($action);
+        $this->forward($action, null, null, array('user' => $user));
     }
 
     /**
@@ -291,7 +291,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 ->setTypeConverterOptions(
                     DateTimeConverter::class,
                     array(
-                        DateTimeConverter::CONFIGURATION_USER_MODEL =>
+                        DateTimeConverter::CONFIGURATION_USER_DATA =>
                             $this->request->getArgument($argumentName)
                     )
                 );

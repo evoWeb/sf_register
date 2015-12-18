@@ -32,7 +32,6 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  */
 class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\ObjectStorageConverter
 {
-
     /**
      * Take precedence over the available ObjectStorageConverter
      *

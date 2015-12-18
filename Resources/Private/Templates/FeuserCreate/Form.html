@@ -249,6 +249,8 @@
 		<register:form.rangeSelect start="1" end="12" property="dateOfBirthMonth" />
 		-
 		<register:form.rangeSelect start="1960" end="2011" property="dateOfBirthYear" />
+
+		<f:form.hidden name="user[dateOfBirth]" value="{f:format.date(date: '{user.dateOfBirth}', format: '{settings.dateFormat}')}"/>
 	</div>
 
 	<div class="clear"></div>

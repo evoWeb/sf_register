@@ -32,15 +32,15 @@ class FeuserCreateController extends FeuserController
     /**
      * Form action
      *
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     *
      * @return void
      */
-    public function formAction()
+    public function formAction($user = null)
     {
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
         $originalRequest = $this->request->getOriginalRequest();
-        if ($this->request->hasArgument('user')
-            || ($originalRequest !== null && $originalRequest->hasArgument('user'))
-        ) {
+        if ($originalRequest !== null && $originalRequest->hasArgument('user')) {
             $userData = $this->request->hasArgument('user') ?
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');
@@ -53,7 +53,7 @@ class FeuserCreateController extends FeuserController
             $user = $propertyMapper->convert($userData, \Evoweb\SfRegister\Domain\Model\FrontendUser::class);
             // @todo check if removable
             //$user = $this->moveTempFile($user);
-        } else {
+        } elseif ($user == null) {
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
             $user = $this->objectManager->get(\Evoweb\SfRegister\Domain\Model\FrontendUser::class);
         }
@@ -83,7 +83,7 @@ class FeuserCreateController extends FeuserController
         // @todo check if removable
         //$user = $this->moveTempFile($user);
 
-        $user->prepareDateOfBirth();
+        //$user->prepareDateOfBirth();
 
         if ($this->request->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));

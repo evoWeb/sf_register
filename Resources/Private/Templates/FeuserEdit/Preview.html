@@ -92,24 +92,11 @@
 	<div class="form-group upload">
 		<label><f:translate key="image" /></label>
 		<f:form.hidden property="image" />
-		<p class="form-control-static">
-			<f:if condition="{user.image}">
-				<f:then>
-					<f:form.hidden name="temporaryImage" value="{temporaryImage}" />
-					<f:if condition="{temporaryImage}">
-						<f:then>
-							<f:image height="100" width="100c" src="typo3temp/sf_register/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
-						</f:then>
-						<f:else>
-							<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}" title="{user.firstName} {user.lastName}" />
-						</f:else>
-					</f:if>
-				</f:then>
-				<f:else>
-					<f:translate key="image_none"/>
-				</f:else>
+		<register:form.upload property="image" disabled="disabled">
+			<f:if condition="{resource}">
+				<f:image image="{resource}" alt="" width="50"/>
 			</f:if>
-		</p>
+		</register:form.upload>
 	</div>
 
 	<div class="clear"></div>

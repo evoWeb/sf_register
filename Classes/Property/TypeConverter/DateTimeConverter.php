@@ -32,12 +32,12 @@ class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTi
     /**
      * Domain model to get values of
      */
-    const CONFIGURATION_USER_MODEL = 1;
+    const CONFIGURATION_USER_DATA = 1;
 
     /**
      * @var int
      */
-    protected $priority = 0;
+    protected $priority = 2;
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
@@ -74,13 +74,22 @@ class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTi
         }
 
         if (!($date instanceof \DateTime)) {
-            $userModel = $configuration->getConfigurationValue(
-                \Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter::class,
-                self::CONFIGURATION_USER_MODEL
-            );
-
             $date = new \DateTime();
             $date->setTimestamp(strtotime($source));
+        }
+
+        $userData = $configuration->getConfigurationValue(
+            \Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter::class,
+            self::CONFIGURATION_USER_DATA
+        );
+
+        if ((is_array($userData) && !empty($userData))
+            && (isset($userData['dateOfBirthDay']) && !empty($userData['dateOfBirthDay']))
+            && (isset($userData['dateOfBirthMonth']) && !empty($userData['dateOfBirthMonth']))
+            && (isset($userData['dateOfBirthYear']) && !empty($userData['dateOfBirthYear']))) {
+            $date->setTimestamp(strtotime(
+                $userData['dateOfBirthYear'] . '-' . $userData['dateOfBirthMonth'] . '-' . $userData['dateOfBirthDay']
+            ));
         }
 
         return $date;
