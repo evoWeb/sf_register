@@ -22,16 +22,5 @@ CREATE TABLE fe_users (
 	module_sys_dmail_newsletter tinyint(3) unsigned DEFAULT '0' NOT NULL,
 	module_sys_dmail_html tinyint(3) unsigned DEFAULT '0' NOT NULL,
 	module_sys_dmail_category int(10) unsigned DEFAULT '0' NOT NULL,
-	email_new varchar(80) DEFAULT '' NOT NULL,
-
-	custom0 varchar(1) DEFAULT '',
-	custom1 varchar(1) DEFAULT '',
-	custom2 varchar(1) DEFAULT '',
-	custom3 varchar(1) DEFAULT '',
-	custom4 varchar(1) DEFAULT '',
-	custom5 varchar(1) DEFAULT '',
-	custom6 varchar(1) DEFAULT '',
-	custom7 varchar(1) DEFAULT '',
-	custom8 varchar(1) DEFAULT '',
-	custom9 varchar(1) DEFAULT ''
+	email_new varchar(80) DEFAULT '' NOT NULL
 );
