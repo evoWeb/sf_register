@@ -150,9 +150,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
 		$this->request->setArgument('removeImage', FALSE);
 
-		$referrer = $this->request->getInternalArgument('__referrer');
+		$referrer = $this->request->getReferringRequest();
 		if ($referrer !== NULL) {
-			$this->forward($referrer['@action'], $referrer['@controller'], $referrer['@extension'], $this->request->getArguments());
+			$this->forward($referrer->getControllerActionName(), $referrer->getControllerName(), $referrer->getControllerExtensionName(), $this->request->getArguments());
 		}
 	}
 
