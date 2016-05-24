@@ -134,7 +134,15 @@ class Tx_SfRegister_Controller_FeuserController extends Tx_Extbase_MVC_Controlle
 
 		if ($this->request->hasArgument('__referrer')) {
 			$referrer = $this->request->getArgument('__referrer');
-			$this->forward($referrer['actionName'], $referrer['controllerName'], $referrer['extensionName'], $this->request->getArguments());
+			$cryptographyHashService = t3lib_div::makeInstance('Tx_Extbase_Security_Cryptography_HashService');
+			if (method_exists($cryptographyHashService, 'validateAndStripHmac')) {
+				if (isset($referrer['@request'])) {
+					$referrer = unserialize($cryptographyHashService->validateAndStripHmac($referrer['@request']));
+					$this->forward($referrer['actionName'], $referrer['controllerName'], $referrer['extensionName'], $this->request->getArguments());
+				}
+			} else {
+				$this->forward($referrer['actionName'], $referrer['controllerName'], $referrer['extensionName'], $this->request->getArguments());
+			}
 		}
 	}
 
