@@ -40,7 +40,7 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
 			->getQuerySettings()
 			->setRespectStoragePage(FALSE);
 
-		$query->statement('SELECT * FROM static_country_zones WHERE zn_country_iso_2 = ? AND deleted = 0', array($iso2));
+		$query->matching($query->equals('zn_country_iso_2', $iso2));
 
 		return $query->execute();
 	}
