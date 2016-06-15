@@ -83,6 +83,7 @@ $temporaryColumns = array(
         'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone',
         'config' => array(
             'type' => 'select',
+            'renderType' => 'selectSingle',
             'items' => array(
                 array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-12', -12),
                 array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.-11', -11),
@@ -126,8 +127,6 @@ $temporaryColumns = array(
                 array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.13', 13),
                 array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.timezone.I.14', 14),
             ),
-            'size' => 1,
-            'maxitems' => 1,
             'default' => 0,
         )
     ),
@@ -165,6 +164,7 @@ $temporaryColumns = array(
         'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.status',
         'config' => array(
             'type' => 'select',
+            'renderType' => 'selectSingle',
             'items' => array(
                 array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.status.I.0', '0'),
                 array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.status.I.1', '1'),
@@ -172,8 +172,6 @@ $temporaryColumns = array(
                 array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.status.I.3', '3'),
                 array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.status.I.4', '4'),
             ),
-            'size' => 1,
-            'maxitems' => 1,
         )
     ),
     'by_invitation' => array(
