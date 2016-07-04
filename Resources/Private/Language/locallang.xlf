@@ -285,6 +285,9 @@
 			<trans-unit id="account_not_activated" xml:space="preserve" approved="yes">
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is not active.</source>
 			</trans-unit>
+			<trans-unit id="email_already_activated" xml:space="preserve" approved="yes">
+				<source>Your new email is already active.</source>
+			</trans-unit>
 			<trans-unit id="email_successful_activated" xml:space="preserve" approved="yes">
 				<source>Your new email adress was successfully saved.</source>
 			</trans-unit>
