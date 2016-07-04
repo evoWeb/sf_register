@@ -172,8 +172,8 @@ class FeuserEditController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            if (!$user->getDisable()) {
-                $this->view->assign('userAlreadyConfirmed', 1);
+            if ($user->getDisable()) {
+                $this->view->assign('userNotConfirmed', 1);
             } else {
                 if (!$this->settings['acceptEmailPostEdit']) {
                     $user->setEmail($user->getEmailNew());
