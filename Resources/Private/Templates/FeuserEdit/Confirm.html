@@ -11,6 +11,8 @@
 	<f:translate key="account_not_found"/>
 </f:if><f:if condition="{userNotConfirmed}">
 	<f:translate key="account_not_activated" arguments="{0: user.username}" htmlEscape="false"/>
+</f:if><f:if condition="{userAlreadyConfirmed}">
+	<f:translate key="email_already_activated" htmlEscape="false"/>
 </f:if><f:if condition="{userConfirmed}">
 	<f:translate key="email_successful_activated" arguments="{0: user.email}" htmlEscape="false"/>
 </f:if>

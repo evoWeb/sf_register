@@ -379,6 +379,10 @@
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is not active.</source>
 				<target>Der Account &lt;b&gt;%1$s&lt;/b&gt; ist nicht aktiv.</target>
 			</trans-unit>
+			<trans-unit id="email_already_activated" xml:space="preserve" approved="yes">
+				<source>Your new email is already active.</source>
+				<target>Ihre neue E-Mail-Adresse ist bereits aktiv.</target>
+			</trans-unit>
 			<trans-unit id="email_successful_activated" xml:space="preserve" approved="yes">
 				<source>Your new email adress &lt;b&gt;%1$s&lt;/b&gt; was successfully saved.</source>
 				<target>Ihre neue E-Mail-Adresse &lt;b&gt;%1$s&lt;/b&gt; wurden erfolgreich gespeichert.</target>
