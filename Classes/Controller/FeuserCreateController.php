@@ -215,11 +215,15 @@ class FeuserCreateController extends FeuserController
 
                 $this->userRepository->update($user);
 
-                $this->sendEmails($user, 'PostCreateConfirm');
+                if ($this->settings['acceptEmailPostCreate']) {
+                    $this->sendEmails($user, 'PostCreateAccept');
+                } else {
+                    $this->sendEmails($user, 'PostCreateSave');
 
-                if ($this->settings['autologinPostConfirmation']) {
-                    $this->persistAll();
-                    $this->autoLogin($user);
+                    if ($this->settings['autologinPostConfirmation']) {
+                        $this->persistAll();
+                        $this->autoLogin($user);
+                    }
                 }
 
                 if ($this->settings['redirectPostActivationPageId']) {
@@ -295,7 +299,7 @@ class FeuserCreateController extends FeuserController
 
                 $this->userRepository->update($user);
 
-                $this->sendEmails($user, 'PostCreateAccept');
+                $this->sendEmails($user, 'PostCreateSave');
 
                 $this->view->assign('userAccepted', 1);
             }

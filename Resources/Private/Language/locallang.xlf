@@ -412,17 +412,17 @@
 			<trans-unit id="email_admin_salutation" xml:space="preserve">
 				<source>Dear admin</source>
 			</trans-unit>
-			<trans-unit id="email_admin_activate_message" xml:space="preserve">
-				<source>A new account "%1$s" has been requested and you need to activate it.</source>
-			</trans-unit>
 			<trans-unit id="email_admin_activate_link" xml:space="preserve">
 				<source>Activate user account</source>
 			</trans-unit>
-			<trans-unit id="email_admin_account_available" xml:space="preserve">
-				<source>The account "%1$s" is available</source>
+			<trans-unit id="email_admin_account_active" xml:space="preserve">
+				<source>The account "%1$s" is active.</source>
 			</trans-unit>
-			<trans-unit id="email_admin_account_activated" xml:space="preserve">
-				<source>The account "%1$s" was activated</source>
+			<trans-unit id="email_admin_account_confirm" xml:space="preserve">
+				<source>The account "%1$s" has been created. The email needs to be confirmed by the user.</source>
+			</trans-unit>
+			<trans-unit id="email_admin_account_accept" xml:space="preserve">
+				<source>The account "%1$s" needs to be accepted.</source>
 			</trans-unit>
 			<trans-unit id="email_admin_account_edited" xml:space="preserve">
 				<source>The account "%1$s" was edited</source>
@@ -430,17 +430,17 @@
 			<trans-unit id="email_user_salutation" xml:space="preserve">
 				<source>Dear user</source>
 			</trans-unit>
-			<trans-unit id="email_user_activate_message" xml:space="preserve">
-				<source>Your account "%1$s" has been created but needs to be activated.</source>
-			</trans-unit>
 			<trans-unit id="email_user_activate_link" xml:space="preserve">
 				<source>Activate your account</source>
 			</trans-unit>
-			<trans-unit id="email_user_account_available" xml:space="preserve">
-				<source>Your account "%1$s" is now available.</source>
+			<trans-unit id="email_user_account_active" xml:space="preserve">
+				<source>Your account "%1$s" is active.</source>
 			</trans-unit>
-			<trans-unit id="email_user_account_activated" xml:space="preserve">
-				<source>Your account "%1$s" is now active.</source>
+			<trans-unit id="email_user_account_confirm" xml:space="preserve">
+				<source>Your account "%1$s" has been created. The email needs to be confirmed.</source>
+			</trans-unit>
+			<trans-unit id="email_user_account_accept" xml:space="preserve">
+				<source>Your account "%1$s" needs to be activated by the admin.</source>
 			</trans-unit>
 			<trans-unit id="email_user_account_edited" xml:space="preserve">
 				<source>You have edited your account "%1$s".</source>

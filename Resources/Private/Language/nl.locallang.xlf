@@ -479,21 +479,21 @@
 				<source>dear admin</source>
 				<target>beste admin</target>
 			</trans-unit>
-			<trans-unit id="email_admin_activate_message" xml:space="preserve" approved="yes">
-				<source>please activate the account %1$s</source>
-				<target>activeer account %1$s a.u.b.</target>
-			</trans-unit>
 			<trans-unit id="email_admin_activate_link" xml:space="preserve" approved="yes">
 				<source>activate user account</source>
 				<target>activeer gebruikers account</target>
 			</trans-unit>
-			<trans-unit id="email_admin_account_available" xml:space="preserve" approved="yes">
-				<source>the account %1$s is available</source>
-				<target>het account %1$s is beschikbaar</target>
+			<trans-unit id="email_admin_account_active" xml:space="preserve">
+				<source>The account "%1$s" is active.</source>
+				<target>De account "%1$s" actief is.</target>
 			</trans-unit>
-			<trans-unit id="email_admin_account_activated" xml:space="preserve" approved="yes">
-				<source>the account %1$s was activated</source>
-				<target>het account %1$s is geactiveerd</target>
+			<trans-unit id="email_admin_account_confirm" xml:space="preserve">
+				<source>The account "%1$s" has been created. The email needs to be confirmed by the user.</source>
+				<target>De account "%1$s" is aangemaakt. E dient te worden bevestigd door de gebruiker.</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_accept" xml:space="preserve">
+				<source>The account "%1$s" needs to be accepted.</source>
+				<target>De account "%1$s" moet worden aanvaard.</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_edited" xml:space="preserve" approved="yes">
 				<source>the account %1$s was edited</source>
@@ -503,21 +503,21 @@
 				<source>dear user</source>
 				<target>beste gebruiker</target>
 			</trans-unit>
-			<trans-unit id="email_user_activate_message" xml:space="preserve" approved="yes">
-				<source>please activate your account %1$s</source>
-				<target>activeer je account %1$s a.u.b.</target>
-			</trans-unit>
 			<trans-unit id="email_user_activate_link" xml:space="preserve" approved="yes">
 				<source>activate your account</source>
 				<target>activeer je account</target>
 			</trans-unit>
-			<trans-unit id="email_user_account_available" xml:space="preserve" approved="yes">
-				<source>your account %1$s is now available</source>
-				<target>je account %1$s is nu beschikbaar</target>
+			<trans-unit id="email_user_account_active" xml:space="preserve">
+				<source>Your account "%1$s" is active.</source>
+				<target>Je account "%1$s" actief is.</target>
 			</trans-unit>
-			<trans-unit id="email_user_account_activated" xml:space="preserve" approved="yes">
-				<source>your account %1$s is now active</source>
-				<target>je account %1$s is nu actief</target>
+			<trans-unit id="email_user_account_confirm" xml:space="preserve">
+				<source>Your account "%1$s" has been created. The email needs to be confirmed.</source>
+				<target>Je account "%1$s" is aangemaakt. E dient te worden bevestigd.</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_accept" xml:space="preserve">
+				<source>Your account "%1$s" needs to be activated by the admin.</source>
+				<target>Je account "%1$s" moet worden geactiveerd door de admin.</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_edited" xml:space="preserve" approved="yes">
 				<source>you have edited your account %1$s</source>
