@@ -1,0 +1,19 @@
+{
+  "name": "evoweb/sf-register",
+  "type": "typo3-cms-extension",
+  "description": "Frontend User Registration: Offers the possibility to maintain the fe_user data in frontend by the user self.",
+  "license": ["GPL-2.0+"],
+  "keywords": ["TYPO3 CMS"],
+  "require": {
+    "typo3/cms-core": ">=6.2.0,<8.0"
+  },
+  "replace": {
+    "sf_register": "self.version",
+    "typo3-ter/sf-register": "self.version"
+  },
+  "autoload": {
+    "psr-4": {
+      "Evoweb\\SfRegister\\": "Classes"
+    }
+  }
+}
