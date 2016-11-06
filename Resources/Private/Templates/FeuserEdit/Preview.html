@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+	  xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 <head>
 	<title>Edit preview template of registration</title>
@@ -91,7 +92,6 @@
 
 	<div class="form-group upload">
 		<label><f:translate key="image" /></label>
-		<f:form.hidden property="image" />
 		<register:form.upload property="image" disabled="disabled">
 			<f:if condition="{resource}">
 				<f:image image="{resource}" alt="" width="50"/>

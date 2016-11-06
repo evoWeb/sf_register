@@ -118,7 +118,6 @@
 
 	<div class="form-group upload">
 		<label><f:translate key="image" /></label>
-		<f:form.hidden property="image" />
 		<register:form.upload property="image" disabled="disabled">
 			<f:if condition="{resource}">
 				<f:image image="{resource}" alt="" width="50"/>
