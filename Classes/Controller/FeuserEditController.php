@@ -120,8 +120,16 @@ class FeuserEditController extends FeuserController
         if (($this->isNotifyAdmin('PostEditSave') || $this->isNotifyUser('PostEditSave'))
             && ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit'])
         ) {
+            // Remove user object from session to fetch it really from database
+            $session = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Session');
+            $session->unregisterObject($user);
+
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $userBeforeEdit */
             $userBeforeEdit = $this->userRepository->findByUid($user->getUid());
+
+            // Now remove the fresh fetched and add the updated one to make it known again
+            $session->unregisterObject($userBeforeEdit);
+            $session->registerObject($user);
 
             $user->setEmailNew($user->getEmail());
             $user->setEmail($userBeforeEdit->getEmail());
@@ -166,7 +174,10 @@ class FeuserEditController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            if (!$user->getDisable()) {
+            $userEmailNew = $user->getEmailNew();
+            if ($user->getDisable()) {
+                $this->view->assign('userNotConfirmed', 1);
+            } elseif (empty($userEmailNew)) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
                 if (!$this->settings['acceptEmailPostEdit']) {

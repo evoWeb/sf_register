@@ -19,8 +19,8 @@ Extendability
 Adding custom fields
 --------------------
 
-Since late the frontend user domain model can be extended. This can be done the extension 'extender'
-which sole purpose is to extend extbase domain models.
+Since late the frontend user domain model can be extended. This can be done the extension 'extender_'
+which sole purpose is to extend extbase domain models. There is an example_ on how to use the extender.
 
 If you run into problems extending please be aware that the only solution supported is by the use of 'extender'.
 
@@ -217,3 +217,8 @@ Evoweb\\SfRegister\\Services\\
 
 Bring in your own captcha
 -------------------------
+
+
+
+.. _extender: https://github.com/evoWeb/extender
+.. _example: https://github.com/evoWeb/ew_sfregister_extended

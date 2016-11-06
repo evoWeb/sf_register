@@ -230,6 +230,7 @@
 		<label for="image"><f:translate key="image" /></label>
 		<f:render partial="Required" section="Main" arguments="{field: 'image'}" />
 		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'image'}" /><br/>
+
 		<register:form.upload property="image">
 			<f:if condition="{resource}">
 				<f:image image="{resource}" alt="" width="50"/>
@@ -249,8 +250,6 @@
 		<register:form.rangeSelect start="1" end="12" property="dateOfBirthMonth" />
 		-
 		<register:form.rangeSelect start="1960" end="2011" property="dateOfBirthYear" />
-
-		<f:form.hidden name="user[dateOfBirth]" value="{f:format.date(date: '{user.dateOfBirth}', format: '{settings.dateFormat}')}"/>
 	</div>
 
 	<div class="clear"></div>
