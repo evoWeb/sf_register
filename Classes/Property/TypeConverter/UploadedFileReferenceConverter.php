@@ -265,7 +265,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     /**
      * @param FalFile $file
      * @param int $resourcePointer
-     * @return \Evoweb\SfRegister\Domain\Model\FileReference
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
     protected function createFileReferenceFromFalFileObject(FalFile $file, $resourcePointer = null)
     {
@@ -284,15 +284,15 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     /**
      * @param FalFileReference $falFileReference
      * @param int $resourcePointer
-     * @return \Evoweb\SfRegister\Domain\Model\FileReference
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
     protected function createFileReferenceFromFalFileReferenceObject(
         FalFileReference $falFileReference,
         $resourcePointer = null
     ) {
         if ($resourcePointer === null) {
-            /** @var $fileReference \Evoweb\SfRegister\Domain\Model\FileReference */
-            $fileReference = $this->objectManager->get(\Evoweb\SfRegister\Domain\Model\FileReference::class);
+            /** @var $fileReference \TYPO3\CMS\Extbase\Domain\Model\FileReference */
+            $fileReference = $this->objectManager->get(\TYPO3\CMS\Extbase\Domain\Model\FileReference::class);
         } else {
             $fileReference = $this->persistenceManager->getObjectByIdentifier(
                 $resourcePointer,

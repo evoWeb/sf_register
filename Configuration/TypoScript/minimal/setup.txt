@@ -220,10 +220,5 @@ config.tx_extbase {
 				tableName = static_languages
 			}
 		}
-		Evoweb\SfRegister\Domain\Model\FileReference {
-			mapping {
-				tableName = sys_file_reference
-			}
-		}
 	}
 }

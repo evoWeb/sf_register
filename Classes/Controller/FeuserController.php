@@ -237,8 +237,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 // uid of reference
                 'uid' => uniqid('NEW_'),
             ));
-            /** @var $image \Evoweb\SfRegister\Domain\Model\FileReference */
-            $image = $this->objectManager->get(\Evoweb\SfRegister\Domain\Model\FileReference::class);
+            /** @var $image \TYPO3\CMS\Extbase\Domain\Model\FileReference */
+            $image = $this->objectManager->get(\TYPO3\CMS\Extbase\Domain\Model\FileReference::class);
             $image->setOriginalResource($fileReference);
             $user->setImage($image);
         }

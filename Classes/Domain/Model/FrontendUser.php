@@ -385,7 +385,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     /**
      * Set an image
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FileReference $image
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
      * @return void
      */
     public function setImage($image)
