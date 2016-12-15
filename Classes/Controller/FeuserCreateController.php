@@ -48,9 +48,24 @@ class FeuserCreateController extends FeuserController
                 unset($userData['uid']);
             }
 
+            $propertyMappingConfiguration = $this->objectManager->get(
+                'TYPO3\\CMS\\Extbase\\Property\\PropertyMappingConfiguration'
+            );
+            $propertyMappingConfiguration->allowAllProperties();
+            $propertyMappingConfiguration->forProperty('usergroup')->allowAllProperties();
+            $propertyMappingConfiguration->setTypeConverterOption(
+                'TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter',
+                \TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+                true
+            );
+
             /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
-            $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
-            $user = $propertyMapper->convert($userData, \Evoweb\SfRegister\Domain\Model\FrontendUser::class);
+            $propertyMapper = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Property\\PropertyMapper');
+            $user = $propertyMapper->convert(
+                $userData,
+                'Evoweb\\SfRegister\\Domain\\Model\\FrontendUser',
+                $propertyMappingConfiguration
+            );
             $user = $this->moveTempFile($user);
         } else {
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
