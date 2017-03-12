@@ -176,7 +176,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
             } else {
                 $this->currentPropertyName = $propertyName;
                 $propertyValue = $this->getPropertyValue($object, $propertyName);
-                $this->checkProperty($propertyValue, (array) $validatorsNames, $messages->forProperty($propertyName));
+                $this->checkUserProperty($propertyValue, (array) $validatorsNames, $messages->forProperty($propertyName));
             }
         }
 
@@ -195,7 +195,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
      *
      * @return void
      */
-    protected function checkProperty($value, $validatorNames, \TYPO3\CMS\Extbase\Error\Result $messages)
+    protected function checkUserProperty($value, $validatorNames, \TYPO3\CMS\Extbase\Error\Result $messages)
     {
         foreach ($validatorNames as $validatorName) {
             $messages->merge($this->getValidator($validatorName)
