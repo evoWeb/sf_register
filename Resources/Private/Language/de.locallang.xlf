@@ -572,7 +572,7 @@
 			</trans-unit>
 			<trans-unit id="email_user_activate_message" xml:space="preserve" approved="yes">
 				<source>please activate your account %1$s</source>
-				<target>bitte aktivierren Sie Ihren Account %1$s</target>
+				<target>bitte aktivieren Sie Ihren Account %1$s</target>
 			</trans-unit>
 			<trans-unit id="email_user_activate_link" xml:space="preserve" approved="yes">
 				<source>activate your account</source>
