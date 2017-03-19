@@ -63,13 +63,6 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     protected $defaultUploadFolder = '1:/user_upload/';
 
     /**
-     * One of 'cancel', 'replace', 'changeName'
-     *
-     * @var string
-     */
-    protected $defaultConflictMode = 'changeName';
-
-    /**
      * @var array<string>
      */
     protected $sourceTypes = array('array');
@@ -84,7 +77,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      *
      * @var integer
      */
-    protected $priority = 2;
+    protected $priority = 31;
 
     /**
      * @var \TYPO3\CMS\Core\Resource\ResourceFactory
@@ -244,10 +237,15 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             self::CONFIGURATION_UPLOAD_FOLDER
         ) ?: $this->defaultUploadFolder;
 
+        if (class_exists('TYPO3\\CMS\\Core\\Resource\\DuplicationBehavior')) {
+            $defaultConflictMode = \TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME;
+        } else {
+            // @deprecated since 7.6 will be removed once 6.2 support is removed
+            $defaultConflictMode = 'changeName';
+        }
         $conflictMode = $configuration->getConfigurationValue(
             \Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter::class,
-            self::CONFIGURATION_UPLOAD_CONFLICT_MODE
-        ) ?: $this->defaultConflictMode;
+            self::CONFIGURATION_UPLOAD_CONFLICT_MODE) ?: $defaultConflictMode;
 
         $uploadFolder = $this->resourceFactory->retrieveFileOrFolderObject($uploadFolderId);
         $uploadedFile = $uploadFolder->addUploadedFile($uploadInfo, $conflictMode);
