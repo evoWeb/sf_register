@@ -103,10 +103,10 @@
 
 	<div class="form-group">
 		<label><f:translate key="dateOfBirth" /></label>
-		<f:form.hidden property="dateOfBirthDay" value="{f:format.date(date: '{user.dateOfBirth}', format: 'd')}"/>
-		<f:form.hidden property="dateOfBirthMonth" value="{f:format.date(date: '{user.dateOfBirth}', format: 'm')}"/>
-		<f:form.hidden property="dateOfBirthYear" value="{f:format.date(date: '{user.dateOfBirth}', format: 'Y')}"/>
-		<p class="form-control-static">{f:format.date(date: '{user.dateOfBirth}', format: '{settings.dateFormat}')}</p>
+		<f:form.hidden property="dateOfBirthDay" value="{f:format.date(date: user.dateOfBirth, format: 'd')}"/>
+		<f:form.hidden property="dateOfBirthMonth" value="{f:format.date(date: user.dateOfBirth, format: 'm')}"/>
+		<f:form.hidden property="dateOfBirthYear" value="{f:format.date(date: user.dateOfBirth, format: 'Y')}"/>
+		<p class="form-control-static">{f:format.date(date: user.dateOfBirth, format: settings.dateFormat)}</p>
 	</div>
 
 	<div class="clear"></div>
