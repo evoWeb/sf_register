@@ -220,18 +220,11 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     protected $emailNew;
 
-
     /**
-     * Constructs a new Front-End User
-     *
-     * @param string $username
-     * @param string $password
-     * @return self
+     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
-    public function __construct($username = '', $password = '')
-    {
-        parent::__construct($username, $password);
-    }
+    protected $image;
+
 
     /**
      * Initializes the date of birth if related values
@@ -258,9 +251,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     public function getDisable()
     {
-        return ($this->disable ?
-            true :
-            false);
+        return ($this->disable ? true : false);
     }
 
     /**
@@ -271,9 +262,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     public function setDisable($disable)
     {
-        $this->disable = ($disable ?
-            true :
-            false);
+        $this->disable = ($disable ? true : false);
     }
 
     /**
@@ -384,58 +373,34 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     }
 
     /**
-     * Add an image to the imagelist
+     * Get an image
      *
-     * @param string $image
-     * @return void
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
-    public function addImage($image)
+    public function getImage()
     {
-        $imageList = $this->getImageList();
-
-        if (!in_array($image, $imageList)) {
-            $imageList = array_merge($imageList, array($image));
-        }
-
-        $this->setImageList($imageList);
+        return $this->image;
     }
 
     /**
-     * Remove an image from the imagelist
+     * Set an image
      *
-     * @param string $image
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
      * @return void
      */
-    public function removeImage($image)
+    public function setImage($image)
     {
-        $imageList = $this->getImageList();
-
-        if (in_array($image, $imageList)) {
-            $imageList = array_diff($imageList, array($image));
-        }
-
-        $this->setImageList($imageList);
+        $this->image = $image;
     }
 
     /**
-     * Get an image list
+     * Remove an image
      *
-     * @return array
-     */
-    public function getImageList()
-    {
-        return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->image, true);
-    }
-
-    /**
-     * Set an image list
-     *
-     * @param array $imageList
      * @return void
      */
-    public function setImageList($imageList)
+    public function removeImage()
     {
-        $this->image = implode(',', $imageList);
+        $this->image = null;
     }
 
     /**

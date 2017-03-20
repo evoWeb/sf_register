@@ -40,7 +40,7 @@ $temporaryColumns = array(
             'type' => 'radio',
             'items' => array(
                 array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.gender.I.1', '1'),
-                array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.gender.I.2', '2'),
+                array('LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.gender.I.2', '2')
             ),
         )
     ),
@@ -215,6 +215,26 @@ $temporaryColumns = array(
         'config' => array(
             'type' => 'check'
         )
+    ),
+    'image' => array(
+        'exclude' => 1,
+        'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.image',
+        'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+            'image',
+            array(
+                'type' => 'inline',
+                'appearance' => array(
+                    'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:images.addFileReference'
+                ),
+                'maxitems' => 1,
+                'foreign_match_fields' => array(
+                    'fieldname' => 'image',
+                    'tablenames' => 'fe_users',
+                    'table_local' => 'sys_file',
+                ),
+            ),
+            $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+        ),
     ),
 );
 

@@ -76,7 +76,7 @@ Reference
 
 plugin.tx\_sfregister.settings:
 
-.. field-list-table::
+.. container:: table-row
 
  - :Property:
          useDataOfLoggedinFeuser
@@ -247,7 +247,7 @@ plugin.tx\_sfregister.settings:
 
 
 
-  - :Property:
+ - :Property:
          filefieldname
 
    :Data type:
@@ -291,8 +291,7 @@ plugin.tx\_sfregister.settings:
 
 plugin.tx\_sfregister.persistence:
 
-.. field-list-table::
- :header-rows: 1
+.. container:: table-row
 
  - :Property:
          Property:

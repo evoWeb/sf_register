@@ -1,7 +1,6 @@
-{namespace register=Evoweb\SfRegister\ViewHelpers}
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	  xmlns:register="http://www.evoweb.de/ns/SfRegister/ViewHelpers"
+	  xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 <head>
 	<title>Edit form template of registration</title>
@@ -142,33 +141,11 @@
 		<label for="image"><f:translate key="image" /></label>
 		<f:render partial="Required" section="Main" arguments="{field: 'image'}" />
 		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'image'}" /><br/>
-		<f:if condition="{user.image}">
-			<f:then>
-				<f:form.hidden property="image" />
-				<f:form.hidden name="temporaryImage" value="{temporaryImage}" />
-				<f:form.hidden name="imagefile" value="{user.image}" />
-				<f:if condition="{temporaryImage}">
-					<f:then>
-						<f:image height="100" width="100c" src="typo3temp/sf_register/{user.image}" alt="{user.firstName} {user.lastName}"
-								 title="{user.firstName} {user.lastName}" />
-					</f:then>
-					<f:else>
-						<f:image height="100" width="100c" src="uploads/pics/{user.image}" alt="{user.firstName} {user.lastName}"
-								 title="{user.firstName} {user.lastName}" />
-					</f:else>
-				</f:if>
-				<f:form.submit name="removeImage" value="{f:translate(key:'submit_removeImage')}" />
-			</f:then>
-			<f:else>
-				<f:form.hidden property="image" value="" />
-				<f:form.hidden name="temporaryImage" value="1" />
-				<div class="btn btn-primary file-upload">
-					<span>{f:translate(key: 'upload')}</span>
-					<f:form.upload name="image" class="upload" id="uploadButton" />
-				</div>
-				<input id="uploadFile" placeholder="{f:translate(key: 'choose_file')}" disabled="disabled" class="form-control" />
-			</f:else>
-		</f:if>
+		<register:form.upload property="image" alwaysShowUpload="1">
+			<f:if condition="{resource}">
+				<f:image image="{resource}" alt="" width="50"/>
+			</f:if>
+		</register:form.upload>
 	</div>
 
 	<div class="clear"></div>
@@ -178,7 +155,7 @@
 	</div>
 </f:form>
 <div class="mandatory">
-	<f:translate key="info_mandatory_fields" htmlEscape="false" />
+	<f:format.raw><f:translate key="info_mandatory_fields" htmlEscape="true"/></f:format.raw>
 </div>
 </f:section>
 </body>

@@ -68,17 +68,17 @@
 	<dd>
 		<f:if condition="{user.dateOfBirthDay}">
 			<f:then><f:form.hidden property="dateOfBirthDay"/></f:then>
-			<f:else><f:form.hidden property="dateOfBirthDay" value="{f:format.date(date: '{user.dateOfBirth}', format: 'd')}"/></f:else>
+			<f:else><f:form.hidden property="dateOfBirthDay" value="{f:format.date(date: user.dateOfBirth, format: 'd')}"/></f:else>
 		</f:if>
 		<f:if condition="{user.dateOfBirthMonth}">
 			<f:then><f:form.hidden property="dateOfBirthMonth"/></f:then>
-			<f:else><f:form.hidden property="dateOfBirthMonth" value="{f:format.date(date: '{user.dateOfBirth}', format: 'm')}"/></f:else>
+			<f:else><f:form.hidden property="dateOfBirthMonth" value="{f:format.date(date: user.dateOfBirth, format: 'm')}"/></f:else>
 		</f:if>
 		<f:if condition="{user.dateOfBirthYear}">
 			<f:then><f:form.hidden property="dateOfBirthYear"/></f:then>
-			<f:else><f:form.hidden property="dateOfBirthYear" value="{f:format.date(date: '{user.dateOfBirth}', format: 'Y')}"/></f:else>
+			<f:else><f:form.hidden property="dateOfBirthYear" value="{f:format.date(date: user.dateOfBirth, format: 'Y')}"/></f:else>
 		</f:if>
-		{f:format.date(date: '{user.dateOfBirth}', format: '{settings.dateFormat}')}
+		{f:format.date(date: user.dateOfBirth, format: '{settings.dateFormat}')}
 	</dd>
 
 	<dt><f:form.submit name="form" value="{f:translate(key:'submit_change')}" /></dt>

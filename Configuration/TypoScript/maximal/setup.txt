@@ -150,7 +150,7 @@ plugin.tx_sfregister.settings {
 		}
 	}
 
-	filefieldname = image
+	imageFolder = 1:frontendusers
 
 	captcha {
 		jmrecaptcha = Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter

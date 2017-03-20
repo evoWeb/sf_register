@@ -50,6 +50,15 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERC
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
     \Evoweb\SfRegister\Property\TypeConverter\FrontendUserConverter::class
 );
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
+    \Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter::class
+);
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
+    \Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter::class
+);
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
+    \Evoweb\SfRegister\Property\TypeConverter\ObjectStorageConverter::class
+);
 
 
 if (TYPO3_MODE === 'FE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {

@@ -69,8 +69,8 @@ class ExtendedFileUtility extends \TYPO3\CMS\Core\Utility\File\ExtendedFileUtili
         }
 
         // early escape for fe_users path
-        if (strpos($identifier, $this->fileService->getUploadFolder()) === 0
-            || strpos($identifier, $this->fileService->getTempFolder()) === 0
+        if (strpos($identifier, $this->fileService->getUploadFolderObject()) === 0
+            || strpos($identifier, $this->fileService->getTempFolderObject()) === 0
         ) {
             return $object;
         }

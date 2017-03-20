@@ -32,15 +32,15 @@ class FeuserCreateController extends FeuserController
     /**
      * Form action
      *
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     *
      * @return void
      */
-    public function formAction()
+    public function formAction($user = null)
     {
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
         $originalRequest = $this->request->getOriginalRequest();
-        if ($this->request->hasArgument('user')
-            || ($originalRequest !== null && $originalRequest->hasArgument('user'))
-        ) {
+        if ($originalRequest !== null && $originalRequest->hasArgument('user')) {
             $userData = $this->request->hasArgument('user') ?
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');
@@ -60,7 +60,7 @@ class FeuserCreateController extends FeuserController
             );
 
             /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
-            $propertyMapper = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Property\\PropertyMapper');
+            $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
             $user = $propertyMapper->convert(
                 $userData,
                 'Evoweb\\SfRegister\\Domain\\Model\\FrontendUser',
@@ -70,10 +70,6 @@ class FeuserCreateController extends FeuserController
         } else {
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
             $user = $this->objectManager->get(\Evoweb\SfRegister\Domain\Model\FrontendUser::class);
-        }
-
-        if ($originalRequest !== null && $originalRequest->hasArgument('temporaryImage')) {
-            $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
         }
 
         $this->signalSlotDispatcher->dispatch(
@@ -98,9 +94,10 @@ class FeuserCreateController extends FeuserController
      */
     public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        $user = $this->moveTempFile($user);
+        // @todo check if removable
+        //$user = $this->moveTempFile($user);
 
-        $user->prepareDateOfBirth();
+        //$user->prepareDateOfBirth();
 
         if ($this->request->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
@@ -125,7 +122,8 @@ class FeuserCreateController extends FeuserController
     public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
         // if preview step is skiped the temp file isn't moved yet
-        $user = $this->moveTempFile($user);
+        // @todo check if removable
+        //$user = $this->moveTempFile($user);
 
         if ($this->isNotifyUser('PostCreateSave') && $this->settings['confirmEmailPostCreate']) {
             $user->setDisable(true);
@@ -136,7 +134,8 @@ class FeuserCreateController extends FeuserController
             $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostSave']);
             $type = 'PostCreateAccept';
         } else {
-            $user = $this->moveImageFile($user);
+            // @todo check if removable
+            //$user = $this->moveImageFile($user);
             $user = $this->changeUsergroup($user, (int) $this->settings['usergroup']);
             $type = 'PostCreateSave';
         }
@@ -216,7 +215,8 @@ class FeuserCreateController extends FeuserController
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
                 $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostConfirm']);
-                $user = $this->moveImageFile($user);
+                // @todo check if removable
+                //$user = $this->moveImageFile($user);
 
                 if (!$this->settings['acceptEmailPostCreate']) {
                     $user->setDisable(false);
