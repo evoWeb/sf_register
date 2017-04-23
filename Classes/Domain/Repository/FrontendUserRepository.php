@@ -35,7 +35,7 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
      * @param mixed $identifier The identifier of the object to find
      * @param bool $ignoreHidden Whether to ignore hidden state
      *
-     * @return NULL|\Evoweb\SfRegister\Interfaces\FrontendUserInterface
+     * @return NULL|\Evoweb\SfRegister\Interfaces\FrontendUserInterface|object
      */
     public function findByIdentifier($identifier, $ignoreHidden = false)
     {
@@ -63,7 +63,7 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
      *
      * @param string $mailhash
      *
-     * @return \Evoweb\SfRegister\Domain\Model\FrontendUser
+     * @return \Evoweb\SfRegister\Domain\Model\FrontendUser|object
      */
     public function findByMailhash($mailhash)
     {

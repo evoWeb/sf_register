@@ -62,8 +62,6 @@ class Ajax
 
     /**
      * Constructor of the class
-     *
-     * @return self
      */
     public function __construct()
     {

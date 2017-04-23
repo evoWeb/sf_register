@@ -4,7 +4,7 @@
 }
 
 #sfrZone_loading {
-	background: transparent url(/typo3/sysext/t3skin/images/spinner/ffffff.gif) no-repeat 4px 1px;
+	background: transparent url(/typo3/sysext/core/Resources/Public/Icons/T3Icons/spinner/spinner-circle-dark.svg) no-repeat 4px 1px;
 	padding-left: 24px;
 }
 

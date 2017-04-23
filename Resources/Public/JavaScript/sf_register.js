@@ -18,7 +18,7 @@ function callTestPassword() {
 	var count = 0,
 		blinds = (bargraph.contentDocument || bargraph.contentWindow.document).getElementsByClassName('blind');
 
-	for (blindKey in blinds) {
+	for (var blindKey in blinds) {
 		if (blinds.hasOwnProperty(blindKey)) {
 			blinds[blindKey].style.display = count < percentScore ? 'none' : 'inherit';
 			count++;
@@ -34,11 +34,11 @@ var loading = false,
 
 function changeZone(event) {
 	if ((
-			(event.type == 'keyup' && event.keyCode == 40)
-			|| (event.type == 'keyup' && event.keyCode == 38)
-			|| event.type == 'change'
+			(event.type === 'keyup' && event.keyCode === 40)
+			|| (event.type === 'keyup' && event.keyCode === 38)
+			|| event.type === 'change'
 		)
-		&& loading != true
+		&& loading !== true
 	) {
 		loading = true;
 		var target = event.target || event.srcElement;
@@ -59,11 +59,11 @@ function changeZone(event) {
 }
 
 function XHRResponse() {
-	if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+	if (ajaxRequest.readyState === 4 && ajaxRequest.status === 200) {
 		ajaxRequest.responseJSON = JSON.parse(ajaxRequest.responseText);
 		zoneLoading.style.display = 'none';
 
-		if (ajaxRequest.responseJSON.status == 'error' || ajaxRequest.responseJSON.data.length == 0) {
+		if (ajaxRequest.responseJSON.status === 'error' || ajaxRequest.responseJSON.data.length === 0) {
 			zoneEmpty.style.display = 'block';
 		} else {
 			XHRResponseSuccess(ajaxRequest.responseJSON.data);

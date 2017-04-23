@@ -42,7 +42,7 @@ class JmRecaptchaAdapter extends AbstractAdapter
     /**
      * Captcha object
      *
-     * @var tx_jmrecaptcha
+     * @var \tx_jmrecaptcha
      */
     protected $captcha = null;
 

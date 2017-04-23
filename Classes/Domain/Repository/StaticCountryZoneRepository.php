@@ -36,7 +36,7 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
      *
      * @param string $iso2
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|object
      */
     public function findAllByIso2($iso2)
     {

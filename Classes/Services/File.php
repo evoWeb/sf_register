@@ -426,13 +426,13 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
     {
         $image = $fileReference->getOriginalResource()->getOriginalFile();
         $folder = $image->getParentFolder();
-        $imageNameAndPath = PATH_site . $filepath . '/' . $filename;
+        $imageNameAndPath = PATH_site . $folder->getName() . '/' . $image->getIdentifier();
 
         if (@file_exists($imageNameAndPath)) {
             unlink($imageNameAndPath);
         }
 
-        return $filename;
+        return $image->getIdentifier();
     }
 
     /**

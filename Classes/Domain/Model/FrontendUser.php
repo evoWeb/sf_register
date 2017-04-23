@@ -220,11 +220,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     protected $emailNew;
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     */
-    protected $image;
-
 
     /**
      * Initializes the date of birth if related values
@@ -370,27 +365,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     public function setEmailRepeat($emailRepeat)
     {
         $this->emailRepeat = trim($emailRepeat);
-    }
-
-    /**
-     * Get an image
-     *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * Set an image
-     *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
-     * @return void
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
     }
 
     /**
