@@ -32,15 +32,16 @@ class FeuserCreateController extends FeuserController
     /**
      * Form action
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-     *
      * @return void
      */
-    public function formAction($user = null)
+    public function formAction()
     {
+        $user = null;
+
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
         $originalRequest = $this->request->getOriginalRequest();
         if ($originalRequest !== null && $originalRequest->hasArgument('user')) {
+            /** @var array $userData */
             $userData = $this->request->hasArgument('user') ?
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');
@@ -49,7 +50,7 @@ class FeuserCreateController extends FeuserController
             }
 
             $propertyMappingConfiguration = $this->objectManager->get(
-                'TYPO3\\CMS\\Extbase\\Property\\PropertyMappingConfiguration'
+                \TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration::class
             );
             $propertyMappingConfiguration->allowAllProperties();
             $propertyMappingConfiguration->forProperty('usergroup')->allowAllProperties();
@@ -63,10 +64,11 @@ class FeuserCreateController extends FeuserController
             $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
             $user = $propertyMapper->convert(
                 $userData,
-                'Evoweb\\SfRegister\\Domain\\Model\\FrontendUser',
+                \Evoweb\SfRegister\Domain\Model\FrontendUser::class,
                 $propertyMappingConfiguration
             );
-            $user = $this->moveTempFile($user);
+            // @todo check if removable
+            //$user = $this->moveTempFile($user);
         } else {
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
             $user = $this->objectManager->get(\Evoweb\SfRegister\Domain\Model\FrontendUser::class);

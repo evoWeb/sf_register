@@ -101,7 +101,7 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
 
         $feUser->start();
         $feUser->unpack_uc('');
-        $feUser->fetchSessionData();
+        $feUser->fetchUserSession();
 
         $userdata[$feUser->lastLogin_column] = $GLOBALS['EXEC_TIME'];
         $userdata['is_online'] = $GLOBALS['EXEC_TIME'];
@@ -112,7 +112,7 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
         $this->updateLastLogin($feUser);
         $feUser->setKey('ses', 'SfRegisterAutoLoginUser', true);
 
-        $this->signalSlotDispatcher->dispatch(__CLASS__, 'save', array('frontend' => &$GLOBALS['TSFE']));
+        $this->signalSlotDispatcher->dispatch(__CLASS__, 'save', ['frontend' => &$GLOBALS['TSFE']]);
     }
 
     /**
@@ -124,10 +124,14 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function updateLastLogin(\TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $feUser)
     {
-        $this->database->exec_UPDATEquery('fe_users', 'uid = ' . intval($feUser->user['uid']), array(
+        $this->database->exec_UPDATEquery(
+            'fe_users',
+            'uid = ' . intval($feUser->user['uid']),
+            [
                 $feUser->lastLogin_column => $GLOBALS['EXEC_TIME'],
                 'is_online' => $GLOBALS['EXEC_TIME']
-            ));
+            ]
+        );
     }
 
     /**
@@ -139,7 +143,11 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function fetchUserdata($uid)
     {
-        return current($this->database->exec_SELECTgetRows('*', 'fe_users', 'uid = ' . (int) $uid));
+        return current($this->database->exec_SELECTgetRows(
+            '*',
+            'fe_users',
+            'uid = ' . (int) $uid
+        ));
     }
 
     /**

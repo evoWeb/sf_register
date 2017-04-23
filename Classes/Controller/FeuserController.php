@@ -75,6 +75,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected $view;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Mvc\Web\Request
+     */
+    protected $request;
+
+    /**
      * Proxy action
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
@@ -209,6 +214,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
         $user->removeImage();
 
+        /** @var array $requestUser */
         $requestUser = $this->request->getArgument('user');
         $requestUser['image'] = $user->getImage();
         $this->request->setArgument('user', $requestUser);

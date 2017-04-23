@@ -26,7 +26,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Class FrontendUserRepositoryTest
  */
-class FrontendUserRepositoryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class FrontendUserRepositoryTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
     /**
      * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository

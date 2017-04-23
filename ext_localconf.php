@@ -1,8 +1,7 @@
 <?php
 defined('TYPO3_MODE') or die();
 
-/** @noinspection PhpUndefinedVariableInspection */
-$extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$_EXTKEY]);
+$extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']);
 
 if (TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')
     && (
@@ -12,14 +11,16 @@ if (TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')
 ) {
     /** @noinspection PhpIncludeInspection */
     require_once(
-        TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) .
-        'Configuration/Realurl/realurl_conf.php'
+        TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath(
+            'sf_register',
+            'Configuration/Realurl/realurl_conf.php'
+        )
     );
 }
 
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Evoweb.' . $_EXTKEY,
+    'Evoweb.sf_register',
     'Form',
     array(
         'FeuserCreate' => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
@@ -37,14 +38,14 @@ if (TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')
 $TYPO3_CONF_VARS['FE']['eID_include']['sf_register'] = 'EXT:sf_register/Classes/Api/Ajax.php';
 
 
-define('SFREGISTERCACHEIDENTIFIER', 'cache_' . $_EXTKEY . '_extending');
+define('SFREGISTERCACHEIDENTIFIER', 'cache_sf_register_extending');
 
 // Register cache sf_register
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER] = array(
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER] = [
     'frontend' => \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class,
     'backend' => \TYPO3\CMS\Core\Cache\Backend\FileBackend::class,
-    'options' => array(),
-);
+    'options' => [],
+];
 
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(

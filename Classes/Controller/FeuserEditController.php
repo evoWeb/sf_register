@@ -46,6 +46,7 @@ class FeuserEditController extends FeuserController
             )
             && \Evoweb\SfRegister\Services\Login::isLoggedIn()
         ) {
+            /** @var array $userData */
             $userData = $this->request->hasArgument('user') ?
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');

@@ -131,6 +131,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
      */
     public function validate($object)
     {
+        /** @var \TYPO3\CMS\Extbase\Error\Result $messages */
         $messages = $this->objectManager->get(\TYPO3\CMS\Extbase\Error\Result::class);
         if (self::$instancesCurrentlyUnderValidation === null) {
             self::$instancesCurrentlyUnderValidation = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
@@ -176,7 +177,11 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
             } else {
                 $this->currentPropertyName = $propertyName;
                 $propertyValue = $this->getPropertyValue($object, $propertyName);
-                $this->checkUserProperty($propertyValue, (array) $validatorsNames, $messages->forProperty($propertyName));
+                $this->checkUserProperty(
+                    $propertyValue,
+                    (array) $validatorsNames,
+                    $messages->forProperty($propertyName)
+                );
             }
         }
 

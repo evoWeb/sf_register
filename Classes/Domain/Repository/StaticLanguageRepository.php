@@ -32,7 +32,7 @@ class StaticLanguageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Find all languages
      *
-     * @return integer
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      */
     public function findAll()
     {
@@ -48,7 +48,7 @@ class StaticLanguageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      *
      * @param array $lgCollateLocale
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|object
      */
     public function findByLgCollateLocale(array $lgCollateLocale)
     {
