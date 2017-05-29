@@ -13,7 +13,7 @@ $EM_CONF['sf_register'] = [
     'modify_tables' => 'fe_users',
     'constraints' => [
         'depends' => [
-            'typo3' => '7.6.0-8.7.99',
+            'typo3' => '8.7.0-8.7.99',
         ],
         'suggests' => [
             'extender' => '6.3.0-',
