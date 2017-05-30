@@ -303,20 +303,21 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Get admin recipient
      *
-     * @return string
+     * @return array
      */
     protected function getAdminRecipient()
     {
-        return array(
+        return [
             trim($this->settings['adminEmail']['toEmail']) => trim($this->settings['adminEmail']['toName'])
-        );
+        ];
     }
 
     /**
      * Get user recipient
      *
      * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @return string
+     *
+     * @return array
      */
     protected function getUserRecipient(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
     {
@@ -326,9 +327,9 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             $name = trim($user->getUsername());
         }
 
-        return array(
+        return [
             trim($user->getEmail()) => $name
-        );
+        ];
     }
 
 
@@ -452,7 +453,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Get absolute layout root path
      *
-     * @return string
+     * @return array
      */
     protected function getAbsoluteLayoutRootPath()
     {

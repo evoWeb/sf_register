@@ -1,0 +1,69 @@
+language: php
+
+branches:
+  only:
+    - master
+    - develop
+    - /^[0-9]+\.[0-9]+\.[0-9]+$/
+
+php:
+  - 7.0
+  - 7.1
+
+env:
+  - TYPO3_VERSION=^8.7.0
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.0
+      env: TYPO3_VERSION=^8.7.0
+    - php: 7.1
+      env: TYPO3_VERSION=^8.7.0
+  allow_failures:
+    - env: TYPO3_VERSION="dev-master as 8.7.0"
+
+sudo: false
+
+addons:
+  apt:
+    packages:
+      - parallel
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+notifications:
+  email:
+    - typo3@evoweb.de
+
+before_install:
+  - composer self-update
+  - composer --version
+
+before_script:
+  - composer require typo3/cms="$TYPO3_VERSION"
+  # Restore composer.json
+  - git checkout composer.json
+  - export TYPO3_PATH_WEB=$PWD/.Build/Web
+
+script:
+  - >
+    echo;
+    echo "Running php lint";
+    find typo3conf/ext/sf_register/ -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
+
+after_script:
+  - >
+    if [ -n "$TRAVIS_TAG" ] && [ -n "$TYPO3_ORG_USERNAME" ] && [ -n "$TYPO3_ORG_PASSWORD" ]; then
+      echo -e "Preparing upload of release ${TRAVIS_TAG} to TER\n"
+      curl -sSL https://raw.githubusercontent.com/alrra/travis-after-all/1.4.4/lib/travis-after-all.js | node
+      if [ $? -eq 0 ]; then
+        git reset --hard HEAD && git clean -fx
+
+        TAG_MESSAGE=`git tag -n10 -l $TRAVIS_TAG | sed 's/^[0-9.]*[ ]*//g'`
+        echo "Uploading release ${TRAVIS_TAG} to TER"
+        .Build/bin/upload . "$TYPO3_ORG_USERNAME" "$TYPO3_ORG_PASSWORD" "$TAG_MESSAGE"
+      fi;
+    fi;

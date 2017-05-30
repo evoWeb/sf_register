@@ -70,7 +70,7 @@ class SrFreecapAdapter extends AbstractAdapter
     /**
      * Captcha object
      *
-     * @var tx_srfreecap_pi2
+     * @var \tx_srfreecap_pi2
      */
     protected $captcha = null;
 

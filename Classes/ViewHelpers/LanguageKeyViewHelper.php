@@ -87,14 +87,17 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
      */
     protected function hasCountriesTableLanguageField($languageCode)
     {
-        $row = $this->getDatabaseConnection()->exec_SELECTgetSingleRow(
-            '*',
-            'information_schema.COLUMNS',
-            'TABLE_SCHEMA = \'' . TYPO3_db . '\'
-                AND TABLE_NAME = \'static_countries\'
-                AND COLUMN_NAME = \'cn_short_' . $languageCode . '\''
-        );
-        return !empty($row);
+        $queryBuilder = $this->getQueryBuilder('static_countries');
+        $columns = $queryBuilder->getConnection()->getSchemaManager()->listTableColumns('static_countries');
+
+        $result = false;
+        foreach ($columns as $column) {
+            if ($column->getName() == 'cn_short_' . $languageCode) {
+                $result = true;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -103,21 +106,28 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
      */
     protected function hasLanguagesTableLanguageField($languageCode)
     {
-        $row = $this->getDatabaseConnection()->exec_SELECTgetSingleRow(
-            '*',
-            'information_schema.COLUMNS',
-            'TABLE_SCHEMA = \'' . TYPO3_db . '\'
-                AND TABLE_NAME = \'static_languages\'
-                AND COLUMN_NAME = \'lg_name_' . $languageCode . '\''
-        );
-        return !empty($row);
+        $queryBuilder = $this->getQueryBuilder('static_languages');
+        $columns = $queryBuilder->getConnection()->getSchemaManager()->listTableColumns('static_languages');
+
+        $result = false;
+        foreach ($columns as $column) {
+            if ($column->getName() == 'lg_name_' . $languageCode) {
+                $result = true;
+            }
+        }
+
+        return $result;
     }
 
     /**
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     * @param string $tableName
+     *
+     * @return \TYPO3\CMS\Core\Database\Query\QueryBuilder
      */
-    protected function getDatabaseConnection()
+    protected function getQueryBuilder($tableName)
     {
-        return $GLOBALS['TYPO3_DB'];
+        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Database\ConnectionPool::class
+        )->getQueryBuilderForTable($tableName);
     }
 }

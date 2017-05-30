@@ -245,7 +245,8 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         }
         $conflictMode = $configuration->getConfigurationValue(
             \Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter::class,
-            self::CONFIGURATION_UPLOAD_CONFLICT_MODE) ?: $defaultConflictMode;
+            self::CONFIGURATION_UPLOAD_CONFLICT_MODE
+        ) ?: $defaultConflictMode;
 
         $uploadFolder = $this->resourceFactory->retrieveFileOrFolderObject($uploadFolderId);
         $uploadedFile = $uploadFolder->addUploadedFile($uploadInfo, $conflictMode);

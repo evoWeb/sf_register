@@ -1,36 +1,22 @@
 <?php
 
-/** @noinspection PhpUndefinedVariableInspection */
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF['sf_register'] = [
     'title' => 'Frontend User Registration',
     'description' => 'Offers the possibility to maintain the fe_user data in frontend by the user self.',
+    'version' => '8.7.0',
     'category' => 'plugin',
-    'shy' => 0,
-    'version' => '7.6.0',
-    'dependencies' => 'extbase,fluid',
-    'conflicts' => '',
-    'priority' => 'bottom',
-    'loadOrder' => '',
-    'module' => '',
-    'state' => 'beta',
-    'uploadfolder' => 0,
-    'createDirs' => 'typo3temp/sf_register',
-    'modify_tables' => 'fe_users',
-    'clearcacheonload' => 1,
-    'lockType' => '',
+    'state' => 'stable',
     'author' => 'Sebastian Fischer',
     'author_email' => 'typo3@evoweb.de',
     'author_company' => 'evoweb',
-    'CGLcompliance' => '',
-    'CGLcompliance_note' => '',
-    'constraints' => array(
-        'depends' => array(
-            'typo3' => '7.6.0-8.7.99',
-        ),
-        'conflicts' => array(),
-        'suggests' => array(
+    'createDirs' => 'typo3temp/sf_register',
+    'modify_tables' => 'fe_users',
+    'constraints' => [
+        'depends' => [
+            'typo3' => '8.7.0-8.7.99',
+        ],
+        'suggests' => [
             'extender' => '6.3.0-',
-        ),
-    ),
-    'suggests' => array(),
-);
+        ],
+    ],
+];

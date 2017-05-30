@@ -32,7 +32,7 @@ class StaticCountryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Find all countries despecting the storage page
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|object
      */
     public function findAll()
     {
@@ -48,7 +48,7 @@ class StaticCountryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      *
      * @param array $cnIso2
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|object
      */
     public function findByCnIso2(array $cnIso2)
     {
