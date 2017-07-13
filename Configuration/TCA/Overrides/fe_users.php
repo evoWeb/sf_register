@@ -18,6 +18,7 @@ $temporaryColumns = array(
         'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.activated_on',
         'config' => array(
             'type' => 'input',
+            'renderType' => 'inputDateTime',
             'readOnly' => true,
             'eval' => 'datetime',
         )
@@ -49,8 +50,8 @@ $temporaryColumns = array(
         'label' => 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:fe_users.date_of_birth',
         'config' => array(
             'type' => 'input',
+            'renderType' => 'inputDateTime',
             'size' => '10',
-            'max' => '20',
             'eval' => 'date',
             'checkbox' => '0',
             'default' => ''
