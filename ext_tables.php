@@ -4,28 +4,6 @@ defined('TYPO3_MODE') or die();
 call_user_func(
     function ($extKey) {
 
-    /** @noinspection PhpUndefinedVariableInspection */
-    $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$extKey]);
-
-    switch ($extensionConfiguration['typoscriptComplexity']) {
-        case 'maximal':
-            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-                $extKey,
-                'Configuration/TypoScript/maximal/',
-                'Feuser Register [maximal]'
-            );
-            break;
-        case 'minimal':
-            // fall through intended
-        default:
-            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-                $extKey,
-                'Configuration/TypoScript/minimal/',
-                'Feuser Register [minimal]'
-            );
-    }
-
-
     /**
      * Page TypoScript for mod wizards
      */
