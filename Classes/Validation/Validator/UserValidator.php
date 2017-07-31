@@ -120,6 +120,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'SfRegister', 'Form'
         );
 
+        // TODO: Can be removed since controllerinformation are received by GP?
         $this->frameworkConfiguration = $this->configurationManager->getConfiguration(
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK, 'SfRegister', 'Form'
         );
@@ -236,7 +237,11 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
      */
     protected function getValidationRulesFromSettings()
     {
-        $mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));
+
+        $requestParameters = \TYPO3\CMS\Core\Utility\GeneralUtility::_GPmerged('tx_sfregister_form');
+
+        $mode = str_replace('feuser', '', strtolower($requestParameters['controller']));
+
         $rules = $this->settings['validation'][$mode];
 
         if ($this->model instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser) {
