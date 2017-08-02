@@ -43,7 +43,11 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Validat
      * @var array
      */
     protected $supportedOptions = [
-        'global' => [true, 'Whether to check uniqueness globally', 'boolean'],
+        'global' => [
+            true,
+            'Whether to check uniqueness globally',
+            'boolean'
+        ],
     ];
 
     /**

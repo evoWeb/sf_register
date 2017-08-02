@@ -279,13 +279,13 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
                         . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);
                 }
 
-                $fileData = array(
+                $fileData = [
                     'filename' => $filename,
                     'type' => $type,
                     'tmp_name' => $tmpName,
                     'error' => $error,
                     'size' => $size,
-                );
+                ];
             }
         }
 
@@ -452,7 +452,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
         $filenameParts = GeneralUtility::trimExplode('/', $filename, true);
 
         $result = implode('/', array_slice($filenameParts, 0, -1));
-        if (!in_array($result, array($this->tempFolder, $this->uploadFolder))) {
+        if (!in_array($result, [$this->tempFolder, $this->uploadFolder])) {
             $result = '';
         }
 

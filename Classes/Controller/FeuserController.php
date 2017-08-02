@@ -26,9 +26,9 @@ namespace Evoweb\SfRegister\Controller;
 
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
-use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 
 /**
  * An frontend user controller
@@ -94,7 +94,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             $action = 'form';
         }
 
-        $this->forward($action, null, null, array('user' => $user));
+        $this->forward($action, null, null, ['user' => $user]);
     }
 
     /**
@@ -122,7 +122,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             $this->signalSlotDispatcher->dispatch(
                 __CLASS__,
                 __FUNCTION__,
-                array('controller' => $this, 'settings' => $this->settings,)
+                [
+                    'controller' => $this,
+                    'settings' => $this->settings
+                ]
             );
         }
 
@@ -148,7 +151,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 true
             );
             if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($templateRootPath)) {
-                $this->view->setTemplateRootPaths(array($templateRootPath));
+                $this->view->setTemplateRootPaths([$templateRootPath]);
             }
         }
     }
@@ -289,21 +292,21 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             $configuration->forProperty('image')
                 ->setTypeConverterOptions(
                     UploadedFileReferenceConverter::class,
-                    array(
+                    [
                         UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
                             $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
                         UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
                             $folder->getStorage()->getUid() . ':' . $folder->getIdentifier(),
-                    )
+                    ]
                 );
 
             $configuration->forProperty('dateOfBirth')
                 ->setTypeConverterOptions(
                     DateTimeConverter::class,
-                    array(
+                    [
                         DateTimeConverter::CONFIGURATION_USER_DATA =>
                             $this->request->getArgument($argumentName)
-                    )
+                    ]
                 );
         }
     }
@@ -480,7 +483,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function getUserGroupIds()
     {
         $userGroups = [];
-        $settingsUserGroupKeys = array('usergroup', 'usergroupPostSave', 'usergroupPostConfirm', 'usergroupPostAccept');
+        $settingsUserGroupKeys = ['usergroup', 'usergroupPostSave', 'usergroupPostConfirm', 'usergroupPostAccept'];
         foreach ($settingsUserGroupKeys as $settingsUserGroupKey) {
             $userGroup = (int) $this->settings[$settingsUserGroupKey];
             if ($userGroup) {

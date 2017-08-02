@@ -110,12 +110,7 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
             return null;
         }
 
-        if (is_callable([$this, 'getValueAttribute'])) {
-            $resource = $this->getValueAttribute();
-        } else {
-            // @deprecated since 7.6 will be removed once 6.2 support is removed
-            $resource = $this->getValue(false);
-        }
+        $resource = $this->getValueAttribute();
         if ($resource instanceof \TYPO3\CMS\Extbase\Domain\Model\FileReference) {
             return $resource;
         }

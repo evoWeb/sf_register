@@ -281,7 +281,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
             $labelIndex,
             'SfRegister',
-            array($this->settings['sitename'], $user->getUsername())
+            [$this->settings['sitename'], $user->getUsername()]
         );
     }
 
@@ -346,16 +346,16 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function sendEmail($user, array $recipient, $typeOfEmail, $subject, $bodyHtml, $bodyPlain)
     {
+        $settings =& $this->settings[$typeOfEmail];
+
         /** @var $mail \TYPO3\CMS\Core\Mail\MailMessage */
         $mail = $this->objectManager->get(\TYPO3\CMS\Core\Mail\MailMessage::class);
         $mail->setTo($recipient)
-            ->setFrom(array($this->settings[$typeOfEmail]['fromEmail'] => $this->settings[$typeOfEmail]['fromName']))
+            ->setFrom([$settings['fromEmail'] => $settings['fromName']])
             ->setSubject($subject);
 
-        if ($this->settings[$typeOfEmail]['replyEmail']) {
-            $mail->setReplyTo(
-                array($this->settings[$typeOfEmail]['replyEmail'] => $this->settings[$typeOfEmail]['replyName'])
-            );
+        if ($settings['replyEmail']) {
+            $mail->setReplyTo([$settings['replyEmail'] => $settings['replyName']]);
         }
 
         if ($bodyHtml !== '') {
@@ -384,7 +384,10 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     protected function renderBody($controller, $action, $method, $user, $fileExtension = 'html')
     {
         $templateName = 'Email/' . str_replace('send', '', $method);
-        $variables = array('user' => $user, 'settings' => $this->settings);
+        $variables = [
+            'user' => $user,
+            'settings' => $this->settings
+        ];
 
         /** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
         $view = $this->objectManager->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
@@ -500,12 +503,12 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function dispatchSlotSignal($signalName, $result)
     {
-        $arguments = array_merge(array_slice(func_get_args(), 2), array($this->settings, $this->objectManager));
+        $arguments = array_merge(array_slice(func_get_args(), 2), [$this->settings, $this->objectManager]);
 
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             $signalName,
-            array('result' => &$result, 'arguments' => $arguments)
+            ['result' => &$result, 'arguments' => $arguments]
         );
 
         return $result;

@@ -75,10 +75,10 @@ class FeuserCreateController extends FeuserController
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
-            array(
+            [
                 'user' => &$user,
                 'settings' => $this->settings,
-            )
+            ]
         );
 
         $this->view->assign('user', $user);
@@ -101,7 +101,10 @@ class FeuserCreateController extends FeuserController
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
-            array('user' => &$user, 'settings' => $this->settings)
+            [
+                'user' => &$user,
+                'settings' => $this->settings
+            ]
         );
 
         $this->view->assign('user', $user);
@@ -136,7 +139,10 @@ class FeuserCreateController extends FeuserController
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
-            array('user' => &$user, 'settings' => $this->settings)
+            [
+                'user' => &$user,
+                'settings' => $this->settings
+            ]
         );
 
         // Persist user to get valid uid
@@ -212,7 +218,10 @@ class FeuserCreateController extends FeuserController
                 $this->signalSlotDispatcher->dispatch(
                     __CLASS__,
                     __FUNCTION__,
-                    array('user' => &$user, 'settings' => $this->settings)
+                    [
+                        'user' => &$user,
+                        'settings' => $this->settings
+                    ]
                 );
 
                 $this->userRepository->update($user);
@@ -252,7 +261,10 @@ class FeuserCreateController extends FeuserController
             $this->signalSlotDispatcher->dispatch(
                 __CLASS__,
                 __FUNCTION__,
-                array('user' => &$user, 'settings' => $this->settings)
+                [
+                    'user' => &$user,
+                    'settings' => $this->settings
+                ]
             );
 
             $this->userRepository->remove($user);
@@ -292,7 +304,10 @@ class FeuserCreateController extends FeuserController
                 $this->signalSlotDispatcher->dispatch(
                     __CLASS__,
                     __FUNCTION__,
-                    array('user' => &$user, 'settings' => $this->settings)
+                    [
+                        'user' => &$user,
+                        'settings' => $this->settings
+                    ]
                 );
 
                 $this->userRepository->update($user);
@@ -323,7 +338,10 @@ class FeuserCreateController extends FeuserController
             $this->signalSlotDispatcher->dispatch(
                 __CLASS__,
                 __FUNCTION__,
-                array('user' => &$user, 'settings' => $this->settings)
+                [
+                    'user' => &$user,
+                    'settings' => $this->settings
+                ]
             );
 
             $this->userRepository->remove($user);

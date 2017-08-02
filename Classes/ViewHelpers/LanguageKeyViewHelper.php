@@ -56,8 +56,8 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
     {
         $languageCode = '';
         if (TYPO3_MODE === 'FE') {
-            if (isset($GLOBALS['TSFE']->config['config']['language'])) {
-                $languageCode = $GLOBALS['TSFE']->config['config']['language'];
+            if (isset($this->getTypoScriptFrontendController()->config['config']['language'])) {
+                $languageCode = $this->getTypoScriptFrontendController()->config['config']['language'];
             }
         } elseif (strlen($GLOBALS['BE_USER']->uc['lang']) > 0) {
             $languageCode = $GLOBALS['BE_USER']->uc['lang'];
@@ -81,7 +81,7 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
     {
         $type = $this->arguments['type'];
 
-        return in_array($type, array('countries', 'languages')) ? $type : '';
+        return in_array($type, ['countries', 'languages']) ? $type : '';
     }
 
     /**
@@ -132,5 +132,13 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
         return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Database\ConnectionPool::class
         )->getQueryBuilderForTable($tableName);
+    }
+
+    /**
+     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     */
+    protected function getTypoScriptFrontendController()
+    {
+        return $GLOBALS['TSFE'];
     }
 }

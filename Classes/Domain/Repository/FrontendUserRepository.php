@@ -49,7 +49,7 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
         $querySettings->setRespectStoragePage(false);
         $querySettings->setRespectSysLanguage(false);
         $querySettings->setIgnoreEnableFields(true);
-        $querySettings->setEnableFieldsToBeIgnored(array('disabled'));
+        $querySettings->setEnableFieldsToBeIgnored(['disabled']);
 
         $object = $query->matching($query->equals('uid', $identifier))
             ->execute()

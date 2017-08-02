@@ -79,12 +79,12 @@ class SrFreecapAdapter extends AbstractAdapter
      *
      * @var array
      */
-    protected $keys = array(
+    protected $keys = [
         'image',
         'notice',
         'cantRead',
         'accessible',
-    );
+    ];
 
     /**
      * Constuctor
@@ -117,7 +117,7 @@ class SrFreecapAdapter extends AbstractAdapter
             $output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                 'error_captcha_notinstalled',
                 'SfRegister',
-                array('sr_freecap')
+                ['sr_freecap']
             );
         }
 

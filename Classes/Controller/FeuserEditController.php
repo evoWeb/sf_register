@@ -70,7 +70,10 @@ class FeuserEditController extends FeuserController
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
-            array('user' => &$user, 'settings' => $this->settings)
+            [
+                'user' => &$user,
+                'settings' => $this->settings
+            ]
         );
 
         $this->view->assign('user', $user);
@@ -92,7 +95,10 @@ class FeuserEditController extends FeuserController
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
-            array('user' => &$user, 'settings' => $this->settings)
+            [
+                'user' => &$user,
+                'settings' => $this->settings
+            ]
         );
 
         $this->view->assign('user', $user);
@@ -130,7 +136,10 @@ class FeuserEditController extends FeuserController
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
-            array('user' => &$user, 'settings' => $this->settings)
+            [
+                'user' => &$user,
+                'settings' => $this->settings
+            ]
         );
 
         $user = $this->sendEmails($user, 'PostEditSave');
@@ -182,7 +191,10 @@ class FeuserEditController extends FeuserController
                 $this->signalSlotDispatcher->dispatch(
                     __CLASS__,
                     __FUNCTION__,
-                    array('user' => &$user, 'settings' => $this->settings)
+                    [
+                        'user' => &$user,
+                        'settings' => $this->settings
+                    ]
                 );
 
                 $this->userRepository->update($user);
@@ -233,7 +245,10 @@ class FeuserEditController extends FeuserController
                 $this->signalSlotDispatcher->dispatch(
                     __CLASS__,
                     __FUNCTION__,
-                    array('user' => &$user, 'settings' => $this->settings)
+                    [
+                        'user' => &$user,
+                        'settings' => $this->settings
+                    ]
                 );
 
                 $this->userRepository->update($user);

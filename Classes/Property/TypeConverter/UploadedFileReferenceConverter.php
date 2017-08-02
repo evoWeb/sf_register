@@ -65,7 +65,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     /**
      * @var array<string>
      */
-    protected $sourceTypes = array('array');
+    protected $sourceTypes = ['array'];
 
     /**
      * @var string
@@ -100,7 +100,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     /**
      * @var \TYPO3\CMS\Core\Resource\FileInterface[]
      */
-    protected $convertedResources = array();
+    protected $convertedResources = [];
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
@@ -117,7 +117,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     public function convertFrom(
         $source,
         $targetType,
-        array $convertedChildProperties = array(),
+        array $convertedChildProperties = [],
         PropertyMappingConfigurationInterface $configuration = null
     ) {
         if (!isset($source['error']) || $source['error'] === \UPLOAD_ERR_NO_FILE) {
@@ -269,12 +269,12 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     protected function createFileReferenceFromFalFileObject(FalFile $file, $resourcePointer = null)
     {
         $fileReference = $this->resourceFactory->createFileReferenceObject(
-            array(
+            [
                 'uid_local' => $file->getUid(),
                 'uid_foreign' => uniqid('NEW_'),
                 'uid' => uniqid('NEW_'),
                 'crop' => null,
-            )
+            ]
         );
 
         return $this->createFileReferenceFromFalFileReferenceObject($fileReference, $resourcePointer);

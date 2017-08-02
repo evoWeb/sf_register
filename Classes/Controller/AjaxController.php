@@ -180,11 +180,11 @@ class AjaxController
      */
     protected function output()
     {
-        $result = array(
+        $result = [
             'status' => $this->status,
             'message' => $this->message,
             'data' => $this->result,
-        );
+        ];
 
         echo json_encode($result);
     }

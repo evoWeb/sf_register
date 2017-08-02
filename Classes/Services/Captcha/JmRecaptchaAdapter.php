@@ -76,7 +76,7 @@ class JmRecaptchaAdapter extends AbstractAdapter
             $output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                 'error_captcha.notinstalled',
                 'SfRegister',
-                array('jm_recaptcha')
+                ['jm_recaptcha']
             );
         }
 

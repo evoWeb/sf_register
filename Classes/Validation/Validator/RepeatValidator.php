@@ -95,7 +95,7 @@ class RepeatValidator extends AbstractValidator implements ValidatorInterface
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     'error_repeatitionwasnotequal',
                     'SfRegister',
-                    array(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($propertyName, 'SfRegister'))
+                    [\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($propertyName, 'SfRegister')]
                 ),
                 1307965971
             );

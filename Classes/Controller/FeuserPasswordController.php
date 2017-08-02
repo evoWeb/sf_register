@@ -39,9 +39,9 @@ class FeuserPasswordController extends FeuserController
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
-            array(
+            [
                 'settings' => $this->settings,
-            )
+            ]
         );
     }
 
@@ -60,7 +60,10 @@ class FeuserPasswordController extends FeuserController
             $this->signalSlotDispatcher->dispatch(
                 __CLASS__,
                 __FUNCTION__,
-                array('user' => &$user, 'settings' => $this->settings)
+                [
+                    'user' => &$user,
+                    'settings' => $this->settings
+                ]
             );
 
             $user->setPassword($this->encryptPassword($password->getPassword(), $this->settings));
