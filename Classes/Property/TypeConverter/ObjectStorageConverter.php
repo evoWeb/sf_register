@@ -49,7 +49,7 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
      */
     public function getSourceChildPropertiesToBeConverted($source)
     {
-        $propertiesToConvert = array();
+        $propertiesToConvert = [];
 
         // TODO: Find a nicer way to throw away empty uploads
         foreach ($source as $propertyName => $propertyValue) {

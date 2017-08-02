@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Signal;
 /***************************************************************
 * Copyright notice
 *
-* (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+* (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
 * All rights reserved
 *
 * This script is part of the TYPO3 project. The TYPO3 project is
@@ -63,12 +63,8 @@ class FeuserControllerSignal
      */
     public function userIsLoggedIn()
     {
-        /**
-         * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser
-         */
-        $frontendUser = $GLOBALS['TSFE']->fe_user;
-
-        return is_array($frontendUser->user);
+        /** @noinspection PhpInternalEntityUsedInspection */
+        return is_array($this->getTypoScriptFrontendController()->fe_user->user);
     }
 
     /**
@@ -87,5 +83,13 @@ class FeuserControllerSignal
         $uriBuilder = $objectManager->get(\TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder::class);
         $url = $uriBuilder->setTargetPageUid($pageId)->build();
         \TYPO3\CMS\Core\Utility\HttpUtility::redirect($url);
+    }
+
+    /**
+     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     */
+    protected function getTypoScriptFrontendController()
+    {
+        return $GLOBALS['TSFE'];
     }
 }

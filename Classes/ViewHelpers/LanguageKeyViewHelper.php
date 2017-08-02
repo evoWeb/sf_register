@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\ViewHelpers;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * (c) 2011-15 Justin Kromlinger
  * All rights reserved
  *
@@ -42,8 +42,11 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
      */
     public function initializeArguments()
     {
-        $this->registerArgument('type', 'string', 'Purpose of this viewhelper. If it shoud check for certain static
-            info tables or not');
+        $this->registerArgument(
+            'type',
+            'string',
+            'Purpose of this viewhelper. If it shoud check for certain static info tables or not'
+        );
     }
 
     /**

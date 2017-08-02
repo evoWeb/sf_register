@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Controller;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -67,8 +67,6 @@ class FeuserCreateController extends FeuserController
                 \Evoweb\SfRegister\Domain\Model\FrontendUser::class,
                 $propertyMappingConfiguration
             );
-            // @todo check if removable
-            //$user = $this->moveTempFile($user);
         } else {
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
             $user = $this->objectManager->get(\Evoweb\SfRegister\Domain\Model\FrontendUser::class);
@@ -96,11 +94,6 @@ class FeuserCreateController extends FeuserController
      */
     public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        // @todo check if removable
-        //$user = $this->moveTempFile($user);
-
-        //$user->prepareDateOfBirth();
-
         if ($this->request->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
@@ -123,10 +116,6 @@ class FeuserCreateController extends FeuserController
      */
     public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        // if preview step is skiped the temp file isn't moved yet
-        // @todo check if removable
-        //$user = $this->moveTempFile($user);
-
         if ($this->isNotifyUser('PostCreateSave') && $this->settings['confirmEmailPostCreate']) {
             $user->setDisable(true);
             $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostSave']);
@@ -136,8 +125,6 @@ class FeuserCreateController extends FeuserController
             $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostSave']);
             $type = 'PostCreateAccept';
         } else {
-            // @todo check if removable
-            //$user = $this->moveImageFile($user);
             $user = $this->changeUsergroup($user, (int) $this->settings['usergroup']);
             $type = 'PostCreateSave';
         }
@@ -217,8 +204,6 @@ class FeuserCreateController extends FeuserController
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
                 $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostConfirm']);
-                // @todo check if removable
-                //$user = $this->moveImageFile($user);
 
                 if (!$this->settings['acceptEmailPostCreate']) {
                     $user->setDisable(false);

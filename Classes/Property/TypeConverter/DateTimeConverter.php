@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -64,7 +64,7 @@ class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTi
     public function convertFrom(
         $source,
         $targetType,
-        array $convertedChildProperties = array(),
+        array $convertedChildProperties = [],
         \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration = null
     ) {
         try {

@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -40,7 +40,7 @@ class FrontendUserConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\Ab
     /**
      * @var array<string>
      */
-    protected $sourceTypes = array('integer', 'string');
+    protected $sourceTypes = ['integer', 'string'];
 
     /**
      * @var string

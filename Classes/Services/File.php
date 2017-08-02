@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Services;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -193,13 +193,17 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
     {
         $value = trim($value);
         $last = strtolower($value[strlen($value) - 1]);
-        switch($last) {
+        switch ($last) {
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'g':
                 $value *= 1024;
                 // fallthrough intended
+
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'm':
                 $value *= 1024;
                 // fallthrough intended
+
             case 'k':
                 $value *= 1024;
         }
@@ -227,6 +231,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function addError($message, $code)
     {
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
         $this->errors[] = $this->objectManager->get(\TYPO3\CMS\Extbase\Validation\Error::class, $message, $code);
     }
 

@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Controller;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -55,8 +55,6 @@ class FeuserEditController extends FeuserController
                 /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
                 $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
                 $user = $propertyMapper->convert($userData, \Evoweb\SfRegister\Domain\Model\FrontendUser::class);
-                // @todo check if removable
-                //$user = $this->moveTempFile($user);
             }
         }
 
@@ -87,9 +85,6 @@ class FeuserEditController extends FeuserController
      */
     public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        // @todo check if removable
-        // $user = $this->moveTempFile($user);
-
         if ($this->request->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
@@ -112,17 +107,11 @@ class FeuserEditController extends FeuserController
      */
     public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        // if preview step is skiped the temp file isn't moved yet
-        // @todo check if removable
-        //$user = $this->moveTempFile($user);
-        //$user = $this->moveImageFile($user);
-        //$user->prepareDateOfBirth();
-
         if (($this->isNotifyAdmin('PostEditSave') || $this->isNotifyUser('PostEditSave'))
             && ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit'])
         ) {
             // Remove user object from session to fetch it really from database
-            $session = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Session');
+            $session = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Session::class);
             $session->unregisterObject($user);
 
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $userBeforeEdit */
@@ -130,7 +119,7 @@ class FeuserEditController extends FeuserController
 
             // Now remove the fresh fetched and add the updated one to make it known again
             $session->unregisterObject($userBeforeEdit);
-            $session->registerObject($user);
+            $session->registerObject($user, 'sf-register-' . $user->getUid());
 
             $user->setEmailNew($user->getEmail());
             $user->setEmail($userBeforeEdit->getEmail());

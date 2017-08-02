@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Services;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -105,6 +105,7 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
 
         $userdata[$feUser->lastLogin_column] = $GLOBALS['EXEC_TIME'];
         $userdata['is_online'] = $GLOBALS['EXEC_TIME'];
+        /** @noinspection PhpInternalEntityUsedInspection */
         $feUser->user = $userdata;
 
         $GLOBALS['TSFE']->fe_user = &$feUser;
@@ -124,9 +125,12 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function updateLastLogin(\TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $feUser)
     {
+        /** @noinspection PhpInternalEntityUsedInspection */
+        $userUid = (int) $feUser->user['uid'];
+
         $this->database->exec_UPDATEquery(
             'fe_users',
-            'uid = ' . intval($feUser->user['uid']),
+            'uid = ' . $userUid,
             [
                 $feUser->lastLogin_column => $GLOBALS['EXEC_TIME'],
                 'is_online' => $GLOBALS['EXEC_TIME']
@@ -157,11 +161,15 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
      */
     public static function isLoggedIn()
     {
-        /**
-         * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser
-         */
-        $frontendUser = $GLOBALS['TSFE']->fe_user;
+        /** @noinspection PhpInternalEntityUsedInspection */
+        return is_array(self::getTypoScriptFrontendController()->fe_user->user);
+    }
 
-        return is_array($frontendUser->user);
+    /**
+     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     */
+    protected static function getTypoScriptFrontendController()
+    {
+        return $GLOBALS['TSFE'];
     }
 }

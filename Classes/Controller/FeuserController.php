@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Controller;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -163,7 +163,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function removeImageAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        $this->fileService->removeFile($user->getImage());
+        /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $image */
+        $image = $user->getImage()->current();
+
+        $this->fileService->removeFile($image);
         $this->removeImageFromUserAndRequest($user);
 
         $this->request->setArgument('removeImage', false);
@@ -235,18 +238,18 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         if (($file = $this->fileService->moveTempFileToTempFolder())) {
             /** @var ResourceFactory $resourceFactory */
             $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
-            $fileReference = $resourceFactory->createFileReferenceObject(array(
+            $fileReference = $resourceFactory->createFileReferenceObject([
                 // uid of image
                 'uid_local' => $file->getUid(),
                 // uid of user
                 'uid_foreign' => $user->getUid(),
                 // uid of reference
                 'uid' => uniqid('NEW_'),
-            ));
+            ]);
             /** @var $image \TYPO3\CMS\Extbase\Domain\Model\FileReference */
             $image = $this->objectManager->get(\TYPO3\CMS\Extbase\Domain\Model\FileReference::class);
             $image->setOriginalResource($fileReference);
-            $user->setImage($image);
+            $user->getImage()->attach($image);
         }
 
         return $user;
@@ -262,7 +265,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function moveImageFile($user)
     {
-        $image = $user->getImage();
+        /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $image */
+        $image = $user->getImage()->current();
 
         if ($image->getOriginalResource()->getStorage()->getUid() == 0) {
             $this->fileService->moveFileFromTempFolderToUploadFolder($image);
