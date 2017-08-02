@@ -1,34 +1,14 @@
 <?php
 defined('TYPO3_MODE') || die();
 
-call_user_func(function () {
-    /** @noinspection PhpUndefinedVariableInspection */
-    $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']);
-
-    switch ($extensionConfiguration['typoscriptComplexity']) {
-        case 'maximal':
-            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-                'sf_register',
-                'Configuration/TypoScript/maximal/',
-                'Feuser Register [maximal]'
-            );
-            break;
-        case 'minimal':
-            // fall through intended
-        default:
-            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-                'sf_register',
-                'Configuration/TypoScript/minimal/',
-                'Feuser Register [minimal]'
-            );
-    }
-
+call_user_func(
+    function ($extKey) {
 
     /**
      * Page TypoScript for mod wizards
      */
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TsConfig/ModWizards.t3s">'
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $extKey . '/Configuration/TsConfig/ModWizards.t3s">'
     );
 
 
@@ -65,8 +45,8 @@ call_user_func(function () {
     } catch (Exception $exeption) {
         \TYPO3\CMS\Core\Utility\GeneralUtility::devLog(
             'Can not create cache ' . SFREGISTERCACHEIDENTIFIER,
-            'sf_register',
+            $extKey,
             2
         );
     }
-});
+}, 'sf_register');
