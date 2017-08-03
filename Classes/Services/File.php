@@ -26,6 +26,7 @@ namespace Evoweb\SfRegister\Services;
 
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -38,16 +39,8 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      * Object manager
      *
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     * @inject
      */
     protected $objectManager;
-
-    /**
-     * Fieldname
-     *
-     * @var string
-     */
-    protected $fieldname;
 
     /**
      * Configuration manager
@@ -71,32 +64,11 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
     protected $namespace = '';
 
     /**
-     * Errors
-     *
-     * @var array
-     */
-    protected $errors = [];
-
-    /**
      * Allowed file extensions
      *
      * @var string
      */
     protected $allowedFileExtensions = '';
-
-    /**
-     * Temporary folder
-     *
-     * @var string
-     */
-    protected $tempFolder = 'sf_register/_temp_/';
-
-    /**
-     * Upload folder
-     *
-     * @var string
-     */
-    protected $uploadFolder = 'sf_register/';
 
     /**
      * Maximal filesize
@@ -105,11 +77,51 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected $maxFilesize = 0;
 
+
+    /**
+     * Errors
+     *
+     * @var array
+     */
+    protected $errors = [];
+
+
+    /**
+     * Temporary folder
+     *
+     * @var string
+     */
+    protected $tempFolderIdentifier = '1:sf_register/_temp_/';
+
+    /**
+     * Temporary folder
+     *
+     * @var Folder
+     */
+    protected $tempFolder;
+
+    /**
+     * Upload folder
+     *
+     * @var string
+     */
+    protected $imageFolderIdentifier = '1:sf_register/';
+
     /**
      * @var Folder
      */
     protected $imageFolder;
 
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+     *
+     * @return void
+     */
+    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
 
     /**
      * Injection of configuration manager
@@ -122,6 +134,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
     ) {
         $this->configurationManager = $configurationManager;
+
         $this->settings = $this->configurationManager->getConfiguration(
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
         );
@@ -129,35 +142,28 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
         if (isset($this->settings['imageFolder']) && !empty($this->settings['imageFolder'])) {
             $this->setImageFolder($this->settings['imageFolder']);
         }
+
+        $this->allowedFileExtensions = $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'];
+        $this->maxFilesize = $this->returnBytes(ini_get('upload_max_filesize') < ini_get('post_max_size') ?
+            ini_get('upload_max_filesize') :
+            ini_get('post_max_size'));
     }
 
 
     /**
      * @return \TYPO3\CMS\Core\Resource\Folder
      */
-    public function getTempFolderObject()
+    public function getTempFolder()
     {
-        $this->createFolderIfNotExist($this->tempFolder);
+        $this->createFolderIfNotExist($this->tempFolderIdentifier);
 
         /** @var ResourceFactory $resourceFactory */
         $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
-        return $resourceFactory->retrieveFileOrFolderObject('1:' . $this->tempFolder);
+        return $resourceFactory->retrieveFileOrFolderObject('1:' . $this->tempFolderIdentifier);
     }
 
     /**
-     * @return \TYPO3\CMS\Core\Resource\Folder
-     */
-    public function getUploadFolderObject()
-    {
-        $this->createFolderIfNotExist($this->uploadFolder);
-
-        /** @var ResourceFactory $resourceFactory */
-        $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
-        return $resourceFactory->retrieveFileOrFolderObject($this->uploadFolder);
-    }
-
-    /**
-     * Setter for fieldname
+     * Setter for image folder
      *
      * @param string $imageFolder
      *
@@ -177,11 +183,21 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         $this->imageFolder = $folder;
+    }
 
-        $this->allowedFileExtensions = $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'];
-        $this->maxFilesize = $this->returnBytes(ini_get('upload_max_filesize') < ini_get('post_max_size') ?
-            ini_get('upload_max_filesize') :
-            ini_get('post_max_size'));
+    /**
+     * @return \TYPO3\CMS\Core\Resource\Folder
+     */
+    public function getImageFolder()
+    {
+        if ($this->imageFolder) {
+            $this->createFolderIfNotExist($this->imageFolderIdentifier);
+
+            /** @var ResourceFactory $resourceFactory */
+            $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
+            $this->imageFolder = $resourceFactory->retrieveFileOrFolderObject($this->imageFolderIdentifier);
+        }
+        return $this->imageFolder;
     }
 
     /**
@@ -355,7 +371,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Move an temporary uploaded file to the upload folder
      *
-     * @return \TYPO3\CMS\Core\Resource\File|NULL
+     * @return \TYPO3\CMS\Core\Resource\FileInterface|NULL
      */
     public function moveTempFileToTempFolder()
     {
@@ -363,22 +379,12 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
         $fileData = $this->getUploadedFileInfo();
 
         if (count($fileData)) {
-            /** @var $basicFileFunctions \TYPO3\CMS\Core\Utility\File\BasicFileUtility */
-            $basicFileFunctions = $this->objectManager->get(\TYPO3\CMS\Core\Utility\File\BasicFileUtility::Class);
-
             $fileExtension = pathinfo($fileData['filename'], PATHINFO_EXTENSION);
             $filename = uniqid('sf_register') . '.' .  $fileExtension;
 
-            $this->createFolderIfNotExist($this->tempFolder);
-
-            $uploadFolder = \TYPO3\CMS\Core\Utility\PathUtility::getCanonicalPath(PATH_site . $this->tempFolder);
-            $uniqueFilename = $basicFileFunctions->getUniqueName($filename, $uploadFolder);
-
-            if (GeneralUtility::upload_copy_move($fileData['tmp_name'], $uniqueFilename)) {
-                /** @var ResourceFactory $resourceFactory */
-                $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
-                $result = $resourceFactory->retrieveFileOrFolderObject($uniqueFilename);
-            }
+            /** @var ResourceStorage $resourceStorage */
+            $resourceStorage = GeneralUtility::makeInstance(ResourceStorage::class);
+            $result = $resourceStorage->addFile($fileData['tmp_name'], $this->getTempFolder(), $filename);
         }
 
         return $result;
@@ -452,7 +458,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
         $filenameParts = GeneralUtility::trimExplode('/', $filename, true);
 
         $result = implode('/', array_slice($filenameParts, 0, -1));
-        if (!in_array($result, [$this->tempFolder, $this->uploadFolder])) {
+        if (!in_array($result, [$this->tempFolderIdentifier, $this->imageFolderIdentifier])) {
             $result = '';
         }
 

@@ -64,10 +64,19 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * Signal slot dispatcher
      *
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     * @inject
      */
     protected $signalSlotDispatcher;
 
+
+    /**
+     * @param \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher
+     *
+     * @return void
+     */
+    public function injectSignalSlotDispatcher(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher)
+    {
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
+    }
 
     /**
      * Inject configuration manager

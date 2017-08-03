@@ -33,9 +33,18 @@ class ExtendedFileUtility extends \TYPO3\CMS\Core\Utility\File\ExtendedFileUtili
      * File service
      *
      * @var \Evoweb\SfRegister\Services\File
-     * @inject
      */
     protected $fileService;
+
+    /**
+     * @param \Evoweb\SfRegister\Services\File $fileService
+     *
+     * @return void
+     */
+    public function injectFileService(\Evoweb\SfRegister\Services\File $fileService)
+    {
+        $this->fileService = $fileService;
+    }
 
     /**
      * Move file function
@@ -69,8 +78,8 @@ class ExtendedFileUtility extends \TYPO3\CMS\Core\Utility\File\ExtendedFileUtili
         }
 
         // early escape for fe_users path
-        if (strpos($identifier, $this->fileService->getUploadFolderObject()) === 0
-            || strpos($identifier, $this->fileService->getTempFolderObject()) === 0
+        if (strpos($identifier, $this->fileService->getImageFolder()) === 0
+            || strpos($identifier, $this->fileService->getTempFolder()) === 0
         ) {
             return $object;
         }

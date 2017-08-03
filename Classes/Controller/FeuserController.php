@@ -285,7 +285,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     {
         if ($this->request->hasArgument($argumentName)) {
             /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
-            $folder = $this->objectManager->get(\Evoweb\SfRegister\Services\File::class)->getTempFolderObject();
+            $folder = $this->objectManager->get(\Evoweb\SfRegister\Services\File::class)->getTempFolder();
 
             /** @var PropertyMappingConfiguration $configuration */
             $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
