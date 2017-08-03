@@ -117,8 +117,3 @@ plugin.tx_sfregister.persistence {
 	# cat=sf_register.settings//10; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.storagePid
 	storagePid =
 }
-
-plugin.tx_sfregister.view {
-	# cat=sf_register.settings/enable/100; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.useOldTemplates
-	useOldTemplates = 0
-}

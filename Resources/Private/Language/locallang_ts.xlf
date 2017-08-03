@@ -163,10 +163,6 @@
 				<source>Page to redirect to if create form is a different page then the edit form</source>
 			</trans-unit>
 
-			<trans-unit id="maximal.useOldTemplates" xml:space="preserve">
-				<source>Check if old templates should get loaded instead of new bootstrap aligned templates.</source>
-			</trans-unit>
-
 			<trans-unit id="minimal.badWordList" xml:space="preserve">
 				<source>comma separated list of words used in bad word validator</source>
 			</trans-unit>
@@ -193,10 +189,6 @@
 			</trans-unit>
 			<trans-unit id="minimal.emailAddress" xml:space="preserve">
 				<source>Address used in every occurance of emails</source>
-			</trans-unit>
-
-			<trans-unit id="minimal.useOldTemplates" xml:space="preserve">
-				<source>Check if old templates should get loaded instead of new bootstrap aligned templates</source>
 			</trans-unit>
 
 			<trans-unit id="extmgm.typoscriptComplexity" xml:space="preserve">

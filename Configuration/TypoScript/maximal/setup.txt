@@ -203,11 +203,6 @@ plugin.tx_sfregister._LOCAL_LANG.default {
 	title_profdr = Prof. Dr.
 }
 
-[globalVar = LIT:1 = {$plugin.tx_sfregister.view.useOldTemplates}]
-page.includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/stylesOld.css
-plugin.tx_sfregister.view.templateRootPaths.100 = EXT:sf_register/Resources/Private/TemplatesOld/
-[end]
-
 module.tx_sfregister < plugin.tx_sfregister
 
 config.tx_extbase {
