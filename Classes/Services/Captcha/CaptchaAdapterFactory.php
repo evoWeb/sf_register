@@ -89,7 +89,7 @@ class CaptchaAdapterFactory
             $type = 'Evoweb\\SfRegister\\Services\\Captcha\\' . ucfirst(strtolower($type)) . 'Adapter';
         }
 
-        /** @var $captchaAdapter \Evoweb\SfRegister\Services\Captcha\AbstractAdapter */
+        /** @var \Evoweb\SfRegister\Services\Captcha\AbstractAdapter $captchaAdapter */
         $captchaAdapter = $this->objectManager->get($type);
         $captchaAdapter->setSettings($settings);
 

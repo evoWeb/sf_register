@@ -357,7 +357,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     {
         $settings =& $this->settings[$typeOfEmail];
 
-        /** @var $mail \TYPO3\CMS\Core\Mail\MailMessage */
+        /** @var \TYPO3\CMS\Core\Mail\MailMessage $mail */
         $mail = $this->objectManager->get(\TYPO3\CMS\Core\Mail\MailMessage::class);
         $mail->setTo($recipient)
             ->setFrom([$settings['fromEmail'] => $settings['fromName']])
@@ -398,7 +398,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             'settings' => $this->settings
         ];
 
-        /** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
+        /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
         $view = $this->objectManager->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
 
         $request = $view->getRequest();

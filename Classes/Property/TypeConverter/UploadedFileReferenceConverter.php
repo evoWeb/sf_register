@@ -290,7 +290,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         $resourcePointer = null
     ) {
         if ($resourcePointer === null) {
-            /** @var $fileReference \TYPO3\CMS\Extbase\Domain\Model\FileReference */
+            /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileReference */
             $fileReference = $this->objectManager->get(\TYPO3\CMS\Extbase\Domain\Model\FileReference::class);
         } else {
             $fileReference = $this->persistenceManager->getObjectByIdentifier(

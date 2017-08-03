@@ -275,7 +275,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
         $currentValidator = $this->parseRule($rule);
         $this->currentValidatorOptions = (array) $currentValidator['validatorOptions'];
 
-        /** @var $validator \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator */
+        /** @var \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator $validator */
         $validator = $this->validatorResolver->createValidator(
             $currentValidator['validatorName'],
             $this->currentValidatorOptions

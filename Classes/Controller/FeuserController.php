@@ -238,6 +238,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function moveTempFile($user)
     {
+        /** @var \TYPO3\CMS\Core\Resource\File $file */
         if (($file = $this->fileService->moveTempFileToTempFolder())) {
             /** @var ResourceFactory $resourceFactory */
             $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
@@ -249,7 +250,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 // uid of reference
                 'uid' => uniqid('NEW_'),
             ]);
-            /** @var $image \TYPO3\CMS\Extbase\Domain\Model\FileReference */
+            /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $image */
             $image = $this->objectManager->get(\TYPO3\CMS\Extbase\Domain\Model\FileReference::class);
             $image->setOriginalResource($fileReference);
             $user->getImage()->attach($image);
@@ -284,8 +285,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function setTypeConverter($argumentName)
     {
         if ($this->request->hasArgument($argumentName)) {
-            /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
-            $folder = $this->objectManager->get(\Evoweb\SfRegister\Services\File::class)->getTempFolder();
+            $folder = $this->fileService->getTempFolder();
 
             /** @var PropertyMappingConfiguration $configuration */
             $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
@@ -367,7 +367,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function sendEmails($user, $type)
     {
-        /** @var $mailService \Evoweb\SfRegister\Services\Mail */
+        /** @var \Evoweb\SfRegister\Services\Mail $mailService */
         $mailService = $this->objectManager->get(\Evoweb\SfRegister\Services\Mail::class);
 
         if ($this->isNotifyAdmin($type)) {

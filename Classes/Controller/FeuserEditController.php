@@ -59,7 +59,7 @@ class FeuserEditController extends FeuserController
         }
 
         if ($user == null) {
-            /** @var $user \Evoweb\SfRegister\Domain\Model\FrontendUser */
+            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
             $user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
         }
 
@@ -235,8 +235,10 @@ class FeuserEditController extends FeuserController
             if (!$user->getDisable()) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
-                $user->setEmail($user->getEmailNew());
-                $user->setEmailNew('');
+                if (!empty($user->getEmailNew())) {
+                    $user->setEmail($user->getEmailNew());
+                    $user->setEmailNew('');
+                }
 
                 if ($this->settings['useEmailAddressAsUsername']) {
                     $user->setUsername($user->getEmail());

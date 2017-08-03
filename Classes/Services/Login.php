@@ -24,6 +24,8 @@ namespace Evoweb\SfRegister\Services;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Service to handle user logins
  */
@@ -38,24 +40,11 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
     protected $objectManager;
 
     /**
-     * @var \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
-    protected $database;
-
-    /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
      * @inject
      */
     protected $signalSlotDispatcher;
 
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->database = $GLOBALS['TYPO3_DB'];
-    }
 
     /**
      * Login user by id
@@ -68,10 +57,7 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
     {
         $this->initFrontendEuser($this->fetchUserdata($userid));
 
-        /**
-         * @var $frontend \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-         */
-        $frontend = $GLOBALS['TSFE'];
+        $frontend = $this::getTypoScriptFrontendController();
         $frontend->fe_user->createUserSession($this->fetchUserdata($userid));
         $frontend->initUserGroups();
         $frontend->setSysPageWhereClause();
@@ -86,14 +72,14 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function initFrontendEuser(array $userdata)
     {
-        /** @var $feUser \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication */
+        /** @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $feUser */
         $feUser = $this->objectManager->get(\TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication::class);
 
         $feUser->lockIP = $GLOBALS['TYPO3_CONF_VARS']['FE']['lockIP'];
         $feUser->checkPid = $GLOBALS['TYPO3_CONF_VARS']['FE']['checkFeUserPid'];
         $feUser->lifetime = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['lifetime']);
         // List of pid's acceptable
-        $feUser->checkPid_value = $this->database->cleanIntList(\TYPO3\CMS\Core\Utility\GeneralUtility::_GP('pid'));
+        $feUser->checkPid_value = implode(',', GeneralUtility::intExplode(',', GeneralUtility::_GP('pid')));
 
         if ($GLOBALS['TYPO3_CONF_VARS']['FE']['dontSetCookie']) {
             $feUser->dontSetCookie = 1;
@@ -108,7 +94,7 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
         /** @noinspection PhpInternalEntityUsedInspection */
         $feUser->user = $userdata;
 
-        $GLOBALS['TSFE']->fe_user = &$feUser;
+        self::getTypoScriptFrontendController()->fe_user = &$feUser;
 
         $this->updateLastLogin($feUser);
         $feUser->setKey('ses', 'SfRegisterAutoLoginUser', true);
@@ -126,16 +112,20 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
     protected function updateLastLogin(\TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $feUser)
     {
         /** @noinspection PhpInternalEntityUsedInspection */
-        $userUid = (int) $feUser->user['uid'];
+        $uid = (int) $feUser->user['uid'];
 
-        $this->database->exec_UPDATEquery(
-            'fe_users',
-            'uid = ' . $userUid,
-            [
-                $feUser->lastLogin_column => $GLOBALS['EXEC_TIME'],
-                'is_online' => $GLOBALS['EXEC_TIME']
-            ]
-        );
+        $queryBuilder = $this->getQueryBuilderForTable('fe_users');
+        $queryBuilder
+            ->update('fe_users')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'uid',
+                    $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
+                )
+            )
+            ->set($feUser->lastLogin_column, $GLOBALS['EXEC_TIME'])
+            ->set('is_online', $GLOBALS['EXEC_TIME'])
+            ->execute();
     }
 
     /**
@@ -147,11 +137,18 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function fetchUserdata($uid)
     {
-        return current($this->database->exec_SELECTgetRows(
-            '*',
-            'fe_users',
-            'uid = ' . (int) $uid
-        ));
+        $queryBuilder = $this->getQueryBuilderForTable('fe_users');
+        return $queryBuilder
+            ->select('*')
+            ->from('fe_users')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'uid',
+                    $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
+                )
+            )
+            ->execute()
+            ->fetch();
     }
 
     /**
@@ -163,6 +160,18 @@ class Login implements \TYPO3\CMS\Core\SingletonInterface
     {
         /** @noinspection PhpInternalEntityUsedInspection */
         return is_array(self::getTypoScriptFrontendController()->fe_user->user);
+    }
+
+    /**
+     * @param string $table
+     *
+     * @return \TYPO3\CMS\Core\Database\Query\QueryBuilder
+     */
+    protected function getQueryBuilderForTable($table): \TYPO3\CMS\Core\Database\Query\QueryBuilder
+    {
+        return GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Database\ConnectionPool::class
+        )->getQueryBuilderForTable($table);
     }
 
     /**
