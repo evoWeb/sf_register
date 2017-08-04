@@ -1,0 +1,25 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+		xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
+		data-namespace-typo3-fluid="true">
+
+<div class="form-group">
+	<label for="sfrZone"><f:translate key="{fieldName}" /></label>
+	<f:render partial="Required" section="Main" arguments="{field: fieldName}" />
+	<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: fieldName}" /><br/>
+	<f:if condition="{user.staticInfoCountry}">
+		<f:then>
+			<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="{user.staticInfoCountry}" />
+		</f:then>
+		<f:else>
+			<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="DE" />
+		</f:else>
+	</f:if>
+	<div id="sfrZone_empty" class="form-control-static" style="display: none;">
+		<f:translate key="no_zone_available" />
+	</div>
+	<div id="sfrZone_loading" class="form-control-static" style="display: none;">
+		<f:translate key="zone_loading" />
+	</div>
+</div>
+
+</html>
