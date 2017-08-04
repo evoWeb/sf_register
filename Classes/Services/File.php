@@ -87,11 +87,21 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
 
 
     /**
+     * @var int
+     */
+    protected $storageUid = 1;
+
+    /**
+     * @var ResourceStorage
+     */
+    protected $storage;
+
+    /**
      * Temporary folder
      *
      * @var string
      */
-    protected $tempFolderIdentifier = '1:sf_register/_temp_/';
+    protected $tempFolderIdentifier = 'sf_register/_temp_/';
 
     /**
      * Temporary folder
@@ -105,7 +115,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var string
      */
-    protected $imageFolderIdentifier = '1:sf_register/';
+    protected $imageFolderIdentifier = 'sf_register/';
 
     /**
      * @var Folder
@@ -140,7 +150,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
         );
 
         if (isset($this->settings['imageFolder']) && !empty($this->settings['imageFolder'])) {
-            $this->setImageFolder($this->settings['imageFolder']);
+            $this->setImageFolderIdentifier($this->settings['imageFolder']);
         }
 
         $this->allowedFileExtensions = $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'];
@@ -151,15 +161,18 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
 
 
     /**
-     * @return \TYPO3\CMS\Core\Resource\Folder
+     * @return ResourceStorage
      */
-    public function getTempFolder()
+    public function getStorage()
     {
-        $this->createFolderIfNotExist($this->tempFolderIdentifier);
+        if (!$this->storage) {
+            /** @var ResourceFactory $resourceFactory */
+            $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
+            /** @var \TYPO3\CMS\Core\Resource\ResourceStorage $storage */
+            $this->storage = $resourceFactory->getStorageObject($this->storageUid);
+        }
 
-        /** @var ResourceFactory $resourceFactory */
-        $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
-        return $resourceFactory->retrieveFileOrFolderObject('1:' . $this->tempFolderIdentifier);
+        return $this->storage;
     }
 
     /**
@@ -169,20 +182,10 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return void
      */
-    public function setImageFolder($imageFolder)
+    public function setImageFolderIdentifier($imageFolder)
     {
-        list($storageUid, $folderIdentifier) = GeneralUtility::trimExplode(':', $imageFolder);
-        /** @var ResourceFactory $resourceFactory */
-        $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
-        /** @var \TYPO3\CMS\Core\Resource\ResourceStorage $storage */
-        $storage = $resourceFactory->getStorageObject($storageUid);
-        if ($storage->hasFolder($folderIdentifier)) {
-            $folder = $storage->getFolder($folderIdentifier);
-        } else {
-            $folder = $storage->createFolder($folderIdentifier);
-        }
-
-        $this->imageFolder = $folder;
+        list($this->storageUid, $this->imageFolderIdentifier) = GeneralUtility::trimExplode(':', $imageFolder);
+        $this->tempFolderIdentifier = rtrim($this->imageFolderIdentifier, '/') . '/_temp_/';
     }
 
     /**
@@ -190,7 +193,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function getImageFolder()
     {
-        if ($this->imageFolder) {
+        if (!$this->imageFolder) {
             $this->createFolderIfNotExist($this->imageFolderIdentifier);
 
             /** @var ResourceFactory $resourceFactory */
@@ -198,6 +201,19 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
             $this->imageFolder = $resourceFactory->retrieveFileOrFolderObject($this->imageFolderIdentifier);
         }
         return $this->imageFolder;
+    }
+
+    /**
+     * @return \TYPO3\CMS\Core\Resource\Folder
+     */
+    public function getTempFolder()
+    {
+        if (!$this->tempFolder) {
+            $this->createFolderIfNotExist($this->tempFolderIdentifier);
+
+            $this->tempFolder = $this->getStorage()->getFolder($this->tempFolderIdentifier);
+        }
+        return $this->tempFolder;
     }
 
     /**
@@ -399,9 +415,8 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function createFolderIfNotExist($uploadFolder)
     {
-        $uploadFolder = \TYPO3\CMS\Core\Utility\PathUtility::getCanonicalPath($uploadFolder);
-        if (!is_dir($uploadFolder)) {
-            GeneralUtility::mkdir_deep(PATH_site . 'fileadmin/', $uploadFolder);
+        if (!$this->getStorage()->hasFolder($uploadFolder)) {
+            $this->getStorage()->createFolder($uploadFolder);
         }
     }
 
