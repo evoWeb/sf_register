@@ -4,7 +4,7 @@
 	<label for="{fieldName}"><f:translate key="{fieldName}" /></label>
 	<f:render partial="Required" section="Main" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: fieldName}" /><br/>
-	<f:form.select property="{fieldName}" id="{fieldName}" class="form-control" options="{options}" />
+	<f:form.select property="{fieldName}" id="{fieldName}" class="form-control" options="{options.values}" />
 </div>
 
 </html>

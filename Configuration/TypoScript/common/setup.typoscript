@@ -1,3 +1,144 @@
-plugin.tx_sfregister.settings {
+plugin.tx_sfregister.settings.fields {
+  defaultSelected {
+    10 = username
+    20 = pseudonym
+    30 = password
+    40 = passwordRepeat
+    50 = email
+    60 = emailRepeat
+    70 = clear
 
+    80 = gender
+    90 = title
+    100 = clear
+
+    110 = firstName
+    120 = lastName
+    130 = company
+    140 = clear
+
+    150 = telephone
+    160 = mobilephone
+    170 = fax
+    190 = clear
+
+    200 = address
+    210 = zip
+    220 = city
+    230 = country
+    240 = zone
+    250 = language
+    260 = clear
+
+    270 = timezone
+    280 = daylight
+    290 = clear
+
+    300 = image
+    310 = clear
+
+    320 = dateOfBirth
+    330 = clear
+
+    340 = gtc
+    350 = privacy
+    360 = clear
+
+    370 = captcha
+    380 = clear
+
+    390 = submit
+  }
+  selected {
+  }
+
+  configuration {
+    username.partial = Textfield
+
+    pseudonym.partial = Textfield
+
+    password {
+      partial = Password
+      progress = show
+    }
+
+    passwordRepeat.partial = Password
+
+    email.partial = Textfield
+
+    emailRepeat.partial = Textfield
+
+    clear.partial = Clear
+
+    gender {
+      partial = Select
+      values {
+        1 = '{f:translate(key: \'gender_male\')}',
+        2 = '{f:translate(key: \'gender_female\')}'
+      }
+    }
+
+    title {
+      partial = Select
+      values {
+        none = '{f:translate(key: \'title_none\')}',
+        dr = '{f:translate(key: \'title_dr\')}',
+        prof = '{f:translate(key: \'title_prof\')}',
+        profdr = '{f:translate(key: \'title_profdr\')}'
+      }
+    }
+
+    firstName.partial = Textfield
+
+    lastName.partial = Textfield
+
+    company.partial = Textfield
+
+    telephone.partial = Textfield
+
+    mobilephone.partial = Textfield
+
+    fax.partial = Textfield
+
+    address.partial = Textfield
+
+    zip.partial = Textfield
+
+    city.partial = Textfield
+
+    country {
+      partial = CountrySelect
+      defaultValue = DE
+      allowedCountries {
+        0 = DE
+        1 = AT
+      }
+    }
+
+    zone {
+      partial = CountryZoneSelect
+      defaultValue = DE
+    }
+
+    language.partial = Language
+
+    timezone.partial = Timezone
+
+    daylight.partial = Checkbox
+
+    image.partial = Upload
+
+    dateOfBirth.partial = DateSelect
+
+    gtc.partial = Checkbox
+
+    privacy.partial = Checkbox
+
+    captcha {
+      partial = Captcha
+      type = Recaptcha
+    }
+
+    submit.partial = Submit
+  }
 }

@@ -13,96 +13,11 @@
 	<f:render partial="FormErrors" section="Main" arguments="{for: 'user'}" />
 	<f:render partial="FieldError" section="Main" arguments="{field: 'uid'}" />
 
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'username'}"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'pseudonym'}"/>
-
-	<f:render partial="Form/Password" arguments="{user: user, fieldName: 'password', progress: 'show'}"/>
-
-	<f:render partial="Form/Password" arguments="{user: user, fieldName: 'passwordRepeat'}"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'email'}"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'emailRepeat'}"/>
-
-	<f:render partial="Form/Clear"/>
-
-	<f:render partial="Form/Select" arguments="{user: user, fieldName: 'gender', options: {
-			1: '{f:translate(key: \'gender_male\')}',
-			2: '{f:translate(key: \'gender_female\')}'
-		}}"/>
-
-	<f:render partial="Form/Select" arguments="{user: user, fieldName: 'title', options: {
-			none: '{f:translate(key: \'title_none\')}',
-			dr: '{f:translate(key: \'title_dr\')}',
-			prof: '{f:translate(key: \'title_prof\')}',
-			profdr: '{f:translate(key: \'title_profdr\')}'
-		}}"/>
-
-	<f:render partial="Form/Clear"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'firstName'}"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'lastName'}"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'company'}"/>
-
-	<f:render partial="Form/Clear"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'telephone'}"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'mobilephone'}"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'fax'}"/>
-
-	<f:render partial="Form/Clear"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'address'}"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'zip'}"/>
-
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'city'}"/>
-
-	<f:render partial="Form/CountrySelect" arguments="{user: user, fieldName: 'country', options: {
-			defaultValue: 'DE',
-			allowedCountries: {0: 'DE', 1: 'AT'}
-		}}"/>
-
-	<f:render partial="Form/CountryZoneSelect" arguments="{user: user, fieldName: 'zone', options: {
-			defaultValue: 'DE'
-		}}"/>
-
-	<f:render partial="Form/Language" arguments="{for: 'user', fieldName: 'language'}"/>
-
-	<f:render partial="Form/Clear"/>
-
-	<f:render partial="Form/Timezone" arguments="{for: 'user', fieldName: 'timezone'}"/>
-
-	<f:render partial="Form/Checkbox" arguments="{user: user, fieldName: 'daylight'}"/>
-
-	<f:render partial="Form/Clear"/>
-
-	<f:render partial="Form/Upload" arguments="{user: user, fieldName: 'image'}"/>
-
-	<f:render partial="Form/Clear"/>
-
-	<f:render partial="Form/DateSelect" arguments="{user: user, fieldName: 'dateOfBirth'}"/>
-
-	<f:render partial="Form/Clear"/>
-
-	<f:render partial="Form/Checkbox" arguments="{user: user, fieldName: 'gtc'}"/>
-
-	<f:render partial="Form/Checkbox" arguments="{user: user, fieldName: 'privacy'}"/>
-
-	<f:render partial="Form/Clear"/>
-
-	<f:render partial="Form/Captcha" arguments="{user: user, fieldName: 'captcha', options: {
-			type: 'Recaptcha'
-		}}"/>
-
-	<f:render partial="Form/Clear"/>
-
-	<f:render partial="Form/Submit"/>
+	<f:for each="{settings.fields.selected}" as="selectedField">
+		<f:alias map="{options: '{settings.fields.configuration.{selectedField}}'}">
+			<f:render partial="Form/{options.partial}" arguments="{user: user, fieldName: selectedField, options: options}"/>
+		</f:alias>
+	</f:for>
 
 </f:form>
 

@@ -135,6 +135,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         ) {
             $this->forward('removeImage');
         }
+
+        if (empty($this->settings['fields']['selected'])) {
+            $this->settings['fields']['selected'] = $this->settings['fields']['defaultSelected'];
+        }
     }
 
     /**
