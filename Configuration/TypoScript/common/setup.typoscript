@@ -81,9 +81,6 @@ plugin.tx_sfregister.settings.fields {
     390 = submit
   }
 
-  selected {
-  }
-
   configuration {
     username.partial = Textfield
 
@@ -105,18 +102,18 @@ plugin.tx_sfregister.settings.fields {
     gender {
       partial = Select
       values {
-        1 = '{f:translate(key: \'gender_male\')}',
-        2 = '{f:translate(key: \'gender_female\')}'
+        1 = gender_male
+        2 = gender_female
       }
     }
 
     title {
       partial = Select
       values {
-        none = '{f:translate(key: \'title_none\')}',
-        dr = '{f:translate(key: \'title_dr\')}',
-        prof = '{f:translate(key: \'title_prof\')}',
-        profdr = '{f:translate(key: \'title_profdr\')}'
+        none = title_none
+        dr = title_dr
+        prof = title_prof
+        profdr = title_profdr
       }
     }
 

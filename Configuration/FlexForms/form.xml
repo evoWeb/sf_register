@@ -32,14 +32,31 @@
 							</config>
 						</TCEforms>
 					</switchableControllerActions>
-					<settings.templateRootPath>
+					<settings.fields.selected>
 						<TCEforms>
-							<label>LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.viewTemplateRootPath</label>
+							<label>LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:form_flexform.settings.fields.selected</label>
 							<config>
-								<type>input</type>
+								<type>select</type>
+								<renderType>selectMultipleSideBySide</renderType>
+								<multiple>1</multiple>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">username</numIndex>
+										<numIndex index="1">username</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">pseudonym</numIndex>
+										<numIndex index="1">pseudonym</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">clear</numIndex>
+										<numIndex index="1">clear</numIndex>
+									</numIndex>
+								</items>
+								<size>10</size>
 							</config>
 						</TCEforms>
-					</settings.templateRootPath>
+					</settings.fields.selected>
 				</el>
 			</ROOT>
 		</sDEF>

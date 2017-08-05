@@ -146,6 +146,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
         if (empty($this->settings['fields']['selected'])) {
             $this->settings['fields']['selected'] = $this->settings['fields'][$controllerType . 'DefaultSelected'];
+        } elseif (!is_array($this->settings['fields']['selected'])) {
+            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
         }
     }
 
