@@ -1,0 +1,223 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/common/setup.typoscript">
+
+page {
+  includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/styles.css
+
+  includeJSFooter.passwordmeter = EXT:sf_register/Resources/Public/JavaScript/passwordmeter.js
+  includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register.js
+}
+
+plugin.tx_sfregister.settings {
+  # boolean defines in edit mode if the fields get filled with data of logged in user
+  useDataOfLoggedinFeuser = 1
+
+  dateFormat = d-m-Y
+
+  # comma separated list of words used in bad word validatorchro
+  badWordList = {$plugin.tx_sfregister.settings.badWordList}
+
+  # uid of the page to redirect to after saving
+  redirectPostRegistrationPageId =
+  # uid of the page to redirect to after confirmation
+  redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId}
+
+  # wether the email address entered should be used as username
+  useEmailAddressAsUsername =
+
+  # string [md5|sha1]
+  encryptPassword =
+
+  # boolean use encrypted filename to deny direct access on uploaded files
+  useEncryptedFilename = md5
+
+  # boolean if user or admin need to activate or notified
+  notifyAdminPostCreateSave =
+  notifyUserPostCreateSave =
+
+  notifyAdminPostCreateConfirm =
+  notifyUserPostCreateConfirm =
+
+  notifyAdminPostCreateRefuse =
+  notifyUserPostCreateRefuse =
+
+  notifyAdminPostCreateAccept =
+  notifyUserPostCreateAccept =
+
+  notifyAdminPostCreateDecline =
+  notifyUserPostCreateDecline =
+
+  notifyAdminPostEditSave =
+  notifyUserPostEditSave =
+
+  notifyAdminPostEditConfirmation =
+  notifyUserPostEditConfirmation =
+
+  confirmEmailPostCreate =
+
+  # boolean if user should get logged in after registration
+  autologinPostRegistration =
+  # boolean if user should get logged in after activation
+  autologinPostConfirmation = {$plugin.tx_sfregister.settings.autologinPostConfirmation}
+
+  # integer usergroup set if no activation is needed
+  usergroup = {$plugin.tx_sfregister.settings.usergroup}
+
+  # integer usergroups set if confirmation is needed
+  usergroupPostSave = {$plugin.tx_sfregister.settings.usergroupPostSave}
+  usergroupPostConfirm = {$plugin.tx_sfregister.settings.usergroupPostConfirm}
+  usergroupPostAccept = {$plugin.tx_sfregister.settings.usergroupPostAccept}
+
+  # string name of the site used in subject
+  sitename = {$plugin.tx_sfregister.settings.emailSitename}
+
+  userEmail {
+    fromName = {$plugin.tx_sfregister.settings.emailName}
+    fromEmail = {$plugin.tx_sfregister.settings.emailAddress}
+
+    replyName =
+    replyEmail =
+  }
+
+  adminEmail {
+    toName = {$plugin.tx_sfregister.settings.emailName}
+    toEmail = {$plugin.tx_sfregister.settings.emailAddress}
+
+    fromName = {$plugin.tx_sfregister.settings.emailName}
+    fromEmail = {$plugin.tx_sfregister.settings.emailAddress}
+
+    replyName =
+    replyEmail =
+  }
+
+  validation.create {
+    username {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 4, maximum = 80)
+      3 = Evoweb\SfRegister\Validation\Validator\UniqueValidator
+      4 = Evoweb\SfRegister\Validation\Validator\UniqueValidator(global = 1)
+    }
+    password {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 8, maximum = 40)
+      3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
+    }
+    passwordRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
+    firstName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+    lastName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+    email {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = EmailAddress
+    }
+    emailRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
+    gtc {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
+    }
+    image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
+    captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = recaptcha)
+  }
+
+  validation.edit {
+    firstName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+    lastName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+    email = EmailAddress
+    gtc = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
+    image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
+  }
+
+  validation.password {
+    password {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 2, maximum = 40)
+      3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
+    }
+    passwordRepeat {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 2, maximum = 40)
+      3 = Evoweb\SfRegister\Validation\Validator\RepeatValidator
+    }
+    oldPassword {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 2, maximum = 40)
+      3 = Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator
+    }
+  }
+
+  filefieldname = image
+
+  captcha {
+    # Needs EXT:recaptcha to be installed
+    recaptcha = Evoweb\Recaptcha\Adapter\SfRegisterAdapter
+    # Needs EXT:jm_recaptcha to be installed
+    jmrecaptcha = Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter
+    # Needs EXT:sr_freecap to be installed
+    srfreecap = Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter
+  }
+
+  processInitializeActionSignal = 0
+}
+
+plugin.tx_sfregister.features {
+  rewrittenPropertyMapper = 1
+}
+
+plugin.tx_sfregister.fieldError = TEXT
+plugin.tx_sfregister.fieldError {
+  current = 1
+  split {
+    token = .
+    cObjNum = 1
+
+    1 = COA
+    1 {
+      10 = TEXT
+      10.current = 1
+      10.substring = 0, 1
+      10.case = upper
+
+      20 = TEXT
+      20.current = 1
+      20.substring = 1, 1000
+      20.case = lower
+    }
+  }
+}
+
+plugin.tx_sfregister._LOCAL_LANG.default {
+  title_none = Please select
+  title_dr = Dr.
+  title_prof = Prof.
+  title_profdr = Prof. Dr.
+}
+
+module.tx_sfregister < plugin.tx_sfregister
+
+config.tx_extbase {
+  objects {
+    Evoweb\SfRegister\Interfaces\FrontendUserInterface {
+      className = Evoweb\SfRegister\Domain\Model\FrontendUser
+    }
+  }
+  persistence.classes {
+    Evoweb\SfRegister\Domain\Model\FrontendUser {
+      mapping {
+        tableName = fe_users
+      }
+    }
+    Evoweb\SfRegister\Domain\Model\StaticCountry {
+      mapping {
+        tableName = static_countries
+      }
+    }
+    Evoweb\SfRegister\Domain\Model\StaticCountryZone {
+      mapping {
+        tableName = static_country_zones
+      }
+    }
+    Evoweb\SfRegister\Domain\Model\StaticLanguage {
+      mapping {
+        tableName = static_languages
+      }
+    }
+  }
+}
