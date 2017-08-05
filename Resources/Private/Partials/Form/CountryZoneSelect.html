@@ -2,18 +2,12 @@
 		xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 		data-namespace-typo3-fluid="true">
 
-<div class="form-group">
+<div class="form-group {fieldName}">
 	<label for="sfrZone"><f:translate key="{fieldName}" /></label>
 	<f:render partial="Required" section="Main" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: fieldName}" /><br/>
-	<f:if condition="{user.staticInfoCountry}">
-		<f:then>
-			<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="{user.staticInfoCountry}" />
-		</f:then>
-		<f:else>
-			<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="DE" />
-		</f:else>
-	</f:if>
+	<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control"
+			parent="{f:if(condition: user.staticInfoCountry, then: user.staticInfoCountry, else: options.defaultValue)}" />
 	<div id="sfrZone_empty" class="form-control-static" style="display: none;">
 		<f:translate key="no_zone_available" />
 	</div>

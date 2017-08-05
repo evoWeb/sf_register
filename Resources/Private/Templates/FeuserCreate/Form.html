@@ -59,13 +59,18 @@
 
 	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'address'}"/>
 
-	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'zip', css: 'zip'}"/>
+	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'zip'}"/>
 
 	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'city'}"/>
 
-	<f:render partial="Form/CountrySelect" arguments="{user: user, fieldName: 'country'}"/>
+	<f:render partial="Form/CountrySelect" arguments="{user: user, fieldName: 'country', options: {
+			defaultValue: 'DE',
+			allowedCountries: {0: 'DE', 1: 'AT'}
+		}}"/>
 
-	<f:render partial="Form/CountryZoneSelect" arguments="{user: user, fieldName: 'zone'}"/>
+	<f:render partial="Form/CountryZoneSelect" arguments="{user: user, fieldName: 'zone', options: {
+			defaultValue: 'DE'
+		}}"/>
 
 	<f:render partial="Form/Language" arguments="{for: 'user', fieldName: 'language'}"/>
 
@@ -91,7 +96,9 @@
 
 	<f:render partial="Form/Clear"/>
 
-	<f:render partial="Form/Captcha" arguments="{user: user, fieldName: 'captcha', options: {type: 'JmRecaptcha'}}"/>
+	<f:render partial="Form/Captcha" arguments="{user: user, fieldName: 'captcha', options: {
+			type: 'Recaptcha'
+		}}"/>
 
 	<f:render partial="Form/Clear"/>
 

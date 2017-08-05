@@ -26,11 +26,12 @@ namespace Evoweb\SfRegister\ViewHelpers;
  ***************************************************************/
 
 /**
- * Viewhelper to output a captcha in a form
+ * Viewhelper to output the configured language
+ *
  * <code title="Usage">
- * {namespace register=Evoweb\SfRegister\ViewHelpers}
- * <register:languageKey type="languages"/>
- * {register:languageKey(type: 'countries')}
+ *  {namespace register=Evoweb\SfRegister\ViewHelpers}
+ *  <register:languageKey type="languages"/>
+ *  {register:languageKey(type: 'countries')}
  * </code>
  */
 class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
@@ -56,14 +57,14 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
     {
         $languageCode = '';
         if (TYPO3_MODE === 'FE') {
-            if (isset($this->getTypoScriptFrontendController()->config['config']['language'])) {
-                $languageCode = $this->getTypoScriptFrontendController()->config['config']['language'];
+            if (isset($this->getTypoScriptFrontendController()->lang)) {
+                $languageCode = strtolower($this->getTypoScriptFrontendController()->lang);
             }
         } elseif (strlen($GLOBALS['BE_USER']->uc['lang']) > 0) {
             $languageCode = $GLOBALS['BE_USER']->uc['lang'];
         }
 
-        if ($languageCode && $this->hasArgument('type') && ($type = $this->getAllowedType())) {
+        if ($languageCode && $this->hasArgument('type') && ($type = $this->getConfiguredType())) {
             if ($type == 'countries') {
                 $languageCode = $this->hasCountriesTableLanguageField($languageCode) ? $languageCode : '';
             } elseif ($type == 'languages') {
@@ -71,13 +72,13 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
             }
         }
 
-        return $languageCode ?: 'en';
+        return strtoupper($languageCode) ?: 'EN';
     }
 
     /**
      * @return string
      */
-    protected function getAllowedType()
+    protected function getConfiguredType()
     {
         $type = $this->arguments['type'];
 

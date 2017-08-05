@@ -1,12 +1,6 @@
-{namespace register=Evoweb\SfRegister\ViewHelpers}
-<?xml version="1.0" encoding="UTF-8" ?>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
-<head>
-	<title>Partial captcha sr freecap template of registration</title>
-</head>
-<body>
-<f:section name="Main">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+		data-namespace-typo3-fluid="true">
+
 <div><f:alias map="{x: '{register:form.captcha(type: \'srfreecap\')}'}">
 	<f:if condition="{x.image}">
 		<f:then>
@@ -20,6 +14,5 @@
 		</f:else>
 	</f:if>
 </f:alias></div>
-</f:section>
-</body>
+
 </html>

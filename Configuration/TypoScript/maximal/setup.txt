@@ -121,7 +121,7 @@ plugin.tx_sfregister.settings {
 			2 = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
 		}
 		image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
-		captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = srfreecap)
+		captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = recaptcha)
 	}
 
 	validation.edit {
@@ -153,7 +153,11 @@ plugin.tx_sfregister.settings {
 	imageFolder = 1:frontendusers
 
 	captcha {
+		# Needs EXT:recaptcha to be installed
+		recaptcha = Evoweb\Recaptcha\Adapter\SfRegisterAdapter
+		# Needs EXT:jm_recaptcha to be installed
 		jmrecaptcha = Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter
+		# Needs EXT:sr_freecap to be installed
 		srfreecap = Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter
 	}
 

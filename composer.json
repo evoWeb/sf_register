@@ -23,6 +23,10 @@
     "typo3-ter/sf-register": "self.version"
   },
 
+  "suggest": {
+    "evoweb/recaptcha": "7.2.1"
+  },
+
   "autoload": {
     "psr-4": {
       "Evoweb\\SfRegister\\": "Classes"

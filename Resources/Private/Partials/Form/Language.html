@@ -2,7 +2,7 @@
 		xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 		data-namespace-typo3-fluid="true">
 
-<div class="form-group">
+<div class="form-group {fieldName}">
 	<label for="{fieldName}"><f:translate key="{fieldName}" /></label>
 	<f:render partial="Required" section="Main" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: fieldName}" /><br/>

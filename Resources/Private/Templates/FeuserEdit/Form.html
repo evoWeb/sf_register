@@ -46,9 +46,14 @@
 
 	<f:render partial="Form/Textfield" arguments="{user: user, fieldName: 'city'}"/>
 
-	<f:render partial="Form/CountrySelect" arguments="{user: user, fieldName: 'country'}"/>
+	<f:render partial="Form/CountrySelect" arguments="{user: user, fieldName: 'country', options: {
+			defaultValue: 'DE',
+			allowedCountries: {0: 'DE', 1: 'AT'}
+		}}"/>
 
-	<f:render partial="Form/CountryZoneSelect" arguments="{user: user, fieldName: 'zone'}"/>
+	<f:render partial="Form/CountryZoneSelect" arguments="{user: user, fieldName: 'zone', options: {
+			defaultValue: 'DE'
+		}}"/>
 
 	<f:render partial="Form/Upload" arguments="{user: user, fieldName: 'image'}"/>
 

@@ -2,20 +2,14 @@
 		xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 		data-namespace-typo3-fluid="true">
 
-<div class="form-group">
+<div class="form-group {fieldName}">
 	<label for="sfrCountry"><f:translate key="{fieldName}" /></label>
 	<f:render partial="Required" section="Main" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: fieldName}" /><br/>
-	<f:if condition="{staticInfoCountry}">
-		<f:then>
-			<register:form.selectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control"
-					allowedCountries="{0: 'DE', 1: 'AT'}" />
-		</f:then>
-		<f:else>
-			<register:form.selectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control" value="DE"
-					allowedCountries="{0: 'DE', 1: 'AT'}" optionLabelField="cnShort{register:languageKey(type: 'countries') -> f:format.case(mode: 'capital')}" />
-		</f:else>
-	</f:if>
+	<register:form.selectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control"
+			value="{f:if(condition: user.staticInfoCountry, then: user.staticInfoCountry, else: options.defaultValue)}"
+			allowedCountries="{options.allowedCountries}"
+			optionLabelField="cnShort{register:languageKey(type: 'countries')}" />
 </div>
 
 </html>

@@ -122,7 +122,7 @@
 }
 
 .tx_evoweb_sfregister .form-group.city {
-	width: 34%;
+	width: 29%;
 	margin-left: 10px;
 }
 
@@ -132,7 +132,7 @@
 }
 
 .tx_evoweb_sfregister .form-group.zip {
-	width: 12%;
+	width: 16%;
 }
 
 .tx_evoweb_sfregister .form-group.housenumber input,
