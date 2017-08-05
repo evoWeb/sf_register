@@ -1,5 +1,6 @@
 plugin.tx_sfregister.settings.fields {
-  defaultSelected {
+  # default selected fields for create controller
+  createDefaultSelected {
     10 = username
     20 = pseudonym
     30 = password
@@ -49,6 +50,37 @@ plugin.tx_sfregister.settings.fields {
 
     390 = submit
   }
+
+  # default selected fields for edit controller
+  editDefaultSelected {
+    90 = title
+    100 = clear
+
+    110 = firstName
+    120 = lastName
+    130 = company
+    140 = clear
+
+    145 = email
+    150 = telephone
+    160 = mobilephone
+    170 = fax
+    190 = clear
+
+    200 = address
+    210 = zip
+    220 = city
+    230 = country
+    240 = zone
+    250 = language
+    260 = clear
+
+    300 = image
+    310 = clear
+
+    390 = submit
+  }
+
   selected {
   }
 
