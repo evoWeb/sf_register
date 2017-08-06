@@ -82,7 +82,10 @@ plugin.tx_sfregister.settings.fields {
   }
 
   configuration {
-    username.partial = Textfield
+    username {
+      partial = Textfield
+      backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.username_selectField
+    }
 
     pseudonym.partial = Textfield
 
@@ -97,10 +100,9 @@ plugin.tx_sfregister.settings.fields {
 
     emailRepeat.partial = Textfield
 
-    clear.partial = Clear
-
     gender {
       partial = Select
+      backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.gender_selectField
       values {
         1 = gender_male
         2 = gender_female
@@ -125,7 +127,10 @@ plugin.tx_sfregister.settings.fields {
 
     telephone.partial = Textfield
 
-    mobilephone.partial = Textfield
+    mobilephone {
+      partial = Textfield
+      backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.mobilephone_selectField
+    }
 
     fax.partial = Textfield
 
@@ -159,7 +164,10 @@ plugin.tx_sfregister.settings.fields {
 
     dateOfBirth.partial = DateSelect
 
-    gtc.partial = Checkbox
+    gtc {
+      partial = Checkbox
+      backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.gtc_selectField
+    }
 
     privacy.partial = Checkbox
 
@@ -167,6 +175,8 @@ plugin.tx_sfregister.settings.fields {
       partial = Captcha
       type = Recaptcha
     }
+
+    clear.partial = Clear
 
     submit.partial = Submit
   }

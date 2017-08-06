@@ -1,11 +1,11 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/fields/setup.typoscript">
+
 page {
   includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/styles.css
 
   includeJSFooter.passwordmeter = EXT:sf_register/Resources/Public/JavaScript/passwordmeter.js
   includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register.js
 }
-
-
 
 plugin.tx_sfregister.settings {
   # boolean defines in edit mode if the fields get filled with data of logged in user

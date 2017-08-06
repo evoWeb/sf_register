@@ -1,11 +1,11 @@
 <?php
-defined('TYPO3_MODE') or die();
+defined('TYPO3_MODE') || die();
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
-    array(
-        'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xml:tt_content.list_type_form',
+    [
+        'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_form',
         'sfregister_form'
-    ),
+    ],
     'list_type',
     'sf_register'
 );
