@@ -1,125 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	  xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
-	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+		xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 <head>
 	<title>Edit preview template of registration</title>
 </head>
 <body>
+
 <f:layout name="Default" />
+
 <f:section name="Main">
 <f:form action="proxy" name="user" object="{user}">
 
-	<div class="form-group">
-		<label><f:translate key="title" /></label>
-		<f:form.hidden property="title" />
-		<p class="form-control-static">{user.title}</p>
-	</div>
-
-	<div class="clear"></div>
-
-	<div class="form-group">
-		<label><f:translate key="firstName" /></label>
-		<f:form.hidden property="firstName" />
-		<p class="form-control-static">{user.firstName}</p>
-	</div>
-
-	<div class="form-group">
-		<label><f:translate key="lastName" /></label>
-		<f:form.hidden property="lastName" />
-		<p class="form-control-static">{user.lastName}</p>
-	</div>
-
-	<div class="form-group">
-		<label><f:translate key="company" /></label>
-		<f:form.hidden property="company" />
-		<p class="form-control-static">{user.company}</p>
-	</div>
-
-	<div class="clear"></div>
-
-	<div class="form-group">
-		<label><f:translate key="email" /></label>
-		<f:form.hidden property="email" />
-		<p class="form-control-static">{user.email}</p>
-	</div>
-
-	<div class="form-group">
-		<label><f:translate key="telephone" /></label>
-		<f:form.hidden property="telephone" />
-		<p class="form-control-static">{user.telephone}</p>
-	</div>
-
-	<div class="form-group">
-		<label><f:translate key="mobilephone" /></label>
-		<f:form.hidden property="mobilephone" />
-		<p class="form-control-static">{user.mobilephone}</p>
-	</div>
-
-	<div class="form-group">
-		<label><f:translate key="fax" /></label>
-		<f:form.hidden property="fax" />
-		<p class="form-control-static">{user.fax}</p>
-	</div>
-
-	<div class="clear"></div>
-
-	<div class="form-group">
-		<label><f:translate key="address" /></label>
-		<f:form.hidden property="address" />
-		<p class="form-control-static">{user.address}</p>
-	</div>
-
-	<div class="form-group zip">
-		<label><f:translate key="zip" /></label>
-		<f:form.hidden property="zip" />
-		<p class="form-control-static">{user.zip}</p>
-	</div>
-
-	<div class="form-group city">
-		<label><f:translate key="city" /></label>
-		<f:form.hidden property="city" />
-		<p class="form-control-static">{user.city}</p>
-	</div>
-
-	<div class="form-group">
-		<label><f:translate key="country" /></label>
-		<f:form.hidden property="country" />
-		<p class="form-control-static">{user.staticInfoCountry}</p>
-	</div>
-
-	<div class="clear"></div>
-
-	<div class="form-group upload">
-		<label><f:translate key="image" /></label>
-		<register:form.upload property="image" disabled="disabled">
-			<f:if condition="{resource}">
-				<f:image image="{resource}" alt="" width="50"/>
-			</f:if>
-		</register:form.upload>
-	</div>
-
-	<div class="clear"></div>
-
-	<div class="form-group">
-		<label><f:translate key="dateOfBirth" /></label>
-		<f:form.hidden property="dateOfBirthDay" value="{f:format.date(date: user.dateOfBirth, format: 'd')}"/>
-		<f:form.hidden property="dateOfBirthMonth" value="{f:format.date(date: user.dateOfBirth, format: 'm')}"/>
-		<f:form.hidden property="dateOfBirthYear" value="{f:format.date(date: user.dateOfBirth, format: 'Y')}"/>
-		<p class="form-control-static">{f:format.date(date: user.dateOfBirth, format: settings.dateFormat)}</p>
-	</div>
-
-	<div class="clear"></div>
-
-	<div class="form-group">
-		<f:form.submit name="form" value="{f:translate(key:'submit_change')}" class="btn btn-primary" />
-	</div>
-
-	<div class="form-group">
-		<f:form.submit name="save" value="{f:translate(key:'submit_save')}" class="btn btn-primary pull-right" />
-	</div>
-
+	<f:for each="{settings.fields.selected}" as="selectedField">
+		<f:alias map="{options: '{settings.fields.configuration.{selectedField}}'}">
+			<f:render partial="Preview/{options.partial}" arguments="{user: user, fieldName: selectedField, options: options}"/>
+		</f:alias>
+	</f:for>
 </f:form>
 </f:section>
+
 </body>
 </html>

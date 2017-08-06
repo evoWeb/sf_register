@@ -1,13 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	  xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
-	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
-<head>
-	<title>Partial required template of registration</title>
-</head>
-<body>
-<f:section name="Main">
-	<register:form.required fieldName="{field}"><span class="required">*</span></register:form.required>
-</f:section>
-</body>
+<html xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
+	data-namespace-typo3-fluid="true">
+
+<register:form.required fieldName="{field}"><span class="required">*</span></register:form.required>
+
 </html>

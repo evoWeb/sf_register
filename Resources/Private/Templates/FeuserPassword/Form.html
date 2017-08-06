@@ -5,15 +5,17 @@
 	<title>Password form template of registration</title>
 </head>
 <body>
+
 <f:layout name="Default" />
+
 <f:section name="Main">
 <f:form action="save" name="password">
-	<f:render partial="FormErrors" section="Main" arguments="{for: 'password'}" />
+	<f:render partial="FormErrors" arguments="{for: 'password'}" />
 
 	<div class="form-group">
 		<label for="oldPassword"><f:translate key="oldPassword" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'oldPassword'}" />
-		<f:render partial="FieldError" section="Main" arguments="{field: 'password.oldPassword'}" /><br/>
+		<f:render partial="Required" arguments="{field: 'oldPassword'}" />
+		<f:render partial="FieldError" arguments="{field: 'password.oldPassword'}" /><br/>
 		<f:form.textfield property="oldPassword" id="oldPassword" class="form-control" />
 	</div>
 
@@ -21,16 +23,16 @@
 
 	<div class="form-group">
 		<label for="sfrPassword"><f:translate key="newPassword1" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'newPassword1'}" />
-		<f:render partial="FieldError" section="Main" arguments="{field: 'password.password'}" /><br/>
+		<f:render partial="Required" arguments="{field: 'newPassword1'}" />
+		<f:render partial="FieldError" arguments="{field: 'password.password'}" /><br/>
 		<f:form.password property="password" value="" id="sfrPassword" class="form-control" />
 		<iframe frameborder="none" src="/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg" id="bargraph"></iframe>
 	</div>
 
 	<div class="form-group">
 		<label for="newPassword2"><f:translate key="newPassword2" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'newPassword2'}" />
-		<f:render partial="FieldError" section="Main" arguments="{field: 'password.newPassword2'}" /><br/>
+		<f:render partial="Required" arguments="{field: 'newPassword2'}" />
+		<f:render partial="FieldError" arguments="{field: 'password.newPassword2'}" /><br/>
 		<f:form.password property="passwordRepeat" value="" id="newPassword2" />
 	</div>
 

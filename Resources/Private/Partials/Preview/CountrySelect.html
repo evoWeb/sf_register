@@ -1,0 +1,14 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
+	data-namespace-typo3-fluid="true">
+
+<div class="form-group {fieldName}">
+	<label><f:translate key="{fieldName}" /></label>
+	<register:form.selectStaticCountries property="{fieldName}" id="sfrCountry" class="form-control"
+		disabled="disabled"
+		value="{user.{fieldName}}"
+		allowedCountries="{options.allowedCountries}"
+		optionLabelField="cnShort{register:languageKey(type: 'countries')}" />
+</div>
+
+</html>

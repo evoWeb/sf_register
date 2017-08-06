@@ -4,8 +4,8 @@
 	<f:form.checkbox property="{fieldName}" id="{fieldName}" value="1" />
 	<label for="{fieldName}">
 		<f:translate key="{fieldName}" />
-		<f:render partial="Required" section="Main" arguments="{field: fieldName}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: fieldName}" />
+		<f:render partial="Required" arguments="{field: fieldName}" />
+		<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
 	</label>
 </div>
 

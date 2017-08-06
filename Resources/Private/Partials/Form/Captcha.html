@@ -3,7 +3,7 @@
 <div class="form-group {fieldName}">
 	<f:render partial="Captcha{options.type}" />
 
-	<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: fieldName}" />
+	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
 	<f:form.hidden property="{fieldName}" value="" id="{fieldName}" />
 </div>
 

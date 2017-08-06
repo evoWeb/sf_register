@@ -4,8 +4,8 @@
 
 <div class="form-group {fieldName}">
 	<label for="{fieldName}"><f:translate key="{fieldName}" /></label>
-	<f:render partial="Required" section="Main" arguments="{field: fieldName}" />
-	<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: fieldName}" /><br/>
+	<f:render partial="Required" arguments="{field: fieldName}" />
+	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
 
 	<register:form.rangeSelect start="1" end="31" property="dateOfBirthDay" id="{fieldName}" />
 	-

@@ -114,7 +114,7 @@ plugin.tx_sfregister.settings {
       2 = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
     }
     image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
-    captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = recaptcha)
+    #captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = recaptcha)
   }
 
   validation.edit {

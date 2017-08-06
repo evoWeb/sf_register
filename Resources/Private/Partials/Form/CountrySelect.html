@@ -1,15 +1,15 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-		xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
-		data-namespace-typo3-fluid="true">
+	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
+	data-namespace-typo3-fluid="true">
 
 <div class="form-group {fieldName}">
 	<label for="sfrCountry"><f:translate key="{fieldName}" /></label>
-	<f:render partial="Required" section="Main" arguments="{field: fieldName}" />
-	<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: fieldName}" /><br/>
+	<f:render partial="Required" arguments="{field: fieldName}" />
+	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
 	<register:form.selectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control"
-			value="{f:if(condition: user.staticInfoCountry, then: user.staticInfoCountry, else: options.defaultValue)}"
-			allowedCountries="{options.allowedCountries}"
-			optionLabelField="cnShort{register:languageKey(type: 'countries')}" />
+		value="{f:if(condition: user.staticInfoCountry, then: user.staticInfoCountry, else: options.defaultValue)}"
+		allowedCountries="{options.allowedCountries}"
+		optionLabelField="cnShort{register:languageKey(type: 'countries')}" />
 </div>
 
 </html>
