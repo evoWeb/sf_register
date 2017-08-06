@@ -109,15 +109,13 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
     {
         parent::initialize();
 
-        $disabled = $this->hasArgument('disabled');
-
         if ($this->hasArgument('parent') && $this->arguments['parent'] != ''
             && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')
         ) {
             $options = $this->countryZonesRepository->findAllByIso2($this->arguments['parent']);
             $options = $options->toArray();
 
-            if ($disabled) {
+            if ($this->hasArgument('disabled')) {
                 $value = $this->getSelectedValue();
                 $value = is_array($value) ? $value : [$value];
 

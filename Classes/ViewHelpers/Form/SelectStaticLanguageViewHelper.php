@@ -117,12 +117,23 @@ class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\S
 
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
             if ($this->hasArgument('allowedLanguages') && count($this->arguments['allowedLanguages'])) {
-                $this->arguments['options'] = $this->languageRepository->findByLgCollateLocale(
-                    $this->arguments['allowedLanguages']
-                );
+                $options = $this->languageRepository->findByLgCollateLocale($this->arguments['allowedLanguages']);
             } else {
-                $this->arguments['options'] = $this->languageRepository->findAll();
+                $options = $this->languageRepository->findAll();
             }
+            $options = $options->toArray();
+
+            if ($this->hasArgument('disabled')) {
+                $value = $this->getSelectedValue();
+                $value = is_array($value) ? $value : [$value];
+
+                $options = array_filter($options, function ($option) use ($value) {
+                    /** @var \Evoweb\SfRegister\Domain\Model\StaticLanguage $option */
+                    return in_array($option->getLgIso2(), $value);
+                });
+            }
+
+            $this->arguments['options'] = $options;
         }
     }
 }

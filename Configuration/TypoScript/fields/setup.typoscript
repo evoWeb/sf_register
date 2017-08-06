@@ -155,7 +155,13 @@ plugin.tx_sfregister.settings.fields {
       defaultValue = DE
     }
 
-    language.partial = Language
+    language {
+      partial = Language
+      allowedLanguages {
+        0 = de_DE
+        1 = fr_FR
+      }
+    }
 
     timezone.partial = Timezone
 

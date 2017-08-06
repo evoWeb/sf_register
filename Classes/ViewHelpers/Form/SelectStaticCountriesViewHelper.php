@@ -119,8 +119,6 @@ class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\
     {
         parent::initialize();
 
-        $disabled = $this->hasArgument('disabled');
-
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
             if ($this->hasArgument('allowedCountries') && count($this->arguments['allowedCountries'])) {
                 $options = $this->countryRepository->findByCnIso2($this->arguments['allowedCountries']);
@@ -129,7 +127,7 @@ class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\
             }
             $options = $options->toArray();
 
-            if ($disabled) {
+            if ($this->hasArgument('disabled')) {
                 $value = $this->getSelectedValue();
                 $value = is_array($value) ? $value : [$value];
 
