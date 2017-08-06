@@ -11,11 +11,11 @@
 				<source>Gender</source>
 				<target>Geschlecht</target>
 			</trans-unit>
-			<trans-unit id="gender_male" xml:space="preserve" approved="yes">
+			<trans-unit id="gender_1" xml:space="preserve" approved="yes">
 				<source>Mr</source>
 				<target>Herr</target>
 			</trans-unit>
-			<trans-unit id="gender_female" xml:space="preserve" approved="yes">
+			<trans-unit id="gender_2" xml:space="preserve" approved="yes">
 				<source>Mrs</source>
 				<target>Frau</target>
 			</trans-unit>

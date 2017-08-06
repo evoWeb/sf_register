@@ -3,7 +3,12 @@
 <div class="form-group {fieldName}">
 	<label><f:translate key="{fieldName}" /></label>
 	<f:form.hidden property="{fieldName}" />
-	<p class="form-control-static">{user.{fieldName}}</p>
+	<p class="form-control-static">
+		<f:if condition="{options.values.{user.{fieldName}}}">
+			<f:then><f:translate id="{options.values.{user.{fieldName}}}"/></f:then>
+			<f:else><f:translate id="{fieldName}_none"/></f:else>
+		</f:if>
+	</p>
 </div>
 
 </html>

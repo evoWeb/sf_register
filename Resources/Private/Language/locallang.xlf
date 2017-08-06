@@ -9,10 +9,10 @@
 			<trans-unit id="gender" xml:space="preserve">
 				<source>Gender</source>
 			</trans-unit>
-			<trans-unit id="gender_male" xml:space="preserve">
+			<trans-unit id="gender_1" xml:space="preserve">
 				<source>Mr</source>
 			</trans-unit>
-			<trans-unit id="gender_female" xml:space="preserve">
+			<trans-unit id="gender_2" xml:space="preserve">
 				<source>Mrs</source>
 			</trans-unit>
 			<trans-unit id="title" xml:space="preserve">

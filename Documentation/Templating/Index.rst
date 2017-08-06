@@ -76,8 +76,8 @@ Single select with radio buttons
 
 ::
 
-   <f:form.radio property="gender" value="1"/> <f:translate key="gender_male"/>
-   <f:form.radio property="gender" value="2"/> <f:translate key="gender_female"/>
+   <f:form.radio property="gender" value="1"/> <f:translate key="gender_1"/>
+   <f:form.radio property="gender" value="2"/> <f:translate key="gender_2"/>
 
 |img-6|
 
@@ -88,8 +88,8 @@ Single select as select box
 ::
 
    <f:form.select property="gender" options="{
-   	1: '{f:translate(key: \'gender_male\')}',
-   	2: '{f:translate(key: \'gender_female\')}'
+   	1: '{f:translate(key: \'gender_1\')}',
+   	2: '{f:translate(key: \'gender_2\')}'
    }"/>
 
 |img-7|

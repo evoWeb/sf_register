@@ -105,8 +105,8 @@ plugin.tx_sfregister.settings.fields {
       partial = Select
       backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.gender_selectField
       values {
-        1 = gender_male
-        2 = gender_female
+        1 = gender_1
+        2 = gender_2
       }
     }
 
