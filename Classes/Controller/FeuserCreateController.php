@@ -30,6 +30,19 @@ namespace Evoweb\SfRegister\Controller;
 class FeuserCreateController extends FeuserController
 {
     /**
+     * Initialization all actions
+     *
+     * @return void
+     */
+    protected function initializeAction()
+    {
+        $this->userRepository = $this->objectManager->get(
+            \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class
+        );
+    }
+
+
+    /**
      * Form action
      *
      * @return void
@@ -174,17 +187,6 @@ class FeuserCreateController extends FeuserController
         $this->view->assign('user', $user);
     }
 
-    /**
-     * Initialization confirm action
-     *
-     * @return void
-     */
-    protected function initializeConfirmAction()
-    {
-        $this->userRepository = $this->objectManager->get(
-            \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class
-        );
-    }
 
     /**
      * Confirm registration process by user
@@ -274,6 +276,7 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('userRefused', 1);
         }
     }
+
 
     /**
      * Accept registration process by admin after user confirmation
