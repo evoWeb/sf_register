@@ -29,11 +29,11 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  *
  * <code title="Usage">
  *  {namespace register=Evoweb\SfRegister\ViewHelpers}
- *  <register:form.SelectStaticCountries name="country" optionLabelField="cnShortDe"/>
+ *  <register:form.selectStaticCountries name="country" optionLabelField="cnShortDe"/>
  * </code>
  * <code title="Optional label field">
  *  {namespace register=Evoweb\SfRegister\ViewHelpers}
- *  <register:form.SelectStaticCountries name="country" optionLabelField="cnShortDe"/>
+ *  <register:form.selectStaticCountries name="country" optionLabelField="cnShortDe"/>
  * </code>
  */
 class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper

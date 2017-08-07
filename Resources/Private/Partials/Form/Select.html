@@ -1,10 +1,12 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
+	data-namespace-typo3-fluid="true">
 
 <div class="form-group {fieldName}">
 	<label for="{fieldName}"><f:translate key="{fieldName}" /></label>
 	<f:render partial="Required" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
-	<f:form.select property="{fieldName}" id="{fieldName}" class="form-control" options="{options.values}" />
+	<register:form.translatedSelect property="{fieldName}" id="{fieldName}" class="form-control" options="{options.values}" />
 </div>
 
 </html>

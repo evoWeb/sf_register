@@ -29,7 +29,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  *
  * <code title="Usage">
  *  {namespace register=Evoweb\SfRegister\ViewHelpers}
- *  <register:form.SelectStaticCountryZones name="zone" parent="US"/>
+ *  <register:form.selectStaticCountryZones name="zone" parent="US"/>
  * </code>
  */
 class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper

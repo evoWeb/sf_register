@@ -25,11 +25,11 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  ***************************************************************/
 
 /**
- * Viewhelper to render a selectbox with values
- * of static info tables country zones
+ * Viewhelper to render a selectbox with values of static info tables country zones
+ *
  * <code title="Usage">
- * {namespace register=Evoweb\SfRegister\ViewHelpers}
- * <register:form.SelectStaticLanguage name="language" allowedLanguages="{0: 'de_DE', 1: 'fr_FR'}"/>
+ *  {namespace register=Evoweb\SfRegister\ViewHelpers}
+ *  <register:form.selectStaticLanguage name="language" allowedLanguages="{0: 'de_DE', 1: 'fr_FR'}"/>
  * </code>
  */
 class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
