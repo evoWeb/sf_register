@@ -132,18 +132,14 @@ class FeuserCreateController extends FeuserController
      */
     public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        if ($this->isNotifyUser('PostCreateSave') && $this->settings['confirmEmailPostCreate']) {
+        if ($this->settings['confirmEmailPostCreate'] || $this->settings['acceptEmailPostCreate']) {
             $user->setDisable(true);
             $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostSave']);
-            $type = 'PostCreateConfirm';
-        } elseif ($this->isNotifyAdmin('PostCreateSave') && $this->settings['acceptEmailPostCreate']) {
-            $user->setDisable(true);
-            $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostSave']);
-            $type = 'PostCreateAccept';
         } else {
             $user = $this->changeUsergroup($user, (int) $this->settings['usergroup']);
-            $type = 'PostCreateSave';
         }
+
+        $type = 'PostCreateSave';
 
         if ($this->settings['useEmailAddressAsUsername']) {
             $user->setUsername($user->getEmail());
@@ -213,7 +209,7 @@ class FeuserCreateController extends FeuserController
             } else {
                 $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostConfirm']);
 
-                if (!$this->settings['acceptEmailPostCreate']) {
+                if (!$this->settings['acceptEmailPostConfirm']) {
                     $user->setDisable(false);
                 }
 
@@ -302,7 +298,10 @@ class FeuserCreateController extends FeuserController
             } else {
                 $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostAccept']);
                 $user->setActivatedOn(new \DateTime('now'));
-                $user->setDisable(false);
+
+                if (!$this->settings['confirmEmailPostAccept']) {
+                    $user->setDisable(false);
+                }
 
                 $this->signalSlotDispatcher->dispatch(
                     __CLASS__,

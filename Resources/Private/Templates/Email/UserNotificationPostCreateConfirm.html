@@ -5,11 +5,14 @@
 	<title>User notification mail post create confirm template of registration</title>
 </head>
 <body>
+
 <f:layout name="Email" />
+
 <f:section name="Main">
 <f:translate key="email_user_salutation" htmlEscape="false"/>,
 
-<f:translate key="email_user_account_activated" arguments="{0: user.username}" htmlEscape="false"/>
+<f:translate key="email_user_account_confirmed" arguments="{0: user.username}" htmlEscape="false"/>
 </f:section>
+
 </body>
 </html>

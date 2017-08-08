@@ -103,6 +103,12 @@
 			<trans-unit id="maximal.acceptEmailPostCreate" xml:space="preserve">
 				<source>admin needs to accept the email on create</source>
 			</trans-unit>
+			<trans-unit id="maximal.confirmEmailPostAccept" xml:space="preserve">
+				<source>user needs to confirm the email after the admin accepted</source>
+			</trans-unit>
+			<trans-unit id="maximal.acceptEmailPostConfirm" xml:space="preserve">
+				<source>admin needs to accept the email after the user confirmed</source>
+			</trans-unit>
 
 			<trans-unit id="maximal.autologinPostRegistration" xml:space="preserve">
 				<source>whether the user should get logged in after registration</source>
