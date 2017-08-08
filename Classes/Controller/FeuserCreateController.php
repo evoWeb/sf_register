@@ -36,6 +36,8 @@ class FeuserCreateController extends FeuserController
      */
     protected function initializeAction()
     {
+        parent::initializeAction();
+
         $this->userRepository = $this->objectManager->get(
             \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class
         );
