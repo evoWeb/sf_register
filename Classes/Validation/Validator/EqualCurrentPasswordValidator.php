@@ -74,7 +74,9 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
     ) {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            'SfRegister',
+            'Form'
         );
     }
 

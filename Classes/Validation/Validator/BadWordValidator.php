@@ -59,7 +59,9 @@ class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
     ) {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            'SfRegister',
+            'Form'
         );
     }
 

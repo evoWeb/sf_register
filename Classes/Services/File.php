@@ -146,7 +146,9 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
         $this->configurationManager = $configurationManager;
 
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            'SfRegister',
+            'Form'
         );
 
         if (isset($this->settings['imageFolder']) && !empty($this->settings['imageFolder'])) {
