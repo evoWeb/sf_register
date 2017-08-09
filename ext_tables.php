@@ -1,7 +1,7 @@
 <?php
 defined('TYPO3_MODE') || die();
 
-call_user_func(function ($extKey) {
+call_user_func(function () {
     /**
      * Page TypoScript for mod wizards
      */
@@ -48,7 +48,7 @@ call_user_func(function ($extKey) {
     } catch (Exception $exeption) {
         \TYPO3\CMS\Core\Utility\GeneralUtility::devLog(
             'Can not create cache ' . SFREGISTERCACHEIDENTIFIER,
-            $extKey,
+            'sf_register',
             2
         );
     }
