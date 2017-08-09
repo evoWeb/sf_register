@@ -2,6 +2,22 @@
 defined('TYPO3_MODE') || die();
 
 call_user_func(function () {
+    /**
+     * Page TypoScript for mod wizards
+     */
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TsConfig/ModWizards.typoscript">'
+    );
+    /**
+     * User TypoScript for fields
+     *
+     * Needs to be added on top so others can extend regardless of load order
+     */
+    $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'] = '
+[GLOBAL]
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript">
+' . $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultPageTSconfig'];
+
     $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']);
 
     if (TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')
@@ -34,7 +50,7 @@ call_user_func(function () {
         ]
     );
 
-    $TYPO3_CONF_VARS['FE']['eID_include']['sf_register'] = 'EXT:sf_register/Classes/Api/Ajax.php';
+    $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['sf_register'] = 'EXT:sf_register/Classes/Api/Ajax.php';
 
     define('SFREGISTERCACHEIDENTIFIER', 'cache_sf_register_extending');
 
