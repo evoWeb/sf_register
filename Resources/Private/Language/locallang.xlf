@@ -447,60 +447,60 @@
 			</trans-unit>
 
 			<trans-unit id="email_admin_account_accepted">
-				<source></source>
+				<source>The user registration was accepted.</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_confirmed">
-				<source></source>
+				<source>The user confirmed the registration</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_accept_link">
-				<source></source>
+				<source>accept user registration</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_decline_link">
-				<source></source>
+				<source>decline user registration</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_declined">
-				<source></source>
+				<source>The user registration was declined.</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_refused">
-				<source></source>
+				<source>The user registration was refused.</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_saved">
-				<source></source>
+				<source>The user registration was saved</source>
 				<target></target>
 			</trans-unit>
 
 			<trans-unit id="email_user_account_accepted">
-				<source></source>
+				<source>Your registration was accepted.</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_confirm_link">
-				<source></source>
+				<source>confirm your registration</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_refuse_link">
-				<source></source>
+				<source>refuse your registration</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_account_confirmed">
-				<source></source>
+				<source>Your registration was confirmed.</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_account_declined">
-				<source></source>
+				<source>Your registration was declined.</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_account_refused">
-				<source></source>
+				<source>Your registration was refused.</source>
 				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_account_saved">
-				<source></source>
+				<source>Your registration was saved.</source>
 				<target></target>
 			</trans-unit>
 		</body>
