@@ -9,11 +9,14 @@ call_user_func(function () {
         '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TsConfig/ModWizards.typoscript">'
     );
     /**
-     * Page TypoScript for mod wizards
+     * User TypoScript for fields
+     *
+     * Needs to be added on top so others can extend regardless of load order
      */
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
-        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/fields/setup.typoscript">'
-    );
+    $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'] = '
+[GLOBAL]
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript">
+' . $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultPageTSconfig'];
 
     try {
         /**
