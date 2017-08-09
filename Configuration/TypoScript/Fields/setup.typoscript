@@ -76,10 +76,10 @@ plugin.tx_sfregister.settings.fields {
     250 = language
     260 = clear
 
-    300 = image
-    310 = clear
+    #300 = image
+    #310 = clear
 
-    390 = submit
+    390 = update
   }
 
   configuration {
@@ -230,5 +230,7 @@ plugin.tx_sfregister.settings.fields {
     change.partial = Change
 
     submit.partial = Submit
+
+    update.partial = Update
   }
 }
