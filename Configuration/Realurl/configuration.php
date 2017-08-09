@@ -18,37 +18,31 @@
  ***************************************************************/
 
 if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
-    $register = array(
-        'FeUser' => array(
-            array(
+    $register = [
+        'FeUser' => [
+            [
                 'GETvar' => 'tx_sfregister_form[controller]',
-                'valueMap' => array(
+                'valueMap' => [
                     'Creation' => 'FeuserCreate',
                     'Editing' => 'FeuserEdit',
                     'Password' => 'FeuserPassword',
-                ),
-            ),
-            array(
+                ],
+            ],
+            [
                 'GETvar' => 'tx_sfregister_form[action]',
-            ),
-        ),
-        'user' => array(
-            array(
+            ],
+        ],
+        'user' => [
+            [
                 'GETvar' => 'tx_sfregister_form[user]',
-            ),
-        ),
-        'hash' => array(
-            array(
+            ],
+        ],
+        'hash' => [
+            [
                 'GETvar' => 'tx_sfregister_form[hash]',
-            ),
-        ),
-        // @deprecated authCode is still there for backward compatibility
-        'ac' => array(
-            array(
-                'GETvar' => 'tx_sfregister_form[authCode]',
-            ),
-        ),
-    );
+            ],
+        ],
+    ];
 
     foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'] as $domain => $config) {
         if (is_array($config)) {
@@ -57,11 +51,9 @@ if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
                 (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'][$domain]['postVarSets']['_DEFAULT']
             );
         }
-
-        unset($config);
     }
 
-    unset($register);
+    unset($register, $config);
 
     reset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']);
 }

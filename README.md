@@ -7,6 +7,7 @@ Suits all your needs to handle frontend users like register new users, edit data
 So whats already in there?
 
 - creating frontend user
+    - flexible form generation by selecting fields in plugin
     - send notification to user and admin
     - activate via link in email by user or admin
     - notification email after activation

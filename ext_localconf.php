@@ -30,7 +30,7 @@ call_user_func(function () {
         require_once(
             TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath(
                 'sf_register',
-                'Configuration/Realurl/realurl_conf.php'
+                'Configuration/Realurl/configuration.php'
             )
         );
     }

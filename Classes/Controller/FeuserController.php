@@ -555,9 +555,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             if ($hash === $calculatedHash) {
                 $frontendUser = $user;
             }
-            // @deprecated authCode is still there for backward compatibility
-        } elseif (!empty($requestArguments['authCode'])) {
-            $frontendUser = $this->userRepository->findByMailhash($requestArguments['authCode']);
         }
 
         return $frontendUser;
