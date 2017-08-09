@@ -424,7 +424,7 @@
 			<trans-unit id="email_admin_account_activated" xml:space="preserve">
 				<source>The account "%1$s" was activated</source>
 			</trans-unit>
-			<trans-unit id="email_admin_account_edited" xml:space="preserve">
+			<trans-unit id="email_admin_account_edited" xml:space="preserve" remove="1">
 				<source>The account "%1$s" was edited</source>
 			</trans-unit>
 			<trans-unit id="email_user_salutation" xml:space="preserve">
@@ -442,8 +442,66 @@
 			<trans-unit id="email_user_account_activated" xml:space="preserve">
 				<source>Your account "%1$s" is now active.</source>
 			</trans-unit>
-			<trans-unit id="email_user_account_edited" xml:space="preserve">
+			<trans-unit id="email_user_account_edited" xml:space="preserve" remove="1">
 				<source>You have edited your account "%1$s".</source>
+			</trans-unit>
+
+			<trans-unit id="email_admin_account_accepted">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_confirmed">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_accept_link">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_decline_link">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_declined">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_refused">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_saved">
+				<source></source>
+				<target></target>
+			</trans-unit>
+
+			<trans-unit id="email_user_account_accepted">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_confirm_link">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_refuse_link">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_confirmed">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_declined">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_refused">
+				<source></source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_saved">
+				<source></source>
+				<target></target>
 			</trans-unit>
 		</body>
 	</file>
