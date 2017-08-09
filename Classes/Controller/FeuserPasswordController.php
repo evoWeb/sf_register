@@ -55,7 +55,8 @@ class FeuserPasswordController extends FeuserController
     public function saveAction(\Evoweb\SfRegister\Domain\Model\Password $password)
     {
         if (\Evoweb\SfRegister\Services\Login::isLoggedIn()) {
-            $user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
+            /** @noinspection PhpInternalEntityUsedInspection */
+            $user = $this->userRepository->findByUid($this->getTypoScriptFrontendController()->fe_user->user['uid']);
 
             $this->signalSlotDispatcher->dispatch(
                 __CLASS__,
@@ -72,5 +73,13 @@ class FeuserPasswordController extends FeuserController
 
             $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)->remove('captchaWasValidPreviously');
         }
+    }
+
+    /**
+     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     */
+    protected function getTypoScriptFrontendController()
+    {
+        return $GLOBALS['TSFE'];
     }
 }
