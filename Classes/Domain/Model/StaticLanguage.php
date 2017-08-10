@@ -51,95 +51,144 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $lgNameEn;
 
     /**
-     * Name (DA)
+     * Short name (CZ)
+     *
+     * @var string
+     */
+    protected $lgNameCz;
+
+    /**
+     * Short name (DA)
      *
      * @var string
      */
     protected $lgNameDa;
 
     /**
-     * Name (DE)
+     * Short name (DE)
      *
      * @var string
      */
     protected $lgNameDe;
 
     /**
-     * Name (ES)
+     * Short name (ES)
      *
      * @var string
      */
     protected $lgNameEs;
 
     /**
-     * Name (FR)
+     * Short name (FR)
      *
      * @var string
      */
     protected $lgNameFr;
 
     /**
-     * Name (GL)
+     * Short name (GA)
+     *
+     * @var string
+     */
+    protected $lgNameGa;
+
+    /**
+     * Short name (GL)
      *
      * @var string
      */
     protected $lgNameGl;
 
     /**
-     * Name (IT)
+     * Short name (IT)
      *
      * @var string
      */
     protected $lgNameIt;
 
     /**
-     * Name (JA)
+     * Short name (JA)
      *
      * @var string
      */
     protected $lgNameJa;
 
     /**
-     * Name (KM)
+     * Short name (KM)
      *
      * @var string
      */
     protected $lgNameKm;
 
     /**
-     * Name (NL)
+     * Short name (NL)
      *
      * @var string
      */
     protected $lgNameNl;
 
     /**
-     * Name (NO)
+     * Short name (NO)
      *
      * @var string
      */
     protected $lgNameNo;
 
     /**
-     * Name (RU)
+     * Short name (PL)
+     *
+     * @var string
+     */
+    protected $lgNamePl;
+
+    /**
+     * Short name (PT)
+     *
+     * @var string
+     */
+    protected $lgNamePt;
+
+    /**
+     * Short name (RO)
+     *
+     * @var string
+     */
+    protected $lgNameRo;
+
+    /**
+     * Short name (RU)
      *
      * @var string
      */
     protected $lgNameRu;
 
     /**
-     * Name (SV)
+     * Short name (SK)
+     *
+     * @var string
+     */
+    protected $lgNameSk;
+
+    /**
+     * Short name (SV)
      *
      * @var string
      */
     protected $lgNameSv;
 
     /**
-     * Name (UA)
+     * Short name (UA)
      *
      * @var string
      */
     protected $lgNameUa;
+
+    /**
+     * Short name (ZH)
+     *
+     * @var string
+     */
+    protected $lgNameZh;
 
     /**
      * Getter for ISO 639-1 A2 Language code
@@ -172,7 +221,17 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (DA)
+     * Getter for Short name (CZ)
+     *
+     * @return string
+     */
+    public function getLgNameCz()
+    {
+        return $this->lgNameCz;
+    }
+
+    /**
+     * Getter for Short name (DA)
      *
      * @return string
      */
@@ -182,7 +241,7 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (DE)
+     * Getter for Short name (DE)
      *
      * @return string
      */
@@ -192,7 +251,7 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (ES)
+     * Getter for Short name (ES)
      *
      * @return string
      */
@@ -202,7 +261,7 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (FR)
+     * Getter for Short name (FR)
      *
      * @return string
      */
@@ -212,7 +271,17 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (GL)
+     * Getter for Short name (GA)
+     *
+     * @return string
+     */
+    public function getLgNameGa()
+    {
+        return $this->lgNameGa;
+    }
+
+    /**
+     * Getter for Short name (GL)
      *
      * @return string
      */
@@ -222,7 +291,7 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (IT)
+     * Getter for Short name (IT)
      *
      * @return string
      */
@@ -232,7 +301,7 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (JA)
+     * Getter for Short name (JA)
      *
      * @return string
      */
@@ -242,7 +311,7 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (KM)
+     * Getter for Short name (KM)
      *
      * @return string
      */
@@ -252,7 +321,7 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (NL)
+     * Getter for Short name (NL)
      *
      * @return string
      */
@@ -262,7 +331,7 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (NO)
+     * Getter for Short name (NO)
      *
      * @return string
      */
@@ -272,7 +341,37 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (RU)
+     * Getter for Short name (PL)
+     *
+     * @return string
+     */
+    public function getLgNamePl()
+    {
+        return $this->lgNamePl;
+    }
+
+    /**
+     * Getter for Short name (PT)
+     *
+     * @return string
+     */
+    public function getLgNamePt()
+    {
+        return $this->lgNamePt;
+    }
+
+    /**
+     * Getter for Short name (RO)
+     *
+     * @return string
+     */
+    public function getLgNameRo()
+    {
+        return $this->lgNameRo;
+    }
+
+    /**
+     * Getter for Short name (RU)
      *
      * @return string
      */
@@ -282,7 +381,17 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (SV)
+     * Getter for Short name (SK)
+     *
+     * @return string
+     */
+    public function getLgNameSk()
+    {
+        return $this->lgNameSk;
+    }
+
+    /**
+     * Getter for Short name (SV)
      *
      * @return string
      */
@@ -292,12 +401,22 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Getter for Name (UA)
+     * Getter for Short name (UA)
      *
      * @return string
      */
     public function getLgNameUa()
     {
         return $this->lgNameUa;
+    }
+
+    /**
+     * Getter for Short name (ZH)
+     *
+     * @return string
+     */
+    public function getLgNameZh()
+    {
+        return $this->lgNameZh;
     }
 }

@@ -65,11 +65,25 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $cnOfficialNameEn;
 
     /**
+     * Short name local
+     *
+     * @var string
+     */
+    protected $cnShortLocal;
+
+    /**
      * Short name (EN)
      *
      * @var string
      */
     protected $cnShortEn;
+
+    /**
+     * Short name (CZ)
+     *
+     * @var string
+     */
+    protected $cnShortCz;
 
     /**
      * Short name (DA)
@@ -98,6 +112,13 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $cnShortFr;
+
+    /**
+     * Short name (GA)
+     *
+     * @var string
+     */
+    protected $cnShortGa;
 
     /**
      * Short name (GL)
@@ -142,11 +163,39 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $cnShortNo;
 
     /**
+     * Short name (PL)
+     *
+     * @var string
+     */
+    protected $cnShortPl;
+
+    /**
+     * Short name (PT)
+     *
+     * @var string
+     */
+    protected $cnShortPt;
+
+    /**
+     * Short name (RO)
+     *
+     * @var string
+     */
+    protected $cnShortRo;
+
+    /**
      * Short name (RU)
      *
      * @var string
      */
     protected $cnShortRu;
+
+    /**
+     * Short name (SK)
+     *
+     * @var string
+     */
+    protected $cnShortSk;
 
     /**
      * Short name (SV)
@@ -163,11 +212,11 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $cnShortUa;
 
     /**
-     * Short name local
+     * Short name (ZH)
      *
      * @var string
      */
-    protected $cnShortLocal;
+    protected $cnShortZh;
 
     /**
      * Getter for ISO 3166-1 A2 Country code
@@ -230,6 +279,16 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
+     * Getter for Short name (CZ)
+     *
+     * @return string
+     */
+    public function getCnShortCz()
+    {
+        return $this->cnShortCz;
+    }
+
+    /**
      * Getter for Short name (DA)
      *
      * @return string
@@ -267,6 +326,16 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getCnShortFr()
     {
         return $this->cnShortFr;
+    }
+
+    /**
+     * Getter for Short name (GA)
+     *
+     * @return string
+     */
+    public function getCnShortGa()
+    {
+        return $this->cnShortGa;
     }
 
     /**
@@ -330,6 +399,36 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
+     * Getter for Short name (PL)
+     *
+     * @return string
+     */
+    public function getCnShortPl()
+    {
+        return $this->cnShortPl;
+    }
+
+    /**
+     * Getter for Short name (PT)
+     *
+     * @return string
+     */
+    public function getCnShortPt()
+    {
+        return $this->cnShortPt;
+    }
+
+    /**
+     * Getter for Short name (RO)
+     *
+     * @return string
+     */
+    public function getCnShortRo()
+    {
+        return $this->cnShortRo;
+    }
+
+    /**
      * Getter for Short name (RU)
      *
      * @return string
@@ -337,6 +436,16 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getCnShortRu()
     {
         return $this->cnShortRu;
+    }
+
+    /**
+     * Getter for Short name (SK)
+     *
+     * @return string
+     */
+    public function getCnShortSk()
+    {
+        return $this->cnShortSk;
     }
 
     /**
@@ -357,6 +466,16 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getCnShortUa()
     {
         return $this->cnShortUa;
+    }
+
+    /**
+     * Getter for Short name (ZH)
+     *
+     * @return string
+     */
+    public function getCnShortZh()
+    {
+        return $this->cnShortZh;
     }
 
     /**
