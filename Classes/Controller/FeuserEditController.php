@@ -37,6 +37,8 @@ class FeuserEditController extends FeuserController
     public function formAction()
     {
         $user = null;
+        /** @noinspection PhpInternalEntityUsedInspection */
+        $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
 
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
         $originalRequest = $this->request->getOriginalRequest();
@@ -51,7 +53,7 @@ class FeuserEditController extends FeuserController
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');
 
-            if ($userData['uid'] == $GLOBALS['TSFE']->fe_user->user['uid']) {
+            if ($userData['uid'] == $userId) {
                 /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
                 $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
                 $user = $propertyMapper->convert($userData, \Evoweb\SfRegister\Domain\Model\FrontendUser::class);
@@ -60,7 +62,7 @@ class FeuserEditController extends FeuserController
 
         if ($user == null) {
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
-            $user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
+            $user = $this->userRepository->findByUid($userId);
         }
 
         if ($originalRequest && $originalRequest->hasArgument('temporaryImage')) {
@@ -83,8 +85,9 @@ class FeuserEditController extends FeuserController
      * Preview action
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-     * @validate $user Evoweb.SfRegister:User
+     *
      * @return void
+     * @validate $user Evoweb.SfRegister:User
      */
     public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
@@ -108,6 +111,7 @@ class FeuserEditController extends FeuserController
      * Save action
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     *
      * @return void
      * @validate $user Evoweb.SfRegister:User
      */
@@ -156,12 +160,14 @@ class FeuserEditController extends FeuserController
         $this->view->assign('user', $user);
     }
 
+
     /**
      * Confirm registration process by user
      * Could be followed by acceptance of admin
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
+     *
      * @return void
      */
     public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)
@@ -215,12 +221,14 @@ class FeuserEditController extends FeuserController
         }
     }
 
+
     /**
      * Confirm registration process by user
      * Could be followed by acceptance of admin
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
+     *
      * @return void
      */
     public function acceptAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)

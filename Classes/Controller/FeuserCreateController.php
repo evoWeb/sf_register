@@ -30,21 +30,6 @@ namespace Evoweb\SfRegister\Controller;
 class FeuserCreateController extends FeuserController
 {
     /**
-     * Initialization all actions
-     *
-     * @return void
-     */
-    protected function initializeAction()
-    {
-        parent::initializeAction();
-
-        $this->userRepository = $this->objectManager->get(
-            \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class
-        );
-    }
-
-
-    /**
      * Form action
      *
      * @return void
@@ -103,9 +88,9 @@ class FeuserCreateController extends FeuserController
      * Preview action
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     *
      * @return void
      * @validate $user Evoweb.SfRegister:User
-     * -validate $user \Evoweb\SfRegister\Validation\Validator\UserValidator
      */
     public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
@@ -129,6 +114,7 @@ class FeuserCreateController extends FeuserController
      * Save action
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     *
      * @return void
      * @validate $user Evoweb.SfRegister:User
      */
@@ -192,6 +178,7 @@ class FeuserCreateController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
+     *
      * @return void
      */
     public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)
@@ -247,6 +234,7 @@ class FeuserCreateController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
+     *
      * @return void
      */
     public function refuseAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)
@@ -281,6 +269,7 @@ class FeuserCreateController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
+     *
      * @return void
      */
     public function acceptAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)
@@ -328,6 +317,7 @@ class FeuserCreateController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
+     *
      * @return void
      */
     public function declineAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, $hash = null)
