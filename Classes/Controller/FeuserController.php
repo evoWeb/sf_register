@@ -81,6 +81,13 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected $request;
 
+    /**
+     * Active if autologgin was set
+     *
+     * @var bool
+     */
+    protected $autoLoginTriggered = false;
+
 
     /**
      * @param FrontendUserRepository $userRepository
@@ -340,7 +347,15 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function redirectToPage($pageId)
     {
-        $url = $this->uriBuilder->setTargetPageUid($pageId)->build();
+        if ($this->autoLoginTriggered) {
+            $statusField = $this->getTypoScriptFrontendController()->fe_user->formfield_permanent;
+            $this->uriBuilder->setAddQueryString('&' . $statusField . '=login');
+        }
+
+        $url = $this->uriBuilder
+            ->setTargetPageUid($pageId)
+            ->build();
+
         $this->redirectToUri($url);
     }
 
@@ -584,7 +599,29 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function autoLogin(FrontendUser $user)
     {
-        $this->objectManager->get(\Evoweb\SfRegister\Services\Login::class)->loginUserById($user->getUid());
+        session_start();
+        $this->autoLoginTriggered = true;
+
+        $hmac = GeneralUtility::hmac(
+            'auto-login::' . $user->getUid()
+        );
+
+        /** @var \TYPO3\CMS\Core\Registry $registry */
+        $registry = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Registry::class);
+        $registry->set('sf-register', $hmac, $user->getUid());
+
+        $_SESSION['sf-register-user'] = $hmac;
+    }
+
+    /**
+     * Checks if an user is logged in
+     *
+     * @return bool
+     */
+    protected function userIsLoggedIn()
+    {
+        /** @noinspection PhpInternalEntityUsedInspection */
+        return is_array($this->getTypoScriptFrontendController()->fe_user->user);
     }
 
     /**

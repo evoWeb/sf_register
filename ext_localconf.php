@@ -50,7 +50,8 @@ call_user_func(function () {
         ]
     );
 
-    $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['sf_register'] = 'EXT:sf_register/Classes/Api/Ajax.php';
+    $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['sf_register'] =
+        \Evoweb\SfRegister\Controller\AjaxController::class . '::processRequest';
 
     define('SFREGISTERCACHEIDENTIFIER', 'cache_sf_register_extending');
 
@@ -92,4 +93,21 @@ call_user_func(function () {
             'initializeAction'
         );
     }
-}, 'sf_register');
+
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addService(
+        'sf_register',
+        'auth',
+        \Evoweb\SfRegister\Services\AutoLogin::class,
+        [
+            'title' => 'Auto login for users of sf_register',
+            'description' => 'Authenticates user with given session value',
+            'subtype' => 'getUserFE,authUserFE',
+            'available' => true,
+            'priority' => 75,
+            'quality' => 75,
+            'os' => '',
+            'exec' => '',
+            'className' => \Evoweb\SfRegister\Services\AutoLogin::class,
+        ]
+    );
+});

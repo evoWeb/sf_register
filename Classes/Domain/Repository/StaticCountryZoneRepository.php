@@ -75,7 +75,7 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
     public function findAllByIso2($iso2)
     {
         $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
-        $queryBuilder->select('static_country_zones.*')
+        $queryBuilder->select('*')
             ->from('static_country_zones')
             ->where($queryBuilder->expr()->eq(
                 'zn_country_iso_2',

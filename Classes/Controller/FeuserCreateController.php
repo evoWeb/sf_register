@@ -40,6 +40,12 @@ class FeuserCreateController extends FeuserController
      */
     public function formAction(FrontendUser $user = null)
     {
+        if (is_null($user)) {
+            $user = $this->objectManager->get(FrontendUser::class);
+            $user->_setProperty('uid', 1);
+            $this->autoLogin($user);
+        }
+
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
         $originalRequest = $this->request->getOriginalRequest();
         if ($originalRequest !== null && $originalRequest->hasArgument('user')) {
