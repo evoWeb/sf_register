@@ -232,7 +232,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             $action = 'form';
         }
 
-        $this->forward($action, null, null, ['user' => $user]);
+        $this->forward($action);
     }
 
     /**

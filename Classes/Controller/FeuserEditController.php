@@ -24,6 +24,8 @@ namespace Evoweb\SfRegister\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+
 /**
  * An frontend user edit controller
  */
@@ -32,11 +34,12 @@ class FeuserEditController extends FeuserController
     /**
      * Form action
      *
+     * @param FrontendUser $user
+     *
      * @return void
      */
-    public function formAction()
+    public function formAction(FrontendUser $user = null)
     {
-        $user = null;
         /** @noinspection PhpInternalEntityUsedInspection */
         $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
 
