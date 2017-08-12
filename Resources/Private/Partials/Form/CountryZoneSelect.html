@@ -7,7 +7,8 @@
 	<f:render partial="Required" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
 	<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control"
-		parent="{f:if(condition: user.staticInfoCountry, then: user.staticInfoCountry, else: options.defaultValue)}" />
+		parent="{f:if(condition: user.staticInfoCountry, then: user.staticInfoCountry, else: options.defaultValue)}"
+		optionLabelField="znNameLocal" />
 	<div id="sfrZone_empty" class="form-control-static" style="display: none;">
 		<f:translate key="no_zone_available" />
 	</div>

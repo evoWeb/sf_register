@@ -74,7 +74,7 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
             'string',
             'If specified, will call the appropriate getter on each object to determine the value.',
             false,
-            'znCode'
+            'uid'
         );
         $this->registerArgument(
             'optionLabelField',
@@ -121,7 +121,7 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
 
                 $options = array_filter($options, function ($option) use ($value) {
                     /** @var \Evoweb\SfRegister\Domain\Model\StaticCountryZone $option */
-                    return in_array($option->getZnCode(), $value);
+                    return in_array($option->getUid(), $value);
                 });
             }
 

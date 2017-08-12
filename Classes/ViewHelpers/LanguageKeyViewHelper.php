@@ -60,15 +60,23 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
             if (isset($this->getTypoScriptFrontendController()->lang)) {
                 $languageCode = strtolower($this->getTypoScriptFrontendController()->lang);
             }
-        } elseif (strlen($GLOBALS['BE_USER']->uc['lang']) > 0) {
-            $languageCode = $GLOBALS['BE_USER']->uc['lang'];
+        } elseif (strlen($this->getBackendUserAuthentication()->uc['lang']) > 0) {
+            $languageCode = $this->getBackendUserAuthentication()->uc['lang'];
         }
 
         if ($languageCode && $this->hasArgument('type') && ($type = $this->getConfiguredType())) {
             if ($type == 'countries') {
-                $languageCode = $this->hasCountriesTableLanguageField($languageCode) ? $languageCode : '';
+                $languageCode = $this->hasTableColumn('static_countries', 'cn_short_' . $languageCode) ?
+                    $languageCode :
+                    '';
+            } elseif ($type == 'zones') {
+                $languageCode = $this->hasTableColumn('static_country_zones', 'zn_name_' . $languageCode) ?
+                    $languageCode :
+                    '';
             } elseif ($type == 'languages') {
-                $languageCode = $this->hasLanguagesTableLanguageField($languageCode) ? $languageCode : '';
+                $languageCode = $this->hasTableColumn('static_languages', 'lg_name_' . $languageCode) ?
+                    $languageCode :
+                    '';
             }
         }
 
@@ -78,61 +86,47 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
     /**
      * @return string
      */
-    protected function getConfiguredType()
+    protected function getConfiguredType(): string
     {
         $type = $this->arguments['type'];
 
-        return in_array($type, ['countries', 'languages']) ? $type : '';
-    }
-
-    /**
-     * @param string $languageCode
-     * @return bool
-     */
-    protected function hasCountriesTableLanguageField($languageCode)
-    {
-        $queryBuilder = $this->getQueryBuilder('static_countries');
-        $columns = $queryBuilder->getConnection()->getSchemaManager()->listTableColumns('static_countries');
-
-        $result = false;
-        foreach ($columns as $column) {
-            if ($column->getName() == 'cn_short_' . $languageCode) {
-                $result = true;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param string $languageCode
-     * @return bool
-     */
-    protected function hasLanguagesTableLanguageField($languageCode)
-    {
-        $queryBuilder = $this->getQueryBuilder('static_languages');
-        $columns = $queryBuilder->getConnection()->getSchemaManager()->listTableColumns('static_languages');
-
-        $result = false;
-        foreach ($columns as $column) {
-            if ($column->getName() == 'lg_name_' . $languageCode) {
-                $result = true;
-            }
-        }
-
-        return $result;
+        return in_array($type, ['countries', 'languages', 'zones']) ? $type : '';
     }
 
     /**
      * @param string $tableName
+     * @param string $columnName
      *
-     * @return \TYPO3\CMS\Core\Database\Query\QueryBuilder
+     * @return bool
      */
-    protected function getQueryBuilder($tableName)
+    protected function hasTableColumn($tableName, $columnName): bool
+    {
+        $columns = $this
+            ->getConnection($tableName)
+            ->getSchemaManager()
+            ->listTableColumns($tableName);
+
+        $result = false;
+        foreach ($columns as $column) {
+            if ($column->getName() == $columnName) {
+                $result = true;
+            }
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * @param string $tableName
+     *
+     * @return \TYPO3\CMS\Core\Utility\GeneralUtility
+     */
+    protected function getConnection($tableName): \TYPO3\CMS\Core\Database\Connection
     {
         return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Database\ConnectionPool::class
-        )->getQueryBuilderForTable($tableName);
+        )->getConnectionForTable($tableName);
     }
 
     /**
@@ -141,5 +135,13 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
     protected function getTypoScriptFrontendController()
     {
         return $GLOBALS['TSFE'];
+    }
+
+    /**
+     * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+     */
+    protected function getBackendUserAuthentication()
+    {
+        return $GLOBALS['BE_USER'];
     }
 }

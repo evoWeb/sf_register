@@ -152,8 +152,8 @@ class AjaxController
              */
             $database = &$GLOBALS['TYPO3_DB'];
             $queryResult = $database->exec_SELECTquery(
-                'zn_code as value, zn_name_local as label',
-                'static_country_zones',
+                'z.uid as value, z.zn_name_local as label',
+                'static_country_zones AS z',
                 'zn_country_iso_2 = \'' . $parent . '\' AND deleted = 0',
                 '',
                 'zn_name_local'
