@@ -43,7 +43,7 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
      *
      * @param int $parent
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|object
+     * @return \Doctrine\DBAL\Driver\Statement
      */
     public function findAllByParentUid($parent)
     {
@@ -62,22 +62,7 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
             )
             ->orderBy('static_country_zones.zn_name_local');
 
-        $statement = $queryBuilder->getSQL();
-        $parameter = $queryBuilder->getParameters();
-
-        array_walk($parameter, function ($value, $name) use (&$statement) {
-            $statement = str_replace(':' . $name, $value, $statement);
-        });
-
-        /**
-         * Query
-         *
-         * @var \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
-         */
-        $query = $this->createQuery();
-        $query->statement($statement);
-
-        return $query->execute();
+        return $queryBuilder->execute();
     }
 
     /**
@@ -85,22 +70,20 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
      *
      * @param string $iso2
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|object
+     * @return \Doctrine\DBAL\Driver\Statement
      */
     public function findAllByIso2($iso2)
     {
-        /**
-         * Query
-         *
-         * @var \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
-         */
-        $query = $this->createQuery();
-        $query->getQuerySettings()
-            ->setRespectStoragePage(false);
+        $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
+        $queryBuilder->select('static_country_zones.*')
+            ->from('static_country_zones')
+            ->where($queryBuilder->expr()->eq(
+                'zn_country_iso_2',
+                $queryBuilder->createNamedParameter($iso2, \PDO::PARAM_STR)
+            ))
+            ->orderBy('zn_name_local');
 
-        $query->matching($query->equals('zn_country_iso_2', $iso2));
-
-        return $query->execute();
+        return $queryBuilder->execute();
     }
 
     /**

@@ -81,7 +81,7 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
             'string',
             'If specified, will call the appropriate getter on each object to determine the label.',
             false,
-            'znNameLocal'
+            'zn_name_local'
         );
         $this->registerArgument(
             'selectAllByDefault',
@@ -113,7 +113,7 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
             && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')
         ) {
             $options = $this->countryZonesRepository->findAllByIso2($this->arguments['parent']);
-            $options = $options->toArray();
+            $options = $options->fetchAll();
 
             if ($this->hasArgument('disabled')) {
                 $value = $this->getSelectedValue();

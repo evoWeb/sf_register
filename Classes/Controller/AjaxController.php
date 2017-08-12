@@ -77,10 +77,11 @@ class AjaxController
      */
     public function processRequest(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $this->requestArguments = $request->getParsedBody()['tx_sfregister'];
-        switch ($this->requestArguments['action']) {
+        $requestArguments = $request->getParsedBody()['tx_sfregister'];
+
+        switch ($requestArguments['action']) {
             case 'zones':
-                $this->getZonesAction();
+                $this->getZonesAction($requestArguments['parent']);
                 break;
 
             default:
@@ -102,14 +103,15 @@ class AjaxController
     }
 
     /**
+     * @param int|string $parent
+     *
      * @return void
      */
-    protected function getZonesAction()
+    protected function getZonesAction($parent)
     {
         /** @var StaticCountryZoneRepository $zoneRepository */
         $zoneRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(StaticCountryZoneRepository::class);
 
-        $parent = $this->requestArguments['parent'];
         if (\TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($parent)) {
             $zones = $zoneRepository->findAllByParentUid((int) $parent);
         } else {
@@ -117,17 +119,17 @@ class AjaxController
             $zones = $zoneRepository->findAllByIso2($parent);
         }
 
-        if ($zones->count() == 0) {
+        if ($zones->rowCount() == 0) {
             $this->status = 'error';
             $this->message = 'no zones';
         } else {
             $result = [];
 
-            array_walk($zones->toArray(), function ($zone) use (&$result) {
-                /** @var \Evoweb\SfRegister\Domain\Model\StaticCountryZone $zone */
+            array_walk($zones->fetchAll(), function ($zone) use (&$result) {
+                /** @var array $zone */
                 $result[] = [
-                    'value' => $zone->getUid(),
-                    'label' => $zone->getZnNameLocal(),
+                    'value' => $zone['uid'],
+                    'label' => $zone['zn_name_local'],
                 ];
             });
 
