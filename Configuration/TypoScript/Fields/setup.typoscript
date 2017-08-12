@@ -31,7 +31,7 @@ plugin.tx_sfregister.settings.fields {
     250 = language
     260 = clear
 
-    #270 = timezone
+    270 = timezone
     280 = daylight
     290 = clear
 
