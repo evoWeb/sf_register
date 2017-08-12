@@ -120,7 +120,7 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
     /**
      * @param string $tableName
      *
-     * @return \TYPO3\CMS\Core\Utility\GeneralUtility
+     * @return \TYPO3\CMS\Core\Database\Connection
      */
     protected function getConnection($tableName): \TYPO3\CMS\Core\Database\Connection
     {
