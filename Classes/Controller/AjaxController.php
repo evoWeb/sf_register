@@ -24,6 +24,12 @@ namespace Evoweb\SfRegister\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+
 /**
  * Api to get informations via ajax calls
  * Possible informations are static info tables country zones
@@ -60,125 +66,81 @@ class AjaxController
      */
     protected $result = [];
 
-    /**
-     * Constructor of the class
-     */
-    public function __construct()
-    {
-        $this->requestArguments = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_sfregister');
-    }
 
     /**
      * Dispatch the given action and call the output rendering afterwards
      *
-     * @return void
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     *
+     * @return NULL|\Psr\Http\Message\ResponseInterface
      */
-    public function dispatch()
+    public function processRequest(ServerRequestInterface $request, ResponseInterface $response)
     {
+        $this->requestArguments = $request->getParsedBody()['tx_sfregister'];
         switch ($this->requestArguments['action']) {
             case 'zones':
-                if (\TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($this->requestArguments['parent'])) {
-                    $this->getZonesByParentId();
-                } else {
-                    $this->getZonesByParentIso2Code();
-                }
+                $this->getZonesAction();
                 break;
 
             default:
-                $this->status = 'error';
-                $this->message = 'unknown action';
+                $this->errorAction();
         }
 
-        $this->output();
+        $response->getBody()->write($this->output());
+
+        return $response;
     }
 
     /**
-     * Query the static info table country zones to
-     * get all zones for the given parent if any
-     *
      * @return void
      */
-    protected function getZonesByParentId()
+    protected function errorAction()
     {
-        $zones = [];
-        $parent = (int) $this->requestArguments['parent'];
-
-        if ($parent) {
-            /**
-             * Database connection
-             *
-             * @var $database \TYPO3\CMS\Core\Database\DatabaseConnection
-             */
-            $database = &$GLOBALS['TYPO3_DB'];
-            $queryResult = $database->exec_SELECTquery(
-                'z.uid as value, z.zn_name_local as label',
-                'static_country_zones AS z
-                    INNER JOIN static_countries AS c ON z.zn_country_iso_2 = c.cn_iso_2',
-                'c.uid = ' . $parent . ' AND z.deleted = 0 AND c.deleted = 0',
-                '',
-                'z.zn_name_local'
-            );
-
-            if (!$database->sql_num_rows($queryResult)) {
-                $this->status = 'error';
-                $this->message = 'no zones';
-            } else {
-                while (($rows = $database->sql_fetch_assoc($queryResult))) {
-                    $zones[] = $rows;
-                }
-            }
-            $database->sql_free_result($queryResult);
-        }
-
-        $this->result = $zones;
+        $this->status = 'error';
+        $this->message = 'unknown action';
     }
 
     /**
-     * Query the static info table country zones to
-     * get all zones for the given parent if any
-     *
      * @return void
      */
-    protected function getZonesByParentIso2Code()
+    protected function getZonesAction()
     {
-        $zones = [];
-        $parent = strtoupper(preg_replace('/[^A-Za-z]/', '', $this->requestArguments['parent']));
+        /** @var StaticCountryZoneRepository $zoneRepository */
+        $zoneRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(StaticCountryZoneRepository::class);
 
-        if (strlen($parent)) {
-            /**
-             * Database connection
-             *
-             * @var $database \TYPO3\CMS\Core\Database\DatabaseConnection
-             */
-            $database = &$GLOBALS['TYPO3_DB'];
-            $queryResult = $database->exec_SELECTquery(
-                'z.uid as value, z.zn_name_local as label',
-                'static_country_zones AS z',
-                'zn_country_iso_2 = \'' . $parent . '\' AND deleted = 0',
-                '',
-                'zn_name_local'
-            );
-
-            if (!$database->sql_num_rows($queryResult)) {
-                $this->status = 'error';
-                $this->message = 'no zones';
-            } else {
-                while (($rows = $database->sql_fetch_assoc($queryResult))) {
-                    $zones[] = $rows;
-                }
-            }
-            $database->sql_free_result($queryResult);
+        $parent = $this->requestArguments['parent'];
+        if (\TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($parent)) {
+            $zones = $zoneRepository->findAllByParentUid((int) $parent);
+        } else {
+            $parent = strtoupper(preg_replace('/[^A-Za-z]{2}/', '', $parent));
+            $zones = $zoneRepository->findAllByIso2($parent);
         }
 
-        $this->result = $zones;
+        if ($zones->count() == 0) {
+            $this->status = 'error';
+            $this->message = 'no zones';
+        } else {
+            $result = [];
+
+            array_walk($zones->toArray(), function ($zone) use (&$result) {
+                /** @var \Evoweb\SfRegister\Domain\Model\StaticCountryZone $zone */
+                $result[] = [
+                    'value' => $zone->getUid(),
+                    'label' => $zone->getZnNameLocal(),
+                ];
+            });
+
+            $this->result = $result;
+        }
     }
 
     /**
      * Render the status, message and result as json encoded array as response
      *
-     * @return void
+     * @return string
      */
-    protected function output()
+    protected function output(): string
     {
         $result = [
             'status' => $this->status,
@@ -186,6 +148,6 @@ class AjaxController
             'data' => $this->result,
         ];
 
-        echo json_encode($result);
+        return json_encode($result);
     }
 }
