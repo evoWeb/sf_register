@@ -7,8 +7,8 @@
 	<register:form.selectStaticCountries property="{fieldName}" id="sfrCountry" class="form-control"
 		disabled="disabled"
 		value="{user.{fieldName}}"
-		allowedCountries="{options.allowedCountries}"
 		optionLabelField="cnShort{register:languageKey(type: 'countries')}" />
+	<f:form.hidden property="{fieldName}"/>
 </div>
 
 </html>

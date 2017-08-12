@@ -176,7 +176,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var integer
      */
-    protected $status;
+    protected $status = 0;
 
     /**
      * wether the user register by invitation
@@ -190,7 +190,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var string
      */
-    protected $comments;
+    protected $comments = '';
 
     /**
      * if Dmail should be enabled

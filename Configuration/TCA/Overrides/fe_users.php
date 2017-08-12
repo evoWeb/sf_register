@@ -85,7 +85,7 @@ $temporaryColumns = [
         'exclude' => 0,
         'label' => $languageFile . 'fe_users.timezone',
         'config' => [
-            'type' => 'select',
+            'type' => 'check',
             'renderType' => 'selectSingle',
             'items' => [
                 [$languageFile . 'fe_users.timezone.I.-12', -12],
@@ -163,14 +163,14 @@ $temporaryColumns = [
         'exclude' => 0,
         'label' => $languageFile . 'fe_users.status',
         'config' => [
-            'type' => 'select',
+            'type' => 'check',
             'renderType' => 'selectSingle',
             'items' => [
-                [$languageFile . 'fe_users.status.I.0', '0'],
-                [$languageFile . 'fe_users.status.I.1', '1'],
-                [$languageFile . 'fe_users.status.I.2', '2'],
-                [$languageFile . 'fe_users.status.I.3', '3'],
-                [$languageFile . 'fe_users.status.I.4', '4'],
+                [$languageFile . 'fe_users.status.I.0', 0],
+                [$languageFile . 'fe_users.status.I.1', 1],
+                [$languageFile . 'fe_users.status.I.2', 2],
+                [$languageFile . 'fe_users.status.I.3', 3],
+                [$languageFile . 'fe_users.status.I.4', 4],
             ],
         ]
     ],
