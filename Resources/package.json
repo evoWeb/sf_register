@@ -1,0 +1,22 @@
+{
+  "name": "sf_register",
+  "description": "Bundles all resources for the usage",
+  "homepage": "http://www.evoweb.de/",
+  "author": {
+    "name": "Sebastian Fischer",
+    "email": "typo3@evoweb.de"
+  },
+  "license": "GPL-2.0+",
+  "version": "1.0.0",
+  "devDependencies": {
+    "grunt": "~1.0.1",
+    "grunt-cli": "~1.2.0",
+    "grunt-contrib-compass": "~1.1.1",
+    "grunt-contrib-concat": "~1.0.1",
+    "grunt-contrib-cssmin": "~2.2.0",
+    "grunt-contrib-jshint": "~1.1.0",
+    "grunt-contrib-uglify": "~3.0.1",
+    "grunt-contrib-watch": "~1.0.0",
+    "modularscale-sass": "^3.0.3"
+  }
+}

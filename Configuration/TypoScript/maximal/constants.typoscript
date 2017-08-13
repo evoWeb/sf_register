@@ -1,3 +1,6 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Common/constants.typoscript">
+
+
 plugin.tx_sfregister.settings {
   # cat=sf_register.settings/enable/40; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.useDataOfLoggedinFeuser
   useDataOfLoggedinFeuser = 1

@@ -1,9 +1,5 @@
-page {
-  includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/styles.css
-
-  includeJSFooter.passwordmeter = EXT:sf_register/Resources/Public/JavaScript/passwordmeter.js
-  includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register.js
-}
+page.includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/styles{$plugin.tx_sfregister.minified}.css
+page.includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register{$plugin.tx_sfregister.minified}.js
 
 plugin.tx_sfregister.settings {
   dateFormat = d-m-Y

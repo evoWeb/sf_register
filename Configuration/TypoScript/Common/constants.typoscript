@@ -1,0 +1,5 @@
+[applicationContext = Production*]
+  plugin.tx_sfregister.minified = .min
+[else]
+  plugin.tx_sfregister.minified =
+[end]
