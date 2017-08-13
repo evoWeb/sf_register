@@ -74,7 +74,7 @@
   height: 17px;
   left: 0;
   margin-left: -20px;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border-radius: 3px;
   background-color: #fff;
   -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
@@ -93,7 +93,7 @@
   padding-left: 1px;
   padding-top: 1px;
   font-size: 11px;
-  color: #555555;
+  color: #555;
 }
 /* line 100, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .checkbox input[type="checkbox"],
@@ -123,7 +123,7 @@
 /* line 121, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .checkbox input[type="checkbox"]:disabled + label::before,
 .tx_evoweb_sfregister .checkbox input[type="radio"]:disabled + label::before {
-  background-color: #eeeeee;
+  background-color: #eee;
   cursor: not-allowed;
 }
 /* line 129, ../../Private/Sass/styles.scss */
@@ -158,7 +158,7 @@
 .tx_evoweb_sfregister .form-group.captcha {
   min-height: inherit;
 }
-/* line 164, ../../Private/Sass/styles.scss */
+/* line 163, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn {
   display: inline-block;
   padding: 6px 12px;
@@ -180,25 +180,25 @@
   border: 1px solid transparent;
   border-radius: 4px;
 }
-/* line 185, ../../Private/Sass/styles.scss */
+/* line 184, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn:focus, .tx_evoweb_sfregister .btn.focus, .tx_evoweb_sfregister .btn:active:focus, .tx_evoweb_sfregister .btn.active:focus, .tx_evoweb_sfregister .btn:active.focus, .tx_evoweb_sfregister .btn.active.focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
-/* line 196, ../../Private/Sass/styles.scss */
+/* line 195, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn:hover, .tx_evoweb_sfregister .btn:focus, .tx_evoweb_sfregister .btn.focus {
   color: #333;
   text-decoration: none;
 }
-/* line 203, ../../Private/Sass/styles.scss */
+/* line 202, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn:active, .tx_evoweb_sfregister .btn.active {
   background-image: none;
   outline: 0;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
-/* line 212, ../../Private/Sass/styles.scss */
+/* line 211, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn.disabled,
 .tx_evoweb_sfregister .btn[disabled],
 .tx_evoweb_sfregister fieldset[disabled] .btn {
@@ -208,30 +208,30 @@
   box-shadow: none;
   opacity: .65;
 }
-/* line 222, ../../Private/Sass/styles.scss */
+/* line 221, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister a.btn.disabled,
 .tx_evoweb_sfregister fieldset[disabled] a.btn {
   pointer-events: none;
 }
-/* line 227, ../../Private/Sass/styles.scss */
+/* line 226, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary {
   color: #fff;
   background-color: #337ab7;
   border-color: #2e6da4;
 }
-/* line 232, ../../Private/Sass/styles.scss */
+/* line 231, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary:focus, .tx_evoweb_sfregister .btn-primary.focus {
   color: #fff;
   background-color: #286090;
   border-color: #122b40;
 }
-/* line 239, ../../Private/Sass/styles.scss */
+/* line 238, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary:hover {
   color: #fff;
   background-color: #286090;
   border-color: #204d74;
 }
-/* line 246, ../../Private/Sass/styles.scss */
+/* line 245, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary:active,
 .tx_evoweb_sfregister .btn-primary.active,
 .tx_evoweb_sfregister .open > .dropdown-toggle.btn-primary {
@@ -239,7 +239,7 @@
   background-color: #286090;
   border-color: #204d74;
 }
-/* line 253, ../../Private/Sass/styles.scss */
+/* line 252, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary:active:hover, .tx_evoweb_sfregister .btn-primary:active:focus, .tx_evoweb_sfregister .btn-primary:active.focus,
 .tx_evoweb_sfregister .btn-primary.active:hover,
 .tx_evoweb_sfregister .btn-primary.active:focus,
@@ -251,13 +251,13 @@
   background-color: #204d74;
   border-color: #122b40;
 }
-/* line 261, ../../Private/Sass/styles.scss */
+/* line 260, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary:active,
 .tx_evoweb_sfregister .btn-primary.active,
 .tx_evoweb_sfregister .open > .dropdown-toggle.btn-primary {
   background-image: none;
 }
-/* line 269, ../../Private/Sass/styles.scss */
+/* line 268, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary.disabled:hover, .tx_evoweb_sfregister .btn-primary.disabled:focus, .tx_evoweb_sfregister .btn-primary.disabled.focus,
 .tx_evoweb_sfregister .btn-primary[disabled]:hover,
 .tx_evoweb_sfregister .btn-primary[disabled]:focus,
@@ -268,19 +268,19 @@
   background-color: #337ab7;
   border-color: #2e6da4;
 }
-/* line 277, ../../Private/Sass/styles.scss */
+/* line 276, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary .badge {
   color: #337ab7;
   background-color: #fff;
 }
-/* line 282, ../../Private/Sass/styles.scss */
+/* line 281, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .file-upload {
   position: relative;
   overflow: hidden;
   margin: 0 10px;
   width: 20%;
 }
-/* line 289, ../../Private/Sass/styles.scss */
+/* line 287, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .file-upload input.upload {
   position: absolute;
   top: 0;
@@ -292,23 +292,23 @@
   opacity: 0;
   filter: alpha(opacity=0);
 }
-/* line 301, ../../Private/Sass/styles.scss */
+/* line 300, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .upload .form-control {
   float: left;
   width: 61%;
 }
-/* line 306, ../../Private/Sass/styles.scss */
+/* line 305, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .form-control-static {
   min-height: 34px;
   padding-top: 7px;
   padding-bottom: 7px;
   margin-bottom: 0;
 }
-/* line 313, ../../Private/Sass/styles.scss */
+/* line 312, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .pull-right {
   float: right !important;
 }
-/* line 317, ../../Private/Sass/styles.scss */
+/* line 316, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .pull-left {
   float: left !important;
 }
