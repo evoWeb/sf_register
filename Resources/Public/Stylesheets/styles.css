@@ -1,6 +1,11 @@
 #bargraph {
+	display: none;
 	height: 14px;
 	width: 372px;
+}
+
+#bargraph.show {
+	display: block;
 }
 
 #sfrZone_loading {

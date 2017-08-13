@@ -177,6 +177,8 @@
 			zoneEmpty = module.getElement('sfrZone_empty');
 			zoneLoading = module.getElement('sfrZone_loading');
 
+			module.getElement('bargraph').classList.add('show');
+
 			module.attachToElement('sfrpassword', 'keyup', module.callTestPassword);
 			module.attachToElement('sfrCountry', 'change', module.changeZone);
 			module.attachToElement('sfrCountry', 'keyup', module.changeZone);
