@@ -24,3 +24,11 @@ CREATE TABLE fe_users (
 	module_sys_dmail_category int(10) unsigned DEFAULT '0' NOT NULL,
 	email_new varchar(80) DEFAULT '' NOT NULL
 );
+
+
+#
+# Table structure for table 'fe_groups'
+#
+CREATE TABLE fe_groups (
+	felogin_redirectPid  tinytext
+);

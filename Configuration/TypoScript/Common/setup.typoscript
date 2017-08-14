@@ -132,6 +132,14 @@ config.tx_extbase {
         tableName = fe_users
       }
     }
+    Evoweb\SfRegister\Domain\Model\FrontendUserGroup {
+      mapping {
+        tableName = fe_groups
+        columns {
+          felogin_redirectPid.mapOnProperty = feloginRedirectPid
+        }
+      }
+    }
     Evoweb\SfRegister\Domain\Model\StaticCountry {
       mapping {
         tableName = static_countries

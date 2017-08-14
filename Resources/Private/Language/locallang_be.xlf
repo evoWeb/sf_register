@@ -10,6 +10,10 @@
 				<source>Registration for create, edit or delete Frontend Users</source>
 			</trans-unit>
 
+			<trans-unit id="felogin_redirectPid">
+				<source>Redirect at Login to Page (felogin)</source>
+			</trans-unit>
+
 			<trans-unit id="fe_users.username_selectField">
 				<source>Username</source>
 			</trans-unit>

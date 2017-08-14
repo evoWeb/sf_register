@@ -25,11 +25,11 @@ namespace Evoweb\SfRegister\Controller;
  ***************************************************************/
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 
 /**
@@ -428,7 +428,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * Determines whether a user is in a given user group.
      *
      * @param FrontendUser $user
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup|string|int $userGroup
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUserGroup|string|int $userGroup
      *
      * @return bool
      */
@@ -436,7 +436,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     {
         $return = false;
 
-        if ($userGroup instanceof \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup) {
+        if ($userGroup instanceof \Evoweb\SfRegister\Domain\Model\FrontendUserGroup) {
             $return = $user->getUsergroup()->contains($userGroup);
         } elseif (!empty($userGroup)) {
             $userGroupUids = $this->getEntityUids(
@@ -453,7 +453,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * Determines whether a user is in a given user group.
      *
      * @param FrontendUser $user
-     * @param array|\TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup[] $userGroups
+     * @param array|\Evoweb\SfRegister\Domain\Model\FrontendUserGroup[] $userGroups
      *
      * @return bool
      */
@@ -550,10 +550,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $usergroupIdToAdd,
         $usergroupIdToBeRemoved = 0
     ): Frontenduser {
-        $this->userGroupRepository = $this->objectManager->get(
-            FrontendUserGroupRepository::class
-        );
-
         // cover deprecated behaviour
         if ($usergroupIdToBeRemoved) {
             GeneralUtility::deprecationLog(
@@ -567,7 +563,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
         $usergroupIdToAdd = (int) $usergroupIdToAdd;
         if ($usergroupIdToAdd) {
-            /** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup $usergroupToAdd */
+            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUserGroup $usergroupToAdd */
             $usergroupToAdd = $this->userGroupRepository->findByUid($usergroupIdToAdd);
             $user->addUsergroup($usergroupToAdd);
         }
@@ -586,7 +582,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     {
         $userGroupIds = $this->getUserGroupIds();
         foreach ($userGroupIds as $userGroupId) {
-            /** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup $usergroupToRemove */
+            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUserGroup $usergroupToRemove */
             $usergroupToRemove = $this->userGroupRepository->findByUid($userGroupId);
             $user->removeUsergroup($usergroupToRemove);
         }
