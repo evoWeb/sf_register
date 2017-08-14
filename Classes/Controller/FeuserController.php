@@ -149,7 +149,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 __FUNCTION__,
                 [
                     'controller' => $this,
-                    'settings' => $this->settings
+                    'settings' => $this->settings,
                 ]
             );
         }
@@ -202,7 +202,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                     DateTimeConverter::class,
                     [
                         DateTimeConverter::CONFIGURATION_USER_DATA =>
-                            $this->request->getArgument('user')
+                            $this->request->getArgument('user'),
                     ]
                 );
         }
@@ -611,6 +611,16 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         // if redirect was empty by now set it to current page
         if (intval($redirectPageId) == 0) {
             $redirectPageId = $this->getTypoScriptFrontendController()->id;
+        }
+
+        // get configured redirect page id if given
+        $userGroups = $user->getUsergroup();
+        /** @var \Evoweb\SfRegister\Domain\Model\FrontendUserGroup $userGroup */
+        foreach ($userGroups as $userGroup) {
+            if ($userGroup->getFeloginRedirectPid()) {
+                $redirectPageId = $userGroup->getFeloginRedirectPid();
+                break;
+            }
         }
     }
 
