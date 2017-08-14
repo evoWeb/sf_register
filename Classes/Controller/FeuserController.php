@@ -82,7 +82,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected $request;
 
     /**
-     * Active if autologgin was set
+     * Active if autologgin was set.
+     *
+     * Used to define of on page redirect an additional
+     * query parameter should be set.
      *
      * @var bool
      */
@@ -594,23 +597,25 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * Login user with service
      *
      * @param FrontendUser $user
+     * @param int $redirectPageId
      *
      * @return void
      */
-    protected function autoLogin(FrontendUser $user)
+    protected function autoLogin(FrontendUser $user, &$redirectPageId)
     {
         session_start();
         $this->autoLoginTriggered = true;
 
-        $hmac = GeneralUtility::hmac(
-            'auto-login::' . $user->getUid()
-        );
+        $_SESSION['sf-register-user'] = GeneralUtility::hmac('auto-login::' . $user->getUid(), $GLOBALS['EXEC_TIME']);
 
         /** @var \TYPO3\CMS\Core\Registry $registry */
         $registry = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Registry::class);
-        $registry->set('sf-register', $hmac, $user->getUid());
+        $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
 
-        $_SESSION['sf-register-user'] = $hmac;
+        // if redirect was empty by now set it to current page
+        if (intval($redirectPageId) == 0) {
+            $redirectPageId = $this->getTypoScriptFrontendController()->id;
+        }
     }
 
     /**

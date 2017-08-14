@@ -215,7 +215,7 @@ class FeuserEditController extends FeuserController
 
             if ($this->settings['autologinPostConfirmation']) {
                 $this->persistAll();
-                $this->autoLogin($user);
+                $this->autoLogin($user, $this->settings['redirectPostActivationPageId']);
             }
 
             if ($this->settings['redirectPostActivationPageId']) {

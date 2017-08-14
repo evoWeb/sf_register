@@ -160,7 +160,7 @@ class FeuserCreateController extends FeuserController
         $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)->remove('captchaWasValidPreviously');
 
         if ($this->settings['autologinPostRegistration']) {
-            $this->autoLogin($user);
+            $this->autoLogin($user, $this->settings['redirectPostRegistrationPageId']);
         }
 
         if ($this->settings['redirectPostRegistrationPageId']) {
@@ -216,7 +216,7 @@ class FeuserCreateController extends FeuserController
 
                 if ($this->settings['autologinPostConfirmation']) {
                     $this->persistAll();
-                    $this->autoLogin($user);
+                    $this->autoLogin($user, $this->settings['redirectPostActivationPageId']);
                 }
 
                 if ($this->settings['redirectPostActivationPageId']) {
