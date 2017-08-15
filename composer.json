@@ -24,7 +24,7 @@
   },
 
   "suggest": {
-    "evoweb/recaptcha": "7.2.1"
+    "evoweb/recaptcha": "7.4.0"
   },
 
   "autoload": {
