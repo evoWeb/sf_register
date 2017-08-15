@@ -78,6 +78,9 @@
 			<trans-unit id="fe_users.submit">
 				<source>Submit button</source>
 			</trans-unit>
+			<trans-unit id="fe_users.submit_captcha">
+				<source>Submit button with invisible captcha (needs EXT:recaptcha)</source>
+			</trans-unit>
 			<trans-unit id="fe_users.change">
 				<source>Change button</source>
 			</trans-unit>

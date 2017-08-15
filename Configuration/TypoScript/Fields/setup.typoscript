@@ -231,6 +231,8 @@ plugin.tx_sfregister.settings.fields {
 
     submit.partial = Submit
 
+    submit_captcha.partial = SubmitWithInvisibleCaptcha
+
     update.partial = Update
   }
 }

@@ -174,6 +174,15 @@
 	};
 
 	/**
+	 * Selects the form and triggers submit
+	 *
+	 * @return void
+	 */
+	module.submitForm = function () {
+		module.getElement('sfrForm').submit();
+	};
+
+	/**
 	 * Attach content loaded element with callback to document
 	 */
 	function initialize() {
@@ -191,4 +200,8 @@
 		});
 	}
 	initialize();
+
+	window.sfRegister_submitForm = function () {
+		module.submitForm();
+	};
 });

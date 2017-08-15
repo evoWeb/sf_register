@@ -312,3 +312,7 @@
 .tx_evoweb_sfregister .pull-left {
   float: left !important;
 }
+
+.tx_evoweb_sfregister .grecaptcha-badge {
+	margin-right: -10000px;
+}

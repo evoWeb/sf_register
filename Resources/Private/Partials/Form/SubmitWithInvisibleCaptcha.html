@@ -1,0 +1,12 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<div class="form-group {fieldName} pull-right">
+	<f:render partial="FieldError" arguments="{for: 'user', field: 'captcha'}" />
+	<f:form.hidden property="captcha" value="" id="captcha" />
+
+	<f:form.submit value="{f:translate(key:'submit_create')}"
+		class="btn btn-primary pull-right g-recaptcha"
+		data="{sitekey: settings.recaptcha.public_key, callback: 'sfRegister_submitForm'}"/>
+</div>
+
+</html>
