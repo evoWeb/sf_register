@@ -32,7 +32,7 @@ Extend class
 
 ::
 
-   Tx_SfRegister_Services_Captcha_AbstractAdapter
+   \\Evoweb\\SfRegister\\Services\\Captcha\\AbstractAdapter
 
 The functions
 
@@ -62,7 +62,7 @@ extends class
 
 ::
 
-   Tx_Extbase_Validation_Validator_AbstractValidator
+   \\TYPO3\\CMS\\Extbase\\Validation\\Validator\\AbstractValidator
 
 and require the function
 
@@ -271,7 +271,7 @@ plugin.tx\_sfregister.settings:
          Adapter for Captcha-Extension jm\_recaptcha
 
    :Default:
-         Tx\_SfRegister\_Services\_Captcha\_JmRecaptchaAdapter
+         \\Evoweb\\SfRegister\\Services\\Captcha\\JmRecaptchaAdapter
 
 
 
@@ -285,7 +285,7 @@ plugin.tx\_sfregister.settings:
          Adapter for Captcha-Extension sr\_freecap
 
    :Default:
-         Tx\_SfRegister\_Services\_Captcha\_SrFreecapAdapter
+         \\Evoweb\\SfRegister\\Services\\Captcha\\SrFreecapAdapter
 
 
 
