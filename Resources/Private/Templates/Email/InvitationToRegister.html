@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers">
+<head>
+	<title>User invitation mail to register template</title>
+</head>
+<body>
+
+<f:layout name="Email" />
+
+<f:section name="Main">
+	<f:format.raw><f:translate key="email_user_salutation"/></f:format.raw>,
+
+	<f:format.raw><f:translate key="email_invitee_invitation_message" arguments="{0: user.invitationEmail, 1: settings.sitename}"/></f:format.raw>
+
+	<register:link.action arguments="{user: {email: user.invitationEmail}}" action="form" absolute="true" noCacheHash="true">
+		<f:translate key="email_invitee_register_link"/>
+	</register:link.action>
+</f:section>
+
+</body>
+</html>

@@ -90,6 +90,12 @@
 			<trans-unit id="maximal.notifyUserPostEditAccept" xml:space="preserve">
 				<source>the user should get an email after accept on edit</source>
 			</trans-unit>
+			<trans-unit id="maximal.notifyAdminSendInvitation" xml:space="preserve">
+				<source>the admin should get an email after an invitation got sent</source>
+			</trans-unit>
+			<trans-unit id="maximal.notifyUserSendInvitation" xml:space="preserve">
+				<source>the user should get an email after an invitation got sent</source>
+			</trans-unit>
 
 			<trans-unit id="maximal.confirmEmailPostEdit" xml:space="preserve">
 				<source>user needs to confirm the email change</source>

@@ -39,12 +39,12 @@ call_user_func(function () {
         'Evoweb.sf_register',
         'Form',
         [
-            'FeuserCreate' => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
+            'FeuserCreate' => 'inviteForm, invite, form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
             'FeuserEdit' => 'form, preview, proxy, save, confirm, accept, removeImage',
             'FeuserPassword' => 'form, save',
         ],
         [
-            'FeuserCreate' => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
+            'FeuserCreate' => 'inviteForm, invite, form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
             'FeuserEdit' => 'form, preview, proxy, save, confirm, accept, removeImage',
             'FeuserPassword' => 'form, save',
         ]

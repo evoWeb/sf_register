@@ -4,7 +4,7 @@
 	<label for="{fieldName}"><f:translate key="{fieldName}" /></label>
 	<f:render partial="Required" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
-	<f:form.textfield property="{fieldName}" id="{fieldName}" placeholder="{options.placeholder}" class="form-control" />
+	<f:form.textfield property="{fieldName}" id="{fieldName}" type="email" placeholder="{options.placeholder}" class="form-control" />
 </div>
 
 </html>

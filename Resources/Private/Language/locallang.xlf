@@ -240,6 +240,9 @@
 			<trans-unit id="info_mandatory_fields" xml:space="preserve">
 				<source>Fields marked with an asterisk (*) are mandatory</source>
 			</trans-unit>
+			<trans-unit id="invitationEmail">
+				<source>Email address of person to invite</source>
+			</trans-unit>
 			<trans-unit id="submit_create" xml:space="preserve">
 				<source>create</source>
 			</trans-unit>
@@ -502,6 +505,28 @@
 			<trans-unit id="email_user_account_saved">
 				<source>Your registration was saved.</source>
 				<target></target>
+			</trans-unit>
+
+			<trans-unit id="email_admin_invitation_message">
+				<source>User "%1$s" send an invitation to "%2$s".</source>
+			</trans-unit>
+			<trans-unit id="email_user_invitation_message">
+				<source>Your invited email "%1$s" to register at %2$s.</source>
+			</trans-unit>
+			<trans-unit id="email_invitee_invitation_message">
+				<source>Your were invited with email "%1$s" to register at {settings.sitename}.</source>
+			</trans-unit>
+			<trans-unit id="email_invitee_register_link">
+				<source>register</source>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationSendInvitation" xml:space="preserve">
+				<source>User invitation at %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationSendInvitation" xml:space="preserve">
+				<source>You invited someone to register at %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectInvitationToRegister" xml:space="preserve">
+				<source>You were invite to register at %1$s</source>
 			</trans-unit>
 		</body>
 	</file>

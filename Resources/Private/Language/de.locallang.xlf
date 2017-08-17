@@ -319,6 +319,10 @@
 				<source>Fields with &lt;span&gt;*&lt;/span&gt; are mandatory</source>
 				<target>Mit &lt;span&gt;*&lt;/span&gt; markierte Felder sind Pflichtfelder</target>
 			</trans-unit>
+			<trans-unit id="invitationEmail">
+				<source>Email address of person to invite</source>
+				<target>Email Adresse der einzuladenden Person</target>
+			</trans-unit>
 			<trans-unit id="submit_create" xml:space="preserve">
 				<source>create</source>
 				<target>registrieren</target>

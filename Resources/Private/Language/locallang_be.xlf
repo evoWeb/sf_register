@@ -310,6 +310,9 @@
 			<trans-unit id="form_flexform.switchableControllerAction.password" xml:space="preserve">
 				<source>Password</source>
 			</trans-unit>
+			<trans-unit id="form_flexform.switchableControllerAction.invite" xml:space="preserve">
+				<source>Invite</source>
+			</trans-unit>
 			<trans-unit id="form_flexform.settings.fields.selected">
 				<source>Select fields to use in form</source>
 			</trans-unit>

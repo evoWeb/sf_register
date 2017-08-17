@@ -32,6 +32,18 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 class FeuserEditController extends FeuserController
 {
     /**
+     * @return void
+     */
+    protected function initializeFormAction()
+    {
+        if (empty($this->settings['fields']['selected'])) {
+            $this->settings['fields']['selected'] = $this->settings['fields']['editDefaultSelected'];
+        } elseif (!is_array($this->settings['fields']['selected'])) {
+            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
+        }
+    }
+
+    /**
      * Form action
      *
      * @param FrontendUser $user

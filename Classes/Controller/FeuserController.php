@@ -160,20 +160,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         ) {
             $this->forward('removeImage');
         }
-
-        $controllerType = strtolower(
-            str_replace(
-                'Controller',
-                '',
-                str_replace('Evoweb\SfRegister\Controller\Feuser', '', get_class($this))
-            )
-        );
-
-        if (empty($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = $this->settings['fields'][$controllerType . 'DefaultSelected'];
-        } elseif (!is_array($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
-        }
     }
 
     /**

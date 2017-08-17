@@ -82,6 +82,23 @@ plugin.tx_sfregister.settings.fields {
     390 = update
   }
 
+  inviteDefaultSelected {
+    10 = username
+    70 = clear
+
+    320 = invitationEmail
+    330 = clear
+
+    340 = gtc
+    360 = clear
+
+    370 = captcha
+    380 = clear
+
+    390 = change
+    400 = submit
+  }
+
   configuration {
     username {
       partial = Textfield
@@ -97,9 +114,15 @@ plugin.tx_sfregister.settings.fields {
 
     passwordRepeat.partial = Password
 
-    email.partial = Textfield
+    email {
+      partial = Email
+      placeholder = email@domain.test
+    }
 
-    emailRepeat.partial = Textfield
+    emailRepeat {
+      partial = Email
+      placeholder = email@domain.test
+    }
 
     gender {
       partial = Select
@@ -223,6 +246,11 @@ plugin.tx_sfregister.settings.fields {
     captcha {
       partial = Captcha
       type = Recaptcha
+    }
+
+    invitationEmail {
+      partial = Email
+      placeholder = email@domain.test
     }
 
     clear.partial = Clear
