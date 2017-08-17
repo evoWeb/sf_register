@@ -7,7 +7,7 @@
 	<f:render partial="Required" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
 	<register:form.selectStaticCountries property="{fieldName}" id="sfrCountry" class="form-control"
-		value="{f:if(condition: user.{fieldName}, then: user.{fieldName}, else: options.defaultValue)}"
+		value="{f:if(condition: '{user.{fieldName}}', then: '{user.{fieldName}}', else: options.defaultValue)}"
 		allowedCountries="{options.allowedCountries}"
 		optionLabelField="cnShort{register:languageKey(type: 'countries')}" />
 </div>
