@@ -3,3 +3,15 @@
 [else]
   plugin.tx_sfregister.minified =
 [end]
+
+# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.createPid
+plugin.tx_sfregister.settings.createPid = 0
+
+# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.editPid
+plugin.tx_sfregister.settings.editPid = 0
+
+# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.passwordPid
+plugin.tx_sfregister.settings.passwordPid = 0
+
+# cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.invitePid
+plugin.tx_sfregister.settings.invitePid = 0

@@ -291,7 +291,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
         $this->sendEmail(
             $user,
-            $this->getUserRecipient(),
+            [$user->getInvitationEmail() => ''],
             'userEmail',
             $this->getSubject($method, $user),
             $this->renderBody('FeuserCreate', 'form', $method, $user, 'html'),

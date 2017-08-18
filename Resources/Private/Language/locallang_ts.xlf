@@ -215,6 +215,19 @@
 			<trans-unit id="extmgm.setRealurlConfigByDefault" xml:space="preserve">
 				<source>Set realurl config by default: In case you have a separate config for realurl or the default settings dont suite your needs you would like to disable this</source>
 			</trans-unit>
+
+			<trans-unit id="common.createPid">
+				<source>Id of page with create form</source>
+			</trans-unit>
+			<trans-unit id="common.editPid">
+				<source>Id of page with edit form</source>
+			</trans-unit>
+			<trans-unit id="common.passwordPid">
+				<source>Id of page with password form</source>
+			</trans-unit>
+			<trans-unit id="common.invitePid">
+				<source>Id of page with invite form</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

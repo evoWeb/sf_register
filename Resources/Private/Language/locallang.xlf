@@ -514,7 +514,7 @@
 				<source>Your invited email "%1$s" to register at %2$s.</source>
 			</trans-unit>
 			<trans-unit id="email_invitee_invitation_message">
-				<source>Your were invited with email "%1$s" to register at {settings.sitename}.</source>
+				<source>Your were invited with email %1$s to register at "%2$s".</source>
 			</trans-unit>
 			<trans-unit id="email_invitee_register_link">
 				<source>register</source>
