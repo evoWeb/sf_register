@@ -59,8 +59,9 @@ class FeuserPasswordController extends FeuserController
     {
         if ($this->userIsLoggedIn()) {
             /** @noinspection PhpInternalEntityUsedInspection */
+            $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
-            $user = $this->userRepository->findByUid($this->getTypoScriptFrontendController()->fe_user->user['uid']);
+            $user = $this->userRepository->findByUid($userId);
 
             $this->signalSlotDispatcher->dispatch(
                 __CLASS__,

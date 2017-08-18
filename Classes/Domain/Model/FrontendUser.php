@@ -220,6 +220,13 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     protected $emailNew;
 
+    /**
+     * email address of invitee
+     *
+     * @var string
+     */
+    protected $invitationEmail;
+
 
     /**
      * Initializes the date of birth if related values
@@ -867,5 +874,27 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     public function getEmailNew()
     {
         return $this->emailNew;
+    }
+
+    /**
+     * Getter for invitationEmail
+     *
+     * @return string
+     */
+    public function getInvitationEmail()
+    {
+        return $this->invitationEmail;
+    }
+
+    /**
+     * Setter for invitationEmail
+     *
+     * @param string $invitationEmail
+     *
+     * @return void
+     */
+    public function setInvitationEmail($invitationEmail)
+    {
+        $this->invitationEmail = $invitationEmail;
     }
 }

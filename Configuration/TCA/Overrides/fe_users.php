@@ -7,7 +7,7 @@ $languageFile = 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf
 
 $temporaryColumns = [
     'mailhash' => [
-        'exclude' => 1,
+        'exclude' => true,
         'label' => $languageFile . 'fe_users.mailhash',
         'config' => [
             'type' => 'input',
@@ -16,7 +16,7 @@ $temporaryColumns = [
     ],
 
     'activated_on' => [
-        'exclude' => 1,
+        'exclude' => true,
         'label' => $languageFile . 'fe_users.activated_on',
         'config' => [
             'type' => 'input',
@@ -27,17 +27,15 @@ $temporaryColumns = [
     ],
 
     'pseudonym' => [
-        'exclude' => 0,
         'label' => $languageFile . 'fe_users.pseudonym',
         'config' => [
             'type' => 'input',
-            'size' => '20',
-            'max' => '50',
+            'size' => 20,
+            'max' => 50,
             'eval' => 'trim',
         ]
     ],
     'gender' => [
-        'exclude' => 1,
         'label' => $languageFile . 'fe_users.gender',
         'config' => [
             'type' => 'radio',
@@ -48,41 +46,36 @@ $temporaryColumns = [
         ]
     ],
     'date_of_birth' => [
-        'exclude' => 0,
         'label' => $languageFile . 'fe_users.date_of_birth',
         'config' => [
             'type' => 'input',
             'renderType' => 'inputDateTime',
-            'size' => '10',
+            'size' => 10,
             'eval' => 'date',
-            'checkbox' => '0',
             'default' => ''
         ]
     ],
     'language' => [
-        'exclude' => 0,
         'label' => $languageFile . 'fe_users.language',
         'config' => [
             'type' => 'input',
-            'size' => '4',
-            'max' => '2',
+            'size' => 4,
+            'max' => 2,
             'eval' => '',
             'default' => ''
         ]
     ],
     'zone' => [
-        'exclude' => 0,
         'label' => $languageFile . 'fe_users.zone',
         'config' => [
             'type' => 'input',
-            'size' => '20',
-            'max' => '40',
+            'size' => 20,
+            'max' => 40,
             'eval' => 'trim',
             'default' => ''
         ]
     ],
     'timezone' => [
-        'exclude' => 0,
         'label' => $languageFile . 'fe_users.timezone',
         'config' => [
             'type' => 'check',
@@ -131,14 +124,12 @@ $temporaryColumns = [
         ]
     ],
     'daylight' => [
-        'exclude' => 1,
         'label' => $languageFile . 'fe_users.daylight',
         'config' => [
             'type' => 'check'
         ]
     ],
     'mobilephone' => [
-        'exclude' => 1,
         'label' => $languageFile . 'fe_users.mobilephone',
         'config' => [
             'type' => 'input',
@@ -146,21 +137,20 @@ $temporaryColumns = [
         ]
     ],
     'gtc' => [
-        'exclude' => 1,
+        'exclude' => true,
         'label' => $languageFile . 'fe_users.gtc',
         'config' => [
             'type' => 'check'
         ]
     ],
     'privacy' => [
-        'exclude' => 1,
+        'exclude' => true,
         'label' => $languageFile . 'fe_users.privacy',
         'config' => [
             'type' => 'check'
         ]
     ],
     'status' => [
-        'exclude' => 0,
         'label' => $languageFile . 'fe_users.status',
         'config' => [
             'type' => 'check',
@@ -175,49 +165,50 @@ $temporaryColumns = [
         ]
     ],
     'by_invitation' => [
-        'exclude' => 0,
         'label' => $languageFile . 'fe_users.by_invitation',
         'config' => [
             'type' => 'check',
-            'default' => '0'
+            'default' => 0
         ]
     ],
     'comments' => [
-        'exclude' => 0,
         'label' => $languageFile . 'fe_users.comments',
         'config' => [
             'type' => 'text',
-            'rows' => '5',
-            'cols' => '48'
+            'rows' => 5,
+            'cols' => 48
         ]
     ],
     'email_new' => [
-        'exclude' => 0,
         'label' => $languageFile . 'fe_users.email_new',
         'config' => [
             'type' => 'input',
-            'size' => '20',
-            'max' => '80',
+            'size' => 20,
+            'max' => 20,
             'eval' => 'trim',
         ]
     ],
+    'invitation_email' => [
+        'config' => [
+            'type' => 'passthrough'
+        ]
+    ],
     'module_sys_dmail_newsletter' => [
-        'label' =>
-            $languageFile . 'fe_users.module_sys_dmail_newsletter',
-        'exclude' => '1',
+        'exclude' => true,
+        'label' => $languageFile . 'fe_users.module_sys_dmail_newsletter',
         'config' => [
             'type' => 'check'
         ]
     ],
     'module_sys_dmail_html' => [
+        'exclude' => true,
         'label' => $languageFile . 'fe_users.module_sys_dmail_html',
-        'exclude' => '1',
         'config' => [
             'type' => 'check'
         ]
     ],
     'image' => [
-        'exclude' => 1,
+        'exclude' => true,
         'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.image',
         'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
             'image',
