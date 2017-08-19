@@ -4,6 +4,11 @@ page.includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/s
 plugin.tx_sfregister.settings {
   dateFormat = d-m-Y
 
+  createPid = {$plugin.tx_sfregister.settings.createPid}
+  editPid = {$plugin.tx_sfregister.settings.editPid}
+  passwordPid = {$plugin.tx_sfregister.settings.passwordPid}
+  invitePid = {$plugin.tx_sfregister.settings.invitePid}
+
   # comma separated list of words used in bad word validatorchro
   badWordList = {$plugin.tx_sfregister.settings.badWordList}
 
@@ -61,6 +66,17 @@ plugin.tx_sfregister.settings {
     }
   }
 
+  validation.invite {
+    username {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 4, maximum = 80)
+    }
+    invitationEmail {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = EmailAddress
+    }
+    captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = jmrecaptcha)
+  }
 
   # integer usergroup set if no activation is needed
   usergroup = {$plugin.tx_sfregister.settings.usergroup}

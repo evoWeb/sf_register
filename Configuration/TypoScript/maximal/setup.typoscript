@@ -51,6 +51,9 @@ plugin.tx_sfregister.settings {
   notifyAdminPostEditAccept = {$plugin.tx_sfregister.settings.notifyAdminPostEditAccept}
   notifyUserPostEditAccept = {$plugin.tx_sfregister.settings.notifyUserPostEditAccept}
 
+  notifyAdminSendInvitation = {$plugin.tx_sfregister.settings.notifyAdminSendInvitation}
+  notifyUserSendInvitation = {$plugin.tx_sfregister.settings.notifyUserSendInvitation}
+
   confirmEmailPostEdit = {$plugin.tx_sfregister.settings.confirmEmailPostEdit}
   acceptEmailPostEdit = {$plugin.tx_sfregister.settings.acceptEmailPostEdit}
 

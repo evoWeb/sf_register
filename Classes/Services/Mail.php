@@ -279,6 +279,32 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
 
     /**
+     * Send an email notification for type to the admin
+     *
+     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
+     * @param string $type
+     * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
+     */
+    public function sendInvitation(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user, $type)
+    {
+        $method = __FUNCTION__ . $type;
+
+        $this->sendEmail(
+            $user,
+            [$user->getInvitationEmail() => ''],
+            'userEmail',
+            $this->getSubject($method, $user),
+            $this->renderBody('FeuserCreate', 'form', $method, $user, 'html'),
+            $this->renderBody('FeuserCreate', 'form', $method, $user, 'txt')
+        );
+
+        $user = $this->dispatchSlotSignal($method . 'PostSend', $user);
+
+        return $user;
+    }
+
+
+    /**
      * Get translated version of the subject with replaced username and sitename
      *
      * @param string $method

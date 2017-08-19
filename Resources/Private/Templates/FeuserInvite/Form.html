@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+<head>
+	<title>Create form template of invitation</title>
+</head>
+<body>
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+	<f:form action="invite" name="user" id="sfrForm" object="{user}" enctype="multipart/form-data">
+		<f:render partial="FormErrors" arguments="{for: 'user'}" />
+		<f:render partial="FieldError" arguments="{field: 'uid'}" />
+
+		<f:for each="{settings.fields.selected}" as="selectedField">
+			<f:alias map="{options: '{settings.fields.configuration.{selectedField}}'}">
+				<f:render partial="Form/{options.partial}"
+					arguments="{user: user, fieldName: selectedField, options: options, settings: settings}"/>
+			</f:alias>
+		</f:for>
+	</f:form>
+
+	<div class="mandatory">
+		<f:format.raw><f:translate key="info_mandatory_fields"/></f:format.raw>
+	</div>
+</f:section>
+
+</body>
+</html>

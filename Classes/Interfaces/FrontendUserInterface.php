@@ -57,4 +57,11 @@ interface FrontendUserInterface
      * @return string
      */
     public function getEmail();
+
+    /**
+     * Getter for invitationEmail
+     *
+     * @return string
+     */
+    public function getInvitationEmail();
 }
