@@ -25,6 +25,8 @@ namespace Evoweb\SfRegister\Controller;
  ***************************************************************/
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
+use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
 /**
  * An frontend user create controller
@@ -40,6 +42,19 @@ class FeuserCreateController extends FeuserController
             $this->settings['fields']['selected'] = $this->settings['fields']['createDefaultSelected'];
         } elseif (!is_array($this->settings['fields']['selected'])) {
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
+        }
+
+        if (isset($this->arguments['user'])) {
+            /** @var Argument $userArgument */
+            $userArgument = $this->arguments['user'];
+            $propertyMappingConfiguration = $userArgument->getPropertyMappingConfiguration();
+            // or just allow certain properties
+            $propertyMappingConfiguration->allowProperties('email');
+            $propertyMappingConfiguration->setTypeConverterOption(
+                PersistentObjectConverter::class,
+                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+                true
+            );
         }
     }
 
@@ -70,7 +85,7 @@ class FeuserCreateController extends FeuserController
             $propertyMappingConfiguration->forProperty('usergroup')->allowAllProperties();
             $propertyMappingConfiguration->setTypeConverterOption(
                 'TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter',
-                \TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
                 true
             );
 
