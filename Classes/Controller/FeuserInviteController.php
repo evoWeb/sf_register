@@ -82,21 +82,25 @@ class FeuserInviteController extends FeuserController
     public function inviteAction(FrontendUser $user)
     {
         $type = 'SendInvitation';
+        $doNotSendInvitation = false;
 
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
             [
                 'user' => &$user,
-                'settings' => $this->settings
+                'settings' => $this->settings,
+                'doNotSendInvitation' => &$doNotSendInvitation,
             ]
         );
 
         $user = $this->sendEmails($user, $type);
 
-        /** @var \Evoweb\SfRegister\Services\Mail $mailService */
-        $mailService = $this->objectManager->get(\Evoweb\SfRegister\Services\Mail::class);
-        $user = $mailService->sendInvitation($user, 'ToRegister');
+        if (!$doNotSendInvitation) {
+            /** @var \Evoweb\SfRegister\Services\Mail $mailService */
+            $mailService = $this->objectManager->get(\Evoweb\SfRegister\Services\Mail::class);
+            $user = $mailService->sendInvitation($user, 'ToRegister');
+        }
 
         $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)->remove('captchaWasValidPreviously');
 
