@@ -105,7 +105,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      */
     public function injectResourceFactory(\TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory)
     {
-        $this->hashService = $resourceFactory;
+        $this->resourceFactory = $resourceFactory;
     }
 
     /**
