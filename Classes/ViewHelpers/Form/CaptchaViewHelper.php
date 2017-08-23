@@ -24,6 +24,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
+
 /**
  * Viewhelper to output a captcha in a form
  * <code title="Usage">
@@ -36,11 +38,17 @@ class CaptchaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFi
     /**
      * Factory to create a captcha that is used to render the output
      *
-     * @var \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory
-     * @inject
+     * @var CaptchaAdapterFactory
      */
     protected $captchaAdapterFactory;
 
+    /**
+     * @param CaptchaAdapterFactory $captchaAdapterFactory
+     */
+    public function injectCaptchaAdapterFactory(CaptchaAdapterFactory $captchaAdapterFactory)
+    {
+        $this->captchaAdapterFactory = $captchaAdapterFactory;
+    }
 
     /**
      * Initialize arguments.

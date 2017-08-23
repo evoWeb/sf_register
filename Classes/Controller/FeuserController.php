@@ -167,7 +167,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function setTypeConverter()
     {
-        if ($this->request->hasArgument('user')) {
+        $argumentName = 'user';
+        if ($this->request->hasArgument($argumentName)) {
             $folder = $this->fileService->getTempFolder();
 
             $uploadConfiguration = [
@@ -178,7 +179,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             ];
 
             /** @var PropertyMappingConfiguration $configuration */
-            $configuration = $this->arguments['user']->getPropertyMappingConfiguration();
+            $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
+
             $configuration->forProperty('image')
                 ->setTypeConverterOptions(
                     UploadedFileReferenceConverter::class,

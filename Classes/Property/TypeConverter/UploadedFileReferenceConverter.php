@@ -259,7 +259,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             self::CONFIGURATION_UPLOAD_FOLDER
         ) ?: $this->defaultUploadFolder;
 
-        if (class_exists('TYPO3\\CMS\\Core\\Resource\\DuplicationBehavior')) {
+        if (class_exists(\TYPO3\CMS\Core\Resource\DuplicationBehavior::class)) {
             $defaultConflictMode = \TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME;
         } else {
             // @deprecated since 7.6 will be removed once 6.2 support is removed
