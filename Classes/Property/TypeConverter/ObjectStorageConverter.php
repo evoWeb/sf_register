@@ -33,6 +33,11 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
 class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\ObjectStorageConverter
 {
     /**
+     * @var string[]
+     */
+    protected $sourceTypes = ['array'];
+
+    /**
      * Take precedence over the available ObjectStorageConverter
      *
      * @var integer
@@ -51,6 +56,10 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
     {
         $propertiesToConvert = [];
 
+        if (!empty($source) && !$this->isMultiple($source)) {
+            $source = [$source];
+        }
+
         // TODO: Find a nicer way to throw away empty uploads
         foreach ($source as $propertyName => $propertyValue) {
             if ($this->isUploadType($propertyValue)) {
@@ -68,9 +77,22 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
     }
 
     /**
+     * If first element is array itself
+     *
+     * @param array $source
+     *
+     * @return bool
+     */
+    protected function isMultiple(array $source)
+    {
+        return is_array(reset($source));
+    }
+
+    /**
      * Check if this is an upload type
      *
      * @param mixed $propertyValue
+     *
      * @return bool
      */
     protected function isUploadType($propertyValue)

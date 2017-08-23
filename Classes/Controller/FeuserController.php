@@ -170,17 +170,19 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         if ($this->request->hasArgument('user')) {
             $folder = $this->fileService->getTempFolder();
 
+            $uploadConfiguration = [
+                UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
+                    $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
+                UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
+                    $folder->getStorage()->getUid() . ':' . $folder->getIdentifier(),
+            ];
+
             /** @var PropertyMappingConfiguration $configuration */
             $configuration = $this->arguments['user']->getPropertyMappingConfiguration();
             $configuration->forProperty('image')
                 ->setTypeConverterOptions(
                     UploadedFileReferenceConverter::class,
-                    [
-                        UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
-                            $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
-                        UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
-                            $folder->getStorage()->getUid() . ':' . $folder->getIdentifier(),
-                    ]
+                    $uploadConfiguration
                 );
 
             $configuration->forProperty('dateOfBirth')

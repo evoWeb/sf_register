@@ -34,15 +34,29 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
 {
     /**
      * @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService
-     * @inject
      */
     protected $hashService;
 
     /**
      * @var \TYPO3\CMS\Extbase\Property\PropertyMapper
-     * @inject
      */
     protected $propertyMapper;
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService
+     */
+    public function injectHashService(\TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService)
+    {
+        $this->hashService = $hashService;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper
+     */
+    public function injectPropertyMapper(\TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper)
+    {
+        $this->propertyMapper = $propertyMapper;
+    }
 
     /**
      * Initialize the arguments.
@@ -53,7 +67,7 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerTagAttribute('alwaysShowUpload', 'string', 'Wether the upload button should be always shown.');
+        $this->registerTagAttribute('alwaysShowUpload', 'string', 'Whether the upload button should be always shown.');
     }
 
     /**
@@ -66,8 +80,29 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
     {
         $output = '';
 
-        $resource = $this->getUploadedResource();
-        if ($resource !== null) {
+        $resources = $this->getUploadedResource();
+
+        if (!is_null($resources)) {
+            $output .= $this->renderPreview($resources);
+        }
+
+        if ($this->isRenderUpload($resources)) {
+            $output .= parent::render();
+        }
+
+        return $output;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage|array $resources
+     *
+     * @return string
+     */
+    protected function renderPreview($resources)
+    {
+        $output = '';
+
+        foreach ($resources as $resource) {
             $resourcePointerIdAttribute = '';
             if ($this->hasArgument('id')) {
                 $resourcePointerIdAttribute = ' id="' . htmlspecialchars($this->arguments['id']) . '-file-reference"';
@@ -91,18 +126,33 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
             $this->templateVariableContainer->remove('resource');
         }
 
-        if ($resource === null || ($this->hasArgument('alwaysShowUpload') && $this->arguments['alwaysShowUpload'])) {
-            $output .= parent::render();
-        }
-
         return $output;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage|array $resources
+     *
+     * @return bool
+     */
+    protected function isRenderUpload($resources)
+    {
+        return is_null($resources)
+            || (
+                is_object($resources) && empty($resources->toArray())
+            )
+            || (
+                is_array($resources) && empty($resource)
+            )
+            || (
+                $this->hasArgument('alwaysShowUpload') && $this->arguments['alwaysShowUpload']
+            );
     }
 
     /**
      * Return a previously uploaded resource.
      * Return NULL if errors occurred during property mapping for this property.
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|array
      */
     protected function getUploadedResource()
     {
@@ -112,6 +162,8 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
 
         $resource = $this->getValueAttribute();
         if ($resource instanceof \TYPO3\CMS\Extbase\Domain\Model\FileReference) {
+            return [$resource];
+        } elseif ($resource instanceof \TYPO3\CMS\Extbase\Persistence\ObjectStorage) {
             return $resource;
         }
 

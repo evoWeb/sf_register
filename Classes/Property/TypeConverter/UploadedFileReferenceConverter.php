@@ -31,6 +31,7 @@ use TYPO3\CMS\Core\Resource\FileReference as FalFileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Error\Error;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
@@ -81,19 +82,16 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
     /**
      * @var \TYPO3\CMS\Core\Resource\ResourceFactory
-     * @inject
      */
     protected $resourceFactory;
 
     /**
      * @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService
-     * @inject
      */
     protected $hashService;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
-     * @inject
+     * @var PersistenceManager
      */
     protected $persistenceManager;
 
@@ -101,6 +99,30 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      * @var \TYPO3\CMS\Core\Resource\FileInterface[]
      */
     protected $convertedResources = [];
+
+    /**
+     * @param \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory
+     */
+    public function injectResourceFactory(\TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory)
+    {
+        $this->hashService = $resourceFactory;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService
+     */
+    public function injectHashService(\TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService)
+    {
+        $this->hashService = $hashService;
+    }
+
+    /**
+     * @param PersistenceManager $persistenceManager
+     */
+    public function injectPersistenceManager(PersistenceManager $persistenceManager)
+    {
+        $this->persistenceManager = $persistenceManager;
+    }
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
