@@ -35,8 +35,8 @@ plugin.tx_sfregister.settings.fields {
     280 = daylight
     290 = clear
 
-    #300 = image
-    #310 = clear
+    300 = image
+    310 = clear
 
     320 = dateOfBirth
     330 = clear
