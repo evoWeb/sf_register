@@ -121,7 +121,7 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
 
                 $options = array_filter($options, function ($option) use ($value) {
                     /** @var \Evoweb\SfRegister\Domain\Model\StaticCountryZone $option */
-                    return in_array($option->getUid(), $value);
+                    return in_array($option['uid'], $value);
                 });
             }
 

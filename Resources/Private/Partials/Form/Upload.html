@@ -7,7 +7,7 @@
 	<f:render partial="Required" arguments="{field: '{fieldName}'}" />
 	<f:render partial="FieldError" arguments="{for: 'user', field: '{fieldName}'}" /><br/>
 
-	<register:form.upload property="{fieldName}">
+	<register:form.upload property="{fieldName}.0">
 		<f:if condition="{resource}">
 			<f:image image="{resource}" alt="" width="50"/>
 		</f:if>

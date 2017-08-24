@@ -42,7 +42,7 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
      *
      * @var integer
      */
-    protected $priority = 21;
+    protected $priority = 19;
 
     /**
      * Return the source, if it is an array, otherwise an empty array.
@@ -55,10 +55,6 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
     public function getSourceChildPropertiesToBeConverted($source)
     {
         $propertiesToConvert = [];
-
-        if (!empty($source) && !$this->isMultiple($source)) {
-            $source = [$source];
-        }
 
         // TODO: Find a nicer way to throw away empty uploads
         foreach ($source as $propertyName => $propertyValue) {
@@ -74,18 +70,6 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
         }
 
         return $propertiesToConvert;
-    }
-
-    /**
-     * If first element is array itself
-     *
-     * @param array $source
-     *
-     * @return bool
-     */
-    protected function isMultiple(array $source)
-    {
-        return is_array(reset($source));
     }
 
     /**

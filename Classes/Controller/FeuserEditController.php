@@ -34,8 +34,10 @@ class FeuserEditController extends FeuserController
     /**
      * @return void
      */
-    protected function initializeFormAction()
+    protected function initializeAction()
     {
+        parent::initializeAction();
+
         if (empty($this->settings['fields']['selected'])) {
             $this->settings['fields']['selected'] = $this->settings['fields']['editDefaultSelected'];
         } elseif (!is_array($this->settings['fields']['selected'])) {

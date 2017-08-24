@@ -31,6 +31,7 @@ use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
+use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
 /**
  * An frontend user controller
@@ -169,33 +170,63 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     {
         $argumentName = 'user';
         if ($this->request->hasArgument($argumentName)) {
-            $folder = $this->fileService->getTempFolder();
-
-            $uploadConfiguration = [
-                UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
-                    $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
-                UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
-                    $folder->getStorage()->getUid() . ':' . $folder->getIdentifier(),
-            ];
-
             /** @var PropertyMappingConfiguration $configuration */
             $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
-
-            $configuration->forProperty('image')
-                ->setTypeConverterOptions(
-                    UploadedFileReferenceConverter::class,
-                    $uploadConfiguration
-                );
-
-            $configuration->forProperty('dateOfBirth')
-                ->setTypeConverterOptions(
-                    DateTimeConverter::class,
-                    [
-                        DateTimeConverter::CONFIGURATION_USER_DATA =>
-                            $this->request->getArgument('user'),
-                    ]
-                );
+            $this->getPropertyMappingConfiguration(
+                $configuration,
+                $this->request->getArgument('user')
+            );
         }
+    }
+
+    /**
+     * @param PropertyMappingConfiguration $configuration
+     * @param array $userData
+     *
+     * @return PropertyMappingConfiguration
+     */
+    protected function getPropertyMappingConfiguration(
+        PropertyMappingConfiguration $configuration = null,
+        $userData = []
+    ) {
+        if (is_null($configuration)) {
+            $configuration = $this->objectManager->get(
+                PropertyMappingConfiguration::class
+            );
+        }
+
+        $configuration->allowAllProperties();
+        $configuration->forProperty('usergroup')->allowAllProperties();
+        $configuration->forProperty('image')->allowAllProperties();
+        $configuration->setTypeConverterOption(
+            PersistentObjectConverter::class,
+            PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+            true
+        );
+
+        $folder = $this->fileService->getTempFolder();
+        $uploadConfiguration = [
+            UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
+                $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
+            UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
+                $folder->getStorage()->getUid() . ':' . $folder->getIdentifier(),
+        ];
+
+        $configuration->forProperty('image.0')
+            ->setTypeConverterOptions(
+                UploadedFileReferenceConverter::class,
+                $uploadConfiguration
+            );
+
+        $configuration->forProperty('dateOfBirth')
+            ->setTypeConverterOptions(
+                DateTimeConverter::class,
+                [
+                    DateTimeConverter::CONFIGURATION_USER_DATA => $userData,
+                ]
+            );
+
+        return $configuration;
     }
 
     /**

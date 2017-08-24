@@ -4,7 +4,7 @@
 
 <div class="form-group upload">
 	<label><f:translate key="image" /></label>
-	<register:form.upload property="image" disabled="disabled">
+	<register:form.upload property="image.0" disabled="disabled">
 		<f:if condition="{resource}">
 			<f:image image="{resource}" alt="" width="50"/>
 		</f:if>

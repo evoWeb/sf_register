@@ -101,7 +101,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var string
      */
-    protected $tempFolderIdentifier = 'sf_register/_temp_/';
+    protected $tempFolderIdentifier = 'frontendusers/_temp_/';
 
     /**
      * Temporary folder
@@ -115,7 +115,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var string
      */
-    protected $imageFolderIdentifier = 'sf_register/';
+    protected $imageFolderIdentifier = 'frontendusers/';
 
     /**
      * @var Folder

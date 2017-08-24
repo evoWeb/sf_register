@@ -36,25 +36,14 @@ class FeuserCreateController extends FeuserController
     /**
      * @return void
      */
-    protected function initializeFormAction()
+    protected function initializeAction()
     {
+        parent::initializeAction();
+
         if (empty($this->settings['fields']['selected'])) {
             $this->settings['fields']['selected'] = $this->settings['fields']['createDefaultSelected'];
         } elseif (!is_array($this->settings['fields']['selected'])) {
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
-        }
-
-        if (isset($this->arguments['user'])) {
-            /** @var Argument $userArgument */
-            $userArgument = $this->arguments['user'];
-            $propertyMappingConfiguration = $userArgument->getPropertyMappingConfiguration();
-            // or just allow certain properties
-            $propertyMappingConfiguration->allowProperties('email');
-            $propertyMappingConfiguration->setTypeConverterOption(
-                PersistentObjectConverter::class,
-                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
-                true
-            );
         }
     }
 
@@ -78,16 +67,7 @@ class FeuserCreateController extends FeuserController
                 unset($userData['uid']);
             }
 
-            $propertyMappingConfiguration = $this->objectManager->get(
-                \TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration::class
-            );
-            $propertyMappingConfiguration->allowAllProperties();
-            $propertyMappingConfiguration->forProperty('usergroup')->allowAllProperties();
-            $propertyMappingConfiguration->setTypeConverterOption(
-                'TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter',
-                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
-                true
-            );
+            $propertyMappingConfiguration = $this->getPropertyMappingConfiguration(null, $userData);
 
             /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
             $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
