@@ -3,13 +3,16 @@
 	data-namespace-typo3-fluid="true">
 
 <div class="form-group {fieldName}">
-	<label><f:translate key="{fieldName}" /></label>
+	<label><f:translate id="{fieldName}" /></label>
 	<f:form.hidden property="{fieldName}" />
-	<register:form.selectStaticLanguage property="{fieldName}" id="{fieldName}" class="form-control"
-		disabled="disabled"
+	<register:form.selectStaticLanguage
+		property="{fieldName}"
+		id="{fieldName}"
 		value="{user.{fieldName}}"
+		disabled="disabled"
 		allowedLanguages="{options.allowedLanguages}"
-		optionLabelField="lgName{register:languageKey(type: 'languages')}" />
+		optionLabelField="lgName{register:languageKey(type: 'languages')}"
+		class="form-control"/>
 </div>
 
 </html>

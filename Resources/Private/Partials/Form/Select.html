@@ -3,10 +3,14 @@
 	data-namespace-typo3-fluid="true">
 
 <div class="form-group {fieldName}">
-	<label for="{fieldName}"><f:translate key="{fieldName}" /></label>
+	<label for="{fieldName}"><f:translate id="{fieldName}" /></label>
 	<f:render partial="Required" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
-	<register:form.translatedSelect property="{fieldName}" id="{fieldName}" class="form-control" options="{options.values}" />
+	<register:form.translatedSelect
+		property="{fieldName}"
+		id="{fieldName}"
+		options="{options.values}"
+		class="form-control" />
 </div>
 
 </html>

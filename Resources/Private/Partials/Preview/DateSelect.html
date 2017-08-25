@@ -2,11 +2,17 @@
 
 <div class="form-group {fieldName}">
 	<f:alias map="{date: '{user.{fieldName} -> f:format.date(format: \'U\')}'}">
-		<label><f:translate key="{fieldName}" /></label>
-		<f:form.hidden property="dateOfBirthDay" value="{f:format.date(date: date, format: 'd')}"/>
-		<f:form.hidden property="dateOfBirthMonth" value="{f:format.date(date: date, format: 'm')}"/>
-		<f:form.hidden property="dateOfBirthYear" value="{f:format.date(date: date, format: 'Y')}"/>
-		<p class="form-control-static">{f:format.date(date: date, format: '{settings.dateFormat}')}</p>
+		<label><f:translate id="{fieldName}" /></label>
+		<f:form.hidden
+			property="dateOfBirthDay"
+			value="{f:format.date(date: date, format: 'd')}"/>
+		<f:form.hidden
+			property="dateOfBirthMonth"
+			value="{f:format.date(date: date, format: 'm')}"/>
+		<f:form.hidden
+			property="dateOfBirthYear"
+			value="{f:format.date(date: date, format: 'Y')}"/>
+		<p class="form-control-static"><f:format.date date="{date}" format="{settings.dateFormat}" /></p>
 	</f:alias>
 </div>
 

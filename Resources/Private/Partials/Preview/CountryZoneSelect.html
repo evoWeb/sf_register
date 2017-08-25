@@ -3,11 +3,14 @@
 	data-namespace-typo3-fluid="true">
 
 <div class="form-group {fieldName}">
-	<label><f:translate key="{fieldName}" /></label>
-	<register:form.selectStaticCountryZones property="{fieldName}" id="sfrZone" class="form-control"
-		disabled="disabled"
+	<label><f:translate id="{fieldName}" /></label>
+	<register:form.selectStaticCountryZones
+		property="{fieldName}"
+		id="sfrZone"
 		value="{user.{fieldName}}"
-		parent="{user.staticInfoCountry}"/>
+		disabled="disabled"
+		parent="{user.staticInfoCountry}"
+		class="form-control" />
 	<f:form.hidden property="{fieldName}"/>
 </div>
 

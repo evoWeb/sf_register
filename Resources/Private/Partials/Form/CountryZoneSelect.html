@@ -3,16 +3,20 @@
 	data-namespace-typo3-fluid="true">
 
 <div class="form-group {fieldName}">
-	<label for="sfrZone"><f:translate key="{fieldName}" /></label>
+	<label for="sfrZone"><f:translate id="{fieldName}" /></label>
 	<f:render partial="Required" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
-	<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control"
-		parent="{f:if(condition: user.staticInfoCountry, then: user.staticInfoCountry, else: options.defaultValue)}"/>
+	<register:form.selectStaticCountryZones
+		property="zone"
+		id="sfrZone"
+		parent="{f:if(condition: user.staticInfoCountry, then: user.staticInfoCountry, else: options.defaultValue)}"
+		class="form-control" />
+
 	<div id="sfrZone_empty" class="form-control-static" style="display: none;">
-		<f:translate key="no_zone_available" />
+		<f:translate id="no_zone_available" />
 	</div>
 	<div id="sfrZone_loading" class="form-control-static" style="display: none;">
-		<f:translate key="zone_loading" />
+		<f:translate id="zone_loading" />
 	</div>
 </div>
 

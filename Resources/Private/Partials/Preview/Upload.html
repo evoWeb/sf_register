@@ -3,8 +3,8 @@
 		data-namespace-typo3-fluid="true">
 
 <div class="form-group upload">
-	<label><f:translate key="image" /></label>
-	<register:form.upload property="image.0" disabled="disabled">
+	<label><f:translate id="{fieldName}" /></label>
+	<register:form.upload property="{fieldName}.0" disabled="disabled">
 		<f:if condition="{resource}">
 			<f:image image="{resource}" alt="" width="50"/>
 		</f:if>

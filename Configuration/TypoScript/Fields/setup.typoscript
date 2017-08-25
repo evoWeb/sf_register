@@ -180,6 +180,7 @@ plugin.tx_sfregister.settings.fields {
 
     language {
       partial = Language
+      defaultValue = DE
       allowedLanguages {
         0 = de_DE
         1 = fr_FR

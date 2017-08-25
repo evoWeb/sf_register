@@ -3,19 +3,16 @@
 	data-namespace-typo3-fluid="true">
 
 <div class="form-group {fieldName}">
-	<label for="{fieldName}"><f:translate key="{fieldName}" /></label>
+	<label for="{fieldName}"><f:translate id="{fieldName}" /></label>
 	<f:render partial="Required" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
-	<f:if condition="{user.language}">
-		<f:then>
-			<register:form.selectStaticLanguage property="{fieldName}" id="{fieldName}" class="form-control" value="{user.language}"
-				allowedLanguages="{0: 'de_DE', 1: 'fr_FR'}" optionLabelField="lgName{register:languageKey(type: 'languages') -> f:format.case(mode: 'capital')}" />
-		</f:then>
-		<f:else>
-			<register:form.selectStaticLanguage property="{fieldName}" id="{fieldName}" class="form-control" value="DE"
-				allowedLanguages="{0: 'de_DE', 1: 'fr_FR'}" optionLabelField="lgName{register:languageKey(type: 'languages') -> f:format.case(mode: 'capital')}" />
-		</f:else>
-	</f:if>
+	<register:form.selectStaticLanguage
+		property="{fieldName}"
+		id="{fieldName}"
+		value="{f:if(condition: '{user.{fieldName}}', then: '{user.{fieldName}}', else: options.defaultValue)}"
+		allowedLanguages="{options.allowedLanguages}"
+		optionLabelField="lgName{register:languageKey(type: 'languages') -> f:format.case(mode: 'capital')}"
+		class="form-control" />
 </div>
 
 </html>

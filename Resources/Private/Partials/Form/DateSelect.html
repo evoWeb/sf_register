@@ -3,15 +3,25 @@
 		data-namespace-typo3-fluid="true">
 
 <div class="form-group {fieldName}">
-	<label for="{fieldName}"><f:translate key="{fieldName}" /></label>
+	<label for="{fieldName}"><f:translate id="{fieldName}" /></label>
 	<f:render partial="Required" arguments="{field: fieldName}" />
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
 
-	<register:form.rangeSelect start="1" end="31" property="dateOfBirthDay" id="{fieldName}" />
+	<register:form.rangeSelect
+		property="dateOfBirthDay"
+		id="{fieldName}"
+		start="1"
+		end="31" />
 	-
-	<register:form.rangeSelect start="1" end="12" property="dateOfBirthMonth" />
+	<register:form.rangeSelect
+		property="dateOfBirthMonth"
+		start="1"
+		end="12" />
 	-
-	<register:form.rangeSelect start="1960" end="2031" property="dateOfBirthYear" />
+	<register:form.rangeSelect
+		property="dateOfBirthYear"
+		start="1960"
+		end="2031" />
 </div>
 
 </html>

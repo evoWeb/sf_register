@@ -4,7 +4,10 @@
 	<f:render partial="Captcha{options.type}" />
 
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
-	<f:form.hidden property="{fieldName}" value="" id="{fieldName}" />
+	<f:form.hidden
+		property="{fieldName}"
+		id="{fieldName}"
+		value="" />
 </div>
 
 </html>
