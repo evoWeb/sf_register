@@ -13,9 +13,9 @@
 		<f:render partial="FormErrors" arguments="{for: 'user'}" />
 		<f:render partial="FieldError" arguments="{field: 'uid'}" />
 
-		<f:for each="{settings.fields.selected}" as="selectedField">
+		<f:for each="{settings.fields.selected}" as="selectedField" iteration="iteration">
 			<f:alias map="{options: '{settings.fields.configuration.{selectedField}}'}">
-				<f:render partial="Form/{options.partial}" arguments="{user: user, fieldName: selectedField, options: options}"/>
+				<f:render partial="Form/{options.partial}" arguments="{user: user, fieldName: selectedField, options: options, iteration: iteration}"/>
 			</f:alias>
 		</f:for>
 	</f:form>
