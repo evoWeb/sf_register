@@ -382,11 +382,14 @@ function testPassword(passwd)
 	 */
 	function initialize() {
 		module.attachToElement(document, 'DOMContentLoaded', function () {
+			var barGraph = module.getElement('bargraph');
 			zone = module.getElement('sfrZone');
 			zoneEmpty = module.getElement('sfrZone_empty');
 			zoneLoading = module.getElement('sfrZone_loading');
 
-			module.getElement('bargraph').classList.add('show');
+			if (barGraph !== null) {
+				barGraph.classList.add('show');
+			}
 
 			module.attachToElement('sfrpassword', 'keyup', module.callTestPassword);
 			module.attachToElement('sfrCountry', 'change', module.changeZone);

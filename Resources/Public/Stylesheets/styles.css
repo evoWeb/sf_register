@@ -159,6 +159,10 @@
   min-height: inherit;
 }
 /* line 163, ../../Private/Sass/styles.scss */
+.tx_evoweb_sfregister .grecaptcha-badge {
+  margin-right: -10000px;
+}
+/* line 167, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn {
   display: inline-block;
   padding: 6px 12px;
@@ -180,25 +184,25 @@
   border: 1px solid transparent;
   border-radius: 4px;
 }
-/* line 184, ../../Private/Sass/styles.scss */
+/* line 188, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn:focus, .tx_evoweb_sfregister .btn.focus, .tx_evoweb_sfregister .btn:active:focus, .tx_evoweb_sfregister .btn.active:focus, .tx_evoweb_sfregister .btn:active.focus, .tx_evoweb_sfregister .btn.active.focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
-/* line 195, ../../Private/Sass/styles.scss */
+/* line 199, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn:hover, .tx_evoweb_sfregister .btn:focus, .tx_evoweb_sfregister .btn.focus {
   color: #333;
   text-decoration: none;
 }
-/* line 202, ../../Private/Sass/styles.scss */
+/* line 206, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn:active, .tx_evoweb_sfregister .btn.active {
   background-image: none;
   outline: 0;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
-/* line 211, ../../Private/Sass/styles.scss */
+/* line 215, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn.disabled,
 .tx_evoweb_sfregister .btn[disabled],
 .tx_evoweb_sfregister fieldset[disabled] .btn {
@@ -208,30 +212,30 @@
   box-shadow: none;
   opacity: .65;
 }
-/* line 221, ../../Private/Sass/styles.scss */
+/* line 225, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister a.btn.disabled,
 .tx_evoweb_sfregister fieldset[disabled] a.btn {
   pointer-events: none;
 }
-/* line 226, ../../Private/Sass/styles.scss */
+/* line 230, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary {
   color: #fff;
   background-color: #337ab7;
   border-color: #2e6da4;
 }
-/* line 231, ../../Private/Sass/styles.scss */
+/* line 235, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary:focus, .tx_evoweb_sfregister .btn-primary.focus {
   color: #fff;
   background-color: #286090;
   border-color: #122b40;
 }
-/* line 238, ../../Private/Sass/styles.scss */
+/* line 242, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary:hover {
   color: #fff;
   background-color: #286090;
   border-color: #204d74;
 }
-/* line 245, ../../Private/Sass/styles.scss */
+/* line 249, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary:active,
 .tx_evoweb_sfregister .btn-primary.active,
 .tx_evoweb_sfregister .open > .dropdown-toggle.btn-primary {
@@ -239,7 +243,7 @@
   background-color: #286090;
   border-color: #204d74;
 }
-/* line 252, ../../Private/Sass/styles.scss */
+/* line 256, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary:active:hover, .tx_evoweb_sfregister .btn-primary:active:focus, .tx_evoweb_sfregister .btn-primary:active.focus,
 .tx_evoweb_sfregister .btn-primary.active:hover,
 .tx_evoweb_sfregister .btn-primary.active:focus,
@@ -251,13 +255,13 @@
   background-color: #204d74;
   border-color: #122b40;
 }
-/* line 260, ../../Private/Sass/styles.scss */
+/* line 264, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary:active,
 .tx_evoweb_sfregister .btn-primary.active,
 .tx_evoweb_sfregister .open > .dropdown-toggle.btn-primary {
   background-image: none;
 }
-/* line 268, ../../Private/Sass/styles.scss */
+/* line 272, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary.disabled:hover, .tx_evoweb_sfregister .btn-primary.disabled:focus, .tx_evoweb_sfregister .btn-primary.disabled.focus,
 .tx_evoweb_sfregister .btn-primary[disabled]:hover,
 .tx_evoweb_sfregister .btn-primary[disabled]:focus,
@@ -268,19 +272,19 @@
   background-color: #337ab7;
   border-color: #2e6da4;
 }
-/* line 276, ../../Private/Sass/styles.scss */
+/* line 280, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .btn-primary .badge {
   color: #337ab7;
   background-color: #fff;
 }
-/* line 281, ../../Private/Sass/styles.scss */
+/* line 285, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .file-upload {
   position: relative;
   overflow: hidden;
   margin: 0 10px;
   width: 20%;
 }
-/* line 287, ../../Private/Sass/styles.scss */
+/* line 291, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .file-upload input.upload {
   position: absolute;
   top: 0;
@@ -292,27 +296,23 @@
   opacity: 0;
   filter: alpha(opacity=0);
 }
-/* line 300, ../../Private/Sass/styles.scss */
+/* line 304, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .upload .form-control {
   float: left;
   width: 61%;
 }
-/* line 305, ../../Private/Sass/styles.scss */
+/* line 309, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .form-control-static {
   min-height: 34px;
   padding-top: 7px;
   padding-bottom: 7px;
   margin-bottom: 0;
 }
-/* line 312, ../../Private/Sass/styles.scss */
+/* line 316, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .pull-right {
   float: right !important;
 }
-/* line 316, ../../Private/Sass/styles.scss */
+/* line 320, ../../Private/Sass/styles.scss */
 .tx_evoweb_sfregister .pull-left {
   float: left !important;
-}
-
-.tx_evoweb_sfregister .grecaptcha-badge {
-	margin-right: -10000px;
 }
