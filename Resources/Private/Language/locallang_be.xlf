@@ -295,6 +295,9 @@
 			<trans-unit id="fe_users.email_new" xml:space="preserve">
 				<source>Email after confirming the change:</source>
 			</trans-unit>
+			<trans-unit id="fe_users.invitationEmail" xml:space="preserve">
+				<source>Email to send invitation</source>
+			</trans-unit>
 			<trans-unit id="form_flexform.sheet_general" xml:space="preserve">
 				<source>General settings</source>
 			</trans-unit>
