@@ -59,7 +59,7 @@
 			<trans-unit id="fe_users.zip">
 				<source>Zipcode</source>
 			</trans-unit>
-			<trans-unit id="fe_users.country">
+			<trans-unit id="fe_users.staticInfoCountry">
 				<source>Country</source>
 			</trans-unit>
 			<trans-unit id="fe_users.dateOfBirth">
