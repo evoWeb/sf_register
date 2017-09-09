@@ -25,8 +25,6 @@ namespace Evoweb\SfRegister\Controller;
  ***************************************************************/
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
-use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
 /**
  * An frontend user create controller
