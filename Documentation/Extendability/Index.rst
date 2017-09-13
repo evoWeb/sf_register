@@ -16,8 +16,50 @@ Extendability
    :depth: 1
 
 
-Adding custom fields
---------------------
+.. _CreateCustomFields:
+Use your own flavor of fields
+-----------------------------
+
+Since version 8.8.0 its easier then ever to user your own fields. Just add your partial folder via typoscript and
+register your own field configuration. After that you need to tell the user ts config that the new type is available to
+be selected in the plugin too.
+
+**Fields.typoscript**::
+
+   plugin.tx_sfregister.view.partialRootPaths.50 = EXT:your_extension/Resources/Private/Partials/
+   plugin.tx_sfregister.settings.fields.configuration {
+      your_field_key {
+         partial = YourFieldKey
+         backendLabel = LLL:EXT:your_extension/Resources/Private/Language/locallang_be.xlf:your_field_key
+      }
+   }
+
+
+**ext_localconf.php**::
+
+   \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
+   '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields.typoscript">'
+   );
+
+
+**TypoScript Setup**::
+
+   <INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields.typoscript">
+
+
+By using the same fields file both in typoscript as well as in user ts config. No additional configuration is needed.
+
+In your partials there are the following informations available
+
+* {user} the user object with previous entered values
+* {fieldName} the name of the field in the user object
+* {options} every value that is inside of the field config {partial, backendLabel, etc}
+* {settings} the general plugin settings
+
+
+.. _AddCustomProperties:
+Adding custom properties
+------------------------
 
 Since late the frontend user domain model can be extended. This can be done the extension 'extender_'
 which sole purpose is to extend extbase domain models. There is an example_ on how to use the extender.
@@ -66,20 +108,32 @@ created for sql and registered in TCA.
 	t3lib_extMgm::addToAllTCAtypes('fe_users', 'extending');
 
 
-Note of compatabilty
-____________________
+.. _AddCustomCaptcha:
+Bring in your own captcha
+-------------------------
 
-There is an internal extending solution which will be deleted in early 2015. There for the example provided
-here is only for documentation and should not be used.
+By implementing a adapter which is extending the \\Evoweb\\SfRegister\\Services\\Captcha\\AbstractAdapter you are able
+to add an own captcha. The adapter now then has to be configured to be usable by adding typoscript settings like the
+following taken from recaptcha_:
 
-**ext_localconf.php**::
+**Captcha.typoscript**::
 
-	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['entities']['FrontendUser']['sfregister_extended'] =
-	'EXT:sfregister_extended/Classes/Domain/Model/FrontendUser.php';
+   plugin.tx_sfregister.settings {
+      # register recaptcha as captcha possibility
+      captcha.recaptcha = Evoweb\Recaptcha\Adapter\SfRegisterAdapter
 
+      fields {
+         configuration {
+            # change captcha field type to recaptcha
+            captcha.type = Recaptcha
+         }
+      }
 
-Since extending the model is possible now the field custom0 to custom9 will be dropped early 2015.
-Please switch to extending the domain model if you need custom fields.
+      validation.create {
+         # tell validation to use recaptcha adapter
+         captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = recaptcha)
+      }
+   }
 
 
 .. _SignalSlotDispatcher:
@@ -211,14 +265,6 @@ Evoweb\\SfRegister\\Services\\
   +----------------------------------------------------+------------------------------------------------------------+----------------------------------+
 
 
-
-
-.. _CreateCustomValidators:
-
-Bring in your own captcha
--------------------------
-
-
-
 .. _extender: https://github.com/evoWeb/extender
+.. _recaptcha: https://github.com/evoWeb/recaptcha
 .. _example: https://github.com/evoWeb/ew_sfregister_extended

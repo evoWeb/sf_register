@@ -9,10 +9,10 @@
 			<trans-unit id="gender" xml:space="preserve">
 				<source>Gender</source>
 			</trans-unit>
-			<trans-unit id="gender_male" xml:space="preserve">
+			<trans-unit id="gender_1" xml:space="preserve">
 				<source>Mr</source>
 			</trans-unit>
-			<trans-unit id="gender_female" xml:space="preserve">
+			<trans-unit id="gender_2" xml:space="preserve">
 				<source>Mrs</source>
 			</trans-unit>
 			<trans-unit id="title" xml:space="preserve">
@@ -240,6 +240,9 @@
 			<trans-unit id="info_mandatory_fields" xml:space="preserve">
 				<source>Fields marked with an asterisk (*) are mandatory</source>
 			</trans-unit>
+			<trans-unit id="invitationEmail">
+				<source>Email address of person to invite</source>
+			</trans-unit>
 			<trans-unit id="submit_create" xml:space="preserve">
 				<source>create</source>
 			</trans-unit>
@@ -424,7 +427,7 @@
 			<trans-unit id="email_admin_account_activated" xml:space="preserve">
 				<source>The account "%1$s" was activated</source>
 			</trans-unit>
-			<trans-unit id="email_admin_account_edited" xml:space="preserve">
+			<trans-unit id="email_admin_account_edited" xml:space="preserve" remove="1">
 				<source>The account "%1$s" was edited</source>
 			</trans-unit>
 			<trans-unit id="email_user_salutation" xml:space="preserve">
@@ -442,8 +445,88 @@
 			<trans-unit id="email_user_account_activated" xml:space="preserve">
 				<source>Your account "%1$s" is now active.</source>
 			</trans-unit>
-			<trans-unit id="email_user_account_edited" xml:space="preserve">
+			<trans-unit id="email_user_account_edited" xml:space="preserve" remove="1">
 				<source>You have edited your account "%1$s".</source>
+			</trans-unit>
+
+			<trans-unit id="email_admin_account_accepted">
+				<source>The user registration was accepted.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_confirmed">
+				<source>The user confirmed the registration</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_accept_link">
+				<source>accept user registration</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_decline_link">
+				<source>decline user registration</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_declined">
+				<source>The user registration was declined.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_refused">
+				<source>The user registration was refused.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_saved">
+				<source>The user registration was saved</source>
+				<target></target>
+			</trans-unit>
+
+			<trans-unit id="email_user_account_accepted">
+				<source>Your registration was accepted.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_confirm_link">
+				<source>confirm your registration</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_refuse_link">
+				<source>refuse your registration</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_confirmed">
+				<source>Your registration was confirmed.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_declined">
+				<source>Your registration was declined.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_refused">
+				<source>Your registration was refused.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_saved">
+				<source>Your registration was saved.</source>
+				<target></target>
+			</trans-unit>
+
+			<trans-unit id="email_admin_invitation_message">
+				<source>User "%1$s" send an invitation to "%2$s".</source>
+			</trans-unit>
+			<trans-unit id="email_user_invitation_message">
+				<source>Your invited email "%1$s" to register at %2$s.</source>
+			</trans-unit>
+			<trans-unit id="email_invitee_invitation_message">
+				<source>Your were invited with email %1$s to register at "%2$s".</source>
+			</trans-unit>
+			<trans-unit id="email_invitee_register_link">
+				<source>register</source>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationSendInvitation" xml:space="preserve">
+				<source>User invitation at %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationSendInvitation" xml:space="preserve">
+				<source>You invited someone to register at %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectInvitationToRegister" xml:space="preserve">
+				<source>You were invite to register at %1$s</source>
 			</trans-unit>
 		</body>
 	</file>

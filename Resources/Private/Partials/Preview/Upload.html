@@ -1,0 +1,14 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+		xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
+		data-namespace-typo3-fluid="true">
+
+<div class="form-group upload">
+	<label><f:translate id="{fieldName}" /></label>
+	<register:form.upload property="{fieldName}.0" disabled="disabled">
+		<f:if condition="{resource}">
+			<f:image image="{resource}" alt="" width="50"/>
+		</f:if>
+	</register:form.upload>
+</div>
+
+</html>

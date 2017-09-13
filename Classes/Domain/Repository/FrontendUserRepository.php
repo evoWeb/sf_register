@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Domain\Repository;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -49,7 +49,7 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
         $querySettings->setRespectStoragePage(false);
         $querySettings->setRespectSysLanguage(false);
         $querySettings->setIgnoreEnableFields(true);
-        $querySettings->setEnableFieldsToBeIgnored(array('disabled'));
+        $querySettings->setEnableFieldsToBeIgnored(['disabled']);
 
         $object = $query->matching($query->equals('uid', $identifier))
             ->execute()

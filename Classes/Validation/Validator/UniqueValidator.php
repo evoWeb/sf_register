@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -41,9 +41,13 @@ class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
     /**
      * @var array
      */
-    protected $supportedOptions = array(
-        'global' => array(true, 'Whether to check uniqueness globally', 'boolean'),
-    );
+    protected $supportedOptions = [
+        'global' => [
+            true,
+            'Whether to check uniqueness globally',
+            'boolean'
+        ],
+    ];
 
     /**
      * Frontend user repository

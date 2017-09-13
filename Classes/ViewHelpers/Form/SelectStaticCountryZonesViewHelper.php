@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,11 +25,11 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  ***************************************************************/
 
 /**
- * Viewhelper to render a selectbox with values
- * of static info tables country zones
+ * Viewhelper to render a selectbox with values of static info tables country zones
+ *
  * <code title="Usage">
- * {namespace register=Evoweb\SfRegister\ViewHelpers}
- * <register:form.SelectStaticCountryZones name="zone" parent="US"/>
+ *  {namespace register=Evoweb\SfRegister\ViewHelpers}
+ *  <register:form.selectStaticCountryZones name="zone" parent="US"/>
  * </code>
  */
 class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
@@ -74,14 +74,14 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
             'string',
             'If specified, will call the appropriate getter on each object to determine the value.',
             false,
-            'znCode'
+            'uid'
         );
         $this->registerArgument(
             'optionLabelField',
             'string',
             'If specified, will call the appropriate getter on each object to determine the label.',
             false,
-            'znNameLocal'
+            'zn_name_local'
         );
         $this->registerArgument(
             'selectAllByDefault',
@@ -112,7 +112,20 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
         if ($this->hasArgument('parent') && $this->arguments['parent'] != ''
             && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')
         ) {
-            $this->arguments['options'] = $this->countryZonesRepository->findAllByIso2($this->arguments['parent']);
+            $options = $this->countryZonesRepository->findAllByIso2($this->arguments['parent']);
+            $options = $options->fetchAll();
+
+            if ($this->hasArgument('disabled')) {
+                $value = $this->getSelectedValue();
+                $value = is_array($value) ? $value : [$value];
+
+                $options = array_filter($options, function ($option) use ($value) {
+                    /** @var \Evoweb\SfRegister\Domain\Model\StaticCountryZone $option */
+                    return in_array($option['uid'], $value);
+                });
+            }
+
+            $this->arguments['options'] = $options;
         }
     }
 }

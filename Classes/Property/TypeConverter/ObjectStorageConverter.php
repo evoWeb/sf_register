@@ -33,6 +33,11 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
 class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\ObjectStorageConverter
 {
     /**
+     * @var string[]
+     */
+    protected $sourceTypes = ['array'];
+
+    /**
      * Take precedence over the available ObjectStorageConverter
      *
      * @var integer
@@ -49,7 +54,7 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
      */
     public function getSourceChildPropertiesToBeConverted($source)
     {
-        $propertiesToConvert = array();
+        $propertiesToConvert = [];
 
         // TODO: Find a nicer way to throw away empty uploads
         foreach ($source as $propertyName => $propertyValue) {
@@ -71,6 +76,7 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
      * Check if this is an upload type
      *
      * @param mixed $propertyValue
+     *
      * @return bool
      */
     protected function isUploadType($propertyValue)

@@ -17,6 +17,40 @@ Templating
    :glob:
 
 
+Template for dynamic fields:
+----------------------------
+
+Since version 8.8.0 the forms are rendered by partials. Create and Edit form fields are defined in typoscript or
+selected in the plugin and then rendered by a loop which calls the configured partial per field.
+
+This was made to be able to only change one field alone through modifying the partial.
+
+Additionaly its now possible to select the fields needed in the content instead the need to add typoscript for the one
+page where the registration should be different.
+
+As its not always needed to define your field selection there are some defaults configured out of the box.
+
+**Fields/setup.typoscript**::
+
+   plugin.tx_sfregister.settings.fields {
+      createDefaultSelected { }
+      editDefaultSelected { }
+   }
+
+
+Word of advise to those that upgrade an existing installation. To make use of this feature in your old templates you
+need to replace all <div> tags between the form tags with the loop.
+
+**Form.html**::
+
+		<f:for each="{settings.fields.selected}" as="selectedField">
+			<f:alias map="{options: '{settings.fields.configuration.{selectedField}}'}">
+				<f:render partial="Form/{options.partial}"
+					arguments="{user: user, fieldName: selectedField, options: options, settings: settings}"/>
+			</f:alias>
+		</f:for>
+
+
 Customize the output:
 ---------------------
 
@@ -76,8 +110,8 @@ Single select with radio buttons
 
 ::
 
-   <f:form.radio property="gender" value="1"/> <f:translate key="gender_male"/>
-   <f:form.radio property="gender" value="2"/> <f:translate key="gender_female"/>
+   <f:form.radio property="gender" value="1"/> <f:translate key="gender_1"/>
+   <f:form.radio property="gender" value="2"/> <f:translate key="gender_2"/>
 
 |img-6|
 
@@ -88,14 +122,14 @@ Single select as select box
 ::
 
    <f:form.select property="gender" options="{
-   	1: '{f:translate(key: \'gender_male\')}',
-   	2: '{f:translate(key: \'gender_female\')}'
+   	1: '{f:translate(key: \'gender_1\')}',
+   	2: '{f:translate(key: \'gender_2\')}'
    }"/>
 
 |img-7|
 
 
-automatic marking of requried fields
+Automatic marking of requried fields
 """"""""""""""""""""""""""""""""""""
 
 ::

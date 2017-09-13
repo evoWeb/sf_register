@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,15 +26,14 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 /**
  * Viewhelper to render a selectbox with values of static info tables countries
+ *
  * <code title="Usage">
- * {namespace register=Evoweb\SfRegister\ViewHelpers}
- * <register:form.SelectStaticCountries
- *    name="country" optionLabelField="cnShortDe"/>
+ *  {namespace register=Evoweb\SfRegister\ViewHelpers}
+ *  <register:form.selectStaticCountries name="country" optionLabelField="cnShortDe"/>
  * </code>
  * <code title="Optional label field">
- * {namespace register=Evoweb\SfRegister\ViewHelpers}
- * <register:form.SelectStaticCountries
- *    name="country" optionLabelField="cnShortDe"/>
+ *  {namespace register=Evoweb\SfRegister\ViewHelpers}
+ *  <register:form.selectStaticCountries name="country" optionLabelField="cnShortDe"/>
  * </code>
  */
 class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
@@ -122,12 +121,23 @@ class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\
 
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
             if ($this->hasArgument('allowedCountries') && count($this->arguments['allowedCountries'])) {
-                $this->arguments['options'] = $this->countryRepository->findByCnIso2(
-                    $this->arguments['allowedCountries']
-                );
+                $options = $this->countryRepository->findByCnIso2($this->arguments['allowedCountries']);
             } else {
-                $this->arguments['options'] = $this->countryRepository->findAll();
+                $options = $this->countryRepository->findAll();
             }
+            $options = $options->toArray();
+
+            if ($this->hasArgument('disabled')) {
+                $value = $this->getSelectedValue();
+                $value = is_array($value) ? $value : [$value];
+
+                $options = array_filter($options, function ($option) use ($value) {
+                    /** @var \Evoweb\SfRegister\Domain\Model\StaticCountry $option */
+                    return in_array($option->getCnIso2(), $value);
+                });
+            }
+
+            $this->arguments['options'] = $options;
         }
     }
 }

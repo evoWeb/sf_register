@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Services\Captcha;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -76,7 +76,7 @@ class JmRecaptchaAdapter extends AbstractAdapter
             $output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                 'error_captcha.notinstalled',
                 'SfRegister',
-                array('jm_recaptcha')
+                ['jm_recaptcha']
             );
         }
 

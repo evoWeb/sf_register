@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Domain\Repository;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -32,25 +32,69 @@ namespace Evoweb\SfRegister\Domain\Repository;
 class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
     /**
+     * @var array
+     */
+    protected $defaultOrderings = [
+        'zn_name_local' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+    ];
+
+    /**
+     * Find all countries disrespecting the storage page
+     *
+     * @param int $parent
+     *
+     * @return \Doctrine\DBAL\Driver\Statement
+     */
+    public function findAllByParentUid($parent)
+    {
+        $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
+        $queryBuilder->select('static_country_zones.*')
+            ->from('static_country_zones', 'static_country_zones')
+            ->where($queryBuilder->expr()->eq(
+                'static_countries.uid',
+                $queryBuilder->createNamedParameter($parent, \PDO::PARAM_INT)
+            ))
+            ->innerJoin(
+                'static_country_zones',
+                'static_countries',
+                'static_countries',
+                'static_country_zones.zn_country_iso_2 = static_countries.cn_iso_2'
+            )
+            ->orderBy('static_country_zones.zn_name_local');
+
+        return $queryBuilder->execute();
+    }
+
+    /**
      * Find all countries disrespecting the storage page
      *
      * @param string $iso2
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|object
+     * @return \Doctrine\DBAL\Driver\Statement
      */
     public function findAllByIso2($iso2)
     {
-        /**
-         * Query
-         *
-         * @var \TYPO3\CMS\Extbase\Persistence\Generic\Query $query
-         */
-        $query = $this->createQuery();
-        $query->getQuerySettings()
-            ->setRespectStoragePage(false);
+        $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
+        $queryBuilder->select('*')
+            ->from('static_country_zones')
+            ->where($queryBuilder->expr()->eq(
+                'zn_country_iso_2',
+                $queryBuilder->createNamedParameter($iso2, \PDO::PARAM_STR)
+            ))
+            ->orderBy('zn_name_local');
 
-        $query->matching($query->equals('zn_country_iso_2', $iso2));
+        return $queryBuilder->execute();
+    }
 
-        return $query->execute();
+    /**
+     * @param string $table
+     *
+     * @return \TYPO3\CMS\Core\Database\Query\QueryBuilder
+     */
+    protected function getQueryBuilderForTable($table): \TYPO3\CMS\Core\Database\Query\QueryBuilder
+    {
+        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Database\ConnectionPool::class
+        )->getQueryBuilderForTable($table);
     }
 }

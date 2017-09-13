@@ -1,0 +1,151 @@
+page.includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/styles{$plugin.tx_sfregister.minified}.css
+page.includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register{$plugin.tx_sfregister.minified}.js
+
+plugin.tx_sfregister.settings {
+  dateFormat = d-m-Y
+
+  createPid = {$plugin.tx_sfregister.settings.createPid}
+  editPid = {$plugin.tx_sfregister.settings.editPid}
+  passwordPid = {$plugin.tx_sfregister.settings.passwordPid}
+  invitePid = {$plugin.tx_sfregister.settings.invitePid}
+
+  # comma separated list of words used in bad word validatorchro
+  badWordList = {$plugin.tx_sfregister.settings.badWordList}
+
+  validation.create {
+    username {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 4, maximum = 80)
+      3 = Evoweb\SfRegister\Validation\Validator\UniqueValidator
+      4 = Evoweb\SfRegister\Validation\Validator\UniqueValidator(global = 1)
+    }
+    password {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 8, maximum = 40)
+      3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
+    }
+    passwordRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
+    firstName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+    lastName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+    email {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = EmailAddress
+    }
+    emailRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
+    gtc {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
+    }
+    image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
+    captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = jmrecaptcha)
+  }
+
+  validation.edit {
+    firstName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+    lastName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+    email = EmailAddress
+    gtc = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
+    image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
+  }
+
+  validation.password {
+    password {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 2, maximum = 40)
+      3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
+    }
+    passwordRepeat {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 2, maximum = 40)
+      3 = Evoweb\SfRegister\Validation\Validator\RepeatValidator
+    }
+    oldPassword {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 2, maximum = 40)
+      3 = Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator
+    }
+  }
+
+  validation.invite {
+    username {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = StringLength(minimum = 4, maximum = 80)
+    }
+    invitationEmail {
+      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+      2 = EmailAddress
+    }
+    captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = jmrecaptcha)
+  }
+
+  # integer usergroup set if no activation is needed
+  usergroup = {$plugin.tx_sfregister.settings.usergroup}
+
+  # integer usergroups set if confirmation is needed
+  usergroupPostSave = {$plugin.tx_sfregister.settings.usergroupPostSave}
+  usergroupPostConfirm = {$plugin.tx_sfregister.settings.usergroupPostConfirm}
+  usergroupPostAccept = {$plugin.tx_sfregister.settings.usergroupPostAccept}
+
+  # string name of the site used in subject
+  sitename = {$plugin.tx_sfregister.settings.emailSitename}
+
+  imageFolder = 1:frontendusers
+
+  captcha {
+    # Needs EXT:jm_recaptcha to be installed
+    jmrecaptcha = Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter
+    # Needs EXT:sr_freecap to be installed
+    srfreecap = Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter
+  }
+
+  processInitializeActionSignal = 0
+}
+
+plugin.tx_sfregister.features {
+  rewrittenPropertyMapper = 1
+}
+
+plugin.tx_sfregister._LOCAL_LANG.default {
+  title_none = Please select
+  title_dr = Dr.
+  title_prof = Prof.
+  title_profdr = Prof. Dr.
+}
+
+config.tx_extbase {
+  objects {
+    Evoweb\SfRegister\Interfaces\FrontendUserInterface {
+      className = Evoweb\SfRegister\Domain\Model\FrontendUser
+    }
+  }
+  persistence.classes {
+    Evoweb\SfRegister\Domain\Model\FrontendUser {
+      mapping {
+        tableName = fe_users
+      }
+    }
+    Evoweb\SfRegister\Domain\Model\FrontendUserGroup {
+      mapping {
+        tableName = fe_groups
+        columns {
+          felogin_redirectPid.mapOnProperty = feloginRedirectPid
+        }
+      }
+    }
+    Evoweb\SfRegister\Domain\Model\StaticCountry {
+      mapping {
+        tableName = static_countries
+      }
+    }
+    Evoweb\SfRegister\Domain\Model\StaticCountryZone {
+      mapping {
+        tableName = static_country_zones
+      }
+    }
+    Evoweb\SfRegister\Domain\Model\StaticLanguage {
+      mapping {
+        tableName = static_languages
+      }
+    }
+  }
+}

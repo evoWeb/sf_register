@@ -1,0 +1,267 @@
+plugin.tx_sfregister.settings.fields {
+  # default selected fields for create controller
+  createDefaultSelected {
+    10 = username
+    20 = pseudonym
+    30 = password
+    40 = passwordRepeat
+    50 = email
+    60 = emailRepeat
+    70 = clear
+
+    80 = gender
+    90 = title
+    100 = clear
+
+    110 = firstName
+    120 = lastName
+    130 = company
+    140 = clear
+
+    150 = telephone
+    160 = mobilephone
+    170 = fax
+    190 = clear
+
+    200 = address
+    210 = zip
+    220 = city
+    230 = staticInfoCountry
+    240 = zone
+    250 = language
+    260 = clear
+
+    270 = timezone
+    280 = daylight
+    290 = clear
+
+    300 = image
+    310 = clear
+
+    320 = dateOfBirth
+    330 = clear
+
+    340 = gtc
+    350 = privacy
+    360 = clear
+
+    370 = captcha
+    380 = clear
+
+    390 = change
+    400 = submit
+  }
+
+  # default selected fields for edit controller
+  editDefaultSelected {
+    90 = title
+    100 = clear
+
+    110 = firstName
+    120 = lastName
+    130 = company
+    140 = clear
+
+    145 = email
+    150 = telephone
+    160 = mobilephone
+    170 = fax
+    190 = clear
+
+    200 = address
+    210 = zip
+    220 = city
+    230 = staticInfoCountry
+    240 = zone
+    250 = language
+    260 = clear
+
+    #300 = image
+    #310 = clear
+
+    390 = update
+  }
+
+  inviteDefaultSelected {
+    10 = username
+    70 = clear
+
+    320 = invitationEmail
+    330 = clear
+
+    340 = gtc
+    360 = clear
+
+    370 = captcha
+    380 = clear
+
+    390 = change
+    400 = submit
+  }
+
+  configuration {
+    username {
+      partial = Textfield
+      backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.username_selectField
+    }
+
+    pseudonym.partial = Textfield
+
+    password {
+      partial = Password
+      progress = show
+    }
+
+    passwordRepeat.partial = Password
+
+    email {
+      partial = Email
+      placeholder = email@domain.test
+    }
+
+    emailRepeat {
+      partial = Email
+      placeholder = email@domain.test
+    }
+
+    gender {
+      partial = Select
+      backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.gender_selectField
+      values {
+        1 = gender_1
+        2 = gender_2
+      }
+    }
+
+    title {
+      partial = Select
+      values {
+        none = title_none
+        dr = title_dr
+        prof = title_prof
+        profdr = title_profdr
+      }
+    }
+
+    firstName.partial = Textfield
+
+    lastName.partial = Textfield
+
+    company.partial = Textfield
+
+    telephone.partial = Textfield
+
+    mobilephone {
+      partial = Textfield
+      backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.mobilephone_selectField
+    }
+
+    fax.partial = Textfield
+
+    address.partial = Textfield
+
+    zip.partial = Textfield
+
+    city.partial = Textfield
+
+    staticInfoCountry {
+      partial = CountrySelect
+      defaultValue = DE
+      allowedCountries {
+        0 = DE
+        1 = AT
+      }
+    }
+
+    zone {
+      partial = CountryZoneSelect
+      defaultValue = DE
+    }
+
+    language {
+      partial = Language
+      defaultValue = DE
+      allowedLanguages {
+        0 = de_DE
+        1 = fr_FR
+      }
+    }
+
+    timezone {
+      partial = Select
+      values {
+        -12 = timezone_I_-12
+        -11 = timezone_I_-11
+        -10 = timezone_I_-10
+        -95 = timezone_I_-9_5
+        -9 = timezone_I_-9
+        -8 = timezone_I_-8
+        -7 = timezone_I_-7
+        -6 = timezone_I_-6
+        -5 = timezone_I_-5
+        -45 = timezone_I_-4_5
+        -4 = timezone_I_-4
+        -35 = timezone_I_-3_5
+        -3 = timezone_I_-3
+        -2 = timezone_I_-2
+        -1 = timezone_I_-1
+        0 = timezone_I_0
+        1 = timezone_I_1
+        2 = timezone_I_2
+        3 = timezone_I_3
+        35 = timezone_I_3_5
+        4 = timezone_I_4
+        45 = timezone_I_4_5
+        5 = timezone_I_5
+        55 = timezone_I_5_5
+        575 = timezone_I_5_75
+        6 = timezone_I_6
+        65 = timezone_I_6_5
+        7 = timezone_I_7
+        8 = timezone_I_8
+        9 = timezone_I_9
+        95 = timezone_I_9_5
+        10 = timezone_I_10
+        11 = timezone_I_11
+        115 = timezone_I_11_5
+        12 = timezone_I_12
+        1275 = timezone_I_12_75
+        13 = timezone_I_13
+        14 = timezone_I_14
+      }
+    }
+
+    daylight.partial = Checkbox
+
+    image.partial = Upload
+
+    dateOfBirth.partial = DateSelect
+
+    gtc {
+      partial = Checkbox
+      backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.gtc_selectField
+    }
+
+    privacy.partial = Checkbox
+
+    captcha {
+      partial = Captcha
+      type = Recaptcha
+    }
+
+    invitationEmail {
+      partial = Email
+      placeholder = email@domain.test
+    }
+
+    clear.partial = Clear
+
+    change.partial = Change
+
+    submit.partial = Submit
+
+    submit_captcha.partial = SubmitWithInvisibleCaptcha
+
+    update.partial = Update
+  }
+}

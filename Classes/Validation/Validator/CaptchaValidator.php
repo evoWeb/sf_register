@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -49,9 +49,13 @@ class CaptchaValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
     /**
      * @var array
      */
-    protected $supportedOptions = array(
-        'type' => array('srfreecap', 'Captcha adapter to be used', 'string'),
-    );
+    protected $supportedOptions = [
+        'type' => [
+            'srfreecap',
+            'Captcha adapter to be used',
+            'string'
+        ],
+    ];
 
     /**
      * If the given captcha is valid

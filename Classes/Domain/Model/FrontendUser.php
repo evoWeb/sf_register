@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Domain\Model;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -176,7 +176,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var integer
      */
-    protected $status;
+    protected $status = 0;
 
     /**
      * wether the user register by invitation
@@ -190,7 +190,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var string
      */
-    protected $comments;
+    protected $comments = '';
 
     /**
      * if Dmail should be enabled
@@ -219,6 +219,13 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * @var string
      */
     protected $emailNew;
+
+    /**
+     * email address of invitee
+     *
+     * @var string
+     */
+    protected $invitationEmail;
 
 
     /**
@@ -867,5 +874,27 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     public function getEmailNew()
     {
         return $this->emailNew;
+    }
+
+    /**
+     * Getter for invitationEmail
+     *
+     * @return string
+     */
+    public function getInvitationEmail()
+    {
+        return $this->invitationEmail;
+    }
+
+    /**
+     * Setter for invitationEmail
+     *
+     * @param string $invitationEmail
+     *
+     * @return void
+     */
+    public function setInvitationEmail($invitationEmail)
+    {
+        $this->invitationEmail = $invitationEmail;
     }
 }

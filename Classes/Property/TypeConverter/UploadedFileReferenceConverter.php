@@ -31,6 +31,7 @@ use TYPO3\CMS\Core\Resource\FileReference as FalFileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Error\Error;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
@@ -65,7 +66,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     /**
      * @var array<string>
      */
-    protected $sourceTypes = array('array');
+    protected $sourceTypes = ['array'];
 
     /**
      * @var string
@@ -81,43 +82,64 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
     /**
      * @var \TYPO3\CMS\Core\Resource\ResourceFactory
-     * @inject
      */
     protected $resourceFactory;
 
     /**
      * @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService
-     * @inject
      */
     protected $hashService;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
-     * @inject
+     * @var PersistenceManager
      */
     protected $persistenceManager;
 
     /**
      * @var \TYPO3\CMS\Core\Resource\FileInterface[]
      */
-    protected $convertedResources = array();
+    protected $convertedResources = [];
+
+    /**
+     * @param \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory
+     */
+    public function injectResourceFactory(\TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory)
+    {
+        $this->resourceFactory = $resourceFactory;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService
+     */
+    public function injectHashService(\TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService)
+    {
+        $this->hashService = $hashService;
+    }
+
+    /**
+     * @param PersistenceManager $persistenceManager
+     */
+    public function injectPersistenceManager(PersistenceManager $persistenceManager)
+    {
+        $this->persistenceManager = $persistenceManager;
+    }
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
      * built $convertedChildProperties and $configuration.
      *
-     * @param string|integer $source
+     * @param array $source
      * @param string $targetType
      * @param array $convertedChildProperties
      * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
      * @throws \TYPO3\CMS\Extbase\Property\Exception
-     * @return \TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder
+     * @return \TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder|Error
      * @api
      */
     public function convertFrom(
         $source,
         $targetType,
-        array $convertedChildProperties = array(),
+        array $convertedChildProperties = [],
         PropertyMappingConfigurationInterface $configuration = null
     ) {
         if (!isset($source['error']) || $source['error'] === \UPLOAD_ERR_NO_FILE) {
@@ -237,7 +259,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             self::CONFIGURATION_UPLOAD_FOLDER
         ) ?: $this->defaultUploadFolder;
 
-        if (class_exists('TYPO3\\CMS\\Core\\Resource\\DuplicationBehavior')) {
+        if (class_exists(\TYPO3\CMS\Core\Resource\DuplicationBehavior::class)) {
             $defaultConflictMode = \TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME;
         } else {
             // @deprecated since 7.6 will be removed once 6.2 support is removed
@@ -269,12 +291,12 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     protected function createFileReferenceFromFalFileObject(FalFile $file, $resourcePointer = null)
     {
         $fileReference = $this->resourceFactory->createFileReferenceObject(
-            array(
+            [
                 'uid_local' => $file->getUid(),
                 'uid_foreign' => uniqid('NEW_'),
                 'uid' => uniqid('NEW_'),
                 'crop' => null,
-            )
+            ]
         );
 
         return $this->createFileReferenceFromFalFileReferenceObject($fileReference, $resourcePointer);
@@ -290,7 +312,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         $resourcePointer = null
     ) {
         if ($resourcePointer === null) {
-            /** @var $fileReference \TYPO3\CMS\Extbase\Domain\Model\FileReference */
+            /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileReference */
             $fileReference = $this->objectManager->get(\TYPO3\CMS\Extbase\Domain\Model\FileReference::class);
         } else {
             $fileReference = $this->persistenceManager->getObjectByIdentifier(

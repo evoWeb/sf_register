@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -74,7 +74,9 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
     ) {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            'SfRegister',
+            'Form'
         );
     }
 
@@ -89,7 +91,7 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
     {
         $result = true;
 
-        if (!\Evoweb\SfRegister\Services\Login::isLoggedIn()) {
+        if (!$this->userIsLoggedIn()) {
             $this->addError(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     'error_changepassword_notloggedin',
@@ -145,5 +147,24 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
         }
 
         return $result;
+    }
+
+    /**
+     * Checks if an user is logged in
+     *
+     * @return bool
+     */
+    protected function userIsLoggedIn()
+    {
+        /** @noinspection PhpInternalEntityUsedInspection */
+        return is_array($this->getTypoScriptFrontendController()->fe_user->user);
+    }
+
+    /**
+     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     */
+    protected static function getTypoScriptFrontendController()
+    {
+        return $GLOBALS['TSFE'];
     }
 }

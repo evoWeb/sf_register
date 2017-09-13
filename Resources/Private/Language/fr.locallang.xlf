@@ -11,11 +11,11 @@
 				<source>Gender</source>
 				<target>Genre</target>
 			</trans-unit>
-			<trans-unit id="gender_male" xml:space="preserve" approved="yes">
+			<trans-unit id="gender_1" xml:space="preserve" approved="yes">
 				<source>Mr</source>
 				<target>Monsieur</target>
 			</trans-unit>
-			<trans-unit id="gender_female" xml:space="preserve" approved="yes">
+			<trans-unit id="gender_2" xml:space="preserve" approved="yes">
 				<source>Mrs</source>
 				<target>Madame</target>
 			</trans-unit>
@@ -397,7 +397,7 @@
 			</trans-unit>
 			<trans-unit id="error_passwordagain_notequal" xml:space="preserve" approved="yes">
 				<source>Password fields are not equal</source>
-				<target>Les mots de passe ne sont pas égaux/target>
+				<target>Les mots de passe ne sont pas égaux</target>
 			</trans-unit>
 			<trans-unit id="error_notunique_local" xml:space="preserve" approved="yes">
 				<source>The %1$s is not unique</source>
@@ -565,6 +565,64 @@
 			<trans-unit id="email_user_account_edited" xml:space="preserve" approved="yes">
 				<source>you have edited your account %1$s</source>
 				<target>vous avez édité votre compte %1$s</target>
+			</trans-unit>
+
+			<trans-unit id="email_admin_account_accepted">
+				<source>The user registration was accepted.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_confirmed">
+				<source>The user confirmed the registration</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_accept_link">
+				<source>accept user registration</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_decline_link">
+				<source>decline user registration</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_declined">
+				<source>The user registration was declined.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_refused">
+				<source>The user registration was refused.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_saved">
+				<source>The user registration was saved</source>
+				<target></target>
+			</trans-unit>
+
+			<trans-unit id="email_user_account_accepted">
+				<source>Your registration was accepted.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_confirm_link">
+				<source>confirm your registration</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_refuse_link">
+				<source>refuse your registration</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_confirmed">
+				<source>Your registration was confirmed.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_declined">
+				<source>Your registration was declined.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_refused">
+				<source>Your registration was refused.</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="email_user_account_saved">
+				<source>Your registration was saved.</source>
+				<target></target>
 			</trans-unit>
 		</body>
 	</file>

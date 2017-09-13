@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Controller;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,6 +24,8 @@ namespace Evoweb\SfRegister\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Evoweb\SfRegister\Domain\Model\Password;
+
 /**
  * An frontend user password controller
  */
@@ -39,28 +41,35 @@ class FeuserPasswordController extends FeuserController
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
-            array(
+            [
                 'settings' => $this->settings,
-            )
+            ]
         );
     }
 
     /**
      * Save action
      *
-     * @param \Evoweb\SfRegister\Domain\Model\Password $password
+     * @param Password $password
+     *
      * @return void
      * @validate $password Evoweb.SfRegister:User
      */
-    public function saveAction(\Evoweb\SfRegister\Domain\Model\Password $password)
+    public function saveAction(Password $password)
     {
-        if (\Evoweb\SfRegister\Services\Login::isLoggedIn()) {
-            $user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
+        if ($this->userIsLoggedIn()) {
+            /** @noinspection PhpInternalEntityUsedInspection */
+            $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
+            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+            $user = $this->userRepository->findByUid($userId);
 
             $this->signalSlotDispatcher->dispatch(
                 __CLASS__,
                 __FUNCTION__,
-                array('user' => &$user, 'settings' => $this->settings)
+                [
+                    'user' => &$user,
+                    'settings' => $this->settings
+                ]
             );
 
             $user->setPassword($this->encryptPassword($password->getPassword(), $this->settings));

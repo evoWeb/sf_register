@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Interfaces;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -57,4 +57,11 @@ interface FrontendUserInterface
      * @return string
      */
     public function getEmail();
+
+    /**
+     * Getter for invitationEmail
+     *
+     * @return string
+     */
+    public function getInvitationEmail();
 }

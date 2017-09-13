@@ -1,46 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
 <head>
 	<title>Password form template of registration</title>
 </head>
 <body>
+
 <f:layout name="Default" />
+
 <f:section name="Main">
-<f:form action="save" name="password">
-	<f:render partial="FormErrors" section="Main" arguments="{for: 'password'}" />
+	<f:form action="save" name="password">
+		<f:render partial="FormErrors" arguments="{for: 'password'}" />
 
-	<div class="form-group">
-		<label for="oldPassword"><f:translate key="oldPassword" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'oldPassword'}" />
-		<f:render partial="FieldError" section="Main" arguments="{field: 'password.oldPassword'}" /><br/>
-		<f:form.textfield property="oldPassword" id="oldPassword" class="form-control" />
-	</div>
+		<f:render partial="Form/Textfield" arguments="{user: password, fieldName: 'oldPassword'}"/>
 
-	<div class="clear"></div>
+		<f:render partial="Form/Clear"/>
 
-	<div class="form-group">
-		<label for="sfrPassword"><f:translate key="newPassword1" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'newPassword1'}" />
-		<f:render partial="FieldError" section="Main" arguments="{field: 'password.password'}" /><br/>
-		<f:form.password property="password" value="" id="sfrPassword" class="form-control" />
-		<iframe frameborder="none" src="/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg" id="bargraph"></iframe>
-	</div>
+		<f:render partial="Form/Password" arguments="{user: password, fieldName: 'password', options: {progress: 'show'}}"/>
 
-	<div class="form-group">
-		<label for="newPassword2"><f:translate key="newPassword2" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'newPassword2'}" />
-		<f:render partial="FieldError" section="Main" arguments="{field: 'password.newPassword2'}" /><br/>
-		<f:form.password property="passwordRepeat" value="" id="newPassword2" />
-	</div>
+		<f:render partial="Form/Password" arguments="{user: password, fieldName: 'passwordRepeat'}"/>
 
-	<div class="clear"></div>
+		<f:render partial="Form/Clear"/>
 
-	<div class="form-group">
-		<f:form.submit value="{f:translate(key:'submit_update')}" class="btn btn-primary" />
-	</div>
+		<f:render partial="Form/Update"/>
 
-</f:form>
+	</f:form>
 </f:section>
+
 </body>
 </html>

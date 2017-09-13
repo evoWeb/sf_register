@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -117,13 +117,16 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
         /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager configurationManager */
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'SfRegister', 'Form'
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            'SfRegister',
+            'Form'
         );
 
         $this->frameworkConfiguration = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK, 'SfRegister', 'Form'
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
+            'SfRegister',
+            'Form'
         );
-
     }
 
     /**
@@ -144,6 +147,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
             return $messages;
         }
         if (!$this->canValidate($object)) {
+            /** @noinspection PhpMethodParametersCountMismatchInspection */
             /** @var \TYPO3\CMS\Extbase\Error\Error $error */
             $error = $this->objectManager->get(
                 \TYPO3\CMS\Extbase\Error\Error::class,
@@ -168,6 +172,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
         $propertyValidators = $this->getValidationRulesFromSettings();
         foreach ($propertyValidators as $propertyName => $validatorsNames) {
             if (!property_exists($object, $propertyName)) {
+                /** @noinspection PhpMethodParametersCountMismatchInspection */
                 /** @var \TYPO3\CMS\Extbase\Error\Error $error */
                 $error = $this->objectManager->get(
                     \TYPO3\CMS\Extbase\Error\Error::class,
@@ -243,13 +248,13 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
             if ($mode == 'create') {
                 // uid needs to be emtpy if FrontendUser should be valid on creation
                 $rules = array_merge(
-                    array('uid' => \Evoweb\SfRegister\Validation\Validator\EmptyValidator::class),
+                    ['uid' => \Evoweb\SfRegister\Validation\Validator\EmptyValidator::class],
                     $rules
                 );
             } elseif ($mode == 'edit') {
                 // add validation that the user to be edited is logged in
                 $rules = array_merge(
-                    array('uid' => \Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator::class),
+                    ['uid' => \Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator::class],
                     $rules
                 );
             }
@@ -270,7 +275,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
         $currentValidator = $this->parseRule($rule);
         $this->currentValidatorOptions = (array) $currentValidator['validatorOptions'];
 
-        /** @var $validator \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator */
+        /** @var \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator $validator */
         $validator = $this->validatorResolver->createValidator(
             $currentValidator['validatorName'],
             $this->currentValidatorOptions

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
 <head>
 	<title>User notification mail post refuse template of registration</title>
 </head>
 <body>
-<f:layout name="Email" />
-<f:section name="Main">
-<f:translate key="email_user_salutation" htmlEscape="false"/>,
 
-<f:translate key="email_user_account_available" arguments="{0: user.username}" htmlEscape="false"/>
+<f:layout name="Email" />
+
+<f:section name="Main">
+	<f:format.raw><f:translate key="email_user_salutation"/></f:format.raw>,
+
+	<f:format.raw><f:translate key="email_user_account_refused" arguments="{0: user.username}"/></f:format.raw>
 </f:section>
+
 </body>
 </html>

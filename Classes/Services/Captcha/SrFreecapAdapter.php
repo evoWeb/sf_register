@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Services\Captcha;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -79,12 +79,12 @@ class SrFreecapAdapter extends AbstractAdapter
      *
      * @var array
      */
-    protected $keys = array(
+    protected $keys = [
         'image',
         'notice',
         'cantRead',
         'accessible',
-    );
+    ];
 
     /**
      * Constuctor
@@ -117,7 +117,7 @@ class SrFreecapAdapter extends AbstractAdapter
             $output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                 'error_captcha_notinstalled',
                 'SfRegister',
-                array('sr_freecap')
+                ['sr_freecap']
             );
         }
 

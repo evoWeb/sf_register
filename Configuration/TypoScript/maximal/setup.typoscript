@@ -1,0 +1,96 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Common/setup.typoscript">
+
+
+plugin.tx_sfregister.settings {
+  # boolean defines in edit mode if the fields get filled with data of logged in user
+  useDataOfLoggedinFeuser = {$plugin.tx_sfregister.settings.useDataOfLoggedinFeuser}
+
+  # uid of the page to redirect to after saving
+  redirectPostRegistrationPageId = {$plugin.tx_sfregister.settings.redirectPostRegistrationPageId}
+  # uid of the page to redirect to after confirmation
+  redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId}
+
+  # wether the email address entered should be used as username
+  useEmailAddressAsUsername = {$plugin.tx_sfregister.settings.useEmailAddressAsUsername}
+
+  # string [md5|sha1]
+  encryptPassword = {$plugin.tx_sfregister.settings.encryptPassword}
+
+  # boolean use encrypted filename to deny direct access on uploaded files
+  useEncryptedFilename = {$plugin.tx_sfregister.settings.useEncryptedFilename}
+
+  # boolean if user or admin need to activate or notified
+  notifyAdminPostCreateSave = {$plugin.tx_sfregister.settings.notifyAdminPostCreateSave}
+  notifyUserPostCreateSave = {$plugin.tx_sfregister.settings.notifyUserPostCreateSave}
+
+  notifyAdminPostCreateConfirm = {$plugin.tx_sfregister.settings.notifyAdminPostCreateConfirm}
+  notifyUserPostCreateConfirm = {$plugin.tx_sfregister.settings.notifyUserPostCreateConfirm}
+
+  notifyAdminPostCreateRefuse = {$plugin.tx_sfregister.settings.notifyAdminPostCreateRefuse}
+  notifyUserPostCreateRefuse = {$plugin.tx_sfregister.settings.notifyUserPostCreateRefuse}
+
+  notifyAdminPostCreateAccept = {$plugin.tx_sfregister.settings.notifyAdminPostCreateAccept}
+  notifyUserPostCreateAccept = {$plugin.tx_sfregister.settings.notifyUserPostCreateAccept}
+
+  notifyAdminPostCreateDecline = {$plugin.tx_sfregister.settings.notifyAdminPostCreateDecline}
+  notifyUserPostCreateDecline = {$plugin.tx_sfregister.settings.notifyUserPostCreateDecline}
+
+  confirmEmailPostCreate = {$plugin.tx_sfregister.settings.confirmEmailPostCreate}
+  acceptEmailPostCreate = {$plugin.tx_sfregister.settings.acceptEmailPostCreate}
+
+  confirmEmailPostAccept = {$plugin.tx_sfregister.settings.confirmEmailPostAccept}
+  acceptEmailPostConfirm = {$plugin.tx_sfregister.settings.acceptEmailPostConfirm}
+
+  notifyAdminPostEditSave = {$plugin.tx_sfregister.settings.notifyAdminPostEditSave}
+  notifyUserPostEditSave = {$plugin.tx_sfregister.settings.notifyUserPostEditSave}
+
+  notifyAdminPostEditConfirm = {$plugin.tx_sfregister.settings.notifyAdminPostEditConfirm}
+  notifyUserPostEditConfirm = {$plugin.tx_sfregister.settings.notifyUserPostEditConfirm}
+
+  notifyAdminPostEditAccept = {$plugin.tx_sfregister.settings.notifyAdminPostEditAccept}
+  notifyUserPostEditAccept = {$plugin.tx_sfregister.settings.notifyUserPostEditAccept}
+
+  notifyAdminSendInvitation = {$plugin.tx_sfregister.settings.notifyAdminSendInvitation}
+  notifyUserSendInvitation = {$plugin.tx_sfregister.settings.notifyUserSendInvitation}
+
+  confirmEmailPostEdit = {$plugin.tx_sfregister.settings.confirmEmailPostEdit}
+  acceptEmailPostEdit = {$plugin.tx_sfregister.settings.acceptEmailPostEdit}
+
+  # boolean if user should get logged in after registration
+  autologinPostRegistration = {$plugin.tx_sfregister.settings.autologinPostRegistration}
+  # boolean if user should get logged in after activation
+  autologinPostConfirmation = {$plugin.tx_sfregister.settings.autologinPostConfirmation}
+
+
+  userEmail {
+    fromName = {$plugin.tx_sfregister.settings.userEmail.fromName}
+    fromEmail = {$plugin.tx_sfregister.settings.userEmail.fromEmail}
+
+    replyName = {$plugin.tx_sfregister.settings.userEmail.replyName}
+    replyEmail = {$plugin.tx_sfregister.settings.userEmail.replyEmail}
+  }
+
+  adminEmail {
+    toName = {$plugin.tx_sfregister.settings.adminEmail.toName}
+    toEmail = {$plugin.tx_sfregister.settings.adminEmail.toEmail}
+
+    fromName = {$plugin.tx_sfregister.settings.adminEmail.fromName}
+    fromEmail = {$plugin.tx_sfregister.settings.adminEmail.fromEmail}
+
+    replyName = {$plugin.tx_sfregister.settings.adminEmail.replyName}
+    replyEmail = {$plugin.tx_sfregister.settings.adminEmail.replyEmail}
+  }
+
+  redirectSignal {
+    controller = FeuserCreate
+    action = form
+    page = {$plugin.tx_sfregister.settings.redirect.page}
+  }
+}
+
+plugin.tx_sfregister.persistence {
+  storagePid = {$plugin.tx_sfregister.persistence.storagePid}
+}
+
+module.tx_sfregister < plugin.tx_sfregister

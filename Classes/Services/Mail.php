@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Services;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -64,10 +64,19 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * Signal slot dispatcher
      *
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     * @inject
      */
     protected $signalSlotDispatcher;
 
+
+    /**
+     * @param \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher
+     *
+     * @return void
+     */
+    public function injectSignalSlotDispatcher(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher)
+    {
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
+    }
 
     /**
      * Inject configuration manager
@@ -80,7 +89,9 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     ) {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            'SfRegister',
+            'Form'
         );
         $this->frameworkConfiguration = $configurationManager->getConfiguration(
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
@@ -268,6 +279,32 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
 
     /**
+     * Send an email notification for type to the admin
+     *
+     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
+     * @param string $type
+     * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
+     */
+    public function sendInvitation(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user, $type)
+    {
+        $method = __FUNCTION__ . $type;
+
+        $this->sendEmail(
+            $user,
+            [$user->getInvitationEmail() => ''],
+            'userEmail',
+            $this->getSubject($method, $user),
+            $this->renderBody('FeuserCreate', 'form', $method, $user, 'html'),
+            $this->renderBody('FeuserCreate', 'form', $method, $user, 'txt')
+        );
+
+        $user = $this->dispatchSlotSignal($method . 'PostSend', $user);
+
+        return $user;
+    }
+
+
+    /**
      * Get translated version of the subject with replaced username and sitename
      *
      * @param string $method
@@ -281,7 +318,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
             $labelIndex,
             'SfRegister',
-            array($this->settings['sitename'], $user->getUsername())
+            [$this->settings['sitename'], $user->getUsername()]
         );
     }
 
@@ -346,16 +383,16 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function sendEmail($user, array $recipient, $typeOfEmail, $subject, $bodyHtml, $bodyPlain)
     {
-        /** @var $mail \TYPO3\CMS\Core\Mail\MailMessage */
+        $settings =& $this->settings[$typeOfEmail];
+
+        /** @var \TYPO3\CMS\Core\Mail\MailMessage $mail */
         $mail = $this->objectManager->get(\TYPO3\CMS\Core\Mail\MailMessage::class);
         $mail->setTo($recipient)
-            ->setFrom(array($this->settings[$typeOfEmail]['fromEmail'] => $this->settings[$typeOfEmail]['fromName']))
+            ->setFrom([$settings['fromEmail'] => $settings['fromName']])
             ->setSubject($subject);
 
-        if ($this->settings[$typeOfEmail]['replyEmail']) {
-            $mail->setReplyTo(
-                array($this->settings[$typeOfEmail]['replyEmail'] => $this->settings[$typeOfEmail]['replyName'])
-            );
+        if ($settings['replyEmail']) {
+            $mail->setReplyTo([$settings['replyEmail'] => $settings['replyName']]);
         }
 
         if ($bodyHtml !== '') {
@@ -384,9 +421,12 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     protected function renderBody($controller, $action, $method, $user, $fileExtension = 'html')
     {
         $templateName = 'Email/' . str_replace('send', '', $method);
-        $variables = array('user' => $user, 'settings' => $this->settings);
+        $variables = [
+            'user' => $user,
+            'settings' => $this->settings
+        ];
 
-        /** @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
+        /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
         $view = $this->objectManager->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
 
         $request = $view->getRequest();
@@ -500,12 +540,12 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function dispatchSlotSignal($signalName, $result)
     {
-        $arguments = array_merge(array_slice(func_get_args(), 2), array($this->settings, $this->objectManager));
+        $arguments = array_merge(array_slice(func_get_args(), 2), [$this->settings, $this->objectManager]);
 
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             $signalName,
-            array('result' => &$result, 'arguments' => $arguments)
+            ['result' => &$result, 'arguments' => $arguments]
         );
 
         return $result;

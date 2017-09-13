@@ -11,13 +11,14 @@ $EM_CONF['sf_register'] = [
     'modify_tables' => 'fe_users',
     'state' => 'stable',
     'clearCacheOnLoad' => true,
-    'version' => '8.7.2',
+    'version' => '8.8.0',
     'constraints' => [
         'depends' => [
             'typo3' => '8.7.0-8.7.99',
         ],
         'suggests' => [
             'extender' => '6.3.0-',
+            'recaptcha' => '7.2.1-',
         ],
     ],
 ];

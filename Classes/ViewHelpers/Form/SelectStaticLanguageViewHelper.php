@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-15 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,11 +25,11 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  ***************************************************************/
 
 /**
- * Viewhelper to render a selectbox with values
- * of static info tables country zones
+ * Viewhelper to render a selectbox with values of static info tables country zones
+ *
  * <code title="Usage">
- * {namespace register=Evoweb\SfRegister\ViewHelpers}
- * <register:form.SelectStaticLanguage name="language" allowedLanguages="{0: 'de_DE', 1: 'fr_FR'}"/>
+ *  {namespace register=Evoweb\SfRegister\ViewHelpers}
+ *  <register:form.selectStaticLanguage name="language" allowedLanguages="{0: 'de_DE', 1: 'fr_FR'}"/>
  * </code>
  */
 class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
@@ -117,12 +117,23 @@ class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\S
 
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
             if ($this->hasArgument('allowedLanguages') && count($this->arguments['allowedLanguages'])) {
-                $this->arguments['options'] = $this->languageRepository->findByLgCollateLocale(
-                    $this->arguments['allowedLanguages']
-                );
+                $options = $this->languageRepository->findByLgCollateLocale($this->arguments['allowedLanguages']);
             } else {
-                $this->arguments['options'] = $this->languageRepository->findAll();
+                $options = $this->languageRepository->findAll();
             }
+            $options = $options->toArray();
+
+            if ($this->hasArgument('disabled')) {
+                $value = $this->getSelectedValue();
+                $value = is_array($value) ? $value : [$value];
+
+                $options = array_filter($options, function ($option) use ($value) {
+                    /** @var \Evoweb\SfRegister\Domain\Model\StaticLanguage $option */
+                    return in_array($option->getLgIso2(), $value);
+                });
+            }
+
+            $this->arguments['options'] = $options;
         }
     }
 }

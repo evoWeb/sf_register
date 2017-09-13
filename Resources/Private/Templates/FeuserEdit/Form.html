@@ -1,162 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	  xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
-	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
 <head>
 	<title>Edit form template of registration</title>
 </head>
 <body>
+
 <f:layout name="Default" />
+
 <f:section name="Main">
-<f:form action="preview" name="user" object="{user}" enctype="multipart/form-data">
-	<f:render partial="FormErrors" section="Main" arguments="{for: 'user'}" />
-	<f:render partial="FieldError" section="Main" arguments="{field: 'uid'}" />
+	<f:form action="preview" name="user" object="{user}" enctype="multipart/form-data">
+		<f:render partial="FormErrors" arguments="{for: 'user'}" />
+		<f:render partial="FieldError" arguments="{field: 'uid'}" />
 
-	<div class="form-group">
-		<label for="title"><f:translate key="title" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'title'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'title'}" /><br/>
-		<!--<f:form.textfield property="title" />-->
-		<f:form.select property="title" id="title" class="form-control" options="{
-			none: '{f:translate(key: \'title_none\')}',
-			dr: '{f:translate(key: \'title_dr\')}',
-			prof: '{f:translate(key: \'title_prof\')}',
-			profdr: '{f:translate(key: \'title_profdr\')}'
-		}" />
+		<f:for each="{settings.fields.selected}" as="selectedField" iteration="iteration">
+			<f:alias map="{options: '{settings.fields.configuration.{selectedField}}'}">
+				<f:render partial="Form/{options.partial}" arguments="{user: user, fieldName: selectedField, options: options, iteration: iteration}"/>
+			</f:alias>
+		</f:for>
+	</f:form>
+
+	<div class="mandatory">
+		<f:format.raw><f:translate key="info_mandatory_fields"/></f:format.raw>
 	</div>
-
-	<div class="clear"></div>
-
-	<div class="form-group">
-		<label for="firstName"><f:translate key="firstName" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'firstName'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'firstName'}" /><br/>
-		<f:form.textfield property="firstName" id="firstName" class="form-control" />
-	</div>
-
-	<div class="form-group">
-		<label for="lastName"><f:translate key="lastName" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'lastName'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'lastName'}" /><br/>
-		<f:form.textfield property="lastName" id="lastName" class="form-control" />
-	</div>
-
-	<div class="form-group">
-		<label for="company"><f:translate key="company" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'company'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'company'}" /><br/>
-		<f:form.textfield property="company" id="company" class="form-control" />
-	</div>
-
-	<div class="clear"></div>
-
-	<div class="form-group">
-		<label for="email"><f:translate key="email" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'email'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'email'}" /><br/>
-		<f:form.textfield property="email" id="email" class="form-control" />
-	</div>
-
-	<div class="form-group">
-		<label for="telephone"><f:translate key="telephone" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'telephone'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'telephone'}" /><br/>
-		<f:form.textfield property="telephone" id="telephone" class="form-control" />
-	</div>
-
-	<div class="form-group">
-		<label for="mobilephone"><f:translate key="mobilephone" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'mobilephone'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'mobilephone'}" /><br/>
-		<f:form.textfield property="mobilephone" id="mobilephone" class="form-control" />
-	</div>
-
-	<div class="form-group">
-		<label for="fax"><f:translate key="fax" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'fax'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'fax'}" /><br/>
-		<f:form.textfield property="fax" id="fax" class="form-control" />
-	</div>
-
-	<div class="clear"></div>
-
-	<div class="form-group">
-		<label for="address"><f:translate key="address" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'address'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'address'}" /><br/>
-		<f:form.textfield property="address" id="address" class="form-control" />
-	</div>
-
-	<div class="form-group zip">
-		<label for="zip"><f:translate key="zip" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'zip'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'zip'}" /><br/>
-		<f:form.textfield property="zip" id="zip" class="form-control" />
-	</div>
-
-	<div class="form-group city">
-		<label for="city"><f:translate key="city" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'city'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'city'}" /><br/>
-		<f:form.textfield property="city" id="city" class="form-control" />
-	</div>
-
-	<div class="form-group">
-		<label for="sfrCountry"><f:translate key="country" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'country'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'country'}" /><br/>
-		<f:if condition="{staticInfoCountry}">
-			<f:then>
-				<register:form.selectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control"
-					allowedCountries="{0: 'DE', 1: 'AT'}" />
-			</f:then>
-			<f:else>
-				<register:form.selectStaticCountries property="staticInfoCountry" id="sfrCountry" class="form-control" value="DE"
-					allowedCountries="{0: 'DE', 1: 'AT'}" optionLabelField="cnShort{register:languageKey(type: 'countries') -> f:format.case(mode: 'capital')}" />
-			</f:else>
-		</f:if>
-	</div>
-
-	<div class="form-group">
-		<label for="sfrZone"><f:translate key="zone" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'zone'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'zone'}" /><br/>
-		<f:if condition="{staticInfoCountry}">
-			<f:then>
-				<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="{staticInfoCountry}" />
-			</f:then>
-			<f:else>
-				<register:form.selectStaticCountryZones property="zone" id="sfrZone" class="form-control" parent="DE" />
-			</f:else>
-		</f:if>
-		<div id="sfrZone_empty" class="form-control-static" style="display: none;">
-			<f:translate key="no_zone_available" />
-		</div>
-		<div id="sfrZone_loading" class="form-control-static" style="display: none;">
-			<f:translate key="zone_loading" />
-		</div>
-	</div>
-
-	<div class="form-group upload">
-		<label for="image"><f:translate key="image" /></label>
-		<f:render partial="Required" section="Main" arguments="{field: 'image'}" />
-		<f:render partial="FieldError" section="Main" arguments="{for: 'user', field: 'image'}" /><br/>
-		<register:form.upload property="image" alwaysShowUpload="1">
-			<f:if condition="{resource}">
-				<f:image image="{resource}" alt="" width="50"/>
-			</f:if>
-		</register:form.upload>
-	</div>
-
-	<div class="clear"></div>
-
-	<div class="form-group">
-		<f:form.submit value="{f:translate(key:'submit_update')}" class="btn btn-primary" />
-	</div>
-</f:form>
-<div class="mandatory">
-	<f:format.raw><f:translate key="info_mandatory_fields" htmlEscape="true"/></f:format.raw>
-</div>
 </f:section>
+
 </body>
 </html>

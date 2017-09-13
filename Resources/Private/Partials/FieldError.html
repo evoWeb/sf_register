@@ -1,24 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	  xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
-<head>
-	<title>Partial field error template of registration</title>
-</head>
-<body>
-<f:section name="Main">
-	<f:form.validationResults for="{for}">
-		<f:if condition="{validationResults.flattenedErrors}">
-			<f:for each="{validationResults.flattenedErrors}" key="propertyPath" as="propertyErrors">
-				<f:if condition="{propertyPath}=={field}">
-					<f:for each="{propertyErrors}" as="propertyError">
-						<div class="error errorMessage errorField field{field -> f:cObject(typoscriptObjectPath: 'plugin.tx_sfregister.fieldError')}">
-							{propertyError.message -> f:format.printf(arguments: {field: '{f:translate(key: \'{propertyPath}\')}'})}
-						</div>
-					</f:for>
-				</f:if>
-			</f:for>
-		</f:if>
-	</f:form.validationResults>
-</f:section>
-</body>
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:form.validationResults for="{for}.{field}">
+	<f:for each="{validationResults.flattenedErrors}" as="propertyErrors">
+		<f:for each="{propertyErrors}" as="propertyError">
+			<div class="error errorMessage errorField field{field}">
+				<f:format.printf arguments="{field: '{f:translate(key: \'{field}\')}'}">
+					{propertyError.message}
+				</f:format.printf>
+			</div>
+		</f:for>
+	</f:for>
+</f:form.validationResults>
+
 </html>

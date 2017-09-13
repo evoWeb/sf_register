@@ -81,8 +81,8 @@ passwords. One would like to keep it simple as possible  because the loss would
 be nearly not existing while another would prefer the passwords stronger than
 for Fort Knox.
 
-'Poor man´s' passwords with short length:
-'''''''''''''''''''''''''''''''''
+Poor man´s passwords with short length:
+'''''''''''''''''''''''''''''''''''''''
 
 ::
 
@@ -93,8 +93,8 @@ for Fort Knox.
 	}
 
 
-'Bulletproof' passwords with long length:
-'''''''''''''''''''''''''''''''''''''''''
+Bulletproof passwords with long length:
+'''''''''''''''''''''''''''''''''''''''
 
 ::
 
@@ -109,7 +109,6 @@ In total you have five possible combination of validator assignments for each
 field that you use in your form. You have none, one and multiple validators.
 And in case of a validator present you can add options too override the default
 that is set in the validator.
-
 
 Separate validators per process
 -------------------------------
@@ -142,7 +141,6 @@ is a special construct to make the configuration via TypoScript possible. All
 others are free to combine. If a validator is only suited for a certain field
 it will be mentioned in the detail configuration.
 
-
 Prefixing needed for non extbase validators
 -------------------------------------------
 
@@ -155,7 +153,6 @@ Secondly this makes it possible to use custom validators that do not come with
 extbase or sf_register. Just code your validator and make it available for auto
 loading (either in an extbase standard path or via ext_autoload.php). Afterwards
 you are ready to use your validator like in the following example.
-
 
 Custom validator usage:
 '''''''''''''''''''''''
@@ -275,7 +272,7 @@ Special fields Validators
 
          Likewise the rendering of the captcha its possible to use custom
          captchas to validate. How to use create custom is described in
-         :ref:`Bring in your own captcha <CreateCustomValidators>`
+         :ref:`Bring in your own captcha <AddCustomCaptcha>`
 
    Options:
          type = [srfreecap, jmrecaptcha]
