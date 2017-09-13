@@ -16,7 +16,7 @@ call_user_func(function () {
     $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'] = '
 [GLOBAL]
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript">
-' . $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultPageTSconfig'];
+' . $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'];
 
     $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']);
 
