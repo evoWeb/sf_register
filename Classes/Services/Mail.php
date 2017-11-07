@@ -437,6 +437,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         $request->setFormat($fileExtension);
 
         $view->setLayoutRootPaths($this->getAbsoluteLayoutRootPath());
+        $view->setPartialRootPaths($this->getAbsolutePartialRootPaths());
         $view->setTemplateRootPaths($this->getAbsoluteTemplateRootPaths());
         try {
             $view->setTemplate($templateName);
@@ -481,6 +482,46 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
         $result = [];
         foreach ($templateRootPaths as $key => $value) {
+            $value = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName(trim($value));
+            if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($value)) {
+                $result[] = rtrim(trim($value), '/') . '/';
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get absolute partial root paths
+     *
+     * @return array
+     */
+    protected function getAbsolutePartialRootPaths()
+    {
+        $partialRootPaths = [];
+        if ($this->settings['partialRootPath']) {
+            $partialRootPaths[] = trim($this->settings['partialRootPath']);
+        }
+
+        if (isset($this->frameworkConfiguration['view'])) {
+            if (isset($this->frameworkConfiguration['view']['partialRootPath'])) {
+                $partialRootPaths[] = $this->frameworkConfiguration['view']['partialRootPath'];
+            }
+
+            if (isset($this->frameworkConfiguration['view']['partialRootPaths'])) {
+                $partialRootPaths = array_merge(
+                    $partialRootPaths,
+                    $this->frameworkConfiguration['view']['partialRootPaths']
+                );
+            }
+        }
+
+        if (empty($partialRootPaths)) {
+            $partialRootPaths[] = ExtensionManagementUtility::extPath('sf_register') . 'Resources/Private/Partials/';
+        }
+
+        $result = [];
+        foreach ($partialRootPaths as $key => $value) {
             $value = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName(trim($value));
             if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($value)) {
                 $result[] = rtrim(trim($value), '/') . '/';
