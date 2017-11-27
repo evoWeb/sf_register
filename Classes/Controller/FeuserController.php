@@ -602,11 +602,13 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function removePreviousUserGroups(FrontendUser $user)
     {
         $userGroupIds = $this->getUserGroupIds();
-        foreach ($userGroupIds as $userGroupId) {
-            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUserGroup $usergroupToRemove */
-            $usergroupToRemove = $this->userGroupRepository->findByUid($userGroupId);
-            $user->removeUsergroup($usergroupToRemove);
+        $assignedUserGroups = $user->getUsergroup();
+        foreach ($assignedUserGroups as $singleUserGroup) {
+            if (\in_array($singleUserGroup->getUid(), $userGroupIds)) {
+                $assignedUserGroups->detach($singleUserGroup);
+            }
         }
+        $user->setUsergroup($assignedUserGroups);
     }
 
 
