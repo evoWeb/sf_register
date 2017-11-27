@@ -558,35 +558,24 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
 
     /**
-     * Change usergroup of user after activation
+     * Change userGroup of user after activation
      *
      * @param FrontendUser $user
-     * @param integer $usergroupIdToBeRemoved
-     * @param integer $usergroupIdToAdd
+     * @param integer $userGroupIdToAdd
      *
      * @return FrontendUser
      */
     protected function changeUsergroup(
         FrontendUser $user,
-        $usergroupIdToAdd,
-        $usergroupIdToBeRemoved = 0
+        $userGroupIdToAdd
     ): Frontenduser {
-        // cover deprecated behaviour
-        if ($usergroupIdToBeRemoved) {
-            GeneralUtility::deprecationLog(
-                'Usage of $usergroupIdToBeRemoved and $usergroupIdToAdd is deprecated
-                please use only $usergroupIdToAdd as all groups previously set get removed'
-            );
-            $usergroupIdToAdd = $usergroupIdToBeRemoved;
-        }
-
         $this->removePreviousUserGroups($user);
 
-        $usergroupIdToAdd = (int) $usergroupIdToAdd;
-        if ($usergroupIdToAdd) {
-            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUserGroup $usergroupToAdd */
-            $usergroupToAdd = $this->userGroupRepository->findByUid($usergroupIdToAdd);
-            $user->addUsergroup($usergroupToAdd);
+        $userGroupIdToAdd = (int) $userGroupIdToAdd;
+        if ($userGroupIdToAdd) {
+            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUserGroup $userGroupToAdd */
+            $userGroupToAdd = $this->userGroupRepository->findByUid($userGroupIdToAdd);
+            $user->addUsergroup($userGroupToAdd);
         }
 
         return $user;
