@@ -634,6 +634,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 break;
             }
         }
+
+        if ($redirectPageId > 0) {
+            $this->redirectToPage($redirectPageId);
+        }
     }
 
     /**
