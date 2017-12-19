@@ -31,6 +31,11 @@ namespace Evoweb\SfRegister\Services;
 class AutoLogin extends \TYPO3\CMS\Sv\AuthenticationService
 {
     /**
+     * @var bool
+     */
+    protected static $autoLoginActivated = false;
+
+    /**
      * Find a user (eg. look up the user record in database when a login is sent)
      *
      * @return mixed User array or FALSE
@@ -47,12 +52,13 @@ class AutoLogin extends \TYPO3\CMS\Sv\AuthenticationService
         $registry->remove('sf-register', $hmac);
         unset($_SESSION['sf-register-user']);
 
-        $user = $this->fetchUserRecord($userId, '', [
-            'table' => 'fe_users',
-            'username_column' => 'uid',
-            'check_pid_clause' => '',
-            'enable_clause' => '',
-        ]);
+        $user = $this->fetchUserRecord(
+                $userId,
+                '',
+                array_merge($this->db_user, ['username_column' => 'uid','check_pid_clause' => ''])
+        );
+
+        self::$autoLoginActivated = intval($userId) > 0 && !empty($user);
 
         return $user;
     }
@@ -75,7 +81,7 @@ class AutoLogin extends \TYPO3\CMS\Sv\AuthenticationService
     {
         $OK = 100;
 
-        if (!empty($user) && is_array($user)) {
+        if (self::$autoLoginActivated) {
             $OK = 200;
         }
 
