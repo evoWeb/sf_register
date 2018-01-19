@@ -12,7 +12,7 @@
 	<f:form action="save" name="password">
 		<f:render partial="FormErrors" arguments="{for: 'password'}" />
 
-		<f:render partial="Form/Textfield" arguments="{user: password, fieldName: 'oldPassword'}"/>
+		<f:render partial="Form/Password" arguments="{user: password, fieldName: 'oldPassword'}"/>
 
 		<f:render partial="Form/Clear"/>
 

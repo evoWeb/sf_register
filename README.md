@@ -1,4 +1,5 @@
 # Overview
+[![Build Status](https://travis-ci.org/evoWeb/sf_register.svg?branch=develop)](https://travis-ci.org/evoWeb/sf_register)
 
 Repository and Issue Tracker can be found at https://github.com/evoWeb/sf_register
 

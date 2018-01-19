@@ -32,6 +32,11 @@ use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
 class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implements FrontendUserInterface
 {
     /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Evoweb\SfRegister\Domain\Model\FrontendUserGroup>
+     */
+    protected $usergroup;
+
+    /**
      * If the account is disabled or not
      *
      * @var boolean

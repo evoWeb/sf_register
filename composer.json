@@ -3,7 +3,7 @@
   "type": "typo3-cms-extension",
   "description": "Frontend User Registration: Offers the possibility to maintain the fe_user data in frontend by the user self.",
   "homepage": "https://github.com/evoWeb/sf_register/",
-  "license": ["GPL-2.0+"],
+  "license": ["GPL-2.0-or-later"],
 
   "support" : {
     "issues" : "https://github.com/evoWeb/sf_register/issues"
