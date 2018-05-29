@@ -51,17 +51,8 @@ class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\S
      */
     public function initializeArguments()
     {
-        $this->registerUniversalTagAttributes();
-        $this->registerTagAttribute('multiple', 'string', 'if set, multiple select field');
-        $this->registerTagAttribute('size', 'string', 'Size of input field');
-        $this->registerTagAttribute(
-            'disabled',
-            'string',
-            'Specifies that the input element should be disabled when the page loads'
-        );
-        $this->registerArgument('name', 'string', 'Name of input tag');
-        $this->registerArgument('value', 'mixed', 'Value of input tag');
-        $this->registerArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', false, true);
+        parent::initializeArguments();
+        $this->overrideArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', false, true);
         $this->registerArgument(
             'allowedLanguages',
             'array',
@@ -69,39 +60,19 @@ class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\S
             false,
             []
         );
-        $this->registerArgument(
-            'property',
-            'string',
-            'Name of Object Property. If used in conjunction with <f:form object="...">,
-            "name" and "value" properties will be ignored.'
-        );
-        $this->registerArgument(
+        $this->overrideArgument(
             'optionValueField',
             'string',
             'If specified, will call the appropriate getter on each object to determine the value.',
             false,
             'lgIso2'
         );
-        $this->registerArgument(
+        $this->overrideArgument(
             'optionLabelField',
             'string',
             'If specified, will call the appropriate getter on each object to determine the label.',
             false,
             'lgNameEn'
-        );
-        $this->registerArgument(
-            'selectAllByDefault',
-            'boolean',
-            'If specified options are selected if none was set before.',
-            false,
-            false
-        );
-        $this->registerArgument(
-            'errorClass',
-            'string',
-            'CSS class to set if there are errors for this view helper',
-            false,
-            'f3-form-error'
         );
     }
 

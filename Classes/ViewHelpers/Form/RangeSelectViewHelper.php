@@ -70,36 +70,7 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
      */
     public function initializeArguments()
     {
-        $this->registerUniversalTagAttributes();
-        $this->registerArgument('name', 'string', 'Name of input tag');
-        $this->registerArgument('value', 'mixed', 'Value of input tag');
-        $this->registerTagAttribute('multiple', 'string', 'if set, multiple select field');
-        $this->registerTagAttribute('size', 'string', 'Size of input field');
-        $this->registerTagAttribute(
-            'disabled',
-            'string',
-            'Specifies that the input element should be disabled when the page loads'
-        );
-        $this->registerArgument(
-            'property',
-            'string',
-            'Name of Object Property. If used in conjunction with <f:form object="...">,
- "name" and "value" properties will be ignored.'
-        );
-        $this->registerArgument(
-            'selectAllByDefault',
-            'boolean',
-            'If specified options are selected if none was set before.',
-            false,
-            false
-        );
-        $this->registerArgument(
-            'errorClass',
-            'string',
-            'CSS class to set if there are errors for this view helper',
-            false,
-            'f3-form-error'
-        );
+        parent::initializeArguments();
         $this->registerArgument(
             'start',
             'int',
