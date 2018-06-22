@@ -41,7 +41,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var bool
      */
-    protected $disable;
+    protected $disable = false;
 
     /**
      * Date on which the account was activated
@@ -55,35 +55,35 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var string
      */
-    protected $captcha;
+    protected $captcha = '';
 
     /**
      *  virtual not stored in database
      *
      * @var string
      */
-    protected $passwordRepeat;
+    protected $passwordRepeat = '';
 
     /**
      *  virtual not stored in database
      *
      * @var string
      */
-    protected $emailRepeat;
+    protected $emailRepeat = '';
 
     /**
      * Pseudonym
      *
      * @var string
      */
-    protected $pseudonym;
+    protected $pseudonym = '';
 
     /**
      * Gender 1 or 2 for mr or mrs
      *
      * @var int
      */
-    protected $gender;
+    protected $gender = 1;
 
     /**
      * Date of birth
@@ -97,21 +97,21 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var int
      */
-    protected $dateOfBirthDay;
+    protected $dateOfBirthDay = 0;
 
     /**
      * Month of date of birth
      *
      * @var int
      */
-    protected $dateOfBirthMonth;
+    protected $dateOfBirthMonth = 0;
 
     /**
      * Year of date of birth
      *
      * @var int
      */
-    protected $dateOfBirthYear;
+    protected $dateOfBirthYear = 0;
 
     /**
      * Language
@@ -132,14 +132,14 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var float
      */
-    protected $timezone;
+    protected $timezone = 0;
 
     /**
      * Daylight saving time
      *
      * @var bool
      */
-    protected $daylight;
+    protected $daylight = false;
 
     /**
      * Country with static info table code
@@ -153,21 +153,21 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var string
      */
-    protected $mobilephone;
+    protected $mobilephone = '';
 
     /**
      * General terms and conditions accepted flag
      *
      * @var bool
      */
-    protected $gtc;
+    protected $gtc = false;
 
     /**
      * Privacy agreement accepted flag
      *
      * @var bool
      */
-    protected $privacy;
+    protected $privacy = false;
 
     /**
      * Status
@@ -181,7 +181,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var bool
      */
-    protected $byInvitation;
+    protected $byInvitation = false;
 
     /**
      * comment of user
@@ -195,35 +195,35 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var bool
      */
-    protected $moduleSysDmailNewsletter;
+    protected $moduleSysDmailNewsletter = false;
 
     /**
      * if emails should be send as HTML or plain text
      *
      * @var bool
      */
-    protected $moduleSysDmailHtml;
+    protected $moduleSysDmailHtml = true;
 
     /**
      * selected Dmail categories
      *
      * @var array
      */
-    protected $moduleSysDmailCategory;
+    protected $moduleSysDmailCategory = [];
 
     /**
      * new email address before edit
      *
      * @var string
      */
-    protected $emailNew;
+    protected $emailNew = '';
 
     /**
      * email address of invitee
      *
      * @var string
      */
-    protected $invitationEmail;
+    protected $invitationEmail = '';
 
 
     /**
@@ -231,13 +231,11 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     public function prepareDateOfBirth()
     {
-        if ($this->dateOfBirthDay !== null && $this->dateOfBirthMonth !== null && $this->dateOfBirthYear !== null) {
+        if ($this->dateOfBirthDay > 0 && $this->dateOfBirthMonth > 0 && $this->dateOfBirthYear > 0) {
             if ($this->dateOfBirth === null) {
                 $this->dateOfBirth = new \DateTime();
             }
             $this->dateOfBirth->setDate($this->dateOfBirthYear, $this->dateOfBirthMonth, $this->dateOfBirthDay);
-        } else {
-            $this->dateOfBirth = null;
         }
     }
 

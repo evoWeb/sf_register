@@ -282,7 +282,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
     {
         $result = true;
 
-        if ($fileExtension !== null
+        if ($fileExtension !== ''
             && !GeneralUtility::inList($this->allowedFileExtensions, strtolower($fileExtension))
         ) {
             $this->addError(LocalizationUtility::translate('error_image_extension', 'SfRegister'), 1296591065);
