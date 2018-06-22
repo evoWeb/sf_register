@@ -12,3 +12,5 @@ Breaking Changes
 - Method 'changeUsergroup' got the parameter '$usergroupIdToBeRemoved' removed. This is because all known usergroups
   previously set get removed now. So only the '$user' and '$usergroupIdToAdd' need to be provided. All usage of this
   method needs to be changed accordingly.
+
+- Drop mailhash, setMailhash() and getMailhash() from frontend user model as it was deprecated since 2014.

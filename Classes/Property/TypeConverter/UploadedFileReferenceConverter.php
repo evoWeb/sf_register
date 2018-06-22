@@ -25,7 +25,6 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Resource\FileReference as FalFileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -36,9 +35,6 @@ use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 
-/**
- * Class UploadedFileReferenceConverter
- */
 class UploadedFileReferenceConverter extends AbstractTypeConverter
 {
     /**
@@ -76,7 +72,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     /**
      * Take precedence over the available FileReferenceConverter
      *
-     * @var integer
+     * @var int
      */
     protected $priority = 31;
 
@@ -132,9 +128,8 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      * @param string $targetType
      * @param array $convertedChildProperties
      * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
-     * @throws \TYPO3\CMS\Extbase\Property\Exception
+     *
      * @return \TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder|Error
-     * @api
      */
     public function convertFrom(
         $source,
@@ -198,14 +193,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         return $resource;
     }
 
-    /**
-     * Returns a human-readable message for the given PHP file upload error
-     * constant.
-     *
-     * @param integer $errorCode One of the UPLOAD_ERR_ constants
-     * @return string
-     */
-    public static function getUploadErrorMessage($errorCode)
+    public static function getUploadErrorMessage(int $errorCode): string
     {
         switch ($errorCode) {
             case \UPLOAD_ERR_INI_SIZE:
@@ -232,18 +220,21 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      *
      * @param array $uploadInfo
      * @param PropertyMappingConfigurationInterface $configuration
+     *
      * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
+     *
      * @throws TypeConverterException
-     * @throws ExistingTargetFileNameException
      */
-    protected function importUploadedResource(array $uploadInfo, PropertyMappingConfigurationInterface $configuration)
-    {
+    protected function importUploadedResource(
+        array $uploadInfo,
+        PropertyMappingConfigurationInterface $configuration
+    ): \TYPO3\CMS\Extbase\Domain\Model\FileReference {
         if (!GeneralUtility::verifyFilenameAgainstDenyPattern($uploadInfo['name'])) {
             throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
         }
 
         $allowedFileExtensions = $configuration->getConfigurationValue(
-            \Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter::class,
+            UploadedFileReferenceConverter::class,
             self::CONFIGURATION_ALLOWED_FILE_EXTENSIONS
         );
 
@@ -255,7 +246,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         }
 
         $uploadFolderId = $configuration->getConfigurationValue(
-            \Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter::class,
+            self::class,
             self::CONFIGURATION_UPLOAD_FOLDER
         ) ?: $this->defaultUploadFolder;
 
@@ -266,7 +257,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             $defaultConflictMode = 'changeName';
         }
         $conflictMode = $configuration->getConfigurationValue(
-            \Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter::class,
+            self::class,
             self::CONFIGURATION_UPLOAD_CONFLICT_MODE
         ) ?: $defaultConflictMode;
 
@@ -283,13 +274,10 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         return $fileReferenceModel;
     }
 
-    /**
-     * @param FalFile $file
-     * @param int $resourcePointer
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     */
-    protected function createFileReferenceFromFalFileObject(FalFile $file, $resourcePointer = null)
-    {
+    protected function createFileReferenceFromFalFileObject(
+        FalFile $file,
+        int $resourcePointer = null
+    ): \TYPO3\CMS\Extbase\Domain\Model\FileReference {
         $fileReference = $this->resourceFactory->createFileReferenceObject(
             [
                 'uid_local' => $file->getUid(),
@@ -302,15 +290,10 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         return $this->createFileReferenceFromFalFileReferenceObject($fileReference, $resourcePointer);
     }
 
-    /**
-     * @param FalFileReference $falFileReference
-     * @param int $resourcePointer
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     */
     protected function createFileReferenceFromFalFileReferenceObject(
         FalFileReference $falFileReference,
-        $resourcePointer = null
-    ) {
+        int $resourcePointer = null
+    ): \TYPO3\CMS\Extbase\Domain\Model\FileReference {
         if ($resourcePointer === null) {
             /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileReference */
             $fileReference = $this->objectManager->get(\TYPO3\CMS\Extbase\Domain\Model\FileReference::class);

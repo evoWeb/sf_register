@@ -29,12 +29,7 @@ namespace Evoweb\SfRegister\Domain\Repository;
  */
 class StaticCountryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-    /**
-     * Find all countries despecting the storage page
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|object
-     */
-    public function findAll()
+    public function findAll(): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()
@@ -43,14 +38,7 @@ class StaticCountryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query->execute();
     }
 
-    /**
-     * Find countries by iso2 codes despecting the storage page
-     *
-     * @param array $cnIso2
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|object
-     */
-    public function findByCnIso2(array $cnIso2)
+    public function findByCnIso2(array $cnIso2): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()

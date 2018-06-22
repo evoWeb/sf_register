@@ -93,31 +93,16 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected $autoLoginTriggered = false;
 
 
-    /**
-     * @param FrontendUserRepository $userRepository
-     *
-     * @return void
-     */
     public function injectUserRepository(FrontendUserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * @param FrontendUserGroupRepository $userGroupRepository
-     *
-     * @return void
-     */
     public function injectUserGroupRepository(FrontendUserGroupRepository $userGroupRepository)
     {
         $this->userGroupRepository = $userGroupRepository;
     }
 
-    /**
-     * @param \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher
-     *
-     * @return void
-     */
     public function injectSignalSlotDispatcher(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher$signalSlotDispatcher)
     {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
@@ -125,7 +110,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
 
     /**
-     * Disable Flashmessages
+     * Disable flash messages
      *
      * @return bool
      */
@@ -134,11 +119,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return false;
     }
 
-    /**
-     * Initialize all actions
-     *
-     * @return void
-     */
     protected function initializeAction()
     {
         $this->fileService = $this->objectManager->get(\Evoweb\SfRegister\Services\File::class);
@@ -163,9 +143,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
     }
 
-    /**
-     * @return void
-     */
     protected function setTypeConverter()
     {
         $argumentName = 'user';
@@ -179,16 +156,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
     }
 
-    /**
-     * @param PropertyMappingConfiguration $configuration
-     * @param array $userData
-     *
-     * @return PropertyMappingConfiguration
-     */
     protected function getPropertyMappingConfiguration(
         PropertyMappingConfiguration $configuration = null,
-        $userData = []
-    ) {
+        array $userData = []
+    ): PropertyMappingConfiguration {
         if (is_null($configuration)) {
             $configuration = $this->objectManager->get(
                 PropertyMappingConfiguration::class
@@ -230,11 +201,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
     /**
-     * Inject an view object to be able to set templateRootPath from flexform
+     * Inject an view object to be able to set templateRootPath from flex form
      *
      * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
-     *
-     * @return void
      */
     protected function initializeView(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view)
     {
@@ -252,7 +221,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @param FrontendUser $user
      *
-     * @return void
      * @validate $user Evoweb.SfRegister:User
      */
     public function proxyAction(FrontendUser $user)
@@ -271,7 +239,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @param FrontendUser $user
      *
-     * @return void
      * @ignorevalidation $user
      */
     protected function removeImageAction(FrontendUser $user)
@@ -295,13 +262,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
     }
 
-    /**
-     * Remove an image from user object and request object
-     *
-     * @param FrontendUser $user
-     *
-     * @return FrontendUser
-     */
     protected function removeImageFromUserAndRequest(FrontendUser $user): FrontendUser
     {
         if ($user->getUid() !== null) {
@@ -323,15 +283,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return $user;
     }
 
-    /**
-     * Encrypt the password
-     *
-     * @param string $password
-     * @param array $settings
-     *
-     * @return string
-     */
-    public static function encryptPassword($password, $settings): string
+    public static function encryptPassword(string $password, array $settings): string
     {
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')
             && \TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility::isUsageEnabled('FE')
@@ -352,24 +304,12 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return $password;
     }
 
-    /**
-     * Persist all data that was not stored by now
-     *
-     * @return void
-     */
     protected function persistAll()
     {
         $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class)->persistAll();
     }
 
-    /**
-     * Redirect to a page with given id
-     *
-     * @param integer $pageId
-     *
-     * @return void
-     */
-    protected function redirectToPage($pageId)
+    protected function redirectToPage(int $pageId)
     {
         if ($this->autoLoginTriggered) {
             $statusField = $this->getTypoScriptFrontendController()->fe_user->formfield_permanent;
@@ -384,15 +324,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
 
-    /**
-     * Send emails to user and/or to admin
-     *
-     * @param FrontendUser $user
-     * @param string $type
-     *
-     * @return FrontendUser
-     */
-    protected function sendEmails(FrontendUser $user, $type): FrontendUser
+    protected function sendEmails(FrontendUser $user, string $type): FrontendUser
     {
         /** @var \Evoweb\SfRegister\Services\Mail $mailService */
         $mailService = $this->objectManager->get(\Evoweb\SfRegister\Services\Mail::class);
@@ -408,40 +340,14 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return $user;
     }
 
-    /**
-     * Check if the admin need to activate the account
-     *
-     * @param string $type
-     *
-     * @return bool
-     */
-    protected function isNotifyAdmin($type): bool
+    protected function isNotifyAdmin(string $type): bool
     {
-        $result = false;
-
-        if ($this->settings['notifyAdmin' . $type]) {
-            $result = true;
-        }
-
-        return $result;
+        return isset($this->settings['notifyAdmin' . $type]) && !empty($this->settings['notifyAdmin' . $type]);
     }
 
-    /**
-     * Check if the user need to activate the account
-     *
-     * @param string $type
-     *
-     * @return bool
-     */
-    protected function isNotifyUser($type): bool
+    protected function isNotifyUser(string $type): bool
     {
-        $result = false;
-
-        if ($this->settings['notifyUser' . $type]) {
-            $result = true;
-        }
-
-        return $result;
+        return isset($this->settings['notifyUser' . $type]) && !empty($this->settings['notifyUser' . $type]);
     }
 
 
@@ -491,33 +397,19 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return $return;
     }
 
-    /**
-     * Check if a user has a given usergroup currently set
-     *
-     * @param int $currentUserGroup
-     * @param bool $excludeCurrentUserGroup
-     *
-     * @return array
-     */
-    protected function getFollowingUserGroups($currentUserGroup, $excludeCurrentUserGroup = false): array
+    protected function getFollowingUserGroups(int $currentUserGroup): array
     {
         $userGroups = $this->getUserGroupIds();
         $currentIndex = array_search((int) $currentUserGroup, $userGroups);
-        $additionalIndex = ($excludeCurrentUserGroup ? 1 : 0);
 
         $reducedUserGroups = [];
         if ($currentUserGroup !== false && $currentUserGroup < count($userGroups)) {
-            $reducedUserGroups = array_slice($userGroups, $currentIndex + $additionalIndex);
+            $reducedUserGroups = array_slice($userGroups, $currentIndex);
         }
 
         return $reducedUserGroups;
     }
 
-    /**
-     * Get all configured usergroups
-     *
-     * @return array
-     */
     protected function getUserGroupIds(): array
     {
         $settingsUserGroupKeys = [
@@ -557,17 +449,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
 
-    /**
-     * Change userGroup of user after activation
-     *
-     * @param FrontendUser $user
-     * @param integer $userGroupIdToAdd
-     *
-     * @return FrontendUser
-     */
     protected function changeUsergroup(
         FrontendUser $user,
-        $userGroupIdToAdd
+        int $userGroupIdToAdd
     ): Frontenduser {
         $this->removePreviousUserGroups($user);
 
@@ -581,13 +465,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return $user;
     }
 
-    /**
-     * Removes all frontend usergroups that were set in previous actions
-     *
-     * @param FrontendUser $user
-     *
-     * @return void
-     */
     protected function removePreviousUserGroups(FrontendUser $user)
     {
         $userGroupIds = $this->getUserGroupIds();
@@ -601,15 +478,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
 
-    /**
-     * Login user with service
-     *
-     * @param FrontendUser $user
-     * @param int $redirectPageId
-     *
-     * @return void
-     */
-    protected function autoLogin(FrontendUser $user, &$redirectPageId)
+    protected function autoLogin(FrontendUser $user, int $redirectPageId)
     {
         session_start();
         $this->autoLoginTriggered = true;
@@ -636,16 +505,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
 
         if ($redirectPageId > 0) {
-            $this->redirectToPage($redirectPageId);
+            $this->redirectToPage((int) $redirectPageId);
         }
     }
 
-    /**
-     * Checks if an user is logged in
-     *
-     * @return bool
-     */
-    protected function userIsLoggedIn()
+    protected function userIsLoggedIn(): bool
     {
         /** @noinspection PhpInternalEntityUsedInspection */
         return is_array($this->getTypoScriptFrontendController()->fe_user->user);
@@ -660,7 +524,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @return NULL|FrontendUser
      */
-    protected function determineFrontendUser(FrontendUser $user = null, $hash = null)
+    protected function determineFrontendUser(FrontendUser $user = null, string $hash = null)
     {
         $frontendUser = null;
 
@@ -677,10 +541,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return $frontendUser;
     }
 
-
-    /**
-     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-     */
     protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];

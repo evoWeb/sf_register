@@ -27,57 +27,40 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
-/**
- * A Uservalidator
- */
 class UserValidator extends GenericObjectValidator implements ValidatorInterface
 {
-
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
     static protected $instancesCurrentlyUnderValidation;
 
     /**
-     * Object manager
-     *
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     * @inject
      */
     protected $objectManager;
 
     /**
-     * Configuration manager
-     *
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
      */
     protected $configurationManager;
 
     /**
-     * Settings
-     *
      * @var array
      */
     protected $settings = null;
 
     /**
-     * Configuration of the framework
-     *
      * @var array
      */
     protected $frameworkConfiguration = [];
 
     /**
      * @var \TYPO3\CMS\Extbase\Error\Result
-     * @inject
      */
     protected $result;
 
     /**
-     * Validator resolver
-     *
      * @var \Evoweb\SfRegister\Validation\ValidatorResolver
-     * @inject
      */
     protected $validatorResolver;
 
@@ -89,8 +72,6 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
     protected $currentPropertyName = '';
 
     /**
-     * Options for the current validation
-     *
      * @var array
      */
     protected $currentValidatorOptions = [];
@@ -98,22 +79,19 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
     /**
      * Model that gets validated currently
      *
-     * @var object
+     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password
      */
     protected $model;
 
 
-    /**
-     * Inject of configuration manager
-     *
-     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
-     *
-     * @return void
-     */
+    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
+
     public function injectConfigurationManager(
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
     ) {
-
         /** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager configurationManager */
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
@@ -129,14 +107,17 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
         );
     }
 
-    /**
-     * Validation method
-     *
-     * @param mixed $object
-     *
-     * @return boolean|\TYPO3\CMS\Extbase\Error\Result
-     */
-    public function validate($object)
+    public function injectResult(\TYPO3\CMS\Extbase\Error\Result $result)
+    {
+        $this->result = $result;
+    }
+
+    public function injectValidatorResolver(\Evoweb\SfRegister\Validation\ValidatorResolver $validatorResolver)
+    {
+        $this->validatorResolver = $validatorResolver;
+    }
+
+    public function validate($object): \TYPO3\CMS\Extbase\Error\Result
     {
         /** @var \TYPO3\CMS\Extbase\Error\Result $messages */
         $messages = $this->objectManager->get(\TYPO3\CMS\Extbase\Error\Result::class);
@@ -206,25 +187,24 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
      * @param mixed $value The value to be validated
      * @param array $validatorNames Contains an array with validator names
      * @param \TYPO3\CMS\Extbase\Error\Result $messages the result object
-     *
-     * @return void
      */
-    protected function checkUserProperty($value, $validatorNames, \TYPO3\CMS\Extbase\Error\Result $messages)
+    protected function checkUserProperty($value, array $validatorNames, \TYPO3\CMS\Extbase\Error\Result $messages)
     {
         foreach ($validatorNames as $validatorName) {
-            $messages->merge($this->getValidator($validatorName)
-                ->validate($value));
+            $messages->merge(
+                $this->getValidator($validatorName)->validate($value)
+            );
         }
     }
 
     /**
      * Checks if validator can validate the object
      *
-     * @param object $object
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $object
      *
-     * @return boolean
+     * @return bool
      */
-    public function canValidate($object)
+    public function canValidate($object): bool
     {
         return (
             $object instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser
@@ -234,27 +214,25 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
 
     /**
      * Get validation rules from settings
-     * Warning: Dont remove the validators added in this method
+     * Warning: Don't remove the validators added in this method
      *          These prevent that editing others data is possible
-     *
-     * @return array
      */
-    protected function getValidationRulesFromSettings()
+    protected function getValidationRulesFromSettings(): array
     {
         $mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));
-        $rules = $this->settings['validation'][$mode];
+        $rules = (array)$this->settings['validation'][$mode];
 
         if ($this->model instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser) {
             if ($mode == 'create') {
                 // uid needs to be emtpy if FrontendUser should be valid on creation
                 $rules = array_merge(
-                    ['uid' => \Evoweb\SfRegister\Validation\Validator\EmptyValidator::class],
+                    ['uid' => EmptyValidator::class],
                     $rules
                 );
             } elseif ($mode == 'edit') {
                 // add validation that the user to be edited is logged in
                 $rules = array_merge(
-                    ['uid' => \Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator::class],
+                    ['uid' => EqualCurrentUserValidator::class],
                     $rules
                 );
             }
@@ -264,13 +242,13 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
     }
 
     /**
-     * Parse the rule and instanciate an validator with the name and the options
+     * Parse the rule and instantiate an validator with the name and the options
      *
      * @param string $rule
      *
      * @return \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
      */
-    protected function getValidator($rule)
+    protected function getValidator(string $rule): \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
     {
         $currentValidator = $this->parseRule($rule);
         $this->currentValidatorOptions = (array) $currentValidator['validatorOptions'];
@@ -293,14 +271,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
         return $validator;
     }
 
-    /**
-     * Parse rule
-     *
-     * @param string $rule
-     *
-     * @return array
-     */
-    protected function parseRule($rule)
+    protected function parseRule(string $rule): array
     {
         $parsedRules = $this->validatorResolver->getParsedValidatorAnnotation($rule);
 

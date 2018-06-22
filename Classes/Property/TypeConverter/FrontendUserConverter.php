@@ -24,16 +24,10 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class FrontendUserTypeConverter
- *
- * @package Evoweb\SfRegister\Property
- */
 class FrontendUserConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter
 {
     /**
      * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
-     * @inject
      */
     protected $frontendUserRepository;
 
@@ -46,6 +40,12 @@ class FrontendUserConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\Ab
      * @var string
      */
     protected $targetType = \Evoweb\SfRegister\Domain\Model\FrontendUser::class;
+
+    public function injectFrontendUserRepository(
+        \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository
+    ) {
+        $this->frontendUserRepository = $userRepository;
+    }
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
@@ -67,7 +67,6 @@ class FrontendUserConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\Ab
      * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
      *
      * @return mixed|\TYPO3\CMS\Extbase\Error\Error target type, or an error object
-     * @throws \TYPO3\CMS\Extbase\Property\Exception\TypeConverterException thrown in case a developer error occurred
      */
     public function convertFrom(
         $source,

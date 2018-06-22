@@ -27,9 +27,6 @@ namespace Evoweb\SfRegister\Tests\Domain\Validator;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class EqualCurrentPasswordValidatorTest
- */
 class EqualCurrentPasswordValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
     /**

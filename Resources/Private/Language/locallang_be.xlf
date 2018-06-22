@@ -91,9 +91,6 @@
 			<trans-unit id="fe_users.div.registration" xml:space="preserve">
 				<source>Registration</source>
 			</trans-unit>
-			<trans-unit id="fe_users.mailhash" xml:space="preserve">
-				<source>Mailhash of confirmation mail</source>
-			</trans-unit>
 			<trans-unit id="fe_users.activated_on" xml:space="preserve">
 				<source>Activated on</source>
 			</trans-unit>

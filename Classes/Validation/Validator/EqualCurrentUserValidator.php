@@ -29,8 +29,6 @@ use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * A validator to check if the userid is equal to the id of the logged in user
- *
- * @scope singleton
  */
 class EqualCurrentUserValidator extends AbstractValidator implements ValidatorInterface
 {
@@ -44,13 +42,14 @@ class EqualCurrentUserValidator extends AbstractValidator implements ValidatorIn
      *
      * @param string $value The value
      *
-     * @return boolean
+     * @return bool
      */
-    public function isValid($value)
+    public function isValid($value): bool
     {
         $result = true;
 
-        if ($value != $GLOBALS['TSFE']->fe_user->user['uid']) {
+        /** @noinspection PhpInternalEntityUsedInspection */
+        if ($value != $this->getTypoScriptFrontendController()->fe_user->user['uid']) {
             $this->addError(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     'error_notequalcurrentuser',
@@ -62,5 +61,10 @@ class EqualCurrentUserValidator extends AbstractValidator implements ValidatorIn
         }
 
         return $result;
+    }
+
+    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+    {
+        return $GLOBALS['TSFE'];
     }
 }

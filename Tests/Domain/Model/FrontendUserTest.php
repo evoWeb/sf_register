@@ -2,34 +2,28 @@
 namespace Evoweb\SfRegister\Tests\Domain\Model;
 
 /***************************************************************
- *  Copyright notice
+ * Copyright notice
  *
- *  (c) 2011 Sebastian Fischer <typo3@evoweb.de>
- *  All rights reserved
+ * (c) 2011-18 Sebastian Fischer <typo3@evoweb.de>
+ * All rights reserved
  *
- *  This class is a backport of the corresponding class of FLOW3.
- *  All credits go to the v5 team.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
+ * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class FrontendUserTest
- */
 class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
     /**
@@ -37,17 +31,11 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected $fixture;
 
-    /**
-     * @return void
-     */
     public function setUp()
     {
         $this->fixture = new \Evoweb\SfRegister\Domain\Model\FrontendUser();
     }
 
-    /**
-     * @return void
-     */
     public function tearDown()
     {
         unset($this->fixture);
@@ -55,7 +43,6 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
     /**
      * @test
-     * @return void
      */
     public function disableDefaultToFalseOnInitialize()
     {
@@ -88,33 +75,6 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         $this->assertTrue(
             $this->fixture->getDisable()
-        );
-    }
-
-    /**
-     * @test
-     * @return void
-     */
-    public function mailhashOnInitializeIsNull()
-    {
-        $this->assertNull(
-            $this->fixture->getMailhash()
-        );
-    }
-
-    /**
-     * @test
-     * @return void
-     */
-    public function mailhashValueGetsTrimmedOnSet()
-    {
-        $expected = 'Test ';
-
-        $this->fixture->setMailhash($expected);
-
-        $this->assertSame(
-            trim($expected),
-            $this->fixture->getMailhash()
         );
     }
 
@@ -202,7 +162,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $expected2 = 'bar.jpg';
 
         $this->fixture->setImage(implode(',', array($expected1, $expected2)));
-        $this->fixture->removeImage($expected1);
+        $this->fixture->removeImage();
 
         $this->assertSame(
             $expected2,

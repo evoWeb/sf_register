@@ -25,7 +25,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  ***************************************************************/
 
 /**
- * Viewhelper to render a selectbox with values of static info tables country zones
+ * View helper to render a select box with values of static info tables country zones
  *
  * <code title="Usage">
  *  {namespace register=Evoweb\SfRegister\ViewHelpers}
@@ -35,20 +35,16 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
 {
     /**
-     * Repository that provides the country zone models
-     *
      * @var \Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository
-     * @inject
      */
     protected $countryZonesRepository;
 
+    public function injectCountryZonesRepository(
+        \Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository $countryZonesRepository
+    ) {
+        $this->countryZonesRepository = $countryZonesRepository;
+    }
 
-    /**
-     * Initialize arguments. Cant be moved to parent because
-     * of "private $argumentDefinitions = [];"
-     *
-     * @return void
-     */
     public function initializeArguments()
     {
         parent::initializeArguments();
@@ -70,12 +66,6 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
         );
     }
 
-    /**
-     * Override the initialize method to load all available country
-     * zones for a given parent country before rendering
-     *
-     * @return void
-     */
     public function initialize()
     {
         parent::initialize();

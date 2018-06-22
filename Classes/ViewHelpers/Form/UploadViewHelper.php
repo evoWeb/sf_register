@@ -27,9 +27,6 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class UploadViewHelper
- */
 class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelper
 {
     /**
@@ -42,41 +39,23 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
      */
     protected $propertyMapper;
 
-    /**
-     * @param \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService
-     */
     public function injectHashService(\TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService)
     {
         $this->hashService = $hashService;
     }
 
-    /**
-     * @param \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper
-     */
     public function injectPropertyMapper(\TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper)
     {
         $this->propertyMapper = $propertyMapper;
     }
 
-    /**
-     * Initialize the arguments.
-     *
-     * @return void
-     * @api
-     */
     public function initializeArguments()
     {
         parent::initializeArguments();
         $this->registerTagAttribute('alwaysShowUpload', 'string', 'Whether the upload button should be always shown.');
     }
 
-    /**
-     * Render the upload field including possible resource pointer
-     *
-     * @return string
-     * @api
-     */
-    public function render()
+    public function render(): string
     {
         $output = '';
 
@@ -98,7 +77,7 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
      *
      * @return string
      */
-    protected function renderPreview($resources)
+    protected function renderPreview($resources): string
     {
         $output = '';
 
@@ -134,18 +113,12 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
      *
      * @return bool
      */
-    protected function isRenderUpload($resources)
+    protected function isRenderUpload($resources): bool
     {
         return is_null($resources)
-            || (
-                is_object($resources) && empty($resources->toArray())
-            )
-            || (
-                is_array($resources) && empty($resource)
-            )
-            || (
-                $this->hasArgument('alwaysShowUpload') && $this->arguments['alwaysShowUpload']
-            );
+            || (is_object($resources) && empty($resources->toArray()))
+            || (is_array($resources) && empty($resource))
+            || ($this->hasArgument('alwaysShowUpload') && $this->arguments['alwaysShowUpload']);
     }
 
     /**

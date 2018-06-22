@@ -32,12 +32,4 @@ namespace Evoweb\SfRegister\Tests\Services;
  */
 class MailTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
-    /**
-     * @test
-     * @return void
-     */
-    public function findByMailhash()
-    {
-        $this->markTestIncomplete('not implemented by now');
-    }
 }

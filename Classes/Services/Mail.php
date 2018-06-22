@@ -24,6 +24,7 @@ namespace Evoweb\SfRegister\Services;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
@@ -32,58 +33,41 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 class Mail implements \TYPO3\CMS\Core\SingletonInterface
 {
     /**
-     * Object manager
-     *
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     * @inject
      */
     protected $objectManager;
 
     /**
-     * Configuration manager
-     *
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
      */
     protected $configurationManager;
 
     /**
-     * Settings of the create controller
-     *
      * @var array
      */
     protected $settings = [];
 
     /**
-     * Framework configurations
-     *
      * @var array
      */
     protected $frameworkConfiguration = [];
 
     /**
-     * Signal slot dispatcher
-     *
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
      */
     protected $signalSlotDispatcher;
 
 
-    /**
-     * @param \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher
-     *
-     * @return void
-     */
+    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
+
     public function injectSignalSlotDispatcher(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher)
     {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
     }
 
-    /**
-     * Inject configuration manager
-     *
-     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
-     * @return void
-     */
     public function injectConfigurationManager(
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
     ) {
@@ -99,14 +83,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     }
 
 
-    /**
-     * Send an email notification for type to the admin
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @param string $type
-     * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
-     */
-    public function sendAdminNotification(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user, $type)
+    public function sendAdminNotification(FrontendUserInterface $user, string $type): FrontendUserInterface
     {
         $method = __FUNCTION__ . $type;
         if (method_exists($this, $method)) {
@@ -127,14 +104,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $user;
     }
 
-    /**
-     * Send an email notification for type to the user
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @param string $type
-     * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
-     */
-    public function sendUserNotification(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user, $type)
+    public function sendUserNotification(FrontendUserInterface $user, string $type): FrontendUserInterface
     {
         $method = __FUNCTION__ . $type;
         if (method_exists($this, $method)) {
@@ -156,13 +126,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     }
 
 
-    /**
-     * Send an email notification pre confirmation to the admin
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
-     */
-    public function sendAdminNotificationPostCreateSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
+    public function sendAdminNotificationPostCreateSave(FrontendUserInterface $user): FrontendUserInterface
     {
         $this->sendEmail(
             $user,
@@ -176,13 +140,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
     }
 
-    /**
-     * Send an email notification pre confirmation to the user
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
-     */
-    public function sendUserNotificationPostCreateSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
+    public function sendUserNotificationPostCreateSave(FrontendUserInterface $user): FrontendUserInterface
     {
         $this->sendEmail(
             $user,
@@ -196,13 +154,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
     }
 
-    /**
-     * Send an email notification post confirmation to the admin
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
-     */
-    public function sendAdminNotificationPostCreateConfirm(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
+    public function sendAdminNotificationPostCreateConfirm(FrontendUserInterface $user): FrontendUserInterface
     {
         $this->sendEmail(
             $user,
@@ -217,13 +169,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     }
 
 
-    /**
-     * Send an email notification post edit to the admin
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
-     */
-    public function sendAdminNotificationPostEditSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
+    public function sendAdminNotificationPostEditSave(FrontendUserInterface $user): FrontendUserInterface
     {
         $this->sendEmail(
             $user,
@@ -237,13 +183,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
     }
 
-    /**
-     * Send an email notification post edit to the user
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
-     */
-    public function sendUserNotificationPostEditSave(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
+    public function sendUserNotificationPostEditSave(FrontendUserInterface $user): FrontendUserInterface
     {
         $this->sendEmail(
             $user,
@@ -257,13 +197,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
     }
 
-    /**
-     * Send an email notification post confirmation to the admin
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
-     */
-    public function sendAdminNotificationPostEditConfirm(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
+    public function sendAdminNotificationPostEditConfirm(FrontendUserInterface $user): FrontendUserInterface
     {
         $this->sendEmail(
             $user,
@@ -278,14 +212,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     }
 
 
-    /**
-     * Send an email notification for type to the admin
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @param string $type
-     * @return \Evoweb\SfRegister\Interfaces\FrontendUserInterface
-     */
-    public function sendInvitation(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user, $type)
+    public function sendInvitation(FrontendUserInterface $user, string $type): FrontendUserInterface
     {
         $method = __FUNCTION__ . $type;
 
@@ -304,14 +231,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     }
 
 
-    /**
-     * Get translated version of the subject with replaced username and sitename
-     *
-     * @param string $method
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @return string
-     */
-    protected function getSubject($method, \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
+    protected function getSubject(string $method, FrontendUserInterface $user): string
     {
         $labelIndex = 'subject' . str_replace('send', '', $method);
 
@@ -322,41 +242,14 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         );
     }
 
-    /**
-     * Get the mailhash for the activation link based on time,
-     * username and email address
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @return string
-     */
-    protected function getMailHash(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
-    {
-        return md5(
-            $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . $user->getUsername() .
-            $GLOBALS['EXEC_TIME'] . $user->getEmail()
-        );
-    }
-
-    /**
-     * Get admin recipient
-     *
-     * @return array
-     */
-    protected function getAdminRecipient()
+    protected function getAdminRecipient(): array
     {
         return [
             trim($this->settings['adminEmail']['toEmail']) => trim($this->settings['adminEmail']['toName'])
         ];
     }
 
-    /**
-     * Get user recipient
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     *
-     * @return array
-     */
-    protected function getUserRecipient(\Evoweb\SfRegister\Interfaces\FrontendUserInterface $user)
+    protected function getUserRecipient(FrontendUserInterface $user): array
     {
         if ($user->getFirstName() || $user->getLastName()) {
             $name = trim($user->getFirstName() . ' ' . $user->getLastName());
@@ -370,19 +263,14 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     }
 
 
-    /**
-     * Send email
-     *
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @param array $recipient
-     * @param string $typeOfEmail
-     * @param string $subject
-     * @param string $bodyHtml
-     * @param string $bodyPlain
-     * @return integer the number of recipients who were accepted for delivery
-     */
-    protected function sendEmail($user, array $recipient, $typeOfEmail, $subject, $bodyHtml, $bodyPlain)
-    {
+    protected function sendEmail(
+        FrontendUserInterface $user,
+        array $recipient,
+        string $typeOfEmail,
+        string $subject,
+        string $bodyHtml,
+        string $bodyPlain
+    ): int {
         $settings =& $this->settings[$typeOfEmail];
 
         /** @var \TYPO3\CMS\Core\Mail\MailMessage $mail */
@@ -407,19 +295,13 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $mail->send();
     }
 
-
-    /**
-     * renders the given Template file via fluid rendering engine.
-     *
-     * @param string $controller
-     * @param string $action
-     * @param string $method method calling this function
-     * @param \Evoweb\SfRegister\Interfaces\FrontendUserInterface $user
-     * @param string $fileExtension
-     * @return string of the rendered View.
-     */
-    protected function renderBody($controller, $action, $method, $user, $fileExtension = 'html')
-    {
+    protected function renderBody(
+        string $controller,
+        string $action,
+        string $method,
+        FrontendUserInterface $user,
+        string $fileExtension = 'html'
+    ): string {
         $templateName = 'Email/' . str_replace('send', '', $method);
         $variables = [
             'user' => $user,
@@ -451,12 +333,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $body;
     }
 
-    /**
-     * Get absolute template root paths
-     *
-     * @return array
-     */
-    protected function getAbsoluteTemplateRootPaths()
+    protected function getAbsoluteTemplateRootPaths(): array
     {
         $templateRootPaths = [];
         if ($this->settings['templateRootPath']) {
@@ -491,12 +368,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $result;
     }
 
-    /**
-     * Get absolute partial root paths
-     *
-     * @return array
-     */
-    protected function getAbsolutePartialRootPaths()
+    protected function getAbsolutePartialRootPaths(): array
     {
         $partialRootPaths = [];
         if ($this->settings['partialRootPath']) {
@@ -531,12 +403,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $result;
     }
 
-    /**
-     * Get absolute layout root path
-     *
-     * @return array
-     */
-    protected function getAbsoluteLayoutRootPath()
+    protected function getAbsoluteLayoutRootPath(): array
     {
         $layoutRootPaths = [];
         if ($this->settings['layoutRootPath']) {
@@ -576,8 +443,9 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      * Dispatch signal to registered slots
      *
      * @param string $signalName
-     * @param object $result
-     * @return mixed
+     * @param \TYPO3\CMS\Core\Mail\MailMessage|FrontendUserInterface $result
+     *
+     * @return \TYPO3\CMS\Core\Mail\MailMessage|FrontendUserInterface
      */
     protected function dispatchSlotSignal($signalName, $result)
     {

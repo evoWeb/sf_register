@@ -38,14 +38,7 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
         'zn_name_local' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
     ];
 
-    /**
-     * Find all countries disrespecting the storage page
-     *
-     * @param int $parent
-     *
-     * @return \Doctrine\DBAL\Driver\Statement
-     */
-    public function findAllByParentUid($parent)
+    public function findAllByParentUid(int $parent): \Doctrine\DBAL\Driver\Statement
     {
         $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
         $queryBuilder->select('static_country_zones.*')
@@ -65,14 +58,7 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
         return $queryBuilder->execute();
     }
 
-    /**
-     * Find all countries disrespecting the storage page
-     *
-     * @param string $iso2
-     *
-     * @return \Doctrine\DBAL\Driver\Statement
-     */
-    public function findAllByIso2($iso2)
+    public function findAllByIso2(string $iso2): \Doctrine\DBAL\Driver\Statement
     {
         $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
         $queryBuilder->select('*')
@@ -86,12 +72,7 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
         return $queryBuilder->execute();
     }
 
-    /**
-     * @param string $table
-     *
-     * @return \TYPO3\CMS\Core\Database\Query\QueryBuilder
-     */
-    protected function getQueryBuilderForTable($table): \TYPO3\CMS\Core\Database\Query\QueryBuilder
+    protected function getQueryBuilderForTable(string $table): \TYPO3\CMS\Core\Database\Query\QueryBuilder
     {
         return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Database\ConnectionPool::class

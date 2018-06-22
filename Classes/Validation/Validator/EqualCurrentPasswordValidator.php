@@ -29,8 +29,6 @@ use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * Validator to check against current password
- *
- * @scope singleton
  */
 class EqualCurrentPasswordValidator extends AbstractValidator implements ValidatorInterface
 {
@@ -40,35 +38,21 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
     protected $acceptsEmptyValues = false;
 
     /**
-     * Configuration manager
-     *
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
      */
     protected $configurationManager;
 
     /**
-     * Settings
-     *
      * @var array
      */
     protected $settings = [];
 
     /**
-     * Frontend user repository
-     *
      * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
-     * @inject
      */
     protected $userRepository = null;
 
 
-    /**
-     * Inject a configuration manager
-     *
-     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
-     *
-     * @return void
-     */
     public function injectConfigurationManager(
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
     ) {
@@ -80,6 +64,11 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
         );
     }
 
+    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Validation method
      *
@@ -87,7 +76,7 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
      *
      * @return bool
      */
-    public function isValid($password)
+    public function isValid($password): bool
     {
         $result = true;
 
@@ -149,21 +138,13 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
         return $result;
     }
 
-    /**
-     * Checks if an user is logged in
-     *
-     * @return bool
-     */
-    protected function userIsLoggedIn()
+    protected function userIsLoggedIn(): bool
     {
         /** @noinspection PhpInternalEntityUsedInspection */
         return is_array($this->getTypoScriptFrontendController()->fe_user->user);
     }
 
-    /**
-     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-     */
-    protected static function getTypoScriptFrontendController()
+    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
     }

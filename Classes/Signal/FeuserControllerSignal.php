@@ -24,30 +24,15 @@ namespace Evoweb\SfRegister\Signal;
 * This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
-/**
- * Class FeuserControllerSignal
- *
- * @package Evoweb\SfRegister\Signal
- */
 class FeuserControllerSignal
 {
-    /**
-     * Initialize action settings
-     *
-     * @param \Evoweb\SfRegister\Controller\FeuserController $controller
-     * @param array $settings
-     *
-     * @return void
-     */
-    public function initializeAction($controller, $settings)
+    public function initializeAction(\Evoweb\SfRegister\Controller\FeuserController $controller, array $settings)
     {
         if (!$this->userIsLoggedIn()) {
             $redirectSettings = $settings['redirectSignal'];
 
             if ((int) $redirectSettings['page']) {
-                $this->redirectToPage($redirectSettings['page']);
+                $this->redirectToPage((int) $redirectSettings['page']);
             } elseif ($redirectSettings['controller']) {
                 $controller->forward($redirectSettings['action'], $redirectSettings['controller']);
             } else {
@@ -56,28 +41,18 @@ class FeuserControllerSignal
         }
     }
 
-    /**
-     * Checks if an user is logged in
-     *
-     * @return bool
-     */
-    public function userIsLoggedIn()
+    public function userIsLoggedIn(): bool
     {
         /** @noinspection PhpInternalEntityUsedInspection */
         return is_array($this->getTypoScriptFrontendController()->fe_user->user);
     }
 
-    /**
-     * Redirect to a page with given id
-     *
-     * @param integer $pageId
-     *
-     * @return void
-     */
-    protected function redirectToPage($pageId)
+    protected function redirectToPage(int $pageId)
     {
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+        $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Extbase\Object\ObjectManager::class
+        );
 
         /** @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder $uriBuilder */
         $uriBuilder = $objectManager->get(\TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder::class);
@@ -85,10 +60,7 @@ class FeuserControllerSignal
         \TYPO3\CMS\Core\Utility\HttpUtility::redirect($url);
     }
 
-    /**
-     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-     */
-    protected function getTypoScriptFrontendController()
+    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
     }

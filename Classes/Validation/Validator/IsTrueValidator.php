@@ -28,8 +28,6 @@ use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * Validator to check if a given value is equal to true
- *
- * @scope singleton
  */
 class IsTrueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
 {
@@ -43,9 +41,9 @@ class IsTrueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
      *
      * @param boolean $value The value
      *
-     * @return boolean
+     * @return bool
      */
-    public function isValid($value)
+    public function isValid($value): bool
     {
         $result = true;
 

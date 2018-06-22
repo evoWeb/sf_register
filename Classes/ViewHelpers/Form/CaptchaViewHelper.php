@@ -24,10 +24,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
-
 /**
- * Viewhelper to output a captcha in a form
+ * View helper to output a captcha in a form
  * <code title="Usage">
  * {namespace register=Evoweb\SfRegister\ViewHelpers}
  * <register:form.captcha type="jmrecaptcha"/>
@@ -36,39 +34,25 @@ use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
 class CaptchaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper
 {
     /**
-     * Factory to create a captcha that is used to render the output
-     *
-     * @var CaptchaAdapterFactory
+     * @var \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory
      */
     protected $captchaAdapterFactory;
 
-    /**
-     * @param CaptchaAdapterFactory $captchaAdapterFactory
-     */
-    public function injectCaptchaAdapterFactory(CaptchaAdapterFactory $captchaAdapterFactory)
-    {
+    public function injectCaptchaAdapterFactory(
+        \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory $captchaAdapterFactory
+    ) {
         $this->captchaAdapterFactory = $captchaAdapterFactory;
     }
 
-    /**
-     * Initialize arguments.
-     *
-     * @return void
-     */
     public function initializeArguments()
     {
         $this->registerUniversalTagAttributes();
+        $this->registerArgument('type', 'string', 'Captcha type', true);
     }
 
-    /**
-     * Render the captcha block
-     *
-     * @param string $type Type of captcha to use
-     *
-     * @return string
-     */
-    public function render($type)
+    public function render(): string
     {
+        $type = $this->arguments['type'];
         return $this->captchaAdapterFactory->getCaptchaAdapter($type)->render();
     }
 }

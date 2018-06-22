@@ -31,9 +31,6 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
  */
 class FeuserEditController extends FeuserController
 {
-    /**
-     * @return void
-     */
     protected function initializeAction()
     {
         parent::initializeAction();
@@ -45,13 +42,6 @@ class FeuserEditController extends FeuserController
         }
     }
 
-    /**
-     * Form action
-     *
-     * @param FrontendUser $user
-     *
-     * @return void
-     */
     public function formAction(FrontendUser $user = null)
     {
         /** @noinspection PhpInternalEntityUsedInspection */
@@ -103,7 +93,6 @@ class FeuserEditController extends FeuserController
      *
      * @param FrontendUser $user
      *
-     * @return void
      * @validate $user Evoweb.SfRegister:User
      */
     public function previewAction(FrontendUser $user)
@@ -129,7 +118,6 @@ class FeuserEditController extends FeuserController
      *
      * @param FrontendUser $user
      *
-     * @return void
      * @validate $user Evoweb.SfRegister:User
      */
     public function saveAction(FrontendUser $user)
@@ -177,17 +165,7 @@ class FeuserEditController extends FeuserController
         $this->view->assign('user', $user);
     }
 
-
-    /**
-     * Confirm registration process by user
-     * Could be followed by acceptance of admin
-     *
-     * @param FrontendUser $user
-     * @param string $hash
-     *
-     * @return void
-     */
-    public function confirmAction(FrontendUser $user = null, $hash = null)
+    public function confirmAction(FrontendUser $user = null, string $hash = null)
     {
         $user = $this->determineFrontendUser($user, $hash);
 
@@ -229,7 +207,7 @@ class FeuserEditController extends FeuserController
 
             if ($this->settings['autologinPostConfirmation']) {
                 $this->persistAll();
-                $this->autoLogin($user, $this->settings['redirectPostActivationPageId']);
+                $this->autoLogin($user, (int) $this->settings['redirectPostActivationPageId']);
             }
 
             if ($this->settings['redirectPostActivationPageId']) {
@@ -238,17 +216,7 @@ class FeuserEditController extends FeuserController
         }
     }
 
-
-    /**
-     * Confirm registration process by user
-     * Could be followed by acceptance of admin
-     *
-     * @param FrontendUser $user
-     * @param string $hash
-     *
-     * @return void
-     */
-    public function acceptAction(FrontendUser $user = null, $hash = null)
+    public function acceptAction(FrontendUser $user = null, string $hash = null)
     {
         $user = $this->determineFrontendUser($user, $hash);
 

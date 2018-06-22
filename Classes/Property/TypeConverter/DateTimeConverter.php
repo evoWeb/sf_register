@@ -24,13 +24,10 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class DateTimeConverter
- */
 class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter
 {
     /**
-     * Domain model to get values of
+     * @var int
      */
     const CONFIGURATION_USER_DATA = 1;
 
@@ -59,7 +56,6 @@ class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTi
      * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
      *
      * @return mixed|\TYPO3\CMS\Extbase\Error\Error target type, or an error object
-     * @throws \TYPO3\CMS\Extbase\Property\Exception\TypeConverterException thrown in case a developer error occurred
      */
     public function convertFrom(
         $source,
@@ -79,7 +75,7 @@ class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTi
         }
 
         $userData = $configuration->getConfigurationValue(
-            \Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter::class,
+            self::class,
             self::CONFIGURATION_USER_DATA
         );
 

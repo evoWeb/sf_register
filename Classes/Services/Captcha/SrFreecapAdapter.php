@@ -60,16 +60,11 @@ namespace Evoweb\SfRegister\Services\Captcha;
 class SrFreecapAdapter extends AbstractAdapter
 {
     /**
-     * Object manager
-     *
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     * @inject
      */
     protected $objectManager;
 
     /**
-     * Captcha object
-     *
      * @var \tx_srfreecap_pi2
      */
     protected $captcha = null;
@@ -87,7 +82,7 @@ class SrFreecapAdapter extends AbstractAdapter
     ];
 
     /**
-     * Constuctor
+     * Constructor
      */
     public function __construct()
     {
@@ -99,15 +94,14 @@ class SrFreecapAdapter extends AbstractAdapter
         }
     }
 
-    /**
-     * Rendering the output of the captcha
-     *
-     * @return string
-     */
-    public function render()
+    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
     {
-        $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)
-            ->remove('captchaWasValidPreviously');
+        $this->objectManager = $objectManager;
+    }
+
+    public function render(): string
+    {
+        $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)->remove('captchaWasValidPreviously');
 
         if ($this->captcha !== null) {
             /** @noinspection PhpUndefinedMethodInspection */
@@ -124,14 +118,7 @@ class SrFreecapAdapter extends AbstractAdapter
         return $output;
     }
 
-    /**
-     * Validate the captcha value from the request and output an error if not valid
-     *
-     * @param string $value
-     *
-     * @return bool
-     */
-    public function isValid($value)
+    public function isValid(string $value): bool
     {
         $validCaptcha = true;
 

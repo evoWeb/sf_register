@@ -29,27 +29,27 @@ use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * Validator to check if the uploaded image could be handled
- *
- * @scope singleton
  */
 class ImageUploadValidator extends AbstractValidator implements ValidatorInterface
 {
     /**
-     * Service to handle files
-     *
      * @var \Evoweb\SfRegister\Services\File
-     * @inject
      */
     protected $fileService;
+
+    public function injectFileService(\Evoweb\SfRegister\Services\File $fileService)
+    {
+        $this->fileService = $fileService;
+    }
 
     /**
      * If the given value is set
      *
      * @param boolean $value The value
      *
-     * @return boolean
+     * @return bool
      */
-    public function isValid($value)
+    public function isValid($value): bool
     {
         $result = true;
 

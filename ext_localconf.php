@@ -6,19 +6,26 @@ call_user_func(function () {
      * Page TypoScript for mod wizards
      */
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TsConfig/ModWizards.typoscript">'
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/PageTS/Wizards/NewContentElement.typoscript">'
     );
-    /**
-     * User TypoScript for fields
-     *
-     * Needs to be added on top so others can extend regardless of load order
-     */
+
+    // Needs to be added on top so others can extend regardless of load order
     $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'] = '
 [GLOBAL]
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript">
 ' . $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'];
 
-    $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']);
+    /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    $iconRegistry->registerIcon(
+        'sf-register-extension',
+        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        ['source' => 'EXT:sf_register/Resources/Public/Icons/Extension.svg']
+    );
+
+    $extensionConfiguration = !is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']) ?
+        unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']) :
+        $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register'];
 
     if (TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')
         && (

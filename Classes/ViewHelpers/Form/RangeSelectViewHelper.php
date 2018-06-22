@@ -25,7 +25,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  ***************************************************************/
 
 /**
- * Viewhelper to render a selectbox with values
+ * View helper to render a select box with values
  * in given steps from start to end value
  * <code title="Usage">
  * {namespace register=Evoweb\SfRegister\ViewHelpers}
@@ -37,21 +37,21 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
     /**
      * Value to start range with
      *
-     * @var integer
+     * @var int
      */
     protected $start = 0;
 
     /**
      * Value to end range with
      *
-     * @var integer
+     * @var int
      */
     protected $end = PHP_INT_MAX;
 
     /**
      * Step to increase value of each option
      *
-     * @var integer
+     * @var int
      */
     protected $step = 1;
 
@@ -59,15 +59,10 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
      * In case of a value lower then 10 and digits
      * defined as 2 the label get prepended with a 0
      *
-     * @var integer
+     * @var int
      */
     protected $digits = 2;
 
-    /**
-     * Initialize arguments.
-     *
-     * @return void
-     */
     public function initializeArguments()
     {
         parent::initializeArguments();
@@ -99,12 +94,7 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
         );
     }
 
-    /**
-     * Rendering of selectbox
-     *
-     * @return string
-     */
-    public function render()
+    public function render(): string
     {
         $this->start = $this->arguments['start'];
         $this->end = $this->arguments['end'];
@@ -114,12 +104,7 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
         return parent::render();
     }
 
-    /**
-     * Get values and lables for the options
-     *
-     * @return array an associative array of options
-     */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         $options = [];
 

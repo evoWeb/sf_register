@@ -31,11 +31,6 @@ use Evoweb\SfRegister\Domain\Model\Password;
  */
 class FeuserPasswordController extends FeuserController
 {
-    /**
-     * Form action
-     *
-     * @return void
-     */
     public function formAction()
     {
         $this->signalSlotDispatcher->dispatch(
@@ -52,7 +47,6 @@ class FeuserPasswordController extends FeuserController
      *
      * @param Password $password
      *
-     * @return void
      * @validate $password Evoweb.SfRegister:User
      */
     public function saveAction(Password $password)

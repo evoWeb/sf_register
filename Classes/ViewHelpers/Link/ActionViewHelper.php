@@ -24,8 +24,6 @@ namespace Evoweb\SfRegister\ViewHelpers\Link;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 /**
  * Link Action view helper that automatically
  * adds a "hash" argument on the "user" and "action" arguments
@@ -34,7 +32,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ActionViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Link\ActionViewHelper
 {
-
     /**
      * Render method
      *
@@ -47,7 +44,7 @@ class ActionViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Link\ActionViewHelpe
      * @param integer $pageUid target page. See TypoLink destination
      * @param integer $pageType type of the target page. See typolink.parameter
      * @param boolean $noCache set this to disable caching for the target page. You should not need this.
-     * @param boolean $noCacheHash set this to supress the cHash query parameter created by TypoLink.
+     * @param boolean $noCacheHash set this to suppress the cHash query parameter created by TypoLink.
      * @param string $section the anchor to be added to the URI
      * @param string $format The requested format, e.g. ".html
      * @param boolean $linkAccessRestrictedPages If set, links pointing to access restricted pages
@@ -82,7 +79,7 @@ class ActionViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Link\ActionViewHelpe
         $addQueryStringMethod = null
     ) {
         if ($action !== null && $arguments !== null && isset($arguments['user'])) {
-            $arguments['hash'] = GeneralUtility::hmac($action . '::' . $arguments['user']);
+            $arguments['hash'] = \TYPO3\CMS\Core\Utility\GeneralUtility::hmac($action . '::' . $arguments['user']);
         }
 
         return parent::render(

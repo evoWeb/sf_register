@@ -31,9 +31,6 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
  */
 class FeuserCreateController extends FeuserController
 {
-    /**
-     * @return void
-     */
     protected function initializeAction()
     {
         parent::initializeAction();
@@ -45,13 +42,6 @@ class FeuserCreateController extends FeuserController
         }
     }
 
-    /**
-     * Form action
-     *
-     * @param FrontendUser $user
-     *
-     * @return void
-     */
     public function formAction(FrontendUser $user = null)
     {
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
@@ -93,7 +83,6 @@ class FeuserCreateController extends FeuserController
      *
      * @param FrontendUser $user
      *
-     * @return void
      * @validate $user Evoweb.SfRegister:User
      */
     public function previewAction(FrontendUser $user)
@@ -119,7 +108,6 @@ class FeuserCreateController extends FeuserController
      *
      * @param FrontendUser $user
      *
-     * @return void
      * @validate $user Evoweb.SfRegister:User
      */
     public function saveAction(FrontendUser $user)
@@ -165,7 +153,7 @@ class FeuserCreateController extends FeuserController
         $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)->remove('captchaWasValidPreviously');
 
         if ($this->settings['autologinPostRegistration']) {
-            $this->autoLogin($user, $this->settings['redirectPostRegistrationPageId']);
+            $this->autoLogin($user, (int) $this->settings['redirectPostRegistrationPageId']);
         }
 
         if ($this->settings['redirectPostRegistrationPageId']) {
@@ -182,10 +170,8 @@ class FeuserCreateController extends FeuserController
      *
      * @param FrontendUser $user
      * @param string $hash
-     *
-     * @return void
      */
-    public function confirmAction(FrontendUser $user = null, $hash = null)
+    public function confirmAction(FrontendUser $user = null, string $hash = null)
     {
         $user = $this->determineFrontendUser($user, $hash);
 
@@ -221,7 +207,7 @@ class FeuserCreateController extends FeuserController
 
                 if ($this->settings['autologinPostConfirmation']) {
                     $this->persistAll();
-                    $this->autoLogin($user, $this->settings['redirectPostActivationPageId']);
+                    $this->autoLogin($user, (int) $this->settings['redirectPostActivationPageId']);
                 }
 
                 if ($this->settings['redirectPostActivationPageId']) {
@@ -238,10 +224,8 @@ class FeuserCreateController extends FeuserController
      *
      * @param FrontendUser $user
      * @param string $hash
-     *
-     * @return void
      */
-    public function refuseAction(FrontendUser $user = null, $hash = null)
+    public function refuseAction(FrontendUser $user = null, string $hash = null)
     {
         $user = $this->determineFrontendUser($user, $hash);
 
@@ -273,10 +257,8 @@ class FeuserCreateController extends FeuserController
      *
      * @param FrontendUser $user
      * @param string $hash
-     *
-     * @return void
      */
-    public function acceptAction(FrontendUser $user = null, $hash = null)
+    public function acceptAction(FrontendUser $user = null, string $hash = null)
     {
         $user = $this->determineFrontendUser($user, $hash);
 
@@ -321,10 +303,8 @@ class FeuserCreateController extends FeuserController
      *
      * @param FrontendUser $user
      * @param string $hash
-     *
-     * @return void
      */
-    public function declineAction(FrontendUser $user = null, $hash = null)
+    public function declineAction(FrontendUser $user = null, string $hash = null)
     {
         $user = $this->determineFrontendUser($user, $hash);
 

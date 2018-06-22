@@ -29,12 +29,7 @@ namespace Evoweb\SfRegister\Domain\Repository;
  */
 class StaticLanguageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-    /**
-     * Find all languages
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
-     */
-    public function findAll()
+    public function findAll(): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()
@@ -43,14 +38,7 @@ class StaticLanguageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query->execute();
     }
 
-    /**
-     * Find languages by collate locale codes despecting the storage page
-     *
-     * @param array $lgCollateLocale
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|object
-     */
-    public function findByLgCollateLocale(array $lgCollateLocale)
+    public function findByLgCollateLocale(array $lgCollateLocale): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()

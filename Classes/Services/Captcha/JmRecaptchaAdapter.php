@@ -24,18 +24,10 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class JmRecaptchaAdapter
- *
- * @package Evoweb\SfRegister\Services\Captcha
- */
 class JmRecaptchaAdapter extends AbstractAdapter
 {
     /**
-     * Object manager
-     *
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     * @inject
      */
     protected $objectManager;
 
@@ -59,12 +51,12 @@ class JmRecaptchaAdapter extends AbstractAdapter
         }
     }
 
-    /**
-     * Rendering the output of the captcha
-     *
-     * @return string
-     */
-    public function render()
+    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
+
+    public function render(): string
     {
         $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)
             ->remove('captchaWasValidPreviously');
@@ -83,14 +75,7 @@ class JmRecaptchaAdapter extends AbstractAdapter
         return $output;
     }
 
-    /**
-     * Validate the captcha value from the request and output an error if not valid
-     *
-     * @param string $value
-     *
-     * @return bool
-     */
-    public function isValid($value)
+    public function isValid(string $value): bool
     {
         $validCaptcha = true;
 

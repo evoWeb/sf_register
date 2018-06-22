@@ -29,14 +29,7 @@ namespace Evoweb\SfRegister\Validation;
  */
 class ValidatorResolver extends \TYPO3\CMS\Extbase\Validation\ValidatorResolver
 {
-    /**
-     * Get the parsed options given in @validate annotations.
-     *
-     * @param string $validateValue
-     *
-     * @return array
-     */
-    public function getParsedValidatorAnnotation($validateValue)
+    public function getParsedValidatorAnnotation(string $validateValue): array
     {
         return $this->parseValidatorAnnotation($validateValue);
     }

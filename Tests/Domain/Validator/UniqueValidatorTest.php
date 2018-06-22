@@ -27,6 +27,8 @@ namespace Evoweb\SfRegister\Tests\Domain\Validator;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 /**
  * Class UniqueValidatorTest
  */
@@ -35,128 +37,105 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     /**
      * @var \Evoweb\SfRegister\Validation\Validator\UniqueValidator
      */
-    protected $fixture;
+    protected $subject;
 
-    /**
-     * @var \Tx_Phpunit_Framework
-     */
-    private $testingFramework;
-
-    /**
-     * @return void
-     */
     public function setUp()
     {
-        $this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
-        $pageUid = $this->testingFramework->createFrontEndPage();
-        $this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/'));
-        $this->testingFramework->createFakeFrontEnd($pageUid);
-
         /** @var \Evoweb\SfRegister\Validation\Validator\UniqueValidator $fixture */
-        $this->fixture = $this->getAccessibleMock(
-            'Evoweb\\SfRegister\\Validation\\Validator\\UniqueValidator',
-            array('dummy'),
-            array('global' => FALSE)
+        $this->subject = $this->getAccessibleMock(
+            \Evoweb\SfRegister\Validation\Validator\UniqueValidator::class,
+            ['dummy'],
+            ['global' => false]
         );
     }
 
     /**
-     * @return void
-     */
-    public function tearDown()
-    {
-        $this->testingFramework->cleanUp();
-
-        unset($this->testingFramework);
-    }
-
-    /**
      * @test
-     * @return void
      */
     public function isValidReturnsTrueIfCountOfValueInFieldReturnsZeroForLocalSearch()
     {
-        $fieldname = 'username';
+        $fieldName = 'username';
         $expected = 'myValue';
 
-        $repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
+        /** @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository|MockObject $repositoryMock */
+        $repositoryMock = $this->createMock(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
         $repositoryMock->expects($this->once())
             ->method('countByField')
-            ->with($fieldname, $expected)
+            ->with($fieldName, $expected)
             ->will($this->returnValue(0));
-        $this->fixture->injectUserRepository($repositoryMock);
-        $this->fixture->setPropertyName($fieldname);
+        $this->subject->injectUserRepository($repositoryMock);
+        $this->subject->setPropertyName($fieldName);
 
-        $this->assertTrue($this->fixture->isValid($expected));
+        $this->assertTrue($this->subject->isValid($expected));
     }
 
     /**
      * @test
-     * @return void
      */
     public function isValidReturnsFalseIfCountOfValueInFieldReturnsHigherThenZeroForLocalSearch()
     {
-        $fieldname = 'username';
+        $fieldName = 'username';
         $expected = 'myValue';
 
-        $repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
+        /** @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository|MockObject $repositoryMock */
+        $repositoryMock = $this->createMock(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
         $repositoryMock->expects($this->once())
             ->method('countByField')
-            ->with($fieldname, $expected)
+            ->with($fieldName, $expected)
             ->will($this->returnValue(1));
-        $this->fixture->injectUserRepository($repositoryMock);
-        $this->fixture->setPropertyName($fieldname);
+        $this->subject->injectUserRepository($repositoryMock);
+        $this->subject->setPropertyName($fieldName);
 
-        $this->assertFalse($this->fixture->isValid($expected));
+        $this->assertFalse($this->subject->isValid($expected));
     }
 
     /**
      * @test
-     * @return void
      */
     public function isValidReturnsTrueIfCountOfValueInFieldReturnsZeroForLocalAndGlobalSearch()
     {
-        $fieldname = 'username';
+        $fieldName = 'username';
         $expected = 'myValue';
 
-        $repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
+        /** @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository|MockObject $repositoryMock */
+        $repositoryMock = $this->createMock(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
         $repositoryMock->expects($this->once())
             ->method('countByField')
-            ->with($fieldname, $expected)
+            ->with($fieldName, $expected)
             ->will($this->returnValue(0));
         $repositoryMock->expects($this->any())
             ->method('countByFieldGlobal')
-            ->with($fieldname, $expected)
+            ->with($fieldName, $expected)
             ->will($this->returnValue(0));
-        $this->fixture->injectUserRepository($repositoryMock);
-        $this->fixture->setPropertyName($fieldname);
+        $this->subject->injectUserRepository($repositoryMock);
+        $this->subject->setPropertyName($fieldName);
 
-        $this->assertTrue($this->fixture->isValid($expected));
+        $this->assertTrue($this->subject->isValid($expected));
     }
 
     /**
      * @test
-     * @return void
      */
     public function isValidReturnsFalseIfCountOfValueInFieldReturnsZeroForLocalAndHigherThenZeroForGlobalSearch()
     {
-        $fieldname = 'username';
+        $fieldName = 'username';
         $expected = 'myValue';
 
+        /** @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(
             \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class
         );
         $repositoryMock->expects($this->once())
             ->method('countByField')
-            ->with($fieldname, $expected)
+            ->with($fieldName, $expected)
             ->will($this->returnValue(0));
         $repositoryMock->expects($this->any())
             ->method('countByFieldGlobal')
-            ->with($fieldname, $expected)
+            ->with($fieldName, $expected)
             ->will($this->returnValue(1));
-        $this->fixture->injectUserRepository($repositoryMock);
-        $this->fixture->setPropertyName($fieldname);
+        $this->subject->injectUserRepository($repositoryMock);
+        $this->subject->setPropertyName($fieldName);
 
-        $this->assertFalse($this->fixture->isValid($expected));
+        $this->assertFalse($this->subject->isValid($expected));
     }
 }

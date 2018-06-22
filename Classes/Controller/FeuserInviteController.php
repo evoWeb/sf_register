@@ -31,9 +31,6 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
  */
 class FeuserInviteController extends FeuserController
 {
-    /**
-     * @return void
-     */
     protected function initializeAction()
     {
         parent::initializeAction();
@@ -45,13 +42,6 @@ class FeuserInviteController extends FeuserController
         }
     }
 
-    /**
-     * Invite form action
-     *
-     * @param FrontendUser $user
-     *
-     * @return void
-     */
     public function formAction(FrontendUser $user = null)
     {
         if (is_null($user) && $this->userIsLoggedIn()) {
@@ -78,7 +68,6 @@ class FeuserInviteController extends FeuserController
      *
      * @param FrontendUser $user
      *
-     * @return void
      * @validate $user Evoweb.SfRegister:User
      */
     public function inviteAction(FrontendUser $user)

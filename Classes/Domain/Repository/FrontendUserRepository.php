@@ -37,7 +37,7 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
      *
      * @return NULL|\Evoweb\SfRegister\Interfaces\FrontendUserInterface|object
      */
-    public function findByIdentifier($identifier, $ignoreHidden = false)
+    public function findByIdentifier($identifier, bool $ignoreHidden = false)
     {
         if ($ignoreHidden) {
             return parent::findByIdentifier($identifier);
@@ -59,37 +59,15 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
     }
 
     /**
-     * Find user by mailhash
-     *
-     * @param string $mailhash
-     *
-     * @return \Evoweb\SfRegister\Domain\Model\FrontendUser|object
-     */
-    public function findByMailhash($mailhash)
-    {
-        $query = $this->createQuery();
-
-        $querySettings = $query->getQuerySettings();
-        $querySettings->setRespectStoragePage(true);
-        $querySettings->setIgnoreEnableFields(true);
-
-        $user = $query->matching($query->equals('mailhash', $mailhash))
-            ->execute()
-            ->getFirst();
-
-        return $user;
-    }
-
-    /**
-     * Count users in storagefolder which have a field that contains the value
+     * Count users in storage folder which have a field that contains the value
      *
      * @param string $field
      * @param string $value
      * @param boolean $respectStoragePage
      *
-     * @return integer
+     * @return int
      */
-    public function countByField($field, $value, $respectStoragePage = true)
+    public function countByField(string $field, string $value, bool $respectStoragePage = true): int
     {
         $query = $this->createQuery();
 
@@ -103,15 +81,7 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
             ->count();
     }
 
-    /**
-     * Count users installationwide which have a field that contains the value
-     *
-     * @param string $field
-     * @param string $value
-     *
-     * @return integer
-     */
-    public function countByFieldGlobal($field, $value)
+    public function countByFieldGlobal(string $field, string $value): int
     {
         return $this->countByField($field, $value, false);
     }

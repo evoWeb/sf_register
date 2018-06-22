@@ -30,85 +30,46 @@ namespace Evoweb\SfRegister\Domain\Model;
 class Password extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
-     * Password
-     *
      * @var string
      */
     protected $password;
 
     /**
-     * Repetition of Password
-     *
      * @var string
      */
     protected $passwordRepeat;
 
     /**
-     * Old password
-     *
      * @var string
      */
     protected $oldPassword;
 
-    /**
-     * Getter for password
-     *
-     * @return string
-     */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    /**
-     * Setter for password
-     *
-     * @param string $password
-     * @return void
-     */
-    public function setPassword($password)
+    public function setPassword(string $password)
     {
         $this->password = $password;
     }
 
-    /**
-     * Getter for passwordAgain
-     *
-     * @return string
-     */
-    public function getPasswordRepeat()
+    public function getPasswordRepeat(): string
     {
         return $this->passwordRepeat;
     }
 
-    /**
-     * Setter for passwordRepeat
-     *
-     * @param string $passwordRepeat
-     * @return void
-     */
-    public function setPasswordRepeat($passwordRepeat)
+    public function setPasswordRepeat(string $passwordRepeat)
     {
         $this->passwordRepeat = $passwordRepeat;
     }
 
-    /**
-     * Getter for oldPassword
-     *
-     * @return string
-     */
-    public function getOldPassword()
+    public function getOldPassword(): string
     {
         return $this->oldPassword;
     }
 
-    /**
-     * Setter for oldPassword
-     *
-     * @param string $oldPassword
-     * @return void
-     */
-    public function setOldPassword($oldPassword)
+    public function setOldPassword(string $oldPassword)
     {
         $this->oldPassword = $oldPassword;
     }

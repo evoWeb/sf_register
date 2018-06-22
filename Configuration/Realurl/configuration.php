@@ -17,7 +17,9 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])) {
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')
+    && is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'])
+) {
     $register = [
         'FeUser' => [
             [

@@ -25,43 +25,30 @@ namespace Evoweb\SfRegister\Interfaces;
  ***************************************************************/
 
 /**
- * Interface to be implemented by every frontenduser
+ * Interface to be implemented by every frontend user
  * model that should be used with this registration
  */
 interface FrontendUserInterface
 {
     /**
-     * Getter for username
-     *
      * @return string
      */
     public function getUsername();
 
     /**
-     * Getter for first name
-     *
      * @return string
      */
     public function getFirstName();
 
     /**
-     * Getter for last name
-     *
      * @return string
      */
     public function getLastName();
 
     /**
-     * Getter for email
-     *
      * @return string
      */
     public function getEmail();
 
-    /**
-     * Getter for invitationEmail
-     *
-     * @return string
-     */
-    public function getInvitationEmail();
+    public function getInvitationEmail(): string;
 }
