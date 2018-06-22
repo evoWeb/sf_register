@@ -149,21 +149,28 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         if ($this->request->hasArgument($argumentName)) {
             /** @var PropertyMappingConfiguration $configuration */
             $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
+            /** @var array $user */
+            $user = $this->request->getArgument('user');
+
             $this->getPropertyMappingConfiguration(
                 $configuration,
-                $this->request->getArgument('user')
+                $user
             );
         }
     }
 
+    /**
+     * @param PropertyMappingConfiguration|null $configuration
+     * @param array|array $userData
+     *
+     * @return PropertyMappingConfiguration
+     */
     protected function getPropertyMappingConfiguration(
         PropertyMappingConfiguration $configuration = null,
-        array $userData = []
+        $userData = []
     ): PropertyMappingConfiguration {
         if (is_null($configuration)) {
-            $configuration = $this->objectManager->get(
-                PropertyMappingConfiguration::class
-            );
+            $configuration = $this->objectManager->get(PropertyMappingConfiguration::class);
         }
 
         $configuration->allowAllProperties();
