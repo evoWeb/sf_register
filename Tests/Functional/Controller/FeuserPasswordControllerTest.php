@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Controller;
+namespace Evoweb\SfRegister\Tests\Functional\Controller;
 
 /***************************************************************
  * Copyright notice
@@ -24,49 +24,23 @@ namespace Evoweb\SfRegister\Tests\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class FeuserPasswordControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
+
+class FeuserPasswordControllerTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
-    /**
-     * @var \Evoweb\SfRegister\Controller\FeuserPasswordController|\TYPO3\CMS\Core\Tests\AccessibleObjectInterface
-     */
-    protected $fixture;
-
-    /**
-     * @var \Tx_Phpunit_Framework
-     */
-    private $testingFramework;
-
-    /**
-     * @return void
-     */
-    public function setUp()
-    {
-        $this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
-        $pageUid = $this->testingFramework->createFrontEndPage();
-        $this->testingFramework->createTemplate($pageUid, array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/'));
-        $this->testingFramework->createFakeFrontEnd($pageUid);
-
-        $this->fixture = $this->getAccessibleMock('Evoweb\\SfRegister\\Controller\\FeuserPasswordController', array('dummy'));
-    }
-
-    /**
-     * @return void
-     */
-    public function tearDown()
-    {
-        $this->testingFramework->cleanUp();
-
-        unset($this->fixture, $this->testingFramework);
-    }
-
     /**
      * @test
      * @return void
      */
     public function isUserLoggedInReturnsFalseIfNotLoggedIn()
     {
+        /** @var \Evoweb\SfRegister\Controller\FeuserPasswordController|AccessibleObjectInterface $subject */
+        $subject = $this->getAccessibleMock(
+            \Evoweb\SfRegister\Controller\FeuserPasswordController::class,
+            null
+        );
         $this->assertFalse(
-            $this->fixture->_call('isUserLoggedIn')
+            $subject->_call('isUserLoggedIn')
         );
     }
 
