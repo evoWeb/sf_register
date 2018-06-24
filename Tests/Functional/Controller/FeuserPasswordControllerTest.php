@@ -1,59 +1,66 @@
 <?php
 namespace Evoweb\SfRegister\Tests\Functional\Controller;
 
-/***************************************************************
- * Copyright notice
+/*
+ * This file is developed by evoweb.
  *
- * (c) 2011-18 Sebastian Fischer <typo3@evoweb.de>
- * All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
 
+use Evoweb\SfRegister\Controller\FeuserPasswordController;
+use TYPO3\CMS\Core\TypoScript\TemplateService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Frontend\Page\PageRepository;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class FeuserPasswordControllerTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        $typoScriptFrontendController = GeneralUtility::makeInstance(
+            TypoScriptFrontendController::class,
+            null,
+            1,
+            0
+        );
+        $typoScriptFrontendController->sys_page = GeneralUtility::makeInstance(PageRepository::class);
+        $typoScriptFrontendController->tmpl = GeneralUtility::makeInstance(TemplateService::class);
+        $GLOBALS['TSFE'] = $typoScriptFrontendController;
+    }
+
     /**
      * @test
-     * @return void
      */
     public function isUserLoggedInReturnsFalseIfNotLoggedIn()
     {
-        /** @var \Evoweb\SfRegister\Controller\FeuserPasswordController|AccessibleObjectInterface $subject */
-        $subject = $this->getAccessibleMock(
-            \Evoweb\SfRegister\Controller\FeuserPasswordController::class,
-            null
-        );
+        /** @var FeuserPasswordController $subject */
+        $subject = new FeuserPasswordController();
+        $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         $this->assertFalse(
-            $subject->_call('isUserLoggedIn')
+            $method->invoke($subject)
         );
     }
 
     /**
      * @test
-     * @return void
      */
     public function isUserLoggedInReturnsTrueIfLoggedIn()
     {
-        $this->testingFramework->createAndLoginFrontEndUser('', array('password' => 'testOld'));
+        $this->testingFramework->createAndLoginFrontEndUser('', ['password' => 'testOld']);
 
+        /** @var FeuserPasswordController $subject */
+        $subject = new FeuserPasswordController();
+        $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         $this->assertTrue(
-            $this->fixture->_call('isUserLoggedIn')
+            $method->invoke($subject)
         );
     }
 
@@ -63,18 +70,30 @@ class FeuserPasswordControllerTest extends \TYPO3\TestingFramework\Core\Function
      */
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository()
     {
+        /** @var FeuserPasswordController|AccessibleObjectInterface $subject */
+        $subject = $this->getAccessibleMock(
+            FeuserPasswordController::class,
+            null
+        );
+
         // we don't want to test the encryption here
         if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'])) {
             unset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword']);
         }
         $expected = 'myPassword';
 
-        $userId = $this->testingFramework->createAndLoginFrontEndUser('', array('password' => $expected));
+        $userId = $this->testingFramework->createAndLoginFrontEndUser('', ['password' => $expected]);
         // we need to clone the create object else the isClone param
         // is not set and the both object wont match
         $userMock = clone(new \Evoweb\SfRegister\Domain\Model\FrontendUser());
 
-        $repositoryMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Repository\\FrontendUserRepository', array(), array(), '', FALSE);
+        $repositoryMock = $this->getMock(
+            \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class,
+            [],
+            [],
+            '',
+            false
+        );
         $repositoryMock->expects($this->once())
             ->method('findByUid')
             ->with($userId)
@@ -83,13 +102,21 @@ class FeuserPasswordControllerTest extends \TYPO3\TestingFramework\Core\Function
         $repositoryMock->expects($this->once())
             ->method('update')
             ->with($userMock);
-        $this->fixture->injectUserRepository($repositoryMock);
+        $subject->injectUserRepository($repositoryMock);
 
         /** @var \Evoweb\SfRegister\Domain\Model\Password|\PHPUnit_Framework_MockObject_MockObject $passwordMock */
-        $passwordMock = $this->getMock('Evoweb\\SfRegister\\Domain\\Model\\Password');
+        $passwordMock = $this->getMock(\Evoweb\SfRegister\Domain\Model\Password::class);
         $passwordMock->expects($this->once())
             ->method('getPassword')
             ->will($this->returnValue($expected));
-        $this->fixture->saveAction($passwordMock);
+        $subject->saveAction($passwordMock);
+    }
+
+    public function getPrivateMethod($obj, $name)
+    {
+        $class = new \ReflectionClass($obj);
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+        return $method;
     }
 }

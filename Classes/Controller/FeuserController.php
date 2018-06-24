@@ -290,7 +290,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return $user;
     }
 
-    public static function encryptPassword(string $password, array $settings): string
+    public function encryptPassword(string $password, array $settings): string
     {
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')
             && \TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility::isUsageEnabled('FE')
