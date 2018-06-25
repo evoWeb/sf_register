@@ -29,6 +29,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
+			"Evoweb\\SfRegister\\Tests\\": "Tests",
 			"TYPO3\\CMS\\Core\\Tests\\": ".Build/Web/typo3/sysext/core/Tests/"
 		}
 	},
