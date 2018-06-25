@@ -2,6 +2,11 @@ language: php
 
 sudo: false
 
+addons:
+  apt:
+    packages:
+      - libxml2-utils
+
 branches:
   only:
     - master
