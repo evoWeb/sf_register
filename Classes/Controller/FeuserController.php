@@ -53,13 +53,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected $userGroupRepository;
 
     /**
-     * Signal slot dispatcher
-     *
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     */
-    protected $signalSlotDispatcher;
-
-    /**
      * File service
      *
      * @var \Evoweb\SfRegister\Services\File
@@ -101,11 +94,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     public function injectUserGroupRepository(FrontendUserGroupRepository $userGroupRepository)
     {
         $this->userGroupRepository = $userGroupRepository;
-    }
-
-    public function injectSignalSlotDispatcher(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher$signalSlotDispatcher)
-    {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
     }
 
 

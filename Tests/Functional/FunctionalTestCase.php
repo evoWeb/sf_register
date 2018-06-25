@@ -6,12 +6,20 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 
 abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
-    public function getPrivateMethod($object, $methodName)
+    public function getPrivateMethod($object, $methodName): \ReflectionMethod
     {
         $classReflection = new \ReflectionClass($object);
         $methodReflection = $classReflection->getMethod($methodName);
         $methodReflection->setAccessible(true);
         return $methodReflection;
+    }
+
+    public function getPrivateProperty($object, $propertyName): \ReflectionProperty
+    {
+        $classReflection = new \ReflectionClass($object);
+        $propertyReflection = $classReflection->getProperty($propertyName);
+        $propertyReflection->setAccessible(true);
+        return $propertyReflection;
     }
 
     public function initializeTypoScriptFrontendController()
