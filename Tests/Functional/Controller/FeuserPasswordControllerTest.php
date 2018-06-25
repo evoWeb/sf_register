@@ -82,11 +82,11 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
             ->getMock();
         $repositoryMock->expects($this->once())
             ->method('findByUid')
-            ->with($userId)
+            ->with($this->equalTo($userId))
             ->will($this->returnValue($userMock));
         $repositoryMock->expects($this->once())
             ->method('update')
-            ->with($userMock);
+            ->with($this->equalTo($userMock));
         $subject->injectUserRepository($repositoryMock);
 
         /** @var \Evoweb\SfRegister\Domain\Model\Password|MockObject $passwordMock */

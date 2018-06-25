@@ -35,9 +35,10 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
         \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $frontendController,
         $frontEndUserGroups = '',
         array $recordData = []
-    ) {
+    ): int {
         $frontEndUserUid = $this->createFrontEndUser($frontEndUserGroups, $recordData);
         $this->loginFrontEndUser($frontendController, $frontEndUserUid);
+        return $frontEndUserUid;
     }
 
     public function createFrontEndUser(string $frontEndUserGroups = '', array $recordData = []): int
