@@ -15,8 +15,6 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
 use Evoweb\SfRegister\Controller\FeuserPasswordController;
 use PHPUnit\Framework\MockObject\MockObject;
 
-use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
-
 class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
     public function setUp()
@@ -24,7 +22,8 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $this->testExtensionsToLoad[] = 'typo3conf/ext/sf_register';
 
         parent::setUp();
-        $this->importDataSet('../Tests/Functional/Fixtures/fe_groups.xml');
+        $this->importDataSet('EXT:sf_register/Tests/Functional/Fixtures/pages.xml');
+        $this->importDataSet('EXT:sf_register/Tests/Functional/Fixtures/fe_groups.xml');
         $this->initializeTypoScriptFrontendController();
     }
 
@@ -33,7 +32,6 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
      */
     public function isUserLoggedInReturnsFalseIfNotLoggedIn()
     {
-        /** @var FeuserPasswordController $subject */
         $subject = new FeuserPasswordController();
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         $this->assertFalse($method->invoke($subject));
@@ -49,7 +47,6 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
             'comments' => ''
         ]);
 
-        /** @var FeuserPasswordController $subject */
         $subject = new FeuserPasswordController();
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         $this->assertTrue($method->invoke($subject));
@@ -60,22 +57,18 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
      */
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository()
     {
-        /** @var FeuserPasswordController|AccessibleObjectInterface $subject */
-        $subject = $this->getAccessibleMock(
-            FeuserPasswordController::class,
-            null
-        );
-        $expected = 'myPassword';
-
         // we don't want to test the encryption here
         if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'])) {
             unset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword']);
         }
 
+        $expected = 'myPassword';
         $userId = $this->createAndLoginFrontEndUser($GLOBALS['TSFE'], '1', [
             'password' => $expected,
             'comments' => ''
         ]);
+
+        $subject = new FeuserPasswordController();
 
         // we need to clone the create object else the isClone param
         // is not set and the both object wont match

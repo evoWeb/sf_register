@@ -16,22 +16,19 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
 
     public function initializeTypoScriptFrontendController()
     {
-        $typoScriptFrontendController = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+        $controller = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::class,
             null,
             1,
             0
         );
-        $typoScriptFrontendController->sys_page = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Frontend\Page\PageRepository::class
-        );
-        $typoScriptFrontendController->tmpl = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\TypoScript\TemplateService::class
-        );
-        $typoScriptFrontendController->fe_user = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication::class
-        );
-        $GLOBALS['TSFE'] = $typoScriptFrontendController;
+
+        $controller->initFEuser();
+        $controller->determineId();
+        $controller->initTemplate();
+        $controller->getConfigArray();
+
+        $GLOBALS['TSFE'] = $controller;
     }
 
     public function createAndLoginFrontEndUser(
