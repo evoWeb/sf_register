@@ -19,11 +19,21 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
+    /**
+     * @var array
+     */
+    protected $testExtensionsToLoad = ['typo3conf/ext/sf_register'];
+
+    /**
+     * @var array
+     */
+    protected $coreExtensionsToLoad = ['extbase', 'fluid'];
+
     public function setUp()
     {
         parent::setUp();
-        $this->importDataSet('EXT:sf_register/Tests/Functional/Fixtures/pages.xml');
-        $this->importDataSet('EXT:sf_register/Tests/Functional/Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__. '/../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__. '/../Fixtures/fe_groups.xml');
         $this->initializeTypoScriptFrontendController();
     }
 
