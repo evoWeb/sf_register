@@ -32,6 +32,7 @@ install:
 
 script:
   - >
+    ls -la
     echo;
     echo "Running functional tests";
     export typo3DatabaseName="typo3";
