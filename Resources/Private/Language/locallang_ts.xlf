@@ -1,218 +1,218 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2013-06-23T17:12:06Z" product-name="sf_register">
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-06-26T07:34:54Z" product-name="sf_register">
 		<header/>
 		<body>
-			<trans-unit id="maximal.useDataOfLoggedinFeuser" xml:space="preserve">
+			<trans-unit id="maximal.useDataOfLoggedinFeuser">
 				<source>defines in edit mode if the fields get filled with data of logged in user</source>
 			</trans-unit>
-			<trans-unit id="maximal.badWordList" xml:space="preserve">
+			<trans-unit id="maximal.badWordList">
 				<source>comma separated list of words used in bad word validator</source>
 			</trans-unit>
-			<trans-unit id="maximal.redirectPostRegistrationPageId" xml:space="preserve">
+			<trans-unit id="maximal.redirectPostRegistrationPageId">
 				<source>Uid of the page to redirect to after the user is saved (not after confirmation)</source>
 			</trans-unit>
-			<trans-unit id="maximal.redirectPostActivationPageId" xml:space="preserve">
+			<trans-unit id="maximal.redirectPostActivationPageId">
 				<source>Uid of the page to redirect to after the creation is confirmed (not after saving)</source>
 			</trans-unit>
-			<trans-unit id="maximal.useEmailAddressAsUsername" xml:space="preserve">
+			<trans-unit id="maximal.useEmailAddressAsUsername">
 				<source>Wether the email address should be used as username</source>
 			</trans-unit>
-			<trans-unit id="maximal.encryptPassword" xml:space="preserve">
+			<trans-unit id="maximal.encryptPassword">
 				<source>Mode of password encryption: if saltedpassword is installed it overrides selection made here</source>
 			</trans-unit>
-			<trans-unit id="maximal.encryptPassword.0" xml:space="preserve">
+			<trans-unit id="maximal.encryptPassword.0">
 				<source>plaintext no encrytion at all</source>
 			</trans-unit>
-			<trans-unit id="maximal.encryptPassword.1" xml:space="preserve">
+			<trans-unit id="maximal.encryptPassword.1">
 				<source>md5-hash of password</source>
 			</trans-unit>
-			<trans-unit id="maximal.encryptPassword.2" xml:space="preserve">
+			<trans-unit id="maximal.encryptPassword.2">
 				<source>sha1-hash of password</source>
 			</trans-unit>
-			<trans-unit id="maximal.useEncryptedFilename" xml:space="preserve">
+			<trans-unit id="maximal.useEncryptedFilename">
 				<source>Use encrypted filename: to deny direct access on uploaded files</source>
 			</trans-unit>
-			<trans-unit id="maximal.useEncryptedFilename.0" xml:space="preserve">
+			<trans-unit id="maximal.useEncryptedFilename.0">
 				<source>plaintext no encrytion at all</source>
 			</trans-unit>
-			<trans-unit id="maximal.useEncryptedFilename.1" xml:space="preserve">
+			<trans-unit id="maximal.useEncryptedFilename.1">
 				<source>md5-hash of password</source>
 			</trans-unit>
-			<trans-unit id="maximal.useEncryptedFilename.2" xml:space="preserve">
+			<trans-unit id="maximal.useEncryptedFilename.2">
 				<source>sha1-hash of password</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyAdminPostCreateSave" xml:space="preserve">
+			<trans-unit id="maximal.notifyAdminPostCreateSave">
 				<source>the admin should get an email after saving on creation</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyUserPostCreateSave" xml:space="preserve">
+			<trans-unit id="maximal.notifyUserPostCreateSave">
 				<source>the user should get an email after saving on creation</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyAdminPostCreateConfirm" xml:space="preserve">
+			<trans-unit id="maximal.notifyAdminPostCreateConfirm">
 				<source>the admin should get an email after confirm on creation</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyUserPostCreateConfirm" xml:space="preserve">
+			<trans-unit id="maximal.notifyUserPostCreateConfirm">
 				<source>the user should get an email after confirm on creation</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyAdminPostCreateRefuse" xml:space="preserve">
+			<trans-unit id="maximal.notifyAdminPostCreateRefuse">
 				<source>the admin should get an email after refuse on creation</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyUserPostCreateRefuse" xml:space="preserve">
+			<trans-unit id="maximal.notifyUserPostCreateRefuse">
 				<source>the user should get an email after refuse on creation</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyAdminPostCreateAccept" xml:space="preserve">
+			<trans-unit id="maximal.notifyAdminPostCreateAccept">
 				<source>the admin should get an email after accept on creation</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyUserPostCreateAccept" xml:space="preserve">
+			<trans-unit id="maximal.notifyUserPostCreateAccept">
 				<source>the user should get an email after accept on creation</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyAdminPostCreateDecline" xml:space="preserve">
+			<trans-unit id="maximal.notifyAdminPostCreateDecline">
 				<source>the admin should get an email after decline on creation</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyUserPostCreateDecline" xml:space="preserve">
+			<trans-unit id="maximal.notifyUserPostCreateDecline">
 				<source>the user should get an email after decline on creation</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyAdminPostEditSave" xml:space="preserve">
+			<trans-unit id="maximal.notifyAdminPostEditSave">
 				<source>the admin should get an email after saving on edit</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyUserPostEditSave" xml:space="preserve">
+			<trans-unit id="maximal.notifyUserPostEditSave">
 				<source>the user should get an email after saving on edit</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyAdminPostEditConfirm" xml:space="preserve">
+			<trans-unit id="maximal.notifyAdminPostEditConfirm">
 				<source>the admin should get an email after confirm on edit</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyUserPostEditConfirm" xml:space="preserve">
+			<trans-unit id="maximal.notifyUserPostEditConfirm">
 				<source>the user should get an email after confirm on edit</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyAdminPostEditAccept" xml:space="preserve">
+			<trans-unit id="maximal.notifyAdminPostEditAccept">
 				<source>the admin should get an email after accept on edit</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyUserPostEditAccept" xml:space="preserve">
+			<trans-unit id="maximal.notifyUserPostEditAccept">
 				<source>the user should get an email after accept on edit</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyAdminSendInvitation" xml:space="preserve">
+			<trans-unit id="maximal.notifyAdminSendInvitation">
 				<source>the admin should get an email after an invitation got sent</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyUserSendInvitation" xml:space="preserve">
+			<trans-unit id="maximal.notifyUserSendInvitation">
 				<source>the user should get an email after an invitation got sent</source>
 			</trans-unit>
 
-			<trans-unit id="maximal.confirmEmailPostEdit" xml:space="preserve">
+			<trans-unit id="maximal.confirmEmailPostEdit">
 				<source>user needs to confirm the email change</source>
 			</trans-unit>
-			<trans-unit id="maximal.acceptEmailPostEdit" xml:space="preserve">
+			<trans-unit id="maximal.acceptEmailPostEdit">
 				<source>admin needs to accept the email change</source>
 			</trans-unit>
-			<trans-unit id="maximal.confirmEmailPostCreate" xml:space="preserve">
+			<trans-unit id="maximal.confirmEmailPostCreate">
 				<source>user needs to confirm the email on create</source>
 			</trans-unit>
-			<trans-unit id="maximal.acceptEmailPostCreate" xml:space="preserve">
+			<trans-unit id="maximal.acceptEmailPostCreate">
 				<source>admin needs to accept the email on create</source>
 			</trans-unit>
-			<trans-unit id="maximal.confirmEmailPostAccept" xml:space="preserve">
+			<trans-unit id="maximal.confirmEmailPostAccept">
 				<source>user needs to confirm the email after the admin accepted</source>
 			</trans-unit>
-			<trans-unit id="maximal.acceptEmailPostConfirm" xml:space="preserve">
+			<trans-unit id="maximal.acceptEmailPostConfirm">
 				<source>admin needs to accept the email after the user confirmed</source>
 			</trans-unit>
 
-			<trans-unit id="maximal.autologinPostRegistration" xml:space="preserve">
+			<trans-unit id="maximal.autologinPostRegistration">
 				<source>whether the user should get logged in after registration</source>
 			</trans-unit>
-			<trans-unit id="maximal.autologinPostConfirmation" xml:space="preserve">
+			<trans-unit id="maximal.autologinPostConfirmation">
 				<source>whether the user should get logged in after activation</source>
 			</trans-unit>
-			<trans-unit id="maximal.usergroupPostSave" xml:space="preserve">
+			<trans-unit id="maximal.usergroupPostSave">
 				<source>usergroup set if an account waits for activation</source>
 			</trans-unit>
-			<trans-unit id="maximal.usergroupPostConfirm" xml:space="preserve">
+			<trans-unit id="maximal.usergroupPostConfirm">
 				<source>usergroup set if the account was activate</source>
 			</trans-unit>
-			<trans-unit id="maximal.usergroupPostAccept" xml:space="preserve">
+			<trans-unit id="maximal.usergroupPostAccept">
 				<source>usergroup set if the account was activate</source>
 			</trans-unit>
-			<trans-unit id="maximal.usergroup" xml:space="preserve">
+			<trans-unit id="maximal.usergroup">
 				<source>usergroup set if no activation is needed</source>
 			</trans-unit>
-			<trans-unit id="maximal.sitename" xml:space="preserve">
+			<trans-unit id="maximal.sitename">
 				<source>Name of the site used in email subject</source>
 			</trans-unit>
-			<trans-unit id="maximal.userEmail.fromName" xml:space="preserve">
+			<trans-unit id="maximal.userEmail.fromName">
 				<source>from name used in email to user</source>
 			</trans-unit>
-			<trans-unit id="maximal.userEmail.fromEmail" xml:space="preserve">
+			<trans-unit id="maximal.userEmail.fromEmail">
 				<source>from email used in email to user</source>
 			</trans-unit>
-			<trans-unit id="maximal.userEmail.replyName" xml:space="preserve">
+			<trans-unit id="maximal.userEmail.replyName">
 				<source>reply name used in email to user</source>
 			</trans-unit>
-			<trans-unit id="maximal.userEmail.replyEmail" xml:space="preserve">
+			<trans-unit id="maximal.userEmail.replyEmail">
 				<source>reply email used in email to user</source>
 			</trans-unit>
-			<trans-unit id="maximal.adminEmail.toName" xml:space="preserve">
+			<trans-unit id="maximal.adminEmail.toName">
 				<source>to name used in email to admin</source>
 			</trans-unit>
-			<trans-unit id="maximal.adminEmail.toEmail" xml:space="preserve">
+			<trans-unit id="maximal.adminEmail.toEmail">
 				<source>to email used in email to admin</source>
 			</trans-unit>
-			<trans-unit id="maximal.adminEmail.fromName" xml:space="preserve">
+			<trans-unit id="maximal.adminEmail.fromName">
 				<source>from name used in email to admin</source>
 			</trans-unit>
-			<trans-unit id="maximal.adminEmail.fromEmail" xml:space="preserve">
+			<trans-unit id="maximal.adminEmail.fromEmail">
 				<source>from email used in email to admin</source>
 			</trans-unit>
-			<trans-unit id="maximal.adminEmail.replyName" xml:space="preserve">
+			<trans-unit id="maximal.adminEmail.replyName">
 				<source>reply name used in email to admin</source>
 			</trans-unit>
-			<trans-unit id="maximal.adminEmail.replyEmail" xml:space="preserve">
+			<trans-unit id="maximal.adminEmail.replyEmail">
 				<source>reply email used in email to admin</source>
 			</trans-unit>
-			<trans-unit id="maximal.storagePid" xml:space="preserve">
+			<trans-unit id="maximal.storagePid">
 				<source>Sysfolder that contains the usergroups and users if not set zero or a selected value in the plugin will be used for storing the user</source>
 			</trans-unit>
 
-			<trans-unit id="maximal.redirect.page" xml:space="preserve">
+			<trans-unit id="maximal.redirect.page">
 				<source>Page to redirect to if create form is a different page then the edit form</source>
 			</trans-unit>
 
-			<trans-unit id="minimal.badWordList" xml:space="preserve">
+			<trans-unit id="minimal.badWordList">
 				<source>comma separated list of words used in bad word validator</source>
 			</trans-unit>
-			<trans-unit id="minimal.redirectPostActivationPageId" xml:space="preserve">
+			<trans-unit id="minimal.redirectPostActivationPageId">
 				<source>Uid of the page to redirect to after the creation is confirmed (not after saving)</source>
 			</trans-unit>
-			<trans-unit id="minimal.autologinPostRegistration" xml:space="preserve">
+			<trans-unit id="minimal.autologinPostRegistration">
 				<source>whether the user should get logged in after registration</source>
 			</trans-unit>
-			<trans-unit id="minimal.autologinPostConfirmation" xml:space="preserve">
+			<trans-unit id="minimal.autologinPostConfirmation">
 				<source>whether the user should get logged in after activation</source>
 			</trans-unit>
-			<trans-unit id="minimal.usergroupPostSave" xml:space="preserve">
+			<trans-unit id="minimal.usergroupPostSave">
 				<source>usergroup set if an account waits for activation</source>
 			</trans-unit>
-			<trans-unit id="minimal.usergroup" xml:space="preserve">
+			<trans-unit id="minimal.usergroup">
 				<source>usergroup set if no activation is needed</source>
 			</trans-unit>
-			<trans-unit id="minimal.emailSitename" xml:space="preserve">
+			<trans-unit id="minimal.emailSitename">
 				<source>Name of the site used in email subject</source>
 			</trans-unit>
-			<trans-unit id="minimal.emailName" xml:space="preserve">
+			<trans-unit id="minimal.emailName">
 				<source>Name used in every occurance of emails</source>
 			</trans-unit>
-			<trans-unit id="minimal.emailAddress" xml:space="preserve">
+			<trans-unit id="minimal.emailAddress">
 				<source>Address used in every occurance of emails</source>
 			</trans-unit>
 
-			<trans-unit id="extmgm.typoscriptComplexity" xml:space="preserve">
+			<trans-unit id="extmgm.typoscriptComplexity">
 				<source>TypoScript complexity: wether to show minimal or maximal settings</source>
 			</trans-unit>
-			<trans-unit id="extmgm.typoscriptComplexity.0" xml:space="preserve">
+			<trans-unit id="extmgm.typoscriptComplexity.0">
 				<source>minimal</source>
 			</trans-unit>
-			<trans-unit id="extmgm.typoscriptComplexity.1" xml:space="preserve">
+			<trans-unit id="extmgm.typoscriptComplexity.1">
 				<source>maximal</source>
 			</trans-unit>
-			<trans-unit id="extmgm.setRealurlConfigByDefault" xml:space="preserve">
+			<trans-unit id="extmgm.setRealurlConfigByDefault">
 				<source>Set realurl config by default: In case you have a separate config for realurl or the default settings dont suite your needs you would like to disable this</source>
 			</trans-unit>
 
