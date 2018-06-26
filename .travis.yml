@@ -32,7 +32,10 @@ install:
 
 script:
   - >
-    ls -la;
+    ls -la .Build;
+    ls -la .Build/Web;
+    ls -la .Build/Web/typo3conf;
+    ls -la .Build/Web/typo3conf/ext;
     echo;
     echo "Running functional tests";
     export typo3DatabaseName="typo3";
