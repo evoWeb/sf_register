@@ -21,8 +21,6 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
 {
     public function setUp()
     {
-        $this->testExtensionsToLoad[] = 'typo3conf/ext/sf_register';
-
         parent::setUp();
         $this->importDataSet('EXT:sf_register/Tests/Functional/Fixtures/pages.xml');
         $this->importDataSet('EXT:sf_register/Tests/Functional/Fixtures/fe_groups.xml');

@@ -21,22 +21,18 @@ notifications:
   email:
     - typo3@evoweb.de
 
+install:
+  - >
+    export TYPO3_PATH_WEB=$PWD/.Build/Web;
+    composer require typo3/minimal="$TYPO3_VERSION" $PREFER_LOWEST;
+    composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK";
+    git checkout composer.json;
+
 before_script:
   - phpenv config-rm xdebug.ini
 
-install:
-  - export TYPO3_PATH_WEB=$PWD/.Build/Web
-  - composer require typo3/minimal="$TYPO3_VERSION" $PREFER_LOWEST
-  - composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"
-  - git checkout composer.json
-
 script:
   - >
-    ls -la .Build;
-    ls -la .Build/Web;
-    ls -la .Build/Web/typo3conf;
-    ls -la .Build/Web/typo3conf/ext;
-    echo;
     echo "Running functional tests";
     export typo3DatabaseName="typo3";
     export typo3DatabaseHost="localhost";
