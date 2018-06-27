@@ -21,8 +21,10 @@
 	],
 
 	"require": {
-		"typo3/cms-core": "^8.7.0 || ^9.3.0",
-		"evoweb/recaptcha": "^7.4.0"
+		"typo3/cms-core": "^8.7.0 || ^9.3.0"
+	},
+	"suggest": {
+		"evoweb/recaptcha": "^8.2.0"
 	},
 
 	"autoload": {
