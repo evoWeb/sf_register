@@ -154,6 +154,7 @@ class FeuserEditController extends FeuserController
         $user = $this->sendEmails($user, 'PostEditSave');
 
         $this->userRepository->update($user);
+        $this->persistAll();
 
         $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)
             ->remove('captchaWasValidPreviously');
