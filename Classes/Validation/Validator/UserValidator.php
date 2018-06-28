@@ -220,7 +220,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
     protected function getValidationRulesFromSettings(): array
     {
         $mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));
-        $rules = (array)$this->settings['validation'][$mode];
+        $rules = $this->settings['validation'][$mode] ?? [];
 
         if ($this->model instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser) {
             if ($mode == 'create') {
