@@ -85,6 +85,14 @@ call_user_func(function () {
         \Evoweb\SfRegister\Property\TypeConverter\ObjectStorageConverter::class
     );
 
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    $iconRegistry->registerIcon(
+        'sf-register-plugin',
+        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        [
+            'source' => 'EXT:sf_register/ext_icon.svg'
+        ]
+    );
 
     if (TYPO3_MODE === 'FE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
         /**
