@@ -90,7 +90,7 @@ call_user_func(function () {
         'sf-register-plugin',
         \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         [
-            'source' => 'EXT:sf_register/ext_icon.svg'
+            'source' => 'EXT:sf_register/Resources/Public/Icons/Extension.svg'
         ]
     );
 
