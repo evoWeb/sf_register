@@ -207,9 +207,9 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     /**
      * selected Dmail categories
      *
-     * @var array
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
      */
-    protected $moduleSysDmailCategory = [];
+    protected $moduleSysDmailCategory;
 
     /**
      * new email address before edit
