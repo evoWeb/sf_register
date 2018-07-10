@@ -163,6 +163,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
         $configuration->allowAllProperties();
         $configuration->forProperty('usergroup')->allowAllProperties();
+        $configuration->forProperty('moduleSysDmailCategory')->allowAllProperties();
         $configuration->forProperty('image')->allowAllProperties();
         $configuration->setTypeConverterOption(
             PersistentObjectConverter::class,
