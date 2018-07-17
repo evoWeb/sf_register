@@ -44,7 +44,7 @@ jobs:
   fast_finish: true
   allow_failures:
     - env: TYPO3_VERSION="^9.2.0" TESTING_FRAMEWORK="^3.2"
-    - env: TYPO3_VERSION="dev-master as 9.3.0" TESTING_FRAMEWORK="^3.2"
+    - env: TYPO3_VERSION="^9.3" TESTING_FRAMEWORK="^3.2"
 
   include:
     - &lint
@@ -85,7 +85,7 @@ jobs:
       env: TYPO3_VERSION="^9.2.0" TESTING_FRAMEWORK="^3.2"
     - stage: test
       php: 7.2
-      env: TYPO3_VERSION="dev-master as 9.3.0" TESTING_FRAMEWORK="^3.2"
+      env: TYPO3_VERSION="^9.3" TESTING_FRAMEWORK="^3.2"
 
     - stage: publish in ter
       if: tag IS present
