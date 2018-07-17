@@ -30,6 +30,7 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
@@ -96,6 +97,17 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $this->userGroupRepository = $userGroupRepository;
     }
 
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    {
+        $this->configurationManager = $configurationManager;
+        $this->settings = $this->configurationManager->getConfiguration(
+	    ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+	);
+        $frameworkConfiguration = $this->configurationManager->getConfiguration(
+	    ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+	);
+        $GLOBALS['sf_register_controllerConfiguration'] = $frameworkConfiguration['controllerConfiguration'];
+    }
 
     /**
      * Disable flash messages
