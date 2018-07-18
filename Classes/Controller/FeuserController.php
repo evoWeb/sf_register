@@ -411,7 +411,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $currentIndex = array_search((int) $currentUserGroup, $userGroups);
 
         $reducedUserGroups = [];
-        if ($currentUserGroup !== false && $currentUserGroup < count($userGroups)) {
+        if ($currentIndex !== false && $currentIndex < count($userGroups)) {
             $reducedUserGroups = array_slice($userGroups, $currentIndex);
         }
 
