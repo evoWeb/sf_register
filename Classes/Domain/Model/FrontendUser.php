@@ -516,7 +516,10 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         $this->moduleSysDmailCategory = $moduleSysDmailCategory;
     }
 
-    public function getModuleSysDmailCategory(): array
+    /**
+     * @return array|null
+     */
+    public function getModuleSysDmailCategory()
     {
         return $this->moduleSysDmailCategory;
     }
