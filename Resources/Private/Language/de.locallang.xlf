@@ -315,6 +315,10 @@
 				<source>User created</source>
 				<target>Benutzer erstellt</target>
 			</trans-unit>
+			<trans-unit id="create_refused">
+                <source>Sorry you refused your registration with account %2$s on site %1$s</source>
+				<target>Schade, dass Sie Ihre Registerung als %2$s auf Seite %1$s abgelehnt haben</target>
+			</trans-unit>
 			<trans-unit id="info_mandatory_fields">
 				<source>Fields with &lt;span&gt;*&lt;/span&gt; are mandatory</source>
 				<target>Mit &lt;span&gt;*&lt;/span&gt; markierte Felder sind Pflichtfelder</target>
@@ -522,7 +526,7 @@
 				<target>Vielen Dank für Ihre Bestätigung der Registerung als %2$s auf Seite %1$s</target>
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationPostCreateRefuse">
-				<source>Sorry your refused your registration with account %2$s on site %1$s</source>
+				<source>Sorry you refused your registration with account %2$s on site %1$s</source>
 				<target>Schade, dass Sie Ihre Registerung als %2$s auf Seite %1$s abgelehnt haben</target>
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationPostCreateAccept">
