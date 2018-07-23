@@ -104,21 +104,23 @@
 			) &&
 			loading !== true
 		) {
-			loading = true;
-			var target = event.target || event.srcElement;
-			var countrySelectedValue = target.options[target.selectedIndex].value;
+			if (zone) {
+				loading = true;
+				var target = event.target || event.srcElement;
+				var countrySelectedValue = target.options[target.selectedIndex].value;
 
-			zone.length = 0;
-			module.hideElement(zone);
+				zone.length = 0;
+				module.hideElement(zone);
 
-			module.hideElement(zoneEmpty);
-			module.showElement(zoneLoading);
+				module.hideElement(zoneEmpty);
+				module.showElement(zoneLoading);
 
-			ajaxRequest = new XMLHttpRequest();
-			ajaxRequest.onreadystatechange = module.xhrReadyStateChanged;
-			ajaxRequest.open('POST', 'index.php?eID=sf_register');
-			ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-			ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+				ajaxRequest = new XMLHttpRequest();
+				ajaxRequest.onreadystatechange = module.xhrReadyStateChanged;
+				ajaxRequest.open('POST', 'index.php?eID=sf_register');
+				ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+				ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+			}
 		}
 	};
 
