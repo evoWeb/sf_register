@@ -24,6 +24,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
@@ -90,16 +91,13 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
             );
             $result = false;
         } else {
+            /** @noinspection PhpInternalEntityUsedInspection */
             $user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
 
-            if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')
-                && \TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility::isUsageEnabled('FE')
-            ) {
-                /** @var \TYPO3\CMS\Saltedpasswords\Salt\SaltInterface $saltedPassword */
-                $saltedPassword = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance(
-                    $user->getPassword(),
-                    null
-                );
+            if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
+                /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
+                $passwordHashFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class);
+                $saltedPassword = $passwordHashFactory->get($user->getPassword(), 'FE');
                 if (!$saltedPassword->checkPassword($password, $user->getPassword())) {
                     $this->addError(
                         \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(

@@ -27,7 +27,7 @@ namespace Evoweb\SfRegister\Services;
 /**
  * Service to handle user login
  */
-class AutoLogin extends \TYPO3\CMS\Sv\AuthenticationService
+class AutoLogin extends \TYPO3\CMS\Core\Authentication\AuthenticationService
 {
     /**
      * @var bool

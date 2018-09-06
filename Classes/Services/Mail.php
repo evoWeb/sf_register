@@ -326,7 +326,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             $view->assignMultiple($variables);
 
             $body = $view->render();
-        } catch (\TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException $e) {
+        } catch (\TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException $e) {
             $body = '';
         }
 

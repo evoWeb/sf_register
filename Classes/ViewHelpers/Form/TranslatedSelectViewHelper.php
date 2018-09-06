@@ -54,7 +54,7 @@ class TranslatedSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\Selec
     protected function renderOptionTag($value, $label, $isSelected): string
     {
         $extensionName = $this->hasArgument('extensionName') ? $this->arguments['extensionName'] : null;
-        $request = $this->controllerContext->getRequest();
+        $request = $this->getRequest();
         $extensionName = $extensionName === null ? $request->getControllerExtensionName() : $extensionName;
 
         $label = htmlspecialchars(LocalizationUtility::translate($label, $extensionName));

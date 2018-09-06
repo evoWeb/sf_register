@@ -34,7 +34,7 @@ namespace Evoweb\SfRegister\ViewHelpers;
  *  {register:languageKey(type: 'countries')}
  * </code>
  */
-class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class LanguageKeyViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
     public function initializeArguments()
     {

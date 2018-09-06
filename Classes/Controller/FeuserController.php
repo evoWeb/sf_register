@@ -101,11 +101,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
-	    ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
-	);
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+        );
         $frameworkConfiguration = $this->configurationManager->getConfiguration(
-	    ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-	);
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+        );
         $GLOBALS['sf_register_controllerConfiguration'] = $frameworkConfiguration['controllerConfiguration'];
     }
 
@@ -227,11 +227,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Proxy action
      *
-     * @param FrontendUser $user
-     *
      * @validate $user Evoweb.SfRegister:User
      */
-    public function proxyAction(FrontendUser $user)
+    public function proxyAction()
     {
         $action = 'save';
 
@@ -293,20 +291,14 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     public function encryptPassword(string $password, array $settings): string
     {
-        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')
-            && \TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility::isUsageEnabled('FE')
-        ) {
-            $saltObject = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance(null);
-            if ($saltObject instanceof \TYPO3\CMS\Saltedpasswords\Salt\SaltInterface) {
-                $password = $saltObject->getHashedPassword($password);
+        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
+            /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
+            $passwordHashFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class);
+            if ($passwordHashFactory instanceof \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface) {
+                $password = $passwordHashFactory->getHashedPassword($password);
             }
         } elseif ($settings['encryptPassword'] === 'md5') {
             $password = md5($password);
-        } elseif ($settings['encryptPassword'] === 'sha1') {
-            GeneralUtility::deprecationLog(
-                'sha1 password encryption is deprecated and will be removed after 2018.02.01'
-            );
-            $password = sha1($password);
         }
 
         return $password;

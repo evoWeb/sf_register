@@ -32,8 +32,10 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Service to handle file upload and deletion
  */
-class File implements \TYPO3\CMS\Core\SingletonInterface
+class File implements \TYPO3\CMS\Core\SingletonInterface, \Psr\Log\LoggerAwareInterface
 {
+    use \Psr\Log\LoggerAwareTrait;
+
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
      */
@@ -332,7 +334,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface
         try {
             $file->getStorage()->moveFile($file, $this->imageFolder);
         } catch (\Exception $e) {
-            GeneralUtility::devLog('Image ' . $file->getName() . ' could not be moved', 'sf_register');
+            $this->logger->info('sf_register: Image ' . $file->getName() . ' could not be moved');
         }
     }
 

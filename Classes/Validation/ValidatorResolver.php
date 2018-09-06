@@ -31,6 +31,7 @@ class ValidatorResolver extends \TYPO3\CMS\Extbase\Validation\ValidatorResolver
 {
     public function getParsedValidatorAnnotation(string $validateValue): array
     {
+        /** @noinspection PhpInternalEntityUsedInspection */
         return $this->parseValidatorAnnotation($validateValue);
     }
 }

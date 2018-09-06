@@ -43,8 +43,9 @@ script:
 jobs:
   fast_finish: true
   allow_failures:
-    - env: TYPO3_VERSION="^9.2.0" TESTING_FRAMEWORK="^3.2"
+    - env: TYPO3_VERSION="^9.2" TESTING_FRAMEWORK="^3.2"
     - env: TYPO3_VERSION="^9.3" TESTING_FRAMEWORK="^3.2"
+    - env: TYPO3_VERSION="^9.4" TESTING_FRAMEWORK="^4.8"
 
   include:
     - &lint
@@ -72,20 +73,14 @@ jobs:
           find Resources/Private/Language/ -name '*.xlf' -type f | xargs xmllint --noout --schema Tests/Fixtures/xliff-core-1.2-strict.xsd
 
     - stage: test
-      php: 7.0
-      env: TYPO3_VERSION="^8.7" TESTING_FRAMEWORK="~1.2.2"
-    - stage: test
-      php: 7.1
-      env: TYPO3_VERSION="^8.7" TESTING_FRAMEWORK="~1.2.2"
-    - stage: test
       php: 7.2
-      env: TYPO3_VERSION="^8.7" TESTING_FRAMEWORK="~1.2.2"
-    - stage: test
-      php: 7.2
-      env: TYPO3_VERSION="^9.2.0" TESTING_FRAMEWORK="^3.2"
+      env: TYPO3_VERSION="^9.2" TESTING_FRAMEWORK="^3.2"
     - stage: test
       php: 7.2
       env: TYPO3_VERSION="^9.3" TESTING_FRAMEWORK="^3.2"
+    - stage: test
+      php: 7.2
+      env: TYPO3_VERSION="^9.4" TESTING_FRAMEWORK="^4.8"
 
     - stage: publish in ter
       if: tag IS present
