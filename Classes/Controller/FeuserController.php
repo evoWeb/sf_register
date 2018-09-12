@@ -400,7 +400,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function getFollowingUserGroups(int $currentUserGroup): array
     {
         $userGroups = $this->getUserGroupIds();
-        $currentIndex = array_search((int) $currentUserGroup, $userGroups);
+        $currentIndex = array_search((int)$currentUserGroup, array_values($userGroups));
 
         $reducedUserGroups = [];
         if ($currentIndex !== false && $currentIndex < count($userGroups)) {
@@ -412,18 +412,13 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     protected function getUserGroupIds(): array
     {
-        $settingsUserGroupKeys = [
-            'usergroup',
-            'usergroupPostSave',
-            'usergroupPostConfirm',
-            'usergroupPostAccept',
-        ];
+        $settingsUserGroupKeys = $this->getUserGroupIdSettingKeys();
 
         $userGroups = [];
         foreach ($settingsUserGroupKeys as $settingsUserGroupKey) {
             $userGroup = (int) $this->settings[$settingsUserGroupKey];
             if ($userGroup) {
-                $userGroups[] = $userGroup;
+                $userGroups[$settingsUserGroupKey] = $userGroup;
             }
         }
 
@@ -544,5 +539,47 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
+    }
+
+    /**
+     * Return the keys of the TypoScript configuration in the order which is relevant for the configured
+     * registration workflow
+     *
+     * @return array
+     */
+    protected function getUserGroupIdSettingKeys(): array
+    {
+        $defaultOrder = [
+            'usergroup',
+            'usergroupPostSave',
+            'usergroupPostConfirm',
+            'usergroupPostAccept',
+        ];
+
+        // Admin    [plugin.tx_sfregister.settings.acceptEmailPostCreate]
+        $confirmEmailPostCreate = (bool)$this->settings['confirmEmailPostCreate'];
+        // User     [plugin.tx_sfregister.settings.confirmEmailPostAccept]
+        $acceptEmailPostCreate = (bool)$this->settings['acceptEmailPostCreate'];
+        // Admin    [plugin.tx_sfregister.settings.acceptEmailPostConfirm]
+        $confirmEmailPostAccept = (bool)$this->settings['confirmEmailPostAccept'];
+        // User     [plugin.tx_sfregister.settings.confirmEmailPostCreate]
+        $acceptEmailPostConfirm = (bool)$this->settings['acceptEmailPostConfirm'];
+
+        // First User:confirm then Admin:accept
+        if ($confirmEmailPostCreate && $acceptEmailPostConfirm) {
+            return $defaultOrder;
+        }
+
+        // First Admin:accept then User:confirm
+        if ($acceptEmailPostCreate && $confirmEmailPostAccept) {
+            return [
+                'usergroup',
+                'usergroupPostSave',
+                'usergroupPostAccept',
+                'usergroupPostConfirm',
+            ];
+        }
+
+        return $defaultOrder;
     }
 }
