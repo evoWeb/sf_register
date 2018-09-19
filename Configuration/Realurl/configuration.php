@@ -47,7 +47,7 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')
     ];
 
     foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'] as $domain => $config) {
-        if (is_array($config)) {
+        if (is_array($config) && array_key_exists('postVarSets', $config)) {
             $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'][$domain]['postVarSets']['_DEFAULT'] = array_merge(
                 $register,
                 (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'][$domain]['postVarSets']['_DEFAULT']
