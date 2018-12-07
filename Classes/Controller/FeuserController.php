@@ -371,9 +371,13 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function redirectToPage($pageId)
     {
+        $this->uriBuilder->reset();
         if ($this->autoLoginTriggered) {
             $statusField = $this->getTypoScriptFrontendController()->fe_user->formfield_permanent;
-            $this->uriBuilder->setAddQueryString('&' . $statusField . '=login');
+            $this->uriBuilder->setArguments([
+                'logintype' => 'login',
+                $statusField => 'login'
+            ]);
         }
 
         $url = $this->uriBuilder
