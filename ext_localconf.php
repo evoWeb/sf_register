@@ -49,16 +49,6 @@ call_user_func(function () {
             \Evoweb\SfRegister\Domain\Model\FrontendUser::class
         );
 
-    define('SFREGISTERCACHEIDENTIFIER', 'cache_sf_register_extending');
-
-    // Register cache sf_register
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER] = [
-        'frontend' => \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class,
-        'backend' => \TYPO3\CMS\Core\Cache\Backend\FileBackend::class,
-        'options' => [],
-    ];
-
-
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
         \Evoweb\SfRegister\Property\TypeConverter\FrontendUserConverter::class
     );
