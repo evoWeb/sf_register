@@ -247,7 +247,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @param FrontendUser $user
      *
-     * @ignorevalidation $user
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $user
      */
     protected function removeImageAction(FrontendUser $user)
     {
