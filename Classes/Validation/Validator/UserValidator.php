@@ -169,7 +169,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
                 $propertyValue = $this->getPropertyValue($object, $propertyName);
                 $this->checkUserProperty(
                     $propertyValue,
-                    (array) $validatorsNames,
+                    (array)$validatorsNames,
                     $messages->forProperty($propertyName)
                 );
             }
@@ -219,7 +219,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
      */
     protected function getValidationRulesFromSettings(): array
     {
-	$mode = str_replace('feuser', '', strtolower(key($GLOBALS['sf_register_controllerConfiguration'])));	    
+        $mode = str_replace('feuser', '', strtolower(key($GLOBALS['sf_register_controllerConfiguration'])));
         $rules = $this->settings['validation'][$mode] ?? [];
 
         if ($this->model instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser) {
@@ -251,7 +251,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
     protected function getValidator(string $rule): \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
     {
         $currentValidator = $this->parseRule($rule);
-        $this->currentValidatorOptions = (array) $currentValidator['validatorOptions'];
+        $this->currentValidatorOptions = (array)$currentValidator['validatorOptions'];
 
         /** @var \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator $validator */
         $validator = $this->validatorResolver->createValidator(

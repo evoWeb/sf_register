@@ -68,7 +68,7 @@ class FeuserInviteController extends FeuserController
      *
      * @param FrontendUser $user
      *
-     * @validate $user Evoweb.SfRegister:User
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
      */
     public function inviteAction(FrontendUser $user)
     {

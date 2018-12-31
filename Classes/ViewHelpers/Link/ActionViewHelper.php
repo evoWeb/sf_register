@@ -37,7 +37,8 @@ class ActionViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Link\ActionViewHelpe
      *
      * @return string Rendered link
      */
-    public function render() {
+    public function render()
+    {
         if ($this->arguments['action'] !== null
             && $this->arguments['arguments'] !== null
             && isset($this->arguments['arguments']['user'])

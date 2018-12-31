@@ -96,7 +96,9 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
 
             if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
                 /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
-                $passwordHashFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class);
+                $passwordHashFactory = GeneralUtility::makeInstance(
+                    \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
+                );
                 $saltedPassword = $passwordHashFactory->get($user->getPassword(), 'FE');
                 if (!$saltedPassword->checkPassword($password, $user->getPassword())) {
                     $this->addError(

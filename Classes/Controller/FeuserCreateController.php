@@ -83,7 +83,7 @@ class FeuserCreateController extends FeuserController
      *
      * @param FrontendUser $user
      *
-     * @validate $user Evoweb.SfRegister:User
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
      */
     public function previewAction(FrontendUser $user)
     {
@@ -108,7 +108,7 @@ class FeuserCreateController extends FeuserController
      *
      * @param FrontendUser $user
      *
-     * @validate $user Evoweb.SfRegister:User
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
      */
     public function saveAction(FrontendUser $user)
     {

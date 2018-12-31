@@ -47,7 +47,7 @@ class FeuserPasswordController extends FeuserController
      *
      * @param Password $password
      *
-     * @validate $password Evoweb.SfRegister:User
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="password")
      */
     public function saveAction(Password $password)
     {

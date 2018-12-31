@@ -14,7 +14,7 @@ $EM_CONF['sf_register'] = [
     'version' => '9.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.0.0-9.7.99',
+            'typo3' => '9.5.0-9.5.99',
         ],
         'suggests' => [
             'extender' => '6.4.7-',

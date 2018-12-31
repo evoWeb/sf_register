@@ -49,14 +49,14 @@ class LanguageKeyViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVi
     {
         $languageCode = '';
         if (TYPO3_MODE === 'FE') {
-            if (isset($this->getTypoScriptFrontendController()->lang)) {
-                $languageCode = strtolower($this->getTypoScriptFrontendController()->lang);
-            }
-        } elseif (strlen($this->getBackendUserAuthentication()->uc['lang']) > 0) {
+            $languageCode = $this->getTypoScriptFrontendController()->config['config']['language'] ?: 'default';
+        } elseif ($this->getBackendUserAuthentication()->uc['lang'] != '') {
             $languageCode = $this->getBackendUserAuthentication()->uc['lang'];
         }
 
-        if ($languageCode && $this->hasArgument('type') && ($type = $this->getConfiguredType())) {
+        $type = $this->getConfiguredType();
+
+        if ($languageCode != '' && $type != '') {
             if ($type == 'countries') {
                 $languageCode = $this->hasTableColumn('static_countries', 'cn_short_' . $languageCode) ?
                     $languageCode :
@@ -77,7 +77,7 @@ class LanguageKeyViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVi
 
     protected function getConfiguredType(): string
     {
-        $type = $this->arguments['type'];
+        $type = isset($this->arguments['type']) ? $this->arguments['type'] : '';
 
         return in_array($type, ['countries', 'languages', 'zones']) ? $type : '';
     }
