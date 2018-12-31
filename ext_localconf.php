@@ -62,6 +62,12 @@ call_user_func(function () {
     $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['sf_register'] =
         \Evoweb\SfRegister\Controller\AjaxController::class . '::processRequest';
 
+    \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
+        ->registerImplementation(
+            \Evoweb\SfRegister\Interfaces\FrontendUserInterface::class,
+            \Evoweb\SfRegister\Domain\Model\FrontendUser::class
+        );
+
     define('SFREGISTERCACHEIDENTIFIER', 'cache_sf_register_extending');
 
     // Register cache sf_register

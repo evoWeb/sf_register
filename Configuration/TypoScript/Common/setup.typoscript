@@ -130,11 +130,6 @@ plugin.tx_sfregister._LOCAL_LANG.default {
 }
 
 config.tx_extbase {
-  objects {
-    Evoweb\SfRegister\Interfaces\FrontendUserInterface {
-      className = Evoweb\SfRegister\Domain\Model\FrontendUser
-    }
-  }
   persistence.classes {
     Evoweb\SfRegister\Domain\Model\FrontendUser {
       mapping {
