@@ -137,7 +137,7 @@ class FeuserEditController extends FeuserController
             $session->registerObject($user, 'sf-register-' . $user->getUid());
 
             $user->setEmailNew($user->getEmail());
-            $user->setEmail($userBeforeEdit->getEmail());
+            $user->setEmail($userBeforeEdit->getEmail() ?: $user->getEmail());
         } elseif ($this->settings['useEmailAddressAsUsername']) {
             $user->setUsername($user->getEmail());
         }
