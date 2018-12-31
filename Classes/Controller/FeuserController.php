@@ -227,9 +227,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Proxy action
      *
-     * @validate $user Evoweb.SfRegister:User
+     * @param FrontendUser $user
+     *
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
      */
-    public function proxyAction()
+    public function proxyAction(/** @noinspection PhpUnusedParameterInspection */$user)
     {
         $action = 'save';
 
@@ -293,7 +295,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     {
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
             /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
-            $passwordHashFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class);
+            $passwordHashFactory = GeneralUtility::makeInstance(
+                \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
+            );
             if ($passwordHashFactory instanceof \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface) {
                 $password = $passwordHashFactory->getHashedPassword($password);
             }
