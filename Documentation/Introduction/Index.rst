@@ -75,8 +75,6 @@ Features:
 
 - change frontend view for every form and registration step
 
-- realurl preconfigured
-
 - english and german localisation included
 
 - mechanism to avoid profile images as file transfer by encrypted

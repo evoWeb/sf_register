@@ -212,9 +212,6 @@
 			<trans-unit id="extmgm.typoscriptComplexity.1">
 				<source>maximal</source>
 			</trans-unit>
-			<trans-unit id="extmgm.setRealurlConfigByDefault">
-				<source>Set realurl config by default: In case you have a separate config for realurl or the default settings dont suite your needs you would like to disable this</source>
-			</trans-unit>
 
 			<trans-unit id="common.createPid">
 				<source>Id of page with create form</source>

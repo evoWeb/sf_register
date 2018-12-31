@@ -23,25 +23,6 @@ call_user_func(function () {
         ['source' => 'EXT:sf_register/Resources/Public/Icons/Extension.svg']
     );
 
-    $extensionConfiguration = !is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']) ?
-        unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']) :
-        $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register'];
-
-    if (TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')
-        && (
-            !isset($extensionConfiguration['setRealurlConfigByDefault'])
-            || $extensionConfiguration['setRealurlConfigByDefault'] == 1
-        )
-    ) {
-        /** @noinspection PhpIncludeInspection */
-        require_once(
-            TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath(
-                'sf_register',
-                'Configuration/Realurl/configuration.php'
-            )
-        );
-    }
-
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Evoweb.sf_register',
         'Form',

@@ -48,7 +48,6 @@ So whats already in there?
 - change password
 - different template file for every form, preview, save and email view, configurable so they do not need to stay in extension
 - override template rootpath in plugin
-- realurl settings preconfigured for controller and actions
 
 If all that is already in, what is missing?
 
