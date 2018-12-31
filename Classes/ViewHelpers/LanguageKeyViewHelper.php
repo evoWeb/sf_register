@@ -72,7 +72,7 @@ class LanguageKeyViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVi
             }
         }
 
-        return strtoupper($languageCode) ?: 'EN';
+        return ucfirst(strtolower($languageCode) ?: 'en');
     }
 
     protected function getConfiguredType(): string

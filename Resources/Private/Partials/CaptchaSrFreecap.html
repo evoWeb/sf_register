@@ -1,9 +1,9 @@
-<html
-	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 	data-namespace-typo3-fluid="true">
 
-<div><f:alias map="{captcha: '{register:form.captcha(type: \'srfreecap\')}'}">
+<f:variable name="captcha"><register:form.captcha type="srfreecap"/></f:variable>
+<div>
 	<f:if condition="{captcha.image}">
 		<f:then>
 			<f:format.raw>{captcha.image}</f:format.raw>
@@ -15,6 +15,6 @@
 			{captcha}
 		</f:else>
 	</f:if>
-</f:alias></div>
+</div>
 
 </html>
