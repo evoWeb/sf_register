@@ -302,7 +302,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         FrontendUserInterface $user,
         string $fileExtension = 'html'
     ): string {
-        $templateName = 'Email/' . str_replace('send', '', $method);
         $variables = [
             'user' => $user,
             'settings' => $this->settings
@@ -310,6 +309,9 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
         /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
         $view = $this->objectManager->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
+        $view->setLayoutRootPaths($this->frameworkConfiguration['view']['layoutRootPaths']);
+        $view->setPartialRootPaths($this->frameworkConfiguration['view']['partialRootPaths']);
+        $view->setTemplateRootPaths($this->frameworkConfiguration['view']['templateRootPaths']);
 
         $request = $view->getRequest();
         $request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
@@ -318,11 +320,10 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         $request->setControllerActionName($action);
         $request->setFormat($fileExtension);
 
-        $view->setLayoutRootPaths($this->getAbsoluteLayoutRootPath());
-        $view->setPartialRootPaths($this->getAbsolutePartialRootPaths());
-        $view->setTemplateRootPaths($this->getAbsoluteTemplateRootPaths());
+        $context = $view->getRenderingContext();
+        $context->setControllerName('Email');
+        $context->setControllerAction(str_replace('send', '', $method));
         try {
-            $view->setTemplate($templateName);
             $view->assignMultiple($variables);
 
             $body = $view->render();
@@ -332,112 +333,6 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
         return $body;
     }
-
-    protected function getAbsoluteTemplateRootPaths(): array
-    {
-        $templateRootPaths = [];
-        if ($this->settings['templateRootPath']) {
-            $templateRootPaths[] = trim($this->settings['templateRootPath']);
-        }
-
-        if (isset($this->frameworkConfiguration['view'])) {
-            if (isset($this->frameworkConfiguration['view']['templateRootPath'])) {
-                $templateRootPaths[] = $this->frameworkConfiguration['view']['templateRootPath'];
-            }
-
-            if (isset($this->frameworkConfiguration['view']['templateRootPaths'])) {
-                $templateRootPaths = array_merge(
-                    $templateRootPaths,
-                    $this->frameworkConfiguration['view']['templateRootPaths']
-                );
-            }
-        }
-
-        if (empty($templateRootPaths)) {
-            $templateRootPaths[] = ExtensionManagementUtility::extPath('sf_register') . 'Resources/Private/Templates/';
-        }
-
-        $result = [];
-        foreach ($templateRootPaths as $key => $value) {
-            $value = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName(trim($value));
-            if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($value)) {
-                $result[] = rtrim(trim($value), '/') . '/';
-            }
-        }
-
-        return $result;
-    }
-
-    protected function getAbsolutePartialRootPaths(): array
-    {
-        $partialRootPaths = [];
-        if ($this->settings['partialRootPath']) {
-            $partialRootPaths[] = trim($this->settings['partialRootPath']);
-        }
-
-        if (isset($this->frameworkConfiguration['view'])) {
-            if (isset($this->frameworkConfiguration['view']['partialRootPath'])) {
-                $partialRootPaths[] = $this->frameworkConfiguration['view']['partialRootPath'];
-            }
-
-            if (isset($this->frameworkConfiguration['view']['partialRootPaths'])) {
-                $partialRootPaths = array_merge(
-                    $partialRootPaths,
-                    $this->frameworkConfiguration['view']['partialRootPaths']
-                );
-            }
-        }
-
-        if (empty($partialRootPaths)) {
-            $partialRootPaths[] = ExtensionManagementUtility::extPath('sf_register') . 'Resources/Private/Partials/';
-        }
-
-        $result = [];
-        foreach ($partialRootPaths as $key => $value) {
-            $value = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName(trim($value));
-            if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($value)) {
-                $result[] = rtrim(trim($value), '/') . '/';
-            }
-        }
-
-        return $result;
-    }
-
-    protected function getAbsoluteLayoutRootPath(): array
-    {
-        $layoutRootPaths = [];
-        if ($this->settings['layoutRootPath']) {
-            $layoutRootPaths = trim($this->settings['layoutRootPath']);
-        }
-
-        if (isset($this->frameworkConfiguration['view'])) {
-            if (isset($this->frameworkConfiguration['view']['layoutRootPath'])) {
-                $layoutRootPaths[] = $this->frameworkConfiguration['view']['layoutRootPath'];
-            }
-
-            if (isset($this->frameworkConfiguration['view']['layoutRootPaths'])) {
-                $layoutRootPaths = array_merge(
-                    $layoutRootPaths,
-                    $this->frameworkConfiguration['view']['layoutRootPaths']
-                );
-            }
-        }
-
-        if (empty($layoutRootPaths)) {
-            $layoutRootPaths[] = ExtensionManagementUtility::extPath('sf_register') . 'Resources/Private/Layouts/';
-        }
-
-        $result = [];
-        foreach ($layoutRootPaths as $key => $value) {
-            $value = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName(trim($value));
-            if (\TYPO3\CMS\Core\Utility\GeneralUtility::isAllowedAbsPath($value)) {
-                $result[] = rtrim(trim($value), '/') . '/';
-            }
-        }
-
-        return $result;
-    }
-
 
     /**
      * Dispatch signal to registered slots
