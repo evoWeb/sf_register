@@ -1,6 +1,23 @@
 page.includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/styles{$plugin.tx_sfregister.minified}.css
 page.includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register{$plugin.tx_sfregister.minified}.js
 
+plugin.tx_sfregister.view {
+  templateRootPaths {
+    0 = EXT:sf_register/Resources/Private/Templates/
+    1 = {$plugin.tx_sfregister.view.templateRootPath}
+  }
+
+  partialRootPaths {
+    0 = EXT:sf_register/Resources/Private/Partials/
+    1 = {$plugin.tx_sfregister.view.partialRootPath}
+  }
+
+  layoutRootPaths {
+    0 = EXT:sf_register/Resources/Private/Layouts/
+    1 = {$plugin.tx_sfregister.view.layoutRootPath}
+  }
+}
+
 plugin.tx_sfregister.settings {
   dateFormat = d-m-Y
 

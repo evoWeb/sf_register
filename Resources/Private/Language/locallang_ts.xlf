@@ -228,6 +228,16 @@
 			<trans-unit id="common.invitePid">
 				<source>Id of page with invite form</source>
 			</trans-unit>
+
+			<trans-unit id="templateRootPath">
+				<source>Path to template root (FE)</source>
+			</trans-unit>
+			<trans-unit id="partialRootPath">
+				<source>Path to template partials (FE)</source>
+			</trans-unit>
+			<trans-unit id="layoutRootPath">
+				<source>Path to template layouts (FE)</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
