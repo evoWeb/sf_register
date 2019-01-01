@@ -10,10 +10,10 @@
 	<f:format.raw><f:translate key="email_admin_account_saved" arguments="{0: user.username}"/></f:format.raw>
 
 	<f:if condition="{settings.acceptEmailPostCreate}">
-		<register:link.action arguments="{user: user.uid}" action="accept" absolute="true">
+		<register:link.action arguments="{user: user.uid}" action="accept" controller="FeuserCreate" absolute="true">
 			<f:translate key="email_user_accept_link"/>
 		</register:link.action>
-		<register:link.action arguments="{user: user.uid}" action="decline" absolute="true">
+		<register:link.action arguments="{user: user.uid}" action="decline" controller="FeuserCreate" absolute="true">
 			<f:translate key="email_user_decline_link"/>
 		</register:link.action>
 	</f:if>
