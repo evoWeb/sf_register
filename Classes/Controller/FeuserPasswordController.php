@@ -24,8 +24,6 @@ namespace Evoweb\SfRegister\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Evoweb\SfRegister\Domain\Model\Password;
-
 /**
  * An frontend user password controller
  */
@@ -45,11 +43,11 @@ class FeuserPasswordController extends FeuserController
     /**
      * Save action
      *
-     * @param Password $password
+     * @param \Evoweb\SfRegister\Domain\Model\Password $password
      *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="password")
      */
-    public function saveAction(Password $password)
+    public function saveAction(\Evoweb\SfRegister\Domain\Model\Password $password)
     {
         if ($this->userIsLoggedIn()) {
             /** @noinspection PhpInternalEntityUsedInspection */
