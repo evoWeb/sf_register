@@ -47,9 +47,10 @@ class ItemProcessor
 
     protected function getConfiguredFieldsFromTsConfig(): array
     {
-        $configuration = $this->getBackendUserAuthentication()
-            ->getTSConfig('plugin.tx_sfregister.settings.fields.configuration');
-        return $configuration['properties'];
+        $tsConfig = $this->getBackendUserAuthentication()->getTSConfig();
+        $pluginConfiguration = $tsConfig['plugin']['tx_sfregister'] ?? [];
+        $configuration = $pluginConfiguration['settings']['fields']['configuration']['properties'] ?? [];
+        return $configuration;
     }
 
     protected function getBackendUserAuthentication(): \TYPO3\CMS\Core\Authentication\BackendUserAuthentication

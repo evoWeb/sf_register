@@ -2,12 +2,11 @@
 defined('TYPO3_MODE') || die();
 
 call_user_func(function () {
-    /** @noinspection PhpUndefinedVariableInspection */
-    $extensionConfiguration = !is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']) ?
-        unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']) :
-        $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register'];
+    $typoScriptComplexity = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+        \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
+    )->get('sf_register', 'typoscriptComplexity');
 
-    switch ($extensionConfiguration['typoscriptComplexity']) {
+    switch ($typoScriptComplexity) {
         case 'maximal':
             \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
                 'sf_register',

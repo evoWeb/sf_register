@@ -31,9 +31,7 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
             0
         );
 
-        $controller->initFEuser();
         $controller->determineId();
-        $controller->initTemplate();
         $controller->getConfigArray();
 
         $GLOBALS['TSFE'] = $controller;
@@ -96,12 +94,21 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
             throw new \InvalidArgumentException('The user ID must be > 0.', 1334439475);
         }
 
-        // Instead of passing the actual user data to createUserSession, we
-        // pass an empty array to improve performance (e.g. no session record
-        // will be written to the database).
-        /** @noinspection PhpInternalEntityUsedInspection */
-        $frontendController->fe_user->user = $frontendController->fe_user->getRawUserByUid($frontEndUserUid);
-        $frontendController->fe_user->fetchGroupData();
-        $frontendController->loginUser = 1;
+        /** @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser */
+        $frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication::class
+        );
+        $frontendUser->user = $frontendUser->getRawUserByUid($frontEndUserUid);
+        $frontendUser->fetchGroupData();
+
+        $aspect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Context\UserAspect::class,
+            $frontendUser
+        );
+
+        /** @var \TYPO3\CMS\Core\Context\Context $context */
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $context->setAspect('frontend.user', $aspect);
+        $context->getPropertyFromAspect('frontend.user', 'isLoggedIn');
     }
 }
