@@ -1,11 +1,27 @@
 <?php
 namespace Evoweb\SfRegister\Tests\Functional;
 
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
 abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
+    /**
+     * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication
+     */
+    protected $frontendUser;
+
     public function getPrivateMethod($object, $methodName): \ReflectionMethod
     {
         $classReflection = new \ReflectionClass($object);
@@ -31,19 +47,17 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
             0
         );
 
+        $controller->fe_user = $this->frontendUser;
         $controller->determineId();
         $controller->getConfigArray();
 
         $GLOBALS['TSFE'] = $controller;
     }
 
-    public function createAndLoginFrontEndUser(
-        \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $frontendController,
-        $frontEndUserGroups = '',
-        array $recordData = []
-    ): int {
+    public function createAndLoginFrontEndUser(string $frontEndUserGroups = '', array $recordData = []): int
+    {
         $frontEndUserUid = $this->createFrontEndUser($frontEndUserGroups, $recordData);
-        $this->loginFrontEndUser($frontendController, $frontEndUserUid);
+        $this->loginFrontEndUser($frontEndUserUid);
         return $frontEndUserUid;
     }
 
@@ -83,27 +97,38 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
         return $connection->lastInsertId($tableName);
     }
 
-    public function loginFrontEndUser(
-        \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $frontendController,
-        int $frontEndUserUid
-    ) {
-        if (!$frontendController) {
-            throw new \Exception('Please create a front end before calling loginFrontEndUser.', 1334439483);
-        }
+    public function loginFrontEndUser(int $frontEndUserUid)
+    {
         if ((int)$frontEndUserUid === 0) {
             throw new \InvalidArgumentException('The user ID must be > 0.', 1334439475);
         }
 
-        /** @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser */
-        $frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+        $this->frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication::class
         );
-        $frontendUser->user = $frontendUser->getRawUserByUid($frontEndUserUid);
-        $frontendUser->fetchGroupData();
+        $this->frontendUser->user = $this->frontendUser->getRawUserByUid($frontEndUserUid);
+        $this->frontendUser->fetchGroupData();
 
         $aspect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Context\UserAspect::class,
-            $frontendUser
+            $this->frontendUser
+        );
+
+        /** @var \TYPO3\CMS\Core\Context\Context $context */
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $context->setAspect('frontend.user', $aspect);
+        $context->getPropertyFromAspect('frontend.user', 'isLoggedIn');
+    }
+
+    public function createEmptyFrontendUser()
+    {
+        $this->frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication::class
+        );
+
+        $aspect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Context\UserAspect::class,
+            $this->frontendUser
         );
 
         /** @var \TYPO3\CMS\Core\Context\Context $context */

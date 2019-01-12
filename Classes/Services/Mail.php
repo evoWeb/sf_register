@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Services;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,7 +25,6 @@ namespace Evoweb\SfRegister\Services;
  ***************************************************************/
 
 use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * Service to handle mail sending

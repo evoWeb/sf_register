@@ -1,44 +1,32 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Domain\Model;
+namespace Evoweb\SfRegister\Tests\Unit\Domain\Model;
 
-/***************************************************************
- * Copyright notice
+/*
+ * This file is developed by evoWeb.
  *
- * (c) 2011-18 Sebastian Fischer <typo3@evoweb.de>
- * All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
 
 class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
     /**
      * @var \Evoweb\SfRegister\Domain\Model\FrontendUser
      */
-    protected $fixture;
+    protected $subject;
 
     public function setUp()
     {
-        $this->fixture = new \Evoweb\SfRegister\Domain\Model\FrontendUser();
+        $this->subject = new \Evoweb\SfRegister\Domain\Model\FrontendUser();
     }
 
     public function tearDown()
     {
-        unset($this->fixture);
+        unset($this->subject);
     }
 
     /**
@@ -46,180 +34,117 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function disableDefaultToFalseOnInitialize()
     {
-        $this->assertFalse(
-            $this->fixture->getDisable()
-        );
+        $this->assertFalse($this->subject->getDisable());
     }
 
-    /**
-     * @return array
-     */
-    public function notEmptyDataProvider()
+    public function notEmptyDataProvider(): array
     {
-        return array(
-            'integerGreaterZero' => array(1),
-            'booleanTrue' => array(TRUE),
-            'notEmptyString' => array('a'),
-        );
+        return [
+            'integerGreaterZero' => [1],
+            'booleanTrue' => [true],
+            'notEmptyString' => ['a'],
+        ];
     }
 
     /**
      * @param mixed $input
      * @test
-     * @return void
      * @dataProvider notEmptyDataProvider
      */
     public function disableReturnsTrueIfSetNotEmpty($input)
     {
-        $this->fixture->setDisable($input);
+        $this->subject->setDisable($input);
 
-        $this->assertTrue(
-            $this->fixture->getDisable()
-        );
+        $this->assertTrue($this->subject->getDisable());
     }
 
     /**
      * @test
-     * @return void
      */
     public function imageContainsEmptyStringOnInitialize()
     {
-        $this->assertSame(
-            '',
-            $this->fixture->getImage()
-        );
+        $this->assertSame('', $this->subject->getImage());
     }
 
     /**
      * @test
-     * @return void
      */
     public function imageReturnsStringSetBySetImage()
     {
-        $expected = 'teststring';
+        $expected = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 
-        $this->fixture->setImage($expected);
+        $this->subject->setImage($expected);
 
-        $this->assertSame(
-            $expected,
-            $this->fixture->getImage()
-        );
+        $this->assertSame($expected, $this->subject->getImage());
     }
 
     /**
      * @test
-     * @return void
-     */
-    public function getImagelistReturnsArray()
-    {
-        $this->assertInternalType(
-            'array',
-            $this->fixture->getImageList()
-        );
-    }
-
-    /**
-     * @test
-     * @return void
-     */
-    public function setImagelistSetsArrayAsListInImage()
-    {
-        $expected1 = 'foo.gif';
-        $expected2 = 'bar.jpg';
-        $this->fixture->setImageList(array($expected1, $expected2));
-
-        $this->assertInternalType(
-            'string',
-            $this->fixture->getImage()
-        );
-    }
-
-    /**
-     * @test
-     * @return void
      */
     public function imageAsImageListAddFilenameToImage()
     {
         $expected1 = 'foo.gif';
         $expected2 = 'bar.jpg';
 
-        $this->fixture->addImage($expected1);
-        $this->fixture->addImage($expected2);
+        // @todo fix test
+        $this->subject->addImage($expected1);
+        $this->subject->addImage($expected2);
 
-        $this->assertSame(
-            implode(',', array($expected1, $expected2)),
-            $this->fixture->getImage()
-        );
+        $this->assertSame(implode(',', [$expected1, $expected2]), $this->subject->getImage());
     }
 
     /**
      * @test
-     * @return void
      */
     public function imageAsImageListRemoveFilenameFromImage()
     {
         $expected1 = 'foo.gif';
         $expected2 = 'bar.jpg';
 
-        $this->fixture->setImage(implode(',', array($expected1, $expected2)));
-        $this->fixture->removeImage();
+        // @todo fix test
+        $this->subject->setImage(implode(',', [$expected1, $expected2]));
+        $this->subject->removeImage();
 
-        $this->assertSame(
-            $expected2,
-            $this->fixture->getImage()
-        );
+        $this->assertSame($expected2, $this->subject->getImage());
     }
 
     /**
      * @test
-     * @return void
      */
     public function gtcDefaultToFalseOnInitialize()
     {
-        $this->assertFalse(
-            $this->fixture->getDisable()
-        );
+        $this->assertFalse($this->subject->getDisable());
     }
 
     /**
      * @param mixed $input
      * @test
-     * @return void
      * @dataProvider notEmptyDataProvider
      */
     public function gtcReturnsTrueIfSetNotEmpty($input)
     {
-        $this->fixture->setDisable($input);
+        $this->subject->setDisable($input);
 
-        $this->assertTrue(
-            $this->fixture->getDisable()
-        );
+        $this->assertTrue($this->subject->getDisable());
     }
 
     /**
      * @test
-     * @return void
      */
-    public function mobilphoneOnInitializeIsNull()
+    public function mobilephoneOnInitializeIsNull()
     {
-        $this->assertNull(
-            $this->fixture->getMobilephone()
-        );
+        $this->assertNull($this->subject->getMobilephone());
     }
 
     /**
      * @test
-     * @return void
      */
-    public function getMobilephoneReturnsStringSetBySetMobilphone()
+    public function getMobilephoneReturnsStringSetBySetMobilephone()
     {
         $expected = 'teststring';
 
-        $this->fixture->setMobilephone($expected);
+        $this->subject->setMobilephone($expected);
 
-        $this->assertSame(
-            $expected,
-            $this->fixture->getMobilephone()
-        );
+        $this->assertSame($expected, $this->subject->getMobilephone());
     }
 }

@@ -4,8 +4,8 @@ namespace Evoweb\SfRegister\ViewHelpers;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
- * (c) 2011-15 Justin Kromlinger
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2015 Justin Kromlinger
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is

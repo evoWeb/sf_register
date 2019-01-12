@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Controller;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -108,6 +108,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $GLOBALS['sf_register_controllerConfiguration'] = $frameworkConfiguration['controllerConfiguration'];
     }
 
+    public function injectFileService(\Evoweb\SfRegister\Services\File $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     /**
      * Disable flash messages
      *
@@ -120,7 +125,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     protected function initializeAction()
     {
-        $this->fileService = $this->objectManager->get(\Evoweb\SfRegister\Services\File::class);
         $this->setTypeConverter();
 
         if ($this->settings['processInitializeActionSignal']) {
@@ -217,7 +221,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         if (isset($this->settings['templateRootPath']) && !empty($this->settings['templateRootPath'])) {
             $templateRootPath = GeneralUtility::getFileAbsFileName($this->settings['templateRootPath']);
             if (GeneralUtility::isAllowedAbsPath($templateRootPath)) {
-                $this->view->setTemplateRootPaths([$templateRootPath]);
+                $this->view->setTemplateRootPaths(array_merge(
+                    $this->view->getTemplateRootPaths(),
+                    [$templateRootPath]
+                ));
             }
         }
     }

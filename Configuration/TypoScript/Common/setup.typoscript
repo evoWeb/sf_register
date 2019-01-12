@@ -113,6 +113,8 @@ plugin.tx_sfregister.settings {
     jmrecaptcha = Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter
     # Needs EXT:sr_freecap to be installed
     srfreecap = Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter
+    # Needs EXT:recaptcha to be installed
+    recaptcha = Evoweb\Recaptcha\Adapter\SfRegisterAdapter
   }
 
   processInitializeActionSignal = 0
