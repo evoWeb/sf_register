@@ -56,12 +56,9 @@ class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
      * If the given password is valid in kind of not on the bad list
      *
      * @param string $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
         $badWordItems = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['badWordList']);
 
         if (in_array(strtolower($value), $badWordItems)) {
@@ -73,9 +70,6 @@ class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
                 ),
                 1301599720
             );
-            $result = false;
         }
-
-        return $result;
     }
 }

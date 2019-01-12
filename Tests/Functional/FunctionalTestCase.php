@@ -18,6 +18,11 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
     /**
+     * @var array
+     */
+    protected $testExtensionsToLoad = ['typo3conf/ext/sf_register'];
+
+    /**
      * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication
      */
     protected $frontendUser;

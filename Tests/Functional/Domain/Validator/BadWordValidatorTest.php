@@ -12,20 +12,25 @@ namespace Evoweb\SfRegister\Tests\Functional\Domain\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
+
 class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
     /**
-     * @var \Evoweb\SfRegister\Validation\Validator\BadWordValidator
+     * @var \Evoweb\SfRegister\Validation\Validator\BadWordValidator|AccessibleObjectInterface
      */
     protected $subject;
 
     public function setUp()
     {
         parent::setUp();
-        $this->importDataSet(__DIR__. '/../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__. '/../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__. '/../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__. '/../Fixtures/fe_users.xml');
+        $this->importDataSet(__DIR__. '/../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__. '/../../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__. '/../../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__. '/../../Fixtures/fe_users.xml');
+
+        $this->createEmptyFrontendUser();
+        $this->initializeTypoScriptFrontendController();
 
         $this->subject = $this->getAccessibleMock(
             \Evoweb\SfRegister\Validation\Validator\BadWordValidator::Class,
@@ -60,7 +65,7 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
             $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList']
         );
 
-        $this->assertFalse($this->subject->isValid(current($words)));
+        $this->assertTrue($this->subject->validate(current($words))->hasErrors());
     }
 
     /**
@@ -68,6 +73,6 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
      */
     public function isValidReturnsTrueForGoodPassword()
     {
-        $this->assertTrue($this->subject->isValid('4dw$koL'));
+        $this->assertFalse($this->subject->validate('4dw$koL')->hasErrors());
     }
 }

@@ -25,14 +25,14 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
     public function setUp()
     {
         parent::setUp();
-        $this->importDataSet(__DIR__. '/../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__. '/../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__. '/../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__. '/../Fixtures/fe_users.xml');
+        $this->importDataSet(__DIR__. '/../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__. '/../../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__. '/../../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__. '/../../Fixtures/fe_users.xml');
 
         $this->subject = $this->getAccessibleMock(
             \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator::class,
-            ['dummy']
+            ['userIsLoggedIn']
         );
     }
 
@@ -46,6 +46,9 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
      */
     public function settingsContainsValidTyposcriptSettings()
     {
+        $this->createEmptyFrontendUser();
+        $this->initializeTypoScriptFrontendController();
+
         $this->assertArrayHasKey(
             'badWordList',
             $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
@@ -57,7 +60,10 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
      */
     public function isUserLoggedInReturnsFalseIfNotLoggedIn()
     {
-        $this->assertFalse($this->subject->_call('isUserLoggedIn'));
+        $this->createEmptyFrontendUser();
+        $this->initializeTypoScriptFrontendController();
+
+        $this->assertFalse($this->subject->_call('userIsLoggedIn'));
     }
 
     /**
@@ -65,9 +71,13 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
      */
     public function isUserLoggedInReturnsTrueIfLoggedIn()
     {
-        $this->createAndLoginFrontEndUser('2', ['password' => 'testOld']);
+        $this->createAndLoginFrontEndUser('2', [
+            'password' => 'testOld',
+            'comments' => ''
+        ]);
+        $this->initializeTypoScriptFrontendController();
 
-        $this->assertTrue($this->subject->_call('isUserLoggedIn'));
+        $this->assertTrue($this->subject->_call('userIsLoggedIn'));
     }
 
     /**
@@ -75,14 +85,23 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
      */
     public function loggedinUserFoundInDbHasEqualUnencryptedPassword()
     {
+        $expected = 'myFancyPassword';
+
+        $userId = $this->createAndLoginFrontEndUser('2', [
+            'password' => $expected,
+            'comments' => ''
+        ]);
+        $this->initializeTypoScriptFrontendController();
+
+        // we don't want to test the encryption here
         if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'])) {
             unset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword']);
         }
-        $this->subject->_set('settings', $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
 
-        $expected = 'myFancyPassword';
+        $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
 
-        $userId = $this->createAndLoginFrontEndUser('2', ['password' => $expected]);
+        $property = $this->getPrivateProperty($subject, 'settings');
+        $property->setValue($subject, $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
 
         /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\PHPUnit_Framework_MockObject_MockObject $userMock */
         $userMock = $this->getAccessibleMock(\Evoweb\SfRegister\Domain\Model\FrontendUser::class);
@@ -91,18 +110,18 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
         /** @var FrontendUserRepository|\PHPUnit_Framework_MockObject_MockObject $repositoryMock */
         $repositoryMock = $this->getAccessibleMock(
             FrontendUserRepository::class,
-            ['dummy'],
+            ['findByUid'],
             [],
             '',
             false
         );
         $repositoryMock->expects($this->once())
             ->method('findByUid')
-            ->with($userId)
-            ->will($this->returnValue($userMock));
-        $this->subject->injectUserRepository($repositoryMock);
+            ->with($this->equalTo($userId))
+            ->willReturn($userMock);
+        $subject->injectUserRepository($repositoryMock);
 
-        $this->assertTrue($this->subject->isValid($expected));
+        $this->assertFalse($subject->validate($expected)->hasErrors());
     }
 
     /**
@@ -110,32 +129,39 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
      */
     public function loggedinUserFoundInDbHasEqualMd5EncryptedPassword()
     {
-        $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'] = 'md5';
-
-        $this->subject->_set('settings', $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
-
         $expected = 'myFancyPassword';
 
-        $userId = $this->createAndLoginFrontEndUser('2', ['password' => $expected]);
+        $userId = $this->createAndLoginFrontEndUser('2', [
+            'password' => $expected,
+            'comments' => ''
+        ]);
+        $this->initializeTypoScriptFrontendController();
+
+        $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'] = 'md5';
+
+        $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
+
+        $property = $this->getPrivateProperty($subject, 'settings');
+        $property->setValue($subject, $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
 
         /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\PHPUnit_Framework_MockObject_MockObject $userMock */
         $userMock = $this->getAccessibleMock(\Evoweb\SfRegister\Domain\Model\FrontendUser::class);
-        $userMock->expects($this->any())->method('getPassword')->willreturn($expected);
+        $userMock->expects($this->any())->method('getPassword')->willreturn(md5($expected));
 
         /** @var FrontendUserRepository|\PHPUnit_Framework_MockObject_MockObject $repositoryMock */
         $repositoryMock = $this->getAccessibleMock(
             FrontendUserRepository::class,
-            ['dummy'],
+            ['findByUid'],
             [],
             '',
             false
         );
         $repositoryMock->expects($this->once())
             ->method('findByUid')
-            ->with($userId)
-            ->will($this->returnValue($userMock));
-        $this->subject->injectUserRepository($repositoryMock);
+            ->with($this->equalTo($userId))
+            ->willReturn($userMock);
+        $subject->injectUserRepository($repositoryMock);
 
-        $this->assertTrue($this->subject->isValid($expected));
+        $this->assertFalse($subject->validate($expected)->hasErrors());
     }
 }

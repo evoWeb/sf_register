@@ -14,56 +14,36 @@ namespace Evoweb\SfRegister\Tests\Functional\Domain\Repository;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class FrontendUserRepositoryTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
     /**
      * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
      */
-    protected $fixture;
-
-    /**
-     * @var \Tx_Phpunit_Framework
-     */
-    private $testingFramework;
+    protected $subject;
 
     public function setUp()
     {
-        $this->testingFramework = new \Tx_Phpunit_Framework('fe_users');
-        $pageUid = $this->testingFramework->createFrontEndPage();
-        $this->testingFramework->createTemplate(
-            $pageUid,
-            array('include_static_file' => 'EXT:sf_register/Configuration/TypoScript/')
-        );
-        $this->testingFramework->createFakeFrontEnd($pageUid);
-
-        $extensionName = 'SfRegister';
-        $pluginName = 'Form';
-        $extensionSettings = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName];
-        $extensionSettings['modules'][$pluginName]['controllers']['FeuserCreate'] = array(
-            'actions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'),
-            'nonCacheableActions' => array('form', 'preview', 'proxy', 'save', 'confirm', 'removeImage'),
-        );
-
-        $bootstrap = new \TYPO3\CMS\Extbase\Core\Bootstrap();
-        $bootstrap->run(
-            '',
-            array(
-                'userFunc' => '\TYPO3\CMS\Extbase\Core\Bootstrap->run',
-                'extensionName' => $extensionName,
-                'pluginName' => $pluginName,
-            )
-        );
+        $this->importDataSet(__DIR__. '/../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__. '/../../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__. '/../../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__. '/../../Fixtures/fe_users.xml');
 
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 
-        $this->fixture = new \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository($objectManager);
+        $this->subject = new \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository($objectManager);
     }
 
     public function tearDown()
     {
-        $this->testingFramework->cleanUp();
+        unset($this->subject);
+    }
 
-        unset($this->fixture, $this->testingFramework);
+    /**
+     * @test
+     */
+    public function findByUid()
+    {
+        $this->markTestIncomplete('not implemented by now');
     }
 }

@@ -74,13 +74,9 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
      * Validation method
      *
      * @param mixed $password
-     *
-     * @return bool
      */
-    public function isValid($password): bool
+    public function isValid($password)
     {
-        $result = true;
-
         if (!$this->userIsLoggedIn()) {
             $this->addError(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
@@ -89,10 +85,11 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
                 ),
                 1301599489
             );
-            $result = false;
         } else {
             /** @noinspection PhpInternalEntityUsedInspection */
-            $user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
+            $user = $this->userRepository->findByUid(
+                $this->getTypoScriptFrontendController()->fe_user->user['uid']
+            );
 
             if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
                 /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
@@ -108,7 +105,6 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
                         ),
                         1301599507
                     );
-                    $result = false;
                 }
             } elseif ($this->settings['encryptPassword'] === 'md5') {
                 if (md5($password) !== $user->getPassword()) {
@@ -117,9 +113,8 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
                             'error_changepassword_notequal',
                             'SfRegister'
                         ),
-                        1301599507
+                        1301599508
                     );
-                    $result = false;
                 }
             } elseif ($this->settings['encryptPassword'] === 'sha1') {
                 if (sha1($password) !== $user->getPassword()) {
@@ -128,14 +123,11 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
                             'error_changepassword_notequal',
                             'SfRegister'
                         ),
-                        1301599507
+                        1301599509
                     );
-                    $result = false;
                 }
             }
         }
-
-        return $result;
     }
 
     protected function userIsLoggedIn(): bool

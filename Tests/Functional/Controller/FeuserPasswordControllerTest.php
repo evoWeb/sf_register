@@ -19,16 +19,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
-    /**
-     * @var array
-     */
-    protected $testExtensionsToLoad = ['typo3conf/ext/sf_register'];
-
-    /**
-     * @var array
-     */
-    protected $coreExtensionsToLoad = ['extbase', 'fluid'];
-
     public function setUp()
     {
         parent::setUp();
