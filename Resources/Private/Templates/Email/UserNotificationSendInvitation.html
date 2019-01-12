@@ -1,11 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers">
-<head>
-	<title>User activation mail send post invitation template of registration</title>
-</head>
-<body>
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <f:layout name="Email" />
 
@@ -15,5 +8,4 @@
 	<f:format.raw><f:translate key="email_user_invitation_message" arguments="{0: user.invitationEmail, 1: settings.sitename}"/></f:format.raw>
 </f:section>
 
-</body>
 </html>

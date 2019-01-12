@@ -2,6 +2,7 @@
 	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 	data-namespace-typo3-fluid="true">
 
+<f:variable name="languageKey"><register:languageKey type="languages"/></f:variable>
 <div class="form-group {fieldName}">
 	<label for="{fieldName}"><f:translate id="{fieldName}" /></label>
 	<f:render partial="Required" arguments="{field: fieldName}" />
@@ -11,7 +12,7 @@
 		id="{fieldName}"
 		value="{f:if(condition: '{user.{fieldName}}', then: '{user.{fieldName}}', else: options.defaultValue)}"
 		allowedLanguages="{options.allowedLanguages}"
-		optionLabelField="lgName{register:languageKey(type: 'languages') -> f:format.case(mode: 'capital')}"
+		optionLabelField="lgName{languageKey}"
 		class="form-control" />
 </div>
 

@@ -1,5 +1,7 @@
 # Overview
 [![Build Status](https://travis-ci.org/evoWeb/sf_register.svg?branch=develop)](https://travis-ci.org/evoWeb/sf_register)
+[![Latest Stable Version](https://poser.pugx.org/evoweb/sf-register/v/stable)](https://packagist.org/packages/evoweb/sf-register)
+[![Total Downloads](https://poser.pugx.org/evoweb/sf-register/downloads)](https://packagist.org/packages/evoweb/sf-register)
 
 Repository and Issue Tracker can be found at https://github.com/evoWeb/sf_register
 
@@ -46,7 +48,6 @@ So whats already in there?
 - change password
 - different template file for every form, preview, save and email view, configurable so they do not need to stay in extension
 - override template rootpath in plugin
-- realurl settings preconfigured for controller, actions and mailhash
 
 If all that is already in, what is missing?
 

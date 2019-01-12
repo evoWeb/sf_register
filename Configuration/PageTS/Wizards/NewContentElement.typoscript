@@ -1,0 +1,16 @@
+mod.wizards.newContentElement.wizardItems {
+  plugins {
+    elements {
+      sfregister_form {
+        iconIdentifier = sf-register-extension
+        title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_form
+        description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_form_description
+        tt_content_defValues {
+          CType = list
+          list_type = sfregister_form
+        }
+      }
+    }
+    show := addToList(sfregister_form)
+  }
+}

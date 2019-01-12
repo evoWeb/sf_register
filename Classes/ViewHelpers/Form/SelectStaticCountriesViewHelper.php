@@ -25,7 +25,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  ***************************************************************/
 
 /**
- * Viewhelper to render a selectbox with values of static info tables countries
+ * View helper to render a select box with values of static info tables countries
  *
  * <code title="Usage">
  *  {namespace register=Evoweb\SfRegister\ViewHelpers}
@@ -39,33 +39,20 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
 {
     /**
-     * Repository that provides the country models
-     *
      * @var \Evoweb\SfRegister\Domain\Repository\StaticCountryRepository
-     * @inject
      */
     protected $countryRepository;
 
+    public function injectCountryRepository(
+        \Evoweb\SfRegister\Domain\Repository\StaticCountryRepository $countryRepository
+    ) {
+        $this->countryRepository = $countryRepository;
+    }
 
-    /**
-     * Initialize arguments. Cant be moved to parent because
-     * of "private $argumentDefinitions = [];"
-     *
-     * @return void
-     */
     public function initializeArguments()
     {
-        $this->registerUniversalTagAttributes();
-        $this->registerTagAttribute('multiple', 'string', 'if set, multiple select field');
-        $this->registerTagAttribute('size', 'string', 'Size of input field');
-        $this->registerTagAttribute(
-            'disabled',
-            'string',
-            'Specifies that the input element should be disabled when the page loads'
-        );
-        $this->registerArgument('name', 'string', 'Name of input tag');
-        $this->registerArgument('value', 'mixed', 'Value of input tag');
-        $this->registerArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', false, true);
+        parent::initializeArguments();
+        $this->overrideArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', false, true);
         $this->registerArgument(
             'allowedCountries',
             'array',
@@ -73,48 +60,22 @@ class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\
             false,
             []
         );
-        $this->registerArgument(
-            'property',
-            'string',
-            'Name of Object Property. If used in conjunction with <f:form object="...">,
-             "name" and "value" properties will be ignored.'
-        );
-        $this->registerArgument(
+        $this->overrideArgument(
             'optionValueField',
             'string',
             'If specified, will call the appropriate getter on each object to determine the value.',
             false,
             'cnIso2'
         );
-        $this->registerArgument(
+        $this->overrideArgument(
             'optionLabelField',
             'string',
             'If specified, will call the appropriate getter on each object to determine the label.',
             false,
             'cnOfficialNameEn'
         );
-        $this->registerArgument(
-            'selectAllByDefault',
-            'boolean',
-            'If specified options are selected if none was set before.',
-            false,
-            false
-        );
-        $this->registerArgument(
-            'errorClass',
-            'string',
-            'CSS class to set if there are errors for this view helper',
-            false,
-            'f3-form-error'
-        );
     }
 
-    /**
-     * Override the initialize method to load all
-     * available countries before rendering
-     *
-     * @return void
-     */
     public function initialize()
     {
         parent::initialize();

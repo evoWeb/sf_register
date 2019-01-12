@@ -24,16 +24,11 @@ namespace Evoweb\SfRegister\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-
 /**
  * An frontend user create controller
  */
 class FeuserCreateController extends FeuserController
 {
-    /**
-     * @return void
-     */
     protected function initializeAction()
     {
         parent::initializeAction();
@@ -45,14 +40,7 @@ class FeuserCreateController extends FeuserController
         }
     }
 
-    /**
-     * Form action
-     *
-     * @param FrontendUser $user
-     *
-     * @return void
-     */
-    public function formAction(FrontendUser $user = null)
+    public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
         $originalRequest = $this->request->getOriginalRequest();
@@ -71,7 +59,7 @@ class FeuserCreateController extends FeuserController
             $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
             $user = $propertyMapper->convert(
                 $userData,
-                FrontendUser::class,
+                \Evoweb\SfRegister\Domain\Model\FrontendUser::class,
                 $propertyMappingConfiguration
             );
         }
@@ -91,12 +79,11 @@ class FeuserCreateController extends FeuserController
     /**
      * Preview action
      *
-     * @param FrontendUser $user
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      *
-     * @return void
-     * @validate $user Evoweb.SfRegister:User
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
      */
-    public function previewAction(FrontendUser $user)
+    public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
         if ($this->request->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
@@ -117,12 +104,11 @@ class FeuserCreateController extends FeuserController
     /**
      * Save action
      *
-     * @param FrontendUser $user
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      *
-     * @return void
-     * @validate $user Evoweb.SfRegister:User
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
      */
-    public function saveAction(FrontendUser $user)
+    public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
         if ($this->settings['confirmEmailPostCreate'] || $this->settings['acceptEmailPostCreate']) {
             $user->setDisable(true);
@@ -165,7 +151,7 @@ class FeuserCreateController extends FeuserController
         $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)->remove('captchaWasValidPreviously');
 
         if ($this->settings['autologinPostRegistration']) {
-            $this->autoLogin($user, $this->settings['redirectPostRegistrationPageId']);
+            $this->autoLogin($user, (int) $this->settings['redirectPostRegistrationPageId']);
         }
 
         if ($this->settings['redirectPostRegistrationPageId']) {
@@ -180,16 +166,14 @@ class FeuserCreateController extends FeuserController
      * Confirm registration process by user
      * Could be followed by acceptance of admin
      *
-     * @param FrontendUser $user
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
-     *
-     * @return void
      */
-    public function confirmAction(FrontendUser $user = null, $hash = null)
+    public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, string $hash = null)
     {
         $user = $this->determineFrontendUser($user, $hash);
 
-        if (!($user instanceof FrontendUser)) {
+        if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
             $this->view->assign('user', $user);
@@ -221,7 +205,7 @@ class FeuserCreateController extends FeuserController
 
                 if ($this->settings['autologinPostConfirmation']) {
                     $this->persistAll();
-                    $this->autoLogin($user, $this->settings['redirectPostActivationPageId']);
+                    $this->autoLogin($user, (int) $this->settings['redirectPostActivationPageId']);
                 }
 
                 if ($this->settings['redirectPostActivationPageId']) {
@@ -236,16 +220,14 @@ class FeuserCreateController extends FeuserController
     /**
      * Refuse registration process by user with removing the user data
      *
-     * @param FrontendUser $user
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
-     *
-     * @return void
      */
-    public function refuseAction(FrontendUser $user = null, $hash = null)
+    public function refuseAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, string $hash = null)
     {
         $user = $this->determineFrontendUser($user, $hash);
 
-        if (!($user instanceof FrontendUser)) {
+        if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
             $this->view->assign('user', $user);
@@ -271,16 +253,14 @@ class FeuserCreateController extends FeuserController
     /**
      * Accept registration process by admin after user confirmation
      *
-     * @param FrontendUser $user
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
-     *
-     * @return void
      */
-    public function acceptAction(FrontendUser $user = null, $hash = null)
+    public function acceptAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, string $hash = null)
     {
         $user = $this->determineFrontendUser($user, $hash);
 
-        if (!($user instanceof FrontendUser)) {
+        if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
             $this->view->assign('user', $user);
@@ -319,16 +299,14 @@ class FeuserCreateController extends FeuserController
     /**
      * Decline registration process by admin with removing the user data
      *
-     * @param FrontendUser $user
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      * @param string $hash
-     *
-     * @return void
      */
-    public function declineAction(FrontendUser $user = null, $hash = null)
+    public function declineAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, string $hash = null)
     {
         $user = $this->determineFrontendUser($user, $hash);
 
-        if (!($user instanceof FrontendUser)) {
+        if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
             $this->view->assign('user', $user);

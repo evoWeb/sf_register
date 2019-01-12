@@ -30,14 +30,92 @@ namespace Evoweb\SfRegister\Validation;
 class ValidatorResolver extends \TYPO3\CMS\Extbase\Validation\ValidatorResolver
 {
     /**
-     * Get the parsed options given in @validate annotations.
+     * Match validator names and options
+     *
+     * @var string
+     */
+    const PATTERN_MATCH_VALIDATORS = '/
+			(?:^|,\s*)
+			(?P<validatorName>[a-z0-9:.\\\\]+)
+			\s*
+			(?:\(
+				(?P<validatorOptions>(?:\s*[a-z0-9]+\s*=\s*(?:
+					"(?:\\\\"|[^"])*"
+					|\'(?:\\\\\'|[^\'])*\'
+					|(?:\s|[^,"\']*)
+				)(?:\s|,)*)*)
+			\))?
+		/ixS';
+
+    /**
+     * Match validator options (to parse actual options)
+     *
+     * @var string
+     */
+    const PATTERN_MATCH_VALIDATOROPTIONS = '/
+			\s*
+			(?P<optionName>[a-z0-9]+)
+			\s*=\s*
+			(?P<optionValue>
+				"(?:\\\\"|[^"])*"
+				|\'(?:\\\\\'|[^\'])*\'
+				|(?:\s|[^,"\']*)
+			)
+		/ixS';
+
+    public function getParsedValidatorAnnotation(string $validateValue): array
+    {
+        /** @todo needs to be refactored */
+        return $this->parseValidatorAnnotation($validateValue);
+    }
+
+    /**
+     * Parses the validator options given in @validate annotations.
      *
      * @param string $validateValue
-     *
      * @return array
+     * @internal
      */
-    public function getParsedValidatorAnnotation($validateValue)
+    public function parseValidatorAnnotation($validateValue)
     {
-        return $this->parseValidatorAnnotation($validateValue);
+        $matches = [];
+        if ($validateValue[0] === '$') {
+            $parts = explode(' ', $validateValue, 2);
+            $validatorConfiguration = ['argumentName' => ltrim($parts[0], '$'), 'validators' => []];
+            preg_match_all(self::PATTERN_MATCH_VALIDATORS, $parts[1], $matches, PREG_SET_ORDER);
+        } else {
+            $validatorConfiguration = ['validators' => []];
+            preg_match_all(self::PATTERN_MATCH_VALIDATORS, $validateValue, $matches, PREG_SET_ORDER);
+        }
+        foreach ($matches as $match) {
+            $validatorOptions = [];
+            if (isset($match['validatorOptions'])) {
+                $validatorOptions = $this->parseValidatorOptions($match['validatorOptions']);
+            }
+            $validatorConfiguration['validators'][] = [
+                'validatorName' => $match['validatorName'],
+                'validatorOptions' => $validatorOptions
+            ];
+        }
+        return $validatorConfiguration;
+    }
+
+    /**
+     * Parses $rawValidatorOptions not containing quoted option values.
+     * $rawValidatorOptions will be an empty string afterwards (pass by ref!).
+     *
+     * @param string $rawValidatorOptions
+     * @return array An array of optionName/optionValue pairs
+     */
+    protected function parseValidatorOptions($rawValidatorOptions)
+    {
+        $validatorOptions = [];
+        $parsedValidatorOptions = [];
+        preg_match_all(self::PATTERN_MATCH_VALIDATOROPTIONS, $rawValidatorOptions, $validatorOptions, PREG_SET_ORDER);
+        foreach ($validatorOptions as $validatorOption) {
+            $parsedValidatorOptions[trim($validatorOption['optionName'])] = trim($validatorOption['optionValue']);
+        }
+        array_walk($parsedValidatorOptions, [$this, 'unquoteString']);
+        return $parsedValidatorOptions;
     }
 }

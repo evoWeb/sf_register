@@ -190,232 +190,117 @@ class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $lgNameZh;
 
-    /**
-     * Getter for ISO 639-1 A2 Language code
-     *
-     * @return string
-     */
-    public function getLgIso2()
+    public function getLgIso2(): string
     {
         return $this->lgIso2;
     }
 
-    /**
-     * Getter for Name
-     *
-     * @return string
-     */
-    public function getLgNameLocal()
+    public function getLgNameLocal(): string
     {
         return $this->lgNameLocal;
     }
 
-    /**
-     * Getter for Name (EN)
-     *
-     * @return string
-     */
-    public function getLgNameEn()
+    public function getLgNameEn(): string
     {
         return $this->lgNameEn;
     }
 
-    /**
-     * Getter for Short name (CZ)
-     *
-     * @return string
-     */
-    public function getLgNameCz()
+    public function getLgNameCz(): string
     {
         return $this->lgNameCz;
     }
 
-    /**
-     * Getter for Short name (DA)
-     *
-     * @return string
-     */
-    public function getLgNameDa()
+    public function getLgNameDa(): string
     {
         return $this->lgNameDa;
     }
 
-    /**
-     * Getter for Short name (DE)
-     *
-     * @return string
-     */
-    public function getLgNameDe()
+    public function getLgNameDe(): string
     {
         return $this->lgNameDe;
     }
 
-    /**
-     * Getter for Short name (ES)
-     *
-     * @return string
-     */
-    public function getLgNameEs()
+    public function getLgNameEs(): string
     {
         return $this->lgNameEs;
     }
 
-    /**
-     * Getter for Short name (FR)
-     *
-     * @return string
-     */
-    public function getLgNameFr()
+    public function getLgNameFr(): string
     {
         return $this->lgNameFr;
     }
 
-    /**
-     * Getter for Short name (GA)
-     *
-     * @return string
-     */
-    public function getLgNameGa()
+    public function getLgNameGa(): string
     {
         return $this->lgNameGa;
     }
 
-    /**
-     * Getter for Short name (GL)
-     *
-     * @return string
-     */
-    public function getLgNameGl()
+    public function getLgNameGl(): string
     {
         return $this->lgNameGl;
     }
 
-    /**
-     * Getter for Short name (IT)
-     *
-     * @return string
-     */
-    public function getLgNameIt()
+    public function getLgNameIt(): string
     {
         return $this->lgNameIt;
     }
 
-    /**
-     * Getter for Short name (JA)
-     *
-     * @return string
-     */
-    public function getLgNameJa()
+    public function getLgNameJa(): string
     {
         return $this->lgNameJa;
     }
 
-    /**
-     * Getter for Short name (KM)
-     *
-     * @return string
-     */
-    public function getLgNameKm()
+    public function getLgNameKm(): string
     {
         return $this->lgNameKm;
     }
 
-    /**
-     * Getter for Short name (NL)
-     *
-     * @return string
-     */
-    public function getLgNameNl()
+    public function getLgNameNl(): string
     {
         return $this->lgNameNl;
     }
 
-    /**
-     * Getter for Short name (NO)
-     *
-     * @return string
-     */
-    public function getLgNameNo()
+    public function getLgNameNo(): string
     {
         return $this->lgNameNo;
     }
 
-    /**
-     * Getter for Short name (PL)
-     *
-     * @return string
-     */
-    public function getLgNamePl()
+    public function getLgNamePl(): string
     {
         return $this->lgNamePl;
     }
 
-    /**
-     * Getter for Short name (PT)
-     *
-     * @return string
-     */
-    public function getLgNamePt()
+    public function getLgNamePt(): string
     {
         return $this->lgNamePt;
     }
 
-    /**
-     * Getter for Short name (RO)
-     *
-     * @return string
-     */
-    public function getLgNameRo()
+    public function getLgNameRo(): string
     {
         return $this->lgNameRo;
     }
 
-    /**
-     * Getter for Short name (RU)
-     *
-     * @return string
-     */
-    public function getLgNameRu()
+    public function getLgNameRu(): string
     {
         return $this->lgNameRu;
     }
 
-    /**
-     * Getter for Short name (SK)
-     *
-     * @return string
-     */
-    public function getLgNameSk()
+    public function getLgNameSk(): string
     {
         return $this->lgNameSk;
     }
 
-    /**
-     * Getter for Short name (SV)
-     *
-     * @return string
-     */
-    public function getLgNameSv()
+    public function getLgNameSv(): string
     {
         return $this->lgNameSv;
     }
 
-    /**
-     * Getter for Short name (UA)
-     *
-     * @return string
-     */
-    public function getLgNameUa()
+    public function getLgNameUa(): string
     {
         return $this->lgNameUa;
     }
 
-    /**
-     * Getter for Short name (ZH)
-     *
-     * @return string
-     */
-    public function getLgNameZh()
+    public function getLgNameZh(): string
     {
         return $this->lgNameZh;
     }

@@ -1,4 +1,8 @@
-.idea/
-
-node_modules/
+.Build/bin/**
+.Build/vendor/**
+.Build/Web/**
+node_modules
+composer.*
+!composer.json
+.idea
 .sass-cache/

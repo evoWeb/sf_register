@@ -31,8 +31,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
- * Api to get informations via ajax calls
- * Possible informations are static info tables country zones
+ * Api to get information via ajax calls
+ * Possible information are static info tables country zones
  * Call eid like
  * ?eID=sf_register&tx_sfregister[action]=zones&tx_sfregister[parent]=DE
  */
@@ -67,15 +67,7 @@ class AjaxController
     protected $result = [];
 
 
-    /**
-     * Dispatch the given action and call the output rendering afterwards
-     *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     *
-     * @return NULL|\Psr\Http\Message\ResponseInterface
-     */
-    public function processRequest(ServerRequestInterface $request, ResponseInterface $response)
+    public function processRequest(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $requestArguments = $request->getParsedBody()['tx_sfregister'];
 
@@ -93,9 +85,6 @@ class AjaxController
         return $response;
     }
 
-    /**
-     * @return void
-     */
     protected function errorAction()
     {
         $this->status = 'error';
@@ -104,8 +93,6 @@ class AjaxController
 
     /**
      * @param int|string $parent
-     *
-     * @return void
      */
     protected function getZonesAction($parent)
     {
@@ -137,11 +124,6 @@ class AjaxController
         }
     }
 
-    /**
-     * Render the status, message and result as json encoded array as response
-     *
-     * @return string
-     */
     protected function output(): string
     {
         $result = [

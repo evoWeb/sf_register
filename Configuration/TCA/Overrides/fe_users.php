@@ -6,15 +6,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 $languageFile = 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:';
 
 $temporaryColumns = [
-    'mailhash' => [
-        'exclude' => true,
-        'label' => $languageFile . 'fe_users.mailhash',
-        'config' => [
-            'type' => 'input',
-            'readOnly' => true,
-        ]
-    ],
-
     'activated_on' => [
         'exclude' => true,
         'label' => $languageFile . 'fe_users.activated_on',
@@ -52,7 +43,7 @@ $temporaryColumns = [
             'renderType' => 'inputDateTime',
             'size' => 10,
             'eval' => 'date',
-            'default' => ''
+            'default' => 0
         ]
     ],
     'language' => [
@@ -239,7 +230,7 @@ ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'email_new', '', 'after
 ExtensionManagementUtility::addToAllTCAtypes(
     'fe_users',
     '--div--;LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.div.registration,
-    mailhash, activated_on, gtc, privacy, by_invitation, comments, module_sys_dmail_html'
+    activated_on, gtc, privacy, by_invitation, comments, module_sys_dmail_html'
 );
 
 if (ExtensionManagementUtility::isLoaded('static_info_tables')) {

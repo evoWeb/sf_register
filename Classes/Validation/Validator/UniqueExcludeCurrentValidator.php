@@ -29,8 +29,6 @@ use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * A validator to check if a value is unique only if current value has changed
- *
- * @scope singleton
  */
 class UniqueExcludeCurrentValidator extends AbstractValidator implements ValidatorInterface
 {
@@ -51,47 +49,31 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Validat
     ];
 
     /**
-     * Frontend user repository
-     *
      * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
-     * @inject
      */
     protected $userRepository = null;
 
     /**
-     * propertyName
-     *
      * @var string
      */
     protected $propertyName = '';
 
     /**
-     * model
-     *
      * @var \Evoweb\SfRegister\Domain\Model\FrontendUser
      */
     protected $model;
 
-    /**
-     * Setter for propertyName
-     *
-     * @param string $propertyName
-     *
-     * @return void
-     */
-    public function setPropertyName($propertyName)
+    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    public function setPropertyName(string $propertyName)
     {
         $this->propertyName = $propertyName;
     }
 
-    /**
-     * Setter for model
-     *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $model
-     *
-     * @return void
-     */
-    public function setModel($model)
+    public function setModel(\Evoweb\SfRegister\Domain\Model\FrontendUser $model)
     {
         $this->model = $model;
     }
@@ -101,9 +83,9 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Validat
      *
      * @param string $value The value
      *
-     * @return boolean
+     * @return bool
      */
-    public function isValid($value)
+    public function isValid($value): bool
     {
         $result = true;
 
@@ -115,7 +97,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Validat
                     'error_notunique_local',
                     'SfRegister'
                 ),
-                1301599608
+                1301599609
             );
             $result = false;
         } elseif ($this->options['global'] && $this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
@@ -124,7 +106,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Validat
                     'error_notunique_global',
                     'SfRegister'
                 ),
-                1301599619
+                1301599620
             );
             $result = false;
         }

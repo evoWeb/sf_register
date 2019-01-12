@@ -39,16 +39,9 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     /**
      * If the account is disabled or not
      *
-     * @var boolean
+     * @var bool
      */
-    protected $disable;
-
-    /**
-     * Mailhash for activation by email
-     *
-     * @var string
-     */
-    protected $mailhash;
+    protected $disable = false;
 
     /**
      * Date on which the account was activated
@@ -62,35 +55,35 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var string
      */
-    protected $captcha;
+    protected $captcha = '';
 
     /**
      *  virtual not stored in database
      *
      * @var string
      */
-    protected $passwordRepeat;
+    protected $passwordRepeat = '';
 
     /**
      *  virtual not stored in database
      *
      * @var string
      */
-    protected $emailRepeat;
+    protected $emailRepeat = '';
 
     /**
      * Pseudonym
      *
      * @var string
      */
-    protected $pseudonym;
+    protected $pseudonym = '';
 
     /**
      * Gender 1 or 2 for mr or mrs
      *
-     * @var integer
+     * @var int
      */
-    protected $gender;
+    protected $gender = 1;
 
     /**
      * Date of birth
@@ -102,93 +95,93 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     /**
      * Day of date of birth
      *
-     * @var integer
+     * @var int
      */
-    protected $dateOfBirthDay;
+    protected $dateOfBirthDay = 0;
 
     /**
      * Month of date of birth
      *
-     * @var integer
+     * @var int
      */
-    protected $dateOfBirthMonth;
+    protected $dateOfBirthMonth = 0;
 
     /**
      * Year of date of birth
      *
-     * @var integer
+     * @var int
      */
-    protected $dateOfBirthYear;
+    protected $dateOfBirthYear = 0;
 
     /**
      * Language
      *
      * @var string
      */
-    protected $language;
+    protected $language = '';
 
     /**
      * Code of state/province
      *
      * @var string
      */
-    protected $zone;
+    protected $zone = '';
 
     /**
      * Timezone
      *
      * @var float
      */
-    protected $timezone;
+    protected $timezone = 0;
 
     /**
      * Daylight saving time
      *
-     * @var boolean
+     * @var bool
      */
-    protected $daylight;
+    protected $daylight = false;
 
     /**
      * Country with static info table code
      *
      * @var string
      */
-    protected $staticInfoCountry;
+    protected $staticInfoCountry = '';
 
     /**
      * Number of mobilephone
      *
      * @var string
      */
-    protected $mobilephone;
+    protected $mobilephone = '';
 
     /**
      * General terms and conditions accepted flag
      *
-     * @var boolean
+     * @var bool
      */
-    protected $gtc;
+    protected $gtc = false;
 
     /**
      * Privacy agreement accepted flag
      *
-     * @var boolean
+     * @var bool
      */
-    protected $privacy;
+    protected $privacy = false;
 
     /**
      * Status
      *
-     * @var integer
+     * @var int
      */
     protected $status = 0;
 
     /**
-     * wether the user register by invitation
+     * whether the user register by invitation
      *
-     * @var boolean
+     * @var bool
      */
-    protected $byInvitation;
+    protected $byInvitation = false;
 
     /**
      * comment of user
@@ -200,21 +193,21 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     /**
      * if Dmail should be enabled
      *
-     * @var boolean
+     * @var bool
      */
-    protected $moduleSysDmailNewsletter;
+    protected $moduleSysDmailNewsletter = false;
 
     /**
      * if emails should be send as HTML or plain text
      *
-     * @var boolean
+     * @var bool
      */
-    protected $moduleSysDmailHtml;
+    protected $moduleSysDmailHtml = true;
 
     /**
-     * selected dmail categories
+     * selected Dmail categories
      *
-     * @var array
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
      */
     protected $moduleSysDmailCategory;
 
@@ -223,76 +216,37 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      *
      * @var string
      */
-    protected $emailNew;
+    protected $emailNew = '';
 
     /**
      * email address of invitee
      *
      * @var string
      */
-    protected $invitationEmail;
+    protected $invitationEmail = '';
 
 
     /**
-     * Initializes the date of birth if related values
-     * are set by request to argument mapping
-     *
-     * @return void
+     * Initializes the date of birth if related values are set by request to argument mapping
      */
     public function prepareDateOfBirth()
     {
-        if ($this->dateOfBirthDay !== null && $this->dateOfBirthMonth !== null && $this->dateOfBirthYear !== null) {
+        if ($this->dateOfBirthDay > 0 && $this->dateOfBirthMonth > 0 && $this->dateOfBirthYear > 0) {
             if ($this->dateOfBirth === null) {
                 $this->dateOfBirth = new \DateTime();
             }
             $this->dateOfBirth->setDate($this->dateOfBirthYear, $this->dateOfBirthMonth, $this->dateOfBirthDay);
-        } else {
-            $this->dateOfBirth = null;
         }
     }
 
-    /**
-     * Getter for disable
-     *
-     * @return boolean
-     */
-    public function getDisable()
-    {
-        return ($this->disable ? true : false);
-    }
-
-    /**
-     * Setter for disable
-     *
-     * @param boolean $disable
-     * @return void
-     */
-    public function setDisable($disable)
+    public function setDisable(bool $disable)
     {
         $this->disable = ($disable ? true : false);
     }
 
-    /**
-     * Getter for mailhash
-     *
-     * @return string
-     * @deprecated
-     */
-    public function getMailhash()
+    public function getDisable(): bool
     {
-        return $this->mailhash;
-    }
-
-    /**
-     * Setter for mailhash
-     *
-     * @param string $mailhash
-     * @return void
-     * @deprecated
-     */
-    public function setMailhash($mailhash)
-    {
-        $this->mailhash = trim($mailhash);
+        return (bool) $this->disable;
     }
 
     /**
@@ -309,140 +263,75 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      * Setter for activatedOn
      *
      * @param \DateTime|NULL $activatedOn
-     * @return void
      */
     public function setActivatedOn(\DateTime $activatedOn = null)
     {
         $this->activatedOn = $activatedOn;
     }
 
-    /**
-     * Getter for captcha
-     *
-     * @return string
-     */
-    public function getCaptcha()
-    {
-        return $this->captcha;
-    }
-
-    /**
-     * Setter for captcha
-     *
-     * @param string $captcha
-     * @return void
-     */
-    public function setCaptcha($captcha)
+    public function setCaptcha(string $captcha)
     {
         $this->captcha = trim($captcha);
     }
 
-    /**
-     * Getter for passwordRepeat
-     *
-     * @return string
-     */
-    public function getPasswordRepeat()
+    public function getCaptcha(): string
     {
-        return $this->passwordRepeat;
+        return $this->captcha;
     }
 
-    /**
-     * Setter for passwordRepeat
-     *
-     * @param string $passwordRepeat
-     * @return void
-     */
-    public function setPasswordRepeat($passwordRepeat)
+    public function setPasswordRepeat(string $passwordRepeat)
     {
         $this->passwordRepeat = trim($passwordRepeat);
     }
 
-    /**
-     * Getter for emailRepeat
-     *
-     * @return string
-     */
-    public function getEmailRepeat()
+    public function getPasswordRepeat(): string
     {
-        return $this->emailRepeat;
+        return $this->passwordRepeat;
     }
 
-    /**
-     * Setter for emailRepeat
-     *
-     * @param string $emailRepeat
-     * @return void
-     */
-    public function setEmailRepeat($emailRepeat)
+    public function setEmailRepeat(string $emailRepeat)
     {
         $this->emailRepeat = trim($emailRepeat);
     }
 
-    /**
-     * Remove an image
-     *
-     * @return void
-     */
+    public function getEmailRepeat(): string
+    {
+        return $this->emailRepeat;
+    }
+
     public function removeImage()
     {
         $this->image = null;
     }
 
-    /**
-     * Setter for title
-     *
-     * @param string $title
-     * @return void
-     */
-    public function setTitle($title)
-    {
-        if ($title == 'none') {
-            $title = '';
-        }
-        $this->title = $title;
-    }
-
-    /**
-     * Getter for pseudonym
-     *
-     * @return string
-     */
-    public function getPseudonym()
-    {
-        return $this->pseudonym;
-    }
-
-    /**
-     * Setter for pseudonym
-     *
-     * @param string $pseudonym
-     * @return void
-     */
-    public function setPseudonym($pseudonym)
+    public function setPseudonym(string $pseudonym)
     {
         $this->pseudonym = $pseudonym;
     }
 
-    /**
-     * Getter for gender
-     *
-     * @return integer
-     */
-    public function getGender()
+    public function getPseudonym(): string
+    {
+        return $this->pseudonym;
+    }
+
+    public function setGender(int $gender)
+    {
+        $this->gender = $gender;
+    }
+
+    public function getGender(): int
     {
         return $this->gender;
     }
 
     /**
-     * Setter for gender
+     * Setter for dateOfBirth
      *
-     * @param integer $gender
-     * @return void
+     * @param \DateTime|NULL $dateOfBirth
      */
-    public function setGender($gender)
+    public function setDateOfBirth(\DateTime $dateOfBirth = null)
     {
-        $this->gender = $gender;
+        $this->dateOfBirth = $dateOfBirth;
     }
 
     /**
@@ -455,23 +344,13 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         return $this->dateOfBirth;
     }
 
-    /**
-     * Setter for dateOfBirth
-     *
-     * @param \DateTime|NULL $dateOfBirth
-     * @return void
-     */
-    public function setDateOfBirth(\DateTime $dateOfBirth = null)
+    public function setDateOfBirthDay(int $day)
     {
-        $this->dateOfBirth = $dateOfBirth;
+        $this->dateOfBirthDay = $day;
+        $this->prepareDateOfBirth();
     }
 
-    /**
-     * Getter for day of dateOfBirth
-     *
-     * @return integer
-     */
-    public function getDateOfBirthDay()
+    public function getDateOfBirthDay(): int
     {
         $result = null;
 
@@ -482,24 +361,13 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         return $result;
     }
 
-    /**
-     * Setter for day of dateOfBirth
-     *
-     * @param integer $day
-     * @return void
-     */
-    public function setDateOfBirthDay($day)
+    public function setDateOfBirthMonth(int $month)
     {
-        $this->dateOfBirthDay = $day;
+        $this->dateOfBirthMonth = $month;
         $this->prepareDateOfBirth();
     }
 
-    /**
-     * Getter for month of dateOfBirth
-     *
-     * @return integer
-     */
-    public function getDateOfBirthMonth()
+    public function getDateOfBirthMonth(): int
     {
         $result = null;
 
@@ -510,24 +378,13 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         return $result;
     }
 
-    /**
-     * Setter for month of dateOfBirth
-     *
-     * @param integer $month
-     * @return void
-     */
-    public function setDateOfBirthMonth($month)
+    public function setDateOfBirthYear(int $year)
     {
-        $this->dateOfBirthMonth = $month;
+        $this->dateOfBirthYear = $year;
         $this->prepareDateOfBirth();
     }
 
-    /**
-     * Getter for year of dateOfBirth
-     *
-     * @return integer
-     */
-    public function getDateOfBirthYear()
+    public function getDateOfBirthYear(): int
     {
         $result = null;
 
@@ -538,368 +395,182 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         return $result;
     }
 
-    /**
-     * Setter for month of dateOfBirth
-     *
-     * @param integer $year
-     * @return void
-     */
-    public function setDateOfBirthYear($year)
-    {
-        $this->dateOfBirthYear = $year;
-        $this->prepareDateOfBirth();
-    }
-
-    /**
-     * Getter for mobilphone
-     *
-     * @return string
-     */
-    public function getMobilephone()
-    {
-        return $this->mobilephone;
-    }
-
-    /**
-     * Setter for mobilphone
-     *
-     * @param string $mobilephone
-     * @return void
-     */
-    public function setMobilephone($mobilephone)
+    public function setMobilephone(string $mobilephone)
     {
         $this->mobilephone = $mobilephone;
     }
 
-    /**
-     * Getter for zone
-     *
-     * @return string
-     */
-    public function getZone()
+    public function getMobilephone(): string
     {
-        return $this->zone;
+        return $this->mobilephone;
     }
 
-    /**
-     * Setter for zone
-     *
-     * @param string $zone
-     * @return void
-     */
-    public function setZone($zone)
+    public function setZone(string $zone)
     {
         $this->zone = $zone;
     }
 
-    /**
-     * Getter for timezone
-     *
-     * @return float
-     */
-    public function getTimezone()
+    public function getZone(): string
     {
-        return floor($this->timezone) != $this->timezone ?
-            $this->timezone * 10 :
-            $this->timezone;
+        return $this->zone;
     }
 
-    /**
-     * Setter for timezone
-     *
-     * @param float $timezone
-     * @return void
-     */
-    public function setTimezone($timezone)
+    public function setTimezone(int $timezone)
     {
         $this->timezone = ($timezone > 14 || $timezone < -12 ?
             $timezone / 10 :
             $timezone);
     }
 
-    /**
-     * Getter for daylight
-     *
-     * @return boolean
-     */
-    public function getDaylight()
+    public function getTimezone(): int
     {
-        return $this->daylight ?
-            true :
-            false;
+        return floor($this->timezone) != $this->timezone ?
+            $this->timezone * 10 :
+            $this->timezone;
     }
 
-    /**
-     * Setter for daylight
-     *
-     * @param boolean $daylight
-     * @return void
-     */
-    public function setDaylight($daylight)
+    public function setDaylight(bool $daylight)
     {
         $this->daylight = ($daylight ?
             true :
             false);
     }
 
-    /**
-     * Getter for static info cpuntry
-     *
-     * @return string
-     */
-    public function getStaticInfoCountry()
+    public function getDaylight(): bool
     {
-        return $this->staticInfoCountry;
-    }
-
-    /**
-     * Setter got static info country
-     *
-     * @param string $staticInfoCountry
-     * @return void
-     */
-    public function setStaticInfoCountry($staticInfoCountry)
-    {
-        $this->staticInfoCountry = $staticInfoCountry;
-    }
-
-    /**
-     * Getter for gtc
-     *
-     * @return boolean
-     */
-    public function getGtc()
-    {
-        return $this->gtc ?
+        return $this->daylight ?
             true :
             false;
     }
 
-    /**
-     * Setter for gtc
-     *
-     * @param boolean $gtc
-     * @return void
-     */
-    public function setGtc($gtc)
+    public function setStaticInfoCountry(string $staticInfoCountry)
+    {
+        $this->staticInfoCountry = $staticInfoCountry;
+    }
+
+    public function getStaticInfoCountry(): string
+    {
+        return $this->staticInfoCountry;
+    }
+
+    public function setGtc(bool $gtc)
     {
         $this->gtc = ($gtc ?
             true :
             false);
     }
 
-    /**
-     * Getter for privacy agreement flag
-     *
-     * @return boolean
-     */
-    public function getPrivacy()
+    public function getGtc(): bool
     {
-        return $this->privacy ?
+        return $this->gtc ?
             true :
             false;
     }
 
-    /**
-     * Setter for privacy agreement flag
-     *
-     * @param boolean $privacy
-     * @return void
-     */
-    public function setPrivacy($privacy)
+    public function setPrivacy(bool $privacy)
     {
         $this->privacy = ($privacy ?
             true :
             false);
     }
 
-    /**
-     * Setter for byInvitation
-     *
-     * @param boolean $byInvitation
-     * @return void
-     */
-    public function setByInvitation($byInvitation)
+    public function getPrivacy(): bool
+    {
+        return $this->privacy ?
+            true :
+            false;
+    }
+
+    public function setByInvitation(bool $byInvitation)
     {
         $this->byInvitation = $byInvitation;
     }
 
-    /**
-     * Getter for byInvitation
-     *
-     * @return boolean
-     */
-    public function getByInvitation()
+    public function getByInvitation(): bool
     {
         return $this->byInvitation;
     }
 
-    /**
-     * Setter for comments
-     *
-     * @param string $comments
-     * @return void
-     */
-    public function setComments($comments)
+    public function setComments(string $comments)
     {
         $this->comments = $comments;
     }
 
-    /**
-     * Getter for comments
-     *
-     * @return string
-     */
-    public function getComments()
+    public function getComments(): string
     {
         return $this->comments;
     }
 
-    /**
-     * Setter language
-     *
-     * @param string $language
-     * @return void
-     */
-    public function setLanguage($language)
+    public function setLanguage(string $language)
     {
         $this->language = $language;
     }
 
-    /**
-     * Getter for language
-     *
-     * @return string
-     */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
 
-    /**
-     * Setter for moduleSysDmailCategory
-     *
-     * @param array $moduleSysDmailCategory
-     * @return void
-     */
-    public function setModuleSysDmailCategory($moduleSysDmailCategory)
+    public function setModuleSysDmailCategory(array $moduleSysDmailCategory)
     {
         $this->moduleSysDmailCategory = $moduleSysDmailCategory;
     }
 
     /**
-     * Getter for moduleSysDmailCategory
-     *
-     * @return array
+     * @return array|null
      */
     public function getModuleSysDmailCategory()
     {
         return $this->moduleSysDmailCategory;
     }
 
-    /**
-     * Set moduleSysDmailNewsletter
-     *
-     * @param boolean $moduleSysDmailNewsletter
-     * @return void
-     */
-    public function setModuleSysDmailNewsletter($moduleSysDmailNewsletter)
+    public function setModuleSysDmailNewsletter(bool $moduleSysDmailNewsletter)
     {
         $this->moduleSysDmailNewsletter = $moduleSysDmailNewsletter;
     }
 
-    /**
-     * Get moduleSysDmailNewsletter
-     *
-     * @return boolean
-     */
-    public function getModuleSysDmailNewsletter()
+    public function getModuleSysDmailNewsletter(): bool
     {
         return $this->moduleSysDmailNewsletter;
     }
 
-    /**
-     * Setter for moduleSysDmailHtml
-     *
-     * @param boolean $moduleSysDmailHtml
-     * @return void
-     */
-    public function setModuleSysDmailHtml($moduleSysDmailHtml)
+    public function setModuleSysDmailHtml(bool $moduleSysDmailHtml)
     {
         $this->moduleSysDmailHtml = $moduleSysDmailHtml;
     }
 
-    /**
-     * Getter for moduleSysDmailHtml
-     *
-     * @return boolean
-     */
-    public function getModuleSysDmailHtml()
+    public function getModuleSysDmailHtml(): bool
     {
         return $this->moduleSysDmailHtml;
     }
 
-    /**
-     * Setter for status
-     *
-     * @param int $status
-     * @return void
-     */
-    public function setStatus($status)
+    public function setStatus(int $status)
     {
         $this->status = $status;
     }
 
-    /**
-     * Getter for status
-     *
-     * @return int
-     */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
 
-    /**
-     * Setter for emailNew
-     *
-     * @param string $emailNew
-     * @return void
-     */
-    public function setEmailNew($emailNew)
+    public function setEmailNew(string $emailNew)
     {
         $this->emailNew = $emailNew;
     }
 
-    /**
-     * Getter for emailNew
-     *
-     * @return string
-     */
-    public function getEmailNew()
+    public function getEmailNew(): string
     {
         return $this->emailNew;
     }
 
-    /**
-     * Getter for invitationEmail
-     *
-     * @return string
-     */
-    public function getInvitationEmail()
-    {
-        return $this->invitationEmail;
-    }
-
-    /**
-     * Setter for invitationEmail
-     *
-     * @param string $invitationEmail
-     *
-     * @return void
-     */
-    public function setInvitationEmail($invitationEmail)
+    public function setInvitationEmail(string $invitationEmail)
     {
         $this->invitationEmail = $invitationEmail;
+    }
+
+    public function getInvitationEmail(): string
+    {
+        return $this->invitationEmail;
     }
 }

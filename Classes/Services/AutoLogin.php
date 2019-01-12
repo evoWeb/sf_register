@@ -24,11 +24,10 @@ namespace Evoweb\SfRegister\Services;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
- * Service to handle user logins
+ * Service to handle user login
  */
-class AutoLogin extends \TYPO3\CMS\Sv\AuthenticationService
+class AutoLogin extends \TYPO3\CMS\Core\Authentication\AuthenticationService
 {
     /**
      * @var bool
@@ -38,7 +37,7 @@ class AutoLogin extends \TYPO3\CMS\Sv\AuthenticationService
     /**
      * Find a user (eg. look up the user record in database when a login is sent)
      *
-     * @return mixed User array or FALSE
+     * @return array|bool User array or FALSE
      */
     public function getUser()
     {
@@ -53,9 +52,9 @@ class AutoLogin extends \TYPO3\CMS\Sv\AuthenticationService
         unset($_SESSION['sf-register-user']);
 
         $user = $this->fetchUserRecord(
-                $userId,
-                '',
-                array_merge($this->db_user, ['username_column' => 'uid','check_pid_clause' => ''])
+            $userId,
+            '',
+            array_merge($this->db_user, ['username_column' => 'uid','check_pid_clause' => ''])
         );
 
         self::$autoLoginActivated = intval($userId) > 0 && !empty($user);
@@ -77,7 +76,7 @@ class AutoLogin extends \TYPO3\CMS\Sv\AuthenticationService
      *             <= 0:   Authentication failed, no more checking needed
      *                     by other auth services.
      */
-    public function authUser(array $user)
+    public function authUser(array $user): int
     {
         $OK = 100;
 

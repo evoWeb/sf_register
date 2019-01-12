@@ -36,6 +36,12 @@ plugin.tx_sfregister.settings {
   notifyAdminPostCreateDecline =
   notifyUserPostCreateDecline =
 
+
+
+
+
+
+
   notifyAdminPostEditSave =
   notifyUserPostEditSave =
 
@@ -49,10 +55,7 @@ plugin.tx_sfregister.settings {
 
 
 
-
-
   confirmEmailPostCreate =
-
 
   # boolean if user should get logged in after registration
   autologinPostRegistration =

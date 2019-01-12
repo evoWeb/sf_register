@@ -57,12 +57,7 @@ class Session implements \TYPO3\CMS\Core\SingletonInterface
         $this->fetch();
     }
 
-    /**
-     * Fetch all values from session
-     *
-     * @return \Evoweb\SfRegister\Services\Session
-     */
-    public function fetch()
+    public function fetch(): self
     {
         if ($this->values === null) {
             $this->values = (array) unserialize($this->frontendUser->getKey('ses', $this->sessionKey));
@@ -71,26 +66,14 @@ class Session implements \TYPO3\CMS\Core\SingletonInterface
         return $this;
     }
 
-    /**
-     * Store all value to session
-     *
-     * @return \Evoweb\SfRegister\Services\Session
-     */
-    public function store()
+    public function store(): self
     {
         $this->frontendUser->setKey('ses', $this->sessionKey, serialize($this->values));
 
         return $this;
     }
 
-    /**
-     * Check if a key is set
-     *
-     * @param string $key
-     *
-     * @return boolean
-     */
-    public function has($key)
+    public function has(string $key): bool
     {
         $result = false;
 
@@ -108,7 +91,7 @@ class Session implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return mixed
      */
-    public function get($key)
+    public function get(string $key)
     {
         $result = null;
 
@@ -127,21 +110,14 @@ class Session implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return \Evoweb\SfRegister\Services\Session
      */
-    public function set($key, $value)
+    public function set(string $key, $value): self
     {
         $this->values[$key] = $value;
 
         return $this->store();
     }
 
-    /**
-     * Removes the key from values
-     *
-     * @param string $key
-     *
-     * @return \Evoweb\SfRegister\Services\Session
-     */
-    public function remove($key)
+    public function remove(string $key): self
     {
         if ($this->has($key)) {
             unset($this->values[$key]);

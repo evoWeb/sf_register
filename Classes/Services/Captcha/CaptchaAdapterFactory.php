@@ -32,41 +32,25 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 class CaptchaAdapterFactory
 {
     /**
-     * Object manager
-     *
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
      */
     protected $objectManager;
 
     /**
-     * Configuration manager
-     *
      * @var ConfigurationManager
      */
     protected $configurationManager;
 
     /**
-     * Settings
-     *
      * @var array
      */
     protected $settings = [];
 
-    /**
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
-     */
     public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
     {
         $this->objectManager = $objectManager;
     }
 
-    /**
-     * Inject configuration manager
-     *
-     * @param ConfigurationManager $configurationManager
-     *
-     * @return void
-     */
     public function injectConfigurationManager(ConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
@@ -77,14 +61,7 @@ class CaptchaAdapterFactory
         );
     }
 
-    /**
-     * Get an adapter for an captcha of given type
-     *
-     * @param string $type
-     *
-     * @return \Evoweb\SfRegister\Services\Captcha\AbstractAdapter
-     */
-    public function getCaptchaAdapter($type)
+    public function getCaptchaAdapter(string $type): AbstractAdapter
     {
         $settings = [];
 

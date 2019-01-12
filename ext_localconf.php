@@ -6,34 +6,22 @@ call_user_func(function () {
      * Page TypoScript for mod wizards
      */
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TsConfig/ModWizards.typoscript">'
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/PageTS/Wizards/NewContentElement.typoscript">'
     );
-    /**
-     * User TypoScript for fields
-     *
-     * Needs to be added on top so others can extend regardless of load order
-     */
+
+    // Needs to be added on top so others can extend regardless of load order
     $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'] = '
 [GLOBAL]
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript">
 ' . $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'];
 
-    $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['sf_register']);
-
-    if (TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')
-        && (
-            !isset($extensionConfiguration['setRealurlConfigByDefault'])
-            || $extensionConfiguration['setRealurlConfigByDefault'] == 1
-        )
-    ) {
-        /** @noinspection PhpIncludeInspection */
-        require_once(
-            TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath(
-                'sf_register',
-                'Configuration/Realurl/configuration.php'
-            )
-        );
-    }
+    /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    $iconRegistry->registerIcon(
+        'sf-register-extension',
+        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        ['source' => 'EXT:sf_register/Resources/Public/Icons/Extension.svg']
+    );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Evoweb.sf_register',
@@ -55,15 +43,11 @@ call_user_func(function () {
     $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['sf_register'] =
         \Evoweb\SfRegister\Controller\AjaxController::class . '::processRequest';
 
-    define('SFREGISTERCACHEIDENTIFIER', 'cache_sf_register_extending');
-
-    // Register cache sf_register
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][SFREGISTERCACHEIDENTIFIER] = [
-        'frontend' => \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class,
-        'backend' => \TYPO3\CMS\Core\Cache\Backend\FileBackend::class,
-        'options' => [],
-    ];
-
+    \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
+        ->registerImplementation(
+            \Evoweb\SfRegister\Interfaces\FrontendUserInterface::class,
+            \Evoweb\SfRegister\Domain\Model\FrontendUser::class
+        );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
         \Evoweb\SfRegister\Property\TypeConverter\FrontendUserConverter::class
@@ -77,7 +61,6 @@ call_user_func(function () {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
         \Evoweb\SfRegister\Property\TypeConverter\ObjectStorageConverter::class
     );
-
 
     if (TYPO3_MODE === 'FE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
         /**

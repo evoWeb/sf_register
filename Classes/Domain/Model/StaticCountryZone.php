@@ -46,7 +46,7 @@ class StaticCountryZone extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * ISO 3166-1 Nr Country code
      *
-     * @var string
+     * @var int
      */
     protected $znCountryIsoNr;
 
@@ -216,7 +216,7 @@ class StaticCountryZone extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return string
      */
-    public function getZnCountryIso2()
+    public function getZnCountryIso2(): string
     {
         return $this->znCountryIso2;
     }
@@ -226,7 +226,7 @@ class StaticCountryZone extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return string
      */
-    public function getZnCountryIso3()
+    public function getZnCountryIso3(): string
     {
         return $this->znCountryIso3;
     }
@@ -234,239 +234,124 @@ class StaticCountryZone extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Getter for ISO 3166-1 Nr Country code
      *
-     * @return string
+     * @return int
      */
-    public function getZnCountryIsoNr()
+    public function getZnCountryIsoNr(): int
     {
         return $this->znCountryIsoNr;
     }
 
-    /**
-     * Getter for ISO 3166-2 Country Zone code
-     *
-     * @return string
-     */
-    public function getZnCode()
+    public function getZnCode(): string
     {
         return $this->znCode;
     }
 
-    /**
-     * Getter for Name
-     *
-     * @return string
-     */
-    public function getZnNameLocal()
+    public function getZnNameLocal(): string
     {
         return $this->znNameLocal;
     }
 
-    /**
-     * Getter for Name (EN)
-     *
-     * @return string
-     */
-    public function getZnNameEn()
+    public function getZnNameEn(): string
     {
         return $this->znNameEn;
     }
 
-    /**
-     * Getter for Short name (CZ)
-     *
-     * @return string
-     */
-    public function getZnNameCz()
+    public function getZnNameCz(): string
     {
         return $this->znNameCz;
     }
 
-    /**
-     * Getter for Short name (DA)
-     *
-     * @return string
-     */
-    public function getZnNameDa()
+    public function getZnNameDa(): string
     {
         return $this->znNameDa;
     }
 
-    /**
-     * Getter for Short name (DE)
-     *
-     * @return string
-     */
-    public function getZnNameDe()
+    public function getZnNameDe(): string
     {
         return $this->znNameDe;
     }
 
-    /**
-     * Getter for Short name (ES)
-     *
-     * @return string
-     */
-    public function getZnNameEs()
+    public function getZnNameEs(): string
     {
         return $this->znNameEs;
     }
 
-    /**
-     * Getter for Short name (FR)
-     *
-     * @return string
-     */
-    public function getZnNameFr()
+    public function getZnNameFr(): string
     {
         return $this->znNameFr;
     }
 
-    /**
-     * Getter for Short name (GA)
-     *
-     * @return string
-     */
-    public function getZnNameGa()
+    public function getZnNameGa(): string
     {
         return $this->znNameGa;
     }
 
-    /**
-     * Getter for Short name (GL)
-     *
-     * @return string
-     */
-    public function getZnNameGl()
+    public function getZnNameGl(): string
     {
         return $this->znNameGl;
     }
 
-    /**
-     * Getter for Short name (IT)
-     *
-     * @return string
-     */
-    public function getZnNameIt()
+    public function getZnNameIt(): string
     {
         return $this->znNameIt;
     }
 
-    /**
-     * Getter for Short name (JA)
-     *
-     * @return string
-     */
-    public function getZnNameJa()
+    public function getZnNameJa(): string
     {
         return $this->znNameJa;
     }
 
-    /**
-     * Getter for Short name (KM)
-     *
-     * @return string
-     */
-    public function getZnNameKm()
+    public function getZnNameKm(): string
     {
         return $this->znNameKm;
     }
 
-    /**
-     * Getter for Short name (NL)
-     *
-     * @return string
-     */
-    public function getZnNameNl()
+    public function getZnNameNl(): string
     {
         return $this->znNameNl;
     }
 
-    /**
-     * Getter for Short name (NO)
-     *
-     * @return string
-     */
-    public function getZnNameNo()
+    public function getZnNameNo(): string
     {
         return $this->znNameNo;
     }
 
-    /**
-     * Getter for Short name (PL)
-     *
-     * @return string
-     */
-    public function getZnNamePl()
+    public function getZnNamePl(): string
     {
         return $this->znNamePl;
     }
 
-    /**
-     * Getter for Short name (PT)
-     *
-     * @return string
-     */
-    public function getZnNamePt()
+    public function getZnNamePt(): string
     {
         return $this->znNamePt;
     }
 
-    /**
-     * Getter for Short name (RO)
-     *
-     * @return string
-     */
-    public function getZnNameRo()
+    public function getZnNameRo(): string
     {
         return $this->znNameRo;
     }
 
-    /**
-     * Getter for Short name (RU)
-     *
-     * @return string
-     */
-    public function getZnNameRu()
+    public function getZnNameRu(): string
     {
         return $this->znNameRu;
     }
 
-    /**
-     * Getter for Short name (SK)
-     *
-     * @return string
-     */
-    public function getZnNameSk()
+    public function getZnNameSk(): string
     {
         return $this->znNameSk;
     }
 
-    /**
-     * Getter for Short name (SV)
-     *
-     * @return string
-     */
-    public function getZnNameSv()
+    public function getZnNameSv(): string
     {
         return $this->znNameSv;
     }
 
-    /**
-     * Getter for Short name (UA)
-     *
-     * @return string
-     */
-    public function getZnNameUa()
+    public function getZnNameUa(): string
     {
         return $this->znNameUa;
     }
 
-    /**
-     * Getter for Short name (ZH)
-     *
-     * @return string
-     */
-    public function getZnNameZh()
+    public function getZnNameZh(): string
     {
         return $this->znNameZh;
     }

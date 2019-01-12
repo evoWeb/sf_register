@@ -1,510 +1,496 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2013-06-23T17:11:54Z" product-name="sf_register">
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-06-26T07:34:54Z" product-name="sf_register">
 		<header/>
 		<body>
-			<trans-unit id="uid" xml:space="preserve">
+			<trans-unit id="uid">
 				<source>Userid</source>
 			</trans-unit>
-			<trans-unit id="gender" xml:space="preserve">
+			<trans-unit id="gender">
 				<source>Gender</source>
 			</trans-unit>
-			<trans-unit id="gender_1" xml:space="preserve">
+			<trans-unit id="gender_1">
 				<source>Mr</source>
 			</trans-unit>
-			<trans-unit id="gender_2" xml:space="preserve">
+			<trans-unit id="gender_2">
 				<source>Mrs</source>
 			</trans-unit>
-			<trans-unit id="title" xml:space="preserve">
+			<trans-unit id="title">
 				<source>Title</source>
 			</trans-unit>
-			<trans-unit id="company" xml:space="preserve">
+			<trans-unit id="company">
 				<source>Company</source>
 			</trans-unit>
-			<trans-unit id="lastName" xml:space="preserve">
+			<trans-unit id="lastName">
 				<source>Last Name</source>
 			</trans-unit>
-			<trans-unit id="middleName" xml:space="preserve">
+			<trans-unit id="middleName">
 				<source>Middle Name</source>
 			</trans-unit>
-			<trans-unit id="firstName" xml:space="preserve">
+			<trans-unit id="firstName">
 				<source>First Name</source>
 			</trans-unit>
-			<trans-unit id="position" xml:space="preserve">
+			<trans-unit id="position">
 				<source>Position</source>
 			</trans-unit>
-			<trans-unit id="email" xml:space="preserve">
+			<trans-unit id="email">
 				<source>Email</source>
 			</trans-unit>
-			<trans-unit id="emailRepeat" xml:space="preserve">
+			<trans-unit id="emailRepeat">
 				<source>Email verification</source>
 			</trans-unit>
-			<trans-unit id="telephone" xml:space="preserve">
+			<trans-unit id="telephone">
 				<source>Phone</source>
 			</trans-unit>
-			<trans-unit id="mobilephone" xml:space="preserve">
+			<trans-unit id="mobilephone">
 				<source>Cell Phone</source>
 			</trans-unit>
-			<trans-unit id="fax" xml:space="preserve">
+			<trans-unit id="fax">
 				<source>Fax</source>
 			</trans-unit>
-			<trans-unit id="www" xml:space="preserve">
+			<trans-unit id="www">
 				<source>Website</source>
 			</trans-unit>
-			<trans-unit id="address" xml:space="preserve">
+			<trans-unit id="address">
 				<source>Street / House Number</source>
 			</trans-unit>
-			<trans-unit id="zip" xml:space="preserve">
+			<trans-unit id="zip">
 				<source>Zip</source>
 			</trans-unit>
-			<trans-unit id="city" xml:space="preserve">
+			<trans-unit id="city">
 				<source>City</source>
 			</trans-unit>
-			<trans-unit id="country" xml:space="preserve">
+			<trans-unit id="country">
 				<source>Country</source>
 			</trans-unit>
-			<trans-unit id="staticInfoCountry" xml:space="preserve">
+			<trans-unit id="staticInfoCountry">
 				<source>Country</source>
 			</trans-unit>
-			<trans-unit id="language" xml:space="preserve">
+			<trans-unit id="language">
 				<source>Language</source>
 			</trans-unit>
-			<trans-unit id="zone" xml:space="preserve">
+			<trans-unit id="zone">
 				<source>State/Province</source>
 			</trans-unit>
-			<trans-unit id="no_zone_available" xml:space="preserve">
+			<trans-unit id="no_zone_available">
 				<source>No zone available</source>
 			</trans-unit>
-			<trans-unit id="zone_loading" xml:space="preserve">
+			<trans-unit id="zone_loading">
 				<source>Loading Zones</source>
 			</trans-unit>
-			<trans-unit id="timezone" xml:space="preserve">
+			<trans-unit id="timezone">
 				<source>Timezone</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-12" xml:space="preserve">
+			<trans-unit id="timezone_I_-12">
 				<source>UTC−12:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-11" xml:space="preserve">
+			<trans-unit id="timezone_I_-11">
 				<source>UTC−11:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-10" xml:space="preserve">
+			<trans-unit id="timezone_I_-10">
 				<source>UTC−10:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-9_5" xml:space="preserve">
+			<trans-unit id="timezone_I_-9_5">
 				<source>UTC−09:30</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-9" xml:space="preserve">
+			<trans-unit id="timezone_I_-9">
 				<source>UTC−09:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-8" xml:space="preserve">
+			<trans-unit id="timezone_I_-8">
 				<source>UTC−08:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-7" xml:space="preserve">
+			<trans-unit id="timezone_I_-7">
 				<source>UTC−07:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-6" xml:space="preserve">
+			<trans-unit id="timezone_I_-6">
 				<source>UTC−06:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-5" xml:space="preserve">
+			<trans-unit id="timezone_I_-5">
 				<source>UTC−05:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-4_5" xml:space="preserve">
+			<trans-unit id="timezone_I_-4_5">
 				<source>UTC−04:30</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-4" xml:space="preserve">
+			<trans-unit id="timezone_I_-4">
 				<source>UTC−04:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-3_5" xml:space="preserve">
+			<trans-unit id="timezone_I_-3_5">
 				<source>UTC−03:30</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-3" xml:space="preserve">
+			<trans-unit id="timezone_I_-3">
 				<source>UTC−03:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-2" xml:space="preserve">
+			<trans-unit id="timezone_I_-2">
 				<source>UTC−02:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_-1" xml:space="preserve">
+			<trans-unit id="timezone_I_-1">
 				<source>UTC−01:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_0" xml:space="preserve">
+			<trans-unit id="timezone_I_0">
 				<source>UTC 0</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_1" xml:space="preserve">
+			<trans-unit id="timezone_I_1">
 				<source>UTC+01:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_2" xml:space="preserve">
+			<trans-unit id="timezone_I_2">
 				<source>UTC+02:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_3" xml:space="preserve">
+			<trans-unit id="timezone_I_3">
 				<source>UTC+03:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_3_5" xml:space="preserve">
+			<trans-unit id="timezone_I_3_5">
 				<source>UTC+03:30</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_4" xml:space="preserve">
+			<trans-unit id="timezone_I_4">
 				<source>UTC+04:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_4_5" xml:space="preserve">
+			<trans-unit id="timezone_I_4_5">
 				<source>UTC+04:30</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_5" xml:space="preserve">
+			<trans-unit id="timezone_I_5">
 				<source>UTC+05:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_5_5" xml:space="preserve">
+			<trans-unit id="timezone_I_5_5">
 				<source>UTC+05:30</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_5_75" xml:space="preserve">
+			<trans-unit id="timezone_I_5_75">
 				<source>UTC+05:45</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_6" xml:space="preserve">
+			<trans-unit id="timezone_I_6">
 				<source>UTC+06:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_6_5" xml:space="preserve">
+			<trans-unit id="timezone_I_6_5">
 				<source>UTC+06:30</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_7" xml:space="preserve">
+			<trans-unit id="timezone_I_7">
 				<source>UTC+07:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_8" xml:space="preserve">
+			<trans-unit id="timezone_I_8">
 				<source>UTC+08:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_9" xml:space="preserve">
+			<trans-unit id="timezone_I_9">
 				<source>UTC+09:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_9_5" xml:space="preserve">
+			<trans-unit id="timezone_I_9_5">
 				<source>UTC+09:30</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_10" xml:space="preserve">
+			<trans-unit id="timezone_I_10">
 				<source>UTC+10:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_11" xml:space="preserve">
+			<trans-unit id="timezone_I_11">
 				<source>UTC+11:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_11_5" xml:space="preserve">
+			<trans-unit id="timezone_I_11_5">
 				<source>UTC+11:30</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_12" xml:space="preserve">
+			<trans-unit id="timezone_I_12">
 				<source>UTC+12:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_12_75" xml:space="preserve">
+			<trans-unit id="timezone_I_12_75">
 				<source>UTC+12:45</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_13" xml:space="preserve">
+			<trans-unit id="timezone_I_13">
 				<source>UTC+13:00</source>
 			</trans-unit>
-			<trans-unit id="timezone_I_14" xml:space="preserve">
+			<trans-unit id="timezone_I_14">
 				<source>UTC+14:00</source>
 			</trans-unit>
-			<trans-unit id="daylight" xml:space="preserve">
+			<trans-unit id="daylight">
 				<source>Daylight saving time</source>
 			</trans-unit>
-			<trans-unit id="password" xml:space="preserve">
+			<trans-unit id="password">
 				<source>Password</source>
 			</trans-unit>
-			<trans-unit id="passwordRepeat" xml:space="preserve">
+			<trans-unit id="passwordRepeat">
 				<source>Password verification</source>
 			</trans-unit>
-			<trans-unit id="gtc" xml:space="preserve">
+			<trans-unit id="gtc">
 				<source>General terms and conditions</source>
 			</trans-unit>
-			<trans-unit id="gtc_checked" xml:space="preserve">
+			<trans-unit id="gtc_checked">
 				<source>not accepted</source>
 			</trans-unit>
-			<trans-unit id="gtc_checked1" xml:space="preserve">
+			<trans-unit id="gtc_checked1">
 				<source>accepted</source>
 			</trans-unit>
-			<trans-unit id="privacy" xml:space="preserve">
+			<trans-unit id="privacy">
 				<source>Privacy agreement</source>
 			</trans-unit>
-			<trans-unit id="dateOfBirth" xml:space="preserve">
+			<trans-unit id="dateOfBirth">
 				<source>Birth date</source>
 			</trans-unit>
-			<trans-unit id="image" xml:space="preserve">
+			<trans-unit id="image">
 				<source>Profile image</source>
 			</trans-unit>
-			<trans-unit id="image_none" xml:space="preserve">
+			<trans-unit id="image_none">
 				<source>Profile image not uploaded</source>
 			</trans-unit>
-			<trans-unit id="choose_file" xml:space="preserve">
+			<trans-unit id="choose_file">
 				<source>Choose File</source>
 			</trans-unit>
-			<trans-unit id="upload" xml:space="preserve">
+			<trans-unit id="upload">
 				<source>upload</source>
 			</trans-unit>
-			<trans-unit id="edit_saved" xml:space="preserve">
+			<trans-unit id="edit_saved">
 				<source>Your account was successfully updated</source>
 			</trans-unit>
-			<trans-unit id="create_saved" xml:space="preserve">
+			<trans-unit id="create_saved">
 				<source>Account created successfully</source>
 			</trans-unit>
-			<trans-unit id="info_mandatory_fields" xml:space="preserve">
+			<trans-unit id="info_mandatory_fields">
 				<source>Fields marked with an asterisk (*) are mandatory</source>
 			</trans-unit>
 			<trans-unit id="invitationEmail">
 				<source>Email address of person to invite</source>
 			</trans-unit>
-			<trans-unit id="submit_create" xml:space="preserve">
+			<trans-unit id="submit_create">
 				<source>create</source>
 			</trans-unit>
-			<trans-unit id="submit_change" xml:space="preserve">
+			<trans-unit id="submit_change">
 				<source>change</source>
 			</trans-unit>
-			<trans-unit id="submit_save" xml:space="preserve">
+			<trans-unit id="submit_save">
 				<source>save</source>
 			</trans-unit>
-			<trans-unit id="submit_update" xml:space="preserve">
+			<trans-unit id="submit_update">
 				<source>update</source>
 			</trans-unit>
-			<trans-unit id="submit_removeImage" xml:space="preserve">
+			<trans-unit id="submit_removeImage">
 				<source>remove</source>
 			</trans-unit>
-			<trans-unit id="username" xml:space="preserve">
+			<trans-unit id="username">
 				<source>Username</source>
 			</trans-unit>
-			<trans-unit id="pseudonym" xml:space="preserve">
+			<trans-unit id="pseudonym">
 				<source>Pseudonym</source>
 			</trans-unit>
-			<trans-unit id="oldPassword" xml:space="preserve">
+			<trans-unit id="oldPassword">
 				<source>Old password</source>
 			</trans-unit>
-			<trans-unit id="newPassword1" xml:space="preserve">
+			<trans-unit id="newPassword1">
 				<source>New password</source>
 			</trans-unit>
-			<trans-unit id="newPassword2" xml:space="preserve">
+			<trans-unit id="newPassword2">
 				<source>Password verification</source>
 			</trans-unit>
-			<trans-unit id="password_saved" xml:space="preserve">
+			<trans-unit id="password_saved">
 				<source>Password successfully updated</source>
 			</trans-unit>
-			<trans-unit id="account_not_found" xml:space="preserve">
+			<trans-unit id="account_not_found">
 				<source>The account that you are trying to activate is unknown to the system.</source>
 			</trans-unit>
-			<trans-unit id="account_already_activated" xml:space="preserve">
+			<trans-unit id="account_already_activated">
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; that you are trying to activate is already active.</source>
 			</trans-unit>
-			<trans-unit id="account_successful_activated" xml:space="preserve">
+			<trans-unit id="account_successful_activated">
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is now active.</source>
 			</trans-unit>
-			<trans-unit id="account_not_activated" xml:space="preserve" approved="yes">
+			<trans-unit id="account_not_activated" approved="yes">
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is not active.</source>
 			</trans-unit>
-			<trans-unit id="email_already_activated" xml:space="preserve" approved="yes">
+			<trans-unit id="email_already_activated" approved="yes">
 				<source>Your new email is already active.</source>
 			</trans-unit>
-			<trans-unit id="email_successful_activated" xml:space="preserve" approved="yes">
+			<trans-unit id="email_successful_activated" approved="yes">
 				<source>Your new email adress was successfully saved.</source>
 			</trans-unit>
 
-			<trans-unit id="error_noteempty" xml:space="preserve">
+			<trans-unit id="error_noteempty">
 				<source>The %1$s was not empty which it should have been</source>
 			</trans-unit>
-			<trans-unit id="error_required" xml:space="preserve">
+			<trans-unit id="error_required">
 				<source>Required field %1$s may not be empty</source>
 			</trans-unit>
-			<trans-unit id="error_notequalcurrentuser" xml:space="preserve">
+			<trans-unit id="error_notequalcurrentuser">
 				<source>The %1$s does not equals your own user which is not allowed</source>
 			</trans-unit>
-			<trans-unit id="error_changepassword_notloggedin" xml:space="preserve">
+			<trans-unit id="error_changepassword_notloggedin">
 				<source>You need to be logged in to change the password</source>
 			</trans-unit>
-			<trans-unit id="error_changepassword_notequal" xml:space="preserve">
+			<trans-unit id="error_changepassword_notequal">
 				<source>The given password was not equal to the current password</source>
 			</trans-unit>
-			<trans-unit id="error_badword" xml:space="preserve">
+			<trans-unit id="error_badword">
 				<source>The password you entered is on the disallowed list</source>
 			</trans-unit>
-			<trans-unit id="error_nottrue" xml:space="preserve">
+			<trans-unit id="error_nottrue">
 				<source>The %1$s was not accepted</source>
 			</trans-unit>
-			<trans-unit id="error_passwordagain_notequal" xml:space="preserve">
+			<trans-unit id="error_passwordagain_notequal">
 				<source>Password fields are not equal</source>
 			</trans-unit>
-			<trans-unit id="error_notunique_local" xml:space="preserve">
+			<trans-unit id="error_notunique_local">
 				<source>The %1$s is not unique</source>
 			</trans-unit>
-			<trans-unit id="error_notunique_global" xml:space="preserve">
+			<trans-unit id="error_notunique_global">
 				<source>The %1$s is not unique</source>
 			</trans-unit>
-			<trans-unit id="error_notvalidatable" xml:space="preserve">
+			<trans-unit id="error_notvalidatable">
 				<source>The given form does not contain data that can be validated</source>
 			</trans-unit>
-			<trans-unit id="error_notexists" xml:space="preserve">
+			<trans-unit id="error_notexists">
 				<source>Attribute does not exists</source>
 			</trans-unit>
-			<trans-unit id="error_image_filesize" xml:space="preserve">
+			<trans-unit id="error_image_filesize">
 				<source>The file was bigger than the maximum allowed file size</source>
 			</trans-unit>
-			<trans-unit id="error_image_extension" xml:space="preserve">
+			<trans-unit id="error_image_extension">
 				<source>The file was not of an allowed image type</source>
 			</trans-unit>
-			<trans-unit id="error_repeatitionwasnotequal" xml:space="preserve">
+			<trans-unit id="error_repeatitionwasnotequal">
 				<source>The verification of field %1$s does not match</source>
 			</trans-unit>
-			<trans-unit id="error_captcha_notcorrect" xml:space="preserve">
+			<trans-unit id="error_captcha_notcorrect">
 				<source>The entered captcha is incorrect</source>
 			</trans-unit>
-			<trans-unit id="error_captcha_notinstalled" xml:space="preserve">
+			<trans-unit id="error_captcha_notinstalled">
 				<source>CAPTCHA extension '%1$s' not installed error</source>
 			</trans-unit>
-			<trans-unit id="error_jmrecaptcha" xml:space="preserve">
+			<trans-unit id="error_jmrecaptcha">
 				<source>Complete the captcha</source>
 			</trans-unit>
-			<trans-unit id="error_jmrecaptcha_incorrect-captcha-sol" xml:space="preserve">
+			<trans-unit id="error_jmrecaptcha_incorrect-captcha-sol">
 				<source>Incorrect captcha</source>
 			</trans-unit>
-			<trans-unit id="error_1238108067" xml:space="preserve">
+			<trans-unit id="error_1238108067">
 				<source>The length of field %1$s must be between %2$s and %3$s characters</source>
 			</trans-unit>
-			<trans-unit id="error_1221559976" xml:space="preserve">
+			<trans-unit id="error_1221559976">
 				<source>Field %1$s does not have a valid email adress format</source>
 			</trans-unit>
-			<trans-unit id="error_1296591069" xml:space="preserve">
+			<trans-unit id="error_1296591069">
 				<source>Field %1$s is not globally unique</source>
 			</trans-unit>
 
-			<trans-unit id="subjectAdminNotificationPostCreateSave" xml:space="preserve">
+			<trans-unit id="subjectAdminNotificationPostCreateSave">
 				<source>User %2$s registered on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateConfirm" xml:space="preserve">
+			<trans-unit id="subjectAdminNotificationPostCreateConfirm">
 				<source>User %2$s confirmed registration on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateRefuse" xml:space="preserve">
+			<trans-unit id="subjectAdminNotificationPostCreateRefuse">
 				<source>User %2$s refused the registration on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateAccept" xml:space="preserve">
+			<trans-unit id="subjectAdminNotificationPostCreateAccept">
 				<source>User %2$s was accepted on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateDecline" xml:space="preserve">
+			<trans-unit id="subjectAdminNotificationPostCreateDecline">
 				<source>User %2$s was declined on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostEditSave" xml:space="preserve">
+			<trans-unit id="subjectAdminNotificationPostEditSave">
 				<source>User %2$s has edited informations on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostEditConfirm" xml:space="preserve">
+			<trans-unit id="subjectAdminNotificationPostEditConfirm">
 				<source>User %2$s has confirmed the change of informations on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostEditAccept" xml:space="preserve">
+			<trans-unit id="subjectAdminNotificationPostEditAccept">
 				<source>User %2$s change of informations was accepted on site %1$s</source>
 			</trans-unit>
 
-			<trans-unit id="subjectUserNotificationPostCreateSave" xml:space="preserve">
+			<trans-unit id="subjectUserNotificationPostCreateSave">
 				<source>You registered yourself at %1$s as %2$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateConfirm" xml:space="preserve">
+			<trans-unit id="subjectUserNotificationPostCreateConfirm">
 				<source>Thank you for confirming your account %2$s at %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateRefuse" xml:space="preserve">
+			<trans-unit id="subjectUserNotificationPostCreateRefuse">
 				<source>Sorry your refused your registration with account %2$s on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateAccept" xml:space="preserve">
+			<trans-unit id="subjectUserNotificationPostCreateAccept">
 				<source>You registration with account %2$s on site %1$s was accepted</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateDecline" xml:space="preserve">
+			<trans-unit id="subjectUserNotificationPostCreateDecline">
 				<source>You activated account %2$s at %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostEditSave" xml:space="preserve">
+			<trans-unit id="subjectUserNotificationPostEditSave">
 				<source>You %2$s changed your information on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostEditConfirm" xml:space="preserve">
+			<trans-unit id="subjectUserNotificationPostEditConfirm">
 				<source>Thank you %2$s for confirming the change of informations on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostEditAccept" xml:space="preserve">
+			<trans-unit id="subjectUserNotificationPostEditAccept">
 				<source>Your change of informations for account %2$s on site %1$s was accepted</source>
 			</trans-unit>
 
-			<trans-unit id="email_admin_salutation" xml:space="preserve">
+			<trans-unit id="email_admin_salutation">
 				<source>Dear admin</source>
 			</trans-unit>
-			<trans-unit id="email_admin_activate_message" xml:space="preserve">
+			<trans-unit id="email_admin_activate_message">
 				<source>A new account "%1$s" has been requested and you need to activate it.</source>
 			</trans-unit>
-			<trans-unit id="email_admin_activate_link" xml:space="preserve">
+			<trans-unit id="email_admin_activate_link">
 				<source>Activate user account</source>
 			</trans-unit>
-			<trans-unit id="email_admin_account_available" xml:space="preserve">
+			<trans-unit id="email_admin_account_available">
 				<source>The account "%1$s" is available</source>
 			</trans-unit>
-			<trans-unit id="email_admin_account_activated" xml:space="preserve">
+			<trans-unit id="email_admin_account_activated">
 				<source>The account "%1$s" was activated</source>
 			</trans-unit>
-			<trans-unit id="email_admin_account_edited" xml:space="preserve" remove="1">
+			<trans-unit id="email_admin_account_edited">
 				<source>The account "%1$s" was edited</source>
 			</trans-unit>
-			<trans-unit id="email_user_salutation" xml:space="preserve">
+			<trans-unit id="email_user_salutation">
 				<source>Dear user</source>
 			</trans-unit>
-			<trans-unit id="email_user_activate_message" xml:space="preserve">
+			<trans-unit id="email_user_activate_message">
 				<source>Your account "%1$s" has been created but needs to be activated.</source>
 			</trans-unit>
-			<trans-unit id="email_user_activate_link" xml:space="preserve">
+			<trans-unit id="email_user_activate_link">
 				<source>Activate your account</source>
 			</trans-unit>
-			<trans-unit id="email_user_account_available" xml:space="preserve">
+			<trans-unit id="email_user_account_available">
 				<source>Your account "%1$s" is now available.</source>
 			</trans-unit>
-			<trans-unit id="email_user_account_activated" xml:space="preserve">
+			<trans-unit id="email_user_account_activated">
 				<source>Your account "%1$s" is now active.</source>
 			</trans-unit>
-			<trans-unit id="email_user_account_edited" xml:space="preserve" remove="1">
+			<trans-unit id="email_user_account_edited">
 				<source>You have edited your account "%1$s".</source>
 			</trans-unit>
 
 			<trans-unit id="email_admin_account_accepted">
 				<source>The user registration was accepted.</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_confirmed">
 				<source>The user confirmed the registration</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_accept_link">
 				<source>accept user registration</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_decline_link">
 				<source>decline user registration</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_declined">
 				<source>The user registration was declined.</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_refused">
 				<source>The user registration was refused.</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_saved">
 				<source>The user registration was saved</source>
-				<target></target>
 			</trans-unit>
 
 			<trans-unit id="email_user_account_accepted">
 				<source>Your registration was accepted.</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_confirm_link">
 				<source>confirm your registration</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_refuse_link">
 				<source>refuse your registration</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_account_confirmed">
 				<source>Your registration was confirmed.</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_account_declined">
 				<source>Your registration was declined.</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_account_refused">
 				<source>Your registration was refused.</source>
-				<target></target>
 			</trans-unit>
 			<trans-unit id="email_user_account_saved">
 				<source>Your registration was saved.</source>
-				<target></target>
 			</trans-unit>
 
 			<trans-unit id="email_admin_invitation_message">
@@ -519,13 +505,13 @@
 			<trans-unit id="email_invitee_register_link">
 				<source>register</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationSendInvitation" xml:space="preserve">
+			<trans-unit id="subjectAdminNotificationSendInvitation">
 				<source>User invitation at %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationSendInvitation" xml:space="preserve">
+			<trans-unit id="subjectUserNotificationSendInvitation">
 				<source>You invited someone to register at %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectInvitationToRegister" xml:space="preserve">
+			<trans-unit id="subjectInvitationToRegister">
 				<source>You were invite to register at %1$s</source>
 			</trans-unit>
 		</body>

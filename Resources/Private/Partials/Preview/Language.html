@@ -2,6 +2,7 @@
 	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 	data-namespace-typo3-fluid="true">
 
+<f:variable name="languageKey"><register:languageKey type="languages"/></f:variable>
 <div class="form-group {fieldName}">
 	<label><f:translate id="{fieldName}" /></label>
 	<f:form.hidden property="{fieldName}" />
@@ -11,7 +12,7 @@
 		value="{user.{fieldName}}"
 		disabled="disabled"
 		allowedLanguages="{options.allowedLanguages}"
-		optionLabelField="lgName{register:languageKey(type: 'languages')}"
+		optionLabelField="lgName{languageKey}"
 		class="form-control"/>
 </div>
 

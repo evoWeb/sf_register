@@ -24,30 +24,19 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class AbstractAdapter
- *
- * @package Evoweb\SfRegister\Services\Captcha
- */
 abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaInterface
 {
     /**
-     * Captcha object
-     *
      * @var object
      */
     protected $captcha = null;
 
     /**
-     * Settings
-     *
      * @var array
      */
     protected $settings = [];
 
     /**
-     * Errors
-     *
      * @var array
      */
     protected $errors = [];
@@ -57,7 +46,7 @@ abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaI
      *
      * @return string
      */
-    abstract public function render();
+    abstract public function render(): string;
 
     /**
      * Returns if the result of the validation was valid or not
@@ -66,39 +55,19 @@ abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaI
      *
      * @return bool
      */
-    abstract public function isValid($value);
+    abstract public function isValid(string $value): bool;
 
-    /**
-     * Setter for settings
-     *
-     * @param array $settings
-     *
-     * @return void
-     */
     public function setSettings(array $settings)
     {
         $this->settings = $settings;
     }
 
-    /**
-     * Creates a new validation error object and adds it to $this->errors
-     *
-     * @param string $message The error message
-     * @param integer $code The error code (a unix timestamp)
-     *
-     * @return void
-     */
-    protected function addError($message, $code)
+    protected function addError(string $message, int $code)
     {
         $this->errors[] = new \TYPO3\CMS\Extbase\Validation\Error($message, $code);
     }
 
-    /**
-     * Getter for errors
-     *
-     * @return array
-     */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }

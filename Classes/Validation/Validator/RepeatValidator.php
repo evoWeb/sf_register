@@ -29,8 +29,6 @@ use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * A repeated value validator
- *
- * @scope singleton
  */
 class RepeatValidator extends AbstractValidator implements ValidatorInterface
 {
@@ -42,13 +40,11 @@ class RepeatValidator extends AbstractValidator implements ValidatorInterface
     /**
      * Model to take repeated value of
      *
-     * @var mixed
+     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password
      */
     protected $model;
 
     /**
-     * propertyName
-     *
      * @var string
      */
     protected $propertyName;
@@ -57,34 +53,25 @@ class RepeatValidator extends AbstractValidator implements ValidatorInterface
      * Setter for model
      *
      * @param mixed $model
-     *
-     * @return void
      */
     public function setModel($model)
     {
         $this->model = $model;
     }
 
-    /**
-     * Setter for propertyName
-     *
-     * @param string $propertyName
-     *
-     * @return void
-     */
-    public function setPropertyName($propertyName)
+    public function setPropertyName(string $propertyName)
     {
         $this->propertyName = $propertyName;
     }
 
     /**
-     * If the given value is equal to the repeatition
+     * If the given value is equal to the repetition
      *
      * @param string $value The value
      *
-     * @return boolean
+     * @return bool
      */
-    public function isValid($value)
+    public function isValid($value): bool
     {
         $result = true;
 

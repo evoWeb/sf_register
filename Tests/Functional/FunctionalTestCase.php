@@ -1,0 +1,114 @@
+<?php
+namespace Evoweb\SfRegister\Tests\Functional;
+
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+
+abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
+{
+    public function getPrivateMethod($object, $methodName): \ReflectionMethod
+    {
+        $classReflection = new \ReflectionClass($object);
+        $methodReflection = $classReflection->getMethod($methodName);
+        $methodReflection->setAccessible(true);
+        return $methodReflection;
+    }
+
+    public function getPrivateProperty($object, $propertyName): \ReflectionProperty
+    {
+        $classReflection = new \ReflectionClass($object);
+        $propertyReflection = $classReflection->getProperty($propertyName);
+        $propertyReflection->setAccessible(true);
+        return $propertyReflection;
+    }
+
+    public function initializeTypoScriptFrontendController()
+    {
+        $controller = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::class,
+            null,
+            1,
+            0
+        );
+
+        $controller->determineId();
+        $controller->getConfigArray();
+
+        $GLOBALS['TSFE'] = $controller;
+    }
+
+    public function createAndLoginFrontEndUser(
+        \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $frontendController,
+        $frontEndUserGroups = '',
+        array $recordData = []
+    ): int {
+        $frontEndUserUid = $this->createFrontEndUser($frontEndUserGroups, $recordData);
+        $this->loginFrontEndUser($frontendController, $frontEndUserUid);
+        return $frontEndUserUid;
+    }
+
+    public function createFrontEndUser(string $frontEndUserGroups = '', array $recordData = []): int
+    {
+        $frontEndUserGroupsWithoutSpaces = str_replace(' ', '', $frontEndUserGroups);
+        if (!preg_match('/^(?:[1-9]+[0-9]*,?)+$/', $frontEndUserGroupsWithoutSpaces)) {
+            throw new \InvalidArgumentException(
+                $frontEndUserGroups . ' must contain a comma-separated list of UIDs. Each UID must be > 0.',
+                1334439059
+            );
+        }
+        if (isset($recordData['uid'])) {
+            throw new \InvalidArgumentException('The column "uid" must not be set in $recordData.', 1334439065);
+        }
+        if (isset($recordData['usergroup'])) {
+            throw new \InvalidArgumentException('The column "usergroup" must not be set in $recordData.', 1334439071);
+        }
+        $completeRecordData = $recordData;
+        $completeRecordData['usergroup'] = $frontEndUserGroupsWithoutSpaces;
+
+        return (int)$this->createRecord('fe_users', $completeRecordData);
+    }
+
+    public function createRecord(string $tableName, array $insertArray): string
+    {
+        /** @var Connection $connection */
+        $connection = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable($tableName);
+        $types = [];
+        $tableDetails = $connection->getSchemaManager()->listTableDetails($tableName);
+        foreach ($insertArray as $columnName => $columnValue) {
+            $types[] = $tableDetails->getColumn($columnName)->getType()->getBindingType();
+        }
+
+        $connection->insert('fe_users', $insertArray, $types);
+        return $connection->lastInsertId($tableName);
+    }
+
+    public function loginFrontEndUser(
+        \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $frontendController,
+        int $frontEndUserUid
+    ) {
+        if (!$frontendController) {
+            throw new \Exception('Please create a front end before calling loginFrontEndUser.', 1334439483);
+        }
+        if ((int)$frontEndUserUid === 0) {
+            throw new \InvalidArgumentException('The user ID must be > 0.', 1334439475);
+        }
+
+        /** @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser */
+        $frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication::class
+        );
+        $frontendUser->user = $frontendUser->getRawUserByUid($frontEndUserUid);
+        $frontendUser->fetchGroupData();
+
+        $aspect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Context\UserAspect::class,
+            $frontendUser
+        );
+
+        /** @var \TYPO3\CMS\Core\Context\Context $context */
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $context->setAspect('frontend.user', $aspect);
+        $context->getPropertyFromAspect('frontend.user', 'isLoggedIn');
+    }
+}

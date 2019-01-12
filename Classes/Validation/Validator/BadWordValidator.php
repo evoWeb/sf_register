@@ -28,32 +28,19 @@ use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * A password validator
- *
- * @scope singleton
  */
 class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
 {
     /**
-     * Configuration Manager
-     *
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
      */
     protected $configurationManager;
 
     /**
-     * Settings
-     *
      * @var array
      */
     protected $settings = [];
 
-    /**
-     * Inject of the configuration manager
-     *
-     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
-     *
-     * @return void
-     */
     public function injectConfigurationManager(
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
     ) {
@@ -70,12 +57,11 @@ class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
      *
      * @param string $value The value
      *
-     * @return boolean
+     * @return bool
      */
-    public function isValid($value)
+    public function isValid($value): bool
     {
         $result = true;
-
         $badWordItems = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['badWordList']);
 
         if (in_array(strtolower($value), $badWordItems)) {

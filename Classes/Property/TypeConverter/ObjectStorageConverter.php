@@ -27,9 +27,6 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class ObjectStorageConverter
- */
 class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\ObjectStorageConverter
 {
     /**
@@ -40,7 +37,7 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
     /**
      * Take precedence over the available ObjectStorageConverter
      *
-     * @var integer
+     * @var int
      */
     protected $priority = 21;
 
@@ -49,10 +46,10 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
      * Filter out empty uploads
      *
      * @param mixed $source
+     *
      * @return array
-     * @api
      */
-    public function getSourceChildPropertiesToBeConverted($source)
+    public function getSourceChildPropertiesToBeConverted($source): array
     {
         $propertiesToConvert = [];
 
@@ -79,7 +76,7 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
      *
      * @return bool
      */
-    protected function isUploadType($propertyValue)
+    protected function isUploadType($propertyValue): bool
     {
         return is_array($propertyValue) && isset($propertyValue['tmp_name']) && isset($propertyValue['error']);
     }

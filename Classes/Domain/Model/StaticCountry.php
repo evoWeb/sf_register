@@ -32,35 +32,35 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * ISO 3166-1 A2 Country code
      *
-     * @var    string
+     * @var string
      */
     protected $cnIso2;
 
     /**
      * ISO 3166-1 A3 Country code
      *
-     * @var    string
+     * @var string
      */
     protected $cnIso3;
 
     /**
      * ISO 3166-1 Nr Country code
      *
-     * @var    integer
+     * @var int
      */
     protected $cnIsoNr;
 
     /**
      * Official name (local)
      *
-     * @var    string
+     * @var string
      */
     protected $cnOfficialNameLocal;
 
     /**
      * Official name (EN)
      *
-     * @var    string
+     * @var string
      */
     protected $cnOfficialNameEn;
 
@@ -223,7 +223,7 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return string
      */
-    public function getCnIso2()
+    public function getCnIso2(): string
     {
         return $this->cnIso2;
     }
@@ -233,7 +233,7 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return string
      */
-    public function getCnIso3()
+    public function getCnIso3(): string
     {
         return $this->cnIso3;
     }
@@ -241,260 +241,129 @@ class StaticCountry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Getter for ISO 3166-1 Nr Country code
      *
-     * @return string
+     * @return int
      */
-    public function getCnIsoNr()
+    public function getCnIsoNr(): int
     {
         return $this->cnIsoNr;
     }
 
-    /**
-     * Getter for Official name (local)
-     *
-     * @return string
-     */
-    public function getCnOfficialNameLocal()
+    public function getCnOfficialNameLocal(): string
     {
         return $this->cnOfficialNameLocal;
     }
 
-    /**
-     * Getter for Official name (EN)
-     *
-     * @return string
-     */
-    public function getCnOfficialNameEn()
+    public function getCnOfficialNameEn(): string
     {
         return $this->cnOfficialNameEn;
     }
 
-    /**
-     * Getter for Short name (EN)
-     *
-     * @return string
-     */
-    public function getCnShortEn()
+    public function getCnShortEn(): string
     {
         return $this->cnShortEn;
     }
 
-    /**
-     * Getter for Short name (CZ)
-     *
-     * @return string
-     */
-    public function getCnShortCz()
+    public function getCnShortCz(): string
     {
         return $this->cnShortCz;
     }
 
-    /**
-     * Getter for Short name (DA)
-     *
-     * @return string
-     */
-    public function getCnShortDa()
+    public function getCnShortDa(): string
     {
         return $this->cnShortDa;
     }
 
-    /**
-     * Getter for Short name (DE)
-     *
-     * @return string
-     */
-    public function getCnShortDe()
+    public function getCnShortDe(): string
     {
         return $this->cnShortDe;
     }
 
-    /**
-     * Getter for Short name (ES)
-     *
-     * @return string
-     */
-    public function getCnShortEs()
+    public function getCnShortEs(): string
     {
         return $this->cnShortEs;
     }
 
-    /**
-     * Getter for Short name (FR)
-     *
-     * @return string
-     */
-    public function getCnShortFr()
+    public function getCnShortFr(): string
     {
         return $this->cnShortFr;
     }
 
-    /**
-     * Getter for Short name (GA)
-     *
-     * @return string
-     */
-    public function getCnShortGa()
+    public function getCnShortGa(): string
     {
         return $this->cnShortGa;
     }
 
-    /**
-     * Getter for Short name (GL)
-     *
-     * @return string
-     */
-    public function getCnShortGl()
+    public function getCnShortGl(): string
     {
         return $this->cnShortGl;
     }
 
-    /**
-     * Getter for Short name (IT)
-     *
-     * @return string
-     */
-    public function getCnShortIt()
+    public function getCnShortIt(): string
     {
         return $this->cnShortIt;
     }
 
-    /**
-     * Getter for Short name (JA)
-     *
-     * @return string
-     */
-    public function getCnShortJa()
+    public function getCnShortJa(): string
     {
         return $this->cnShortJa;
     }
 
-    /**
-     * Getter for Short name (KM)
-     *
-     * @return string
-     */
-    public function getCnShortKm()
+    public function getCnShortKm(): string
     {
         return $this->cnShortKm;
     }
 
-    /**
-     * Getter for Short name (NL)
-     *
-     * @return string
-     */
-    public function getCnShortNl()
+    public function getCnShortNl(): string
     {
         return $this->cnShortNl;
     }
 
-    /**
-     * Getter for Short name (NO)
-     *
-     * @return string
-     */
-    public function getCnShortNo()
+    public function getCnShortNo(): string
     {
         return $this->cnShortNo;
     }
 
-    /**
-     * Getter for Short name (PL)
-     *
-     * @return string
-     */
-    public function getCnShortPl()
+    public function getCnShortPl(): string
     {
         return $this->cnShortPl;
     }
 
-    /**
-     * Getter for Short name (PT)
-     *
-     * @return string
-     */
-    public function getCnShortPt()
+    public function getCnShortPt(): string
     {
         return $this->cnShortPt;
     }
 
-    /**
-     * Getter for Short name (RO)
-     *
-     * @return string
-     */
-    public function getCnShortRo()
+    public function getCnShortRo(): string
     {
         return $this->cnShortRo;
     }
 
-    /**
-     * Getter for Short name (RU)
-     *
-     * @return string
-     */
-    public function getCnShortRu()
+    public function getCnShortRu(): string
     {
         return $this->cnShortRu;
     }
 
-    /**
-     * Getter for Short name (SK)
-     *
-     * @return string
-     */
-    public function getCnShortSk()
+    public function getCnShortSk(): string
     {
         return $this->cnShortSk;
     }
 
-    /**
-     * Getter for Short name (SV)
-     *
-     * @return string
-     */
-    public function getCnShortSv()
+    public function getCnShortSv(): string
     {
         return $this->cnShortSv;
     }
 
-    /**
-     * Getter for Short name (UA)
-     *
-     * @return string
-     */
-    public function getCnShortUa()
+    public function getCnShortUa(): string
     {
         return $this->cnShortUa;
     }
 
-    /**
-     * Getter for Short name (ZH)
-     *
-     * @return string
-     */
-    public function getCnShortZh()
+    public function getCnShortZh(): string
     {
         return $this->cnShortZh;
     }
 
-    /**
-     * Set cnShortLocal
-     *
-     * @param string $cnShortLocal
-     * @return void
-     */
-    public function setCnShortLocal($cnShortLocal)
-    {
-        $this->cnShortLocal = $cnShortLocal;
-    }
-
-    /**
-     * Get cnShortLocal
-     *
-     * @return string
-     */
-    public function getCnShortLocal()
+    public function getCnShortLocal(): string
     {
         return $this->cnShortLocal;
     }

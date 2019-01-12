@@ -1,46 +1,62 @@
 {
-  "name": "evoweb/sf-register",
-  "type": "typo3-cms-extension",
-  "description": "Frontend User Registration: Offers the possibility to maintain the fe_user data in frontend by the user self.",
-  "homepage": "https://github.com/evoWeb/sf_register/",
-  "license": ["GPL-2.0-or-later"],
+	"name": "evoweb/sf-register",
+	"type": "typo3-cms-extension",
+	"description": "Frontend User Registration: Offers the possibility to maintain the fe_user data in frontend.",
+	"homepage": "https://github.com/evoWeb/sf_register/",
 
-  "support" : {
-    "issues" : "https://github.com/evoWeb/sf_register/issues"
-  },
-  "keywords": [
-    "TYPO3 CMS",
-    "User registration",
-    "Frontend"
-  ],
+	"license": [
+		"GPL-2.0-or-later"
+	],
 
-  "require": {
-    "typo3/cms-core": "^8.7.0"
-  },
+	"support": {
+		"issues": "https://github.com/evoWeb/sf_register/issues"
+	},
 
-  "replace": {
-    "sf_register": "self.version",
-    "typo3-ter/sf-register": "self.version"
-  },
+	"keywords": [
+		"TYPO3 CMS",
+		"User registration",
+		"Frontend",
+		"Edit user data",
+		"Double-optin"
+	],
 
-  "suggest": {
-    "evoweb/recaptcha": "7.4.0"
-  },
+	"require": {
+		"typo3/cms-core": "^9.5"
+	},
+	"require-dev": {
+		"typo3/testing-framework": "*"
+	},
+	"suggest": {
+		"evoweb/recaptcha": "^8.2.0"
+	},
 
-  "autoload": {
-    "psr-4": {
-      "Evoweb\\SfRegister\\": "Classes"
-    }
-  },
+	"autoload": {
+		"psr-4": {
+			"Evoweb\\SfRegister\\": "Classes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Evoweb\\SfRegister\\Tests\\": "Tests/",
+			"TYPO3\\CMS\\Core\\Tests\\": ".Build/Web/typo3/sysext/core/Tests/"
+		}
+	},
 
-  "config": {
-    "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin"
-  },
-  "extra": {
-    "typo3/cms": {
-      "cms-package-dir": "{$vendor-dir}/typo3/cms",
-      "web-dir": ".Build/Web"
-    }
-  }
+	"config": {
+		"vendor-dir": ".Build/Web/vendor",
+		"bin-dir": ".Build/bin"
+	},
+	"extra": {
+		"typo3/cms": {
+			"cms-package-dir": "{$vendor-dir}/typo3/cms",
+			"web-dir": ".Build/Web"
+		}
+	},
+
+	"scripts": {
+		"post-autoload-dump": [
+			"mkdir -p .Build/Web/typo3conf/ext/",
+			"[ -L .Build/Web/typo3conf/ext/sf_register ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/sf_register"
+		]
+	}
 }

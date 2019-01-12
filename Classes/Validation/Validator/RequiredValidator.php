@@ -27,8 +27,6 @@ use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * A required validator to check that a value is set
- *
- * @scope singleton
  */
 class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
 {
@@ -42,9 +40,9 @@ class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
      *
      * @param string $value The value
      *
-     * @return boolean
+     * @return bool
      */
-    public function isValid($value)
+    public function isValid($value): bool
     {
         $result = true;
 

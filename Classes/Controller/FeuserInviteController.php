@@ -24,16 +24,11 @@ namespace Evoweb\SfRegister\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-
 /**
  * An frontend user create controller
  */
 class FeuserInviteController extends FeuserController
 {
-    /**
-     * @return void
-     */
     protected function initializeAction()
     {
         parent::initializeAction();
@@ -45,19 +40,12 @@ class FeuserInviteController extends FeuserController
         }
     }
 
-    /**
-     * Invite form action
-     *
-     * @param FrontendUser $user
-     *
-     * @return void
-     */
-    public function formAction(FrontendUser $user = null)
+    public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {
         if (is_null($user) && $this->userIsLoggedIn()) {
             /** @noinspection PhpInternalEntityUsedInspection */
             $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
-            /** @var FrontendUser $user */
+            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
         }
 
@@ -76,12 +64,11 @@ class FeuserInviteController extends FeuserController
     /**
      * Save action
      *
-     * @param FrontendUser $user
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      *
-     * @return void
-     * @validate $user Evoweb.SfRegister:User
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
      */
-    public function inviteAction(FrontendUser $user)
+    public function inviteAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
         $type = 'SendInvitation';
         $doNotSendInvitation = false;

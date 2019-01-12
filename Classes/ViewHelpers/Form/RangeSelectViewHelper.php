@@ -25,7 +25,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  ***************************************************************/
 
 /**
- * Viewhelper to render a selectbox with values
+ * View helper to render a select box with values
  * in given steps from start to end value
  * <code title="Usage">
  * {namespace register=Evoweb\SfRegister\ViewHelpers}
@@ -37,21 +37,21 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
     /**
      * Value to start range with
      *
-     * @var integer
+     * @var int
      */
     protected $start = 0;
 
     /**
      * Value to end range with
      *
-     * @var integer
+     * @var int
      */
     protected $end = PHP_INT_MAX;
 
     /**
      * Step to increase value of each option
      *
-     * @var integer
+     * @var int
      */
     protected $step = 1;
 
@@ -59,47 +59,13 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
      * In case of a value lower then 10 and digits
      * defined as 2 the label get prepended with a 0
      *
-     * @var integer
+     * @var int
      */
     protected $digits = 2;
 
-    /**
-     * Initialize arguments.
-     *
-     * @return void
-     */
     public function initializeArguments()
     {
-        $this->registerUniversalTagAttributes();
-        $this->registerArgument('name', 'string', 'Name of input tag');
-        $this->registerArgument('value', 'mixed', 'Value of input tag');
-        $this->registerTagAttribute('multiple', 'string', 'if set, multiple select field');
-        $this->registerTagAttribute('size', 'string', 'Size of input field');
-        $this->registerTagAttribute(
-            'disabled',
-            'string',
-            'Specifies that the input element should be disabled when the page loads'
-        );
-        $this->registerArgument(
-            'property',
-            'string',
-            'Name of Object Property. If used in conjunction with <f:form object="...">,
- "name" and "value" properties will be ignored.'
-        );
-        $this->registerArgument(
-            'selectAllByDefault',
-            'boolean',
-            'If specified options are selected if none was set before.',
-            false,
-            false
-        );
-        $this->registerArgument(
-            'errorClass',
-            'string',
-            'CSS class to set if there are errors for this view helper',
-            false,
-            'f3-form-error'
-        );
+        parent::initializeArguments();
         $this->registerArgument(
             'start',
             'int',
@@ -128,12 +94,7 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
         );
     }
 
-    /**
-     * Rendering of selectbox
-     *
-     * @return string
-     */
-    public function render()
+    public function render(): string
     {
         $this->start = $this->arguments['start'];
         $this->end = $this->arguments['end'];
@@ -143,12 +104,7 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
         return parent::render();
     }
 
-    /**
-     * Get values and lables for the options
-     *
-     * @return array an associative array of options
-     */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         $options = [];
 

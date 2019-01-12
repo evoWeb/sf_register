@@ -26,7 +26,7 @@ namespace Evoweb\SfRegister\ViewHelpers;
  ***************************************************************/
 
 /**
- * Viewhelper to output the configured language
+ * View helper to output the configured language
  *
  * <code title="Usage">
  *  {namespace register=Evoweb\SfRegister\ViewHelpers}
@@ -34,37 +34,29 @@ namespace Evoweb\SfRegister\ViewHelpers;
  *  {register:languageKey(type: 'countries')}
  * </code>
  */
-class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class LanguageKeyViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
-    /**
-     * Initialize arguments.
-     *
-     * @return void
-     */
     public function initializeArguments()
     {
         $this->registerArgument(
             'type',
             'string',
-            'Purpose of this viewhelper. If it shoud check for certain static info tables or not'
+            'Purpose of this view helper. If it should check for certain static info tables or not'
         );
     }
 
-    /**
-     * @return string
-     */
-    public function render()
+    public function render(): string
     {
         $languageCode = '';
         if (TYPO3_MODE === 'FE') {
-            if (isset($this->getTypoScriptFrontendController()->lang)) {
-                $languageCode = strtolower($this->getTypoScriptFrontendController()->lang);
-            }
-        } elseif (strlen($this->getBackendUserAuthentication()->uc['lang']) > 0) {
+            $languageCode = $this->getTypoScriptFrontendController()->config['config']['language'] ?: 'default';
+        } elseif ($this->getBackendUserAuthentication()->uc['lang'] != '') {
             $languageCode = $this->getBackendUserAuthentication()->uc['lang'];
         }
 
-        if ($languageCode && $this->hasArgument('type') && ($type = $this->getConfiguredType())) {
+        $type = $this->getConfiguredType();
+
+        if ($languageCode != '' && $type != '') {
             if ($type == 'countries') {
                 $languageCode = $this->hasTableColumn('static_countries', 'cn_short_' . $languageCode) ?
                     $languageCode :
@@ -80,26 +72,17 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
             }
         }
 
-        return strtoupper($languageCode) ?: 'EN';
+        return ucfirst(strtolower($languageCode) ?: 'en');
     }
 
-    /**
-     * @return string
-     */
     protected function getConfiguredType(): string
     {
-        $type = $this->arguments['type'];
+        $type = isset($this->arguments['type']) ? $this->arguments['type'] : '';
 
         return in_array($type, ['countries', 'languages', 'zones']) ? $type : '';
     }
 
-    /**
-     * @param string $tableName
-     * @param string $columnName
-     *
-     * @return bool
-     */
-    protected function hasTableColumn($tableName, $columnName): bool
+    protected function hasTableColumn(string $tableName, string $columnName): bool
     {
         $columns = $this
             ->getConnection($tableName)
@@ -117,30 +100,19 @@ class LanguageKeyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
     }
 
 
-    /**
-     * @param string $tableName
-     *
-     * @return \TYPO3\CMS\Core\Database\Connection
-     */
-    protected function getConnection($tableName): \TYPO3\CMS\Core\Database\Connection
+    protected function getConnection(string $tableName): \TYPO3\CMS\Core\Database\Connection
     {
         return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Database\ConnectionPool::class
         )->getConnectionForTable($tableName);
     }
 
-    /**
-     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-     */
-    protected function getTypoScriptFrontendController()
+    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
     }
 
-    /**
-     * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
-     */
-    protected function getBackendUserAuthentication()
+    protected function getBackendUserAuthentication(): \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }

@@ -27,9 +27,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
- * A Passwordvalidator
- *
- * @scope singleton
+ * A password validator
  */
 class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
 {
@@ -50,29 +48,21 @@ class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
     ];
 
     /**
-     * Frontend user repository
-     *
      * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
-     * @inject
      */
     protected $userRepository = null;
 
     /**
-     * propertyName
-     *
      * @var string
      */
     protected $propertyName = '';
 
+    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
 
-    /**
-     * Setter for propertyName
-     *
-     * @param string $propertyName
-     *
-     * @return void
-     */
-    public function setPropertyName($propertyName)
+    public function setPropertyName(string $propertyName)
     {
         $this->propertyName = $propertyName;
     }
@@ -82,9 +72,9 @@ class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
      *
      * @param string $value The value
      *
-     * @return boolean
+     * @return bool
      */
-    public function isValid($value)
+    public function isValid($value): bool
     {
         $result = true;
 

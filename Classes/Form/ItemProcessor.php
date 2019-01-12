@@ -24,17 +24,9 @@ namespace Evoweb\SfRegister\Form;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Class ItemProcessor
- *
- * @package Evoweb\SfRegister\Form
- */
 class ItemProcessor
 {
-    /**
-     * @param array $parameters
-     */
-    public function getConfiguredFields(&$parameters)
+    public function getConfiguredFields(array &$parameters)
     {
         $items =& $parameters['items'];
 
@@ -46,33 +38,22 @@ class ItemProcessor
         }
     }
 
-    /**
-     * @param string $fieldName
-     * @param array $configuration
-     *
-     * @return string
-     */
-    protected function getLabel($fieldName, $configuration)
+    protected function getLabel(string $fieldName, array $configuration): string
     {
         return isset($configuration['backendLabel']) ?
             $configuration['backendLabel'] :
             'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.' . $fieldName;
     }
 
-    /**
-     * @return array
-     */
-    protected function getConfiguredFieldsFromTsConfig()
+    protected function getConfiguredFieldsFromTsConfig(): array
     {
-        $configuration = $this->getBackendUserAuthentication()
-            ->getTSConfig('plugin.tx_sfregister.settings.fields.configuration');
-        return $configuration['properties'];
+        $tsConfig = $this->getBackendUserAuthentication()->getTSConfig();
+        $pluginConfiguration = $tsConfig['plugin']['tx_sfregister'] ?? [];
+        $configuration = $pluginConfiguration['settings']['fields']['configuration']['properties'] ?? [];
+        return $configuration;
     }
 
-    /**
-     * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
-     */
-    protected function getBackendUserAuthentication()
+    protected function getBackendUserAuthentication(): \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }

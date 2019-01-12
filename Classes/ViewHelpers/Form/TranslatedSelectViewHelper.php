@@ -27,7 +27,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Viewhelper to render a selectbox with labels that need to be translated
+ * View helper to render a selectbox with labels that need to be translated
  *
  * <code title="Usage">
  *  {namespace register=Evoweb\SfRegister\ViewHelpers}
@@ -36,11 +36,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class TranslatedSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
 {
-    /**
-     * Initialize arguments.
-     *
-     * @api
-     */
     public function initializeArguments()
     {
         parent::initializeArguments();
@@ -52,13 +47,14 @@ class TranslatedSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\Selec
      *
      * @param string $value value attribute of the option tag (will be escaped)
      * @param string $label content of the option tag (will be escaped)
-     * @param bool $isSelected specifies wheter or not to add selected attribute
+     * @param bool $isSelected specifies whether or not to add selected attribute
+     *
      * @return string the rendered option tag
      */
-    protected function renderOptionTag($value, $label, $isSelected)
+    protected function renderOptionTag($value, $label, $isSelected): string
     {
         $extensionName = $this->hasArgument('extensionName') ? $this->arguments['extensionName'] : null;
-        $request = $this->controllerContext->getRequest();
+        $request = $this->getRequest();
         $extensionName = $extensionName === null ? $request->getControllerExtensionName() : $extensionName;
 
         $label = htmlspecialchars(LocalizationUtility::translate($label, $extensionName));

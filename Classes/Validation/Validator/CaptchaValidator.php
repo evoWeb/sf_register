@@ -26,11 +26,6 @@ namespace Evoweb\SfRegister\Validation\Validator;
 
 use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
-/**
- * A captcha validator
- *
- * @scope singleton
- */
 class CaptchaValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
 {
     /**
@@ -39,10 +34,7 @@ class CaptchaValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
     protected $acceptsEmptyValues = false;
 
     /**
-     * Captcha adapter factory
-     *
      * @var \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory
-     * @inject
      */
     protected $captchaAdapterFactory;
 
@@ -57,14 +49,20 @@ class CaptchaValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
         ],
     ];
 
+    public function injectCaptchaAdapterFactory(
+        \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory $captchaAdapterFactory
+    ) {
+        $this->captchaAdapterFactory = $captchaAdapterFactory;
+    }
+
     /**
      * If the given captcha is valid
      *
      * @param string $value
      *
-     * @return boolean
+     * @return bool
      */
-    public function isValid($value)
+    public function isValid($value): bool
     {
         $result = true;
 

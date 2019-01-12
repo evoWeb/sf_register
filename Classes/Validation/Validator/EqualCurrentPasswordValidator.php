@@ -24,13 +24,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * Validator to check against current password
- *
- * @scope singleton
  */
 class EqualCurrentPasswordValidator extends AbstractValidator implements ValidatorInterface
 {
@@ -40,35 +39,21 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
     protected $acceptsEmptyValues = false;
 
     /**
-     * Configuration manager
-     *
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
      */
     protected $configurationManager;
 
     /**
-     * Settings
-     *
      * @var array
      */
     protected $settings = [];
 
     /**
-     * Frontend user repository
-     *
      * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
-     * @inject
      */
     protected $userRepository = null;
 
 
-    /**
-     * Inject a configuration manager
-     *
-     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
-     *
-     * @return void
-     */
     public function injectConfigurationManager(
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
     ) {
@@ -80,6 +65,11 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
         );
     }
 
+    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Validation method
      *
@@ -87,7 +77,7 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
      *
      * @return bool
      */
-    public function isValid($password)
+    public function isValid($password): bool
     {
         $result = true;
 
@@ -101,16 +91,15 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
             );
             $result = false;
         } else {
+            /** @noinspection PhpInternalEntityUsedInspection */
             $user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
 
-            if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')
-                && \TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility::isUsageEnabled('FE')
-            ) {
-                /** @var \TYPO3\CMS\Saltedpasswords\Salt\SaltInterface $saltedPassword */
-                $saltedPassword = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance(
-                    $user->getPassword(),
-                    null
+            if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
+                /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
+                $passwordHashFactory = GeneralUtility::makeInstance(
+                    \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
                 );
+                $saltedPassword = $passwordHashFactory->get($user->getPassword(), 'FE');
                 if (!$saltedPassword->checkPassword($password, $user->getPassword())) {
                     $this->addError(
                         \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
@@ -149,21 +138,13 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
         return $result;
     }
 
-    /**
-     * Checks if an user is logged in
-     *
-     * @return bool
-     */
-    protected function userIsLoggedIn()
+    protected function userIsLoggedIn(): bool
     {
         /** @noinspection PhpInternalEntityUsedInspection */
         return is_array($this->getTypoScriptFrontendController()->fe_user->user);
     }
 
-    /**
-     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-     */
-    protected static function getTypoScriptFrontendController()
+    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
     }

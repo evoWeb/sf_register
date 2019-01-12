@@ -25,7 +25,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  ***************************************************************/
 
 /**
- * Viewhelper to render a selectbox with values
+ * View helper to render a select box with values
  * in given steps from start to end value
  * <code title="Usage">
  * {namespace register=Evoweb\SfRegister\ViewHelpers}
@@ -35,33 +35,20 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper
 {
     /**
-     * Configuration manager to fetch settings from
-     *
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
      */
     protected $configurationManager;
 
     /**
-     * Settings of the plugin
-     *
      * @var array
      */
     protected $settings = [];
 
     /**
-     * Configuration of the framework
-     *
      * @var array
      */
     protected $frameworkConfiguration = [];
 
-    /**
-     * Injection of configuration manager
-     *
-     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
-     *
-     * @return void
-     */
     public function injectConfigurationManager(
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
     ) {
@@ -76,15 +63,15 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
         );
     }
 
-    /**
-     * Render a special sign if the field is required
-     *
-     * @param string $fieldName Name of the field to render the requird marker to
-     *
-     * @return string
-     */
-    public function render($fieldName)
+    public function initializeArguments()
     {
+        $this->registerUniversalTagAttributes();
+        $this->registerArgument('fieldName', 'string', 'Name of the field to render', true);
+    }
+
+    public function render(): string
+    {
+        $fieldName = $this->arguments['fieldName'];
         $mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));
         $modeSettings = $this->settings['validation'][$mode];
         $fieldSettings = isset($modeSettings[$fieldName]) ? $modeSettings[$fieldName] : false;
