@@ -3,10 +3,10 @@
 $EM_CONF['sf_register'] = [
     'title' => 'Frontend User Registration',
     'description' => 'Offers the possibility to maintain the fe_user data in frontend by the user self.',
-    'category' => 'plugin',
+    'category' => 'fe',
     'author' => 'Sebastian Fischer',
     'author_email' => 'typo3@evoweb.de',
-    'author_company' => 'evoweb',
+    'author_company' => 'evoWeb',
     'createDirs' => 'typo3temp/sf_register',
     'modify_tables' => 'fe_users',
     'state' => 'stable',

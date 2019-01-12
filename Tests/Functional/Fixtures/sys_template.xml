@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <sys_template>
+        <uid>1</uid>
+        <pid>1</pid>
+        <tstamp>1547300908</tstamp>
+        <crdate>1547063591</crdate>
+        <cruser_id>1</cruser_id>
+        <deleted>0</deleted>
+        <hidden>0</hidden>
+        <starttime>0</starttime>
+        <endtime>0</endtime>
+        <sorting>256</sorting>
+        <description></description>
+        <t3_origuid>0</t3_origuid>
+        <t3ver_oid>0</t3ver_oid>
+        <t3ver_id>0</t3ver_id>
+        <t3ver_label></t3ver_label>
+        <t3ver_wsid>0</t3ver_wsid>
+        <t3ver_state>0</t3ver_state>
+        <t3ver_stage>0</t3ver_stage>
+        <t3ver_count>0</t3ver_count>
+        <t3ver_tstamp>0</t3ver_tstamp>
+        <t3ver_move_id>0</t3ver_move_id>
+        <title>dev9</title>
+        <sitetitle></sitetitle>
+        <root>1</root>
+        <clear>3</clear>
+        <include_static_file>EXT:fluid_styled_content/Configuration/TypoScript/,EXT:sf_register/Configuration/TypoScript/minimal/</include_static_file>
+        <constants></constants>
+        <config><![CDATA[page = PAGE
+            page.10 < styles.content.get]]></config>
+        <nextLevel></nextLevel>
+        <basedOn></basedOn>
+        <includeStaticAfterBasedOn>0</includeStaticAfterBasedOn>
+        <static_file_mode>0</static_file_mode>
+    </sys_template>
+</dataset>
