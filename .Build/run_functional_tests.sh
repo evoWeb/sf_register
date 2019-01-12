@@ -22,4 +22,4 @@ export typo3DatabaseDriver="pdo_sqlite";
     .Build/bin/phpunit \
     --colors \
     -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml \
-    ./Tests/Functional/Controller/FeuserPasswordControllerTest.php
+    ./Tests/Functional/

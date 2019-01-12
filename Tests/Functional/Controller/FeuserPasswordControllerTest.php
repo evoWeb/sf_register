@@ -22,10 +22,10 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
     public function setUp()
     {
         parent::setUp();
-        $this->importDataSet(__DIR__. '/../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__. '/../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__. '/../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__. '/../Fixtures/fe_users.xml');
+        $this->importDataSet(__DIR__ . '/../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__ . '/../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__ . '/../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__ . '/../Fixtures/fe_users.xml');
     }
 
     /**

@@ -167,7 +167,8 @@ $temporaryColumns = [
         'config' => [
             'type' => 'text',
             'rows' => 5,
-            'cols' => 48
+            'cols' => 48,
+            'default' => '',
         ]
     ],
     'email_new' => [

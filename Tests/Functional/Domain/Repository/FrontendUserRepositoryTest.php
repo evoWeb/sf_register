@@ -23,10 +23,11 @@ class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional\Fun
 
     public function setUp()
     {
-        $this->importDataSet(__DIR__. '/../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__. '/../../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__. '/../../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__. '/../../Fixtures/fe_users.xml');
+        parent::setUp();
+        $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
 
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
