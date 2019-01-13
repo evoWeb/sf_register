@@ -123,6 +123,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return false;
     }
 
+    protected function initializeActionMethodValidators()
+    {
+        parent::initializeActionMethodValidators();
+    }
+
     protected function initializeAction()
     {
         $this->setTypeConverter();

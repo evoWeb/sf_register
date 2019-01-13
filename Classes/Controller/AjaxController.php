@@ -27,8 +27,6 @@ namespace Evoweb\SfRegister\Controller;
 use Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Api to get information via ajax calls
@@ -69,7 +67,7 @@ class AjaxController
 
     public function processRequest(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $requestArguments = $request->getParsedBody()['tx_sfregister'];
+        $requestArguments = $request->getParsedBody()['tx_sfregister'] ?? [];
 
         switch ($requestArguments['action']) {
             case 'zones':
@@ -97,7 +95,9 @@ class AjaxController
     protected function getZonesAction($parent)
     {
         /** @var StaticCountryZoneRepository $zoneRepository */
-        $zoneRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(StaticCountryZoneRepository::class);
+        $zoneRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Extbase\Object\ObjectManager::class
+        )->get(StaticCountryZoneRepository::class);
 
         if (\TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($parent)) {
             $zones = $zoneRepository->findAllByParentUid((int) $parent);
