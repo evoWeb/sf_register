@@ -24,12 +24,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-
-/**
- * A password validator
- */
-class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
+class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
     /**
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
@@ -63,11 +58,7 @@ class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
 
         if (in_array(strtolower($value), $badWordItems)) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'error_badword',
-                    'SfRegister',
-                    $this->options
-                ),
+                $this->translateErrorMessage('error_badword', 'SfRegister', $this->options),
                 1301599720
             );
         }

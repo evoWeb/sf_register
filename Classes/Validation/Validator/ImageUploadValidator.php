@@ -46,20 +46,13 @@ class ImageUploadValidator extends AbstractValidator implements ValidatorInterfa
      * If the given value is set
      *
      * @param boolean $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
-
         if (!$this->fileService->isValid()) {
             foreach ($this->fileService->getErrors() as $error) {
                 $this->result->addError($error);
             }
-            $result = false;
         }
-
-        return $result;
     }
 }

@@ -24,13 +24,10 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-
 /**
  * A repeated value validator
  */
-class RepeatValidator extends AbstractValidator implements ValidatorInterface
+class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
     /**
      * @var bool
@@ -68,27 +65,20 @@ class RepeatValidator extends AbstractValidator implements ValidatorInterface
      * If the given value is equal to the repetition
      *
      * @param string $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
-
         $propertyName = str_replace('Repeat', '', $this->propertyName);
         $getterMethod = 'get' . ucfirst($propertyName);
         if ($value != $this->model->{$getterMethod}()) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                $this->translateErrorMessage(
                     'error_repeatitionwasnotequal',
                     'SfRegister',
-                    [\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($propertyName, 'SfRegister')]
+                    [$this->translateErrorMessage($propertyName, 'SfRegister')]
                 ),
                 1307965971
             );
-            $result = false;
         }
-
-        return $result;
     }
 }

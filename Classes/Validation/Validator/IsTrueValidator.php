@@ -24,12 +24,10 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-
 /**
  * Validator to check if a given value is equal to true
  */
-class IsTrueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
+class IsTrueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
     /**
      * @var bool
@@ -40,21 +38,14 @@ class IsTrueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
      * If the given value is set
      *
      * @param boolean $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
-
         if ($value !== true) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_nottrue', 'SfRegister'),
+                $this->translateErrorMessage('error_nottrue', 'SfRegister'),
                 1301599670
             );
-            $result = false;
         }
-
-        return $result;
     }
 }

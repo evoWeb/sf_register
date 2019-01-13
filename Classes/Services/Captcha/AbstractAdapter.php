@@ -29,7 +29,7 @@ abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaI
     /**
      * @var object
      */
-    protected $captcha = null;
+    protected $captcha;
 
     /**
      * @var array

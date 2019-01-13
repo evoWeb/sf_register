@@ -47,7 +47,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
     /**
      * @var array
      */
-    protected $settings = null;
+    protected $settings = [];
 
     /**
      * @var array
@@ -132,10 +132,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
             /** @var \TYPO3\CMS\Extbase\Error\Error $error */
             $error = $this->objectManager->get(
                 \TYPO3\CMS\Extbase\Error\Error::class,
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'error_notvalidatable',
-                    'SfRegister'
-                ),
+                $this->translateErrorMessage('error_notvalidatable', 'SfRegister'),
                 1301599551
             );
             $messages->addError($error);
@@ -157,10 +154,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
                 /** @var \TYPO3\CMS\Extbase\Error\Error $error */
                 $error = $this->objectManager->get(
                     \TYPO3\CMS\Extbase\Error\Error::class,
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                        'error_notexists',
-                        'SfRegister'
-                    ),
+                    $this->translateErrorMessage('error_notexists', 'SfRegister'),
                     1301599575
                 );
                 $messages->addError($error);

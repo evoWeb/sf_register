@@ -51,10 +51,7 @@ class EqualCurrentUserValidator extends AbstractValidator implements ValidatorIn
         /** @noinspection PhpInternalEntityUsedInspection */
         if ($value != $this->getTypoScriptFrontendController()->fe_user->user['uid']) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'error_notequalcurrentuser',
-                    'SfRegister'
-                ),
+                $this->translateErrorMessage('error_notequalcurrentuser', 'SfRegister'),
                 1305009260
             );
             $result = false;

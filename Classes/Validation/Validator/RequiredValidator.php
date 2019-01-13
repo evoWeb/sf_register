@@ -23,12 +23,11 @@ namespace Evoweb\SfRegister\Validation\Validator;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * A required validator to check that a value is set
  */
-class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
+class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
     /**
      * @var bool
@@ -39,21 +38,14 @@ class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
      * If the given value is empty
      *
      * @param string $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
-
         if (empty($value)) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_required', 'SfRegister'),
+                $this->translateErrorMessage('error_required', 'SfRegister'),
                 1305008423
             );
-            $result = false;
         }
-
-        return $result;
     }
 }

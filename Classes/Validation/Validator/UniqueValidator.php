@@ -24,12 +24,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-
-/**
- * A password validator
- */
-class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
+class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
     /**
      * @var bool
@@ -50,7 +45,7 @@ class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
     /**
      * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
      */
-    protected $userRepository = null;
+    protected $userRepository;
 
     /**
      * @var string
@@ -71,33 +66,19 @@ class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
      * If the given passwords are valid
      *
      * @param string $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
-
         if ($this->userRepository->countByField($this->propertyName, $value)) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'error_notunique_local',
-                    'SfRegister'
-                ),
+                $this->translateErrorMessage('error_notunique_local', 'SfRegister'),
                 1301599608
             );
-            $result = false;
         } elseif ($this->options['global'] && $this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'error_notunique_global',
-                    'SfRegister'
-                ),
+                $this->translateErrorMessage('error_notunique_global', 'SfRegister'),
                 1301599619
             );
-            $result = false;
         }
-
-        return $result;
     }
 }

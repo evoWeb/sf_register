@@ -24,13 +24,10 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-
 /**
  * A validator to check if a value is unique only if current value has changed
  */
-class UniqueExcludeCurrentValidator extends AbstractValidator implements ValidatorInterface
+class UniqueExcludeCurrentValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
     /**
      * @var bool
@@ -51,7 +48,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Validat
     /**
      * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
      */
-    protected $userRepository = null;
+    protected $userRepository;
 
     /**
      * @var string
@@ -82,35 +79,20 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Validat
      * If the given passwords are valid
      *
      * @param string $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
-
         if (!$this->model->_isDirty($this->propertyName)) {
-            $result = true;
         } elseif ($this->userRepository->countByField($this->propertyName, $value)) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'error_notunique_local',
-                    'SfRegister'
-                ),
+                $this->translateErrorMessage('error_notunique_local', 'SfRegister'),
                 1301599609
             );
-            $result = false;
         } elseif ($this->options['global'] && $this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'error_notunique_global',
-                    'SfRegister'
-                ),
+                $this->translateErrorMessage('error_notunique_global', 'SfRegister'),
                 1301599620
             );
-            $result = false;
         }
-
-        return $result;
     }
 }
