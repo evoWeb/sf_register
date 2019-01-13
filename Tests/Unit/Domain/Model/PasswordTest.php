@@ -32,9 +32,9 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     /**
      * @test
      */
-    public function passwordOnInitializeIsNull()
+    public function passwordOnInitializeIsEmptyString()
     {
-        $this->assertNull($this->subject->getPassword());
+        $this->assertEquals('', $this->subject->getPassword());
     }
 
     /**
@@ -52,9 +52,9 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     /**
      * @test
      */
-    public function passwordRepeatOnInitializeIsNull()
+    public function passwordRepeatOnInitializeIsEmptyString()
     {
-        $this->assertNull($this->subject->getPasswordRepeat());
+        $this->assertEquals('', $this->subject->getPasswordRepeat());
     }
 
     /**
@@ -72,9 +72,9 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     /**
      * @test
      */
-    public function oldPasswordOnInitializeIsNull()
+    public function oldPasswordOnInitializeIsEmptyString()
     {
-        $this->assertNull($this->subject->getOldPassword());
+        $this->assertEquals('', $this->subject->getOldPassword());
     }
 
     /**

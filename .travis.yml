@@ -36,6 +36,7 @@ script:
     echo "Running functional tests";
     export typo3DatabaseName="functional";
     export typo3DatabaseDriver="pdo_sqlite";
+    php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/;
     php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
 
 jobs:

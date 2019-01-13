@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Unit\Domain\Validator;
+namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
 
 /*
  * This file is developed by evoWeb.
@@ -23,12 +23,9 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
     public function setUp()
     {
-        /** @var \Evoweb\SfRegister\Validation\Validator\UniqueValidator $fixture */
-        $this->subject = $this->getAccessibleMock(
-            \Evoweb\SfRegister\Validation\Validator\UniqueValidator::class,
-            ['dummy'],
-            ['global' => false]
-        );
+        $this->subject = $this->getMockBuilder(\Evoweb\SfRegister\Validation\Validator\UniqueValidator::class)
+            ->setMethods(['translateErrorMessage'])
+            ->getMock();
     }
 
     /**
@@ -48,7 +45,7 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $this->subject->injectUserRepository($repositoryMock);
         $this->subject->setPropertyName($fieldName);
 
-        $this->assertTrue($this->subject->isValid($expected));
+        $this->assertFalse($this->subject->validate($expected)->hasErrors());
     }
 
     /**
@@ -68,7 +65,7 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $this->subject->injectUserRepository($repositoryMock);
         $this->subject->setPropertyName($fieldName);
 
-        $this->assertFalse($this->subject->isValid($expected));
+        $this->assertTrue($this->subject->validate($expected)->hasErrors());
     }
 
     /**
@@ -92,7 +89,7 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $this->subject->injectUserRepository($repositoryMock);
         $this->subject->setPropertyName($fieldName);
 
-        $this->assertTrue($this->subject->isValid($expected));
+        $this->assertFalse($this->subject->validate($expected)->hasErrors());
     }
 
     /**
@@ -118,6 +115,6 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $this->subject->injectUserRepository($repositoryMock);
         $this->subject->setPropertyName($fieldName);
 
-        $this->assertFalse($this->subject->isValid($expected));
+        $this->assertTrue($this->subject->validate($expected)->hasErrors());
     }
 }

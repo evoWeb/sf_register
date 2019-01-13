@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Unit\Domain\Validator;
+namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
 
 /*
  * This file is developed by evoWeb.
@@ -12,7 +12,7 @@ namespace Evoweb\SfRegister\Tests\Unit\Domain\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class UserValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class ImageUploadValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
     /**
      * @test

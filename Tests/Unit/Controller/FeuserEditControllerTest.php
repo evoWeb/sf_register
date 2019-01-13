@@ -14,4 +14,11 @@ namespace Evoweb\SfRegister\Tests\Unit\Controller;
 
 class FeuserEditControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
+    /**
+     * @test
+     */
+    public function initializeAction()
+    {
+        $this->markTestIncomplete('not implemented by now');
+    }
 }

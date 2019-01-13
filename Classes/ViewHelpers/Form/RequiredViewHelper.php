@@ -79,11 +79,11 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
         $result = '';
         if ((
                 is_array($fieldSettings)
-                && in_array('Evoweb\SfRegister\Validation\Validator\RequiredValidator', $fieldSettings)
+                && in_array(\Evoweb\SfRegister\Validation\Validator\RequiredValidator::class, $fieldSettings)
             )
             || (
                 is_string($fieldSettings)
-                && $fieldSettings == 'Evoweb\SfRegister\Validation\Validator\RequiredValidator'
+                && $fieldSettings == \Evoweb\SfRegister\Validation\Validator\RequiredValidator::class
             )
         ) {
             $result = $this->renderChildren();

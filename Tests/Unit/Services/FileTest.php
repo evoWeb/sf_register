@@ -14,4 +14,11 @@ namespace Evoweb\SfRegister\Tests\Unit\Services;
 
 class FileTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
+    /**
+     * @test
+     */
+    public function isValid()
+    {
+        $this->markTestIncomplete('not implemented by now');
+    }
 }

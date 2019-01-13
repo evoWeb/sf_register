@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Functional\Domain\Validator;
+namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 
 /*
  * This file is developed by evoWeb.

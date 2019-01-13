@@ -225,6 +225,12 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     protected $invitationEmail = '';
 
+    public function __construct(string $username = '', string $password = '')
+    {
+        parent::__construct($username, $password);
+        $this->image = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->moduleSysDmailCategory = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
 
     /**
      * Initializes the date of birth if related values are set by request to argument mapping
@@ -259,11 +265,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         return $this->activatedOn;
     }
 
-    /**
-     * Setter for activatedOn
-     *
-     * @param \DateTime|NULL $activatedOn
-     */
     public function setActivatedOn(\DateTime $activatedOn = null)
     {
         $this->activatedOn = $activatedOn;
@@ -324,11 +325,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         return $this->gender;
     }
 
-    /**
-     * Setter for dateOfBirth
-     *
-     * @param \DateTime|NULL $dateOfBirth
-     */
     public function setDateOfBirth(\DateTime $dateOfBirth = null)
     {
         $this->dateOfBirth = $dateOfBirth;

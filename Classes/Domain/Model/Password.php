@@ -32,17 +32,17 @@ class Password extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var string
      */
-    protected $password;
+    protected $password = '';
 
     /**
      * @var string
      */
-    protected $passwordRepeat;
+    protected $passwordRepeat = '';
 
     /**
      * @var string
      */
-    protected $oldPassword;
+    protected $oldPassword = '';
 
     public function getPassword(): string
     {

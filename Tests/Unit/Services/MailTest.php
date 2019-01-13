@@ -14,4 +14,11 @@ namespace Evoweb\SfRegister\Tests\Unit\Services;
 
 class MailTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
+    /**
+     * @test
+     */
+    public function sendEmail()
+    {
+        $this->markTestIncomplete('not implemented by now');
+    }
 }

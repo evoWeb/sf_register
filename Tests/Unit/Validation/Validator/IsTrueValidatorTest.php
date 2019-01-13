@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Unit\Domain\Validator;
+namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
 
 /*
  * This file is developed by evoWeb.
@@ -21,7 +21,9 @@ class IsTrueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
     public function setUp()
     {
-        $this->subject = new \Evoweb\SfRegister\Validation\Validator\IsTrueValidator();
+        $this->subject = $this->getMockBuilder(\Evoweb\SfRegister\Validation\Validator\IsTrueValidator::class)
+            ->setMethods(['translateErrorMessage'])
+            ->getMock();
     }
 
     public function tearDown()
@@ -34,13 +36,13 @@ class IsTrueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function isValidReturnsTrueIfTrueWasUsed()
     {
-        $this->assertTrue($this->subject->isValid(true));
+        $this->assertFalse($this->subject->validate(true)->hasErrors());
     }
 
     /**
      * @return array
      */
-    public function isValidNonTrueDataProvider()
+    public function nonTrueValues()
     {
         return [
             'stringIsNonTrue' => ['true'],
@@ -52,10 +54,10 @@ class IsTrueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     /**
      * @param mixed $input
      * @test
-     * @dataProvider isValidNonTrueDataProvider
+     * @dataProvider nonTrueValues
      */
     public function isValidReturnsFalseIfNonTrueWasUsed($input)
     {
-        $this->assertFalse($this->subject->isValid($input));
+        $this->assertTrue($this->subject->validate($input)->hasErrors());
     }
 }

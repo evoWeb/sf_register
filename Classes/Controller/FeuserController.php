@@ -482,7 +482,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $userGroupIds = $this->getUserGroupIds();
         $assignedUserGroups = $user->getUsergroup();
         foreach ($assignedUserGroups as $singleUserGroup) {
-            if (\in_array($singleUserGroup->getUid(), $userGroupIds)) {
+            if (in_array($singleUserGroup->getUid(), $userGroupIds)) {
                 $assignedUserGroups->detach($singleUserGroup);
             }
         }
