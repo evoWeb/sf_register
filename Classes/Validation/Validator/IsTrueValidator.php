@@ -35,6 +35,16 @@ class IsTrueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
     protected $acceptsEmptyValues = false;
 
     /**
+     * @var string
+     */
+    protected $propertyName;
+
+    public function setPropertyName(string $propertyName)
+    {
+        $this->propertyName = $propertyName;
+    }
+
+    /**
      * If the given value is set
      *
      * @param boolean $value The value
@@ -43,7 +53,11 @@ class IsTrueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
     {
         if ($value !== true) {
             $this->addError(
-                $this->translateErrorMessage('error_nottrue', 'SfRegister'),
+                $this->translateErrorMessage(
+                    'error_nottrue',
+                    'SfRegister',
+                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                ),
                 1301599670
             );
         }

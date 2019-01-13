@@ -35,6 +35,16 @@ class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
     protected $acceptsEmptyValues = false;
 
     /**
+     * @var string
+     */
+    protected $propertyName;
+
+    public function setPropertyName(string $propertyName)
+    {
+        $this->propertyName = $propertyName;
+    }
+
+    /**
      * If the given value is empty
      *
      * @param string $value The value
@@ -43,7 +53,11 @@ class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
     {
         if (empty($value)) {
             $this->addError(
-                $this->translateErrorMessage('error_required', 'SfRegister'),
+                $this->translateErrorMessage(
+                    'error_required',
+                    'SfRegister',
+                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                ),
                 1305008423
             );
         }

@@ -107,11 +107,6 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
         );
     }
 
-    public function injectResult(\TYPO3\CMS\Extbase\Error\Result $result)
-    {
-        $this->result = $result;
-    }
-
     public function injectValidatorResolver(\Evoweb\SfRegister\Validation\ValidatorResolver $validatorResolver)
     {
         $this->validatorResolver = $validatorResolver;
@@ -119,13 +114,12 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
 
     public function validate($object): \TYPO3\CMS\Extbase\Error\Result
     {
-        /** @var \TYPO3\CMS\Extbase\Error\Result $messages */
-        $messages = $this->objectManager->get(\TYPO3\CMS\Extbase\Error\Result::class);
+        $this->result = new \TYPO3\CMS\Extbase\Error\Result();
         if (self::$instancesCurrentlyUnderValidation === null) {
             self::$instancesCurrentlyUnderValidation = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         }
         if ($object === null) {
-            return $messages;
+            return $this->result;
         }
         if (!$this->canValidate($object)) {
             /** @noinspection PhpMethodParametersCountMismatchInspection */
@@ -135,12 +129,12 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
                 $this->translateErrorMessage('error_notvalidatable', 'SfRegister'),
                 1301599551
             );
-            $messages->addError($error);
+            $this->result->addError($error);
 
-            return $messages;
+            return $this->result;
         }
         if (self::$instancesCurrentlyUnderValidation->contains($object)) {
-            return $messages;
+            return $this->result;
         } else {
             self::$instancesCurrentlyUnderValidation->attach($object);
         }
@@ -157,21 +151,21 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
                     $this->translateErrorMessage('error_notexists', 'SfRegister'),
                     1301599575
                 );
-                $messages->addError($error);
+                $this->result->addError($error);
             } else {
                 $this->currentPropertyName = $propertyName;
                 $propertyValue = $this->getPropertyValue($object, $propertyName);
                 $this->checkUserProperty(
                     $propertyValue,
                     (array)$validatorsNames,
-                    $messages->forProperty($propertyName)
+                    $this->result->forProperty($propertyName)
                 );
             }
         }
 
         self::$instancesCurrentlyUnderValidation->detach($object);
 
-        return $messages;
+        return $this->result;
     }
 
     /**
@@ -185,9 +179,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
     protected function checkUserProperty($value, array $validatorNames, \TYPO3\CMS\Extbase\Error\Result $messages)
     {
         foreach ($validatorNames as $validatorName) {
-            $messages->merge(
-                $this->getValidator($validatorName)->validate($value)
-            );
+            $messages->merge($this->getValidator($validatorName)->validate($value));
         }
     }
 
