@@ -74,7 +74,7 @@ jobs:
 
     - stage: test
       php: 7.2
-      env: TYPO3_VERSION="^dev-master" TESTING_FRAMEWORK="~5.0.3"
+      env: TYPO3_VERSION="dev-master" TESTING_FRAMEWORK="~5.0.3"
 
     - stage: publish in ter
       if: tag IS present
