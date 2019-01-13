@@ -32,7 +32,7 @@ class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 
-        $this->subject = new \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository($objectManager);
+        $this->subject = $objectManager->get(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
     }
 
     public function tearDown()
@@ -45,6 +45,10 @@ class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional\Fun
      */
     public function findByUid()
     {
-        $this->markTestIncomplete('not implemented by now');
+        /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+        $user = $this->subject->findByUid(1);
+
+        $this->assertInstanceOf(\Evoweb\SfRegister\Domain\Model\FrontendUser::class, $user);
+        $this->assertEquals('loginuser', $user->getUsername());
     }
 }

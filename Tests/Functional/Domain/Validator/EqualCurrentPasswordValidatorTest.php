@@ -13,15 +13,9 @@ namespace Evoweb\SfRegister\Tests\Functional\Domain\Validator;
  */
 
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
-    /**
-     * @var \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator|AccessibleObjectInterface
-     */
-    protected $subject;
-
     public function setUp()
     {
         parent::setUp();
@@ -29,16 +23,6 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
         $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
         $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
         $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
-
-        $this->subject = $this->getAccessibleMock(
-            \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator::class,
-            ['userIsLoggedIn']
-        );
-    }
-
-    public function tearDown()
-    {
-        unset($this->subject);
     }
 
     /**
@@ -63,7 +47,10 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
         $this->createEmptyFrontendUser();
         $this->initializeTypoScriptFrontendController();
 
-        $this->assertFalse($this->subject->_call('userIsLoggedIn'));
+        $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
+
+        $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
+        $this->assertFalse($method->invoke($subject));
     }
 
     /**
@@ -71,14 +58,16 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
      */
     public function isUserLoggedInReturnsTrueIfLoggedIn()
     {
-        $this->markTestSkipped('currently failing for no reason');
         $this->createAndLoginFrontEndUser('2', [
             'password' => 'testOld',
             'comments' => ''
         ]);
         $this->initializeTypoScriptFrontendController();
 
-        $this->assertTrue($this->subject->_call('userIsLoggedIn'));
+        $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
+
+        $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
+        $this->assertTrue($method->invoke($subject));
     }
 
     /**
