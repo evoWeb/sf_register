@@ -29,16 +29,10 @@ namespace Evoweb\SfRegister\Controller;
  */
 class FeuserCreateController extends FeuserController
 {
-    protected function initializeAction()
-    {
-        parent::initializeAction();
-
-        if (empty($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = $this->settings['fields']['createDefaultSelected'];
-        } elseif (!is_array($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
-        }
-    }
+    /**
+     * @var string
+     */
+    protected $controller = 'create';
 
     public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {

@@ -42,5 +42,5 @@ runFunctionalTests ()
 cd ../;
 composer update;
 
-#runUnitTests;
+runUnitTests;
 runFunctionalTests;

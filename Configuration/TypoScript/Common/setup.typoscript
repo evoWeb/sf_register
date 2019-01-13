@@ -31,68 +31,68 @@ plugin.tx_sfregister.settings {
 
   validation.create {
     username {
-      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-      2 = StringLength(minimum = 4, maximum = 80)
-      3 = Evoweb\SfRegister\Validation\Validator\UniqueValidator
-      4 = Evoweb\SfRegister\Validation\Validator\UniqueValidator(global = 1)
+      1 = "Evoweb.SfRegister:Required"
+      2 = "StringLength", options={"minimum": 4, "maximum": 80}
+      3 = "Evoweb.SfRegister:Unique"
+      4 = "Evoweb.SfRegister:Unique", options={"global": 1}
     }
     password {
-      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-      2 = StringLength(minimum = 8, maximum = 40)
-      3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
+      1 = "Evoweb.SfRegister:Required"
+      2 = "StringLength", options={"minimum": 8, "maximum": 40}
+      3 = "Evoweb.SfRegister:BadWord"
     }
-    passwordRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
-    firstName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-    lastName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+    passwordRepeat = "Evoweb.SfRegister:Repeat"
+    firstName = "Evoweb.SfRegister:Required"
+    lastName = "Evoweb.SfRegister:Required"
     email {
-      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-      2 = EmailAddress
+      1 = "Evoweb.SfRegister:Required"
+      2 = "EmailAddress"
     }
-    emailRepeat = Evoweb\SfRegister\Validation\Validator\RepeatValidator
+    emailRepeat = "Evoweb.SfRegister:Repeat"
     gtc {
-      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-      2 = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
+      1 = "Evoweb.SfRegister:Required"
+      2 = "Evoweb.SfRegister:IsTrue"
     }
-    image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
-    captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = jmrecaptcha)
+    image = "Evoweb.SfRegister:ImageUpload"
+    captcha = "Evoweb.SfRegister:Captcha", options={"type": "jmrecaptcha"}
   }
 
   validation.edit {
-    firstName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-    lastName = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-    email = EmailAddress
-    gtc = Evoweb\SfRegister\Validation\Validator\IsTrueValidator
-    image = Evoweb\SfRegister\Validation\Validator\ImageUploadValidator
+    firstName = "Evoweb.SfRegister:Required"
+    lastName = "Evoweb.SfRegister:Required"
+    email = "EmailAddress"
+    gtc = "Evoweb.SfRegister:IsTrue"
+    image = "Evoweb.SfRegister:ImageUpload"
   }
 
   validation.password {
     password {
-      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-      2 = StringLength(minimum = 2, maximum = 40)
-      3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
+      1 = "Evoweb.SfRegister:Required"
+      2 = "StringLength", options={"minimum": 2, "maximum": 40}
+      3 = "Evoweb.SfRegister:BadWord"
     }
     passwordRepeat {
-      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-      2 = StringLength(minimum = 2, maximum = 40)
-      3 = Evoweb\SfRegister\Validation\Validator\RepeatValidator
+      1 = "Evoweb.SfRegister:Required"
+      2 = "StringLength", options={"minimum": 2, "maximum": 40}
+      3 = "Evoweb.SfRegister:Repeat"
     }
     oldPassword {
-      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-      2 = StringLength(minimum = 2, maximum = 40)
-      3 = Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator
+      1 = "Evoweb.SfRegister:Required"
+      2 = "StringLength", options={"minimum": 2, "maximum": 40}
+      3 = "Evoweb.SfRegister:EqualCurrentPassword"
     }
   }
 
   validation.invite {
     username {
-      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-      2 = StringLength(minimum = 4, maximum = 80)
+      1 = "Evoweb.SfRegister:Required"
+      2 = "StringLength", options={"minimum": 4, "maximum": 80}
     }
     invitationEmail {
-      1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-      2 = EmailAddress
+      1 = "Evoweb.SfRegister:Required"
+      2 = "EmailAddress"
     }
-    captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = jmrecaptcha)
+    captcha = "Evoweb.SfRegister:Captcha", options={"type": "jmrecaptcha"}
   }
 
   # integer usergroup set if no activation is needed

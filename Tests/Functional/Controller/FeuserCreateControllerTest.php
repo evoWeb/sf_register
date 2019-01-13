@@ -83,6 +83,6 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
 
         $validator = $subject->_get('arguments')->getArgument('user')->getValidator();
 
-        $this->assertInstanceOf(\TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator::class, $validator);
+        $this->assertInstanceOf(\Evoweb\SfRegister\Validation\Validator\UserValidator::class, $validator);
     }
 }

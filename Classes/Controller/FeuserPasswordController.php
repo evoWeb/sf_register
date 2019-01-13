@@ -29,6 +29,11 @@ namespace Evoweb\SfRegister\Controller;
  */
 class FeuserPasswordController extends FeuserController
 {
+    /**
+     * @var string
+     */
+    protected $controller = 'password';
+
     public function formAction()
     {
         $this->signalSlotDispatcher->dispatch(

@@ -32,12 +32,19 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
+use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * An frontend user controller
  */
 class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+    /**
+     * @var string
+     */
+    protected $controller = '';
+
     /**
      * User repository
      *
@@ -125,7 +132,96 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     protected function initializeActionMethodValidators()
     {
-        parent::initializeActionMethodValidators();
+        if (empty($this->settings['fields']['selected'])) {
+            $this->settings['fields']['selected'] = $this->settings['fields'][$this->controller . 'DefaultSelected'];
+        } elseif (!is_array($this->settings['fields']['selected'])) {
+            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
+        }
+
+        if ($this->arguments->hasArgument('user')) {
+            $this->modifyValidatorsBasedOnSettings(
+                $this->arguments->getArgument('user'),
+                $this->settings['validation'][$this->controller] ?? []
+            );
+        } elseif ($this->arguments->hasArgument('password')) {
+            $this->modifyValidatorsBasedOnSettings(
+                $this->arguments->getArgument('password'),
+                $this->settings['validation']['password'] ?? []
+            );
+        } else {
+            parent::initializeActionMethodValidators();
+        }
+    }
+
+    protected function modifyValidatorsBasedOnSettings(
+        \TYPO3\CMS\Extbase\Mvc\Controller\Argument $argument,
+        array $configuredValidators
+    ) {
+        /** @var \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validatorResolver */
+        $validatorResolver = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Validation\ValidatorResolver::class);
+        $parser = new \Doctrine\Common\Annotations\DocParser();
+
+        /** @var \Evoweb\SfRegister\Validation\Validator\UserValidator $validator */
+        $validator = $this->objectManager->get(\Evoweb\SfRegister\Validation\Validator\UserValidator::class);
+        foreach ($configuredValidators as $fieldName => $configuredValidator) {
+            if (!in_array($fieldName, $this->settings['fields']['selected'])) {
+                continue;
+            }
+
+            if (!is_array($configuredValidator)) {
+                $validatorInstance = $this->getValidatorByConfiguration(
+                    $configuredValidator,
+                    $parser,
+                    $validatorResolver
+                );
+
+                if (method_exists($validatorInstance, 'setPropertyName')) {
+                    $validatorInstance->setPropertyName($fieldName);
+                }
+            } else {
+                $validatorInstance = $this->objectManager->get(ConjunctionValidator::class);
+                foreach ($configuredValidator as $individualConfiguredValidator) {
+                    $individualValidatorInstance = $this->getValidatorByConfiguration(
+                        $individualConfiguredValidator,
+                        $parser,
+                        $validatorResolver
+                    );
+
+                    if (method_exists($individualValidatorInstance, 'setPropertyName')) {
+                        $individualValidatorInstance->setPropertyName($fieldName);
+                    }
+
+                    $validatorInstance->addValidator($individualValidatorInstance);
+                }
+            }
+
+            $validator->addPropertyValidator($fieldName, $validatorInstance);
+        }
+        $argument->setValidator($validator);
+    }
+
+    /**
+     * @param $configuration
+     * @param \Doctrine\Common\Annotations\DocParser $parser
+     * @param \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validatorResolver
+     *
+     * @return ValidatorInterface
+     */
+    protected function getValidatorByConfiguration($configuration, $parser, $validatorResolver)
+    {
+        /** @var \TYPO3\CMS\Extbase\Annotation\Validate $validateAnnotation */
+        $validateAnnotation = current($parser->parse(
+            '@TYPO3\CMS\Extbase\Annotation\Validate(' . $configuration . ')'
+        ));
+        $validatorObjectName = $validatorResolver->resolveValidatorObjectName($validateAnnotation->validator);
+
+        /** @var ValidatorInterface $validatorInstance */
+        $validatorInstance = $this->objectManager->get(
+            $validatorObjectName,
+            $validateAnnotation->options
+        );
+
+        return $validatorInstance;
     }
 
     protected function initializeAction()

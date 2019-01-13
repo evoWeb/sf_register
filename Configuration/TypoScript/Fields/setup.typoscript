@@ -99,6 +99,14 @@ plugin.tx_sfregister.settings.fields {
     400 = submit
   }
 
+  passwordDefaultSelected {
+    10 = oldPassword
+    20 = clear
+
+    30 = password
+    40 = passwordRepeat
+  }
+
   configuration {
     username {
       partial = Textfield

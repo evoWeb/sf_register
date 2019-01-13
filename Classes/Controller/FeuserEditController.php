@@ -29,16 +29,10 @@ namespace Evoweb\SfRegister\Controller;
  */
 class FeuserEditController extends FeuserController
 {
-    protected function initializeAction()
-    {
-        parent::initializeAction();
-
-        if (empty($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = $this->settings['fields']['editDefaultSelected'];
-        } elseif (!is_array($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
-        }
-    }
+    /**
+     * @var string
+     */
+    protected $controller = 'edit';
 
     public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {
