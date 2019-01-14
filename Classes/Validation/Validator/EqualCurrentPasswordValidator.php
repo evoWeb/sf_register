@@ -82,7 +82,7 @@ class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Valida
      */
     public function isValid($password)
     {
-        if (!$this->context->getAspect('frontend.user')->isLoggedIn()) {
+        if (!$this->userIsLoggedIn()) {
             $this->addError(
                 $this->translateErrorMessage('error_changepassword_notloggedin', 'SfRegister'),
                 1301599489
@@ -118,5 +118,10 @@ class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Valida
                 }
             }
         }
+    }
+
+    public function userIsLoggedIn(): bool
+    {
+        return $this->context->getAspect('frontend.user')->isLoggedIn();
     }
 }

@@ -36,7 +36,7 @@ runFunctionalTests ()
     export typo3DatabaseDriver="pdo_sqlite";
 
     echo "Running functional tests";
-    runPhpunit ".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml" "./Tests/Functional/Controller/FeuserCreateControllerTest.php";
+    runPhpunit ".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml" "./Tests/Functional/";
 }
 
 cd ../;

@@ -48,6 +48,8 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
         $this->initializeTypoScriptFrontendController();
 
         $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $subject->injectContext($context);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         $this->assertFalse($method->invoke($subject));
@@ -65,6 +67,8 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
         $this->initializeTypoScriptFrontendController();
 
         $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $subject->injectContext($context);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         $this->assertTrue($method->invoke($subject));
@@ -89,6 +93,8 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
         }
 
         $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $subject->injectContext($context);
 
         $property = $this->getPrivateProperty($subject, 'settings');
         $property->setValue($subject, $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
@@ -130,6 +136,8 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
         $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'] = 'md5';
 
         $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $subject->injectContext($context);
 
         $property = $this->getPrivateProperty($subject, 'settings');
         $property->setValue($subject, $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
