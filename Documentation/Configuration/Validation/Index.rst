@@ -36,8 +36,10 @@ validators should take care of a value.
 Changes since version 9.0.0
 ---------------------------
 
-Since version 9 validators are only used for selected fields. Beside that the
-configuration changed from using "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+Since version 9 validators are only used for selected fields, it's not necessary
+to remove validation configuration only because certain fields should not be
+present in the form.
+Beside that the configuration changed from using "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
 to "Evoweb.SfRegister:Required"
 
 In general the pattern for a validation rule is
