@@ -197,6 +197,14 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
             $validator->addPropertyValidator($fieldName, $validatorInstance);
         }
+
+        $uidValidatorInstance = $this->getValidatorByConfiguration(
+            '"Evoweb.SfRegister:' . ($this->controller == 'edit' ? 'EqualCurrentUser' : 'Empty') . '"',
+            $parser,
+            $validatorResolver
+        );
+        $validator->addPropertyValidator('uid', $uidValidatorInstance);
+
         $argument->setValidator($validator);
     }
 

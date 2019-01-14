@@ -8,7 +8,7 @@ Breaking Changes
 ================
 
 2019.01.13
-----------
+''''''''''
 
 Changes in validation were done to match the new pattern used since TYPO3 9. To ensure that the user/password model
 still validates you need to check whether you changed rules in plugin.tx_sfregister.settings.validation.*.*
@@ -16,26 +16,32 @@ still validates you need to check whether you changed rules in plugin.tx_sfregis
 Here are some examples how old rules need to be converted:
 
 Before:
-Evoweb\SfRegister\Validation\Validator\RequiredValidator
+::
+   Evoweb\SfRegister\Validation\Validator\RequiredValidator
 After:
-"Evoweb.SfRegister:Required"
+::
+   "Evoweb.SfRegister:Required"
 
 Before:
-StringLength(minimum = 4, maximum = 80)
+::
+   StringLength(minimum = 4, maximum = 80)
 After:
-"StringLength", options={"minimum": 4, "maximum": 80}
+::
+   "StringLength", options={"minimum": 4, "maximum": 80}
 
 Before:
-Evoweb\SfRegister\Validation\Validator\UniqueValidator(global = 1)
+::
+   Evoweb\SfRegister\Validation\Validator\UniqueValidator(global = 1)
 After:
-"Evoweb.SfRegister:Unique", options={"global": 1}
+::
+   "Evoweb.SfRegister:Unique", options={"global": 1}
 
 In general 'Evoweb\SfRegister\Validation\Validator\' needs to be replaced with '"Evoweb.SfRegister:' and the
 ending 'Validator' with '"'
 
 
 2015.11.15
-----------
+''''''''''
 
 - Method 'changeUsergroup' got pulled up from FeuserCreateController to FeuserController. If a controller extends
   FeuserCreateController the change in changeUsergroup needs to be copied.

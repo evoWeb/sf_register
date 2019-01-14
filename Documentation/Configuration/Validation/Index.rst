@@ -33,6 +33,23 @@ times to a field. Despite the concept of extbase you are free to choose how many
 validators should take care of a value.
 
 
+Changes since version 9.0.0
+---------------------------
+
+Since version 9 validators are only used for selected fields. Beside that the
+configuration changed from using "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+to "Evoweb.SfRegister:Required"
+
+In general the pattern for a validation rule is
+
+::
+
+   "name", options={"parameter1": valueA, "parameter2": valueB}
+
+The name needs to be quoted followed with a comma if options are following. Then
+the options with an equal sign and json notated properties and values.
+
+
 Different possibilities of assigning validators
 -----------------------------------------------
 
@@ -56,8 +73,7 @@ Assign only one validator:
 
 ::
 
- 	plugin.tx_sfregister.settings.validation.create.passwordRepeat =
- 		Evoweb\SfRegister\Validation\Validator\RepeatValidator
+ 	plugin.tx_sfregister.settings.validation.create.passwordRepeat = "Evoweb.SfRegister:Repeat"
 
 
 And finaly it's possible to have multiple validators for one field like in the
@@ -69,8 +85,8 @@ Assign multiple validators:
 ::
 
 	plugin.tx_sfregister.settings.validation.create.password {
-		1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-		2 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
+		1 = "Evoweb.SfRegister:Required"
+		2 = "Evoweb.SfRegister:BadWord"
 	}
 
 
@@ -87,9 +103,9 @@ Poor man´s passwords with short length:
 ::
 
 	plugin.tx_sfregister.settings.validation.create.password {
-		1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-		2 = StringLength(minimum = 8, maximum = 10)
-		3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
+		1 = "Evoweb.SfRegister:Required"
+		2 = "StringLength", options={"minimum": 8, "maximum": 40}
+		3 = "Evoweb.SfRegister:BadWord"
 	}
 
 
@@ -99,9 +115,9 @@ Bulletproof passwords with long length:
 ::
 
 	plugin.tx_sfregister.settings.validation.create.password {
-		1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
-		2 = StringLength(minimum = 48, maximum = 64)
-		3 = Evoweb\SfRegister\Validation\Validator\BadWordValidator
+		1 = "Evoweb.SfRegister:Required"
+		2 = "StringLength", options={"minimum": 8, "maximum": 40}
+		3 = "Evoweb.SfRegister:BadWord"
 	}
 
 
@@ -130,6 +146,9 @@ the condition. Because of this the validation settings are split for any process
 		password {
 			[...]
 		}
+		invite {
+			[...]
+		}
 	}
 
 
@@ -145,9 +164,8 @@ Prefixing needed for non extbase validators
 -------------------------------------------
 
 To use the extension validators you need to prefix them in the TypoScript with
-Evoweb\SfRegister\Validation\Validator\ . For all validators without this
-prefix the validation assumes that they are extbase specific validators and use
-them as such.
+Evoweb.SfRegister: . For all validators without this prefix the validation assumes
+that they are extbase specific validators and use them as such.
 
 Secondly this makes it possible to use custom validators that do not come with
 extbase or sf_register. Just code your validator and make it available for auto
@@ -159,8 +177,7 @@ Custom validator usage:
 
 ::
 
-	plugin.tx_sfregister.settings.validation.create.password =
-		1 = Evoweb\SfRegister\Validation\Validator\RequiredValidator
+	plugin.tx_sfregister.settings.validation.create.password = "Evoweb.SfRegister:Required"
 
 
 Available validators
