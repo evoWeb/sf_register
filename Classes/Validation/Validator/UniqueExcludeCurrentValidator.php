@@ -24,10 +24,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+
 /**
  * A validator to check if a value is unique only if current value has changed
  */
-class UniqueExcludeCurrentValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+class UniqueExcludeCurrentValidator extends AbstractValidator implements SettableInterface
 {
     /**
      * @var bool
@@ -51,18 +53,25 @@ class UniqueExcludeCurrentValidator extends \TYPO3\CMS\Extbase\Validation\Valida
     protected $userRepository;
 
     /**
-     * @var string
-     */
-    protected $propertyName = '';
-
-    /**
-     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser
+     * Model to take repeated value of
+     *
+     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password
      */
     protected $model;
 
-    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
+    /**
+     * @var string
+     */
+    protected $propertyName;
+
+    /**
+     * Setter for model
+     *
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
+     */
+    public function setModel($model)
     {
-        $this->userRepository = $userRepository;
+        $this->model = $model;
     }
 
     public function setPropertyName(string $propertyName)
@@ -70,9 +79,9 @@ class UniqueExcludeCurrentValidator extends \TYPO3\CMS\Extbase\Validation\Valida
         $this->propertyName = $propertyName;
     }
 
-    public function setModel(\Evoweb\SfRegister\Domain\Model\FrontendUser $model)
+    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
     {
-        $this->model = $model;
+        $this->userRepository = $userRepository;
     }
 
     /**

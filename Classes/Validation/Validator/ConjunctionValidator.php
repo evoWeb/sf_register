@@ -16,11 +16,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
 
 use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator as ExtbaseConjunctionValidator;
 
 /**
  * Validator to chain many validators in a conjunction (logical and).
  */
-class ConjunctionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator
+class ConjunctionValidator extends ExtbaseConjunctionValidator implements SettableInterface
 {
     /**
      * Model to take repeated value of
@@ -30,13 +31,23 @@ class ConjunctionValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Conju
     protected $model;
 
     /**
+     * @var string
+     */
+    protected $propertyName;
+
+    /**
      * Setter for model
      *
-     * @param mixed $model
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
      */
     public function setModel($model)
     {
         $this->model = $model;
+    }
+
+    public function setPropertyName(string $propertyName)
+    {
+        $this->propertyName = $propertyName;
     }
 
     /**

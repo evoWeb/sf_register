@@ -64,7 +64,7 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
         /** @var \TYPO3\CMS\Extbase\Error\Result $result */
         $result = null;
         foreach ($validators as $validator) {
-            if (method_exists($validator, 'setModel')) {
+            if ($validator instanceof SettableInterface) {
                 $validator->setModel($this->model);
             }
 

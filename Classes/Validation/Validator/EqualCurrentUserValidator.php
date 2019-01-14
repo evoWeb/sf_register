@@ -38,6 +38,16 @@ class EqualCurrentUserValidator extends AbstractValidator implements ValidatorIn
     protected $acceptsEmptyValues = false;
 
     /**
+     * @var \TYPO3\CMS\Core\Context\Context
+     */
+    protected $context;
+
+    public function injectContext(\TYPO3\CMS\Core\Context\Context $context)
+    {
+        $this->context = $context;
+    }
+
+    /**
      * If the given value is empty
      *
      * @param string $value The value
@@ -48,8 +58,7 @@ class EqualCurrentUserValidator extends AbstractValidator implements ValidatorIn
     {
         $result = true;
 
-        /** @noinspection PhpInternalEntityUsedInspection */
-        if ($value != $this->getTypoScriptFrontendController()->fe_user->user['uid']) {
+        if ($value != $this->context->getAspect('frontend.user')->get('id')) {
             $this->addError(
                 $this->translateErrorMessage('error_notequalcurrentuser', 'SfRegister'),
                 1305009260
@@ -58,10 +67,5 @@ class EqualCurrentUserValidator extends AbstractValidator implements ValidatorIn
         }
 
         return $result;
-    }
-
-    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-    {
-        return $GLOBALS['TSFE'];
     }
 }

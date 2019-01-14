@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,32 +24,19 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Validator to check if the uploaded image could be handled
- */
-class ImageUploadValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+interface SettableInterface
 {
     /**
-     * @var \Evoweb\SfRegister\Services\File
+     * Setter for model
+     *
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
      */
-    protected $fileService;
-
-    public function injectFileService(\Evoweb\SfRegister\Services\File $fileService)
-    {
-        $this->fileService = $fileService;
-    }
+    public function setModel($model);
 
     /**
-     * If the given value is set
+     * Setter for propertyName
      *
-     * @param boolean $value The value
+     * @param string $propertyName
      */
-    public function isValid($value)
-    {
-        if (!$this->fileService->isValid()) {
-            foreach ($this->fileService->getErrors() as $error) {
-                $this->result->addError($error);
-            }
-        }
-    }
+    public function setPropertyName(string $propertyName);
 }

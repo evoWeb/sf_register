@@ -24,7 +24,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements SettableInterface
 {
     /**
      * @var bool
@@ -48,18 +48,35 @@ class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
     protected $userRepository;
 
     /**
+     * Model to take repeated value of
+     *
+     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password
+     */
+    protected $model;
+
+    /**
      * @var string
      */
-    protected $propertyName = '';
+    protected $propertyName;
 
-    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
+    /**
+     * Setter for model
+     *
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
+     */
+    public function setModel($model)
     {
-        $this->userRepository = $userRepository;
+        $this->model = $model;
     }
 
     public function setPropertyName(string $propertyName)
     {
         $this->propertyName = $propertyName;
+    }
+
+    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
     }
 
     /**

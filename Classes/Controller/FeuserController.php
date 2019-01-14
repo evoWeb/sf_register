@@ -28,12 +28,12 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
+use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
+use Evoweb\SfRegister\Validation\Validator\SettableInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * An frontend user controller
@@ -175,7 +175,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                     $validatorResolver
                 );
 
-                if (method_exists($validatorInstance, 'setPropertyName')) {
+                if ($validatorInstance instanceof SettableInterface) {
                     $validatorInstance->setPropertyName($fieldName);
                 }
             } else {
@@ -187,7 +187,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                         $validatorResolver
                     );
 
-                    if (method_exists($individualValidatorInstance, 'setPropertyName')) {
+                    if ($individualValidatorInstance instanceof SettableInterface) {
                         $individualValidatorInstance->setPropertyName($fieldName);
                     }
 
@@ -209,11 +209,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
     /**
-     * @param $configuration
+     * @param string $configuration
      * @param \Doctrine\Common\Annotations\DocParser $parser
      * @param \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validatorResolver
      *
-     * @return ValidatorInterface
+     * @return \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface
      */
     protected function getValidatorByConfiguration($configuration, $parser, $validatorResolver)
     {
@@ -222,14 +222,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             '@TYPO3\CMS\Extbase\Annotation\Validate(' . $configuration . ')'
         ));
         $validatorObjectName = $validatorResolver->resolveValidatorObjectName($validateAnnotation->validator);
-
-        /** @var ValidatorInterface $validatorInstance */
-        $validatorInstance = $this->objectManager->get(
-            $validatorObjectName,
-            $validateAnnotation->options
-        );
-
-        return $validatorInstance;
+        return $this->objectManager->get($validatorObjectName, $validateAnnotation->options);
     }
 
     protected function initializeAction()

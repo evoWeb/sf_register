@@ -27,7 +27,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /**
  * A required validator to check that a value is set
  */
-class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements SettableInterface
 {
     /**
      * @var bool
@@ -35,9 +35,26 @@ class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
     protected $acceptsEmptyValues = false;
 
     /**
+     * Model to take repeated value of
+     *
+     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password
+     */
+    protected $model;
+
+    /**
      * @var string
      */
     protected $propertyName;
+
+    /**
+     * Setter for model
+     *
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
 
     public function setPropertyName(string $propertyName)
     {

@@ -29,7 +29,7 @@ use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 /**
  * A repeated value validator
  */
-class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements SettableInterface
 {
     /**
      * @var bool
@@ -51,7 +51,7 @@ class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
     /**
      * Setter for model
      *
-     * @param mixed $model
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
      */
     public function setModel($model)
     {
