@@ -26,6 +26,7 @@ namespace Evoweb\SfRegister\Controller;
 
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use \Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
@@ -44,6 +45,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * @var string
      */
     protected $controller = '';
+
+    /**
+     * @var \TYPO3\CMS\Core\Context\Context
+     */
+    protected $context;
 
     /**
      * User repository
@@ -92,6 +98,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected $autoLoginTriggered = false;
 
+    public function injectContext(\TYPO3\CMS\Core\Context\Context $context)
+    {
+        $this->context = $context;
+    }
 
     public function injectUserRepository(FrontendUserRepository $userRepository)
     {
@@ -340,8 +350,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
      */
-    public function proxyAction(/** @noinspection PhpUnusedParameterInspection */$user)
-    {
+    public function proxyAction(
+        /** @noinspection PhpUnusedParameterInspection */\Evoweb\SfRegister\Domain\Model\FrontendUser $user
+    ) {
         $action = 'save';
 
         if ($this->request->hasArgument('form')) {
@@ -354,11 +365,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Remove an image and forward to the action where it was called
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
      *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $user
      */
-    protected function removeImageAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
+    protected function removeImageAction(FrontendUser $user)
     {
         /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $image */
         $image = $user->getImage()->current();
@@ -380,10 +391,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
     protected function removeImageFromUserAndRequest(
-        \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-    ): \Evoweb\SfRegister\Domain\Model\FrontendUser {
+        FrontendUser $user
+    ): FrontendUser {
         if ($user->getUid() !== null) {
-            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $localUser */
+            /** @var FrontendUser $localUser */
             $localUser = $this->userRepository->findByUid($user->getUid());
             $localUser->removeImage();
             $this->userRepository->update($localUser);
@@ -443,9 +454,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
 
     protected function sendEmails(
-        \Evoweb\SfRegister\Domain\Model\FrontendUser $user,
+        FrontendUser $user,
         string $type
-    ): \Evoweb\SfRegister\Domain\Model\FrontendUser {
+    ): FrontendUser {
         /** @var \Evoweb\SfRegister\Services\Mail $mailService */
         $mailService = $this->objectManager->get(\Evoweb\SfRegister\Services\Mail::class);
 
@@ -474,12 +485,12 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Determines whether a user is in a given user group.
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUserGroup|string|int $userGroup
      *
      * @return bool
      */
-    protected function isUserInUserGroup(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, $userGroup): bool
+    protected function isUserInUserGroup(FrontendUser $user, $userGroup): bool
     {
         $return = false;
 
@@ -499,12 +510,12 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Determines whether a user is in a given user group.
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
      * @param array|\Evoweb\SfRegister\Domain\Model\FrontendUserGroup[] $userGroups
      *
      * @return bool
      */
-    protected function isUserInUserGroups(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, array $userGroups): bool
+    protected function isUserInUserGroups(FrontendUser $user, array $userGroups): bool
     {
         $return = false;
 
@@ -565,9 +576,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
 
     protected function changeUsergroup(
-        \Evoweb\SfRegister\Domain\Model\FrontendUser $user,
+        FrontendUser $user,
         int $userGroupIdToAdd
-    ): \Evoweb\SfRegister\Domain\Model\FrontendUser {
+    ): FrontendUser {
         $this->removePreviousUserGroups($user);
 
         $userGroupIdToAdd = (int) $userGroupIdToAdd;
@@ -580,7 +591,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return $user;
     }
 
-    protected function removePreviousUserGroups(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
+    protected function removePreviousUserGroups(FrontendUser $user)
     {
         $userGroupIds = $this->getUserGroupIds();
         $assignedUserGroups = $user->getUsergroup();
@@ -593,7 +604,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
 
-    protected function autoLogin(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, int $redirectPageId)
+    protected function autoLogin(FrontendUser $user, int $redirectPageId)
     {
         session_start();
         $this->autoLoginTriggered = true;
@@ -626,21 +637,20 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     protected function userIsLoggedIn(): bool
     {
-        /** @noinspection PhpInternalEntityUsedInspection */
-        return is_array($this->getTypoScriptFrontendController()->fe_user->user);
+        return $this->context->getAspect('frontend.user')->isLoggedIn();
     }
 
     /**
      * Determines the frontend user, either if it's
      * already submitted, or by looking up the mail hash code.
      *
-     * @param NULL|\Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param NULL|FrontendUser $user
      * @param NULL|string $hash
      *
-     * @return NULL|\Evoweb\SfRegister\Domain\Model\FrontendUser
+     * @return NULL|FrontendUser
      */
     protected function determineFrontendUser(
-        \Evoweb\SfRegister\Domain\Model\FrontendUser $user = null,
+        FrontendUser $user = null,
         string $hash = null
     ) {
         $frontendUser = null;
