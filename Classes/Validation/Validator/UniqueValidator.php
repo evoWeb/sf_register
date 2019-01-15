@@ -88,12 +88,20 @@ class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
     {
         if ($this->userRepository->countByField($this->propertyName, $value)) {
             $this->addError(
-                $this->translateErrorMessage('error_notunique_local', 'SfRegister'),
+                $this->translateErrorMessage(
+                    'error_notunique_local',
+                    'SfRegister',
+                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                ),
                 1301599608
             );
         } elseif ($this->options['global'] && $this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
             $this->addError(
-                $this->translateErrorMessage('error_notunique_global', 'SfRegister'),
+                $this->translateErrorMessage(
+                    'error_notunique_global',
+                    'SfRegister',
+                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                ),
                 1301599619
             );
         }
