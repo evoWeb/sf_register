@@ -91,7 +91,7 @@ plugin.tx_sfregister.settings {
   usergroup = 0
 
   # cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.sitename
-  sitename = dummy Site
+  emailSitename = dummy Site
 
   userEmail {
     # cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.userEmail.fromName
