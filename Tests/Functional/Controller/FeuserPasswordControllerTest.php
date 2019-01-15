@@ -12,7 +12,6 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Controller\FeuserPasswordController;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -36,7 +35,10 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $this->createEmptyFrontendUser();
         $this->initializeTypoScriptFrontendController();
 
-        $subject = new FeuserPasswordController();
+        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController();
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $subject->injectContext($context);
+
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         $this->assertFalse($method->invoke($subject));
     }
@@ -52,7 +54,10 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         ]);
         $this->initializeTypoScriptFrontendController();
 
-        $subject = new FeuserPasswordController();
+        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController();
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $subject->injectContext($context);
+
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         $this->assertTrue($method->invoke($subject));
     }
@@ -77,7 +82,9 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $GLOBALS['TSFE']->tmpl->setup['module.']['tx_sfregister.'] =
             $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.'];
 
-        $subject = new FeuserPasswordController();
+        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController();
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $subject->injectContext($context);
 
         $property = $this->getPrivateProperty($subject, 'settings');
         $property->setValue($subject, ['encryptPassword' => '']);
