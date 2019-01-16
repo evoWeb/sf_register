@@ -34,6 +34,11 @@ class FeuserCreateController extends FeuserController
      */
     protected $controller = 'create';
 
+    /**
+     * @var array
+     */
+    protected $ignoredActions = ['confirmAction', 'refuseAction', 'acceptAction', 'declineAction'];
+
     public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */

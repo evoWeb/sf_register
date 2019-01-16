@@ -47,6 +47,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected $controller = '';
 
     /**
+     * @var array
+     */
+    protected $ignoredActions = [];
+
+    /**
      * @var \TYPO3\CMS\Core\Context\Context
      */
     protected $context;
@@ -148,12 +153,12 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
         }
 
-        if ($this->arguments->hasArgument('user')) {
+        if ($this->arguments->hasArgument('user') && !$this->actionIsIgnored()) {
             $this->modifyValidatorsBasedOnSettings(
                 $this->arguments->getArgument('user'),
                 $this->settings['validation'][$this->controller] ?? []
             );
-        } elseif ($this->arguments->hasArgument('password')) {
+        } elseif ($this->arguments->hasArgument('password') && !$this->actionIsIgnored()) {
             $this->modifyValidatorsBasedOnSettings(
                 $this->arguments->getArgument('password'),
                 $this->settings['validation']['password'] ?? []
@@ -161,6 +166,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         } else {
             parent::initializeActionMethodValidators();
         }
+    }
+
+    protected function actionIsIgnored(): bool
+    {
+        return in_array($this->actionMethodName, $this->ignoredActions);
     }
 
     protected function modifyValidatorsBasedOnSettings(

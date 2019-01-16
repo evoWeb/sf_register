@@ -34,6 +34,11 @@ class FeuserEditController extends FeuserController
      */
     protected $controller = 'edit';
 
+    /**
+     * @var array
+     */
+    protected $ignoredActions = ['confirmAction', 'acceptAction'];
+
     public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {
         /** @noinspection PhpInternalEntityUsedInspection */
