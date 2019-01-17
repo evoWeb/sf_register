@@ -76,22 +76,6 @@ Reference
 
 plugin.tx\_sfregister.settings:
 
-.. container:: table-row
-
- - :Property:
-         useDataOfLoggedinFeuser
-
-   :Data type:
-         boolean
-
-   :Description:
-         Fill the edit form with data of currently logged in user
-
-   :Default:
-         1
-
-
-
  - :Property:
          badWordList
 

@@ -41,10 +41,8 @@ class FeuserEditController extends FeuserController
 
     public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {
-        /** @noinspection PhpInternalEntityUsedInspection */
-        $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
+        $userId = $this->context->getAspect('frontend.user')->get('id');
 
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
         $originalRequest = $this->request->getOriginalRequest();
         if ((
                 $this->request->hasArgument('user')
@@ -57,6 +55,7 @@ class FeuserEditController extends FeuserController
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');
 
+            // only reconstitute user object if given user uid equals logged in user uid
             if ($userData['uid'] == $userId) {
                 /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
                 $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
