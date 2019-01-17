@@ -177,13 +177,14 @@ class FeuserCreateController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            if (!$user->getDisable() || $this->isUserInUserGroups(
+            if ($user->getActivatedOn() || $this->isUserInUserGroups(
                 $user,
                 $this->getFollowingUserGroups((int) $this->settings['usergroupPostConfirm'])
             )) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
                 $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostConfirm']);
+                $user->setActivatedOn(new \DateTime('now'));
 
                 if (!$this->settings['acceptEmailPostConfirm']) {
                     $user->setDisable(false);
@@ -264,17 +265,17 @@ class FeuserCreateController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            if ($user->getActivatedOn() || $this->isUserInUserGroups(
+            if (!$user->getDisable() || $this->isUserInUserGroups(
                 $user,
                 $this->getFollowingUserGroups((int) $this->settings['usergroupPostAccept'])
             )) {
                 $this->view->assign('userAlreadyAccepted', 1);
             } else {
                 $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostAccept']);
-                $user->setActivatedOn(new \DateTime('now'));
+                $user->setDisable(false);
 
                 if (!$this->settings['confirmEmailPostAccept']) {
-                    $user->setDisable(false);
+                    $user->setActivatedOn(new \DateTime('now'));
                 }
 
                 $this->signalSlotDispatcher->dispatch(
