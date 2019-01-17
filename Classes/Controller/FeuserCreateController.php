@@ -143,7 +143,7 @@ class FeuserCreateController extends FeuserController
         $user = $this->sendEmails($user, $type);
 
         // Encrypt plain password
-        $user->setPassword($this->encryptPassword($user->getPassword(), $this->settings));
+        $user->setPassword($this->encryptPassword($user->getPassword()));
         $this->userRepository->update($user);
         $this->persistAll();
 

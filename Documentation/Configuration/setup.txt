@@ -24,8 +24,6 @@ plugin.tx_sfregister.settings {
 	# wether the email address entered should be used as username
 	useEmailAddressAsUsername = {$plugin.tx_sfregister.settings.useEmailAddressAsUsername}
 
-	# string [md5|sha1]
-	encryptPassword = {$plugin.tx_sfregister.settings.encryptPassword}
 	# boolean use encrypted filename to deny direct access on uploaded files
 	useEncryptedFilename = {$plugin.tx_sfregister.settings.useEncryptedFilename}
 

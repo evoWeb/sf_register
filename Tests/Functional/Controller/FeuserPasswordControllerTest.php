@@ -75,13 +75,6 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         ]);
         $this->initializeTypoScriptFrontendController();
 
-        // we don't want to test the encryption here
-        if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword'])) {
-            unset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['encryptPassword']);
-        }
-        $GLOBALS['TSFE']->tmpl->setup['module.']['tx_sfregister.'] =
-            $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.'];
-
         $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController();
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         $subject->injectContext($context);

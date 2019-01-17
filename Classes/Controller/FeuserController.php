@@ -29,7 +29,6 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use \Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
-use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
 use Evoweb\SfRegister\Validation\Validator\SettableInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -178,7 +177,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         array $configuredValidators
     ) {
         /** @var \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validatorResolver */
-        $validatorResolver = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Validation\ValidatorResolver::class);
+        $validatorResolver = $this->objectManager->get(\TYPO3\CMS\Extbase\Validation\ValidatorResolver::class);
         $parser = new \Doctrine\Common\Annotations\DocParser();
 
         /** @var \Evoweb\SfRegister\Validation\Validator\UserValidator $validator */
@@ -199,7 +198,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                     $validatorInstance->setPropertyName($fieldName);
                 }
             } else {
-                $validatorInstance = $this->objectManager->get(ConjunctionValidator::class);
+                $validatorInstance = $this->objectManager->get(
+                    \Evoweb\SfRegister\Validation\Validator\ConjunctionValidator::class
+                );
                 foreach ($configuredValidator as $individualConfiguredValidator) {
                     $individualValidatorInstance = $this->getValidatorByConfiguration(
                         $individualConfiguredValidator,
@@ -404,9 +405,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
     }
 
-    protected function removeImageFromUserAndRequest(
-        FrontendUser $user
-    ): FrontendUser {
+    protected function removeImageFromUserAndRequest(FrontendUser $user): FrontendUser
+    {
         if ($user->getUid() !== null) {
             /** @var FrontendUser $localUser */
             $localUser = $this->userRepository->findByUid($user->getUid());
@@ -426,21 +426,14 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return $user;
     }
 
-    public function encryptPassword(string $password, array $settings): string
+    public function encryptPassword(string $password): string
     {
-        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
-            /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
-            $passwordHashFactory = GeneralUtility::makeInstance(
-                \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
-            );
-            if ($passwordHashFactory instanceof \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface) {
-                $password = $passwordHashFactory->getHashedPassword($password);
-            }
-        } elseif ($settings['encryptPassword'] === 'md5') {
-            $password = md5($password);
-        }
-
-        return $password;
+        /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
+        $passwordHashFactory = $this->objectManager->get(
+            \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
+        );
+        $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
+        return $passwordHash->getHashedPassword($password);
     }
 
     protected function persistAll()
@@ -467,10 +460,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
 
-    protected function sendEmails(
-        FrontendUser $user,
-        string $type
-    ): FrontendUser {
+    protected function sendEmails(FrontendUser $user, string $type): FrontendUser
+    {
         /** @var \Evoweb\SfRegister\Services\Mail $mailService */
         $mailService = $this->objectManager->get(\Evoweb\SfRegister\Services\Mail::class);
 
@@ -589,10 +580,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
 
-    protected function changeUsergroup(
-        FrontendUser $user,
-        int $userGroupIdToAdd
-    ): FrontendUser {
+    protected function changeUsergroup(FrontendUser $user, int $userGroupIdToAdd): FrontendUser
+    {
         $this->removePreviousUserGroups($user);
 
         $userGroupIdToAdd = (int) $userGroupIdToAdd;
@@ -626,7 +615,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $_SESSION['sf-register-user'] = GeneralUtility::hmac('auto-login::' . $user->getUid(), $GLOBALS['EXEC_TIME']);
 
         /** @var \TYPO3\CMS\Core\Registry $registry */
-        $registry = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Registry::class);
+        $registry = $this->objectManager->get(\TYPO3\CMS\Core\Registry::class);
         $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
 
         // if redirect was empty by now set it to current page
@@ -663,10 +652,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @return NULL|FrontendUser
      */
-    protected function determineFrontendUser(
-        FrontendUser $user = null,
-        string $hash = null
-    ) {
+    protected function determineFrontendUser(FrontendUser $user = null, string $hash = null)
+    {
         $frontendUser = null;
 
         $requestArguments = $this->request->getArguments();

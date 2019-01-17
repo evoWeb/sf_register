@@ -7,6 +7,19 @@
 Breaking Changes
 ================
 
+2019.01.17
+''''''''''
+
+The core changed away from saltedpasswords towards integrated passwordHashing in EXT:Core (see
+Deprecation: #85804 - Salted password hash class deprecations)
+
+By this its always possible to properly hash passwords.
+
+Due to this shift the support for md5 and sha1 configuration is dropped in
+EqualCurrentPasswordValidator::isValid and FeuserController::encryptPassword.
+
+
+
 2019.01.13
 ''''''''''
 
@@ -38,6 +51,7 @@ After:
 
 In general 'Evoweb\SfRegister\Validation\Validator\' needs to be replaced with '"Evoweb.SfRegister:' and the
 ending 'Validator' with '"'
+
 
 
 2015.11.15

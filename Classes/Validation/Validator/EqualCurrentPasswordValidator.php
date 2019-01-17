@@ -90,32 +90,16 @@ class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Valida
         } else {
             $user = $this->userRepository->findByUid($this->context->getAspect('frontend.user')->get('id'));
 
-            if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
-                /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
-                $passwordHashFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-                    \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
+            /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
+            $passwordHashFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+                \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
+            );
+            $passwordHash = $passwordHashFactory->get($user->getPassword(), 'FE');
+            if (!$passwordHash->checkPassword($password, $user->getPassword())) {
+                $this->addError(
+                    $this->translateErrorMessage('error_changepassword_notequal', 'SfRegister'),
+                    1301599507
                 );
-                $saltedPassword = $passwordHashFactory->get($user->getPassword(), 'FE');
-                if (!$saltedPassword->checkPassword($password, $user->getPassword())) {
-                    $this->addError(
-                        $this->translateErrorMessage('error_changepassword_notequal', 'SfRegister'),
-                        1301599507
-                    );
-                }
-            } elseif ($this->settings['encryptPassword'] === 'md5') {
-                if (md5($password) !== $user->getPassword()) {
-                    $this->addError(
-                        $this->translateErrorMessage('error_changepassword_notequal', 'SfRegister'),
-                        1301599508
-                    );
-                }
-            } elseif ($this->settings['encryptPassword'] === 'sha1') {
-                if (sha1($password) !== $user->getPassword()) {
-                    $this->addError(
-                        $this->translateErrorMessage('error_changepassword_notequal', 'SfRegister'),
-                        1301599509
-                    );
-                }
             }
         }
     }

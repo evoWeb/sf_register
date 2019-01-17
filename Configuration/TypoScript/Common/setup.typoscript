@@ -26,7 +26,7 @@ plugin.tx_sfregister.settings {
   passwordPid = {$plugin.tx_sfregister.settings.passwordPid}
   invitePid = {$plugin.tx_sfregister.settings.invitePid}
 
-  # comma separated list of words used in bad word validatorchro
+  # comma separated list of words used in bad word validator
   badWordList = {$plugin.tx_sfregister.settings.badWordList}
 
   validation.create {

@@ -146,24 +146,6 @@ plugin.tx\_sfregister.settings:
 
 
  - :Property:
-         encryptPassword
-
-   :Data type:
-         Int
-
-   :Description:
-         Encrypt password
-
-         0 – none1 – md5
-
-         2 - sha1
-
-   :Default:
-         0
-
-
-
- - :Property:
          useEncryptedFilename
 
    :Data type:
@@ -178,6 +160,7 @@ plugin.tx\_sfregister.settings:
 
    :Default:
          0
+
 
 
  - :Property:

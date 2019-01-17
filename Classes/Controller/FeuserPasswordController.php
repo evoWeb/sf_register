@@ -69,7 +69,7 @@ class FeuserPasswordController extends FeuserController
                 ]
             );
 
-            $user->setPassword($this->encryptPassword($password->getPassword(), $this->settings));
+            $user->setPassword($this->encryptPassword($password->getPassword()));
 
             $this->userRepository->update($user);
 
