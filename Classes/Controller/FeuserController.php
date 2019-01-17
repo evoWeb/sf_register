@@ -237,6 +237,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected function getValidatorByConfiguration($configuration, $parser, $validatorResolver)
     {
+        if (strpos($configuration, '"') === false && strpos($configuration, '(') === false) {
+            $configuration = '"' . $configuration . '"';
+        }
+
         /** @var \TYPO3\CMS\Extbase\Annotation\Validate $validateAnnotation */
         $validateAnnotation = current($parser->parse(
             '@TYPO3\CMS\Extbase\Annotation\Validate(' . $configuration . ')'
