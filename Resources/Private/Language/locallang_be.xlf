@@ -316,6 +316,9 @@
 			<trans-unit id="form_flexform.settings.fields.selected">
 				<source>Select fields to use in form</source>
 			</trans-unit>
+			<trans-unit id="form_flexform.settings.fields.configuredByTypoScript">
+				<source>Fields configured by TypoScript</source>
+			</trans-unit>
 			<trans-unit id="form_flexform.settings.viewTemplateRootPath">
 				<source>Template root path (EXT:sf_register/Resources/Private/Templates)</source>
 			</trans-unit>

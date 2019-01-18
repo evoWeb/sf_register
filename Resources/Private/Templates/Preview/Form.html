@@ -1,0 +1,41 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<table class="table table-condensed table-hover news-table">
+	<thead>
+		<tr>
+			<th colspan="2">Settings of registration plugin</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th><f:translate id="LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:form_flexform.switchableControllerAction"/></th>
+			<td><f:render section="switchableControllerAction" arguments="{_all}"/></td>
+		</tr>
+		<tr>
+			<th><f:translate id="LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:form_flexform.settings.fields.selected"/></th>
+			<td>
+				<f:if condition="{pi_flexform_transformed.settings.fields.selected}">
+					<f:then>{pi_flexform_transformed.settings.fields.selected}</f:then>
+					<f:else><f:translate id="LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:form_flexform.settings.fields.configuredByTypoScript"/></f:else>
+				</f:if>
+			</td>
+		</tr>
+		<f:if condition="{pi_flexform_transformed.settings.templateRootPath}">
+		<tr>
+			<th><f:translate id="LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:form_flexform.settings.viewTemplateRootPath"/></th>
+			<td>{pi_flexform_transformed.settings.templateRootPath}</td>
+		</tr>
+		</f:if>
+	</tbody>
+</table>
+
+<f:section name="switchableControllerAction">
+	<f:switch expression="{pi_flexform_transformed.switchableControllerActions}">
+		<f:case value="FeuserCreate->form;FeuserCreate->preview;FeuserCreate->proxy;FeuserCreate->save;FeuserCreate->confirm;FeuserCreate->accept;FeuserCreate->decline;FeuserCreate->refuse;FeuserCreate->removeImage">Create</f:case>
+		<f:case value="FeuserEdit->form;FeuserEdit->preview;FeuserEdit->proxy;FeuserEdit->save;FeuserEdit->confirm;FeuserEdit->accept;FeuserEdit->removeImage">Edit</f:case>
+		<f:case value="FeuserPassword->form;FeuserPassword->save">Password</f:case>
+		<f:case value="FeuserInvite->form;FeuserInvite->invite">Invite</f:case>
+	</f:switch>
+</f:section>
+
+</html>
