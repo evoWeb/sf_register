@@ -108,10 +108,7 @@ plugin.tx_sfregister.settings.fields {
   }
 
   configuration {
-    username {
-      partial = Textfield
-      backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.username_selectField
-    }
+    username.partial = Textfield
 
     pseudonym.partial = Textfield
 
@@ -134,7 +131,6 @@ plugin.tx_sfregister.settings.fields {
 
     gender {
       partial = Select
-      backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.gender_selectField
       values {
         1 = gender_1
         2 = gender_2
@@ -159,10 +155,7 @@ plugin.tx_sfregister.settings.fields {
 
     telephone.partial = Textfield
 
-    mobilephone {
-      partial = Textfield
-      backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.mobilephone_selectField
-    }
+    mobilephone.partial = Textfield
 
     fax.partial = Textfield
 
