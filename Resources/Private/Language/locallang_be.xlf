@@ -322,6 +322,9 @@
 			<trans-unit id="form_flexform.settings.viewTemplateRootPath">
 				<source>Template root path (EXT:sf_register/Resources/Private/Templates)</source>
 			</trans-unit>
+			<trans-unit id="form_flexform.settings.viewTemplateRootPath.short">
+				<source>Template root path</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
