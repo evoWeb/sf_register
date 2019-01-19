@@ -346,7 +346,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         $this->prepareDateOfBirth();
     }
 
-    public function getDateOfBirthDay(): int
+    public function getDateOfBirthDay(): ?int
     {
         $result = null;
 
@@ -363,7 +363,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         $this->prepareDateOfBirth();
     }
 
-    public function getDateOfBirthMonth(): int
+    public function getDateOfBirthMonth(): ?int
     {
         $result = null;
 
@@ -380,7 +380,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         $this->prepareDateOfBirth();
     }
 
-    public function getDateOfBirthYear(): int
+    public function getDateOfBirthYear(): ?int
     {
         $result = null;
 
