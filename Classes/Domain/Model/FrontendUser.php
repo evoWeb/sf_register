@@ -302,7 +302,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
     public function removeImage()
     {
-        $this->image = null;
+        $this->image = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
     public function setPseudonym(string $pseudonym)

@@ -420,7 +420,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
         /** @var array $requestUser */
         $requestUser = $this->request->getArgument('user');
-        $requestUser['image'] = $user->getImage();
+        if (is_array($requestUser)) {
+            $requestUser['image'] = $user->getImage();
+        }
         $this->request->setArgument('user', $requestUser);
 
         return $user;

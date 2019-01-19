@@ -10,6 +10,7 @@
 	<register:form.upload property="{fieldName}.0">
 		<f:if condition="{resource}">
 			<f:image image="{resource}" alt="" width="50"/>
+			<f:form.submit name="removeImage" value="{f:translate(key:'submit_removeImage')}" />
 		</f:if>
 	</register:form.upload>
 </div>
