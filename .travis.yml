@@ -54,10 +54,9 @@ jobs:
       before_script: skip
       script:
         - errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l {} 2>&1 >/dev/null \;) && echo "$errors" && test -z "$errors"
+
     - <<: *lint
       php: 7.1
-    - <<: *lint
-      php: 7.0
 
     - stage: test
       php: 7.2

@@ -348,7 +348,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
     public function getDateOfBirthDay(): int
     {
-        $result = null;
+        $result = 1;
 
         if ($this->dateOfBirth instanceof \DateTime) {
             $result = $this->dateOfBirth->format('j');
@@ -365,7 +365,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
     public function getDateOfBirthMonth(): int
     {
-        $result = null;
+        $result = 1;
 
         if ($this->dateOfBirth instanceof \DateTime) {
             $result = $this->dateOfBirth->format('n');
@@ -382,7 +382,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
     public function getDateOfBirthYear(): int
     {
-        $result = null;
+        $result = 1970;
 
         if ($this->dateOfBirth instanceof \DateTime) {
             $result = $this->dateOfBirth->format('Y');
