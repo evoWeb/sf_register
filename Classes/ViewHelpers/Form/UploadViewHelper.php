@@ -61,7 +61,7 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
 
         $resources = $this->getUploadedResource();
 
-        if (!is_null($resources)) {
+        if (count($resources)) {
             $output .= $this->renderPreview($resources);
         }
 
@@ -116,30 +116,35 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
     protected function isRenderUpload($resources): bool
     {
         return is_null($resources)
-            || (is_object($resources) && empty($resources->toArray()))
-            || (is_array($resources) && empty($resource))
+            || ($resources instanceof \TYPO3\CMS\Extbase\Persistence\ObjectStorage && count($resources) === 0)
+            || (is_array($resources) && count($resources) === 0)
             || ($this->hasArgument('alwaysShowUpload') && $this->arguments['alwaysShowUpload']);
     }
 
     /**
      * Return a previously uploaded resource.
-     * Return NULL if errors occurred during property mapping for this property.
+     * Return empty array if errors occurred during property mapping for this property.
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|array
+     * @return array
      */
-    protected function getUploadedResource()
+    protected function getUploadedResource(): array
     {
-        if ($this->getMappingResultsForProperty()->hasErrors()) {
-            return null;
+        $result = [];
+
+        if (!$this->getMappingResultsForProperty()->hasErrors()) {
+            $resource = $this->getValueAttribute();
+
+            if ($resource instanceof \TYPO3\CMS\Extbase\Domain\Model\FileReference) {
+                $result = [$resource];
+            } elseif ($resource instanceof \TYPO3\CMS\Extbase\Persistence\ObjectStorage) {
+                $result = $resource->toArray();
+            } elseif ($resource !== null) {
+                $result = [
+                    $this->propertyMapper->convert($resource, \TYPO3\CMS\Extbase\Domain\Model\FileReference::class)
+                ];
+            }
         }
 
-        $resource = $this->getValueAttribute();
-        if ($resource instanceof \TYPO3\CMS\Extbase\Domain\Model\FileReference) {
-            return [$resource];
-        } elseif ($resource instanceof \TYPO3\CMS\Extbase\Persistence\ObjectStorage) {
-            return $resource;
-        }
-
-        return $this->propertyMapper->convert($resource, \TYPO3\CMS\Extbase\Domain\Model\FileReference::class);
+        return $result;
     }
 }
