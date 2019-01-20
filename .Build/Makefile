@@ -2,7 +2,7 @@
 SPHINXOPTS    = -c . -a -E -w ./_not_versioned/warnings.txt
 SPHINXBUILD   = sphinx-build
 PAPER         =
-BUILDDIR      = build
+BUILDDIR      = sphinx
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
