@@ -99,7 +99,7 @@ class SrFreecapAdapter extends AbstractAdapter
         $this->objectManager = $objectManager;
     }
 
-    public function render(): string
+    public function render(): array
     {
         $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)->remove('captchaWasValidPreviously');
 

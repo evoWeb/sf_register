@@ -44,9 +44,9 @@ abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaI
     /**
      * Renders the output of an concrete captcha
      *
-     * @return string
+     * @return array
      */
-    abstract public function render(): string;
+    abstract public function render(): array;
 
     /**
      * Returns if the result of the validation was valid or not
