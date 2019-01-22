@@ -50,7 +50,10 @@ class CaptchaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFi
         $this->registerArgument('type', 'string', 'Captcha type', true);
     }
 
-    public function render(): string
+    /**
+     * @return string|array
+     */
+    public function render()
     {
         $type = $this->arguments['type'];
         return $this->captchaAdapterFactory->getCaptchaAdapter($type)->render();
