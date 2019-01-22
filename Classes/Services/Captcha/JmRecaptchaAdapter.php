@@ -56,7 +56,10 @@ class JmRecaptchaAdapter extends AbstractAdapter
         $this->objectManager = $objectManager;
     }
 
-    public function render(): string
+    /**
+     * @return array|string
+     */
+    public function render()
     {
         $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)
             ->remove('captchaWasValidPreviously');

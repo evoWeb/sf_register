@@ -100,7 +100,7 @@ class SrFreecapAdapter extends AbstractAdapter
     }
 
     /**
-     * @return string|array
+     * @return array|string
      */
     public function render()
     {
