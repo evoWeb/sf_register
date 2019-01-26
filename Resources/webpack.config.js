@@ -2,7 +2,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var entries = {};
+let entries = {};
 entries['sf_register'] = entries['sf_register.min'] = [
 	'./Private/Scripts/passwordmeter',
 	'./Private/Scripts/sf_register'
