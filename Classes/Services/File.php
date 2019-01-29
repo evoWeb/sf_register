@@ -203,7 +203,6 @@ class File implements \TYPO3\CMS\Core\SingletonInterface, \Psr\Log\LoggerAwareIn
 
     protected function addError(string $message, int $code)
     {
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
         $this->errors[] = $this->objectManager->get(\TYPO3\CMS\Extbase\Validation\Error::class, $message, $code);
     }
 
