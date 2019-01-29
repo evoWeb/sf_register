@@ -55,6 +55,7 @@ class ConjunctionValidator extends ExtbaseConjunctionValidator implements Settab
      * Every validator has to be valid, to make the whole conjunction valid.
      *
      * @param mixed $value The value that should be validated
+     *
      * @return Result
      */
     public function validate($value)

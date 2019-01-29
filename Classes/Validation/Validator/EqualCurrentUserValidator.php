@@ -48,24 +48,17 @@ class EqualCurrentUserValidator extends AbstractValidator implements ValidatorIn
     }
 
     /**
-     * If the given value is empty
+     * If the given value is not equal to logged in user id
      *
      * @param string $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
-
         if ($value != $this->context->getAspect('frontend.user')->get('id')) {
             $this->addError(
                 $this->translateErrorMessage('error_notequalcurrentuser', 'SfRegister'),
                 1305009260
             );
-            $result = false;
         }
-
-        return $result;
     }
 }
