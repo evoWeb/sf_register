@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -38,33 +38,27 @@ class EqualCurrentUserValidator extends AbstractValidator implements ValidatorIn
     protected $acceptsEmptyValues = false;
 
     /**
-     * If the given value is empty
-     *
-     * @param string $value The value
-     *
-     * @return bool
+     * @var \TYPO3\CMS\Core\Context\Context
      */
-    public function isValid($value): bool
+    protected $context;
+
+    public function injectContext(\TYPO3\CMS\Core\Context\Context $context)
     {
-        $result = true;
-
-        /** @noinspection PhpInternalEntityUsedInspection */
-        if ($value != $this->getTypoScriptFrontendController()->fe_user->user['uid']) {
-            $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'error_notequalcurrentuser',
-                    'SfRegister'
-                ),
-                1305009260
-            );
-            $result = false;
-        }
-
-        return $result;
+        $this->context = $context;
     }
 
-    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+    /**
+     * If the given value is not equal to logged in user id
+     *
+     * @param string $value The value
+     */
+    public function isValid($value)
     {
-        return $GLOBALS['TSFE'];
+        if ($value != $this->context->getAspect('frontend.user')->get('id')) {
+            $this->addError(
+                $this->translateErrorMessage('error_notequalcurrentuser', 'SfRegister'),
+                1305009260
+            );
+        }
     }
 }

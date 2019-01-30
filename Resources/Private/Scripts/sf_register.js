@@ -1,11 +1,11 @@
 /* global define, XMLHttpRequest */
 (function(factory) {
 	if ('function' === typeof define && define.amd) {
-		define('map', ['window'], factory);
+		define('map', [], factory);
 	} else {
-		factory(window);
+		factory();
 	}
-})(function(window) {
+})(function() {
 	var document = window.document,
 		module = {},
 
@@ -16,22 +16,23 @@
 		ajaxRequest;
 
 	/**
-	 * @param {String} id
-	 * @returns {Element}
+	 * @param {string} id
+	 *
+	 * @returns {Object}
 	 */
 	module.getElement = function (id) {
 		return 'object' === typeof id ? id : document.getElementById(id);
 	};
 
 	/**
-	 * @param {Element} element
+	 * @param {Object} element
 	 */
 	module.showElement = function (element) {
 		element.style.display = 'block';
 	};
 
 	/**
-	 * @param {Element} element
+	 * @param {Object} element
 	 */
 	module.hideElement = function (element) {
 		element.style.display = 'none';
@@ -40,9 +41,9 @@
 	/**
 	 * Attach an event to an element
 	 *
-	 * @param {String|Object} id
-	 * @param {String} eventName
-	 * @param {Function} callback
+	 * @param {string|Object} id
+	 * @param {string} eventName
+	 * @param {callback} callback
 	 */
 	module.attachToElement = function (id, eventName, callback) {
 		var element = module.getElement(id);
@@ -58,8 +59,6 @@
 	/**
 	 * Gets bargraph element and calls test password function
 	 * with value entered in field where this callback is attached
-	 *
-	 * @return void
 	 */
 	module.callTestPassword = function () {
 		var bargraph = module.getElement('bargraph'),
@@ -91,7 +90,7 @@
 	/**
 	 * Change value of zone selectbox
 	 *
-	 * @param event
+	 * @param {event} event
 	 */
 	module.changeZone = function (event) {
 		if (
@@ -127,8 +126,6 @@
 	/**
 	 * Process ajax response and display error message or
 	 * hand data received to add zone option function
-	 *
-	 * @return void
 	 */
 	module.xhrReadyStateChanged = function (stateChanged) {
 		var xhrResponse = stateChanged.target;
@@ -150,26 +147,23 @@
 	/**
 	 * Process data received with xhr response
 	 *
-	 * @param {Array} data
-	 *
-	 * @constructor
+	 * @param {[]} options
 	 */
-	module.addZoneOptions = function (data) {
-		for (var pointer = 0; pointer < data.length; pointer++) {
-			var option = document.createElement('option');
-			option.text = data[pointer].label;
-			option.value = data[pointer].value;
+	module.addZoneOptions = function (options) {
+		zone.options = [];
 
-			zone.options[pointer] = option;
-		}
+		options.forEach(function (option, index) {
+			zone.options[index] = {
+				test: option.label,
+				value: option.value,
+			};
+		});
 
 		module.showElement(zone);
 	};
 
 	/**
 	 * Adds a preview information about file to upload in a label
-	 *
-	 * @return void
 	 */
 	module.uploadFile = function () {
 		document.getElementById('uploadFile').value = this.value;
@@ -177,8 +171,6 @@
 
 	/**
 	 * Selects the form and triggers submit
-	 *
-	 * @return void
 	 */
 	module.submitForm = function () {
 		module.getElement('sfrForm').submit();
@@ -206,6 +198,9 @@
 	}
 	initialize();
 
+	/**
+	 * Register global function to be accessible from outside of the module
+	 */
 	window.sfRegister_submitForm = function () {
 		module.submitForm();
 	};

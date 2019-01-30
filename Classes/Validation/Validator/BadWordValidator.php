@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,12 +24,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-
-/**
- * A password validator
- */
-class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
+class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
     /**
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
@@ -56,26 +51,16 @@ class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
      * If the given password is valid in kind of not on the bad list
      *
      * @param string $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
         $badWordItems = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['badWordList']);
 
         if (in_array(strtolower($value), $badWordItems)) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'error_badword',
-                    'SfRegister',
-                    $this->options
-                ),
+                $this->translateErrorMessage('error_badword', 'SfRegister', $this->options),
                 1301599720
             );
-            $result = false;
         }
-
-        return $result;
     }
 }

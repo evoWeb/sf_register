@@ -34,18 +34,15 @@ before_script:
 script:
   - >
     echo "Running functional tests";
-    export typo3DatabaseName="typo3";
-    export typo3DatabaseHost="localhost";
-    export typo3DatabaseUsername="root";
-    export typo3DatabasePassword="";
+    export typo3DatabaseName="functional";
+    export typo3DatabaseDriver="pdo_sqlite";
+    php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/;
     php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
 
 jobs:
   fast_finish: true
   allow_failures:
-    - env: TYPO3_VERSION="^9.2" TESTING_FRAMEWORK="^3.2"
-    - env: TYPO3_VERSION="^9.3" TESTING_FRAMEWORK="^3.2"
-    - env: TYPO3_VERSION="^9.4" TESTING_FRAMEWORK="^4.8"
+    - env: TYPO3_VERSION="dev-master" TESTING_FRAMEWORK="~5.0.3"
 
   include:
     - &lint
@@ -57,10 +54,6 @@ jobs:
       before_script: skip
       script:
         - errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l {} 2>&1 >/dev/null \;) && echo "$errors" && test -z "$errors"
-    - <<: *lint
-      php: 7.1
-    - <<: *lint
-      php: 7.0
 
     - stage: test
       php: 7.2
@@ -74,17 +67,15 @@ jobs:
 
     - stage: test
       php: 7.2
-      env: TYPO3_VERSION="^9.2" TESTING_FRAMEWORK="^3.2"
+      env: TYPO3_VERSION="^9.5" TESTING_FRAMEWORK="~4.11.1"
+
     - stage: test
       php: 7.2
-      env: TYPO3_VERSION="^9.3" TESTING_FRAMEWORK="^3.2"
-    - stage: test
-      php: 7.2
-      env: TYPO3_VERSION="^9.4" TESTING_FRAMEWORK="^4.8"
+      env: TYPO3_VERSION="dev-master" TESTING_FRAMEWORK="~5.0.3"
 
     - stage: publish in ter
       if: tag IS present
-      php: 7.0
+      php: 7.1
       before_install: skip
       install: skip
       before_script: skip
@@ -94,7 +85,7 @@ jobs:
             echo -e "Preparing upload of release ${TRAVIS_TAG} to TER\n";
 
             # Install requirements
-            composer require --dev helhum/ter-client dev-master
+            composer global require helhum/ter-client dev-master
 
             # Cleanup before we upload
             git reset --hard HEAD && git clean -fx
@@ -105,5 +96,5 @@ jobs:
             # Upload
             TAG_MESSAGE=`git tag -n10 -l $TRAVIS_TAG | sed 's/^[0-9.]*[ ]*//g'`
             echo "Uploading release ${TRAVIS_TAG} to TER"
-            .Build/bin/ter-client upload sf_register . -u "$TYPO3_ORG_USERNAME" -p "$TYPO3_ORG_PASSWORD" -m "$TAG_MESSAGE"
+            $HOME/.composer/vendor/bin/ter-client upload sf_register . -u "$TYPO3_ORG_USERNAME" -p "$TYPO3_ORG_PASSWORD" -m "$TAG_MESSAGE"
           fi;

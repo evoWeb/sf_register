@@ -3,9 +3,6 @@
 
 
 plugin.tx_sfregister.settings {
-  # boolean defines in edit mode if the fields get filled with data of logged in user
-  useDataOfLoggedinFeuser = 1
-
   # uid of the page to redirect to after saving
   redirectPostRegistrationPageId =
   # uid of the page to redirect to after confirmation
@@ -13,9 +10,6 @@ plugin.tx_sfregister.settings {
 
   # wether the email address entered should be used as username
   useEmailAddressAsUsername =
-
-  # string [md5|sha1]
-  encryptPassword =
 
   # boolean use encrypted filename to deny direct access on uploaded files
   useEncryptedFilename = md5

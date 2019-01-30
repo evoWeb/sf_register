@@ -14,7 +14,7 @@
 				<source>Redirect at Login to Page (felogin)</source>
 			</trans-unit>
 
-			<trans-unit id="fe_users.username_selectField">
+			<trans-unit id="fe_users.username">
 				<source>Username</source>
 			</trans-unit>
 			<trans-unit id="fe_users.password">
@@ -98,9 +98,6 @@
 				<source>Pseudonym</source>
 			</trans-unit>
 			<trans-unit id="fe_users.gender">
-				<source>Mr/Ms:</source>
-			</trans-unit>
-			<trans-unit id="fe_users.gender_selectField">
 				<source>Mr/Ms</source>
 			</trans-unit>
 			<trans-unit id="fe_users.gender.I.1">
@@ -242,9 +239,6 @@
 				<source>Country Code</source>
 			</trans-unit>
 			<trans-unit id="fe_users.mobilephone">
-				<source>Mobile phone:</source>
-			</trans-unit>
-			<trans-unit id="fe_users.mobilephone_selectField">
 				<source>Mobile phone</source>
 			</trans-unit>
 			<trans-unit id="fe_users.gtc">
@@ -257,7 +251,7 @@
 				<source>Privacy agreement</source>
 			</trans-unit>
 			<trans-unit id="fe_users.status">
-				<source>Status:</source>
+				<source>Status</source>
 			</trans-unit>
 			<trans-unit id="fe_users.status.I.1">
 				<source>Student</source>
@@ -316,8 +310,14 @@
 			<trans-unit id="form_flexform.settings.fields.selected">
 				<source>Select fields to use in form</source>
 			</trans-unit>
+			<trans-unit id="form_flexform.settings.fields.configuredByTypoScript">
+				<source>Fields configured by TypoScript</source>
+			</trans-unit>
 			<trans-unit id="form_flexform.settings.viewTemplateRootPath">
 				<source>Template root path (EXT:sf_register/Resources/Private/Templates)</source>
+			</trans-unit>
+			<trans-unit id="form_flexform.settings.viewTemplateRootPath.short">
+				<source>Template root path</source>
 			</trans-unit>
 		</body>
 	</file>

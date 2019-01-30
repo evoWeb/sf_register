@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Domain\Model;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -225,6 +225,12 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     protected $invitationEmail = '';
 
+    public function __construct(string $username = '', string $password = '')
+    {
+        parent::__construct($username, $password);
+        $this->image = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->moduleSysDmailCategory = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
 
     /**
      * Initializes the date of birth if related values are set by request to argument mapping
@@ -259,11 +265,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         return $this->activatedOn;
     }
 
-    /**
-     * Setter for activatedOn
-     *
-     * @param \DateTime|NULL $activatedOn
-     */
     public function setActivatedOn(\DateTime $activatedOn = null)
     {
         $this->activatedOn = $activatedOn;
@@ -301,7 +302,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
     public function removeImage()
     {
-        $this->image = null;
+        $this->image = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
     public function setPseudonym(string $pseudonym)
@@ -324,11 +325,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         return $this->gender;
     }
 
-    /**
-     * Setter for dateOfBirth
-     *
-     * @param \DateTime|NULL $dateOfBirth
-     */
     public function setDateOfBirth(\DateTime $dateOfBirth = null)
     {
         $this->dateOfBirth = $dateOfBirth;
@@ -352,7 +348,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
     public function getDateOfBirthDay(): int
     {
-        $result = null;
+        $result = 1;
 
         if ($this->dateOfBirth instanceof \DateTime) {
             $result = $this->dateOfBirth->format('j');
@@ -369,7 +365,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
     public function getDateOfBirthMonth(): int
     {
-        $result = null;
+        $result = 1;
 
         if ($this->dateOfBirth instanceof \DateTime) {
             $result = $this->dateOfBirth->format('n');
@@ -386,7 +382,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
     public function getDateOfBirthYear(): int
     {
-        $result = null;
+        $result = 1970;
 
         if ($this->dateOfBirth instanceof \DateTime) {
             $result = $this->dateOfBirth->format('Y');

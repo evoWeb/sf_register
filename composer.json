@@ -24,10 +24,11 @@
 		"typo3/cms-core": "^9.5"
 	},
 	"require-dev": {
+		"typo3/cms-fluid-styled-content": "*",
 		"typo3/testing-framework": "*"
 	},
 	"suggest": {
-		"evoweb/recaptcha": "^8.2.0"
+		"evoweb/recaptcha": "^9.0"
 	},
 
 	"autoload": {

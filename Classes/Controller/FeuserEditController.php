@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Controller;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,23 +29,20 @@ namespace Evoweb\SfRegister\Controller;
  */
 class FeuserEditController extends FeuserController
 {
-    protected function initializeAction()
-    {
-        parent::initializeAction();
+    /**
+     * @var string
+     */
+    protected $controller = 'edit';
 
-        if (empty($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = $this->settings['fields']['editDefaultSelected'];
-        } elseif (!is_array($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
-        }
-    }
+    /**
+     * @var array
+     */
+    protected $ignoredActions = ['confirmAction', 'acceptAction'];
 
     public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {
-        /** @noinspection PhpInternalEntityUsedInspection */
-        $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
+        $userId = $this->context->getAspect('frontend.user')->get('id');
 
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
         $originalRequest = $this->request->getOriginalRequest();
         if ((
                 $this->request->hasArgument('user')
@@ -58,6 +55,7 @@ class FeuserEditController extends FeuserController
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');
 
+            // only reconstitute user object if given user uid equals logged in user uid
             if ($userData['uid'] == $userId) {
                 /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
                 $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);

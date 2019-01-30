@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -79,11 +79,17 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
         $result = '';
         if ((
                 is_array($fieldSettings)
-                && in_array('Evoweb\SfRegister\Validation\Validator\RequiredValidator', $fieldSettings)
+                && (
+                    in_array(\Evoweb\SfRegister\Validation\Validator\RequiredValidator::class, $fieldSettings)
+                    || in_array('"Evoweb.SfRegister:Required"', $fieldSettings)
+                )
             )
             || (
                 is_string($fieldSettings)
-                && $fieldSettings == 'Evoweb\SfRegister\Validation\Validator\RequiredValidator'
+                && (
+                    $fieldSettings === \Evoweb\SfRegister\Validation\Validator\RequiredValidator::class
+                    || $fieldSettings === '"Evoweb.SfRegister:Required"'
+                )
             )
         ) {
             $result = $this->renderChildren();

@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Services\Captcha;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +29,7 @@ abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaI
     /**
      * @var object
      */
-    protected $captcha = null;
+    protected $captcha;
 
     /**
      * @var array
@@ -44,9 +44,9 @@ abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaI
     /**
      * Renders the output of an concrete captcha
      *
-     * @return string
+     * @return string|array
      */
-    abstract public function render(): string;
+    abstract public function render();
 
     /**
      * Returns if the result of the validation was valid or not

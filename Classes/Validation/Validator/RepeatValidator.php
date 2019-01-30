@@ -1,10 +1,12 @@
 <?php
 namespace Evoweb\SfRegister\Validation\Validator;
 
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,13 +26,10 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-
 /**
  * A repeated value validator
  */
-class RepeatValidator extends AbstractValidator implements ValidatorInterface
+class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements SettableInterface
 {
     /**
      * @var bool
@@ -52,7 +51,7 @@ class RepeatValidator extends AbstractValidator implements ValidatorInterface
     /**
      * Setter for model
      *
-     * @param mixed $model
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
      */
     public function setModel($model)
     {
@@ -68,27 +67,38 @@ class RepeatValidator extends AbstractValidator implements ValidatorInterface
      * If the given value is equal to the repetition
      *
      * @param string $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
-
         $propertyName = str_replace('Repeat', '', $this->propertyName);
-        $getterMethod = 'get' . ucfirst($propertyName);
-        if ($value != $this->model->{$getterMethod}()) {
+        if ($value != $this->getPropertyValue($this->model, $propertyName)) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                $this->translateErrorMessage(
                     'error_repeatitionwasnotequal',
                     'SfRegister',
-                    [\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($propertyName, 'SfRegister')]
+                    [$this->translateErrorMessage($propertyName, 'SfRegister')]
                 ),
                 1307965971
             );
-            $result = false;
         }
+    }
 
-        return $result;
+    /**
+     * Load the property value to be used for validation.
+     *
+     * In case the object is a doctrine proxy, we need to load the real instance first.
+     *
+     * @param object $object
+     * @param string $propertyName
+     *
+     * @return mixed
+     */
+    protected function getPropertyValue($object, $propertyName)
+    {
+        // @todo add support for lazy loading proxies, if needed
+        if (ObjectAccess::isPropertyGettable($object, $propertyName)) {
+            return ObjectAccess::getProperty($object, $propertyName);
+        }
+        return ObjectAccess::getProperty($object, $propertyName, true);
     }
 }

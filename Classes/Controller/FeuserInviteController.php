@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Controller;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,16 +29,10 @@ namespace Evoweb\SfRegister\Controller;
  */
 class FeuserInviteController extends FeuserController
 {
-    protected function initializeAction()
-    {
-        parent::initializeAction();
-
-        if (empty($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = $this->settings['fields']['inviteDefaultSelected'];
-        } elseif (!is_array($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
-        }
-    }
+    /**
+     * @var string
+     */
+    protected $controller = 'invite';
 
     public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {

@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Controller;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,16 +29,15 @@ namespace Evoweb\SfRegister\Controller;
  */
 class FeuserCreateController extends FeuserController
 {
-    protected function initializeAction()
-    {
-        parent::initializeAction();
+    /**
+     * @var string
+     */
+    protected $controller = 'create';
 
-        if (empty($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = $this->settings['fields']['createDefaultSelected'];
-        } elseif (!is_array($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
-        }
-    }
+    /**
+     * @var array
+     */
+    protected $ignoredActions = ['confirmAction', 'refuseAction', 'acceptAction', 'declineAction'];
 
     public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {
@@ -144,7 +143,9 @@ class FeuserCreateController extends FeuserController
         $user = $this->sendEmails($user, $type);
 
         // Encrypt plain password
-        $user->setPassword($this->encryptPassword($user->getPassword(), $this->settings));
+        if ($user->getPassword()) {
+            $user->setPassword($this->encryptPassword($user->getPassword()));
+        }
         $this->userRepository->update($user);
         $this->persistAll();
 
@@ -178,13 +179,14 @@ class FeuserCreateController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            if (!$user->getDisable() || $this->isUserInUserGroups(
+            if ($user->getActivatedOn() || $this->isUserInUserGroups(
                 $user,
                 $this->getFollowingUserGroups((int) $this->settings['usergroupPostConfirm'])
             )) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
                 $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostConfirm']);
+                $user->setActivatedOn(new \DateTime('now'));
 
                 if (!$this->settings['acceptEmailPostConfirm']) {
                     $user->setDisable(false);
@@ -265,17 +267,17 @@ class FeuserCreateController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            if ($user->getActivatedOn() || $this->isUserInUserGroups(
+            if (!$user->getDisable() || $this->isUserInUserGroups(
                 $user,
                 $this->getFollowingUserGroups((int) $this->settings['usergroupPostAccept'])
             )) {
                 $this->view->assign('userAlreadyAccepted', 1);
             } else {
                 $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostAccept']);
-                $user->setActivatedOn(new \DateTime('now'));
+                $user->setDisable(false);
 
                 if (!$this->settings['confirmEmailPostAccept']) {
-                    $user->setDisable(false);
+                    $user->setActivatedOn(new \DateTime('now'));
                 }
 
                 $this->signalSlotDispatcher->dispatch(

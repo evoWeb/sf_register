@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Controller;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,8 +26,10 @@ namespace Evoweb\SfRegister\Controller;
 
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use \Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
+use Evoweb\SfRegister\Validation\Validator\SettableInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
@@ -38,6 +40,21 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
  */
 class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+    /**
+     * @var string
+     */
+    protected $controller = '';
+
+    /**
+     * @var array
+     */
+    protected $ignoredActions = [];
+
+    /**
+     * @var \TYPO3\CMS\Core\Context\Context
+     */
+    protected $context;
+
     /**
      * User repository
      *
@@ -85,6 +102,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      */
     protected $autoLoginTriggered = false;
 
+    public function injectContext(\TYPO3\CMS\Core\Context\Context $context)
+    {
+        $this->context = $context;
+    }
 
     public function injectUserRepository(FrontendUserRepository $userRepository)
     {
@@ -108,6 +129,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $GLOBALS['sf_register_controllerConfiguration'] = $frameworkConfiguration['controllerConfiguration'];
     }
 
+    public function injectFileService(\Evoweb\SfRegister\Services\File $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     /**
      * Disable flash messages
      *
@@ -118,9 +144,114 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return false;
     }
 
+    protected function initializeActionMethodValidators()
+    {
+        if (empty($this->settings['fields']['selected'])) {
+            $this->settings['fields']['selected'] = $this->settings['fields'][$this->controller . 'DefaultSelected'];
+        } elseif (!is_array($this->settings['fields']['selected'])) {
+            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
+        }
+
+        if ($this->arguments->hasArgument('user') && !$this->actionIsIgnored()) {
+            $this->modifyValidatorsBasedOnSettings(
+                $this->arguments->getArgument('user'),
+                $this->settings['validation'][$this->controller] ?? []
+            );
+        } elseif ($this->arguments->hasArgument('password') && !$this->actionIsIgnored()) {
+            $this->modifyValidatorsBasedOnSettings(
+                $this->arguments->getArgument('password'),
+                $this->settings['validation']['password'] ?? []
+            );
+        } else {
+            parent::initializeActionMethodValidators();
+        }
+    }
+
+    protected function actionIsIgnored(): bool
+    {
+        return in_array($this->actionMethodName, $this->ignoredActions);
+    }
+
+    protected function modifyValidatorsBasedOnSettings(
+        \TYPO3\CMS\Extbase\Mvc\Controller\Argument $argument,
+        array $configuredValidators
+    ) {
+        /** @var \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validatorResolver */
+        $validatorResolver = $this->objectManager->get(\TYPO3\CMS\Extbase\Validation\ValidatorResolver::class);
+        $parser = new \Doctrine\Common\Annotations\DocParser();
+
+        /** @var \Evoweb\SfRegister\Validation\Validator\UserValidator $validator */
+        $validator = $this->objectManager->get(\Evoweb\SfRegister\Validation\Validator\UserValidator::class);
+        foreach ($configuredValidators as $fieldName => $configuredValidator) {
+            if (!in_array($fieldName, $this->settings['fields']['selected'])) {
+                continue;
+            }
+
+            if (!is_array($configuredValidator)) {
+                $validatorInstance = $this->getValidatorByConfiguration(
+                    $configuredValidator,
+                    $parser,
+                    $validatorResolver
+                );
+
+                if ($validatorInstance instanceof SettableInterface) {
+                    $validatorInstance->setPropertyName($fieldName);
+                }
+            } else {
+                $validatorInstance = $this->objectManager->get(
+                    \Evoweb\SfRegister\Validation\Validator\ConjunctionValidator::class
+                );
+                foreach ($configuredValidator as $individualConfiguredValidator) {
+                    $individualValidatorInstance = $this->getValidatorByConfiguration(
+                        $individualConfiguredValidator,
+                        $parser,
+                        $validatorResolver
+                    );
+
+                    if ($individualValidatorInstance instanceof SettableInterface) {
+                        $individualValidatorInstance->setPropertyName($fieldName);
+                    }
+
+                    $validatorInstance->addValidator($individualValidatorInstance);
+                }
+            }
+
+            $validator->addPropertyValidator($fieldName, $validatorInstance);
+        }
+
+        $uidValidatorInstance = $this->getValidatorByConfiguration(
+            '"Evoweb.SfRegister:' . ($this->controller == 'edit' ? 'EqualCurrentUser' : 'Empty') . '"',
+            $parser,
+            $validatorResolver
+        );
+        $validator->addPropertyValidator('uid', $uidValidatorInstance);
+
+        $argument->setValidator($validator);
+    }
+
+    /**
+     * @param string $configuration
+     * @param \Doctrine\Common\Annotations\DocParser $parser
+     * @param \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validatorResolver
+     *
+     * @return \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface
+     */
+    protected function getValidatorByConfiguration($configuration, $parser, $validatorResolver)
+    {
+        if (strpos($configuration, '"') === false && strpos($configuration, '(') === false) {
+            $configuration = '"' . $configuration . '"';
+        }
+
+        /** @var \TYPO3\CMS\Extbase\Annotation\Validate $validateAnnotation */
+        $validateAnnotation = current($parser->parse(
+            '@TYPO3\CMS\Extbase\Annotation\Validate(' . $configuration . ')'
+        ));
+        $validatorObjectName = $validatorResolver->resolveValidatorObjectName($validateAnnotation->validator);
+        return $this->objectManager->get($validatorObjectName, $validateAnnotation->options);
+    }
+
     protected function initializeAction()
     {
-        $this->fileService = $this->objectManager->get(\Evoweb\SfRegister\Services\File::class);
         $this->setTypeConverter();
 
         if ($this->settings['processInitializeActionSignal']) {
@@ -217,7 +348,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         if (isset($this->settings['templateRootPath']) && !empty($this->settings['templateRootPath'])) {
             $templateRootPath = GeneralUtility::getFileAbsFileName($this->settings['templateRootPath']);
             if (GeneralUtility::isAllowedAbsPath($templateRootPath)) {
-                $this->view->setTemplateRootPaths([$templateRootPath]);
+                $templateRootPathes = $this->view->getTemplateRootPaths() ?? [];
+                $this->view->setTemplateRootPaths(array_merge(
+                    $templateRootPathes,
+                    [$templateRootPath]
+                ));
             }
         }
     }
@@ -230,8 +365,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
      */
-    public function proxyAction(/** @noinspection PhpUnusedParameterInspection */$user)
-    {
+    public function proxyAction(
+        /** @noinspection PhpUnusedParameterInspection */\Evoweb\SfRegister\Domain\Model\FrontendUser $user
+    ) {
         $action = 'save';
 
         if ($this->request->hasArgument('form')) {
@@ -244,11 +380,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Remove an image and forward to the action where it was called
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
      *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $user
      */
-    protected function removeImageAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
+    protected function removeImageAction(FrontendUser $user)
     {
         /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $image */
         $image = $user->getImage()->current();
@@ -269,11 +405,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
     }
 
-    protected function removeImageFromUserAndRequest(
-        \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-    ): \Evoweb\SfRegister\Domain\Model\FrontendUser {
+    protected function removeImageFromUserAndRequest(FrontendUser $user): FrontendUser
+    {
         if ($user->getUid() !== null) {
-            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $localUser */
+            /** @var FrontendUser $localUser */
             $localUser = $this->userRepository->findByUid($user->getUid());
             $localUser->removeImage();
             $this->userRepository->update($localUser);
@@ -285,27 +420,22 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
         /** @var array $requestUser */
         $requestUser = $this->request->getArgument('user');
-        $requestUser['image'] = $user->getImage();
+        if (is_array($requestUser)) {
+            $requestUser['image'] = $user->getImage();
+        }
         $this->request->setArgument('user', $requestUser);
 
         return $user;
     }
 
-    public function encryptPassword(string $password, array $settings): string
+    public function encryptPassword(string $password): string
     {
-        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
-            /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
-            $passwordHashFactory = GeneralUtility::makeInstance(
-                \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
-            );
-            if ($passwordHashFactory instanceof \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface) {
-                $password = $passwordHashFactory->getHashedPassword($password);
-            }
-        } elseif ($settings['encryptPassword'] === 'md5') {
-            $password = md5($password);
-        }
-
-        return $password;
+        /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
+        $passwordHashFactory = $this->objectManager->get(
+            \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
+        );
+        $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
+        return $passwordHash->getHashedPassword($password);
     }
 
     protected function persistAll()
@@ -332,10 +462,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
 
-    protected function sendEmails(
-        \Evoweb\SfRegister\Domain\Model\FrontendUser $user,
-        string $type
-    ): \Evoweb\SfRegister\Domain\Model\FrontendUser {
+    protected function sendEmails(FrontendUser $user, string $type): FrontendUser
+    {
         /** @var \Evoweb\SfRegister\Services\Mail $mailService */
         $mailService = $this->objectManager->get(\Evoweb\SfRegister\Services\Mail::class);
 
@@ -364,12 +492,12 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Determines whether a user is in a given user group.
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUserGroup|string|int $userGroup
      *
      * @return bool
      */
-    protected function isUserInUserGroup(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, $userGroup): bool
+    protected function isUserInUserGroup(FrontendUser $user, $userGroup): bool
     {
         $return = false;
 
@@ -389,12 +517,12 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Determines whether a user is in a given user group.
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
      * @param array|\Evoweb\SfRegister\Domain\Model\FrontendUserGroup[] $userGroups
      *
      * @return bool
      */
-    protected function isUserInUserGroups(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, array $userGroups): bool
+    protected function isUserInUserGroups(FrontendUser $user, array $userGroups): bool
     {
         $return = false;
 
@@ -454,10 +582,8 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
 
-    protected function changeUsergroup(
-        \Evoweb\SfRegister\Domain\Model\FrontendUser $user,
-        int $userGroupIdToAdd
-    ): \Evoweb\SfRegister\Domain\Model\FrontendUser {
+    protected function changeUsergroup(FrontendUser $user, int $userGroupIdToAdd): FrontendUser
+    {
         $this->removePreviousUserGroups($user);
 
         $userGroupIdToAdd = (int) $userGroupIdToAdd;
@@ -470,12 +596,12 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return $user;
     }
 
-    protected function removePreviousUserGroups(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
+    protected function removePreviousUserGroups(FrontendUser $user)
     {
         $userGroupIds = $this->getUserGroupIds();
         $assignedUserGroups = $user->getUsergroup();
         foreach ($assignedUserGroups as $singleUserGroup) {
-            if (\in_array($singleUserGroup->getUid(), $userGroupIds)) {
+            if (in_array($singleUserGroup->getUid(), $userGroupIds)) {
                 $assignedUserGroups->detach($singleUserGroup);
             }
         }
@@ -483,7 +609,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
 
-    protected function autoLogin(\Evoweb\SfRegister\Domain\Model\FrontendUser $user, int $redirectPageId)
+    protected function autoLogin(FrontendUser $user, int $redirectPageId)
     {
         session_start();
         $this->autoLoginTriggered = true;
@@ -491,7 +617,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $_SESSION['sf-register-user'] = GeneralUtility::hmac('auto-login::' . $user->getUid(), $GLOBALS['EXEC_TIME']);
 
         /** @var \TYPO3\CMS\Core\Registry $registry */
-        $registry = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Registry::class);
+        $registry = $this->objectManager->get(\TYPO3\CMS\Core\Registry::class);
         $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
 
         // if redirect was empty by now set it to current page
@@ -516,23 +642,20 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     protected function userIsLoggedIn(): bool
     {
-        /** @noinspection PhpInternalEntityUsedInspection */
-        return is_array($this->getTypoScriptFrontendController()->fe_user->user);
+        return $this->context->getAspect('frontend.user')->isLoggedIn();
     }
 
     /**
      * Determines the frontend user, either if it's
      * already submitted, or by looking up the mail hash code.
      *
-     * @param NULL|\Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param NULL|FrontendUser $user
      * @param NULL|string $hash
      *
-     * @return NULL|\Evoweb\SfRegister\Domain\Model\FrontendUser
+     * @return NULL|FrontendUser
      */
-    protected function determineFrontendUser(
-        \Evoweb\SfRegister\Domain\Model\FrontendUser $user = null,
-        string $hash = null
-    ) {
+    protected function determineFrontendUser(FrontendUser $user = null, string $hash = null)
+    {
         $frontendUser = null;
 
         $requestArguments = $this->request->getArguments();

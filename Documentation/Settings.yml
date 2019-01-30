@@ -4,8 +4,14 @@
 
 ---
 conf.py:
-  copyright: 2010-2013
-  project: sf_register
-  version: 2.0
-  release: 2.0.2
+  copyright: 2010-2019
+  project: Frontend User Registration
+  version: 9.0
+  release: 9.0.0
+  latex_elements:
+    papersize: a4paper
+    pointsize: 10pt
+    preamble: \usepackage{typo3}
+  latex_use_parts: True
+  latex_show_pagerefs: True
 ...

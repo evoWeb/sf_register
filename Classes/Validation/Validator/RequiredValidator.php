@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,12 +23,11 @@ namespace Evoweb\SfRegister\Validation\Validator;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * A required validator to check that a value is set
  */
-class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
+class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements SettableInterface
 {
     /**
      * @var bool
@@ -36,24 +35,48 @@ class RequiredValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
     protected $acceptsEmptyValues = false;
 
     /**
+     * Model to take repeated value of
+     *
+     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password
+     */
+    protected $model;
+
+    /**
+     * @var string
+     */
+    protected $propertyName;
+
+    /**
+     * Setter for model
+     *
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
+    public function setPropertyName(string $propertyName)
+    {
+        $this->propertyName = $propertyName;
+    }
+
+    /**
      * If the given value is empty
      *
      * @param string $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
-
         if (empty($value)) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error_required', 'SfRegister'),
+                $this->translateErrorMessage(
+                    'error_required',
+                    'SfRegister',
+                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                ),
                 1305008423
             );
-            $result = false;
         }
-
-        return $result;
     }
 }

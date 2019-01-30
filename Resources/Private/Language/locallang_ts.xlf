@@ -3,9 +3,6 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2018-06-26T07:34:54Z" product-name="sf_register">
 		<header/>
 		<body>
-			<trans-unit id="maximal.useDataOfLoggedinFeuser">
-				<source>defines in edit mode if the fields get filled with data of logged in user</source>
-			</trans-unit>
 			<trans-unit id="maximal.badWordList">
 				<source>comma separated list of words used in bad word validator</source>
 			</trans-unit>
@@ -17,18 +14,6 @@
 			</trans-unit>
 			<trans-unit id="maximal.useEmailAddressAsUsername">
 				<source>Wether the email address should be used as username</source>
-			</trans-unit>
-			<trans-unit id="maximal.encryptPassword">
-				<source>Mode of password encryption: if saltedpassword is installed it overrides selection made here</source>
-			</trans-unit>
-			<trans-unit id="maximal.encryptPassword.0">
-				<source>plaintext no encrytion at all</source>
-			</trans-unit>
-			<trans-unit id="maximal.encryptPassword.1">
-				<source>md5-hash of password</source>
-			</trans-unit>
-			<trans-unit id="maximal.encryptPassword.2">
-				<source>sha1-hash of password</source>
 			</trans-unit>
 			<trans-unit id="maximal.useEncryptedFilename">
 				<source>Use encrypted filename: to deny direct access on uploaded files</source>

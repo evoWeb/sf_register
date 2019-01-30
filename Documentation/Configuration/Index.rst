@@ -76,22 +76,6 @@ Reference
 
 plugin.tx\_sfregister.settings:
 
-.. container:: table-row
-
- - :Property:
-         useDataOfLoggedinFeuser
-
-   :Data type:
-         boolean
-
-   :Description:
-         Fill the edit form with data of currently logged in user
-
-   :Default:
-         1
-
-
-
  - :Property:
          badWordList
 
@@ -146,24 +130,6 @@ plugin.tx\_sfregister.settings:
 
 
  - :Property:
-         encryptPassword
-
-   :Data type:
-         Int
-
-   :Description:
-         Encrypt password
-
-         0 – none1 – md5
-
-         2 - sha1
-
-   :Default:
-         0
-
-
-
- - :Property:
          useEncryptedFilename
 
    :Data type:
@@ -178,6 +144,7 @@ plugin.tx\_sfregister.settings:
 
    :Default:
          0
+
 
 
  - :Property:

@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Domain\Repository;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2017 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2017-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is

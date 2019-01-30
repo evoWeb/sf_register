@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Controller;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,6 +29,11 @@ namespace Evoweb\SfRegister\Controller;
  */
 class FeuserPasswordController extends FeuserController
 {
+    /**
+     * @var string
+     */
+    protected $controller = 'password';
+
     public function formAction()
     {
         $this->signalSlotDispatcher->dispatch(
@@ -64,7 +69,7 @@ class FeuserPasswordController extends FeuserController
                 ]
             );
 
-            $user->setPassword($this->encryptPassword($password->getPassword(), $this->settings));
+            $user->setPassword($this->encryptPassword($password->getPassword()));
 
             $this->userRepository->update($user);
 

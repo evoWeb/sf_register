@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Domain\Model;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -32,17 +32,17 @@ class Password extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var string
      */
-    protected $password;
+    protected $password = '';
 
     /**
      * @var string
      */
-    protected $passwordRepeat;
+    protected $passwordRepeat = '';
 
     /**
      * @var string
      */
-    protected $oldPassword;
+    protected $oldPassword = '';
 
     public function getPassword(): string
     {

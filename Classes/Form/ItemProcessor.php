@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Form;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2017 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2017-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -48,8 +48,8 @@ class ItemProcessor
     protected function getConfiguredFieldsFromTsConfig(): array
     {
         $tsConfig = $this->getBackendUserAuthentication()->getTSConfig();
-        $pluginConfiguration = $tsConfig['plugin']['tx_sfregister'] ?? [];
-        $configuration = $pluginConfiguration['settings']['fields']['configuration']['properties'] ?? [];
+        $pluginConfiguration = $tsConfig['plugin.']['tx_sfregister.'] ?? [];
+        $configuration = $pluginConfiguration['settings.']['fields.']['configuration.'] ?? [];
         return $configuration;
     }
 

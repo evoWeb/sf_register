@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Services\Captcha;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -67,7 +67,7 @@ class SrFreecapAdapter extends AbstractAdapter
     /**
      * @var \tx_srfreecap_pi2
      */
-    protected $captcha = null;
+    protected $captcha;
 
     /**
      * Keys to be used as variables output
@@ -99,7 +99,10 @@ class SrFreecapAdapter extends AbstractAdapter
         $this->objectManager = $objectManager;
     }
 
-    public function render(): string
+    /**
+     * @return array|string
+     */
+    public function render()
     {
         $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)->remove('captchaWasValidPreviously');
 

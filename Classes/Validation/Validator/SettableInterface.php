@@ -1,10 +1,10 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Domain\Validator;
+namespace Evoweb\SfRegister\Validation\Validator;
 
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-18 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,14 +24,19 @@ namespace Evoweb\SfRegister\Tests\Domain\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class ImageUploadValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+interface SettableInterface
 {
     /**
-     * @test
-     * @return void
+     * Setter for model
+     *
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
      */
-    public function isValid()
-    {
-        $this->markTestIncomplete('not implemented by now');
-    }
+    public function setModel($model);
+
+    /**
+     * Setter for propertyName
+     *
+     * @param string $propertyName
+     */
+    public function setPropertyName(string $propertyName);
 }

@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,13 +24,10 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-
 /**
  * Validator to check if the uploaded image could be handled
  */
-class ImageUploadValidator extends AbstractValidator implements ValidatorInterface
+class ImageUploadValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
     /**
      * @var \Evoweb\SfRegister\Services\File
@@ -46,20 +43,13 @@ class ImageUploadValidator extends AbstractValidator implements ValidatorInterfa
      * If the given value is set
      *
      * @param boolean $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
-
         if (!$this->fileService->isValid()) {
             foreach ($this->fileService->getErrors() as $error) {
                 $this->result->addError($error);
             }
-            $result = false;
         }
-
-        return $result;
     }
 }

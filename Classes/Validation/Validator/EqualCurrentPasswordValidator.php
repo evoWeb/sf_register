@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,19 +24,25 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-
 /**
  * Validator to check against current password
  */
-class EqualCurrentPasswordValidator extends AbstractValidator implements ValidatorInterface
+class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
     /**
      * @var bool
      */
     protected $acceptsEmptyValues = false;
+
+    /**
+     * @var \TYPO3\CMS\Core\Context\Context
+     */
+    protected $context;
+
+    /**
+     * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
+     */
+    protected $userRepository;
 
     /**
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
@@ -48,11 +54,15 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
      */
     protected $settings = [];
 
-    /**
-     * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
-     */
-    protected $userRepository = null;
+    public function injectContext(\TYPO3\CMS\Core\Context\Context $context)
+    {
+        $this->context = $context;
+    }
 
+    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
 
     public function injectConfigurationManager(
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
@@ -65,87 +75,37 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Validat
         );
     }
 
-    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
-
     /**
      * Validation method
      *
      * @param mixed $password
-     *
-     * @return bool
      */
-    public function isValid($password): bool
+    public function isValid($password)
     {
-        $result = true;
-
         if (!$this->userIsLoggedIn()) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'error_changepassword_notloggedin',
-                    'SfRegister'
-                ),
+                $this->translateErrorMessage('error_changepassword_notloggedin', 'SfRegister'),
                 1301599489
             );
-            $result = false;
         } else {
-            /** @noinspection PhpInternalEntityUsedInspection */
-            $user = $this->userRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
+            $user = $this->userRepository->findByUid($this->context->getAspect('frontend.user')->get('id'));
 
-            if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
-                /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
-                $passwordHashFactory = GeneralUtility::makeInstance(
-                    \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
+            /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
+            $passwordHashFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+                \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
+            );
+            $passwordHash = $passwordHashFactory->get($user->getPassword(), 'FE');
+            if (!$passwordHash->checkPassword($password, $user->getPassword())) {
+                $this->addError(
+                    $this->translateErrorMessage('error_changepassword_notequal', 'SfRegister'),
+                    1301599507
                 );
-                $saltedPassword = $passwordHashFactory->get($user->getPassword(), 'FE');
-                if (!$saltedPassword->checkPassword($password, $user->getPassword())) {
-                    $this->addError(
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                            'error_changepassword_notequal',
-                            'SfRegister'
-                        ),
-                        1301599507
-                    );
-                    $result = false;
-                }
-            } elseif ($this->settings['encryptPassword'] === 'md5') {
-                if (md5($password) !== $user->getPassword()) {
-                    $this->addError(
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                            'error_changepassword_notequal',
-                            'SfRegister'
-                        ),
-                        1301599507
-                    );
-                    $result = false;
-                }
-            } elseif ($this->settings['encryptPassword'] === 'sha1') {
-                if (sha1($password) !== $user->getPassword()) {
-                    $this->addError(
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                            'error_changepassword_notequal',
-                            'SfRegister'
-                        ),
-                        1301599507
-                    );
-                    $result = false;
-                }
             }
         }
-
-        return $result;
     }
 
-    protected function userIsLoggedIn(): bool
+    public function userIsLoggedIn(): bool
     {
-        /** @noinspection PhpInternalEntityUsedInspection */
-        return is_array($this->getTypoScriptFrontendController()->fe_user->user);
-    }
-
-    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-    {
-        return $GLOBALS['TSFE'];
+        return $this->context->getAspect('frontend.user')->isLoggedIn();
     }
 }

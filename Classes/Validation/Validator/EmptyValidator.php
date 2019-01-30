@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,12 +24,10 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-
 /**
  * A empty validator this is used in validation of a new created user to ensure that the uid is empty
  */
-class EmptyValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements ValidatorInterface
+class EmptyValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
     /**
      * @var bool
@@ -40,24 +38,14 @@ class EmptyValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVal
      * If the given value is empty
      *
      * @param string $value The value
-     *
-     * @return bool
      */
-    public function isValid($value): bool
+    public function isValid($value)
     {
-        $result = true;
-
         if (!empty($value)) {
             $this->addError(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'error_notempty',
-                    'SfRegister'
-                ),
+                $this->translateErrorMessage('error_notempty', 'SfRegister'),
                 1305008423
             );
-            $result = false;
         }
-
-        return $result;
     }
 }

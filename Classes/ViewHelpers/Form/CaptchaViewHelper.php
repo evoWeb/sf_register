@@ -4,7 +4,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2011-17 Sebastian Fischer <typo3@evoweb.de>
+ * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -50,7 +50,10 @@ class CaptchaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFi
         $this->registerArgument('type', 'string', 'Captcha type', true);
     }
 
-    public function render(): string
+    /**
+     * @return string|array
+     */
+    public function render()
     {
         $type = $this->arguments['type'];
         return $this->captchaAdapterFactory->getCaptchaAdapter($type)->render();
