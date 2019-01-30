@@ -84,7 +84,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function imageAsImageListAddFilenameToImage()
     {
-        $this->markTestSkipped('addImage is currently not implemented');
+        $this->markTestSkipped('needs to be changed to ObjectStorage');
         $expected1 = 'foo.gif';
         $expected2 = 'bar.jpg';
 
