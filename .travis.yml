@@ -75,7 +75,7 @@ jobs:
 
     - stage: publish in ter
       if: tag IS present
-      php: 7.2
+      php: 7.1
       before_install: skip
       install: skip
       before_script: skip
@@ -85,7 +85,7 @@ jobs:
             echo -e "Preparing upload of release ${TRAVIS_TAG} to TER\n";
 
             # Install requirements
-            composer require --dev helhum/ter-client dev-master
+            composer global require helhum/ter-client dev-master
 
             # Cleanup before we upload
             git reset --hard HEAD && git clean -fx
@@ -96,5 +96,5 @@ jobs:
             # Upload
             TAG_MESSAGE=`git tag -n10 -l $TRAVIS_TAG | sed 's/^[0-9.]*[ ]*//g'`
             echo "Uploading release ${TRAVIS_TAG} to TER"
-            .Build/bin/ter-client upload sf_register . -u "$TYPO3_ORG_USERNAME" -p "$TYPO3_ORG_PASSWORD" -m "$TAG_MESSAGE"
+            $HOME/.composer/vendor/bin/ter-client upload sf_register . -u "$TYPO3_ORG_USERNAME" -p "$TYPO3_ORG_PASSWORD" -m "$TAG_MESSAGE"
           fi;
