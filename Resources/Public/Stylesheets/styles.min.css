@@ -1,7 +1,8 @@
 .tx_evoweb_sfregister #bargraph {
   display: none;
   height: 14px;
-  width: 372px; }
+  width: 372px;
+  border: none; }
   .tx_evoweb_sfregister #bargraph.show {
     display: block; }
 

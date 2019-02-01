@@ -193,3 +193,5 @@ function testPassword(passwd)
 	// document.forms.passwordForm.matchlog.value = (strLog)
 	return {intScore: intScore, strVerdict: strVerdict, strLog: strLog};
 }
+
+window.testPassword = testPassword;
