@@ -11,7 +11,7 @@
 		<f:if condition="{resource}">
 			<f:image image="{resource}" alt="" width="50"/>
 			<f:form.hidden name="removeImage" id="removeImage" value="0"/>
-			<f:form.button type="button" onclick="document.getElementById('removeImage').value='1';this.form.submit();">{f:translate(key:'submit_removeImage')}</f:form.button>
+			<f:form.button type="button" id="removeImageButton">{f:translate(key:'submit_removeImage')}</f:form.button>
 		</f:if>
 	</register:form.upload>
 </div>

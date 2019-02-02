@@ -1,5 +1,5 @@
 .tx_evoweb_sfregister {
-    #bargraph {
+    iframe#bargraph {
         display: none;
         height: 14px;
         width: 372px;
@@ -7,6 +7,83 @@
 
         &.show {
             display: block;
+        }
+    }
+
+    meter#bargraph {
+        display: none;
+        background: #efefef;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+        height: 11px;
+        width: 372px;
+
+        &.show {
+            display: block;
+        }
+
+        /* WebKit */
+        &::-webkit-meter-inner-element {
+            background: #efefef;
+            border: none;
+            border-radius: 0 0 10px 10px;
+        }
+
+        &::-webkit-meter-bar {
+            background: none;
+            background-color: #efefef;
+            border: 1px solid #ccc;
+            border-radius: 0 0 10px 10px;
+        }
+
+        &::-webkit-meter-even-less-good-value,
+        &::-webkit-meter-suboptimum-value,
+        &::-webkit-meter-optimum-value {
+            border-radius: 0 0 10px 10px;
+        }
+
+        &::-webkit-meter-even-less-good-value {
+            background: #D14900;
+        }
+
+        &::-webkit-meter-suboptimum-value {
+            background: #F5D000;
+        }
+
+        &::-webkit-meter-optimum-value {
+            background: #3C5C00;
+        }
+
+        /* Firefox */
+        &::-moz-meter-inner-element {
+            background: #efefef;
+        }
+
+        &::-moz-meter-bar {
+            background: none;
+            background-color: #fff;
+            border: none;
+            border-radius: 0 0 10px 10px;
+        }
+
+        &:-moz-meter-sub-sub-optimum::-moz-meter-bar,
+        &:-moz-meter-sub-optimum::-moz-meter-bar,
+        &:-moz-meter-optimum::-moz-meter-bar {
+            border-radius: 0 0 10px 10px;
+        }
+
+        &:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+            background-color: #D14900;
+        }
+
+        &:-moz-meter-sub-optimum::-moz-meter-bar {
+            background-color: #F5D000;
+        }
+
+        &:-moz-meter-optimum::-moz-meter-bar {
+            background-color: #3C5C00;
         }
     }
 

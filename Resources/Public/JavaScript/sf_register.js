@@ -88,399 +88,445 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(1);
-module.exports = __webpack_require__(2);
+module.exports = __webpack_require__(1);
 
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-/* ************************************************************
-Created: 20060120
-Author:  Steve Moitozo <god at zilla dot us> -- geekwisdom.com
-Description: This is a quick and dirty password quality meter
-		 written in JavaScript so that the password does
-		 not pass over the network.
-License: MIT License (see below)
-Modified: 20060620 - added MIT License
-Modified: 20061111 - corrected regex for letters and numbers
-                     Thanks to Zack Smith -- zacksmithdesign.com
----------------------------------------------------------------
-Copyright (c) 2006 Steve Moitozo <god at zilla dot us>
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or
-sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-   The above copyright notice and this permission notice shall
-be included in all copies or substantial portions of the
-Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
-KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
-OR OTHER DEALINGS IN THE SOFTWARE.
----------------------------------------------------------------
-
-
-Password Strength Factors and Weightings
-
-password length:
-level 0 (3 point): less than 4 characters
-level 1 (6 points): between 5 and 7 characters
-level 2 (12 points): between 8 and 15 characters
-level 3 (18 points): 16 or more characters
-
-letters:
-level 0 (0 points): no letters
-level 1 (5 points): all letters are lower case
-level 2 (7 points): letters are mixed case
-
-numbers:
-level 0 (0 points): no numbers exist
-level 1 (5 points): one number exists
-level 1 (7 points): 3 or more numbers exists
-
-special characters:
-level 0 (0 points): no special characters
-level 1 (5 points): one special character exists
-level 2 (10 points): more than one special character exists
-
-combinatons:
-level 0 (1 points): letters and numbers exist
-level 1 (1 points): mixed case letters
-level 1 (2 points): letters, numbers and special characters
-					exist
-level 1 (2 points): mixed case letters, numbers and special
-					characters exist
-
-
-NOTE: Because I suck at regex the code might need work
-
-NOTE: Instead of putting out all the logging information,
-	  the score, and the verdict it would be nicer to stretch
-	  a graphic as a method of presenting a visual strength
-	  guage.
-
-************************************************************ */
-function testPassword(passwd) {
-  var intScore = 0;
-  var strVerdict = "weak";
-  var strLog = ""; // PASSWORD LENGTH
-
-  if (passwd.length < 5) // length 4 or less
-    {
-      intScore = intScore + 3;
-      strLog = strLog + "3 points for length (" + passwd.length + ")\n";
-    } else if (passwd.length > 4 && passwd.length < 8) // length between 5 and 7
-    {
-      intScore = intScore + 6;
-      strLog = strLog + "6 points for length (" + passwd.length + ")\n";
-    } else if (passwd.length > 7 && passwd.length < 16) // length between 8 and 15
-    {
-      intScore = intScore + 12;
-      strLog = strLog + "12 points for length (" + passwd.length + ")\n";
-    } else if (passwd.length > 15) // length 16 or more
-    {
-      intScore = intScore + 18;
-      strLog = strLog + "18 point for length (" + passwd.length + ")\n";
-    } // LETTERS (Not exactly implemented as dictacted above because of my limited understanding of Regex)
-
-
-  if (passwd.match(/[a-z]/)) // [verified] at least one lower case letter
-    {
-      intScore = intScore + 1;
-      strLog = strLog + "1 point for at least one lower case char\n";
-    }
-
-  if (passwd.match(/[A-Z]/)) // [verified] at least one upper case letter
-    {
-      intScore = intScore + 5;
-      strLog = strLog + "5 points for at least one upper case char\n";
-    } // NUMBERS
-
-
-  if (passwd.match(/\d+/)) // [verified] at least one number
-    {
-      intScore = intScore + 5;
-      strLog = strLog + "5 points for at least one number\n";
-    }
-
-  if (passwd.match(/(.*[0-9].*[0-9].*[0-9])/)) // [verified] at least three numbers
-    {
-      intScore = intScore + 5;
-      strLog = strLog + "5 points for at least three numbers\n";
-    } // SPECIAL CHAR
-
-
-  if (passwd.match(/.[!,@#$%^&*?_~]/)) // [verified] at least one special character
-    {
-      intScore = intScore + 5;
-      strLog = strLog + "5 points for at least one special char\n";
-    } // [verified] at least two special characters
-
-
-  if (passwd.match(/(.*[!,@#$%^&*?_~].*[!,@#$%^&*?_~])/)) {
-    intScore = intScore + 5;
-    strLog = strLog + "5 points for at least two special chars\n";
-  } // COMBOS
-
-
-  if (passwd.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) // [verified] both upper and lower case
-    {
-      intScore = intScore + 2;
-      strLog = strLog + "2 combo points for upper and lower letters\n";
-    }
-
-  if (passwd.match(/([a-zA-Z])/) && passwd.match(/([0-9])/)) // [verified] both letters and numbers
-    {
-      intScore = intScore + 2;
-      strLog = strLog + "2 combo points for letters and numbers\n";
-    } // [verified] letters, numbers, and special characters
-
-
-  if (passwd.match(/([a-zA-Z0-9].*[!,@#$%^&*?_~])|([!,@#$%^&*?_~].*[a-zA-Z0-9])/)) {
-    intScore = intScore + 2;
-    strLog = strLog + "2 combo points for letters, numbers and special chars\n";
-  }
-
-  if (intScore < 16) {
-    strVerdict = "very weak";
-  } else if (intScore > 15 && intScore < 25) {
-    strVerdict = "weak";
-  } else if (intScore > 24 && intScore < 35) {
-    strVerdict = "mediocre";
-  } else if (intScore > 34 && intScore < 45) {
-    strVerdict = "strong";
-  } else {
-    strVerdict = "stronger";
-  } // document.forms.passwordForm.score.value = (intScore)
-  // document.forms.passwordForm.verdict.value = (strVerdict)
-  // document.forms.passwordForm.matchlog.value = (strLog)
-
-
-  return {
-    intScore: intScore,
-    strVerdict: strVerdict,
-    strLog: strLog
-  };
-}
-
-window.testPassword = testPassword;
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /* global define, XMLHttpRequest */
-(function (factory) {
+(function (root, factory) {
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    // AMD. Register as an anonymous module.
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(3)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
   } else {}
-})(function () {
-  var document = window.document,
-      module = {},
-      loading = false,
-      zone,
-      zoneEmpty,
-      zoneLoading,
-      ajaxRequest;
+})(typeof self !== 'undefined' ? self : this, function (exports, PasswordStrengthCalculator) {
+  var document = window.document;
+
+  var SfRegister =
   /**
-   * @param {string} id
-   *
-   * @returns {Object}
+   * @type {boolean}
    */
 
-  module.getElement = function (id) {
-    return 'object' === _typeof(id) ? id : document.getElementById(id);
-  };
   /**
-   * @param {Object} element
+   * @type {object}
    */
 
-
-  module.showElement = function (element) {
-    element.style.display = 'block';
-  };
   /**
-   * @param {Object} element
+   * @type {object|element}
    */
 
-
-  module.hideElement = function (element) {
-    element.style.display = 'none';
-  };
   /**
-   * Attach an event to an element
-   *
-   * @param {string|Object} id
-   * @param {string} eventName
-   * @param {callback} callback
+   * @type {element}
    */
 
-
-  module.attachToElement = function (id, eventName, callback) {
-    var element = module.getElement(id);
-
-    if (element && element.addEventListener) {
-      element.addEventListener(eventName, callback, false);
-    } else if (element) {
-      element.attachEvent('on' + eventName, callback);
-    }
-  };
   /**
-   * Gets bargraph element and calls test password function
-   * with value entered in field where this callback is attached
+   * @type {element}
    */
 
+  /**
+   * @type {element}
+   */
+  function SfRegister() {
+    var _this = this;
 
-  module.callTestPassword = function () {
-    var bargraph = module.getElement('bargraph'),
-        // calculating percent score for sprite
-    meter = window.testPassword(this.value),
-        percentScore = Math.min(Math.floor(meter.intScore / 3.4) * 10, 100) / 10,
-        // displaying the sprite
-    count = 0,
-        blinds = (bargraph.contentDocument || bargraph.contentWindow.document).getElementsByClassName('blind');
+    _classCallCheck(this, SfRegister);
 
-    for (var blindKey in blinds) {
-      if (blinds.hasOwnProperty(blindKey)) {
-        if (count < percentScore) {
-          module.hideElement(blinds[blindKey]);
-        } else {
-          module.showElement(blinds[blindKey]);
-        }
+    _defineProperty(this, "loading", false);
 
-        count++;
+    _defineProperty(this, "ajaxRequest", null);
+
+    _defineProperty(this, "barGraph", null);
+
+    _defineProperty(this, "zone", null);
+
+    _defineProperty(this, "zoneEmpty", null);
+
+    _defineProperty(this, "zoneLoading", null);
+
+    _defineProperty(this, "contentLoaded", function () {
+      var self = _this;
+      _this.barGraph = document.getElementById('bargraph');
+      _this.zone = document.getElementById('sfrZone');
+      _this.zoneEmpty = document.getElementById('sfrZone_empty');
+      _this.zoneLoading = document.getElementById('sfrZone_loading');
+
+      if (_this.barGraph !== null) {
+        _this.barGraph.classList.add('show');
+
+        _this.barGraph.passwordStrengthCalculator = new PasswordStrengthCalculator();
+
+        _this.attachToElement('sfrpassword', 'keyup', function () {
+          self.callTestPassword(this);
+        });
       }
-    }
-  };
-  /**
-   * Change value of zone selectbox
-   *
-   * @param {event} event
-   */
 
+      _this.attachToElement('sfrCountry', 'change', function (event) {
+        self.countryChanged(event);
+      });
 
-  module.changeZone = function (event) {
-    if ((event.type === 'keyup' && (event.keyCode === 40 || event.keyCode === 38) || event.type === 'change') && loading !== true) {
-      if (zone) {
-        loading = true;
-        var target = event.target || event.srcElement;
-        var countrySelectedValue = target.options[target.selectedIndex].value;
-        zone.length = 0;
-        module.hideElement(zone);
-        module.hideElement(zoneEmpty);
-        module.showElement(zoneLoading);
-        ajaxRequest = new XMLHttpRequest();
-        ajaxRequest.onreadystatechange = module.xhrReadyStateChanged;
-        ajaxRequest.open('POST', 'index.php?eID=sf_register');
-        ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+      _this.attachToElement('sfrCountry', 'keyup', function (event) {
+        self.countryChanged(event);
+      });
+
+      _this.attachToElement('uploadButton', 'change', _this.uploadFile);
+
+      _this.attachToElement('removeImageButton', 'click', _this.removeFile.bind(_this));
+    });
+
+    _defineProperty(this, "showElement", function (element) {
+      element.style.display = 'block';
+    });
+
+    _defineProperty(this, "hideElement", function (element) {
+      element.style.display = 'none';
+    });
+
+    _defineProperty(this, "attachToElement", function (id, eventName, callback) {
+      var element = 'object' === _typeof(id) ? id : document.getElementById(id);
+
+      if (element && element.addEventListener) {
+        element.addEventListener(eventName, callback, false);
+      } else if (element) {
+        element.attachEvent('on' + eventName, callback);
       }
-    }
-  };
-  /**
-   * Process ajax response and display error message or
-   * hand data received to add zone option function
-   */
+    });
 
+    _defineProperty(this, "callTestPassword", function (element) {
+      var self = _this,
+          meterResult = _this.barGraph.passwordStrengthCalculator.calculate(element.value);
 
-  module.xhrReadyStateChanged = function (stateChanged) {
-    var xhrResponse = stateChanged.target;
-
-    if (xhrResponse.readyState === 4 && xhrResponse.status === 200) {
-      var xhrResponseData = JSON.parse(xhrResponse.responseText);
-      module.hideElement(zoneLoading);
-
-      if (xhrResponseData.status === 'error' || xhrResponseData.data.length === 0) {
-        module.showElement(zoneEmpty);
+      if (_this.barGraph.tagName.toLowerCase() === 'meter') {
+        _this.barGraph.value = meterResult.score;
       } else {
-        module.addZoneOptions(xhrResponseData.data);
+        var percentScore = Math.min(Math.floor(meterResult.score / 3.4), 10),
+            blinds = (_this.barGraph.contentDocument || _this.barGraph.contentWindow.document).getElementsByClassName('blind');
+
+        Array.from(blinds).forEach(function (blind, index) {
+          self[index < percentScore ? 'hideElement' : 'showElement'](blind);
+        });
       }
-    }
-
-    loading = false;
-  };
-  /**
-   * Process data received with xhr response
-   *
-   * @param {[]} options
-   */
-
-
-  module.addZoneOptions = function (options) {
-    zone.options = [];
-    options.forEach(function (option, index) {
-      zone.options[index] = {
-        test: option.label,
-        value: option.value
-      };
     });
-    module.showElement(zone);
-  };
-  /**
-   * Adds a preview information about file to upload in a label
-   */
 
+    _defineProperty(this, "countryChanged", function (event) {
+      if ((event.type === 'keyup' && (event.keyCode === 40 || event.keyCode === 38) || event.type === 'change') && _this.loading !== true) {
+        if (_this.zone) {
+          var target = event.target || event.srcElement,
+              countrySelectedValue = target.options[target.selectedIndex].value;
+          _this.loading = true;
+          _this.zone.length = 0;
 
-  module.uploadFile = function () {
-    document.getElementById('uploadFile').value = this.value;
-  };
-  /**
-   * Selects the form and triggers submit
-   */
+          _this.hideElement(_this.zone);
 
+          _this.hideElement(_this.zoneEmpty);
 
-  module.submitForm = function () {
-    module.getElement('sfrForm').submit();
-  };
-  /**
-   * Attach content loaded element with callback to document
-   */
+          _this.showElement(_this.zoneLoading);
 
+          _this.ajaxRequest = new XMLHttpRequest();
+          _this.ajaxRequest.onreadystatechange = _this.xhrReadyStateChanged.bind(_this);
 
-  function initialize() {
-    module.attachToElement(document, 'DOMContentLoaded', function () {
-      var barGraph = module.getElement('bargraph');
-      zone = module.getElement('sfrZone');
-      zoneEmpty = module.getElement('sfrZone_empty');
-      zoneLoading = module.getElement('sfrZone_loading');
+          _this.ajaxRequest.open('POST', 'index.php?eID=sf_register');
 
-      if (barGraph !== null) {
-        barGraph.classList.add('show');
+          _this.ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+          _this.ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+        }
+      }
+    });
+
+    _defineProperty(this, "xhrReadyStateChanged", function (stateChanged) {
+      var xhrResponse = stateChanged.target;
+
+      if (xhrResponse.readyState === 4 && xhrResponse.status === 200) {
+        var xhrResponseData = JSON.parse(xhrResponse.responseText);
+
+        _this.hideElement(_this.zoneLoading);
+
+        if (xhrResponseData.status === 'error' || xhrResponseData.data.length === 0) {
+          _this.showElement(zoneEmpty);
+        } else {
+          _this.addZoneOptions(xhrResponseData.data);
+        }
       }
 
-      module.attachToElement('sfrpassword', 'keyup', module.callTestPassword);
-      module.attachToElement('sfrCountry', 'change', module.changeZone);
-      module.attachToElement('sfrCountry', 'keyup', module.changeZone);
-      module.attachToElement('uploadButton', 'change', module.uploadFile);
+      _this.loading = false;
     });
+
+    _defineProperty(this, "addZoneOptions", function (options) {
+      _this.zone.options = [];
+      options.forEach(function (option, index) {
+        this.options[index] = new Option(option.label, option.value);
+      }.bind(_this.zone));
+
+      _this.showElement(_this.zone);
+    });
+
+    _defineProperty(this, "uploadFile", function () {
+      document.getElementById('uploadFile').value = _this.value;
+    });
+
+    _defineProperty(this, "removeFile", function () {
+      document.getElementById('removeImage').value = 1;
+
+      _this.submitForm();
+    });
+
+    _defineProperty(this, "submitForm", function () {
+      document.getElementById('sfregister_form').submit();
+    });
+
+    var _self = this; // Attach content loaded element with callback to document
+
+
+    _self.attachToElement(document, 'DOMContentLoaded', _self.contentLoaded.bind(_self));
   }
+  /**
+   * Callback after content was loaded
+   */
+  ;
 
-  initialize();
+  var sfRegister = new SfRegister();
   /**
    * Register global function to be accessible from outside of the module
    */
 
   window.sfRegister_submitForm = function () {
-    module.submitForm();
+    sfRegister.submitForm();
   };
+
+  exports.SfRegister = module;
+});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(2)(module)))
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+(function PasswordStrengthCalculator(root, factory) {
+  if (true) {
+    // AMD. Register as an anonymous module.
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {}
+})(this, function () {
+  var PasswordStrengthCalculator = function PasswordStrengthCalculator() {
+    var _this = this;
+
+    _classCallCheck(this, PasswordStrengthCalculator);
+
+    _defineProperty(this, "verdictLength", function (password) {
+      var score = 0,
+          log = '',
+          length = password.length;
+
+      switch (true) {
+        case length > 0 && length < 5:
+          log = '3 points for length (' + length + ')';
+          score = 3;
+          break;
+
+        case length > 4 && length < 8:
+          log = '6 points for length (' + length + ')';
+          score = 6;
+          break;
+
+        case length > 7 && length < 16:
+          log = '12 points for length (' + length + ')';
+          score = 12;
+          break;
+
+        case length > 15:
+          log = '18 points for length (' + length + ')';
+          score = 18;
+          break;
+      }
+
+      return {
+        score: score,
+        log: log
+      };
+    });
+
+    _defineProperty(this, "verdictLetter", function (password) {
+      var score = 0,
+          log = '',
+          matchLower = password.match(/[a-z]/),
+          matchUpper = password.match(/[A-Z]/);
+
+      if (matchLower) {
+        if (matchUpper) {
+          score = 7;
+          log = '7 points for letters are mixed';
+        } else {
+          score = 5;
+          log = '5 point for at least one lower case char';
+        }
+      } else if (matchUpper) {
+        score = 5;
+        log = '5 points for at least one upper case char';
+      }
+
+      return {
+        score: score,
+        log: log
+      };
+    });
+
+    _defineProperty(this, "verdictNumbers", function (password) {
+      var score = 0,
+          log = '',
+          numbers = password.replace(/\D/gi, '');
+
+      if (numbers.length > 1) {
+        score = 7;
+        log = '7 points for at least three numbers';
+      } else if (numbers.length > 0) {
+        score = 5;
+        log = '5 points for at least one number';
+      }
+
+      return {
+        score: score,
+        log: log
+      };
+    });
+
+    _defineProperty(this, "verdictSpecialChars", function (password) {
+      var score = 0,
+          log = '',
+          specialCharacters = password.replace(/[\w\s]/gi, '');
+
+      if (specialCharacters.length > 1) {
+        score = 10;
+        log = '10 points for at least two special chars';
+      } else if (specialCharacters.length > 0) {
+        score = 5;
+        log = '5 points for at least one special char';
+      }
+
+      return {
+        score: score,
+        log: log
+      };
+    });
+
+    _defineProperty(this, "verdictCombos", function (verdicts) {
+      var score = 0,
+          log = '';
+
+      if (verdicts.letter === 7 && verdicts.number > 0 && verdicts.special > 0) {
+        score = 6;
+        log = '6 combo points for letters, numbers and special characters';
+      } else if (verdicts.letter > 0 && verdicts.number > 0 && verdicts.special > 0) {
+        score = 4;
+        log = '4 combo points for letters, numbers and special characters';
+      } else if (verdicts.letter === 7 && verdicts.number > 0) {
+        score = 2;
+        log = '2 combo points for mixed case letters and numbers';
+      } else if (verdicts.letter > 0 && verdicts.number > 0) {
+        score = 1;
+        log = '1 combo points for letters and numbers';
+      } else if (verdicts.letter === 7) {
+        score = 1;
+        log = '1 combo points for mixed case letters';
+      }
+
+      return {
+        score: score,
+        log: log
+      };
+    });
+
+    _defineProperty(this, "finalVerdict", function (finalScore) {
+      var strVerdict = '';
+
+      if (finalScore < 16) {
+        strVerdict = 'very weak';
+      } else if (finalScore > 15 && finalScore < 25) {
+        strVerdict = 'weak';
+      } else if (finalScore > 24 && finalScore < 35) {
+        strVerdict = 'mediocre';
+      } else if (finalScore > 34 && finalScore < 45) {
+        strVerdict = 'strong';
+      } else {
+        strVerdict = 'stronger';
+      }
+
+      return strVerdict;
+    });
+
+    _defineProperty(this, "calculate", function (password) {
+      var lengthVerdict = _this.verdictLength(password);
+
+      var letterVerdict = _this.verdictLetter(password);
+
+      var numberVerdict = _this.verdictNumbers(password);
+
+      var specialVerdict = _this.verdictSpecialChars(password);
+
+      var combosVerdict = _this.verdictCombos({
+        letter: letterVerdict.score,
+        number: numberVerdict.score,
+        special: specialVerdict.score
+      });
+
+      var score = lengthVerdict.score + letterVerdict.score + numberVerdict.score + specialVerdict.score + combosVerdict.score;
+      var log = [lengthVerdict.log, letterVerdict.log, numberVerdict.log, specialVerdict.log, combosVerdict.log, score + ' points final score'].join("\n");
+      return {
+        score: score,
+        verdict: _this.finalVerdict(score),
+        log: log
+      };
+    });
+  };
+
+  return PasswordStrengthCalculator;
 });
 
 /***/ })

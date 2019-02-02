@@ -1,10 +1,56 @@
-.tx_evoweb_sfregister #bargraph {
+.tx_evoweb_sfregister iframe#bargraph {
   display: none;
   height: 14px;
   width: 372px;
   border: none; }
-  .tx_evoweb_sfregister #bargraph.show {
+  .tx_evoweb_sfregister iframe#bargraph.show {
     display: block; }
+
+.tx_evoweb_sfregister meter#bargraph {
+  display: none;
+  background: #efefef;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  height: 11px;
+  width: 372px;
+  /* WebKit */
+  /* Firefox */ }
+  .tx_evoweb_sfregister meter#bargraph.show {
+    display: block; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-inner-element {
+    background: #efefef;
+    border: none;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-bar {
+    background: none;
+    background-color: #efefef;
+    border: 1px solid #ccc;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-even-less-good-value, .tx_evoweb_sfregister meter#bargraph::-webkit-meter-suboptimum-value, .tx_evoweb_sfregister meter#bargraph::-webkit-meter-optimum-value {
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-even-less-good-value {
+    background: #D14900; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-suboptimum-value {
+    background: #F5D000; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-optimum-value {
+    background: #3C5C00; }
+  .tx_evoweb_sfregister meter#bargraph::-moz-meter-inner-element {
+    background: #efefef; }
+  .tx_evoweb_sfregister meter#bargraph::-moz-meter-bar {
+    background: none;
+    background-color: #fff;
+    border: none;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-sub-optimum::-moz-meter-bar, .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-optimum::-moz-meter-bar, .tx_evoweb_sfregister meter#bargraph:-moz-meter-optimum::-moz-meter-bar {
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background-color: #D14900; }
+  .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-optimum::-moz-meter-bar {
+    background-color: #F5D000; }
+  .tx_evoweb_sfregister meter#bargraph:-moz-meter-optimum::-moz-meter-bar {
+    background-color: #3C5C00; }
 
 .tx_evoweb_sfregister #sfrZone_loading {
   background: transparent url(/typo3/sysext/core/Resources/Public/Icons/T3Icons/spinner/spinner-circle-dark.svg) no-repeat 4px 1px;

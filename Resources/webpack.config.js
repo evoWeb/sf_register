@@ -4,8 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 let entries = {};
 entries['sf_register'] = entries['sf_register.min'] = [
-	'./Private/Scripts/passwordmeter',
-	'./Private/Scripts/sf_register'
+	'./Private/Scripts/SfRegister'
 ];
 entries['styles'] = entries['styles.min'] = [
 	'./Private/Scss/styles.scss'
@@ -35,7 +34,12 @@ module.exports = {
 				],
 				loader: 'babel-loader',
 				options: {
-					presets: ['@babel/env', '@babel/react']
+					presets: [
+						'@babel/env'
+					],
+					'plugins': [
+						'@babel/plugin-proposal-class-properties'
+					]
 				}
 			},
 
