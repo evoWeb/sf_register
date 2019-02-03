@@ -7,6 +7,14 @@
 Breaking Changes
 ================
 
+2019.02.03
+''''''''''
+
+Drop custom form styles in favor for Bootstrap 4.2 styles. Be aware, to get the styles.css
+from older releases if you depend on it. If you use the Bootstrap 4.2 form styles you are
+good to go.
+
+
 2019.02.02
 ''''''''''
 

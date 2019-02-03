@@ -3,21 +3,22 @@
 <f:layout name="Default" />
 
 <f:section name="Main">
-	<f:form action="save" name="password">
-		<f:render partial="FormErrors" arguments="{for: 'password'}" />
+	<f:form action="save" name="password" id="sfrForm" class="px-3">
+		<div class="form-row">
+			<f:render partial="FormErrors" arguments="{for: 'password'}" />
 
-		<f:render partial="Form/Password" arguments="{user: password, fieldName: 'oldPassword'}"/>
+			<f:render partial="Form/Password" arguments="{user: password, fieldName: 'oldPassword'}"/>
 
-		<f:render partial="Form/Clear"/>
+			<f:render partial="Form/Clear"/>
 
-		<f:render partial="Form/Password" arguments="{user: password, fieldName: 'password', options: {progress: 'show'}}"/>
+			<f:render partial="Form/Password" arguments="{user: password, fieldName: 'password', options: {progress: 'show'}}"/>
 
-		<f:render partial="Form/Password" arguments="{user: password, fieldName: 'passwordRepeat'}"/>
+			<f:render partial="Form/Password" arguments="{user: password, fieldName: 'passwordRepeat'}"/>
 
-		<f:render partial="Form/Clear"/>
+			<f:render partial="Form/Clear"/>
 
-		<f:render partial="Form/Update"/>
-
+			<f:render partial="Form/Update"/>
+		</div>
 	</f:form>
 </f:section>
 

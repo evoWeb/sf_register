@@ -3,13 +3,15 @@
 <f:layout name="Default" />
 
 <f:section name="Main">
-	<f:form action="proxy" name="user" object="{user}">
+	<f:form action="proxy" name="user" class="px-3" object="{user}">
 
+		<div class="form-row">
 		<f:for each="{settings.fields.selected}" as="selectedField">
 			<f:alias map="{options: '{settings.fields.configuration.{selectedField}}'}">
 				<f:render partial="Preview/{options.partial}" arguments="{user: user, fieldName: selectedField, options: options}"/>
 			</f:alias>
 		</f:for>
+		</div>
 	</f:form>
 </f:section>
 

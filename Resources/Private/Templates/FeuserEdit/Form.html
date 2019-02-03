@@ -3,15 +3,18 @@
 <f:layout name="Default" />
 
 <f:section name="Main">
-	<f:form action="preview" id="sfregister_form" name="user" object="{user}" enctype="multipart/form-data">
+	<f:form action="preview" name="user" id="sfrForm" class="px-3" object="{user}" enctype="multipart/form-data">
 		<f:render partial="FormErrors" arguments="{for: 'user'}" />
 		<f:render partial="FieldError" arguments="{field: 'uid'}" />
 
+		<div class="form-row">
 		<f:for each="{settings.fields.selected}" as="selectedField" iteration="iteration">
 			<f:alias map="{options: '{settings.fields.configuration.{selectedField}}'}">
-				<f:render partial="Form/{options.partial}" arguments="{user: user, fieldName: selectedField, options: options, iteration: iteration}"/>
+				<f:render partial="Form/{options.partial}"
+					arguments="{user: user, fieldName: selectedField, options: options, iteration: iteration}"/>
 			</f:alias>
 		</f:for>
+		</div>
 	</f:form>
 
 	<div class="mandatory">

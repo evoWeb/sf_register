@@ -2,22 +2,22 @@
 	xmlns:recaptcha="http://typo3.org/ns/Evoweb/Recaptcha/ViewHelpers"
 	data-namespace-typo3-fluid="true">
 
-<div class="form-group {fieldName} pull-right">
+<div class="col-md-6 offset-md-6 text-md-right mb-3 {fieldName}">
 	<f:render partial="FieldError" arguments="{for: 'user', field: 'captcha'}" />
-	<f:form.hidden property="captcha" value="" id="captcha" />
+	<f:form.hidden property="captcha" id="captcha" value="" />
 
 	<recaptcha:form.recaptcha>
 		<f:if condition="{showCaptcha}">
 			<f:then>
 				<f:form.submit
 					value="{f:translate(key:'submit_create')}"
-					class="btn btn-primary pull-right g-recaptcha"
+					class="btn btn-primary g-recaptcha"
 					data="{sitekey: settings.recaptcha.public_key, callback: 'sfRegister_submitForm'}" />
 			</f:then>
 			<f:else>
 				<f:form.submit
 					value="{f:translate(key:'submit_create')}"
-					class="btn btn-primary pull-right" />
+					class="btn btn-primary" />
 				<div class="recaptcha-development-mode">
 					Development mode active. Do not expect the captcha to appear
 				</div>

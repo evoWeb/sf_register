@@ -2,16 +2,18 @@
 	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 	data-namespace-typo3-fluid="true">
 
-<div class="form-group upload {fieldName}">
-	<label for="{fieldName}"><f:translate id="{fieldName}" /></label>
-	<f:render partial="Required" arguments="{field: '{fieldName}'}" />
-	<f:render partial="FieldError" arguments="{for: 'user', field: '{fieldName}'}" /><br/>
+<div class="col-md-6 mb-3 {fieldName}">
+	<label for="{fieldName}">
+		<f:translate id="{fieldName}" />
+		<f:render partial="Required" arguments="{field: '{fieldName}'}" />
+	</label>
+	<f:render partial="FieldError" arguments="{for: 'user', field: '{fieldName}'}" />
 
-	<register:form.upload property="{fieldName}.0">
+	<register:form.upload property="{fieldName}.0" class="form-control-file">
 		<f:if condition="{resource}">
 			<f:image image="{resource}" alt="" width="50"/>
 			<f:form.hidden name="removeImage" id="removeImage" value="0"/>
-			<f:form.button type="button" id="removeImageButton">{f:translate(key:'submit_removeImage')}</f:form.button>
+			<f:form.button type="button" id="removeImageButton" class="btn btn-danger">{f:translate(key:'submit_removeImage')}</f:form.button>
 		</f:if>
 	</register:form.upload>
 </div>

@@ -54,11 +54,11 @@
 		 * Callback after content was loaded
 		 */
 		contentLoaded = () => {
-			this.barGraph = document.getElementById('bargraph');
 			this.zone = document.getElementById('sfrZone');
 			this.zoneEmpty = document.getElementById('sfrZone_empty');
 			this.zoneLoading = document.getElementById('sfrZone_loading');
 
+			this.barGraph = document.getElementById('bargraph');
 			if (this.barGraph !== null) {
 				this.barGraph.classList.add('show');
 				this.barGraph.passwordStrengthCalculator = new PasswordStrengthCalculator();
@@ -76,21 +76,23 @@
 		};
 
 		/**
-		 * Set display to block
+		 * Add class d-block remove class d-none
 		 *
 		 * @param {Object} element
 		 */
 		showElement = (element) => {
-			element.style.display = 'block';
+			element.classList.remove('d-none');
+			element.classList.add('d-block');
 		};
 
 		/**
-		 * Set display to none
+		 * Add class d-none remove class d-block
 		 *
 		 * @param {Object} element
 		 */
 		hideElement = (element) => {
-			element.style.display = 'none';
+			element.classList.remove('d-block');
+			element.classList.add('d-none');
 		};
 
 		/**
@@ -183,8 +185,7 @@
 
 					this.loading = true;
 
-					this.zone.length = 0;
-					this.hideElement(this.zone);
+					this.zone.disabled = true;
 					this.hideElement(this.zoneEmpty);
 					this.showElement(this.zoneLoading);
 
@@ -209,7 +210,7 @@
 				this.hideElement(this.zoneLoading);
 
 				if (xhrResponseData.status === 'error' || xhrResponseData.data.length === 0) {
-					this.showElement(zoneEmpty);
+					this.showElement(this.zoneEmpty);
 				} else {
 					this.addZoneOptions(xhrResponseData.data);
 				}
@@ -224,12 +225,13 @@
 		 * @param {[]} options
 		 */
 		addZoneOptions = (options) => {
+			this.zone.length = 0;
 			this.zone.options = [];
 			options.forEach(function (option, index) {
 				this.options[index] = new Option(option.label, option.value);
 			}.bind(this.zone));
 
-			this.showElement(this.zone);
+			this.zone.disabled = false;
 		};
 
 
@@ -252,7 +254,7 @@
 		 * Selects the form and triggers submit
 		 */
 		submitForm = () => {
-			document.getElementById('sfregister_form').submit();
+			document.getElementById('sfrForm').submit();
 		};
 	}
 

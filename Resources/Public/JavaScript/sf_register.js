@@ -156,10 +156,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _defineProperty(this, "zoneLoading", null);
 
     _defineProperty(this, "contentLoaded", function () {
-      _this.barGraph = document.getElementById('bargraph');
       _this.zone = document.getElementById('sfrZone');
       _this.zoneEmpty = document.getElementById('sfrZone_empty');
       _this.zoneLoading = document.getElementById('sfrZone_loading');
+      _this.barGraph = document.getElementById('bargraph');
 
       if (_this.barGraph !== null) {
         _this.barGraph.classList.add('show');
@@ -183,11 +183,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     });
 
     _defineProperty(this, "showElement", function (element) {
-      element.style.display = 'block';
+      element.classList.remove('d-none');
+      element.classList.add('d-block');
     });
 
     _defineProperty(this, "hideElement", function (element) {
-      element.style.display = 'none';
+      element.classList.remove('d-block');
+      element.classList.add('d-none');
     });
 
     _defineProperty(this, "attachToElement", function (id, eventName, callback) {
@@ -245,9 +247,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           var target = event.target || event.srcElement,
               countrySelectedValue = target.options[target.selectedIndex].value;
           _this.loading = true;
-          _this.zone.length = 0;
-
-          _this.hideElement(_this.zone);
+          _this.zone.disabled = true;
 
           _this.hideElement(_this.zoneEmpty);
 
@@ -274,7 +274,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         _this.hideElement(_this.zoneLoading);
 
         if (xhrResponseData.status === 'error' || xhrResponseData.data.length === 0) {
-          _this.showElement(zoneEmpty);
+          _this.showElement(_this.zoneEmpty);
         } else {
           _this.addZoneOptions(xhrResponseData.data);
         }
@@ -284,12 +284,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     });
 
     _defineProperty(this, "addZoneOptions", function (options) {
+      _this.zone.length = 0;
       _this.zone.options = [];
       options.forEach(function (option, index) {
         this.options[index] = new Option(option.label, option.value);
       }.bind(_this.zone));
-
-      _this.showElement(_this.zone);
+      _this.zone.disabled = false;
     });
 
     _defineProperty(this, "uploadFile", function () {
@@ -303,7 +303,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     });
 
     _defineProperty(this, "submitForm", function () {
-      document.getElementById('sfregister_form').submit();
+      document.getElementById('sfrForm').submit();
     });
 
     var _self = this; // Attach content loaded element with callback to document
