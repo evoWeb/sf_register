@@ -1,4 +1,4 @@
-page.includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/styles{$plugin.tx_sfregister.minified}.css
+page.includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/sf_register{$plugin.tx_sfregister.minified}.css
 page.includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register{$plugin.tx_sfregister.minified}.js
 
 plugin.tx_sfregister.view {

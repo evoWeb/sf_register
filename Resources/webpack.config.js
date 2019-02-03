@@ -1,30 +1,21 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 let entries = {};
 entries['sf_register'] = entries['sf_register.min'] = [
-	'./Private/Scripts/SfRegister'
-];
-entries['styles'] = entries['styles.min'] = [
+	'./Private/Scripts/SfRegister',
 	'./Private/Scss/styles.scss'
 ];
 
 module.exports = {
 	entry: entries,
-	devtool: 'source-map',
 	output: {
 		path: path.resolve(__dirname),
 		filename: './Public/JavaScript/[name].js'
 	},
-	optimization: {
-		minimize: true,
-		minimizer: [
-			new UglifyJsPlugin({
-				include: /\.min\.js$/
-			})
-		]
-	},
+	devtool: 'source-map',
 	module: {
 		rules: [
 			{
@@ -43,22 +34,45 @@ module.exports = {
 				}
 			},
 
-			{ // sass / scss loader for webpack
+			{
 				test: /\.(css|sass|scss)$/,
-				use: ExtractTextPlugin.extract({
-					use: ['css-loader', 'sass-loader'],
-				})
+				use: [
+					{
+						loader: MiniCssExtractPlugin.loader
+					},
+					{
+						loader: 'css-loader'
+					},
+					{
+						loader: 'sass-loader'
+					}
+				]
 			}
 		]
 	},
+	optimization: {
+		minimize: true,
+		minimizer: [
+			new UglifyJsPlugin({
+				include: /\.min\.js$/,
+				cache: true,
+				parallel: true,
+				sourceMap: true // set to true if you want JS source maps
+			}),
+			new OptimizeCSSAssetsPlugin({
+				assetNameRegExp: /\.min\.css$/,
+				sourceMap: true,
+				cssProcessorOptions: {
+					map: {
+						inline: false
+					}
+				}
+			})
+		]
+	},
 	plugins: [
-		new ExtractTextPlugin({ // define where to save the file
-			filename: './Public/Stylesheets/[name].css',
-			allChunks: true,
-		}),
-	],
-	// only to satisfy dependencies of loaded libraries
-	externals: {
-		jquery: 'jQuery'
-	}
+		new MiniCssExtractPlugin({
+			filename: './Public/Stylesheets/[name].css'
+		})
+	]
 };
