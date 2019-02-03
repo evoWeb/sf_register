@@ -95,7 +95,7 @@ module.exports = __webpack_require__(1);
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -105,7 +105,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 (function (root, factory) {
   if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(3)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -155,7 +155,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _defineProperty(this, "zoneLoading", null);
 
     _defineProperty(this, "contentLoaded", function () {
-      var self = _this;
       _this.barGraph = document.getElementById('bargraph');
       _this.zone = document.getElementById('sfrZone');
       _this.zoneEmpty = document.getElementById('sfrZone_empty');
@@ -166,18 +165,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         _this.barGraph.passwordStrengthCalculator = new PasswordStrengthCalculator();
 
-        _this.attachToElement('sfrpassword', 'keyup', function () {
-          self.callTestPassword(this);
-        });
+        if (!_this.isInternetExplorer()) {
+          _this.attachToElement('sfrpassword', 'keyup', _this.callTestPassword.bind(_this));
+        } else {
+          _this.loadInternetExplorerPolyfill();
+        }
       }
 
-      _this.attachToElement('sfrCountry', 'change', function (event) {
-        self.countryChanged(event);
-      });
+      _this.attachToElement('sfrCountry', 'change', _this.countryChanged.bind(_this));
 
-      _this.attachToElement('sfrCountry', 'keyup', function (event) {
-        self.countryChanged(event);
-      });
+      _this.attachToElement('sfrCountry', 'keyup', _this.countryChanged.bind(_this));
 
       _this.attachToElement('uploadButton', 'change', _this.uploadFile);
 
@@ -202,8 +199,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
     });
 
-    _defineProperty(this, "callTestPassword", function (element) {
-      var self = _this,
+    _defineProperty(this, "callTestPassword", function (event) {
+      var element = event.target,
           meterResult = _this.barGraph.passwordStrengthCalculator.calculate(element.value);
 
       if (_this.barGraph.tagName.toLowerCase() === 'meter') {
@@ -212,10 +209,33 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var percentScore = Math.min(Math.floor(meterResult.score / 3.4), 10),
             blinds = (_this.barGraph.contentDocument || _this.barGraph.contentWindow.document).getElementsByClassName('blind');
 
+        var _self2 = _this;
         Array.from(blinds).forEach(function (blind, index) {
-          self[index < percentScore ? 'hideElement' : 'showElement'](blind);
+          _self2[index < percentScore ? 'hideElement' : 'showElement'](blind);
         });
       }
+    });
+
+    _defineProperty(this, "isInternetExplorer", function () {
+      var ua = navigator.userAgent;
+      /* MSIE used to detect old browsers and Trident used to newer ones*/
+
+      return ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+    });
+
+    _defineProperty(this, "loadInternetExplorerPolyfill", function () {
+      var self = _this,
+          body = document.getElementsByTagName('body').item(0),
+          js = document.createElement('script');
+      js.setAttribute('type', 'text/javascript');
+      js.setAttribute('src', 'https://unpkg.com/meter-polyfill/dist/meter-polyfill.min.js');
+
+      js.onload = function () {
+        meterPolyfill(self.barGraph);
+        self.attachToElement('sfrpassword', 'keyup', self.callTestPassword.bind(this));
+      };
+
+      body.appendChild(js);
     });
 
     _defineProperty(this, "countryChanged", function (event) {
@@ -297,47 +317,18 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   var sfRegister = new SfRegister();
   /**
-   * Register global function to be accessible from outside of the module
+   * Global function needed for invisible recaptcha
    */
 
   window.sfRegister_submitForm = function () {
     sfRegister.submitForm();
   };
 
-  exports.SfRegister = module;
+  exports.SfRegister = sfRegister;
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(2)(module)))
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }

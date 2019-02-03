@@ -54,8 +54,6 @@
 		 * Callback after content was loaded
 		 */
 		contentLoaded = () => {
-			let self = this;
-
 			this.barGraph = document.getElementById('bargraph');
 			this.zone = document.getElementById('sfrZone');
 			this.zoneEmpty = document.getElementById('sfrZone_empty');
@@ -64,17 +62,15 @@
 			if (this.barGraph !== null) {
 				this.barGraph.classList.add('show');
 				this.barGraph.passwordStrengthCalculator = new PasswordStrengthCalculator();
-				this.attachToElement('sfrpassword', 'keyup', function () {
-					self.callTestPassword(this);
-				});
+				if (!this.isInternetExplorer()) {
+					this.attachToElement('sfrpassword', 'keyup', this.callTestPassword.bind(this));
+				} else {
+					this.loadInternetExplorerPolyfill();
+				}
 			}
 
-			this.attachToElement('sfrCountry', 'change', function (event) {
-				self.countryChanged(event);
-			});
-			this.attachToElement('sfrCountry', 'keyup', function (event) {
-				self.countryChanged(event);
-			});
+			this.attachToElement('sfrCountry', 'change', this.countryChanged.bind(this));
+			this.attachToElement('sfrCountry', 'keyup', this.countryChanged.bind(this));
 			this.attachToElement('uploadButton', 'change', this.uploadFile);
 			this.attachToElement('removeImageButton', 'click', this.removeFile.bind(this));
 		};
@@ -118,9 +114,11 @@
 		/**
 		 * Gets password meter element and sets the value with
 		 * the result of the calculate password strength function
+		 *
+		 * @param {object} event
 		 */
-		callTestPassword = (element) => {
-			let self = this,
+		callTestPassword = (event) => {
+			let element = event.target,
 				meterResult = this.barGraph.passwordStrengthCalculator.calculate(element.value);
 
 			if (this.barGraph.tagName.toLowerCase() === 'meter') {
@@ -131,10 +129,35 @@
 						this.barGraph.contentDocument || this.barGraph.contentWindow.document
 					).getElementsByClassName('blind');
 
+				let self = this;
 				Array.from(blinds).forEach(function (blind, index) {
 					self[index < percentScore ? 'hideElement' : 'showElement'](blind);
 				});
 			}
+		};
+
+		/**
+		 * Check if is internet explorer
+		 *
+		 * @returns {boolean}
+		 */
+		isInternetExplorer = () => {
+			let ua = navigator.userAgent;
+			/* MSIE used to detect old browsers and Trident used to newer ones*/
+			return ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+		};
+
+		loadInternetExplorerPolyfill = () => {
+			let self = this,
+				body = document.getElementsByTagName('body').item(0),
+				js = document.createElement('script');
+			js.setAttribute('type', 'text/javascript');
+			js.setAttribute('src', 'https://unpkg.com/meter-polyfill/dist/meter-polyfill.min.js');
+			js.onload = function () {
+				meterPolyfill(self.barGraph);
+				self.attachToElement('sfrpassword', 'keyup', self.callTestPassword.bind(this));
+			};
+			body.appendChild(js);
 		};
 
 
@@ -209,6 +232,7 @@
 			this.showElement(this.zone);
 		};
 
+
 		/**
 		 * Adds a preview information about file to upload in a label
 		 */
@@ -235,11 +259,11 @@
 	let sfRegister = new SfRegister();
 
 	/**
-	 * Register global function to be accessible from outside of the module
+	 * Global function needed for invisible recaptcha
 	 */
 	window.sfRegister_submitForm = function () {
 		sfRegister.submitForm();
 	};
 
-	exports.SfRegister = module;
+	exports.SfRegister = sfRegister;
 }));

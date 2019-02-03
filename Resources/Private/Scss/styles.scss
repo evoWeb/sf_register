@@ -19,9 +19,53 @@
         border-radius: 0 0 10px 10px;
         height: 11px;
         width: 372px;
+        max-width: 98%;
 
         &.show {
             display: block;
+        }
+
+        /* Polyfill */
+        .meter-inner-element {
+            appearance: inherit;
+            box-sizing: inherit;
+            height: 100%;
+            width: 100%;
+            background: #efefef;
+            border: none;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .meter-bar {
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            background: none;
+            background-color: #efefef;
+            border: none;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .meter-even-less-good-value,
+        .meter-suboptimum-value,
+        .meter-optimum-value {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            user-modify: read-only;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .meter-even-less-good-value {
+            background: #D14900;
+        }
+
+        .meter-suboptimum-value {
+            background: #F5D000;
+        }
+
+        .meter-optimum-value {
+            background: #3C5C00;
         }
 
         /* WebKit */
@@ -35,6 +79,7 @@
             background: none;
             background-color: #efefef;
             border: 1px solid #ccc;
+            border-top: none;
             border-radius: 0 0 10px 10px;
         }
 
@@ -85,6 +130,15 @@
         &:-moz-meter-optimum::-moz-meter-bar {
             background-color: #3C5C00;
         }
+        /*div
+        {
+            display: block;
+            border: none;
+            border-radius: 0 0 10px 10px;
+            height: 11px;
+            background: linear-gradient(to right, #d14900 0%, #d14900 30%, #f5d000 30%, #f5d000 70%, #3c5c00 70%, #3c5c00 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d14900', endColorstr='#3c5c00', GradientType=1 );
+        }*/
     }
 
     #sfrZone_loading {

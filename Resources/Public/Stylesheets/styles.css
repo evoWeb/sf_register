@@ -15,10 +15,51 @@
   border-radius: 0 0 10px 10px;
   height: 11px;
   width: 372px;
+  max-width: 98%;
+  /* Polyfill */
   /* WebKit */
-  /* Firefox */ }
+  /* Firefox */
+  /*div
+        {
+            display: block;
+            border: none;
+            border-radius: 0 0 10px 10px;
+            height: 11px;
+            background: linear-gradient(to right, #d14900 0%, #d14900 30%, #f5d000 30%, #f5d000 70%, #3c5c00 70%, #3c5c00 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d14900', endColorstr='#3c5c00', GradientType=1 );
+        }*/ }
   .tx_evoweb_sfregister meter#bargraph.show {
     display: block; }
+  .tx_evoweb_sfregister meter#bargraph .meter-inner-element {
+    appearance: inherit;
+    box-sizing: inherit;
+    height: 100%;
+    width: 100%;
+    background: #efefef;
+    border: none;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph .meter-bar {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    background: none;
+    background-color: #efefef;
+    border: none;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph .meter-even-less-good-value,
+  .tx_evoweb_sfregister meter#bargraph .meter-suboptimum-value,
+  .tx_evoweb_sfregister meter#bargraph .meter-optimum-value {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    user-modify: read-only;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph .meter-even-less-good-value {
+    background: #D14900; }
+  .tx_evoweb_sfregister meter#bargraph .meter-suboptimum-value {
+    background: #F5D000; }
+  .tx_evoweb_sfregister meter#bargraph .meter-optimum-value {
+    background: #3C5C00; }
   .tx_evoweb_sfregister meter#bargraph::-webkit-meter-inner-element {
     background: #efefef;
     border: none;
@@ -27,6 +68,7 @@
     background: none;
     background-color: #efefef;
     border: 1px solid #ccc;
+    border-top: none;
     border-radius: 0 0 10px 10px; }
   .tx_evoweb_sfregister meter#bargraph::-webkit-meter-even-less-good-value, .tx_evoweb_sfregister meter#bargraph::-webkit-meter-suboptimum-value, .tx_evoweb_sfregister meter#bargraph::-webkit-meter-optimum-value {
     border-radius: 0 0 10px 10px; }
