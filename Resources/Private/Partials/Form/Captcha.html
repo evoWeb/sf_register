@@ -4,7 +4,7 @@
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
 	<f:form.hidden property="{fieldName}" id="{fieldName}" value="" />
 
-	<f:render partial="Captcha{options.type}" />
+	<f:render partial="Captcha{options.type -> f:format.case(mode: 'capital')}" />
 </div>
 
 </html>
