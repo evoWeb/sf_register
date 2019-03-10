@@ -6,8 +6,8 @@
 conf.py:
   copyright: 2010-2019
   project: Frontend User Registration
-  version: 9.0
-  release: 9.0.0
+  version: 9.1
+  release: 9.1.0
   latex_elements:
     papersize: a4paper
     pointsize: 10pt

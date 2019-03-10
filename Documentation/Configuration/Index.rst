@@ -83,7 +83,7 @@ plugin.tx\_sfregister.settings:
          string
 
    :Description:
-         Comma sererated list of word, that validator badWordFilterwill avoid
+         Comma separated list of word, that validator badWordFilter will avoid
 
    :Default:
          god, sex, password

@@ -2,21 +2,22 @@
 	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 	data-namespace-typo3-fluid="true">
 
-<div class="form-group {fieldName}">
-	<label for="sfrZone"><f:translate id="{fieldName}" /></label>
-	<f:render partial="Required" arguments="{field: fieldName}" />
-	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
+<div class="col-md-6 mb-3 {fieldName}">
+	<label for="sfrZone">
+		<f:translate id="{fieldName}" />
+		<f:render partial="Required" arguments="{field: fieldName}" />
+	</label>
+	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
+
 	<register:form.selectStaticCountryZones
-		property="zone"
+		property="{fieldName}"
 		id="sfrZone"
 		parent="{f:if(condition: user.staticInfoCountry, then: user.staticInfoCountry, else: options.defaultValue)}"
 		class="form-control" />
 
-	<div id="sfrZone_empty" class="form-control-static" style="display: none;">
-		<f:translate id="no_zone_available" />
-	</div>
-	<div id="sfrZone_loading" class="form-control-static" style="display: none;">
-		<f:translate id="zone_loading" />
+	<div id="sfrZone_empty" class="d-none form-control-plaintext"><f:translate id="no_zone_available" /></div>
+	<div id="sfrZone_loading" class="spinner-border text-primary d-none" role="status">
+		<span class="sr-only"><f:translate id="zone_loading" /></span>
 	</div>
 </div>
 

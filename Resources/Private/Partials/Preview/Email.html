@@ -1,9 +1,9 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<div class="form-group {fieldName}">
+<div class="col-md-6 mb-3 {fieldName}">
 	<label><f:translate id="{fieldName}" /></label>
 	<f:form.hidden property="{fieldName}" />
-	<p class="form-control-static">{user.{fieldName}}</p>
+	<p class="form-control-plaintext">{user.{fieldName}}</p>
 </div>
 
 </html>

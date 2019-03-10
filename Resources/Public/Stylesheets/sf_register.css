@@ -1,0 +1,94 @@
+.tx_evoweb_sfregister iframe#bargraph {
+  display: none;
+  height: 14px;
+  width: 372px;
+  border: none; }
+  .tx_evoweb_sfregister iframe#bargraph.show {
+    display: block; }
+
+.tx_evoweb_sfregister meter#bargraph {
+  display: none;
+  background: #efefef;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  height: 11px;
+  width: 100%;
+  /* Polyfill */
+  /* WebKit */
+  /* Firefox */ }
+  .tx_evoweb_sfregister meter#bargraph.show {
+    display: block; }
+  .tx_evoweb_sfregister meter#bargraph .meter-inner-element {
+    appearance: inherit;
+    box-sizing: inherit;
+    height: 100%;
+    width: 100%;
+    background: #efefef;
+    border: none;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph .meter-bar {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    background: #efefef;
+    border: none;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph .meter-even-less-good-value,
+  .tx_evoweb_sfregister meter#bargraph .meter-suboptimum-value,
+  .tx_evoweb_sfregister meter#bargraph .meter-optimum-value {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    user-modify: read-only;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph .meter-even-less-good-value {
+    background: #D14900; }
+  .tx_evoweb_sfregister meter#bargraph .meter-suboptimum-value {
+    background: #F5D000; }
+  .tx_evoweb_sfregister meter#bargraph .meter-optimum-value {
+    background: #3C5C00; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-inner-element {
+    background: #efefef;
+    border: none;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-bar {
+    background: #efefef;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-even-less-good-value, .tx_evoweb_sfregister meter#bargraph::-webkit-meter-suboptimum-value, .tx_evoweb_sfregister meter#bargraph::-webkit-meter-optimum-value {
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-even-less-good-value {
+    background: #D14900; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-suboptimum-value {
+    background: #F5D000; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-optimum-value {
+    background: #3C5C00; }
+  .tx_evoweb_sfregister meter#bargraph::-moz-meter-inner-element {
+    background: #efefef; }
+  .tx_evoweb_sfregister meter#bargraph::-moz-meter-bar {
+    background: #efefef;
+    border: none;
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-sub-optimum::-moz-meter-bar, .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-optimum::-moz-meter-bar, .tx_evoweb_sfregister meter#bargraph:-moz-meter-optimum::-moz-meter-bar {
+    border-radius: 0 0 10px 10px; }
+  .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: #D14900; }
+  .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-optimum::-moz-meter-bar {
+    background: #F5D000; }
+  .tx_evoweb_sfregister meter#bargraph:-moz-meter-optimum::-moz-meter-bar {
+    background: #3C5C00; }
+
+.tx_evoweb_sfregister #sfrZone_loading {
+  position: relative;
+  top: -35px;
+  left: -13px;
+  margin-left: 50%; }
+
+.tx_evoweb_sfregister .grecaptcha-badge {
+  margin-right: -10000px; }
+
+
+/*# sourceMappingURL=sf_register.css.map*/

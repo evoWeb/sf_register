@@ -2,15 +2,14 @@
 	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 	data-namespace-typo3-fluid="true">
 
-<div class="form-group {fieldName}">
-	<label for="{fieldName}"><f:translate id="{fieldName}" /></label>
-	<f:render partial="Required" arguments="{field: fieldName}" />
-	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
-	<register:form.translatedSelect
-		property="{fieldName}"
-		id="{fieldName}"
-		options="{options.values}"
-		class="form-control" />
+<div class="col-md-6 mb-3 {fieldName}">
+	<label for="{fieldName}">
+		<f:translate id="{fieldName}" />
+		<f:render partial="Required" arguments="{field: fieldName}" />
+	</label>
+	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
+
+	<register:form.translatedSelect property="{fieldName}" id="{fieldName}" options="{options.values}" class="form-control" />
 </div>
 
 </html>

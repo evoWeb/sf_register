@@ -7,6 +7,32 @@
 Breaking Changes
 ================
 
+2019.02.03
+''''''''''
+
+Drop custom form styles in favor for Bootstrap 4.2 styles. Be aware, to get the styles.css
+from older releases if you depend on it. If you use the Bootstrap 4.2 form styles you are
+good to go.
+
+
+2019.02.02
+''''''''''
+
+The password strength meter got replaced with the <meter> element. If you still need the old
+iframe variant for old browser or for the looks, please override the file
+EXT:sf_register/Resources/Private/Partials/Form/Password.html in your sitepackage and replace
+
+Before:
+::
+   <meter min="0" low="20" optimum="30" high="40" max="50" id="bargraph"></meter>
+
+After:
+::
+   <iframe id="bargraph" frameborder="none" scrolling="no"
+      src="/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg"></iframe>
+
+
+
 2019.01.17
 ''''''''''
 

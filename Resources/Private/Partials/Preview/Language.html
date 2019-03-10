@@ -3,9 +3,10 @@
 	data-namespace-typo3-fluid="true">
 
 <f:variable name="languageKey"><register:languageKey type="languages"/></f:variable>
-<div class="form-group {fieldName}">
+<div class="col-md-6 mb-3 {fieldName}">
 	<label><f:translate id="{fieldName}" /></label>
 	<f:form.hidden property="{fieldName}" />
+
 	<register:form.selectStaticLanguage
 		property="{fieldName}"
 		id="{fieldName}"

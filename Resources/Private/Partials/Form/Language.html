@@ -3,10 +3,13 @@
 	data-namespace-typo3-fluid="true">
 
 <f:variable name="languageKey"><register:languageKey type="languages"/></f:variable>
-<div class="form-group {fieldName}">
-	<label for="{fieldName}"><f:translate id="{fieldName}" /></label>
-	<f:render partial="Required" arguments="{field: fieldName}" />
-	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" /><br/>
+<div class="col-md-6 mb-3 {fieldName}">
+	<label for="{fieldName}">
+		<f:translate id="{fieldName}" />
+		<f:render partial="Required" arguments="{field: fieldName}" />
+	</label>
+	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
+
 	<register:form.selectStaticLanguage
 		property="{fieldName}"
 		id="{fieldName}"

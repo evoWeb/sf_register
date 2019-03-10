@@ -33,10 +33,14 @@ before_script:
 
 script:
   - >
-    echo "Running functional tests";
-    export typo3DatabaseName="functional";
-    export typo3DatabaseDriver="pdo_sqlite";
+    echo "Running ${TYPO3_VERSION} unit tests";
     php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/;
+    echo "Running functional tests";
+    export typo3DatabaseName="typo3";
+    export typo3DatabaseHost="localhost";
+    export typo3DatabaseUsername="root";
+    export typo3DatabasePassword="";
+    export typo3DatabaseDriver="pdo_sqlite";
     php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
 
 jobs:
@@ -67,7 +71,7 @@ jobs:
 
     - stage: test
       php: 7.2
-      env: TYPO3_VERSION="^9.5" TESTING_FRAMEWORK="~4.11.1"
+      env: TYPO3_VERSION="^9.5" TESTING_FRAMEWORK="~4.10.0"
 
     - stage: test
       php: 7.2
