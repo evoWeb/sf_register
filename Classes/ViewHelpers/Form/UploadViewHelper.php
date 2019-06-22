@@ -136,16 +136,12 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
      */
     protected function isRenderUpload($resources)
     {
-        return is_null($resources)
-            || (
-                is_object($resources) && empty($resources->toArray())
-            )
-            || (
-                is_array($resources) && empty($resource)
-            )
-            || (
-                $this->hasArgument('alwaysShowUpload') && $this->arguments['alwaysShowUpload']
-            );
+        $null = is_null($resources);
+        $objectStorage = $resources instanceof ObjectStorage && empty($resources->toArray());
+        $fileReference = $resources instanceof FileReference && empty($resources->getOriginalResource()->toArray());
+        $array = is_array($resources) && empty($resources);
+        $argument = $this->hasArgument('alwaysShowUpload') && $this->arguments['alwaysShowUpload'];
+        return $null || $objectStorage || $fileReference || $array || $argument;
     }
 
     /**
@@ -167,6 +163,6 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
             return $resource;
         }
 
-        return $this->propertyMapper->convert($resource, \TYPO3\CMS\Extbase\Domain\Model\FileReference::class);
+        return [$this->propertyMapper->convert($resource, \TYPO3\CMS\Extbase\Domain\Model\FileReference::class)];
     }
 }
