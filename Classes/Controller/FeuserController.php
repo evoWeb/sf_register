@@ -30,6 +30,7 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
@@ -280,8 +281,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $user->getImage()->rewind();
         $image = $user->getImage()->current();
 
-        $this->fileService->removeFile($image);
-        $this->removeImageFromUserAndRequest($user);
+        $this->removeImageFromUserAndRequest($user, $image);
 
         $this->request->setArgument('removeImage', false);
 
@@ -300,21 +300,22 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * Remove an image from user object and request object
      *
      * @param FrontendUser $user
+     * @param FileReference $image
      *
      * @return FrontendUser
      */
-    protected function removeImageFromUserAndRequest(FrontendUser $user): FrontendUser
+    protected function removeImageFromUserAndRequest(FrontendUser $user, $image): FrontendUser
     {
         if ($user->getUid() !== null) {
             /** @var FrontendUser $localUser */
             $localUser = $this->userRepository->findByUid($user->getUid());
-            $localUser->removeImage();
+            $localUser->removeImage($image);
             $this->userRepository->update($localUser);
 
             $this->persistAll();
         }
 
-        $user->removeImage();
+        $user->emptyImage();
 
         /** @var array $requestUser */
         $requestUser = $this->request->getArgument('user');

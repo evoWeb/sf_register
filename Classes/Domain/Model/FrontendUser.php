@@ -25,6 +25,7 @@ namespace Evoweb\SfRegister\Domain\Model;
  ***************************************************************/
 
 use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
  * An extended frontend user with more attributes
@@ -380,11 +381,19 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
     }
 
     /**
-     * Remove an image
+     * Remove image reference
      *
-     * @return void
+     * @param FileReference $image
      */
-    public function removeImage()
+    public function removeImage(\TYPO3\CMS\Extbase\Domain\Model\FileReference $image)
+    {
+        $this->image->detach($image);
+    }
+
+    /**
+     * Clear temporary image
+     */
+    public function emptyImage()
     {
         $this->image = null;
     }
