@@ -277,6 +277,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function removeImageAction(FrontendUser $user)
     {
         /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $image */
+        $user->getImage()->rewind();
         $image = $user->getImage()->current();
 
         $this->fileService->removeFile($image);

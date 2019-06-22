@@ -9,7 +9,8 @@
 
 	<register:form.upload property="{fieldName}.0">
 		<f:if condition="{resource}">
-			<f:image image="{resource}" alt="" width="50"/>
+			<div><f:image image="{resource}" alt="" width="50"/>
+			<f:form.button name="removeImage" value="1">Bild entfernen</f:form.button></div>
 		</f:if>
 	</register:form.upload>
 </div>

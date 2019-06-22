@@ -27,6 +27,9 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /**
  * Class UploadViewHelper
  */
@@ -130,7 +133,7 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage|array $resources
+     * @param ObjectStorage|array $resources
      *
      * @return bool
      */
@@ -148,7 +151,7 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
      * Return a previously uploaded resource.
      * Return NULL if errors occurred during property mapping for this property.
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|array
+     * @return ObjectStorage|array|null
      */
     protected function getUploadedResource()
     {
@@ -158,11 +161,15 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
 
         $resource = $this->getValueAttribute();
         if ($resource instanceof \TYPO3\CMS\Extbase\Domain\Model\FileReference) {
-            return [$resource];
+            $resource = [$resource];
         } elseif ($resource instanceof \TYPO3\CMS\Extbase\Persistence\ObjectStorage) {
-            return $resource;
+        } elseif (!is_null($resource)) {
+            $resource = [$this->propertyMapper->convert(
+                $resource,
+                \TYPO3\CMS\Extbase\Domain\Model\FileReference::class
+            )];
         }
 
-        return [$this->propertyMapper->convert($resource, \TYPO3\CMS\Extbase\Domain\Model\FileReference::class)];
+        return $resource;
     }
 }
