@@ -304,7 +304,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @return FrontendUser
      */
-    protected function removeImageFromUserAndRequest(FrontendUser $user, $image): FrontendUser
+    protected function removeImageFromUserAndRequest(FrontendUser $user, $image = null): FrontendUser
     {
         if ($user->getUid() !== null) {
             /** @var FrontendUser $localUser */
@@ -313,6 +313,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             $this->userRepository->update($localUser);
 
             $this->persistAll();
+        }
+
+        if (!is_null($image)) {
+            $file = $image->getOriginalResource();
+            $file->getStorage()->deleteFile($file);
         }
 
         $user->emptyImage();
