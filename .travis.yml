@@ -57,24 +57,6 @@ jobs:
       script:
         - errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l {} 2>&1 >/dev/null \;) && echo "$errors" && test -z "$errors"
 
-    - stage: test
-      php: 7.2
-      env: Xliff Lint
-      before_install: skip
-      install: skip
-      before_script: skip
-      script:
-        - echo "Running xmllint (Xliff)";
-          find Resources/Private/Language/ -name '*.xlf' -type f | xargs xmllint --noout --schema Tests/Fixtures/xliff-core-1.2-strict.xsd
-
-    - stage: test
-      php: 7.2
-      env: TYPO3_VERSION="^9.5" TESTING_FRAMEWORK="~4.10.0"
-
-    - stage: test
-      php: 7.2
-      env: TYPO3_VERSION="dev-master" TESTING_FRAMEWORK="~5.0.3"
-
     - stage: publish in ter
       if: tag IS present
       php: 7.1
