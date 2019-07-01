@@ -17,7 +17,7 @@ CREATE TABLE fe_users (
 	privacy tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	status int(11) unsigned DEFAULT '0' NOT NULL,
 	by_invitation tinyint(4) unsigned DEFAULT '0' NOT NULL,
-	comments text NOT NULL,
+	comments text,
 	module_sys_dmail_newsletter tinyint(3) unsigned DEFAULT '0' NOT NULL,
 	module_sys_dmail_html tinyint(3) unsigned DEFAULT '0' NOT NULL,
 	module_sys_dmail_category text,
