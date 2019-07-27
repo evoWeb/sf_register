@@ -7,7 +7,7 @@
 		<div class="form-row">
 			<f:render partial="FormErrors" arguments="{for: 'password'}" />
 
-			<f:render partial="Form/Password" arguments="{user: password, fieldName: 'oldPassword'}"/>
+			<f:render partial="Form/Password" arguments="{user: password, fieldName: 'oldPassword', property: 'password'}"/>
 
 			<f:render partial="Form/Clear"/>
 
