@@ -1,7 +1,7 @@
 {
   "name": "sf_register",
   "description": "Bundles all resources for the usage",
-  "version": "9.1.0",
+  "version": "9.2.0",
   "license": "GPL-2.0+",
   "repository": "https://github.com/evoWeb/sf_register.git",
   "homepage": "http://www.evoweb.de/",
