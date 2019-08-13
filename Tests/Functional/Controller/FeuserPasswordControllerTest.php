@@ -67,6 +67,9 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
      */
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository()
     {
+        $this->markTestSkipped(
+            'Due to missing Argon2 in travisci.'
+        );
         $expected = 'myPassword';
 
         $userId = $this->createAndLoginFrontEndUser('2', [
