@@ -53,6 +53,7 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
     {
         parent::initializeArguments();
         $this->registerTagAttribute('alwaysShowUpload', 'string', 'Whether the upload button should be always shown.');
+        $this->registerTagAttribute('accept', 'string', 'Accepted file extensions.', false, '');
     }
 
     public function render(): string
