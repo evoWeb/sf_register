@@ -6,6 +6,9 @@ addons:
   apt:
     packages:
       - libxml2-utils
+      - argon2
+      - libargon2-0
+      - libargon2-0-dev
 
 branches:
   only:
