@@ -36,6 +36,7 @@ install:
 before_script:
   - phpenv config-rm xdebug.ini
   - pecl install libsodium
+  - echo "extension=sodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 script:
   - >
