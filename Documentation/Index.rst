@@ -1,10 +1,4 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: Includes.txt
-.. include:: Images.txt
+.. include:: ../Includes.txt
 
 
 .. _start:
@@ -14,34 +8,42 @@ Frontend User Registration: Multipurpose configurable registration
 ==================================================================
 
 :Extension Key:
-	sf_register
+      sf_register
+
+:Version:
+      |release|
 
 :Language:
-	en
+      en
+
+:Description:
+      Offers the possibility to maintain the fe_user data in frontend by the user self.
 
 :Keywords:
-	forEditors, forAdmins, forBeginners, forIntermediates
+      forEditors, forAdmins, forBeginners, forIntermediates
 
 :Copyright:
-	2010-2013
+      2010-2019
 
 :Author:
-	Sebastian Fischer, Anja Leichsenring
-
-:Email:
-      typo3@evoweb.de
+      Sebastian Fischer
 
 :License:
-      Open Content License_
+      Open Content License available from http://www.opencontent.org/opl.shtml
 
 :Rendered:
       |today|
 
-|img-1| |img-logo| Frontend User Registration: Multipurpose configurable registration
-
 The content of this document is related to TYPO3,
+a GNU/GPL CMS/Framework available from http://typo3.org
 
-a GNU/GPL CMS/Framework available from www.typo3.org_
+.. only:: html
+
+   .. tip::
+
+      :ref:`Sitemap`
+
+**Table of Contents**
 
 .. toctree::
    :maxdepth: 5
@@ -60,7 +62,3 @@ a GNU/GPL CMS/Framework available from www.typo3.org_
    Changelog/Index
    Deprecations/Index
    BreakingChanges/Index
-   Targets
-
-.. _License: http://www.opencontent.org/opl.shtml
-.. _www.typo3.org: http://www.typo3.org/

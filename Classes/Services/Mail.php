@@ -283,10 +283,20 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         if ($bodyHtml !== '') {
-            $mail->addPart($bodyHtml, 'text/html');
+            if (method_exists($mail, 'addPart')) {
+                // @todo remove once TYPO3 9.5 support gets dropped
+                $mail->addPart($bodyHtml, 'text/html');
+            } else {
+                $mail->html($bodyHtml);
+            }
         }
         if ($bodyPlain !== '') {
-            $mail->addPart($bodyPlain, 'text/plain');
+            if (method_exists($mail, 'addPart')) {
+                // @todo remove once TYPO3 9.5 support gets dropped
+                $mail->addPart($bodyPlain, 'text/plain');
+            } else {
+                $mail->text($bodyPlain);
+            }
         }
 
         $mail = $this->dispatchSlotSignal('sendMailPreSend', $mail, $user);

@@ -1,5 +1,0 @@
-.. |img-1|      image:: ../Images/action_diagram.png
-.. :align: LEFT
-.. :border: 0
-.. :name: Grafik1
-.. :width: 100%

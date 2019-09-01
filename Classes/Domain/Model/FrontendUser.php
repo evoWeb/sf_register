@@ -225,10 +225,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
      */
     protected $invitationEmail = '';
 
-    public function __construct(string $username = '', string $password = '')
+    public function initializeObject()
     {
-        parent::__construct($username, $password);
-        $this->image = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $this->moduleSysDmailCategory = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 

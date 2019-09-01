@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Controller;
+namespace Evoweb\SfRegister\Middleware;
 
 /***************************************************************
  * Copyright notice
@@ -27,6 +27,7 @@ namespace Evoweb\SfRegister\Controller;
 use Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Api to get information via ajax calls
@@ -34,7 +35,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * Call eid like
  * ?eID=sf_register&tx_sfregister[action]=zones&tx_sfregister[parent]=DE
  */
-class AjaxController
+class AjaxMiddleware implements \Psr\Http\Server\MiddlewareInterface
 {
     /**
      * Request parameters from url
@@ -65,20 +66,27 @@ class AjaxController
     protected $result = [];
 
 
-    public function processRequest(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $requestArguments = $request->getParsedBody()['tx_sfregister'] ?? [];
+        $requestArguments = $this->getParamFromRequest($request, 'tx_sfregister');
 
-        switch ($requestArguments['action']) {
-            case 'zones':
-                $this->getZonesAction($requestArguments['parent']);
-                break;
+        if (!\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('ajax') == 'sf_register') {
+            $response = $handler->handle($request);
+        } else {
+            switch ($requestArguments['action']) {
+                case 'zones':
+                    $this->getZonesAction($requestArguments['parent']);
+                    break;
 
-            default:
-                $this->errorAction();
+                default:
+                    $this->errorAction();
+            }
+            $response = new \TYPO3\CMS\Core\Http\JsonResponse([
+                'status' => $this->status,
+                'message' => $this->message,
+                'data' => $this->result,
+            ]);
         }
-
-        $response->getBody()->write($this->output());
 
         return $response;
     }
@@ -102,8 +110,7 @@ class AjaxController
         if (\TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($parent)) {
             $zones = $zoneRepository->findAllByParentUid((int) $parent);
         } else {
-            $parent = strtoupper(preg_replace('/[^A-Za-z]{2}/', '', $parent));
-            $zones = $zoneRepository->findAllByIso2($parent);
+            $zones = $zoneRepository->findAllByIso2(strtoupper(preg_replace('/[^A-Za-z]{2}/', '', $parent)));
         }
 
         if ($zones->rowCount() == 0) {
@@ -124,14 +131,15 @@ class AjaxController
         }
     }
 
-    protected function output(): string
+    /**
+     * @param ServerRequestInterface $request
+     * @param string $name
+     *
+     * @return array
+     */
+    protected function getParamFromRequest(ServerRequestInterface $request, string $name): array
     {
-        $result = [
-            'status' => $this->status,
-            'message' => $this->message,
-            'data' => $this->result,
-        ];
-
-        return json_encode($result);
+        $arguments = $request->getParsedBody()[$name] ?? $request->getQueryParams()[$name] ?? [];
+        return is_array($arguments) ? $arguments : [];
     }
 }

@@ -62,7 +62,7 @@ class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTi
         $targetType,
         array $convertedChildProperties = [],
         \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration = null
-    ) {
+    ): ?object {
         try {
             $date = parent::convertFrom($source, $targetType, $convertedChildProperties, $configuration);
         } catch (\TYPO3\CMS\Extbase\Property\Exception\TypeConverterException $e) {

@@ -5,15 +5,15 @@ import path from 'path';
 
 let entries = {};
 entries['sf_register'] = entries['sf_register.min'] = [
-	'./Private/Scripts/SfRegister',
-	'./Private/Scss/styles.scss'
+	'./Sources/Scripts/SfRegister',
+	'./Sources/Scss/styles.scss'
 ];
 
 module.exports = {
 	entry: entries,
 	output: {
 		path: path.resolve(__dirname),
-		filename: './Public/JavaScript/[name].js'
+		filename: '../Resources/Public/JavaScript/[name].js'
 	},
 	devtool: 'source-map',
 	module: {
@@ -72,7 +72,7 @@ module.exports = {
 	},
 	plugins: [
 		new MiniCssExtractPlugin({
-			filename: './Public/Stylesheets/[name].css'
+			filename: '../Resources/Public/Stylesheets/[name].css'
 		})
 	]
 };

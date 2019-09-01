@@ -26,8 +26,6 @@ namespace Evoweb\SfRegister\Domain\Repository;
 
 /**
  * A repository for static info tables country zones
- *
- * @author Sebastian Fischer <typo3@evoweb.de>
  */
 class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
@@ -41,19 +39,19 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
     public function findAllByParentUid(int $parent): \Doctrine\DBAL\Driver\Statement
     {
         $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
-        $queryBuilder->select('static_country_zones.*')
-            ->from('static_country_zones', 'static_country_zones')
+        $queryBuilder->select('zones.*')
+            ->from('static_country_zones', 'zones')
             ->where($queryBuilder->expr()->eq(
-                'static_countries.uid',
+                'countries.uid',
                 $queryBuilder->createNamedParameter($parent, \PDO::PARAM_INT)
             ))
             ->innerJoin(
-                'static_country_zones',
+                'zones',
                 'static_countries',
-                'static_countries',
-                'static_country_zones.zn_country_iso_2 = static_countries.cn_iso_2'
+                'countries',
+                'zones.zn_country_iso_2 = countries.cn_iso_2'
             )
-            ->orderBy('static_country_zones.zn_name_local');
+            ->orderBy('zones.zn_name_local');
 
         return $queryBuilder->execute();
     }

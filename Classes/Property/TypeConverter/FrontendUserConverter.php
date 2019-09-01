@@ -41,6 +41,11 @@ class FrontendUserConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\Ab
      */
     protected $targetType = \Evoweb\SfRegister\Domain\Model\FrontendUser::class;
 
+    /**
+     * @var int
+     */
+    protected $priority = 31;
+
     public function injectFrontendUserRepository(
         \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository
     ) {

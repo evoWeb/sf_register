@@ -1,9 +1,0 @@
-.. |img-1|      image:: Images/background_devider.gif
-.. :align: LEFT
-
-.. |img-logo|      image:: Images/logo_typo3.png
-.. :height: 21
-.. :width: 87
-.. :border: 0
-.. :hspace: 9
-.. :name: TYPO3 CMS Logo

@@ -191,7 +191,7 @@
 
 					this.ajaxRequest = new XMLHttpRequest();
 					this.ajaxRequest.onreadystatechange = this.xhrReadyStateChanged.bind(this);
-					this.ajaxRequest.open('POST', 'index.php?eID=sf_register');
+					this.ajaxRequest.open('POST', 'index.php?ajax=sf_register');
 					this.ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 					this.ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
 				}

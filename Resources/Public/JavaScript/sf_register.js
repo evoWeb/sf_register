@@ -256,7 +256,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           _this.ajaxRequest = new XMLHttpRequest();
           _this.ajaxRequest.onreadystatechange = _this.xhrReadyStateChanged.bind(_this);
 
-          _this.ajaxRequest.open('POST', 'index.php?eID=sf_register');
+          _this.ajaxRequest.open('POST', 'index.php?ajax=sf_register');
 
           _this.ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 

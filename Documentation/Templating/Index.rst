@@ -1,11 +1,7 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../Includes.txt
-.. include:: Images.txt
 
+
+.. _templating:
 
 Templating
 ==========
@@ -102,7 +98,9 @@ Birthdate with three select boxes
    <register:form.rangeSelect start="1960" end="2011" property="dateOfBirthYear"/>
 
 
-|img-5|
+.. figure:: Images/screenshot_dateselectors.png
+   :alt:
+   :align: left
 
 
 Single select with radio buttons
@@ -113,7 +111,10 @@ Single select with radio buttons
    <f:form.radio property="gender" value="1"/> <f:translate key="gender_1"/>
    <f:form.radio property="gender" value="2"/> <f:translate key="gender_2"/>
 
-|img-6|
+
+.. figure:: Images/screenshot_genderradio.png
+   :alt:
+   :align: left
 
 
 Single select as select box
@@ -126,7 +127,10 @@ Single select as select box
    	2: '{f:translate(key: \'gender_2\')}'
    }"/>
 
-|img-7|
+
+.. figure:: Images/screenshot_genderselect.png
+   :alt:
+   :align: left
 
 
 Automatic marking of requried fields
