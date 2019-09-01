@@ -21,11 +21,6 @@ notifications:
   email:
     - typo3@evoweb.de
 
-before_install:
-  - sudo add-apt-repository ppa:ondrej/php -y
-  - sudo apt-get update -q
-  - sudo apt-get install libsodium-dev -y
-
 install:
   - >
     export TYPO3_PATH_WEB=$PWD/.Build/Web;

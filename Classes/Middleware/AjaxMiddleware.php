@@ -38,13 +38,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 class AjaxMiddleware implements \Psr\Http\Server\MiddlewareInterface
 {
     /**
-     * Request parameters from url
-     *
-     * @var array
-     */
-    protected $requestArguments = [];
-
-    /**
      * Status of the request returned with every response
      *
      * @var string
@@ -65,7 +58,6 @@ class AjaxMiddleware implements \Psr\Http\Server\MiddlewareInterface
      */
     protected $result = [];
 
-
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $requestArguments = $this->getParamFromRequest($request, 'tx_sfregister');
@@ -75,12 +67,13 @@ class AjaxMiddleware implements \Psr\Http\Server\MiddlewareInterface
         } else {
             switch ($requestArguments['action']) {
                 case 'zones':
-                    $this->getZonesAction($requestArguments['parent']);
+                    $this->zonesAction($requestArguments['parent']);
                     break;
 
                 default:
                     $this->errorAction();
             }
+
             $response = new \TYPO3\CMS\Core\Http\JsonResponse([
                 'status' => $this->status,
                 'message' => $this->message,
@@ -100,7 +93,7 @@ class AjaxMiddleware implements \Psr\Http\Server\MiddlewareInterface
     /**
      * @param int|string $parent
      */
-    protected function getZonesAction($parent)
+    protected function zonesAction($parent)
     {
         /** @var StaticCountryZoneRepository $zoneRepository */
         $zoneRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
