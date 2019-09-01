@@ -21,6 +21,11 @@ notifications:
   email:
     - typo3@evoweb.de
 
+before_install:
+  - composer require phwoolcon/ci-pecl-cacher -n
+  # Cache till new version
+  - vendor/bin/ci-pecl-install swoole
+
 install:
   - >
     export TYPO3_PATH_WEB=$PWD/.Build/Web;
@@ -30,7 +35,6 @@ install:
 
 before_script:
   - phpenv config-rm xdebug.ini
-  - pecl install libsodium
 
 script:
   - >
