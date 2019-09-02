@@ -19,14 +19,14 @@ class IsTrueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected $subject;
 
-    public function setUp(): void
+    public function setUp()
     {
         $this->subject = $this->getMockBuilder(\Evoweb\SfRegister\Validation\Validator\IsTrueValidator::class)
             ->setMethods(['translateErrorMessage'])
             ->getMock();
     }
 
-    public function tearDown(): void
+    public function tearDown()
     {
         unset($this->subject);
     }

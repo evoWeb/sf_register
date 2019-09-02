@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
-    public function setUp(): void
+    public function setUp()
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/../Fixtures/pages.xml');

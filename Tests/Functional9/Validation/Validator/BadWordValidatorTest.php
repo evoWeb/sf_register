@@ -21,7 +21,7 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
      */
     protected $subject;
 
-    public function setUp(): void
+    public function setUp()
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
@@ -39,7 +39,7 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
         $this->subject->_set('settings', $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
     }
 
-    public function tearDown(): void
+    public function tearDown()
     {
         unset($this->subject);
     }

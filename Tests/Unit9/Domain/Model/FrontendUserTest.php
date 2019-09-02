@@ -19,7 +19,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected $subject;
 
-    public function setUp(): void
+    public function setUp()
     {
         $this->subject = new \Evoweb\SfRegister\Domain\Model\FrontendUser();
     }

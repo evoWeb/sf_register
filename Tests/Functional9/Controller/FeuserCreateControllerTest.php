@@ -20,7 +20,7 @@ use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
-    public function setUp(): void
+    public function setUp()
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/../Fixtures/pages.xml');

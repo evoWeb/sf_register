@@ -21,7 +21,7 @@ class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional\Fun
      */
     protected $subject;
 
-    public function setUp(): void
+    public function setUp()
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
@@ -35,7 +35,7 @@ class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         $this->subject = $objectManager->get(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
     }
 
-    public function tearDown(): void
+    public function tearDown()
     {
         unset($this->subject);
     }
