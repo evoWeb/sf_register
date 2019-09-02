@@ -39,10 +39,10 @@ before_script:
 script:
   - >
     echo "Running ${TYPO3_VERSION} unit tests";
-    php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/;
+    php .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/;
     echo "Running functional tests";
     export typo3DatabaseDriver="pdo_sqlite";
-    php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
+    php .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
 
 jobs:
   fast_finish: true
