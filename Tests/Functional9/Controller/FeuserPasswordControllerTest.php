@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Functional\Controller;
+namespace Evoweb\SfRegister\Tests\Functional9\Controller;
 
 /*
  * This file is developed by evoWeb.
@@ -16,7 +16,7 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
-class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
+class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional9\FunctionalTestCase
 {
     public function setUp()
     {

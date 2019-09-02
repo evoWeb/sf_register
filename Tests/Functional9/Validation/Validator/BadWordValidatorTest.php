@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
+namespace Evoweb\SfRegister\Tests\Functional9\Validation\Validator;
 
 /*
  * This file is developed by evoWeb.
@@ -14,7 +14,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
-class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
+class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional9\FunctionalTestCase
 {
     /**
      * @var \Evoweb\SfRegister\Validation\Validator\BadWordValidator|AccessibleObjectInterface

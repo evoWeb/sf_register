@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Functional;
+namespace Evoweb\SfRegister\Tests\Functional9;
 
 /*
  * This file is developed by evoWeb.
@@ -45,8 +45,6 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
 
     public function initializeTypoScriptFrontendController()
     {
-        $_SERVER['HTTP_HOST'] = 'example.com';
-
         $controller = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::class,
             null,

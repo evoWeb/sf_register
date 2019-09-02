@@ -28,8 +28,8 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         $this->importDataSet(__DIR__ . '/../Fixtures/fe_groups.xml');
         $this->importDataSet(__DIR__ . '/../Fixtures/fe_users.xml');
 
-        $this->createEmptyFrontendUser();
         $this->initializeTypoScriptFrontendController();
+        $this->createEmptyFrontendUser();
     }
 
     /**

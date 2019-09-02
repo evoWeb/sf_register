@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Functional\Domain\Repository;
+namespace Evoweb\SfRegister\Tests\Functional9\Domain\Repository;
 
 /*
  * This file is developed by evoWeb.
@@ -14,7 +14,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Domain\Repository;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
+class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional9\FunctionalTestCase
 {
     /**
      * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository

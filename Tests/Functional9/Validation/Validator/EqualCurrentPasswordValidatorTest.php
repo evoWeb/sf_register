@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
+namespace Evoweb\SfRegister\Tests\Functional9\Validation\Validator;
 
 /*
  * This file is developed by evoWeb.
@@ -12,7 +12,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
+class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functional9\FunctionalTestCase
 {
     public function setUp()
     {

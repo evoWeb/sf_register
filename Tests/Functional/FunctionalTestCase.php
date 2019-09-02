@@ -12,15 +12,37 @@ namespace Evoweb\SfRegister\Tests\Functional;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use TYPO3\CMS\Core\Routing\PageArguments;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Tests\Functional\SiteHandling\SiteBasedTestTrait;
+use TYPO3\CMS\Core\TypoScript\TemplateService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
+    use SiteBasedTestTrait;
+
     /**
      * @var array
      */
     protected $testExtensionsToLoad = ['typo3conf/ext/sf_register'];
+
+    /**
+     * @var array[]
+     */
+    protected const LANGUAGE_PRESETS = [
+        'EN' => ['id' => 0, 'title' => 'English', 'locale' => 'en_US.UTF8'],
+    ];
+
+    /**
+     * @var TypoScriptFrontendController
+     */
+    protected $typoScriptFrontendController;
 
     /**
      * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication
@@ -45,18 +67,34 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
 
     public function initializeTypoScriptFrontendController()
     {
-        $controller = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::class,
-            null,
-            1,
-            0
+        $this->writeSiteConfiguration(
+            'test',
+            $this->buildSiteConfiguration(1, '/'),
+            [
+                $this->buildDefaultLanguageConfiguration('EN', '/en/'),
+            ],
+            [
+                $this->buildErrorHandlingConfiguration('Fluid', [404])
+            ]
         );
+        $_SERVER['HTTP_HOST'] = 'example.com';
+        $_SERVER['REQUEST_URI'] = '/en/';
+        $_GET['id'] = 1;
+        GeneralUtility::flushInternalRuntimeCaches();
+        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByIdentifier('test');
 
-        $controller->fe_user = $this->frontendUser;
-        $controller->determineId();
-        $controller->getConfigArray();
+        $this->typoScriptFrontendController = GeneralUtility::makeInstance(
+            TypoScriptFrontendController::class,
+            GeneralUtility::makeInstance(Context::class),
+            $site,
+            $site->getDefaultLanguage(),
+            new PageArguments(1, '0', [])
+        );
+        $this->typoScriptFrontendController->sys_page = GeneralUtility::makeInstance(PageRepository::class);
+        $this->typoScriptFrontendController->tmpl = GeneralUtility::makeInstance(TemplateService::class);
+        $this->typoScriptFrontendController->fe_user = $this->frontendUser;
 
-        $GLOBALS['TSFE'] = $controller;
+        $GLOBALS['TSFE'] = $this->typoScriptFrontendController;
     }
 
     public function createAndLoginFrontEndUser(string $frontEndUserGroups = '', array $recordData = []): int
