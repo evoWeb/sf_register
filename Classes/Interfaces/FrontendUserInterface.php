@@ -37,11 +37,26 @@ interface FrontendUserInterface
      */
     public function getUsername();
 
-    public function getFirstName(): string;
+    /**
+     * Returns the firstName value
+     *
+     * @return string
+     */
+    public function getFirstName();
 
-    public function getLastName(): string;
+    /**
+     * Returns the lastName value
+     *
+     * @return string
+     */
+    public function getLastName();
 
-    public function getEmail(): string;
+    /**
+     * Returns the email value
+     *
+     * @return string
+     */
+    public function getEmail();
 
     public function getInvitationEmail(): string;
 }
