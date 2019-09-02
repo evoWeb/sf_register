@@ -29,8 +29,8 @@ before_install:
 install:
   - >
     export TYPO3_PATH_WEB=$PWD/.Build/Web;
-    composer require typo3/minimal="$TYPO3_VERSION" $PREFER_LOWEST;
-    composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK";
+    composer require typo3/cms-core="$TYPO3_VERSION" $PREFER_LOWEST;
+    if [ ! -z "$TESTING_FRAMEWORK" ]; then composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"; fi;
     git checkout composer.json;
 
 before_script:
