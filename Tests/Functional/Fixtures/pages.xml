@@ -4,7 +4,6 @@
 		<uid>1</uid>
 		<pid>0</pid>
 		<t3ver_oid>0</t3ver_oid>
-		<t3ver_id>0</t3ver_id>
 		<t3ver_wsid>0</t3ver_wsid>
 		<t3ver_label></t3ver_label>
 		<t3ver_state>0</t3ver_state>
@@ -71,7 +70,6 @@
 		<uid>2</uid>
 		<pid>1</pid>
 		<t3ver_oid>0</t3ver_oid>
-		<t3ver_id>0</t3ver_id>
 		<t3ver_wsid>0</t3ver_wsid>
 		<t3ver_label></t3ver_label>
 		<t3ver_state>0</t3ver_state>
