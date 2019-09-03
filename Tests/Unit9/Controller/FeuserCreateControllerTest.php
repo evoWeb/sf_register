@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\SfRegister\Tests\Unit\Controller;
+namespace Evoweb\SfRegister\Tests\Unit9\Controller;
 
 /*
  * This file is developed by evoWeb.
