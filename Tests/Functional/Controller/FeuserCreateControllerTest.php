@@ -12,11 +12,10 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Controller\FeuserCreateController;
+use Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
@@ -37,8 +36,21 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
      */
     public function isUserValidatorSet()
     {
-        /** @var FeuserCreateController|AccessibleObjectInterface $subject */
-        $subject = $this->getAccessibleMock(FeuserCreateController::class, ['dummy']);
+        $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.'] = [
+            'validation.' => [
+                'create.' => [
+                    'username.' => [
+                        '1.' => '"Evoweb.SfRegister:Required"',
+                        '2.' => '"StringLength", options={"minimum": 4, "maximum": 80}',
+                        '3.' => '"Evoweb.SfRegister:Unique"',
+                        '4.' => '"Evoweb.SfRegister:Unique", options={"global": 1}',
+                    ]
+                ]
+            ]
+        ];
+
+        /** @var FeuserCreateController $subject */
+        $subject = new FeuserCreateController();
 
         /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
@@ -69,19 +81,21 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
             'gtc' => '',
             'privacy' => '',
         ]);
-        $subject->_set('request', $request);
-        $subject->_set('actionMethodName', 'previewAction');
+        $subject->set('request', $request);
+        $subject->set('actionMethodName', 'previewAction');
 
         $typoScriptService = GeneralUtility::makeInstance(TypoScriptService::class);
         $settings = $typoScriptService->convertTypoScriptArrayToPlainArray(
-            $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
+            $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
         );
-        $subject->_set('settings', $settings);
+        $subject->set('settings', $settings);
 
-        $subject->_call('initializeActionMethodArguments');
-        $subject->_call('initializeActionMethodValidators');
+        $subject->call('initializeActionMethodArguments');
+        $subject->call('initializeActionMethodValidators');
 
-        $validator = $subject->_get('arguments')->getArgument('user')->getValidator();
+        /** @var \TYPO3\CMS\Extbase\Mvc\Controller\Arguments $arguments */
+        $arguments = $subject->get('arguments');
+        $validator = $arguments->getArgument('user')->getValidator();
 
         $this->assertInstanceOf(\Evoweb\SfRegister\Validation\Validator\UserValidator::class, $validator);
     }

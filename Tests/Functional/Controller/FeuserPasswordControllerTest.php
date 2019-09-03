@@ -13,6 +13,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  */
 
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
@@ -67,9 +68,6 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
      */
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository()
     {
-        $this->markTestSkipped(
-            'Due to missing Argon2 in travisci.'
-        );
         $expected = 'myPassword';
 
         $userId = $this->createAndLoginFrontEndUser('2', [
@@ -77,6 +75,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
             'comments' => ''
         ]);
         $this->initializeTypoScriptFrontendController();
+        $GLOBALS['TSFE'] = $this->typoScriptFrontendController;
 
         $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController();
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
@@ -93,7 +92,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $subject->injectObjectManager($objectManager);
 
-        /** @var FrontendUserRepository|\PHPUnit_Framework_MockObject_MockObject $repositoryMock */
+        /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->getMockBuilder(FrontendUserRepository::class)
             ->setMethods(['findByUid', 'update'])
             ->disableOriginalConstructor()

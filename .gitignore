@@ -4,5 +4,6 @@
 .Build/Web/
 .Build/node_modules/
 .Build/.sass-cache/
+var/
 composer.*
 !composer.json

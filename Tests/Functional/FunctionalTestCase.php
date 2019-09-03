@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\Tests\Functional\SiteHandling\SiteBasedTestTrait;
+use Evoweb\SfRegister\Tests\Functional\SiteHandling\SiteBasedTestTrait;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -93,8 +93,6 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
         $this->typoScriptFrontendController->sys_page = GeneralUtility::makeInstance(PageRepository::class);
         $this->typoScriptFrontendController->tmpl = GeneralUtility::makeInstance(TemplateService::class);
         $this->typoScriptFrontendController->fe_user = $this->frontendUser;
-
-        $GLOBALS['TSFE'] = $this->typoScriptFrontendController;
     }
 
     public function createAndLoginFrontEndUser(string $frontEndUserGroups = '', array $recordData = []): int
