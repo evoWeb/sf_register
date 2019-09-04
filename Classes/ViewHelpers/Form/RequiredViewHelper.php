@@ -72,7 +72,11 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
     public function render(): string
     {
         $fieldName = $this->arguments['fieldName'];
-        $mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));
+        $mode = str_replace(
+            ['evoweb\sfregister\controller\feuser', 'controller'],
+            '',
+            strtolower(key($this->frameworkConfiguration['controllerConfiguration']))
+        );
         $modeSettings = $this->settings['validation'][$mode];
         $fieldSettings = isset($modeSettings[$fieldName]) ? $modeSettings[$fieldName] : false;
 
