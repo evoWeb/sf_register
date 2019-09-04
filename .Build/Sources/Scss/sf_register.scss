@@ -50,9 +50,9 @@ $meter-border-radius: 0 0 10px 10px;
             border-radius: $meter-border-radius;
         }
 
-        .meter-even-less-good-value,
+        .meter-optimum-value,
         .meter-suboptimum-value,
-        .meter-optimum-value {
+        .meter-even-less-good-value {
             width: 100%;
             height: 100%;
             box-sizing: border-box;
@@ -60,16 +60,16 @@ $meter-border-radius: 0 0 10px 10px;
             border-radius: $meter-border-radius;
         }
 
-        .meter-even-less-good-value {
-            background: $meter-background-even-less-color;
+        .meter-optimum-value {
+            background: $meter-background-optimum-color;
         }
 
         .meter-suboptimum-value {
             background: $meter-background-suboptimum-color;
         }
 
-        .meter-optimum-value {
-            background: $meter-background-optimum-color;
+        .meter-even-less-good-value {
+            background: $meter-background-even-less-color;
         }
 
         /* WebKit */
@@ -86,22 +86,22 @@ $meter-border-radius: 0 0 10px 10px;
             border-radius: $meter-border-radius;
         }
 
-        &::-webkit-meter-even-less-good-value,
+        &::-webkit-meter-optimum-value,
         &::-webkit-meter-suboptimum-value,
-        &::-webkit-meter-optimum-value {
+        &::-webkit-meter-even-less-good-value {
             border-radius: $meter-border-radius;
         }
 
-        &::-webkit-meter-even-less-good-value {
-            background: $meter-background-even-less-color;
+        &::-webkit-meter-optimum-value {
+            background: $meter-background-optimum-color;
         }
 
         &::-webkit-meter-suboptimum-value {
             background: $meter-background-suboptimum-color;
         }
 
-        &::-webkit-meter-optimum-value {
-            background: $meter-background-optimum-color;
+        &::-webkit-meter-even-less-good-value {
+            background: $meter-background-even-less-color;
         }
 
         /* Firefox */
@@ -115,22 +115,22 @@ $meter-border-radius: 0 0 10px 10px;
             border-radius: $meter-border-radius;
         }
 
-        &:-moz-meter-sub-sub-optimum::-moz-meter-bar,
+        &:-moz-meter-optimum::-moz-meter-bar ,
         &:-moz-meter-sub-optimum::-moz-meter-bar,
-        &:-moz-meter-optimum::-moz-meter-bar {
+        &:-moz-meter-sub-sub-optimum::-moz-meter-bar {
             border-radius: $meter-border-radius;
         }
 
-        &:-moz-meter-sub-sub-optimum::-moz-meter-bar {
-            background: $meter-background-even-less-color;
+        &:-moz-meter-optimum::-moz-meter-bar {
+            background: $meter-background-optimum-color;
         }
 
         &:-moz-meter-sub-optimum::-moz-meter-bar {
             background: $meter-background-suboptimum-color;
         }
 
-        &:-moz-meter-optimum::-moz-meter-bar {
-            background: $meter-background-optimum-color;
+        &:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+            background: $meter-background-even-less-color;
         }
     }
 

@@ -21,7 +21,9 @@
   .tx_evoweb_sfregister meter#bargraph.show {
     display: block; }
   .tx_evoweb_sfregister meter#bargraph .meter-inner-element {
-    appearance: inherit;
+    -webkit-appearance: inherit;
+       -moz-appearance: inherit;
+            appearance: inherit;
     box-sizing: inherit;
     height: 100%;
     width: 100%;
@@ -90,5 +92,4 @@
 .tx_evoweb_sfregister .grecaptcha-badge {
   margin-right: -10000px; }
 
-
-/*# sourceMappingURL=sf_register.css.map*/
+/*# sourceMappingURL=sf_register.css.map */

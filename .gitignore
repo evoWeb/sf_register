@@ -3,7 +3,7 @@
 .Build/vendor/
 .Build/Web/
 .Build/node_modules/
-.Build/.sass-cache/
+.Build/package-lock.json
 var/
 composer.*
 !composer.json

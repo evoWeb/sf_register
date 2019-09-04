@@ -15,7 +15,7 @@ runUnitTests () {
     ${PHP} ${COMPOSER} --version
 
     export TYPO3_PATH_WEB=${PWD}/.Build/Web;
-    ${PHP} ${COMPOSER} require typo3/cms-core="${TYPO3_VERSION}" $PREFER_LOWEST;
+    ${PHP} ${COMPOSER} require typo3/cms-core="${TYPO3_VERSION}";
     if [ ! -z "${TESTING_FRAMEWORK}" ]; then ${PHP} ${COMPOSER} require --dev typo3/testing-framework="${TESTING_FRAMEWORK}"; fi;
     git checkout composer.json;
 
@@ -41,6 +41,6 @@ runUnitTests () {
 
 cd ../;
 
-#runUnitTests "/usr/bin/php7.2" "^9.5.0" "~4.10.0" "Unit9" "Functional9";
+runUnitTests "/usr/bin/php7.2" "^9.5.0" "~4.10.0" "Unit9" "Functional9";
 runUnitTests "/usr/bin/php7.2" "^10.0.0" "~5.0.11" "Unit" "Functional";
-#runUnitTests "/usr/bin/php7.2" "dev-master as 10.0.0" "~5.0.11" "Unit" "Functional";
+runUnitTests "/usr/bin/php7.2" "dev-master as 10.0.0" "~5.0.11" "Unit" "Functional";
