@@ -24,7 +24,7 @@ export default class SfRegister {
   /**
    * Callback after content was loaded
    */
-  contentLoaded() {
+  contentLoaded(this: SfRegister) {
     this.zone = (document.getElementById('sfrZone') as HTMLSelectElement);
     this.zoneEmpty = document.getElementById('sfrZone_empty');
     this.zoneLoading = document.getElementById('sfrZone_loading');
@@ -107,7 +107,7 @@ export default class SfRegister {
     return userAgent.indexOf('MSIE ') > -1 || userAgent.indexOf('Trident/') > -1;
   };
 
-  loadInternetExplorerPolyfill() {
+  loadInternetExplorerPolyfill(this: SfRegister) {
     let body = document.getElementsByTagName('body').item(0),
       js = document.createElement('script');
     js.setAttribute('type', 'text/javascript');
@@ -124,7 +124,7 @@ export default class SfRegister {
   /**
    * Change value of zone selectbox
    */
-  countryChanged(event: KeyboardEvent) {
+  countryChanged(this: SfRegister, event: KeyboardEvent) {
     if (
       (
         event.type === 'change'
@@ -175,7 +175,7 @@ export default class SfRegister {
   /**
    * Process data received with xhr response
    */
-  addZoneOptions(options: Array<Object>) {
+  addZoneOptions(this: SfRegister, options: Array<Object>) {
     while (this.zone.length) {
       this.zone.removeChild(this.zone[0]);
     }
