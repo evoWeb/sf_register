@@ -93,12 +93,9 @@ class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
      *
      * @return mixed
      */
-    protected function getPropertyValue($object, $propertyName)
+    protected function getPropertyValue($object, string $propertyName)
     {
         // @todo add support for lazy loading proxies, if needed
-        if (ObjectAccess::isPropertyGettable($object, $propertyName)) {
-            return ObjectAccess::getProperty($object, $propertyName);
-        }
-        return ObjectAccess::getProperty($object, $propertyName, true);
+        return ObjectAccess::getProperty($object, $propertyName);
     }
 }
