@@ -12,10 +12,10 @@
     "yarn": "^1.10.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
+    "@babel/core": "^7.6.0",
     "@babel/plugin-proposal-class-properties": "^7.3.4",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/register": "^7.0.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/register": "^7.6.0",
     "autoprefixer": "^9.6.1",
     "browserify": "^16.5.0",
     "exorcist": "^1.0.1",
@@ -25,7 +25,6 @@
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-typescript": "^5.0.1",
     "gulp-uglify": "^3.0.2",
     "gulplog": "^1.0.0",
     "node-normalize-scss": "^8.0.1",

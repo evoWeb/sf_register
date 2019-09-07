@@ -9,7 +9,6 @@ import rename from 'gulp-rename';
 import source from 'vinyl-source-stream';
 import sourcemaps from 'gulp-sourcemaps';
 import tsify from 'tsify';
-import ts from 'gulp-typescript';
 import uglify from 'gulp-uglify';
 
 import postcss from 'gulp-postcss';
