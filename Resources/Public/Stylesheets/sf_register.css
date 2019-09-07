@@ -37,20 +37,20 @@
     background: #efefef;
     border: none;
     border-radius: 0 0 10px 10px; }
-  .tx_evoweb_sfregister meter#bargraph .meter-even-less-good-value,
+  .tx_evoweb_sfregister meter#bargraph .meter-optimum-value,
   .tx_evoweb_sfregister meter#bargraph .meter-suboptimum-value,
-  .tx_evoweb_sfregister meter#bargraph .meter-optimum-value {
+  .tx_evoweb_sfregister meter#bargraph .meter-even-less-good-value {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
     user-modify: read-only;
     border-radius: 0 0 10px 10px; }
-  .tx_evoweb_sfregister meter#bargraph .meter-even-less-good-value {
-    background: #D14900; }
-  .tx_evoweb_sfregister meter#bargraph .meter-suboptimum-value {
-    background: #F5D000; }
   .tx_evoweb_sfregister meter#bargraph .meter-optimum-value {
     background: #3C5C00; }
+  .tx_evoweb_sfregister meter#bargraph .meter-suboptimum-value {
+    background: #F5D000; }
+  .tx_evoweb_sfregister meter#bargraph .meter-even-less-good-value {
+    background: #D14900; }
   .tx_evoweb_sfregister meter#bargraph::-webkit-meter-inner-element {
     background: #efefef;
     border: none;
@@ -60,28 +60,28 @@
     border: 1px solid #ccc;
     border-top: none;
     border-radius: 0 0 10px 10px; }
-  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-even-less-good-value, .tx_evoweb_sfregister meter#bargraph::-webkit-meter-suboptimum-value, .tx_evoweb_sfregister meter#bargraph::-webkit-meter-optimum-value {
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-optimum-value, .tx_evoweb_sfregister meter#bargraph::-webkit-meter-suboptimum-value, .tx_evoweb_sfregister meter#bargraph::-webkit-meter-even-less-good-value {
     border-radius: 0 0 10px 10px; }
-  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-even-less-good-value {
-    background: #D14900; }
-  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-suboptimum-value {
-    background: #F5D000; }
   .tx_evoweb_sfregister meter#bargraph::-webkit-meter-optimum-value {
     background: #3C5C00; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-suboptimum-value {
+    background: #F5D000; }
+  .tx_evoweb_sfregister meter#bargraph::-webkit-meter-even-less-good-value {
+    background: #D14900; }
   .tx_evoweb_sfregister meter#bargraph::-moz-meter-inner-element {
     background: #efefef; }
   .tx_evoweb_sfregister meter#bargraph::-moz-meter-bar {
     background: #efefef;
     border: none;
     border-radius: 0 0 10px 10px; }
-  .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-sub-optimum::-moz-meter-bar, .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-optimum::-moz-meter-bar, .tx_evoweb_sfregister meter#bargraph:-moz-meter-optimum::-moz-meter-bar {
+  .tx_evoweb_sfregister meter#bargraph:-moz-meter-optimum::-moz-meter-bar, .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-optimum::-moz-meter-bar, .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-sub-optimum::-moz-meter-bar {
     border-radius: 0 0 10px 10px; }
-  .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-sub-optimum::-moz-meter-bar {
-    background: #D14900; }
-  .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-optimum::-moz-meter-bar {
-    background: #F5D000; }
   .tx_evoweb_sfregister meter#bargraph:-moz-meter-optimum::-moz-meter-bar {
     background: #3C5C00; }
+  .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-optimum::-moz-meter-bar {
+    background: #F5D000; }
+  .tx_evoweb_sfregister meter#bargraph:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: #D14900; }
 
 .tx_evoweb_sfregister #sfrZone_loading {
   position: relative;

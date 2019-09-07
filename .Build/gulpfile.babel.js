@@ -2,7 +2,6 @@
 
 import gulp from 'gulp';
 import log from 'gulplog';
-import path from 'path';
 
 import browserify from 'browserify';
 import buffer from 'vinyl-buffer';
@@ -18,24 +17,24 @@ import autoprefixer from 'autoprefixer';
 import sass from 'gulp-sass';
 
 const paths = {
-	src: './Sources/',
-	dest: '../Resources/Public/'
+	src: './Sources',
+	dest: '../Resources/Public'
 };
 
 const tasks = {
 	typescript: {
-		src: 'TypeScript',
-		dest: 'JavaScript'
+		src: `${paths.src}/TypeScript/sf_register.ts`,
+		dest: `${paths.dest}/JavaScript/`
 	},
 	scss: {
-		src: 'Scss/*.scss',
-		dest: 'Stylesheets'
+		src: `${paths.src}/Scss/*.scss`,
+		dest: `${paths.dest}/Stylesheets/`
 	}
 };
 
 gulp.task('typescript', () => {
 	let b = browserify({
-		entries: [path.join(paths.src, tasks.typescript.src, 'sf_register.ts')],
+		entries: [tasks.typescript.src],
 		debug: true
 	});
 
@@ -46,7 +45,7 @@ gulp.task('typescript', () => {
 		.pipe(buffer())
 		.pipe(sourcemaps.init({loadMaps: true}))
 		// This will output the non-minified version
-		.pipe(gulp.dest(path.join(paths.dest, tasks.typescript.dest)))
+		.pipe(gulp.dest(tasks.typescript.dest))
 		// Add transformation tasks to the pipeline here.
 		.pipe(uglify())
 		.on('error', log.error)
@@ -57,20 +56,20 @@ gulp.task('typescript', () => {
 				return mapFilePath.replace('.min.js.map', '.js.map');
 			}
 		}))
-		.pipe(gulp.dest(path.join(paths.dest, tasks.typescript.dest)));
+		.pipe(gulp.dest(tasks.typescript.dest));
 });
 
 gulp.task('scss', () => {
-	return gulp.src(path.join(paths.src, tasks.scss.src))
+	return gulp.src(tasks.scss.src)
 		.pipe(sourcemaps.init())
 		.pipe(
 			sass({
 				includePaths: require('node-normalize-scss').includePaths
-			}).on('error', sass.logError)
+			}).on('error', log.error)
 		)
 		.pipe(postcss([autoprefixer()]))
 		.pipe(sourcemaps.write('./'))
-		.pipe(gulp.dest(path.join(paths.dest, tasks.scss.dest)));
+		.pipe(gulp.dest(tasks.scss.dest));
 });
 
 gulp.task('build', gulp.series('typescript', 'scss'));
