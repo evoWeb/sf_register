@@ -32,7 +32,7 @@ const tasks = {
 	}
 };
 
-gulp.task('typescript', () => {
+let typescriptTask = () => {
 	let b = browserify({
 		entries: [tasks.typescript.src],
 		debug: true
@@ -57,9 +57,9 @@ gulp.task('typescript', () => {
 			}
 		}))
 		.pipe(gulp.dest(tasks.typescript.dest));
-});
+};
 
-gulp.task('scss', () => {
+let stylesTask = () => {
 	return gulp.src(tasks.scss.src)
 		.pipe(sourcemaps.init())
 		.pipe(
@@ -70,6 +70,10 @@ gulp.task('scss', () => {
 		.pipe(postcss([autoprefixer()]))
 		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest(tasks.scss.dest));
-});
+};
 
-gulp.task('build', gulp.series('typescript', 'scss'));
+exports.typescript = typescriptTask;
+
+exports.scss = stylesTask;
+
+exports.build = gulp.series(typescriptTask, stylesTask);
