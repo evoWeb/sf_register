@@ -23,8 +23,7 @@ call_user_func(function () {
         ['source' => 'EXT:sf_register/Resources/Public/Icons/Extension.svg']
     );
 
-    if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch)
-        < 10000000) {
+    if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) < 10000000) {
         // @todo remove once TYPO3 9.5.x support is dropped
         $extensionName = 'Evoweb.sf_register';
         $createController = 'FeuserCreate';
