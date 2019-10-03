@@ -51,6 +51,12 @@ plugin.tx_sfregister.settings {
   confirmEmailPostEdit = {$plugin.tx_sfregister.settings.confirmEmailPostEdit}
   acceptEmailPostEdit = {$plugin.tx_sfregister.settings.acceptEmailPostEdit}
 
+  notifyAdminPostDeleteSave = {$plugin.tx_sfregister.settings.notifyAdminPostDeleteSave}
+  notifyUserPostDeleteSave = {$plugin.tx_sfregister.settings.notifyUserPostDeleteSave}
+
+  notifyAdminPostDeleteConfirm = {$plugin.tx_sfregister.settings.notifyAdminPostDeleteConfirm}
+  notifyUserPostDeleteConfirm = {$plugin.tx_sfregister.settings.notifyUserPostDeleteConfirm}
+
   # boolean if user should get logged in after registration
   autologinPostRegistration = {$plugin.tx_sfregister.settings.autologinPostRegistration}
   # boolean if user should get logged in after activation

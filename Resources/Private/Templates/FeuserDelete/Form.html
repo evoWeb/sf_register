@@ -1,0 +1,21 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+	<f:form action="save" name="user" id="sfrForm" class="px-3" object="{user}">
+		<f:render partial="FormErrors" arguments="{for: 'user'}" />
+		<f:render partial="FieldError" arguments="{field: 'uid'}" />
+
+		<div class="form-row">
+		<f:for each="{settings.fields.selected}" as="selectedField" iteration="iteration">
+			<f:alias map="{options: '{settings.fields.configuration.{selectedField}}'}">
+				<f:render partial="Form/{options.partial}"
+					arguments="{user: user, fieldName: selectedField, options: options, iteration: iteration}"/>
+			</f:alias>
+		</f:for>
+		</div>
+	</f:form>
+</f:section>
+
+</html>

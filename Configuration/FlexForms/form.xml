@@ -33,6 +33,10 @@
 										<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:form_flexform.switchableControllerAction.invite</numIndex>
 										<numIndex index="1">FeuserInvite->form;FeuserInvite->invite</numIndex>
 									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:form_flexform.switchableControllerAction.delete</numIndex>
+										<numIndex index="1">FeuserDelete->form;FeuserDelete->save;FeuserDelete->confirm</numIndex>
+									</numIndex>
 								</items>
 							</config>
 						</TCEforms>

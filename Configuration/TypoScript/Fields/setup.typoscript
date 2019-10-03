@@ -107,6 +107,11 @@ plugin.tx_sfregister.settings.fields {
     40 = passwordRepeat
   }
 
+  deleteDefaultSelected {
+    10 = disabledEmail
+    20 = delete
+  }
+
   configuration {
     username.partial = Textfield
 
@@ -121,6 +126,11 @@ plugin.tx_sfregister.settings.fields {
 
     email {
       partial = Email
+      placeholder = email@domain.test
+    }
+
+    disabledEmail {
+      partial = DisabledEmail
       placeholder = email@domain.test
     }
 
@@ -264,5 +274,7 @@ plugin.tx_sfregister.settings.fields {
     submit_captcha.partial = SubmitWithInvisibleCaptcha
 
     update.partial = Update
+
+    delete.partial = Delete
   }
 }

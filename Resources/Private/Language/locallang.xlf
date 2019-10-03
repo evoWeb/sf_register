@@ -295,6 +295,19 @@
 				<source>Your new email adress was successfully saved.</source>
 			</trans-unit>
 
+			<trans-unit id="submit_delete" approved="yes">
+				<source>delete</source>
+			</trans-unit>
+			<trans-unit id="delete_saved" approved="yes">
+				<source>You requested to delete your account. We send an email with a link with which you can confirm this request.</source>
+			</trans-unit>
+			<trans-unit id="account_already_deleted" approved="yes">
+				<source>Account was already deleted.</source>
+			</trans-unit>
+			<trans-unit id="account_deleted" approved="yes">
+				<source>Account deleted.</source>
+			</trans-unit>
+
 			<trans-unit id="error_noteempty">
 				<source>The %1$s was not empty which it should have been</source>
 			</trans-unit>
@@ -377,16 +390,6 @@
 			<trans-unit id="subjectAdminNotificationPostCreateDecline">
 				<source>User %2$s was declined on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostEditSave">
-				<source>User %2$s has edited informations on site %1$s</source>
-			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostEditConfirm">
-				<source>User %2$s has confirmed the change of informations on site %1$s</source>
-			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostEditAccept">
-				<source>User %2$s change of informations was accepted on site %1$s</source>
-			</trans-unit>
-
 			<trans-unit id="subjectUserNotificationPostCreateSave">
 				<source>You registered yourself at %1$s as %2$s</source>
 			</trans-unit>
@@ -402,6 +405,16 @@
 			<trans-unit id="subjectUserNotificationPostCreateDecline">
 				<source>You activated account %2$s at %1$s</source>
 			</trans-unit>
+
+			<trans-unit id="subjectAdminNotificationPostEditSave">
+				<source>User %2$s has edited informations on site %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostEditConfirm">
+				<source>User %2$s has confirmed the change of informations on site %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostEditAccept">
+				<source>User %2$s change of informations was accepted on site %1$s</source>
+			</trans-unit>
 			<trans-unit id="subjectUserNotificationPostEditSave">
 				<source>You %2$s changed your information on site %1$s</source>
 			</trans-unit>
@@ -410,6 +423,29 @@
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationPostEditAccept">
 				<source>Your change of informations for account %2$s on site %1$s was accepted</source>
+			</trans-unit>
+
+			<trans-unit id="subjectAdminNotificationSendInvitation">
+				<source>User invitation at %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationSendInvitation">
+				<source>You invited someone to register at %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectInvitationToRegister">
+				<source>You were invite to register at %1$s</source>
+			</trans-unit>
+
+			<trans-unit id="subjectAdminNotificationPostDeleteSave">
+				<source>User %2$s requests to delete the account from %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostDeleteSave">
+				<source>Your requests to delete the account %2$s from %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectAdminNotificationPostDeleteConfirm">
+				<source>User %2$s confirmed to delete the account from %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostDeleteConfirm">
+				<source>Your confirmed to delete the account %2$s from %1$s</source>
 			</trans-unit>
 
 			<trans-unit id="email_admin_salutation">
@@ -470,6 +506,12 @@
 			<trans-unit id="email_admin_account_saved">
 				<source>The user registration was saved</source>
 			</trans-unit>
+			<trans-unit id="email_admin_account_delete">
+				<source>The user %1$s requested to delete the account</source>
+			</trans-unit>
+			<trans-unit id="email_admin_account_deleted">
+				<source>The user %1$s confirmed to delete the account</source>
+			</trans-unit>
 
 			<trans-unit id="email_user_account_accepted">
 				<source>Your registration was accepted.</source>
@@ -492,6 +534,15 @@
 			<trans-unit id="email_user_account_saved">
 				<source>Your registration was saved.</source>
 			</trans-unit>
+			<trans-unit id="email_user_account_delete">
+				<source>Your requested to delete your account %1$s</source>
+			</trans-unit>
+			<trans-unit id="email_user_account_deleted">
+				<source>Your confirmed to delete your account %1$s</source>
+			</trans-unit>
+			<trans-unit id="email_user_delete_link">
+				<source>Confirm to delete your account</source>
+			</trans-unit>
 
 			<trans-unit id="email_admin_invitation_message">
 				<source>User "%1$s" send an invitation to "%2$s".</source>
@@ -504,15 +555,6 @@
 			</trans-unit>
 			<trans-unit id="email_invitee_register_link">
 				<source>register</source>
-			</trans-unit>
-			<trans-unit id="subjectAdminNotificationSendInvitation">
-				<source>User invitation at %1$s</source>
-			</trans-unit>
-			<trans-unit id="subjectUserNotificationSendInvitation">
-				<source>You invited someone to register at %1$s</source>
-			</trans-unit>
-			<trans-unit id="subjectInvitationToRegister">
-				<source>You were invite to register at %1$s</source>
 			</trans-unit>
 		</body>
 	</file>

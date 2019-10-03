@@ -15,11 +15,12 @@
 		"User registration",
 		"Frontend",
 		"Edit user data",
-		"Double-optin"
+		"Double-optin",
+		"Delete account"
 	],
 
 	"require": {
-		"typo3/cms-core": "^9.5 || ^10.0"
+		"typo3/cms-core": "^9.5 || ^10.1"
 	},
 	"suggest": {
 		"evoweb/recaptcha": "^9.0"
@@ -42,7 +43,7 @@
 	},
 	"extra": {
 		"typo3/cms": {
-			"extension-key": "store_finder",
+			"extension-key": "sf_register",
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"web-dir": ".Build/Web"
 		}

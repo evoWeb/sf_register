@@ -217,7 +217,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             $validator->addPropertyValidator($fieldName, $validatorInstance);
         }
 
-        if ($this->controller == 'edit') {
+        if (in_array($this->controller, ['edit', 'delete'])) {
             $validatorName = \Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator::class;
         } else {
             $validatorName = \Evoweb\SfRegister\Validation\Validator\EmptyValidator::class;
