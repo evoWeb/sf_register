@@ -87,6 +87,12 @@
 			<trans-unit id="fe_users.update">
 				<source>Update button</source>
 			</trans-unit>
+			<trans-unit id="fe_users.delete">
+				<source>Delete button</source>
+			</trans-unit>
+			<trans-unit id="fe_users.disabledEmail">
+				<source>Email (disabled if logged in)</source>
+			</trans-unit>
 
 			<trans-unit id="fe_users.div.registration">
 				<source>Registration</source>
@@ -306,6 +312,9 @@
 			</trans-unit>
 			<trans-unit id="form_flexform.switchableControllerAction.invite">
 				<source>Invite</source>
+			</trans-unit>
+			<trans-unit id="form_flexform.switchableControllerAction.delete">
+				<source>Delete</source>
 			</trans-unit>
 			<trans-unit id="form_flexform.settings.fields.selected">
 				<source>Select fields to use in form</source>

@@ -19,12 +19,12 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->subject = new \Evoweb\SfRegister\Domain\Model\Password();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->subject);
     }

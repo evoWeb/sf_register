@@ -31,21 +31,29 @@ namespace Evoweb\SfRegister\Interfaces;
 interface FrontendUserInterface
 {
     /**
+     * Returns the username value
+     *
      * @return string
      */
     public function getUsername();
 
     /**
+     * Returns the firstName value
+     *
      * @return string
      */
     public function getFirstName();
 
     /**
+     * Returns the lastName value
+     *
      * @return string
      */
     public function getLastName();
 
     /**
+     * Returns the email value
+     *
      * @return string
      */
     public function getEmail();

@@ -50,7 +50,7 @@ class FeuserPasswordController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\Password $password
      *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="password")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="password")
      */
     public function saveAction(\Evoweb\SfRegister\Domain\Model\Password $password)
     {

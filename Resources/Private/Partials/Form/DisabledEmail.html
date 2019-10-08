@@ -1,0 +1,33 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:variable name="fieldName">email</f:variable>
+<div class="col-md-6 mb-3 {fieldName}">
+	<label for="{fieldName}">
+		<f:translate id="{fieldName}" />
+		<f:render partial="Required" arguments="{field: fieldName}" />
+	</label>
+	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
+
+	<f:if condition="{user}">
+		<f:then>
+			<f:form.textfield
+				property="{fieldName}"
+				id="{fieldName}"
+				disabled="disabled"
+				type="email"
+				class="form-control"
+				data="{lpignore: 'true'}"/>
+		</f:then>
+		<f:else>
+			<f:form.textfield
+				property="{fieldName}"
+				id="{fieldName}"
+				type="email"
+				placeholder="{options.placeholder}"
+				class="form-control"
+				data="{lpignore: 'true'}"/>
+		</f:else>
+	</f:if>
+</div>
+
+</html>

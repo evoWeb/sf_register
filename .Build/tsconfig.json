@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"sourceMap": false,
+		"removeComments": false,
+		"alwaysStrict": true,
+		"downlevelIteration": true,
+		"experimentalDecorators": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noImplicitReturns": true,
+		"pretty": true,
+
+		"typeRoots": [
+			"node_modules/@types",
+			"Sources/types"
+		]
+	}
+}

@@ -89,7 +89,7 @@ class FeuserEditController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
     public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
@@ -114,7 +114,7 @@ class FeuserEditController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
     public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {

@@ -24,6 +24,7 @@ namespace Evoweb\SfRegister\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Doctrine\Common\Annotations\DocParser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use \Evoweb\SfRegister\Domain\Model\FrontendUser;
@@ -32,6 +33,7 @@ use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use Evoweb\SfRegister\Validation\Validator\SettableInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Mvc\Web\ReferringRequest;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
@@ -176,9 +178,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         \TYPO3\CMS\Extbase\Mvc\Controller\Argument $argument,
         array $configuredValidators
     ) {
-        /** @var \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validatorResolver */
-        $validatorResolver = $this->objectManager->get(\TYPO3\CMS\Extbase\Validation\ValidatorResolver::class);
-        $parser = new \Doctrine\Common\Annotations\DocParser();
+        $parser = new DocParser();
 
         /** @var \Evoweb\SfRegister\Validation\Validator\UserValidator $validator */
         $validator = $this->objectManager->get(\Evoweb\SfRegister\Validation\Validator\UserValidator::class);
@@ -190,8 +190,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             if (!is_array($configuredValidator)) {
                 $validatorInstance = $this->getValidatorByConfiguration(
                     $configuredValidator,
-                    $parser,
-                    $validatorResolver
+                    $parser
                 );
 
                 if ($validatorInstance instanceof SettableInterface) {
@@ -204,8 +203,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 foreach ($configuredValidator as $individualConfiguredValidator) {
                     $individualValidatorInstance = $this->getValidatorByConfiguration(
                         $individualConfiguredValidator,
-                        $parser,
-                        $validatorResolver
+                        $parser
                     );
 
                     if ($individualValidatorInstance instanceof SettableInterface) {
@@ -219,12 +217,13 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             $validator->addPropertyValidator($fieldName, $validatorInstance);
         }
 
-        $uidValidatorInstance = $this->getValidatorByConfiguration(
-            '"Evoweb.SfRegister:' . ($this->controller == 'edit' ? 'EqualCurrentUser' : 'Empty') . '"',
-            $parser,
-            $validatorResolver
-        );
-        $validator->addPropertyValidator('uid', $uidValidatorInstance);
+        if (in_array($this->controller, ['edit', 'delete'])) {
+            $validatorName = \Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator::class;
+        } else {
+            $validatorName = \Evoweb\SfRegister\Validation\Validator\EmptyValidator::class;
+        }
+        $validatorInstance = $this->getValidatorByConfiguration($validatorName, $parser);
+        $validator->addPropertyValidator('uid', $validatorInstance);
 
         $argument->setValidator($validator);
     }
@@ -232,11 +231,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * @param string $configuration
      * @param \Doctrine\Common\Annotations\DocParser $parser
-     * @param \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validatorResolver
      *
      * @return \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface
      */
-    protected function getValidatorByConfiguration($configuration, $parser, $validatorResolver)
+    protected function getValidatorByConfiguration(string $configuration, DocParser $parser)
     {
         if (strpos($configuration, '"') === false && strpos($configuration, '(') === false) {
             $configuration = '"' . $configuration . '"';
@@ -246,7 +244,19 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $validateAnnotation = current($parser->parse(
             '@TYPO3\CMS\Extbase\Annotation\Validate(' . $configuration . ')'
         ));
-        $validatorObjectName = $validatorResolver->resolveValidatorObjectName($validateAnnotation->validator);
+        if (class_exists(\TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver::class)) {
+            $validatorObjectName = \TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver::resolve(
+                $validateAnnotation->validator
+            );
+        } else {
+            $validatorObjectName = '';
+            // @todo remove once 9.x support is dropped
+            /** @var \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validatorResolver */
+            $validatorResolver = $this->objectManager->get(\TYPO3\CMS\Extbase\Validation\ValidatorResolver::class);
+            if (method_exists($validatorResolver, 'resolveValidatorObjectName')) {
+                $validatorObjectName = $validatorResolver->resolveValidatorObjectName($validateAnnotation->validator);
+            }
+        }
         return $this->objectManager->get($validatorObjectName, $validateAnnotation->options);
     }
 
@@ -363,7 +373,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb.SfRegister:User", param="user")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
     public function proxyAction(
         /** @noinspection PhpUnusedParameterInspection */\Evoweb\SfRegister\Domain\Model\FrontendUser $user
@@ -394,12 +404,25 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
         $this->request->setArgument('removeImage', false);
 
-        $referrer = $this->request->getReferringRequest();
-        if ($referrer !== null) {
+        $referringRequest = null;
+        $referringRequestArguments = $this->request->getInternalArguments()['__referrer']['@request'] ?? null;
+        if (is_string($referringRequestArguments)) {
+            /** @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService */
+            $hashService = $this->objectManager->get(\TYPO3\CMS\Extbase\Security\Cryptography\HashService::class);
+            $referrerArray = json_decode(
+                $hashService->validateAndStripHmac($referringRequestArguments),
+                true
+            );
+            $arguments = [];
+            $referringRequest = new ReferringRequest();
+            $referringRequest->setArguments(array_replace_recursive($arguments, $referrerArray));
+        }
+
+        if ($referringRequest !== null) {
             $this->forward(
-                $referrer->getControllerActionName(),
-                $referrer->getControllerName(),
-                $referrer->getControllerExtensionName(),
+                $referringRequest->getControllerActionName(),
+                $referringRequest->getControllerName(),
+                $referringRequest->getControllerExtensionName(),
                 $this->request->getArguments()
             );
         }

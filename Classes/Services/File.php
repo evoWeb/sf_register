@@ -341,7 +341,8 @@ class File implements \TYPO3\CMS\Core\SingletonInterface, \Psr\Log\LoggerAwareIn
     {
         $image = $fileReference->getOriginalResource()->getOriginalFile();
         $folder = $image->getParentFolder();
-        $imageNameAndPath = PATH_site . $folder->getName() . '/' . $image->getIdentifier();
+        $imageNameAndPath = \TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/'
+            . $folder->getName() . '/' . $image->getIdentifier();
 
         if (@file_exists($imageNameAndPath)) {
             unlink($imageNameAndPath);

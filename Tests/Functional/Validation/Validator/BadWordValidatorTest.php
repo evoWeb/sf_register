@@ -12,6 +12,8 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
@@ -21,7 +23,7 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
@@ -32,14 +34,20 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
         $this->createEmptyFrontendUser();
         $this->initializeTypoScriptFrontendController();
 
+        $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList'] =
+            'god, sex, password';
+
         $this->subject = $this->getAccessibleMock(
             \Evoweb\SfRegister\Validation\Validator\BadWordValidator::Class,
             ['dummy']
         );
-        $this->subject->_set('settings', $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']);
+        $this->subject->_set(
+            'settings',
+            $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
+        );
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->subject);
     }
@@ -51,7 +59,7 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
     {
         $this->assertArrayHasKey(
             'badWordList',
-            $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
+            $this->subject->_get('settings')
         );
     }
 
@@ -62,8 +70,10 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
     {
         $words = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
             ',',
-            $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList']
+            $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList']
         );
+
+        $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageService::class);
 
         $this->assertTrue($this->subject->validate(current($words))->hasErrors());
     }

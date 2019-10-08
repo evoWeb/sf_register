@@ -1,5 +1,0 @@
-# ignore everything in this directory
-*
-
-# but do not ignore this this file
-!.gitignore

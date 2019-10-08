@@ -1,11 +1,7 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../Includes.txt
-.. include:: Images.txt
 
+
+.. _user-manual:
 
 Users manual
 ============
@@ -28,5 +24,6 @@ screenshot below shows the select field.
 Screenshots:
 ~~~~~~~~~~~~
 
-
-|img-1| *Abbildung 1: field with which form fields are selectable and orderable
+.. figure:: Images/select_fields.png
+   :alt: Illustration 1: field with which form fields are selectable and orderable
+   :align: left

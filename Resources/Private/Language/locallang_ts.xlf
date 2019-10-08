@@ -81,6 +81,18 @@
 			<trans-unit id="maximal.notifyUserSendInvitation">
 				<source>the user should get an email after an invitation got sent</source>
 			</trans-unit>
+			<trans-unit id="maximal.notifyAdminPostDeleteSave">
+				<source>the admin should get an email after a delete request got sent</source>
+			</trans-unit>
+			<trans-unit id="maximal.notifyUserPostDeleteSave">
+				<source>the user should get an email after a delete request got sent</source>
+			</trans-unit>
+			<trans-unit id="maximal.notifyAdminPostDeleteConfirm">
+				<source>the admin should get an email after a delete request was confirmed</source>
+			</trans-unit>
+			<trans-unit id="maximal.notifyUserPostDeleteConfirm">
+				<source>the user should get an email after an delete request was confirmed</source>
+			</trans-unit>
 
 			<trans-unit id="maximal.confirmEmailPostEdit">
 				<source>user needs to confirm the email change</source>

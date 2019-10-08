@@ -5,7 +5,7 @@
 <div class="col-md-6 mb-3 {fieldName}">
 	<label><f:translate id="{fieldName}" /></label>
 
-	<register:form.upload property="{fieldName}.0" disabled="disabled" class="form-control-file">
+	<register:form.upload property="{fieldName}.0" disabled="disabled" class="form-control-file" id="uploadButton">
 		<f:if condition="{resource}">
 			<f:image image="{resource}" alt="" width="50"/>
 		</f:if>

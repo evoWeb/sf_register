@@ -1,11 +1,7 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../Includes.txt
-.. include:: Images.txt
 
+
+.. _registration_actions:
 
 Registration actions
 ====================
@@ -21,5 +17,6 @@ Screenshots:
 ~~~~~~~~~~~~
 
 
-|img-1| *Abbildung 1: Action diagram of registration steps
-
+.. figure:: Images/action_diagram.png
+   :alt: *Illustration 1: Action diagram of registration steps
+   :align: left

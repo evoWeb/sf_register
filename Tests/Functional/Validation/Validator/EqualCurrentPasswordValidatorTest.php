@@ -14,13 +14,19 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 
 class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
         $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
         $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
         $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
+
+        $this->createEmptyFrontendUser();
+        $this->initializeTypoScriptFrontendController();
+
+        $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList'] =
+            'god, sex, password';
     }
 
     /**
@@ -28,12 +34,9 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
      */
     public function settingsContainsValidTyposcriptSettings()
     {
-        $this->createEmptyFrontendUser();
-        $this->initializeTypoScriptFrontendController();
-
         $this->assertArrayHasKey(
             'badWordList',
-            $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
+            $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
         );
     }
 
@@ -42,9 +45,6 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
      */
     public function isUserLoggedInReturnsFalseIfNotLoggedIn()
     {
-        $this->createEmptyFrontendUser();
-        $this->initializeTypoScriptFrontendController();
-
         $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         $subject->injectContext($context);

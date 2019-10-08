@@ -1,532 +1,394 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(1);
-module.exports = __webpack_require__(3);
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-/* global define, XMLHttpRequest */
-(function (root, factory) {
-  if (true) {
-    // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-  } else {}
-})(typeof self !== 'undefined' ? self : this, function (exports, PasswordStrengthCalculator) {
-  var document = window.document;
-
-  var SfRegister =
-  /**
-   * @type {boolean}
-   */
-
-  /**
-   * @type {object}
-   */
-
-  /**
-   * @type {object|element}
-   */
-
-  /**
-   * @type {element}
-   */
-
-  /**
-   * @type {element}
-   */
-
-  /**
-   * @type {element}
-   */
-  function SfRegister() {
-    var _this = this;
-
-    _classCallCheck(this, SfRegister);
-
-    _defineProperty(this, "loading", false);
-
-    _defineProperty(this, "ajaxRequest", null);
-
-    _defineProperty(this, "barGraph", null);
-
-    _defineProperty(this, "zone", null);
-
-    _defineProperty(this, "zoneEmpty", null);
-
-    _defineProperty(this, "zoneLoading", null);
-
-    _defineProperty(this, "contentLoaded", function () {
-      _this.zone = document.getElementById('sfrZone');
-      _this.zoneEmpty = document.getElementById('sfrZone_empty');
-      _this.zoneLoading = document.getElementById('sfrZone_loading');
-      _this.barGraph = document.getElementById('bargraph');
-
-      if (_this.barGraph !== null) {
-        _this.barGraph.classList.add('show');
-
-        _this.barGraph.passwordStrengthCalculator = new PasswordStrengthCalculator();
-
-        if (!_this.isInternetExplorer()) {
-          _this.attachToElement('sfrpassword', 'keyup', _this.callTestPassword.bind(_this));
-        } else {
-          _this.loadInternetExplorerPolyfill();
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var PasswordStrengthCalculator = /** @class */ (function () {
+    function PasswordStrengthCalculator() {
+    }
+    /**
+     * password length:
+     * level 0 (0 point): less than 4 characters
+     * level 1 (6 points): between 5 and 7 characters
+     * level 2 (12 points): between 8 and 15 characters
+     * level 3 (18 points): 16 or more characters
+     */
+    PasswordStrengthCalculator.prototype.verdictLength = function (password) {
+        var score = 0, log = '', length = password.length;
+        switch (true) {
+            case length > 0 && length < 5:
+                log = '3 points for length (' + length + ')';
+                score = 3;
+                break;
+            case length > 4 && length < 8:
+                log = '6 points for length (' + length + ')';
+                score = 6;
+                break;
+            case length > 7 && length < 16:
+                log = '12 points for length (' + length + ')';
+                score = 12;
+                break;
+            case length > 15:
+                log = '18 points for length (' + length + ')';
+                score = 18;
+                break;
         }
-      }
+        return { score: score, log: log };
+    };
+    ;
+    /**
+     * letters:
+     * level 0 (0 points): no letters
+     * level 1 (5 points): all letters are lower case
+     * level 1 (5 points): all letters are upper case
+     * level 2 (7 points): letters are mixed case
+     */
+    PasswordStrengthCalculator.prototype.verdictLetter = function (password) {
+        var score = 0, log = '', matchLower = password.match(/[a-z]/), matchUpper = password.match(/[A-Z]/);
+        if (matchLower) {
+            if (matchUpper) {
+                score = 7;
+                log = '7 points for letters are mixed';
+            }
+            else {
+                score = 5;
+                log = '5 point for at least one lower case char';
+            }
+        }
+        else if (matchUpper) {
+            score = 5;
+            log = '5 points for at least one upper case char';
+        }
+        return { score: score, log: log };
+    };
+    ;
+    /**
+     * numbers:
+     * level 0 (0 points): no numbers exist
+     * level 1 (5 points): one number exists
+     * level 1 (7 points): 3 or more numbers exists
+     */
+    PasswordStrengthCalculator.prototype.verdictNumbers = function (password) {
+        var score = 0, log = '', numbers = password.replace(/\D/gi, '');
+        if (numbers.length > 1) {
+            score = 7;
+            log = '7 points for at least three numbers';
+        }
+        else if (numbers.length > 0) {
+            score = 5;
+            log = '5 points for at least one number';
+        }
+        return { score: score, log: log };
+    };
+    ;
+    /**
+     * special characters:
+     * level 0 (0 points): no special characters
+     * level 1 (5 points): one special character exists
+     * level 2 (10 points): more than one special character exists
+     */
+    PasswordStrengthCalculator.prototype.verdictSpecialChars = function (password) {
+        var score = 0, log = '', specialCharacters = password.replace(/[\w\s]/gi, '');
+        if (specialCharacters.length > 1) {
+            score = 10;
+            log = '10 points for at least two special chars';
+        }
+        else if (specialCharacters.length > 0) {
+            score = 5;
+            log = '5 points for at least one special char';
+        }
+        return { score: score, log: log };
+    };
+    ;
+    /**
+     * combinations:
+     * level 0 (1 points): mixed case letters
+     * level 0 (1 points): letters and numbers
+     * level 1 (2 points): mixed case letters and numbers
+     * level 3 (4 points): letters, numbers and special characters
+     * level 4 (6 points): mixed case letters, numbers and special characters
+     */
+    PasswordStrengthCalculator.prototype.verdictCombos = function (letter, number, special) {
+        var score = 0, log = '';
+        if (letter === 7 && number > 0 && special > 0) {
+            score = 6;
+            log = '6 combo points for letters, numbers and special characters';
+        }
+        else if (letter > 0 && number > 0 && special > 0) {
+            score = 4;
+            log = '4 combo points for letters, numbers and special characters';
+        }
+        else if (letter === 7 && number > 0) {
+            score = 2;
+            log = '2 combo points for mixed case letters and numbers';
+        }
+        else if (letter > 0 && number > 0) {
+            score = 1;
+            log = '1 combo points for letters and numbers';
+        }
+        else if (letter === 7) {
+            score = 1;
+            log = '1 combo points for mixed case letters';
+        }
+        return { score: score, log: log };
+    };
+    ;
+    /**
+     * final verdict base on final score
+     */
+    PasswordStrengthCalculator.prototype.finalVerdict = function (finalScore) {
+        var strVerdict = '';
+        if (finalScore < 16) {
+            strVerdict = 'very weak';
+        }
+        else if (finalScore > 15 && finalScore < 25) {
+            strVerdict = 'weak';
+        }
+        else if (finalScore > 24 && finalScore < 35) {
+            strVerdict = 'mediocre';
+        }
+        else if (finalScore > 34 && finalScore < 45) {
+            strVerdict = 'strong';
+        }
+        else {
+            strVerdict = 'stronger';
+        }
+        return strVerdict;
+    };
+    ;
+    PasswordStrengthCalculator.prototype.calculate = function (password) {
+        var lengthVerdict = this.verdictLength(password);
+        var letterVerdict = this.verdictLetter(password);
+        var numberVerdict = this.verdictNumbers(password);
+        var specialVerdict = this.verdictSpecialChars(password);
+        var combosVerdict = this.verdictCombos(letterVerdict.score, numberVerdict.score, specialVerdict.score);
+        var score = lengthVerdict.score
+            + letterVerdict.score
+            + numberVerdict.score
+            + specialVerdict.score
+            + combosVerdict.score;
+        var log = [
+            lengthVerdict.log,
+            letterVerdict.log,
+            numberVerdict.log,
+            specialVerdict.log,
+            combosVerdict.log,
+            score + ' points final score'
+        ].join("\n");
+        return { score: score, verdict: this.finalVerdict(score), log: log };
+    };
+    return PasswordStrengthCalculator;
+}());
+exports.default = PasswordStrengthCalculator;
 
-      _this.attachToElement('sfrCountry', 'change', _this.countryChanged.bind(_this));
-
-      _this.attachToElement('sfrCountry', 'keyup', _this.countryChanged.bind(_this));
-
-      _this.attachToElement('uploadButton', 'change', _this.uploadFile);
-
-      _this.attachToElement('removeImageButton', 'click', _this.removeFile.bind(_this));
-    });
-
-    _defineProperty(this, "showElement", function (element) {
-      element.classList.remove('d-none');
-      element.classList.add('d-block');
-    });
-
-    _defineProperty(this, "hideElement", function (element) {
-      element.classList.remove('d-block');
-      element.classList.add('d-none');
-    });
-
-    _defineProperty(this, "attachToElement", function (id, eventName, callback) {
-      var element = 'object' === _typeof(id) ? id : document.getElementById(id);
-
-      if (element && element.addEventListener) {
-        element.addEventListener(eventName, callback, false);
-      } else if (element) {
-        element.attachEvent('on' + eventName, callback);
-      }
-    });
-
-    _defineProperty(this, "callTestPassword", function (event) {
-      var element = event.target,
-          meterResult = _this.barGraph.passwordStrengthCalculator.calculate(element.value);
-
-      if (_this.barGraph.tagName.toLowerCase() === 'meter') {
-        _this.barGraph.value = meterResult.score;
-      } else {
-        var percentScore = Math.min(Math.floor(meterResult.score / 3.4), 10),
-            blinds = (_this.barGraph.contentDocument || _this.barGraph.contentWindow.document).getElementsByClassName('blind');
-
-        var _self2 = _this;
-        Array.from(blinds).forEach(function (blind, index) {
-          _self2[index < percentScore ? 'hideElement' : 'showElement'](blind);
+},{}],2:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var PasswordStrengthCalculator_1 = require("./PasswordStrengthCalculator");
+var document = window.document;
+var SfRegister = /** @class */ (function () {
+    function SfRegister() {
+        this.loading = false;
+        this.ajaxRequest = null;
+        this.barGraph = null;
+        this.passwordStrengthCalculator = null;
+        this.zone = null;
+        this.zoneEmpty = null;
+        this.zoneLoading = null;
+        // Attach content loaded element with callback to document
+        document.addEventListener('DOMContentLoaded', this.contentLoaded.bind(this));
+    }
+    /**
+     * Callback after content was loaded
+     */
+    SfRegister.prototype.contentLoaded = function () {
+        this.zone = document.getElementById('sfrZone');
+        this.zoneEmpty = document.getElementById('sfrZone_empty');
+        this.zoneLoading = document.getElementById('sfrZone_loading');
+        this.barGraph = document.getElementById('bargraph');
+        if (this.barGraph) {
+            this.barGraph.classList.add('show');
+            this.passwordStrengthCalculator = new PasswordStrengthCalculator_1.default();
+            if (this.isInternetExplorer()) {
+                this.loadInternetExplorerPolyfill();
+            }
+            else {
+                this.attachToElementById('sfrpassword', 'keyup', this.callTestPassword.bind(this));
+            }
+        }
+        this.attachToElementById('sfrCountry', 'change', this.countryChanged.bind(this));
+        this.attachToElementById('sfrCountry', 'keyup', this.countryChanged.bind(this));
+        this.attachToElementById('uploadButton', 'change', this.uploadFile.bind(this));
+        this.attachToElementById('removeImageButton', 'click', this.removeFile.bind(this));
+    };
+    ;
+    /**
+     * Add class d-block remove class d-none
+     */
+    SfRegister.prototype.showElement = function (element) {
+        element.classList.remove('d-none');
+        element.classList.add('d-block');
+    };
+    ;
+    /**
+     * Add class d-none remove class d-block
+     */
+    SfRegister.prototype.hideElement = function (element) {
+        element.classList.remove('d-block');
+        element.classList.add('d-none');
+    };
+    ;
+    SfRegister.prototype.attachToElementById = function (id, eventName, callback) {
+        var element = document.getElementById(id);
+        this.attachToElement(element, eventName, callback);
+    };
+    SfRegister.prototype.attachToElement = function (element, eventName, callback) {
+        if (element) {
+            element.addEventListener(eventName, callback);
+        }
+    };
+    ;
+    /**
+     * Gets password meter element and sets the value with
+     * the result of the calculate password strength function
+     */
+    SfRegister.prototype.callTestPassword = function (event) {
+        var element = event.target, meterResult = this.passwordStrengthCalculator.calculate(element.value);
+        if (this.barGraph.tagName.toLowerCase() === 'meter') {
+            this.barGraph.value = meterResult.score;
+        }
+        else {
+            var barGraph = this.barGraph, percentScore = Math.min((Math.floor(meterResult.score / 3.4)), 10), blinds = (barGraph.contentDocument || barGraph.contentWindow.document).getElementsByClassName('blind');
+            for (var index = 0; index < blinds.length; index++) {
+                var blind = blinds[index];
+                if (index < percentScore) {
+                    this.hideElement(blind);
+                }
+                else {
+                    this.showElement(blind);
+                }
+            }
+        }
+    };
+    ;
+    SfRegister.prototype.isInternetExplorer = function () {
+        var userAgent = navigator.userAgent;
+        /* MSIE used to detect old browsers and Trident used to newer ones*/
+        return userAgent.indexOf('MSIE ') > -1 || userAgent.indexOf('Trident/') > -1;
+    };
+    ;
+    SfRegister.prototype.loadInternetExplorerPolyfill = function () {
+        var _this = this;
+        var body = document.getElementsByTagName('body').item(0), js = document.createElement('script');
+        js.setAttribute('type', 'text/javascript');
+        js.setAttribute('src', 'https://unpkg.com/meter-polyfill/dist/meter-polyfill.min.js');
+        js.onload = function () {
+            // @ts-ignore
+            meterPolyfill(_this.barGraph);
+            _this.attachToElementById('sfrpassword', 'keyup', _this.callTestPassword);
+        };
+        body.appendChild(js);
+    };
+    ;
+    /**
+     * Change value of zone selectbox
+     */
+    SfRegister.prototype.countryChanged = function (event) {
+        if ((event.type === 'change'
+            || (event.type === 'keyup' && (event.keyCode === 40 || event.keyCode === 38)))
+            && this.loading !== true) {
+            if (this.zone) {
+                var target = (event.target || event.srcElement), countrySelectedValue = target.options[target.selectedIndex].value;
+                this.loading = true;
+                this.zone.disabled = true;
+                this.hideElement(this.zoneEmpty);
+                this.showElement(this.zoneLoading);
+                this.ajaxRequest = new XMLHttpRequest();
+                this.ajaxRequest.onload = this.xhrReadyOnLoad.bind(this);
+                this.ajaxRequest.open('POST', 'index.php?ajax=sf_register');
+                this.ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                this.ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+            }
+        }
+    };
+    ;
+    /**
+     * Process ajax response and display error message or
+     * hand data received to add zone option function
+     */
+    SfRegister.prototype.xhrReadyOnLoad = function (stateChanged) {
+        var xhrResponse = stateChanged.target;
+        if (xhrResponse.readyState === 4 && xhrResponse.status === 200) {
+            var xhrResponseData = JSON.parse(xhrResponse.responseText);
+            this.hideElement(this.zoneLoading);
+            if (xhrResponseData.status === 'error' || xhrResponseData.data.length === 0) {
+                this.showElement(this.zoneEmpty);
+            }
+            else {
+                this.addZoneOptions(xhrResponseData.data);
+            }
+        }
+        this.loading = false;
+    };
+    ;
+    /**
+     * Process data received with xhr response
+     */
+    SfRegister.prototype.addZoneOptions = function (options) {
+        var _this = this;
+        while (this.zone.length) {
+            this.zone.removeChild(this.zone[0]);
+        }
+        options.forEach(function (option, index) {
+            _this.zone.options[index] = new Option(option.label, option.value);
         });
-      }
-    });
-
-    _defineProperty(this, "isInternetExplorer", function () {
-      var ua = navigator.userAgent;
-      /* MSIE used to detect old browsers and Trident used to newer ones*/
-
-      return ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
-    });
-
-    _defineProperty(this, "loadInternetExplorerPolyfill", function () {
-      var self = _this,
-          body = document.getElementsByTagName('body').item(0),
-          js = document.createElement('script');
-      js.setAttribute('type', 'text/javascript');
-      js.setAttribute('src', 'https://unpkg.com/meter-polyfill/dist/meter-polyfill.min.js');
-
-      js.onload = function () {
-        meterPolyfill(self.barGraph);
-        self.attachToElement('sfrpassword', 'keyup', self.callTestPassword.bind(this));
-      };
-
-      body.appendChild(js);
-    });
-
-    _defineProperty(this, "countryChanged", function (event) {
-      if ((event.type === 'keyup' && (event.keyCode === 40 || event.keyCode === 38) || event.type === 'change') && _this.loading !== true) {
-        if (_this.zone) {
-          var target = event.target || event.srcElement,
-              countrySelectedValue = target.options[target.selectedIndex].value;
-          _this.loading = true;
-          _this.zone.disabled = true;
-
-          _this.hideElement(_this.zoneEmpty);
-
-          _this.showElement(_this.zoneLoading);
-
-          _this.ajaxRequest = new XMLHttpRequest();
-          _this.ajaxRequest.onreadystatechange = _this.xhrReadyStateChanged.bind(_this);
-
-          _this.ajaxRequest.open('POST', 'index.php?eID=sf_register');
-
-          _this.ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
-          _this.ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+        this.zone.disabled = false;
+    };
+    ;
+    /**
+     * Adds a preview information about file to upload in a label
+     */
+    SfRegister.prototype.uploadFile = function () {
+        var information = document.getElementById('uploadFile');
+        if (information) {
+            information.value = this.value;
         }
-      }
-    });
-
-    _defineProperty(this, "xhrReadyStateChanged", function (stateChanged) {
-      var xhrResponse = stateChanged.target;
-
-      if (xhrResponse.readyState === 4 && xhrResponse.status === 200) {
-        var xhrResponseData = JSON.parse(xhrResponse.responseText);
-
-        _this.hideElement(_this.zoneLoading);
-
-        if (xhrResponseData.status === 'error' || xhrResponseData.data.length === 0) {
-          _this.showElement(_this.zoneEmpty);
-        } else {
-          _this.addZoneOptions(xhrResponseData.data);
+    };
+    ;
+    /**
+     * Handle remove image button clicked
+     */
+    SfRegister.prototype.removeFile = function () {
+        var remove = document.getElementById('removeImage');
+        if (remove) {
+            remove.value = '1';
         }
-      }
+        this.submitForm();
+    };
+    ;
+    /**
+     * Selects the form and triggers submit
+     */
+    SfRegister.prototype.submitForm = function () {
+        var form = document.getElementById('sfrForm');
+        if (form) {
+            form.reset();
+        }
+    };
+    ;
+    return SfRegister;
+}());
+exports.default = SfRegister;
 
-      _this.loading = false;
-    });
-
-    _defineProperty(this, "addZoneOptions", function (options) {
-      _this.zone.length = 0;
-      _this.zone.options = [];
-      options.forEach(function (option, index) {
-        this.options[index] = new Option(option.label, option.value);
-      }.bind(_this.zone));
-      _this.zone.disabled = false;
-    });
-
-    _defineProperty(this, "uploadFile", function () {
-      document.getElementById('uploadFile').value = _this.value;
-    });
-
-    _defineProperty(this, "removeFile", function () {
-      document.getElementById('removeImage').value = 1;
-
-      _this.submitForm();
-    });
-
-    _defineProperty(this, "submitForm", function () {
-      document.getElementById('sfrForm').submit();
-    });
-
-    var _self = this; // Attach content loaded element with callback to document
-
-
-    _self.attachToElement(document, 'DOMContentLoaded', _self.contentLoaded.bind(_self));
-  }
-  /**
-   * Callback after content was loaded
-   */
-  ;
-
-  var sfRegister = new SfRegister();
-  /**
-   * Global function needed for invisible recaptcha
-   */
-
-  window.sfRegister_submitForm = function () {
+},{"./PasswordStrengthCalculator":1}],3:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var SfRegister_1 = require("./SfRegister");
+var sfRegister = new SfRegister_1.default();
+/**
+ * Global function needed for invisible recaptcha
+ */
+window.sfRegister_submitForm = function () {
     sfRegister.submitForm();
-  };
+};
 
-  exports.SfRegister = sfRegister;
-});
+},{"./SfRegister":2}]},{},[3])
 
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-(function PasswordStrengthCalculator(root, factory) {
-  if (true) {
-    // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-  } else {}
-})(this, function () {
-  var PasswordStrengthCalculator = function PasswordStrengthCalculator() {
-    var _this = this;
-
-    _classCallCheck(this, PasswordStrengthCalculator);
-
-    _defineProperty(this, "verdictLength", function (password) {
-      var score = 0,
-          log = '',
-          length = password.length;
-
-      switch (true) {
-        case length > 0 && length < 5:
-          log = '3 points for length (' + length + ')';
-          score = 3;
-          break;
-
-        case length > 4 && length < 8:
-          log = '6 points for length (' + length + ')';
-          score = 6;
-          break;
-
-        case length > 7 && length < 16:
-          log = '12 points for length (' + length + ')';
-          score = 12;
-          break;
-
-        case length > 15:
-          log = '18 points for length (' + length + ')';
-          score = 18;
-          break;
-      }
-
-      return {
-        score: score,
-        log: log
-      };
-    });
-
-    _defineProperty(this, "verdictLetter", function (password) {
-      var score = 0,
-          log = '',
-          matchLower = password.match(/[a-z]/),
-          matchUpper = password.match(/[A-Z]/);
-
-      if (matchLower) {
-        if (matchUpper) {
-          score = 7;
-          log = '7 points for letters are mixed';
-        } else {
-          score = 5;
-          log = '5 point for at least one lower case char';
-        }
-      } else if (matchUpper) {
-        score = 5;
-        log = '5 points for at least one upper case char';
-      }
-
-      return {
-        score: score,
-        log: log
-      };
-    });
-
-    _defineProperty(this, "verdictNumbers", function (password) {
-      var score = 0,
-          log = '',
-          numbers = password.replace(/\D/gi, '');
-
-      if (numbers.length > 1) {
-        score = 7;
-        log = '7 points for at least three numbers';
-      } else if (numbers.length > 0) {
-        score = 5;
-        log = '5 points for at least one number';
-      }
-
-      return {
-        score: score,
-        log: log
-      };
-    });
-
-    _defineProperty(this, "verdictSpecialChars", function (password) {
-      var score = 0,
-          log = '',
-          specialCharacters = password.replace(/[\w\s]/gi, '');
-
-      if (specialCharacters.length > 1) {
-        score = 10;
-        log = '10 points for at least two special chars';
-      } else if (specialCharacters.length > 0) {
-        score = 5;
-        log = '5 points for at least one special char';
-      }
-
-      return {
-        score: score,
-        log: log
-      };
-    });
-
-    _defineProperty(this, "verdictCombos", function (verdicts) {
-      var score = 0,
-          log = '';
-
-      if (verdicts.letter === 7 && verdicts.number > 0 && verdicts.special > 0) {
-        score = 6;
-        log = '6 combo points for letters, numbers and special characters';
-      } else if (verdicts.letter > 0 && verdicts.number > 0 && verdicts.special > 0) {
-        score = 4;
-        log = '4 combo points for letters, numbers and special characters';
-      } else if (verdicts.letter === 7 && verdicts.number > 0) {
-        score = 2;
-        log = '2 combo points for mixed case letters and numbers';
-      } else if (verdicts.letter > 0 && verdicts.number > 0) {
-        score = 1;
-        log = '1 combo points for letters and numbers';
-      } else if (verdicts.letter === 7) {
-        score = 1;
-        log = '1 combo points for mixed case letters';
-      }
-
-      return {
-        score: score,
-        log: log
-      };
-    });
-
-    _defineProperty(this, "finalVerdict", function (finalScore) {
-      var strVerdict = '';
-
-      if (finalScore < 16) {
-        strVerdict = 'very weak';
-      } else if (finalScore > 15 && finalScore < 25) {
-        strVerdict = 'weak';
-      } else if (finalScore > 24 && finalScore < 35) {
-        strVerdict = 'mediocre';
-      } else if (finalScore > 34 && finalScore < 45) {
-        strVerdict = 'strong';
-      } else {
-        strVerdict = 'stronger';
-      }
-
-      return strVerdict;
-    });
-
-    _defineProperty(this, "calculate", function (password) {
-      var lengthVerdict = _this.verdictLength(password);
-
-      var letterVerdict = _this.verdictLetter(password);
-
-      var numberVerdict = _this.verdictNumbers(password);
-
-      var specialVerdict = _this.verdictSpecialChars(password);
-
-      var combosVerdict = _this.verdictCombos({
-        letter: letterVerdict.score,
-        number: numberVerdict.score,
-        special: specialVerdict.score
-      });
-
-      var score = lengthVerdict.score + letterVerdict.score + numberVerdict.score + specialVerdict.score + combosVerdict.score;
-      var log = [lengthVerdict.log, letterVerdict.log, numberVerdict.log, specialVerdict.log, combosVerdict.log, score + ' points final score'].join("\n");
-      return {
-        score: score,
-        verdict: _this.finalVerdict(score),
-        log: log
-      };
-    });
-  };
-
-  return PasswordStrengthCalculator;
-});
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ })
-/******/ ]);
-//# sourceMappingURL=sf_register.js.map

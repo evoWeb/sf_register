@@ -23,25 +23,40 @@ call_user_func(function () {
         ['source' => 'EXT:sf_register/Resources/Public/Icons/Extension.svg']
     );
 
+    if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) < 10000000) {
+        // @todo remove once TYPO3 9.5.x support is dropped
+        $extensionName = 'Evoweb.sf_register';
+        $createController = 'FeuserCreate';
+        $editController = 'FeuserEdit';
+        $passwordController = 'FeuserPassword';
+        $inviteController = 'FeuserPassword';
+        $deleteController = 'FeuserDelete';
+    } else {
+        $extensionName = 'SfRegister';
+        $createController = \Evoweb\SfRegister\Controller\FeuserCreateController::class;
+        $editController = \Evoweb\SfRegister\Controller\FeuserEditController::class;
+        $passwordController = \Evoweb\SfRegister\Controller\FeuserPasswordController::class;
+        $inviteController = \Evoweb\SfRegister\Controller\FeuserInviteController::class;
+        $deleteController = \Evoweb\SfRegister\Controller\FeuserDeleteController::class;
+    }
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'Evoweb.sf_register',
+        $extensionName,
         'Form',
         [
-            'FeuserCreate' => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
-            'FeuserEdit' => 'form, preview, proxy, save, confirm, accept, removeImage',
-            'FeuserPassword' => 'form, save',
-            'FeuserInvite' => 'inviteForm, invite',
+            $createController => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
+            $editController => 'form, preview, proxy, save, confirm, accept, removeImage',
+            $passwordController => 'form, save',
+            $inviteController => 'inviteForm, invite',
+            $deleteController => 'form, save, confirm',
         ],
         [
-            'FeuserCreate' => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
-            'FeuserEdit' => 'form, preview, proxy, save, confirm, accept, removeImage',
-            'FeuserPassword' => 'form, save',
-            'FeuserInvite' => 'inviteForm, invite',
+            $createController => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
+            $editController => 'form, preview, proxy, save, confirm, accept, removeImage',
+            $passwordController => 'form, save',
+            $inviteController => 'inviteForm, invite',
+            $deleteController => 'form, save, confirm',
         ]
     );
-
-    $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['sf_register'] =
-        \Evoweb\SfRegister\Controller\AjaxController::class . '::processRequest';
 
     \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
         ->registerImplementation(

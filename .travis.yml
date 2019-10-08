@@ -1,6 +1,6 @@
 language: php
 
-sudo: required
+sudo: false
 
 addons:
   apt:
@@ -22,52 +22,38 @@ notifications:
     - typo3@evoweb.de
 
 before_install:
-  - sudo add-apt-repository ppa:ondrej/php -y
-  - sudo apt-get update -q
-  - sudo apt-get install libsodium-dev -y
+  - composer require phwoolcon/ci-pecl-cacher -n
+  # Cache till new version
+  - .Build/bin/ci-pecl-install swoole
 
 install:
   - >
     export TYPO3_PATH_WEB=$PWD/.Build/Web;
-    composer require typo3/minimal="$TYPO3_VERSION" $PREFER_LOWEST;
-    composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK";
+    composer require typo3/cms-core="$TYPO3_VERSION" $PREFER_LOWEST;
+    if [ ! -z "$TESTING_FRAMEWORK" ]; then composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"; fi;
     git checkout composer.json;
 
 before_script:
   - phpenv config-rm xdebug.ini
-  - pecl install libsodium
 
 script:
   - >
     echo "Running ${TYPO3_VERSION} unit tests";
-    php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/;
+    php .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/${UNIT_TESTING_FOLDER}/;
     echo "Running functional tests";
-    export typo3DatabaseName="typo3";
-    export typo3DatabaseHost="localhost";
-    export typo3DatabaseUsername="root";
-    export typo3DatabasePassword="";
     export typo3DatabaseDriver="pdo_sqlite";
-    php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
+    php .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/${FUNCTIONAL_TESTING_FOLDER}/;
 
 jobs:
   fast_finish: true
   allow_failures:
-    - env: TYPO3_VERSION="dev-master" TESTING_FRAMEWORK="~5.0.3"
+    - env:
+        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11"
 
   include:
-    - &lint
-      stage: test
-      php: 7.2
-      env: PHP Lint
-      before_install: skip
-      install: skip
-      before_script: skip
-      script:
-        - errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l {} 2>&1 >/dev/null \;) && echo "$errors" && test -z "$errors"
-
     - stage: test
       php: 7.2
-      env: Xliff Lint
+      env: TASK="XML Lint (Xliff)"
       before_install: skip
       install: skip
       before_script: skip
@@ -75,13 +61,39 @@ jobs:
         - echo "Running xmllint (Xliff)";
           find Resources/Private/Language/ -name '*.xlf' -type f | xargs xmllint --noout --schema Tests/Fixtures/xliff-core-1.2-strict.xsd
 
-    - stage: test
+    - &lint
+      stage: test
+      php: 7.3
+      env: TASK="PHP Lint"
+      before_install: skip
+      install: skip
+      before_script: skip
+      script:
+        - echo "Running php lint";
+          errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l {} 2>&1 >/dev/null \;) && echo "$errors" && test -z "$errors"
+    - <<: *lint
       php: 7.2
-      env: TYPO3_VERSION="^9.5" TESTING_FRAMEWORK="~4.10.0"
 
     - stage: test
+      php: 7.3
+      env:
+        - TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
+    - stage: test
       php: 7.2
-      env: TYPO3_VERSION="dev-master" TESTING_FRAMEWORK="~5.0.3"
+      env:
+        - TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
+    - stage: test
+      php: 7.3
+      env:
+        - TYPO3_VERSION="^10.0.0" TESTING_FRAMEWORK="~5.0.11" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+    - stage: test
+      php: 7.2
+      env:
+        - TYPO3_VERSION="^10.0.0" TESTING_FRAMEWORK="~5.0.11" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+    - stage: test
+      php: 7.2
+      env:
+        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
 
     - stage: publish in ter
       if: tag IS present

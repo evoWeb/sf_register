@@ -1,10 +1,7 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../Includes.txt
-.. include:: Images.txt
+
+
+.. _introduction:
 
 Introduction
 ============
@@ -90,5 +87,11 @@ Screenshots:
 ~~~~~~~~~~~~
 
 
-|img-3| *Abbildung 1: simple register form with recaptcha*
-|img-4|  *Abbildung 2: extensive register form with sr\_freecap*
+.. figure:: Images/screenshot_capture.png
+   :alt: *Illustration 1: simple register form with recaptcha*
+   :align: left
+
+
+.. figure:: Images/screenshot_createform.png
+   :alt: *Illustration 2: extensive register form with sr\_freecap*
+   :align: left

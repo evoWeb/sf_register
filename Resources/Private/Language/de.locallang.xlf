@@ -554,6 +554,23 @@
 				<target>Ihre Änderungen an Ihrem Account %2$s auf Seite %1$s wurden akzeptiert</target>
 			</trans-unit>
 
+			<trans-unit id="submit_delete" approved="yes">
+				<source>delete</source>
+				<target>löschen</target>
+			</trans-unit>
+			<trans-unit id="delete_saved" approved="yes">
+				<source>You requested to delete your account. We send an email with a link with which you can confirm this request.</source>
+				<target>Sie haben angefordert, dass Ihr Account gelöscht wird. Wir haben Ihnen eine E-Mail mit einem Link geschickt, mit dem Sie diese Anfrage bestätigen können.</target>
+			</trans-unit>
+			<trans-unit id="account_already_deleted" approved="yes">
+				<source>Account was already deleted.</source>
+				<target>Der Account wurde bereits gelöscht.</target>
+			</trans-unit>
+			<trans-unit id="account_deleted" approved="yes">
+				<source>Account deleted.</source>
+				<target>Account wurde gelöscht.</target>
+			</trans-unit>
+
 			<trans-unit id="email_admin_salutation">
 				<source>dear admin</source>
 				<target>Sehr geehrter Admin</target>

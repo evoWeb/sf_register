@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <fe_groups>
+        <uid>1</uid>
+        <tx_extbase_type>0</tx_extbase_type>
+        <pid>2</pid>
+        <tstamp>1529850292</tstamp>
+        <crdate>1529850292</crdate>
+        <cruser_id>1</cruser_id>
+        <title>PreConfirm</title>
+        <hidden>0</hidden>
+        <lockToDomain></lockToDomain>
+        <deleted>0</deleted>
+        <description></description>
+        <subgroup></subgroup>
+        <TSconfig></TSconfig>
+    </fe_groups>
+
+    <fe_groups>
+        <uid>2</uid>
+        <tx_extbase_type>0</tx_extbase_type>
+        <pid>2</pid>
+        <tstamp>1529850300</tstamp>
+        <crdate>1529850300</crdate>
+        <cruser_id>1</cruser_id>
+        <title>PostConfirm</title>
+        <hidden>0</hidden>
+        <lockToDomain></lockToDomain>
+        <deleted>0</deleted>
+        <description></description>
+        <subgroup></subgroup>
+        <TSconfig></TSconfig>
+    </fe_groups>
+</dataset>
