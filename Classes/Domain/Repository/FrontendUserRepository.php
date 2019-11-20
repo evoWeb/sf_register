@@ -59,6 +59,33 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
     }
 
     /**
+     * Finds an object matching the given identifier.
+     *
+     * @param string $email The Email address of the object to find
+     * @param bool $ignoreHidden Whether to ignore hidden state
+     *
+     * @return NULL|\Evoweb\SfRegister\Interfaces\FrontendUserInterface|object
+     */
+    public function findByEmail($email, bool $ignoreHidden = false)
+    {
+        if ($ignoreHidden) {
+            return parent::findByEmail($email)->getFirst();
+        }
+
+        $query = $this->createQuery();
+
+        $querySettings = $query->getQuerySettings();
+        $querySettings->setIgnoreEnableFields(true);
+        $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+
+        $object = $query->matching($query->equals('email', $email))
+            ->execute()
+            ->getFirst();
+
+        return $object;
+    }
+
+    /**
      * Count users in storage folder which have a field that contains the value
      *
      * @param string $field

@@ -222,6 +222,9 @@
 			<trans-unit id="common.invitePid">
 				<source>Id of page with invite form</source>
 			</trans-unit>
+			<trans-unit id="common.resendPid">
+				<source>Id of page with resend form</source>
+			</trans-unit>
 
 			<trans-unit id="templateRootPath">
 				<source>Path to template root (FE)</source>

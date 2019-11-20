@@ -255,11 +255,17 @@
 			<trans-unit id="submit_update">
 				<source>update</source>
 			</trans-unit>
+			<trans-unit id="submit_resend">
+				<source>resend</source>
+			</trans-unit>
 			<trans-unit id="submit_removeImage">
 				<source>remove</source>
 			</trans-unit>
 			<trans-unit id="username">
 				<source>Username</source>
+			</trans-unit>
+			<trans-unit id="usernameOrEmail">
+				<source>Username or Email</source>
 			</trans-unit>
 			<trans-unit id="pseudonym">
 				<source>Pseudonym</source>
@@ -275,6 +281,9 @@
 			</trans-unit>
 			<trans-unit id="password_saved">
 				<source>Password successfully updated</source>
+			</trans-unit>
+			<trans-unit id="resend_mail_sent">
+				<source>If your email address was found the confirmation mail was sent to you again.</source>
 			</trans-unit>
 			<trans-unit id="account_not_found">
 				<source>The account that you are trying to activate is unknown to the system.</source>
