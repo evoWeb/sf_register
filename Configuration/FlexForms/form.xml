@@ -37,6 +37,10 @@
 										<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:form_flexform.switchableControllerAction.delete</numIndex>
 										<numIndex index="1">FeuserDelete->form;FeuserDelete->save;FeuserDelete->confirm</numIndex>
 									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:form_flexform.switchableControllerAction.resend</numIndex>
+										<numIndex index="1">FeuserResend->form;FeuserResend->mail</numIndex>
+									</numIndex>
 								</items>
 							</config>
 						</TCEforms>

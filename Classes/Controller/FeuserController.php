@@ -164,6 +164,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 $this->arguments->getArgument('password'),
                 $this->settings['validation']['password'] ?? []
             );
+        } elseif ($this->arguments->hasArgument('email') && !$this->actionIsIgnored()) {
+            $this->modifyValidatorsBasedOnSettings(
+                $this->arguments->getArgument('email'),
+                $this->settings['validation'][$this->controller] ?? []
+            );
         } else {
             parent::initializeActionMethodValidators();
         }

@@ -31,6 +31,7 @@ call_user_func(function () {
         $passwordController = 'FeuserPassword';
         $inviteController = 'FeuserPassword';
         $deleteController = 'FeuserDelete';
+        $resendController = 'FeuserResend';
     } else {
         $extensionName = 'SfRegister';
         $createController = \Evoweb\SfRegister\Controller\FeuserCreateController::class;
@@ -38,6 +39,7 @@ call_user_func(function () {
         $passwordController = \Evoweb\SfRegister\Controller\FeuserPasswordController::class;
         $inviteController = \Evoweb\SfRegister\Controller\FeuserInviteController::class;
         $deleteController = \Evoweb\SfRegister\Controller\FeuserDeleteController::class;
+        $resendController = \Evoweb\SfRegister\Controller\FeuserResendController::class;
     }
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         $extensionName,
@@ -48,6 +50,7 @@ call_user_func(function () {
             $passwordController => 'form, save',
             $inviteController => 'inviteForm, invite',
             $deleteController => 'form, save, confirm',
+            $resendController => 'form, mail',
         ],
         [
             $createController => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
@@ -55,6 +58,7 @@ call_user_func(function () {
             $passwordController => 'form, save',
             $inviteController => 'inviteForm, invite',
             $deleteController => 'form, save, confirm',
+            $resendController => 'form, mail',
         ]
     );
 

@@ -27,4 +27,7 @@ plugin.tx_sfregister.settings {
 
   # cat=sf_register.settings//10; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.invitePid
   invitePid = 0
+
+  # cat=sf_register.settings//10; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.resendPid
+  resendPid = 0
 }
