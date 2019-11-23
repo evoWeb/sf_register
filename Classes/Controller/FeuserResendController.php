@@ -1,5 +1,4 @@
 <?php
-
 namespace Evoweb\SfRegister\Controller;
 
 /***************************************************************
@@ -35,27 +34,8 @@ class FeuserResendController extends FeuserController
      */
     protected $controller = 'resend';
 
-
     public function formAction(\Evoweb\SfRegister\Domain\Model\Email $email = null)
     {
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $originalRequest */
-        $originalRequest = $this->request->getOriginalRequest();
-        if ($originalRequest !== null && $originalRequest->hasArgument('email')) {
-            /** @var array $email */
-            $email = $this->request->hasArgument('email') ?
-                $this->request->getArgument('email') : $originalRequest->getArgument('email');
-
-            $propertyMappingConfiguration = $this->getPropertyMappingConfiguration(null, $email);
-
-            /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
-            $propertyMapper = $this->objectManager->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
-            $email = $propertyMapper->convert(
-                $email,
-                \Evoweb\SfRegister\Domain\Model\Email::class,
-                $propertyMappingConfiguration
-            );
-        }
-
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             __FUNCTION__,
@@ -86,10 +66,11 @@ class FeuserResendController extends FeuserController
             ]
         );
 
-        $user = $this->userRepository->findByEmail($email);
+        /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+        $user = $this->userRepository->findByEmail($email->getEmail());
 
         if ($user) {
-            $this->sendEmails($user, 'PostCreateSave');
+            $this->sendEmails($user, 'PostResendMail');
         }
     }
 }

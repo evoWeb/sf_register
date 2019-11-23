@@ -39,21 +39,22 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
      */
     public function findByIdentifier($identifier, bool $ignoreHidden = false)
     {
-        if ($ignoreHidden) {
-            return parent::findByIdentifier($identifier);
-        }
-
+        trigger_error('Method ' . __METHOD__ . ' will be removed in sf_register 10.0', E_USER_DEPRECATED);
         $query = $this->createQuery();
 
-        $querySettings = $query->getQuerySettings();
-        $querySettings->setRespectStoragePage(false);
-        $querySettings->setRespectSysLanguage(false);
-        $querySettings->setIgnoreEnableFields(true);
-        $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+        if (!$ignoreHidden) {
+            $querySettings = $query->getQuerySettings();
+            $querySettings->setRespectStoragePage(false);
+            $querySettings->setRespectSysLanguage(false);
+            $querySettings->setIgnoreEnableFields(true);
+            $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+        }
 
-        $object = $query->matching($query->equals('uid', $identifier))
-            ->execute()
-            ->getFirst();
+        $object = $query->matching(
+            $query->equals('uid', $identifier)
+        )
+        ->execute()
+        ->getFirst();
 
         return $object;
     }
@@ -66,21 +67,22 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
      *
      * @return NULL|\Evoweb\SfRegister\Interfaces\FrontendUserInterface|object
      */
-    public function findByEmail($email, bool $ignoreHidden = false)
+    public function findByEmail(string $email, bool $ignoreHidden = false)
     {
-        if ($ignoreHidden) {
-            return parent::findByEmail($email)->getFirst();
-        }
-
         $query = $this->createQuery();
 
-        $querySettings = $query->getQuerySettings();
-        $querySettings->setIgnoreEnableFields(true);
-        $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+        if (!$ignoreHidden) {
+            $querySettings = $query->getQuerySettings();
+            $querySettings->setIgnoreEnableFields(true);
+            $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+        }
 
-        $object = $query->matching($query->equals('email', $email))
-            ->execute()
-            ->getFirst();
+        $object = $query->matching($query->logicalOr([
+            $query->equals('email', $email),
+            $query->equals('username', $email)
+        ]))
+        ->execute()
+        ->getFirst();
 
         return $object;
     }

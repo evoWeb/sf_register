@@ -1,5 +1,4 @@
 <?php
-
 namespace Evoweb\SfRegister\Domain\Model;
 
 /***************************************************************

@@ -57,6 +57,9 @@ plugin.tx_sfregister.settings {
   notifyAdminPostDeleteConfirm = {$plugin.tx_sfregister.settings.notifyAdminPostDeleteConfirm}
   notifyUserPostDeleteConfirm = {$plugin.tx_sfregister.settings.notifyUserPostDeleteConfirm}
 
+  notifyAdminPostResendMail = {$plugin.tx_sfregister.settings.notifyAdminPostResendMail}
+  notifyUserPostResendMail = {$plugin.tx_sfregister.settings.notifyUserPostResendMail}
+
   # boolean if user should get logged in after registration
   autologinPostRegistration = {$plugin.tx_sfregister.settings.autologinPostRegistration}
   # boolean if user should get logged in after activation
