@@ -80,6 +80,11 @@ plugin.tx_sfregister.settings {
   # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostDeleteConfirm
   notifyUserPostDeleteConfirm = 0
 
+  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostResendMail
+  notifyAdminPostResendMail = 0
+  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostResendMail
+  notifyUserPostResendMail = 1
+
   # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.autologinPostRegistration
   autologinPostRegistration = 0
   # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.autologinPostConfirmation

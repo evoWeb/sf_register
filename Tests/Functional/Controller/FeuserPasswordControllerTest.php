@@ -21,6 +21,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
 {
     public function setUp(): void
     {
+        defined('LF') ?: define('LF', chr(10));
         parent::setUp();
         $this->importDataSet(__DIR__ . '/../Fixtures/pages.xml');
         $this->importDataSet(__DIR__ . '/../Fixtures/sys_template.xml');

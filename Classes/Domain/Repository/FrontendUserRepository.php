@@ -39,21 +39,50 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
      */
     public function findByIdentifier($identifier, bool $ignoreHidden = false)
     {
-        if ($ignoreHidden) {
-            return parent::findByIdentifier($identifier);
-        }
-
+        trigger_error('Method ' . __METHOD__ . ' will be removed in sf_register 10.0', E_USER_DEPRECATED);
         $query = $this->createQuery();
 
-        $querySettings = $query->getQuerySettings();
-        $querySettings->setRespectStoragePage(false);
-        $querySettings->setRespectSysLanguage(false);
-        $querySettings->setIgnoreEnableFields(true);
-        $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+        if (!$ignoreHidden) {
+            $querySettings = $query->getQuerySettings();
+            $querySettings->setRespectStoragePage(false);
+            $querySettings->setRespectSysLanguage(false);
+            $querySettings->setIgnoreEnableFields(true);
+            $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+        }
 
-        $object = $query->matching($query->equals('uid', $identifier))
-            ->execute()
-            ->getFirst();
+        $object = $query->matching(
+            $query->equals('uid', $identifier)
+        )
+        ->execute()
+        ->getFirst();
+
+        return $object;
+    }
+
+    /**
+     * Finds an object matching the given identifier.
+     *
+     * @param string $email The Email address of the object to find
+     * @param bool $ignoreHidden Whether to ignore hidden state
+     *
+     * @return NULL|\Evoweb\SfRegister\Interfaces\FrontendUserInterface|object
+     */
+    public function findByEmail(string $email, bool $ignoreHidden = false)
+    {
+        $query = $this->createQuery();
+
+        if (!$ignoreHidden) {
+            $querySettings = $query->getQuerySettings();
+            $querySettings->setIgnoreEnableFields(true);
+            $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+        }
+
+        $object = $query->matching($query->logicalOr([
+            $query->equals('email', $email),
+            $query->equals('username', $email)
+        ]))
+        ->execute()
+        ->getFirst();
 
         return $object;
     }

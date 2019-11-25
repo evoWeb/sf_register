@@ -347,6 +347,10 @@
 				<source>update</source>
 				<target>aktualisieren</target>
 			</trans-unit>
+			<trans-unit id="submit_resend">
+				<source>resend</source>
+				<target>senden</target>
+			</trans-unit>
 			<trans-unit id="submit_removeImage">
 				<source>remove</source>
 				<target>entfernen</target>
@@ -354,6 +358,10 @@
 			<trans-unit id="username">
 				<source>Username</source>
 				<target>Benutzername</target>
+			</trans-unit>
+			<trans-unit id="usernameOrEmail">
+				<source>Username or Email</source>
+				<target>Benutzername oder E-Mail</target>
 			</trans-unit>
 			<trans-unit id="pseudonym">
 				<source>Pseudonym</source>
@@ -374,6 +382,10 @@
 			<trans-unit id="password_saved">
 				<source>password saved</source>
 				<target>Passwort gespeichert</target>
+			</trans-unit>
+			<trans-unit id="resend_mail_sent">
+				<source>If your email address was found the confirmation mail was sent to you again.</source>
+				<target>Falls Ihre Mailadresse gefunden wurde, wurde die Bestätigungsmail erneut an Sie gesendet.</target>
 			</trans-unit>
 			<trans-unit id="account_not_found">
 				<source>The account you are trying to activate is unknow to the system.</source>

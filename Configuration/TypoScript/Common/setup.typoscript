@@ -25,6 +25,7 @@ plugin.tx_sfregister.settings {
   editPid = {$plugin.tx_sfregister.settings.editPid}
   passwordPid = {$plugin.tx_sfregister.settings.passwordPid}
   invitePid = {$plugin.tx_sfregister.settings.invitePid}
+  resendPid = {$plugin.tx_sfregister.settings.resendPid}
 
   # comma separated list of words used in bad word validator
   badWordList = {$plugin.tx_sfregister.settings.badWordList}
@@ -96,6 +97,13 @@ plugin.tx_sfregister.settings {
   }
 
   validation.delete {
+  }
+
+  validation.resend {
+    email {
+      1 = "Evoweb.SfRegister:Required"
+      2 = "EmailAddress"
+    }
   }
 
   # integer usergroup set if no activation is needed
