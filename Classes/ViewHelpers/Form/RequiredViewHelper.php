@@ -74,7 +74,11 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
         $fieldName = $this->arguments['fieldName'];
         if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) < 10000000) {
             // @todo remove once TYPO3 9.5.x support is dropped
-            $mode = str_replace('feuser', '', strtolower(key($this->frameworkConfiguration['controllerConfiguration'])));
+            $mode = str_replace(
+                'feuser',
+                '',
+                strtolower(key($this->frameworkConfiguration['controllerConfiguration']))
+            );
         } else {
             $mode = str_replace(
                 ['evoweb\sfregister\controller\feuser', 'controller'],
