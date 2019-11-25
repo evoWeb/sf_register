@@ -6,11 +6,11 @@
 Known problems
 ==============
 
-- `http://forge.typo3.org/projects/extension-sf\_register/issues
-  <http://forge.typo3.org/projects/extension-sf_register/issues>`_
+- `https://github.com/evoweb/sf\_register/issues
+  <https://github.com/evoweb/sf_register/issues>`_
 
 To-Do list
 ==========
 
-- `http://forge.typo3.org/projects/extension-sf\_register/issues
-  <http://forge.typo3.org/projects/extension-sf_register/issues>`_
+- `https://github.com/evoweb/sf\_register/issues
+  <https://github.com/evoweb/sf_register/issues>`_
