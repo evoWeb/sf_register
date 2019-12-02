@@ -49,6 +49,16 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
      */
     protected $frameworkConfiguration = [];
 
+    /**
+     * @var bool
+     */
+    protected $escapeOutput = false;
+
+    /**
+     * @var bool
+     */
+    protected $escapeChildren = false;
+
     public function injectConfigurationManager(
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
     ) {
