@@ -16,7 +16,8 @@
 		"Frontend",
 		"Edit user data",
 		"Double-optin",
-		"Delete account"
+		"Delete account",
+		"Resend optin mail"
 	],
 
 	"require": {

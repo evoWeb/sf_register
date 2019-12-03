@@ -27,12 +27,11 @@ before_install:
   - .Build/bin/ci-pecl-install swoole
 
 install:
-  - >
-    export TYPO3_PATH_WEB=$PWD/.Build/Web;
-    composer require typo3/cms-core="$TYPO3_VERSION" $PREFER_LOWEST;
-    if [ ! -z "$TESTING_FRAMEWORK" ]; then composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"; fi;
-    git checkout composer.json;
-    ls -la .Build/bin/;
+  - export TYPO3_PATH_WEB=$PWD/.Build/Web;
+  - composer require typo3/cms-core="$TYPO3_VERSION" $PREFER_LOWEST;
+  - if [ ! -z "$TESTING_FRAMEWORK" ]; then composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"; fi;
+  - git checkout composer.json;
+  - ls -la .Build/bin/;
 
 before_script:
   - phpenv config-rm xdebug.ini
@@ -51,7 +50,7 @@ matrix:
 jobs:
   allow_failures:
     - env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11"
+        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~6.1.0"
 
   include:
     - stage: test
