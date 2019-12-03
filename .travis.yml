@@ -32,6 +32,7 @@ install:
     composer require typo3/cms-core="$TYPO3_VERSION" $PREFER_LOWEST;
     if [ ! -z "$TESTING_FRAMEWORK" ]; then composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"; fi;
     git checkout composer.json;
+    ls -la .Build;
 
 before_script:
   - phpenv config-rm xdebug.ini
@@ -79,23 +80,23 @@ jobs:
     - stage: test
       php: 7.3
       env:
-        - TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
+        - TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.12.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
     - stage: test
       php: 7.2
       env:
-        - TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
+        - TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.12.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
     - stage: test
       php: 7.3
       env:
-        - TYPO3_VERSION="^10.1.0" TESTING_FRAMEWORK="~5.0.16" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+        - TYPO3_VERSION="^10.2.0" TESTING_FRAMEWORK="~6.1.0" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
     - stage: test
       php: 7.2
       env:
-        - TYPO3_VERSION="^10.1.0" TESTING_FRAMEWORK="~5.0.16" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+        - TYPO3_VERSION="^10.2.0" TESTING_FRAMEWORK="~6.1.0" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
     - stage: test
       php: 7.2
       env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~6.1.0" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
 
     - stage: publish in ter
       if: tag IS present

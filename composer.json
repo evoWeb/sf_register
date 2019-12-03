@@ -20,7 +20,7 @@
 	],
 
 	"require": {
-		"typo3/cms-core": "^9.5 || ^10.1"
+		"typo3/cms-core": "^9.5 || ^10.2"
 	},
 	"suggest": {
 		"evoweb/recaptcha": "^9.0"
