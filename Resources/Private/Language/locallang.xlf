@@ -258,11 +258,17 @@
 			<trans-unit id="submit_update">
 				<source>update</source>
 			</trans-unit>
+			<trans-unit id="submit_resend">
+				<source>resend</source>
+			</trans-unit>
 			<trans-unit id="submit_removeImage">
 				<source>remove</source>
 			</trans-unit>
 			<trans-unit id="username">
 				<source>Username</source>
+			</trans-unit>
+			<trans-unit id="usernameOrEmail">
+				<source>Username or Email</source>
 			</trans-unit>
 			<trans-unit id="pseudonym">
 				<source>Pseudonym</source>
@@ -278,6 +284,9 @@
 			</trans-unit>
 			<trans-unit id="password_saved">
 				<source>Password successfully updated</source>
+			</trans-unit>
+			<trans-unit id="resend_mail_sent">
+				<source>If your email address was found the confirmation mail was sent to you again.</source>
 			</trans-unit>
 			<trans-unit id="account_not_found">
 				<source>The account that you are trying to activate is unknown to the system.</source>
@@ -410,22 +419,22 @@
 			</trans-unit>
 
 			<trans-unit id="subjectAdminNotificationPostEditSave">
-				<source>User %2$s has edited informations on site %1$s</source>
+				<source>User %2$s has edited information on site %1$s</source>
 			</trans-unit>
 			<trans-unit id="subjectAdminNotificationPostEditConfirm">
-				<source>User %2$s has confirmed the change of informations on site %1$s</source>
+				<source>User %2$s has confirmed the change of information on site %1$s</source>
 			</trans-unit>
 			<trans-unit id="subjectAdminNotificationPostEditAccept">
-				<source>User %2$s change of informations was accepted on site %1$s</source>
+				<source>User %2$s change of information was accepted on site %1$s</source>
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationPostEditSave">
 				<source>You %2$s changed your information on site %1$s</source>
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationPostEditConfirm">
-				<source>Thank you %2$s for confirming the change of informations on site %1$s</source>
+				<source>Thank you %2$s for confirming the change of information on site %1$s</source>
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationPostEditAccept">
-				<source>Your change of informations for account %2$s on site %1$s was accepted</source>
+				<source>Your change of information for account %2$s on site %1$s was accepted</source>
 			</trans-unit>
 
 			<trans-unit id="subjectAdminNotificationSendInvitation">
@@ -449,6 +458,13 @@
 			</trans-unit>
 			<trans-unit id="subjectUserNotificationPostDeleteConfirm">
 				<source>Your confirmed to delete the account %2$s from %1$s</source>
+			</trans-unit>
+
+			<trans-unit id="subjectAdminNotificationPostReMail">
+				<source>User %2$s requested a resend of the activation key of the account from %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectUserNotificationPostReMail">
+				<source>Your requested a resend of the activation key of the account %2$s from %1$s</source>
 			</trans-unit>
 
 			<trans-unit id="email_admin_salutation">

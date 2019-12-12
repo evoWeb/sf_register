@@ -93,6 +93,12 @@
 			<trans-unit id="maximal.notifyUserPostDeleteConfirm">
 				<source>the user should get an email after an delete request was confirmed</source>
 			</trans-unit>
+			<trans-unit id="maximal.notifyAdminPostResendMail">
+				<source>the admin should get an email with the activation key for an awaiting registration</source>
+			</trans-unit>
+			<trans-unit id="maximal.notifyUserPostResendMail">
+				<source>the user should get an email with the activation key for an awaiting registration</source>
+			</trans-unit>
 
 			<trans-unit id="maximal.confirmEmailPostEdit">
 				<source>user needs to confirm the email change</source>
@@ -222,6 +228,10 @@
 			<trans-unit id="common.invitePid">
 				<source>Id of page with invite form</source>
 			</trans-unit>
+			<trans-unit id="common.resendPid">
+				<source>Id of page with resend form</source>
+			</trans-unit>
+
 			<trans-unit id="common.captchaId">
 				<source>Short name for the desired captcha extension: recaptcha, jmrecaptcha, srfreecap</source>
 			</trans-unit>
