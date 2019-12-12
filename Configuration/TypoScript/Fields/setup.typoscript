@@ -112,11 +112,6 @@ plugin.tx_sfregister.settings.fields {
     20 = delete
   }
 
-  resendDefaultSelected {
-    10 = email
-    20 = resend
-  }
-
   configuration {
     username.partial = Textfield
 
@@ -262,7 +257,7 @@ plugin.tx_sfregister.settings.fields {
 
     captcha {
       partial = Captcha
-      type = recaptcha
+      type = {$plugin.tx_sfregister.settings.captchaId}
     }
 
     invitationEmail {
@@ -281,7 +276,5 @@ plugin.tx_sfregister.settings.fields {
     update.partial = Update
 
     delete.partial = Delete
-
-    resend.partial = Resend
   }
 }
