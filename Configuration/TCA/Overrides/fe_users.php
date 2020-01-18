@@ -68,7 +68,7 @@ call_user_func(function () {
         'timezone' => [
             'label' => $languageFile . 'fe_users.timezone',
             'config' => [
-                'type' => 'check',
+                'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     [$languageFile . 'fe_users.timezone.I.-12', -12],
