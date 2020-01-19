@@ -370,7 +370,7 @@ var SfRegister = /** @class */ (function () {
     SfRegister.prototype.submitForm = function () {
         var form = document.getElementById('sfrForm');
         if (form) {
-            form.reset();
+            form.submit();
         }
     };
     ;
@@ -387,7 +387,16 @@ var sfRegister = new SfRegister_1.default();
  * Global function needed for invisible recaptcha
  */
 window.sfRegister_submitForm = function () {
-    sfRegister.submitForm();
+    return new Promise(function (resolve, reject) {
+        if (grecaptcha === undefined) {
+            alert('Recaptcha ist nicht definiert');
+            reject();
+        }
+        var captchaField = document.getElementById('captcha');
+        captchaField.value = grecaptcha.getResponse();
+        sfRegister.submitForm();
+        resolve();
+    });
 };
 
 },{"./SfRegister":2}]},{},[3])

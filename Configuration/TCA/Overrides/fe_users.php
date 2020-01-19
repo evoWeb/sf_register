@@ -200,7 +200,7 @@ call_user_func(function () {
         ],
         'image' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.image',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'image',
                 [
