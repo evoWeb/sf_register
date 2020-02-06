@@ -101,6 +101,9 @@ class FeuserDeleteController extends FeuserController
         if (!$user->getUsername()) {
             $user->setUsername($user->getEmail());
         }
+        if (!$user->getUid()) {
+            $user = $this->userRepository->findByEmail($user->getEmail());
+        }
 
         $user = $this->sendEmails($user, 'PostDeleteSave');
 
