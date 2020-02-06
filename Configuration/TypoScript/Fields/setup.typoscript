@@ -262,7 +262,7 @@ plugin.tx_sfregister.settings.fields {
 
     captcha {
       partial = Captcha
-      type = recaptcha
+      type = {$plugin.tx_sfregister.settings.captchaId}
     }
 
     invitationEmail {

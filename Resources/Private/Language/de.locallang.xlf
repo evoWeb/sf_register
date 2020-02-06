@@ -291,6 +291,10 @@
 				<source>Birth date</source>
 				<target>Geburtsdatum</target>
 			</trans-unit>
+			<trans-unit id="captcha">
+				<source>Verification code</source>
+				<target>Verifizierungscode</target>
+			</trans-unit>
 			<trans-unit id="image">
 				<source>Profilimage</source>
 				<target>Profilbild</target>

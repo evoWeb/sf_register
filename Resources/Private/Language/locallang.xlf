@@ -219,6 +219,9 @@
 			<trans-unit id="dateOfBirth">
 				<source>Birth date</source>
 			</trans-unit>
+			<trans-unit id="captcha">
+				<source>Verification code</source>
+			</trans-unit>
 			<trans-unit id="image">
 				<source>Profile image</source>
 			</trans-unit>
