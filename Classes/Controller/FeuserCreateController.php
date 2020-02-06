@@ -114,6 +114,7 @@ class FeuserCreateController extends FeuserController
             $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostSave']);
         } else {
             $user = $this->changeUsergroup($user, (int) $this->settings['usergroup']);
+            $this->moveTemporaryImage($user);
         }
 
         $type = 'PostCreateSave';
@@ -186,6 +187,7 @@ class FeuserCreateController extends FeuserController
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
                 $user = $this->changeUsergroup($user, (int) $this->settings['usergroupPostConfirm']);
+                $this->moveTemporaryImage($user);
                 $user->setActivatedOn(new \DateTime('now'));
 
                 if (!$this->settings['acceptEmailPostConfirm']) {

@@ -636,6 +636,15 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $user->setUsergroup($assignedUserGroups);
     }
 
+    protected function moveTemporaryImage(FrontendUser $user)
+    {
+        if ($user->getImage()->count()) {
+            /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $image */
+            $image = $user->getImage()->current();
+            $this->fileService->moveFileFromTempFolderToUploadFolder($image);
+        }
+    }
+
 
     protected function autoLogin(FrontendUser $user, int $redirectPageId)
     {
