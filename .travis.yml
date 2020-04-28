@@ -77,24 +77,24 @@ jobs:
     - stage: test
       php: 7.3
       env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.11.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
-#    - stage: test
-#      php: 7.2
-#      env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
-#    - stage: test
-#      php: 7.4
-#      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
-#    - stage: test
-#      php: 7.3
-#      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
-#    - stage: test
-#      php: 7.2
-#      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
-#    - stage: test
-#      php: 7.2
-#      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^5.0.15" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional" PREFER_LOWEST="--prefer-lowest"
-#    - stage: test
-#      php: 7.2
-#      env: TYPO3_VERSION="dev-master as 10.4.0" TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+    - stage: test
+      php: 7.2
+      env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
+    - stage: test
+      php: 7.4
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+    - stage: test
+      php: 7.3
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+    - stage: test
+      php: 7.2
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+    - stage: test
+      php: 7.2
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^5.0.15" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional" PREFER_LOWEST="--prefer-lowest"
+    - stage: test
+      php: 7.2
+      env: TYPO3_VERSION="dev-master as 10.4.0" TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
 
     - stage: publish in ter
       if: tag IS present
