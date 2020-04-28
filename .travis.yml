@@ -21,39 +21,32 @@ notifications:
   email:
     - typo3@evoweb.de
 
+# This is executed for all stages
 before_install:
-  - composer require phwoolcon/ci-pecl-cacher -n
+  - if php -i | grep -v TRAVIS_CMD | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
+  #- composer require phwoolcon/ci-pecl-cacher -n
+  #- rm composer.lock
   # Cache till new version
-  - .Build/bin/ci-pecl-install swoole
+  #- .Build/bin/ci-pecl-install swoole
 
 install:
-  - export TYPO3_PATH_WEB=$PWD/.Build/Web
-  - echo "TYPO3_PATH_WEB $TYPO3_PATH_WEB"
-  - echo "TYPO3_VERSION $TYPO3_VERSION"
-  - rm composer.lock
-  - composer require typo3/cms-core="$TYPO3_VERSION" $PREFER_LOWEST
-  - if [ ! -z "$TESTING_FRAMEWORK" ]; then echo "TESTING_FRAMEWORK $TESTING_FRAMEWORK"; composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"; fi
-  - git checkout composer.json
-  - ls -la .Build/bin/
-
-before_script:
-  - phpenv config-rm xdebug.ini
+  - export TYPO3_PATH_WEB=$PWD/.Build/Web;
+  - |
+    composer require typo3/cms-core="$TYPO3_VERSION" $PREFER_LOWEST;
+    if [ ! -z "$TESTING_FRAMEWORK" ]; then composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"; fi;
+  - git checkout composer.json;
 
 script:
   - >
     echo "Running ${TYPO3_VERSION} unit tests";
-    php .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/${UNIT_TESTING_FOLDER}/;
-    echo "Running functional tests";
+    php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/${UNIT_TESTING_FOLDER}/;
+    echo "Running $TYPO3_VERSION functional tests";
     export typo3DatabaseDriver="pdo_sqlite";
-    php .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/${FUNCTIONAL_TESTING_FOLDER}/;
-
-matrix:
-  fast_finish: true
+    php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
 
 jobs:
   allow_failures:
-    - env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~6.1.0"
+    - env: TYPO3_VERSION="dev-master as 10.4.0" TESTING_FRAMEWORK="^6.2.3"
 
   include:
     - stage: test
@@ -63,56 +56,58 @@ jobs:
       install: skip
       before_script: skip
       script:
-        - echo "Running xmllint (Xliff)";
-          find Resources/Private/Language/ -name '*.xlf' -type f | xargs xmllint --noout --schema Tests/Fixtures/xliff-core-1.2-strict.xsd
+        - |
+          echo "Running xmllint (Xliff)";
+          find Resources/Private/Language/ -name '*.xlf' -type f | xargs xmllint --noout --schema .Build/xliff-core-1.2-strict.xsd
 
     - &lint
       stage: test
-      php: 7.3
+      php: 7.4
       env: TASK="PHP Lint"
-      before_install: skip
       install: skip
-      before_script: skip
       script:
-        - echo "Running php lint";
+        - |
+          echo "Running php lint";
           errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l {} 2>&1 >/dev/null \;) && echo "$errors" && test -z "$errors"
+    - <<: *lint
+      php: 7.3
     - <<: *lint
       php: 7.2
 
     - stage: test
       php: 7.3
-      env:
-        - TYPO3_VERSION="^9.5" TESTING_FRAMEWORK="~4.12.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
+      env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.12.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
     - stage: test
       php: 7.2
-      env:
-        - TYPO3_VERSION="^9.5" TESTING_FRAMEWORK="~4.12.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
+      env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.12.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
+    - stage: test
+      php: 7.4
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
     - stage: test
       php: 7.3
-      env:
-        - TYPO3_VERSION="^10.2" TESTING_FRAMEWORK="~6.1.0" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
     - stage: test
       php: 7.2
-      env:
-        - TYPO3_VERSION="^10.2" TESTING_FRAMEWORK="~6.1.0" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
     - stage: test
       php: 7.2
-      env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~6.1.0" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional" PREFER_LOWEST="--prefer-lowest"
+    - stage: test
+      php: 7.2
+      env: TYPO3_VERSION="dev-master as 10.4.0" TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
 
     - stage: publish in ter
       if: tag IS present
-      php: 7.1
+      php: 7.2
       before_install: skip
       install: skip
-      before_script: skip
       script:
         - |
-          if [ -n "$TYPO3_ORG_USERNAME" ] && [ -n "$TYPO3_ORG_PASSWORD" ]; then
+          if [[ "$TRAVIS_TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] && [ -n "$TYPO3_ORG_USERNAME" ] && [ -n "$TYPO3_ORG_PASSWORD" ]; then
             echo -e "Preparing upload of release ${TRAVIS_TAG} to TER\n";
 
             # Install requirements
-            composer global require helhum/ter-client dev-master
+            composer global require helhum/ter-client
 
             # Cleanup before we upload
             git reset --hard HEAD && git clean -fx
