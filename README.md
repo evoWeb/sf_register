@@ -1,7 +1,21 @@
-# Overview
+# TYPO3 Extension ``sf_register``
 [![Build Status](https://travis-ci.org/evoWeb/sf_register.svg?branch=develop)](https://travis-ci.org/evoWeb/sf_register)
 [![Latest Stable Version](https://poser.pugx.org/evoweb/sf-register/v/stable)](https://packagist.org/packages/evoweb/sf-register)
+[![Monthly Downloads](https://poser.pugx.org/evoweb/sf-register/d/monthly)](https://packagist.org/packages/evoweb/sf-register)
 [![Total Downloads](https://poser.pugx.org/evoweb/sf-register/downloads)](https://packagist.org/packages/evoweb/sf-register)
+
+## Installation
+
+### via Composer
+
+The recommended way to install TYPO3 Console is by using [Composer](https://getcomposer.org):
+
+    composer require evoweb/sf-register
+
+**Installation from TYPO3 Extension Repository**
+
+Download and install the extension with the extension manager module or directly from the
+[TER](https://typo3.org/extensions/repository/view/sf_register).
 
 Repository and Issue Tracker can be found at https://github.com/evoWeb/sf_register
 
