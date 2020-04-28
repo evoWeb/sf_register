@@ -34,9 +34,6 @@ install:
   - |
     composer require typo3/cms-core="$TYPO3_VERSION" $PREFER_LOWEST;
     if [ ! -z "$TESTING_FRAMEWORK" ]; then composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"; fi;
-    ls -la $TYPO3_PATH_WEB/;
-    ls -la $TYPO3_PATH_WEB/typo3/;
-    ls -la $TYPO3_PATH_WEB/typo3/sysext/;
     ls -la $TYPO3_PATH_WEB/typo3/sysext/core/;
   - git checkout composer.json;
 
@@ -53,34 +50,34 @@ jobs:
     - env: TYPO3_VERSION="dev-master as 10.4.0" TESTING_FRAMEWORK="^6.2.3"
 
   include:
-#    - stage: test
-#      php: 7.2
-#      env: TASK="XML Lint (Xliff)"
-#      before_install: skip
-#      install: skip
-#      before_script: skip
-#      script:
-#        - |
-#          echo "Running xmllint (Xliff)";
-#          find Resources/Private/Language/ -name '*.xlf' -type f | xargs xmllint --noout --schema .Build/xliff-core-1.2-strict.xsd
-#
-#    - &lint
-#      stage: test
-#      php: 7.4
-#      env: TASK="PHP Lint"
-#      install: skip
-#      script:
-#        - |
-#          echo "Running php lint";
-#          errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l {} 2>&1 >/dev/null \;) && echo "$errors" && test -z "$errors"
-#    - <<: *lint
-#      php: 7.3
-#    - <<: *lint
-#      php: 7.2
+    - stage: test
+      php: 7.2
+      env: TASK="XML Lint (Xliff)"
+      before_install: skip
+      install: skip
+      before_script: skip
+      script:
+        - |
+          echo "Running xmllint (Xliff)";
+          find Resources/Private/Language/ -name '*.xlf' -type f | xargs xmllint --noout --schema .Build/xliff-core-1.2-strict.xsd
+
+    - &lint
+      stage: test
+      php: 7.4
+      env: TASK="PHP Lint"
+      install: skip
+      script:
+        - |
+          echo "Running php lint";
+          errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l {} 2>&1 >/dev/null \;) && echo "$errors" && test -z "$errors"
+    - <<: *lint
+      php: 7.3
+    - <<: *lint
+      php: 7.2
 
     - stage: test
       php: 7.3
-      env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
+      env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.11.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
 #    - stage: test
 #      php: 7.2
 #      env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
