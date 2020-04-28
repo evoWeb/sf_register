@@ -34,9 +34,10 @@ install:
   - |
     composer require typo3/cms-core="$TYPO3_VERSION" $PREFER_LOWEST;
     if [ ! -z "$TESTING_FRAMEWORK" ]; then composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"; fi;
-    ls -la $TYPO3_PATH_WEB;
-    ls -la $TYPO3_PATH_WEB/vendor;
-    ls -la $TYPO3_PATH_WEB/vendor/typo3;
+    ls -la $TYPO3_PATH_WEB/;
+    ls -la $TYPO3_PATH_WEB/typo3/;
+    ls -la $TYPO3_PATH_WEB/typo3/sysext/;
+    ls -la $TYPO3_PATH_WEB/typo3/sysext/core/;
   - git checkout composer.json;
 
 script:
