@@ -1,30 +1,20 @@
 <?php
+
 namespace Evoweb\SfRegister\Services;
 
-/***************************************************************
- * Copyright notice
+/*
+ * This file is developed by evoWeb.
  *
- * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
- * All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
 
 use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Service to handle mail sending
@@ -32,9 +22,9 @@ use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
 class Mail implements \TYPO3\CMS\Core\SingletonInterface
 {
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
      */
-    protected $objectManager;
+    protected $signalSlotDispatcher;
 
     /**
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
@@ -51,25 +41,11 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected $frameworkConfiguration = [];
 
-    /**
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     */
-    protected $signalSlotDispatcher;
-
-
-    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
-    public function injectSignalSlotDispatcher(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher)
-    {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
-    }
-
-    public function injectConfigurationManager(
+    public function __construct(
+        \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher,
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
     ) {
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
@@ -273,7 +249,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         $settings =& $this->settings[$typeOfEmail];
 
         /** @var \TYPO3\CMS\Core\Mail\MailMessage $mail */
-        $mail = $this->objectManager->get(\TYPO3\CMS\Core\Mail\MailMessage::class);
+        $mail = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Mail\MailMessage::class);
         $mail->setTo($recipient)
             ->setFrom([$settings['fromEmail'] => $settings['fromName']])
             ->setSubject($subject);
@@ -283,20 +259,10 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         if ($bodyHtml !== '') {
-            if (method_exists($mail, 'addPart')) {
-                // @todo remove once TYPO3 9.5 support gets dropped
-                $mail->addPart($bodyHtml, 'text/html');
-            } else {
-                $mail->html($bodyHtml);
-            }
+            $mail->html($bodyHtml);
         }
         if ($bodyPlain !== '') {
-            if (method_exists($mail, 'addPart')) {
-                // @todo remove once TYPO3 9.5 support gets dropped
-                $mail->addPart($bodyPlain, 'text/plain');
-            } else {
-                $mail->text($bodyPlain);
-            }
+            $mail->text($bodyPlain);
         }
 
         $mail = $this->dispatchSlotSignal('sendMailPreSend', $mail, $user);
@@ -317,7 +283,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         ];
 
         /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
-        $view = $this->objectManager->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
+        $view = GeneralUtility::getContainer()->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
         $view->setLayoutRootPaths($this->frameworkConfiguration['view']['layoutRootPaths']);
         $view->setPartialRootPaths($this->frameworkConfiguration['view']['partialRootPaths']);
         $view->setTemplateRootPaths($this->frameworkConfiguration['view']['templateRootPaths']);
@@ -353,7 +319,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function dispatchSlotSignal($signalName, $result)
     {
-        $arguments = array_merge(array_slice(func_get_args(), 2), [$this->settings, $this->objectManager]);
+        $arguments = array_merge(array_slice(func_get_args(), 2), [$this->settings]);
 
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,

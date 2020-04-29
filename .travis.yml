@@ -39,7 +39,7 @@ install:
 script:
   - >
     echo "Running ${TYPO3_VERSION} unit tests";
-    php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/${UNIT_TESTING_FOLDER}/;
+    php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/;
     echo "Running $TYPO3_VERSION functional tests";
     export typo3DatabaseDriver="pdo_sqlite";
     php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
@@ -75,26 +75,20 @@ jobs:
       php: 7.2
 
     - stage: test
-      php: 7.3
-      env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.11.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
-    - stage: test
-      php: 7.2
-      env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.11.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
-    - stage: test
       php: 7.4
-      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3"
     - stage: test
       php: 7.3
-      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3"
     - stage: test
       php: 7.2
-      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3"
     - stage: test
       php: 7.2
-      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^5.0.15" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional" PREFER_LOWEST="--prefer-lowest"
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^5.0.15" PREFER_LOWEST="--prefer-lowest"
     - stage: test
       php: 7.2
-      env: TYPO3_VERSION="dev-master as 10.4.0" TESTING_FRAMEWORK="^6.2.3" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+      env: TYPO3_VERSION="dev-master as 10.4.0" TESTING_FRAMEWORK="^6.2.3"
 
     - stage: publish in ter
       if: tag IS present

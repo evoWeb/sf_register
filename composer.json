@@ -22,10 +22,12 @@
 	],
 
 	"require": {
-		"typo3/cms-core": "^9.5 || ^10.4"
+		"typo3/cms-core": "^10.4",
+		"typo3/cms-extbase": "^10.4",
+		"typo3/cms-fluid": "^10.4"
 	},
 	"suggest": {
-		"evoweb/recaptcha": "^9.0"
+		"evoweb/recaptcha": "^10.0"
 	},
 
 	"autoload": {

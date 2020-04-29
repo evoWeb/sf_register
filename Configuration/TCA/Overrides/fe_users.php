@@ -1,4 +1,5 @@
 <?php
+
 defined('TYPO3_MODE') || die();
 
 call_user_func(function () {
@@ -205,7 +206,7 @@ call_user_func(function () {
                 'image',
                 [
                     'maxitems' => 1,
-                    'minitems'=> 0
+                    'minitems' => 0
                 ],
                 $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
             )

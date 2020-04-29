@@ -1,4 +1,5 @@
 <?php
+
 defined('TYPO3_MODE') || die();
 
 call_user_func(function () {
@@ -23,50 +24,39 @@ call_user_func(function () {
         ['source' => 'EXT:sf_register/Resources/Public/Icons/Extension.svg']
     );
 
-    if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) < 10000000) {
-        // @todo remove once TYPO3 9.5.x support is dropped
-        $extensionName = 'Evoweb.sf_register';
-        $createController = 'FeuserCreate';
-        $editController = 'FeuserEdit';
-        $passwordController = 'FeuserPassword';
-        $inviteController = 'FeuserInvite';
-        $deleteController = 'FeuserDelete';
-        $resendController = 'FeuserResend';
-    } else {
-        $extensionName = 'SfRegister';
-        $createController = \Evoweb\SfRegister\Controller\FeuserCreateController::class;
-        $editController = \Evoweb\SfRegister\Controller\FeuserEditController::class;
-        $passwordController = \Evoweb\SfRegister\Controller\FeuserPasswordController::class;
-        $inviteController = \Evoweb\SfRegister\Controller\FeuserInviteController::class;
-        $deleteController = \Evoweb\SfRegister\Controller\FeuserDeleteController::class;
-        $resendController = \Evoweb\SfRegister\Controller\FeuserResendController::class;
-    }
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        $extensionName,
+        'SfRegister',
         'Form',
         [
-            $createController => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
-            $editController => 'form, preview, proxy, save, confirm, accept, removeImage',
-            $passwordController => 'form, save',
-            $inviteController => 'inviteForm, invite',
-            $deleteController => 'form, save, confirm',
-            $resendController => 'form, mail',
+            \Evoweb\SfRegister\Controller\FeuserCreateController::class =>
+                'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
+            \Evoweb\SfRegister\Controller\FeuserEditController::class =>
+                'form, preview, proxy, save, confirm, accept, removeImage',
+            \Evoweb\SfRegister\Controller\FeuserPasswordController::class => 'form, save',
+            \Evoweb\SfRegister\Controller\FeuserInviteController::class => 'inviteForm, invite',
+            \Evoweb\SfRegister\Controller\FeuserDeleteController::class => 'form, save, confirm',
+            \Evoweb\SfRegister\Controller\FeuserResendController::class => 'form, mail',
         ],
         [
-            $createController => 'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
-            $editController => 'form, preview, proxy, save, confirm, accept, removeImage',
-            $passwordController => 'form, save',
-            $inviteController => 'inviteForm, invite',
-            $deleteController => 'form, save, confirm',
-            $resendController => 'form, mail',
+            \Evoweb\SfRegister\Controller\FeuserCreateController::class =>
+                'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
+            \Evoweb\SfRegister\Controller\FeuserEditController::class =>
+                'form, preview, proxy, save, confirm, accept, removeImage',
+            \Evoweb\SfRegister\Controller\FeuserPasswordController::class => 'form, save',
+            \Evoweb\SfRegister\Controller\FeuserInviteController::class => 'inviteForm, invite',
+            \Evoweb\SfRegister\Controller\FeuserDeleteController::class => 'form, save, confirm',
+            \Evoweb\SfRegister\Controller\FeuserResendController::class => 'form, mail',
         ]
     );
 
-    \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
-        ->registerImplementation(
-            \Evoweb\SfRegister\Interfaces\FrontendUserInterface::class,
-            \Evoweb\SfRegister\Domain\Model\FrontendUser::class
-        );
+    /** @var \TYPO3\CMS\Extbase\Object\Container\Container $container */
+    $container = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+        \TYPO3\CMS\Extbase\Object\Container\Container::class
+    );
+    $container->registerImplementation(
+        \Evoweb\SfRegister\Interfaces\FrontendUserInterface::class,
+        \Evoweb\SfRegister\Domain\Model\FrontendUser::class
+    );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
         \Evoweb\SfRegister\Property\TypeConverter\FrontendUserConverter::class

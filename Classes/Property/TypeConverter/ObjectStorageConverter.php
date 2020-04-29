@@ -1,7 +1,8 @@
 <?php
+
 namespace Evoweb\SfRegister\Property\TypeConverter;
 
-/***************************************************************
+/*
  *  Copyright notice
  *
  *  (c) 2014 Helmut Hummel <helmut.hummel@typo3.org>
@@ -25,7 +26,7 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  *  GNU General Public License for more details.
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ */
 
 class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\ObjectStorageConverter
 {
@@ -56,7 +57,8 @@ class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\O
         // TODO: Find a nicer way to throw away empty uploads
         foreach ($source as $propertyName => $propertyValue) {
             if ($this->isUploadType($propertyValue)) {
-                if ($propertyValue['error'] !== \UPLOAD_ERR_NO_FILE
+                if (
+                    $propertyValue['error'] !== \UPLOAD_ERR_NO_FILE
                     || isset($propertyValue['submittedFile']['resourcePointer'])
                 ) {
                     $propertiesToConvert[$propertyName] = $propertyValue;

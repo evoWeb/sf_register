@@ -1,7 +1,8 @@
 <?php
+
 namespace Evoweb\SfRegister\Property\TypeConverter;
 
-/***************************************************************
+/*
  *  Copyright notice
  *
  *  (c) 2014 Helmut Hummel
@@ -23,35 +24,38 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  *  GNU General Public License for more details.
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ */
 
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Resource\FileReference as FalFileReference;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\Security\FileNameValidator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
+use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 
 class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter
 {
     /**
      * Folder where the file upload should go to (including storage).
      */
-    const CONFIGURATION_UPLOAD_FOLDER = 1;
+    public const CONFIGURATION_UPLOAD_FOLDER = 1;
 
     /**
      * How to handle a upload when the name of the uploaded file conflicts.
      */
-    const CONFIGURATION_UPLOAD_CONFLICT_MODE = 2;
+    public const CONFIGURATION_UPLOAD_CONFLICT_MODE = 2;
 
     /**
      * Whether to replace an already present resource.
      * Useful for "maxitems = 1" fields and properties
      * with no ObjectStorage annotation.
      */
-    const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
+    public const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
 
     /**
      * @var string
@@ -76,12 +80,12 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
     protected $priority = 31;
 
     /**
-     * @var \TYPO3\CMS\Core\Resource\ResourceFactory
+     * @var ResourceFactory
      */
     protected $resourceFactory;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService
+     * @var HashService
      */
     protected $hashService;
 
@@ -91,31 +95,17 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
     protected $persistenceManager;
 
     /**
-     * @var \TYPO3\CMS\Core\Resource\FileInterface[]
+     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference[]
      */
     protected $convertedResources = [];
 
-    /**
-     * @param \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory
-     */
-    public function injectResourceFactory(\TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory)
-    {
+    public function __construct(
+        ResourceFactory $resourceFactory,
+        HashService $hashService,
+        PersistenceManager $persistenceManager
+    ) {
         $this->resourceFactory = $resourceFactory;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService
-     */
-    public function injectHashService(\TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService)
-    {
         $this->hashService = $hashService;
-    }
-
-    /**
-     * @param PersistenceManager $persistenceManager
-     */
-    public function injectPersistenceManager(PersistenceManager $persistenceManager)
-    {
         $this->persistenceManager = $persistenceManager;
     }
 
@@ -128,7 +118,7 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
      * @param array $convertedChildProperties
      * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder|Error
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference|Error
      */
     public function convertFrom(
         $source,
@@ -228,7 +218,9 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
         array $uploadInfo,
         PropertyMappingConfigurationInterface $configuration
     ): \TYPO3\CMS\Extbase\Domain\Model\FileReference {
-        if (!GeneralUtility::verifyFilenameAgainstDenyPattern($uploadInfo['name'])) {
+        /** @var FileNameValidator $fileNameValidator */
+        $fileNameValidator = GeneralUtility::makeInstance(FileNameValidator::class);
+        if (!$fileNameValidator->isValid((string)$uploadInfo['name'])) {
             throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
         }
 
@@ -249,16 +241,10 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
             self::CONFIGURATION_UPLOAD_FOLDER
         ) ?: $this->defaultUploadFolder;
 
-        if (class_exists(\TYPO3\CMS\Core\Resource\DuplicationBehavior::class)) {
-            $defaultConflictMode = \TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME;
-        } else {
-            // @deprecated since 7.6 will be removed once 6.2 support is removed
-            $defaultConflictMode = 'changeName';
-        }
         $conflictMode = $configuration->getConfigurationValue(
             self::class,
             self::CONFIGURATION_UPLOAD_CONFLICT_MODE
-        ) ?: $defaultConflictMode;
+        ) ?: \TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME;
 
         $uploadFolder = $this->resourceFactory->retrieveFileOrFolderObject($uploadFolderId);
         $uploadedFile = $uploadFolder->addUploadedFile($uploadInfo, $conflictMode);
@@ -268,9 +254,7 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
             $this->hashService->validateAndStripHmac($uploadInfo['submittedFile']['resourcePointer']) :
             null;
 
-        $fileReferenceModel = $this->createFileReferenceFromFalFileObject($uploadedFile, $resourcePointer);
-
-        return $fileReferenceModel;
+        return $this->createFileReferenceFromFalFileObject($uploadedFile, $resourcePointer);
     }
 
     protected function createFileReferenceFromFalFileObject(
@@ -295,7 +279,7 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
     ): \TYPO3\CMS\Extbase\Domain\Model\FileReference {
         if ($resourcePointer === null) {
             /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileReference */
-            $fileReference = $this->objectManager->get(\TYPO3\CMS\Extbase\Domain\Model\FileReference::class);
+            $fileReference = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Domain\Model\FileReference::class);
         } else {
             $fileReference = $this->persistenceManager->getObjectByIdentifier(
                 $resourcePointer,

@@ -1,7 +1,8 @@
 <?php
+
 namespace Evoweb\SfRegister\ViewHelpers;
 
-/***************************************************************
+/*
  * Copyright notice
  *
  * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
@@ -23,7 +24,7 @@ namespace Evoweb\SfRegister\ViewHelpers;
  * GNU General Public License for more details.
  *
  * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ */
 
 /**
  * View helper to output the configured language
