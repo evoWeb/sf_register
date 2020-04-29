@@ -14,6 +14,7 @@ namespace Evoweb\SfRegister\Controller;
  */
 
 use Doctrine\Common\Annotations\DocParser;
+use Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
@@ -243,14 +244,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $this->setTypeConverter();
 
         if ($this->settings['processInitializeActionSignal']) {
-            $this->signalSlotDispatcher->dispatch(
-                __CLASS__,
-                __FUNCTION__,
-                [
-                    'controller' => $this,
-                    'settings' => $this->settings,
-                ]
-            );
+            $this->eventDispatcher->dispatch(new ProcessInitializeActionEvent($this, $this->settings));
         }
 
         if (

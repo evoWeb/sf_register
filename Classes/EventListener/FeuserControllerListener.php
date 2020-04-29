@@ -1,6 +1,6 @@
 <?php
 
-namespace Evoweb\SfRegister\Signal;
+namespace Evoweb\SfRegister\EventListener;
 
 /*
  * This file is developed by evoWeb.
@@ -13,9 +13,10 @@ namespace Evoweb\SfRegister\Signal;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
-class FeuserControllerSignal
+class FeuserControllerListener
 {
     /**
      * @var UriBuilder
@@ -27,17 +28,17 @@ class FeuserControllerSignal
         $this->uriBuilder = $uriBuilder;
     }
 
-    public function initializeAction(\Evoweb\SfRegister\Controller\FeuserController $controller, array $settings)
+    public function onProcessInitializeActionEvent(ProcessInitializeActionEvent $event)
     {
         if (!$this->userIsLoggedIn()) {
-            $redirectSettings = $settings['redirectSignal'];
+            $redirectSettings = $event->getSettings()['redirectSignal'];
 
             if ((int) $redirectSettings['page']) {
                 $this->redirectToPage((int) $redirectSettings['page']);
             } elseif ($redirectSettings['controller']) {
-                $controller->forward($redirectSettings['action'], $redirectSettings['controller']);
+                $event->getController()->forward($redirectSettings['action'], $redirectSettings['controller']);
             } else {
-                $controller->forward($redirectSettings['action']);
+                $event->getController()->forward($redirectSettings['action']);
             }
         }
     }

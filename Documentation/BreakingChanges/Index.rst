@@ -6,6 +6,15 @@
 Breaking Changes
 ================
 
+2020.04.29
+''''''''''
+
+The hole extension was refactored to make best usage of TYPO3 10 changes. Namely
+- constructor DI
+- exchange Signal/Slot dispatcher with PSR-14 events, have a look in extendability at :ref:`PSR-14 events<Psr14Event_>`
+- refactor to fully match the PSR-12 standard
+
+
 2019.02.03
 ''''''''''
 

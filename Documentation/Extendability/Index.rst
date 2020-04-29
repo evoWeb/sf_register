@@ -131,56 +131,42 @@ following taken from recaptcha_:
    }
 
 
-.. _SignalSlotDispatcher:
+.. _Psr14Event:
 
-Hooks / Signal-Slot-Dispatcher
-------------------------------
+PSR-14 Events
+-------------
 
-Because of signal-slot-dispatcher are the new hotness all hooks got replaced with
-the call of this dispatcher. Well its not really this simple, but as signal-slot-dispatcher
-are the extbase way of giving the opportunity to have some custom methods called
-at a certain process, this will be the way to go in the future. Beside of obeying
-this paradigm there are a lot more dispatcher call spread across the different
-tasks.
+This kind of event is superseding Hooks and Signal-Slots in TYPO3 and are the
+way to go. That's why all signals are replaced with their event counterparts.
 
 
 How to implement a slot
 -----------------------
 
-As the different tasks emits signals there could be slots that fulfill them. To
-have your own slots please understand how slots_ work.
-After you read that introduction, here is a short example:
+An overview_ on how to configure and interact with events was given on the
+Developer Days in 2019. The detailed example shows how to configure them in the
+Services.yaml:
 
-.. _slots: http://blog.foertel.com/2011/10/using-signalslots-in-extbase/
+**Services.yaml**::
 
-**ext_localconf.php**::
-
-	/** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
-	$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class)
-		->get(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
-	$signalSlotDispatcher->connect(
-		\Evoweb\SfRegister\Controller\FeuserCreateController::class,
-		'formAction',
-		'ExampleClassName',
-		'ExampleMethodName',
-		TRUE
-	);
+  Evoweb\SfRegister\EventListener\FeuserControllerListener:
+    tags:
+      - name: event.listener
+        identifier: 'sfregister_feusercontroller_processinitializeaction'
+        method: 'onProcessInitializeActionEvent'
+        event: Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent
 
 
-The code above show how to get an instance of the signal slot dispatcher and
-then connect a slot for form action in the frontend user create controller to
-your own slot with ExampleClassName and ExampleMethodName.
-Its possible to have a optional fifth parameter that hands the information
-about the calling signal to the slot. This would be useful if you want to
-handle multiple signals with only one defined slot. Although this is possible
-it's also highly discourage, because the scope is lost to easily.
+The code above shows how to get an event listener is registered to an event.
 
-Available signals
------------------
+Available events
+----------------
 
-All classnames need to be fully qualified. So please prefix all controllers
-with Evoweb\\SfRegister\\Controller\\ and all services with
-Evoweb\\SfRegister\\Services\\
++-----------------------------------------------------------------------------------+----------------------------------------------------------------------+
+| Event                                                                             | Parameter                                                            |
++===================================================================================+======================================================================+
+|:php:`Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent`             | :php:`FeuserController`, `array`                                     |
++-----------------------------------------------------------------------------------+----------------------------------------------------------------------+
 
 .. container:: ts-properties
 
@@ -263,3 +249,4 @@ Evoweb\\SfRegister\\Services\\
 .. _extender: https://github.com/evoWeb/extender
 .. _recaptcha: https://github.com/evoWeb/recaptcha
 .. _example: https://github.com/evoWeb/ew_sfregister_extended
+.. _overview: https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/ApiOverview/Hooks/EventDispatcher/Index.html

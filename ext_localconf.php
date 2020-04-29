@@ -71,23 +71,6 @@ call_user_func(function () {
         \Evoweb\SfRegister\Property\TypeConverter\ObjectStorageConverter::class
     );
 
-    if (TYPO3_MODE === 'FE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
-        /**
-         * Signal slot dispatcher
-         *
-         * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher
-         */
-        $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
-        );
-        $signalSlotDispatcher->connect(
-            \Evoweb\SfRegister\Controller\FeuserController::class,
-            'initializeAction',
-            \Evoweb\SfRegister\Signal\FeuserControllerSignal::class,
-            'initializeAction'
-        );
-    }
-
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addService(
         'sf_register',
         'auth',
