@@ -26,25 +26,70 @@ call_user_func(function () {
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'SfRegister',
-        'Form',
+        'Create',
         [
             \Evoweb\SfRegister\Controller\FeuserCreateController::class =>
-                'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
-            \Evoweb\SfRegister\Controller\FeuserEditController::class =>
-                'form, preview, proxy, save, confirm, accept, removeImage',
-            \Evoweb\SfRegister\Controller\FeuserPasswordController::class => 'form, save',
-            \Evoweb\SfRegister\Controller\FeuserInviteController::class => 'inviteForm, invite',
-            \Evoweb\SfRegister\Controller\FeuserDeleteController::class => 'form, save, confirm',
-            \Evoweb\SfRegister\Controller\FeuserResendController::class => 'form, mail',
+                'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage',
         ],
         [
             \Evoweb\SfRegister\Controller\FeuserCreateController::class =>
-                'form, preview, proxy, save, confirm, accept, decline, refuse, removeImage',
+                'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'SfRegister',
+        'Edit',
+        [
             \Evoweb\SfRegister\Controller\FeuserEditController::class =>
                 'form, preview, proxy, save, confirm, accept, removeImage',
-            \Evoweb\SfRegister\Controller\FeuserPasswordController::class => 'form, save',
-            \Evoweb\SfRegister\Controller\FeuserInviteController::class => 'inviteForm, invite',
+        ],
+        [
+            \Evoweb\SfRegister\Controller\FeuserEditController::class =>
+                'form, preview, proxy, save, confirm, accept, removeImage',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'SfRegister',
+        'Delete',
+        [
             \Evoweb\SfRegister\Controller\FeuserDeleteController::class => 'form, save, confirm',
+        ],
+        [
+            \Evoweb\SfRegister\Controller\FeuserDeleteController::class => 'form, save, confirm',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'SfRegister',
+        'Password',
+        [
+            \Evoweb\SfRegister\Controller\FeuserPasswordController::class => 'form, save',
+        ],
+        [
+            \Evoweb\SfRegister\Controller\FeuserPasswordController::class => 'form, save',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'SfRegister',
+        'Invite',
+        [
+            \Evoweb\SfRegister\Controller\FeuserInviteController::class => 'form, invite',
+        ],
+        [
+            \Evoweb\SfRegister\Controller\FeuserInviteController::class => 'form, invite',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'SfRegister',
+        'Resend',
+        [
+            \Evoweb\SfRegister\Controller\FeuserResendController::class => 'form, mail',
+        ],
+        [
             \Evoweb\SfRegister\Controller\FeuserResendController::class => 'form, mail',
         ]
     );
