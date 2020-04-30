@@ -122,7 +122,7 @@ class FeuserEditController extends FeuserController
 
         $this->eventDispatcher->dispatch(new Event\EditSaveEvent($user, $this->settings));
 
-        $user = $this->sendEmails($user, 'PostEditSave');
+        $user = $this->sendEmails($user, __FUNCTION__);
 
         $this->userRepository->update($user);
         $this->persistAll();
@@ -166,7 +166,7 @@ class FeuserEditController extends FeuserController
 
                 $this->userRepository->update($user);
 
-                $this->sendEmails($user, 'PostEditConfirm');
+                $this->sendEmails($user, __FUNCTION__);
 
                 $this->view->assign('userConfirmed', 1);
             }
@@ -207,7 +207,7 @@ class FeuserEditController extends FeuserController
 
                 $this->userRepository->update($user);
 
-                $this->sendEmails($user, 'PostEditAccept');
+                $this->sendEmails($user, __FUNCTION__);
 
                 if ($this->settings['redirectPostActivationPageId']) {
                     $this->redirectToPage((int) $this->settings['redirectPostActivationPageId']);

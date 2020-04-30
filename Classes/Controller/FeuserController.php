@@ -456,17 +456,25 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
 
-    protected function sendEmails(FrontendUser $user, string $type): FrontendUser
+    protected function sendEmails(FrontendUser $user, string $action): FrontendUser
     {
+        $controller = str_replace(
+            ['Evoweb\\SfRegister\\Controller\\Feuser', 'Controller'],
+            '',
+            static::class
+        );
+
+        $type = $controller . str_replace('Action', '', $action);
+
         /** @var \Evoweb\SfRegister\Services\Mail $mailService */
         $mailService = GeneralUtility::getContainer()->get(\Evoweb\SfRegister\Services\Mail::class);
 
         if ($this->isNotifyAdmin($type)) {
-            $user = $mailService->sendAdminNotification($user, $type);
+            $user = $mailService->sendNotifyAdmin($user, $type);
         }
 
         if ($this->isNotifyUser($type)) {
-            $user = $mailService->sendUserNotification($user, $type);
+            $user = $mailService->sendNotifyUser($user, $type);
         }
 
         return $user;

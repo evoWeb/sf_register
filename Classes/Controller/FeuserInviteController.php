@@ -52,7 +52,7 @@ class FeuserInviteController extends FeuserController
         $this->eventDispatcher->dispatch($event);
         $doNotSendInvitation = $event->isDoNotSendInvitation();
 
-        $user = $this->sendEmails($user, 'SendInvitation');
+        $user = $this->sendEmails($user, __FUNCTION__);
 
         if (!$doNotSendInvitation) {
             /** @var \Evoweb\SfRegister\Services\Mail $mailService */

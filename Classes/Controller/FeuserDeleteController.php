@@ -85,7 +85,7 @@ class FeuserDeleteController extends FeuserController
             $user = $this->userRepository->findByEmail($user->getEmail());
         }
 
-        $user = $this->sendEmails($user, 'PostDeleteSave');
+        $user = $this->sendEmails($user, __FUNCTION__);
 
         $this->view->assign('user', $user);
     }
@@ -107,7 +107,7 @@ class FeuserDeleteController extends FeuserController
 
             $this->eventDispatcher->dispatch(new Event\DeleteConfirmEvent($user, $this->settings));
 
-            $this->sendEmails($user, 'PostDeleteConfirm');
+            $this->sendEmails($user, __FUNCTION__);
 
             $this->userRepository->remove($user);
             $this->persistAll();

@@ -93,10 +93,10 @@
 			<trans-unit id="maximal.notifyUserPostDeleteConfirm">
 				<source>the user should get an email after an delete request was confirmed</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyAdminPostResendMail">
+			<trans-unit id="maximal.notifyAdminResendMail">
 				<source>the admin should get an email with the activation key for an awaiting registration</source>
 			</trans-unit>
-			<trans-unit id="maximal.notifyUserPostResendMail">
+			<trans-unit id="maximal.notifyUserResendMail">
 				<source>the user should get an email with the activation key for an awaiting registration</source>
 			</trans-unit>
 

@@ -110,7 +110,7 @@ class FeuserCreateController extends FeuserController
 
         // Write back plain password
         $user->setPassword($plainPassword);
-        $user = $this->sendEmails($user, 'PostCreateSave');
+        $user = $this->sendEmails($user, __FUNCTION__);
 
         // Encrypt plain password
         if ($user->getPassword()) {
@@ -171,7 +171,7 @@ class FeuserCreateController extends FeuserController
 
                 $this->userRepository->update($user);
 
-                $this->sendEmails($user, 'PostCreateConfirm');
+                $this->sendEmails($user, __FUNCTION__);
 
                 if ($this->settings['autologinPostConfirmation']) {
                     $this->persistAll();
@@ -206,7 +206,7 @@ class FeuserCreateController extends FeuserController
 
             $this->userRepository->remove($user);
 
-            $this->sendEmails($user, 'PostCreateRefuse');
+            $this->sendEmails($user, __FUNCTION__);
 
             $this->view->assign('userRefused', 1);
         }
@@ -247,7 +247,7 @@ class FeuserCreateController extends FeuserController
 
                 $this->userRepository->update($user);
 
-                $this->sendEmails($user, 'PostCreateAccept');
+                $this->sendEmails($user, __FUNCTION__);
 
                 $this->view->assign('userAccepted', 1);
             }
@@ -273,7 +273,7 @@ class FeuserCreateController extends FeuserController
 
             $this->userRepository->remove($user);
 
-            $this->sendEmails($user, 'PostCreateDecline');
+            $this->sendEmails($user, __FUNCTION__);
 
             $this->view->assign('userDeclined', 1);
         }

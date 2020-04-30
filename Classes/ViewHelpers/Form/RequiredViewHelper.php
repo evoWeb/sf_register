@@ -73,7 +73,7 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
     {
         $fieldName = $this->arguments['fieldName'];
         $mode = str_replace(
-            ['evoweb\sfregister\controller\feuser', 'controller'],
+            ['evoweb\\sfregister\\controller\\feuser', 'controller'],
             '',
             strtolower(key($this->frameworkConfiguration['controllerConfiguration']))
         );

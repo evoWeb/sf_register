@@ -128,7 +128,7 @@ plugin.tx_sfregister.settings {
     recaptcha = Evoweb\Recaptcha\Adapter\SfRegisterAdapter
   }
 
-  processInitializeActionSignal = 0
+  processInitializeActionEvent = 0
 }
 
 plugin.tx_sfregister.features {
