@@ -13,6 +13,7 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Controller\Event;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -33,14 +34,7 @@ class FeuserInviteController extends FeuserController
             $user = $this->userRepository->findByUid($userId);
         }
 
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'user' => &$user,
-                'settings' => $this->settings,
-            ]
-        );
+        $this->eventDispatcher->dispatch(new Event\InviteFormEvent($user, $this->settings));
 
         $this->view->assign('user', $user);
     }
@@ -54,20 +48,11 @@ class FeuserInviteController extends FeuserController
      */
     public function inviteAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        $type = 'SendInvitation';
-        $doNotSendInvitation = false;
+        $event = new Event\InviteInviteEvent($user, $this->settings, false);
+        $this->eventDispatcher->dispatch($event);
+        $doNotSendInvitation = $event->isDoNotSendInvitation();
 
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'user' => &$user,
-                'settings' => $this->settings,
-                'doNotSendInvitation' => &$doNotSendInvitation,
-            ]
-        );
-
-        $user = $this->sendEmails($user, $type);
+        $user = $this->sendEmails($user, 'SendInvitation');
 
         if (!$doNotSendInvitation) {
             /** @var \Evoweb\SfRegister\Services\Mail $mailService */

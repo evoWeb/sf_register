@@ -13,6 +13,7 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Controller\Event;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -65,14 +66,7 @@ class FeuserEditController extends FeuserController
             $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
         }
 
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'user' => &$user,
-                'settings' => $this->settings
-            ]
-        );
+        $this->eventDispatcher->dispatch(new Event\EditFormEvent($user, $this->settings));
 
         $this->view->assign('user', $user);
     }
@@ -90,14 +84,7 @@ class FeuserEditController extends FeuserController
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
 
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'user' => &$user,
-                'settings' => $this->settings
-            ]
-        );
+        $this->eventDispatcher->dispatch(new Event\EditPreviewEvent($user, $this->settings));
 
         $this->view->assign('user', $user);
     }
@@ -133,14 +120,7 @@ class FeuserEditController extends FeuserController
             $user->setUsername($user->getEmail());
         }
 
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'user' => &$user,
-                'settings' => $this->settings
-            ]
-        );
+        $this->eventDispatcher->dispatch(new Event\EditSaveEvent($user, $this->settings));
 
         $user = $this->sendEmails($user, 'PostEditSave');
 
@@ -182,14 +162,7 @@ class FeuserEditController extends FeuserController
                     }
                 }
 
-                $this->signalSlotDispatcher->dispatch(
-                    __CLASS__,
-                    __FUNCTION__,
-                    [
-                        'user' => &$user,
-                        'settings' => $this->settings
-                    ]
-                );
+                $this->eventDispatcher->dispatch(new Event\EditConfirmEvent($user, $this->settings));
 
                 $this->userRepository->update($user);
 
@@ -230,14 +203,7 @@ class FeuserEditController extends FeuserController
                     $user->setUsername($user->getEmail());
                 }
 
-                $this->signalSlotDispatcher->dispatch(
-                    __CLASS__,
-                    __FUNCTION__,
-                    [
-                        'user' => &$user,
-                        'settings' => $this->settings
-                    ]
-                );
+                $this->eventDispatcher->dispatch(new Event\EditAcceptEvent($user, $this->settings));
 
                 $this->userRepository->update($user);
 

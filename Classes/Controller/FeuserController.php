@@ -243,7 +243,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     {
         $this->setTypeConverter();
 
-        if ($this->settings['processInitializeActionSignal']) {
+        if ($this->settings['processInitializeActionEvent']) {
             $this->eventDispatcher->dispatch(new ProcessInitializeActionEvent($this, $this->settings));
         }
 

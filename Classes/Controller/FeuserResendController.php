@@ -13,6 +13,8 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Controller\Event;
+
 /**
  * An frontend user resend controller
  */
@@ -25,14 +27,7 @@ class FeuserResendController extends FeuserController
 
     public function formAction(\Evoweb\SfRegister\Domain\Model\Email $email = null)
     {
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'email' => &$email,
-                'settings' => $this->settings,
-            ]
-        );
+        $email = $this->eventDispatcher->dispatch(new Event\ResendFormEvent($email, $this->settings))->getEmail();
 
         $this->view->assign('email', $email);
     }
@@ -46,20 +41,13 @@ class FeuserResendController extends FeuserController
      */
     public function mailAction(\Evoweb\SfRegister\Domain\Model\Email $email)
     {
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'email' => &$email,
-                'settings' => $this->settings
-            ]
-        );
+        $email = $this->eventDispatcher->dispatch(new Event\ResendMailEvent($email, $this->settings))->getEmail();
 
         /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
         $user = $this->userRepository->findByEmail($email->getEmail());
 
         if ($user) {
-            $this->sendEmails($user, 'PostResendMail');
+            $this->sendEmails($user, 'ResendMail');
         }
     }
 }

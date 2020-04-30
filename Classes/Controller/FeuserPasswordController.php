@@ -13,6 +13,7 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Controller\Event;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -27,13 +28,7 @@ class FeuserPasswordController extends FeuserController
 
     public function formAction()
     {
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'settings' => $this->settings,
-            ]
-        );
+        $this->eventDispatcher->dispatch(new Event\PasswordFormEvent($this->settings));
     }
 
     /**
@@ -50,14 +45,7 @@ class FeuserPasswordController extends FeuserController
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
 
-            $this->signalSlotDispatcher->dispatch(
-                __CLASS__,
-                __FUNCTION__,
-                [
-                    'user' => &$user,
-                    'settings' => $this->settings
-                ]
-            );
+            $this->eventDispatcher->dispatch(new Event\PasswordSaveEvent($user, $this->settings));
 
             $user->setPassword($this->encryptPassword($password->getPassword()));
 

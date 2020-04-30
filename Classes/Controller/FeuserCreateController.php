@@ -13,6 +13,7 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Controller\Event;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -54,14 +55,7 @@ class FeuserCreateController extends FeuserController
             );
         }
 
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'user' => &$user,
-                'settings' => $this->settings,
-            ]
-        );
+        $this->eventDispatcher->dispatch(new Event\CreateFormEvent($user, $this->settings));
 
         $this->view->assign('user', $user);
     }
@@ -79,14 +73,7 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
 
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'user' => &$user,
-                'settings' => $this->settings
-            ]
-        );
+        $this->eventDispatcher->dispatch(new Event\CreatePreviewEvent($user, $this->settings));
 
         $this->view->assign('user', $user);
     }
@@ -108,20 +95,11 @@ class FeuserCreateController extends FeuserController
             $this->moveTemporaryImage($user);
         }
 
-        $type = 'PostCreateSave';
-
         if ($this->settings['useEmailAddressAsUsername']) {
             $user->setUsername($user->getEmail());
         }
 
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'user' => &$user,
-                'settings' => $this->settings
-            ]
-        );
+        $this->eventDispatcher->dispatch(new Event\CreateSaveEvent($user, $this->settings));
 
         // Persist user to get valid uid
         $plainPassword = $user->getPassword();
@@ -132,7 +110,7 @@ class FeuserCreateController extends FeuserController
 
         // Write back plain password
         $user->setPassword($plainPassword);
-        $user = $this->sendEmails($user, $type);
+        $user = $this->sendEmails($user, 'PostCreateSave');
 
         // Encrypt plain password
         if ($user->getPassword()) {
@@ -189,14 +167,7 @@ class FeuserCreateController extends FeuserController
                     $user->setDisable(false);
                 }
 
-                $this->signalSlotDispatcher->dispatch(
-                    __CLASS__,
-                    __FUNCTION__,
-                    [
-                        'user' => &$user,
-                        'settings' => $this->settings
-                    ]
-                );
+                $this->eventDispatcher->dispatch(new Event\CreateConfirmEvent($user, $this->settings));
 
                 $this->userRepository->update($user);
 
@@ -231,14 +202,7 @@ class FeuserCreateController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            $this->signalSlotDispatcher->dispatch(
-                __CLASS__,
-                __FUNCTION__,
-                [
-                    'user' => &$user,
-                    'settings' => $this->settings
-                ]
-            );
+            $this->eventDispatcher->dispatch(new Event\CreateRefuseEvent($user, $this->settings));
 
             $this->userRepository->remove($user);
 
@@ -279,14 +243,7 @@ class FeuserCreateController extends FeuserController
                     $user->setActivatedOn(new \DateTime('now'));
                 }
 
-                $this->signalSlotDispatcher->dispatch(
-                    __CLASS__,
-                    __FUNCTION__,
-                    [
-                        'user' => &$user,
-                        'settings' => $this->settings
-                    ]
-                );
+                $this->eventDispatcher->dispatch(new Event\CreateAcceptEvent($user, $this->settings));
 
                 $this->userRepository->update($user);
 
@@ -312,14 +269,7 @@ class FeuserCreateController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            $this->signalSlotDispatcher->dispatch(
-                __CLASS__,
-                __FUNCTION__,
-                [
-                    'user' => &$user,
-                    'settings' => $this->settings
-                ]
-            );
+            $this->eventDispatcher->dispatch(new Event\CreateDeclineEvent($user, $this->settings));
 
             $this->userRepository->remove($user);
 

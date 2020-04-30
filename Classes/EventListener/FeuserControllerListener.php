@@ -31,14 +31,12 @@ class FeuserControllerListener
     public function onProcessInitializeActionEvent(ProcessInitializeActionEvent $event)
     {
         if (!$this->userIsLoggedIn()) {
-            $redirectSettings = $event->getSettings()['redirectSignal'];
+            $redirectEvent = $event->getSettings()['redirectEvent'];
 
-            if ((int) $redirectSettings['page']) {
-                $this->redirectToPage((int) $redirectSettings['page']);
-            } elseif ($redirectSettings['controller']) {
-                $event->getController()->forward($redirectSettings['action'], $redirectSettings['controller']);
+            if ((int) $redirectEvent['page']) {
+                $this->redirectToPage((int) $redirectEvent['page']);
             } else {
-                $event->getController()->forward($redirectSettings['action']);
+                $event->getController()->forward($redirectEvent['action'], $redirectEvent['controller'] ?? null);
             }
         }
     }

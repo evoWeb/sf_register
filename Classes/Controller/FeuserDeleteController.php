@@ -13,6 +13,7 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Controller\Event;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -61,14 +62,7 @@ class FeuserDeleteController extends FeuserController
             $user = $this->userRepository->findByUid($userId);
         }
 
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'user' => &$user,
-                'settings' => $this->settings
-            ]
-        );
+        $this->eventDispatcher->dispatch(new Event\DeleteFormEvent($user, $this->settings));
 
         $this->view->assign('user', $user);
     }
@@ -82,14 +76,7 @@ class FeuserDeleteController extends FeuserController
      */
     public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
     {
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'user' => &$user,
-                'settings' => $this->settings
-            ]
-        );
+        $this->eventDispatcher->dispatch(new Event\DeleteSaveEvent($user, $this->settings));
 
         if (!$user->getUsername()) {
             $user->setUsername($user->getEmail());
@@ -118,14 +105,7 @@ class FeuserDeleteController extends FeuserController
         } else {
             $this->view->assign('user', $user);
 
-            $this->signalSlotDispatcher->dispatch(
-                __CLASS__,
-                __FUNCTION__,
-                [
-                    'user' => &$user,
-                    'settings' => $this->settings
-                ]
-            );
+            $this->eventDispatcher->dispatch(new Event\DeleteConfirmEvent($user, $this->settings));
 
             $this->sendEmails($user, 'PostDeleteConfirm');
 

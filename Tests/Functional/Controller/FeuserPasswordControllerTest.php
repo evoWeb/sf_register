@@ -111,9 +111,9 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
             ->with($this->equalTo($userMock));
         $subject->injectUserRepository($repositoryMock);
 
-        /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
-        $signalSlotDispatcher = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
-        $subject->injectSignalSlotDispatcher($signalSlotDispatcher);
+        /** @var \TYPO3\CMS\Core\EventDispatcher\EventDispatcher $eventDispatcher */
+        $eventDispatcher = GeneralUtility::makeInstance(\TYPO3\CMS\Core\EventDispatcher\EventDispatcher::class);
+        $subject->injectEventDispatcher($eventDispatcher);
 
         /** @var \Evoweb\SfRegister\Domain\Model\Password $passwordMock */
         $passwordMock = GeneralUtility::makeInstance(\Evoweb\SfRegister\Domain\Model\Password::class);
