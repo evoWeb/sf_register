@@ -96,7 +96,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     public function __construct(
         \TYPO3\CMS\Core\Context\Context $context,
-        ConfigurationManagerInterface $configurationManager = null,
+        ConfigurationManagerInterface $configurationManager,
         \Evoweb\SfRegister\Services\File $fileService = null,
         FrontendUserRepository $userRepository = null,
         FrontendUserGroupRepository $userGroupRepository = null

@@ -14,12 +14,11 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  */
 
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use PHPUnit\Framework\MockObject\Builder\InvocationMocker;
 use PHPUnit\Framework\MockObject\MockObject;
-use Prophecy\Prophecy\ObjectProphecy;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
@@ -45,12 +44,14 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var Context $context */
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
 
-        /** @var ConfigurationManager|InvocationMocker $configurationManager */
-        $configurationManager = $this->prophesize(ConfigurationManager::class);
-        $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_SETTINGS)
-            ->willReturn(
-                []
-            );
+        /** @var ConfigurationManager $configurationManager */
+        $configurationManager = $this->getAccessibleMock(
+            FrontendConfigurationManager::class,
+            ['dummy'],
+            [],
+            '',
+            false
+        );
 
         $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController($context, $configurationManager);
 
@@ -72,12 +73,14 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var Context $context */
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
 
-        /** @var ConfigurationManager|InvocationMocker $configurationManager */
-        $configurationManager = $this->prophesize(ConfigurationManager::class);
-        $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_SETTINGS)
-            ->willReturn(
-                []
-            );
+        /** @var ConfigurationManager $configurationManager */
+        $configurationManager = $this->getAccessibleMock(
+            FrontendConfigurationManager::class,
+            ['dummy'],
+            [],
+            '',
+            false
+        );
 
         $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController($context, $configurationManager);
 
@@ -106,12 +109,14 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
 
-        /** @var ConfigurationManager|ObjectProphecy $configurationManager */
-        $configurationManager = $this->prophesize(ConfigurationManager::class);
-        $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_SETTINGS)
-            ->willReturn(
-                []
-            );
+        /** @var ConfigurationManager $configurationManager */
+        $configurationManager = $this->getAccessibleMock(
+            FrontendConfigurationManager::class,
+            ['dummy'],
+            [],
+            '',
+            false
+        );
 
         // we need to clone the create object, else the isClone parameter is not set and both object wont match
         $userMock = clone(new \Evoweb\SfRegister\Domain\Model\FrontendUser());
