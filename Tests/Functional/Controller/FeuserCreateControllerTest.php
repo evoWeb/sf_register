@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\SfRegister\Tests\Functional\Controller;
 
 /*
@@ -12,7 +13,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -50,8 +51,10 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
             ]
         ];
 
-        /** @var FeuserCreateController $subject */
-        $subject = new FeuserCreateController();
+        /** @var Context $context */
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
+
+        $subject = new \Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController($context);
 
         /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
