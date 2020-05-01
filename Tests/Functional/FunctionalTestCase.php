@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\SfRegister\Tests\Functional;
 
 /*
@@ -150,6 +151,7 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
         $this->frontendUser->user = $this->frontendUser->getRawUserByUid($frontEndUserUid);
         $this->frontendUser->fetchGroupData();
 
+        /** @var \TYPO3\CMS\Core\Context\UserAspect $aspect */
         $aspect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Context\UserAspect::class,
             $this->frontendUser
@@ -167,6 +169,7 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
             \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication::class
         );
 
+        /** @var \TYPO3\CMS\Core\Context\UserAspect $aspect */
         $aspect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Context\UserAspect::class,
             $this->frontendUser

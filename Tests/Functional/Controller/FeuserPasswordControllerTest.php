@@ -39,9 +39,10 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $this->createEmptyFrontendUser();
         $this->initializeTypoScriptFrontendController();
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController();
+        /** @var Context $context */
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
-        $subject->injectContext($context);
+
+        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController($context);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         $this->assertFalse($method->invoke($subject));
@@ -86,7 +87,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $GLOBALS['TSFE'] = $this->typoScriptFrontendController;
 
         /** @var Context $context */
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
+        $context = GeneralUtility::makeInstance(Context::class);
 
         // we need to clone the create object, else the isClone parameter is not set and both object wont match
         $userMock = clone(new \Evoweb\SfRegister\Domain\Model\FrontendUser());
@@ -94,7 +95,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
 
         /** @var FrontendUserRepository|MockObject $userRepositoryMock */
         $userRepositoryMock = $this->getMockBuilder(FrontendUserRepository::class)
-            ->setMethods(['findByUid', 'update'])
+            ->onlyMethods(['findByUid', 'update'])
             ->disableOriginalConstructor()
             ->getMock();
         $userRepositoryMock->expects($this->once())

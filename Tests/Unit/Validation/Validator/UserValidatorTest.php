@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
 
 /*
