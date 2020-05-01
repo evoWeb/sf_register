@@ -16,6 +16,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
@@ -54,6 +55,10 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         $context = GeneralUtility::makeInstance(Context::class);
 
         $subject = new \Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController($context);
+
+        /** @var ObjectManager $objectManager */
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $subject->injectObjectManager($objectManager);
 
         /** @var \TYPO3\CMS\Extbase\Reflection\ReflectionService $reflectionService */
         $reflectionService = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
