@@ -96,15 +96,12 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     public function __construct(
         \TYPO3\CMS\Core\Context\Context $context,
-        FrontendUserRepository $userRepository,
-        FrontendUserGroupRepository $userGroupRepository,
-        \Evoweb\SfRegister\Services\File $fileService,
-        ConfigurationManagerInterface $configurationManager
+        ConfigurationManagerInterface $configurationManager = null,
+        \Evoweb\SfRegister\Services\File $fileService = null,
+        FrontendUserRepository $userRepository = null,
+        FrontendUserGroupRepository $userGroupRepository = null
     ) {
         $this->context = $context;
-        $this->userRepository = $userRepository;
-        $this->userGroupRepository = $userGroupRepository;
-        $this->fileService = $fileService;
 
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
@@ -114,6 +111,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
         $GLOBALS['sf_register_controllerConfiguration'] = $frameworkConfiguration['controllerConfiguration'];
+
+        $this->fileService = $fileService;
+        $this->userRepository = $userRepository;
+        $this->userGroupRepository = $userGroupRepository;
     }
 
 
