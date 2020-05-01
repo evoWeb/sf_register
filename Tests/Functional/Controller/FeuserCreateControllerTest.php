@@ -16,7 +16,6 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
@@ -54,16 +53,7 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
 
-        /** @var ConfigurationManager $configurationManager */
-        $configurationManager = $this->getAccessibleMock(
-            ConfigurationManager::class,
-            ['dummy'],
-            [],
-            '',
-            false
-        );
-
-        $subject = new \Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController($context, $configurationManager);
+        $subject = new \Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController($context);
 
         /** @var \TYPO3\CMS\Extbase\Reflection\ReflectionService $reflectionService */
         $reflectionService = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
