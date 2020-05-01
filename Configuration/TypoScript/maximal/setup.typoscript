@@ -15,20 +15,43 @@ plugin.tx_sfregister.settings {
   useEncryptedFilename = {$plugin.tx_sfregister.settings.useEncryptedFilename}
 
   # boolean if user or admin need to activate or notified
-  notifyAdminPostCreateSave = {$plugin.tx_sfregister.settings.notifyAdminPostCreateSave}
-  notifyUserPostCreateSave = {$plugin.tx_sfregister.settings.notifyUserPostCreateSave}
+  notifyAdmin {
+    createSave = {$plugin.tx_sfregister.settings.notifyAdmin.createSave}
+    createConfirm = {$plugin.tx_sfregister.settings.notifyAdmin.createConfirm}
+    createRefuse = {$plugin.tx_sfregister.settings.notifyAdmin.createRefuse}
+    createAccept = {$plugin.tx_sfregister.settings.notifyAdmin.createAccept}
+    createDecline = {$plugin.tx_sfregister.settings.notifyAdmin.createDecline}
 
-  notifyAdminPostCreateConfirm = {$plugin.tx_sfregister.settings.notifyAdminPostCreateConfirm}
-  notifyUserPostCreateConfirm = {$plugin.tx_sfregister.settings.notifyUserPostCreateConfirm}
+    deleteSave = {$plugin.tx_sfregister.settings.notifyAdmin.deleteSave}
+    deleteConfirm = {$plugin.tx_sfregister.settings.notifyAdmin.deleteConfirm}
 
-  notifyAdminPostCreateRefuse = {$plugin.tx_sfregister.settings.notifyAdminPostCreateRefuse}
-  notifyUserPostCreateRefuse = {$plugin.tx_sfregister.settings.notifyUserPostCreateRefuse}
+    editSave = {$plugin.tx_sfregister.settings.notifyAdmin.editSave}
+    editConfirm = {$plugin.tx_sfregister.settings.notifyAdmin.editConfirm}
+    editAccept = {$plugin.tx_sfregister.settings.notifyAdmin.editAccept}
 
-  notifyAdminPostCreateAccept = {$plugin.tx_sfregister.settings.notifyAdminPostCreateAccept}
-  notifyUserPostCreateAccept = {$plugin.tx_sfregister.settings.notifyUserPostCreateAccept}
+    inviteInvite = {$plugin.tx_sfregister.settings.notifyAdmin.inviteInvite}
 
-  notifyAdminPostCreateDecline = {$plugin.tx_sfregister.settings.notifyAdminPostCreateDecline}
-  notifyUserPostCreateDecline = {$plugin.tx_sfregister.settings.notifyUserPostCreateDecline}
+    resendMail = {$plugin.tx_sfregister.settings.notifyAdmin.resendMail}
+  }
+
+  notifyUser {
+    createSave = {$plugin.tx_sfregister.settings.notifyUser.createSave}
+    createConfirm = {$plugin.tx_sfregister.settings.notifyUser.createConfirm}
+    createRefuse = {$plugin.tx_sfregister.settings.notifyUser.createRefuse}
+    createAccept = {$plugin.tx_sfregister.settings.notifyUser.createAccept}
+    createDecline = {$plugin.tx_sfregister.settings.notifyUser.createDecline}
+
+    deleteSave = {$plugin.tx_sfregister.settings.notifyUser.deleteSave}
+    deleteConfirm = {$plugin.tx_sfregister.settings.notifyUser.deleteConfirm}
+
+    editSave = {$plugin.tx_sfregister.settings.notifyUser.editSave}
+    editConfirm = {$plugin.tx_sfregister.settings.notifyUser.editConfirm}
+    editAccept = {$plugin.tx_sfregister.settings.notifyUser.editAccept}
+
+    inviteInvite = {$plugin.tx_sfregister.settings.notifyUser.inviteInvite}
+
+    resendMail = {$plugin.tx_sfregister.settings.notifyUser.resendMail}
+  }
 
   confirmEmailPostCreate = {$plugin.tx_sfregister.settings.confirmEmailPostCreate}
   acceptEmailPostCreate = {$plugin.tx_sfregister.settings.acceptEmailPostCreate}
@@ -36,32 +59,12 @@ plugin.tx_sfregister.settings {
   confirmEmailPostAccept = {$plugin.tx_sfregister.settings.confirmEmailPostAccept}
   acceptEmailPostConfirm = {$plugin.tx_sfregister.settings.acceptEmailPostConfirm}
 
-  notifyAdminPostEditSave = {$plugin.tx_sfregister.settings.notifyAdminPostEditSave}
-  notifyUserPostEditSave = {$plugin.tx_sfregister.settings.notifyUserPostEditSave}
-
-  notifyAdminPostEditConfirm = {$plugin.tx_sfregister.settings.notifyAdminPostEditConfirm}
-  notifyUserPostEditConfirm = {$plugin.tx_sfregister.settings.notifyUserPostEditConfirm}
-
-  notifyAdminPostEditAccept = {$plugin.tx_sfregister.settings.notifyAdminPostEditAccept}
-  notifyUserPostEditAccept = {$plugin.tx_sfregister.settings.notifyUserPostEditAccept}
-
-  notifyAdminSendInvitation = {$plugin.tx_sfregister.settings.notifyAdminSendInvitation}
-  notifyUserSendInvitation = {$plugin.tx_sfregister.settings.notifyUserSendInvitation}
-
   confirmEmailPostEdit = {$plugin.tx_sfregister.settings.confirmEmailPostEdit}
   acceptEmailPostEdit = {$plugin.tx_sfregister.settings.acceptEmailPostEdit}
 
-  notifyAdminPostDeleteSave = {$plugin.tx_sfregister.settings.notifyAdminPostDeleteSave}
-  notifyUserPostDeleteSave = {$plugin.tx_sfregister.settings.notifyUserPostDeleteSave}
-
-  notifyAdminPostDeleteConfirm = {$plugin.tx_sfregister.settings.notifyAdminPostDeleteConfirm}
-  notifyUserPostDeleteConfirm = {$plugin.tx_sfregister.settings.notifyUserPostDeleteConfirm}
-
-  notifyAdminPostResendMail = {$plugin.tx_sfregister.settings.notifyAdminPostResendMail}
-  notifyUserPostResendMail = {$plugin.tx_sfregister.settings.notifyUserPostResendMail}
-
   # boolean if user should get logged in after registration
   autologinPostRegistration = {$plugin.tx_sfregister.settings.autologinPostRegistration}
+
   # boolean if user should get logged in after activation
   autologinPostConfirmation = {$plugin.tx_sfregister.settings.autologinPostConfirmation}
 
@@ -85,7 +88,7 @@ plugin.tx_sfregister.settings {
     replyEmail = {$plugin.tx_sfregister.settings.adminEmail.replyEmail}
   }
 
-  redirectSignal {
+  redirectEvent {
     controller = FeuserCreate
     action = form
     page = {$plugin.tx_sfregister.settings.redirect.page}

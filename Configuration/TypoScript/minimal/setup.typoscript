@@ -15,53 +15,56 @@ plugin.tx_sfregister.settings {
   useEncryptedFilename = md5
 
   # boolean if user or admin need to activate or notified
-  notifyAdminPostCreateSave =
-  notifyUserPostCreateSave =
+  notifyAdmin {
+    createSave =
+    createConfirm =
+    createRefuse =
+    createAccept =
+    createDecline =
 
-  notifyAdminPostCreateConfirm =
-  notifyUserPostCreateConfirm =
+    deleteSave =
+    deleteConfirm =
 
-  notifyAdminPostCreateRefuse =
-  notifyUserPostCreateRefuse =
+    editSave =
+    editConfirm =
+    editAccept =
 
-  notifyAdminPostCreateAccept =
-  notifyUserPostCreateAccept =
+    inviteInvite =
 
-  notifyAdminPostCreateDecline =
-  notifyUserPostCreateDecline =
+    resendMail =
+  }
 
-  confirmEmailPostCreate =
+  notifyUser {
+    createSave =
+    createConfirm =
+    createRefuse =
+    createAccept =
+    createDecline =
 
+    deleteSave =
+    deleteConfirm =
 
+    editSave =
+    editConfirm =
+    editAccept =
 
+    inviteInvite =
 
+    resendMail =
+  }
 
-  notifyAdminPostEditSave =
-  notifyUserPostEditSave =
+  confirmEmailPostCreate = {$plugin.tx_sfregister.settings.confirmEmailPostCreate}
+  acceptEmailPostCreate = {$plugin.tx_sfregister.settings.acceptEmailPostCreate}
 
-  notifyAdminPostEditConfirmation =
-  notifyUserPostEditConfirmation =
+  confirmEmailPostAccept = {$plugin.tx_sfregister.settings.confirmEmailPostAccept}
+  acceptEmailPostConfirm = {$plugin.tx_sfregister.settings.acceptEmailPostConfirm}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  confirmEmailPostEdit = {$plugin.tx_sfregister.settings.confirmEmailPostEdit}
+  acceptEmailPostEdit = {$plugin.tx_sfregister.settings.acceptEmailPostEdit}
 
   # boolean if user should get logged in after registration
   autologinPostRegistration =
+
   # boolean if user should get logged in after activation
   autologinPostConfirmation = {$plugin.tx_sfregister.settings.autologinPostConfirmation}
 

@@ -16,18 +16,14 @@ The hole extension was refactored to make best usage of TYPO3 10 changes. Namely
 * refactor to fully match the PSR-12 standard
 * rename TypoScript setting processInitializeActionSignal to processInitializeActionEvent
 * rename TypoScript setting redirectSignal.* to redirectEvent.*
+* reorganize TypoScript notifyUser* and notifyAdmin* setup and constants to notifyUser.* and notifyAdmin.*
 * modify Mail service to have better controller and action assignment
-* rename PostResendMail to ResendMail
-  * rename TS constants notifyAdminPostResendMail to notifyAdminResendMail
-  * rename TS constants notifyUserPostResendMail to notifyUserResendMail
-  * rename TS setup notifyAdminPostResendMail to notifyAdminResendMail
-  * rename TS setup notifyUserPostResendMail to notifyUserResendMail
 * replace switchableControllerActions with individual plugin per controller
   check what elements with list_type sfregister_form are present in table tt_content
   and replace them with their corresponding new plugin
 * change how TS names, templates, mail subject and PSR-14 event name are build based
   on controller and action name in combination with notifyAdmin and notifyUser
-  * TS name is build notifyAdmin{ControllerName}{ActionName} notifyAdminCreateSave
+  * TS name is build notifyAdmin.{ControllerName}{ActionName} notifyAdmin.createSave
   * Template name is build NotifyAdmin{ControllerName}{ActionName} NotifyAdminCreateSave
   * Mail subject is build subjectNotifyAdmin{ControllerName}{ActionName} subjectNotifyAdminCreateSave
   * Event name is build NotifyAdmin{ControllerName}{ActionName}Event NotifyAdminCreateSaveEvent

@@ -483,12 +483,16 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     protected function isNotifyAdmin(string $type): bool
     {
-        return isset($this->settings['notifyAdmin' . $type]) && !empty($this->settings['notifyAdmin' . $type]);
+        $type = lcfirst($type);
+        $notifySettings = $this->settings['notifyAdmin'];
+        return isset($notifySettings[$type]) && !empty($notifySettings[$type]);
     }
 
     protected function isNotifyUser(string $type): bool
     {
-        return isset($this->settings['notifyUser' . $type]) && !empty($this->settings['notifyUser' . $type]);
+        $type = lcfirst($type);
+        $notifySettings = $this->settings['notifyUser'];
+        return isset($notifySettings[$type]) && !empty($notifySettings[$type]);
     }
 
 
