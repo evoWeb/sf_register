@@ -18,7 +18,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
@@ -46,7 +45,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
 
         /** @var ConfigurationManager $configurationManager */
         $configurationManager = $this->getAccessibleMock(
-            FrontendConfigurationManager::class,
+            ConfigurationManager::class,
             ['dummy'],
             [],
             '',
@@ -75,7 +74,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
 
         /** @var ConfigurationManager $configurationManager */
         $configurationManager = $this->getAccessibleMock(
-            FrontendConfigurationManager::class,
+            ConfigurationManager::class,
             ['dummy'],
             [],
             '',
@@ -111,7 +110,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
 
         /** @var ConfigurationManager $configurationManager */
         $configurationManager = $this->getAccessibleMock(
-            FrontendConfigurationManager::class,
+            ConfigurationManager::class,
             ['dummy'],
             [],
             '',

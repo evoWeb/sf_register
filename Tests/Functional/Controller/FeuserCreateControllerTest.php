@@ -13,7 +13,6 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Prophecy\Prophecy\ObjectProphecy;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -55,12 +54,14 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
 
-        /** @var ConfigurationManager|ObjectProphecy $configurationManager */
-        $configurationManager = $this->prophesize(ConfigurationManager::class);
-        $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_SETTINGS)
-            ->willReturn(
-                $settings
-            );
+        /** @var ConfigurationManager $configurationManager */
+        $configurationManager = $this->getAccessibleMock(
+            ConfigurationManager::class,
+            ['dummy'],
+            [],
+            '',
+            false
+        );
 
         $subject = new \Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController($context, $configurationManager);
 
