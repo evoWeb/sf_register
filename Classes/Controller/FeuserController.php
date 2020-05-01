@@ -14,7 +14,7 @@ namespace Evoweb\SfRegister\Controller;
  */
 
 use Doctrine\Common\Annotations\DocParser;
-use Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent;
+use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
@@ -244,7 +244,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $this->setTypeConverter();
 
         if ($this->settings['processInitializeActionEvent']) {
-            $this->eventDispatcher->dispatch(new ProcessInitializeActionEvent($this, $this->settings));
+            $this->eventDispatcher->dispatch(new InitializeActionEvent($this, $this->settings));
         }
 
         if (
@@ -458,23 +458,24 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     protected function sendEmails(FrontendUser $user, string $action): FrontendUser
     {
+        $action = ucfirst(str_replace('Action', '', $action));
         $controller = str_replace(
             ['Evoweb\\SfRegister\\Controller\\Feuser', 'Controller'],
             '',
             static::class
         );
 
-        $type = $controller . str_replace('Action', '', $action);
+        $type = $controller . $action;
 
         /** @var \Evoweb\SfRegister\Services\Mail $mailService */
         $mailService = GeneralUtility::getContainer()->get(\Evoweb\SfRegister\Services\Mail::class);
 
         if ($this->isNotifyAdmin($type)) {
-            $user = $mailService->sendNotifyAdmin($user, $type);
+            $user = $mailService->sendNotifyAdmin($user, $controller, $action);
         }
 
         if ($this->isNotifyUser($type)) {
-            $user = $mailService->sendNotifyUser($user, $type);
+            $user = $mailService->sendNotifyUser($user, $controller, $action);
         }
 
         return $user;

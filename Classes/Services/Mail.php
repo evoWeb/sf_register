@@ -58,122 +58,49 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     }
 
 
-    public function sendNotifyAdmin(FrontendUserInterface $user, string $type): FrontendUserInterface
-    {
-        $method = __FUNCTION__ . $type;
-        if (method_exists($this, $method)) {
-            $user = $this->{$method}($user);
-        } else {
-            $this->sendEmail(
-                $user,
-                $this->getAdminRecipient(),
-                'adminEmail',
-                $this->getSubject($method, $user),
-                $this->renderHtmlBody('FeuserCreate', 'form', $method, $user),
-                $this->renderTextBody('FeuserCreate', 'form', $method, $user)
-            );
-        }
+    public function sendNotifyAdmin(
+        FrontendUserInterface $user,
+        string $controller,
+        string $action
+    ): FrontendUserInterface {
+        $method = 'NotifyAdmin' . $controller . $action;
+        $controller = 'Feuser' . $controller;
+
+        $this->sendEmail(
+            $user,
+            $this->getAdminRecipient(),
+            'adminEmail',
+            $this->getSubject($method, $user),
+            $this->renderHtmlBody($controller, 'form', $method, $user),
+            $this->renderTextBody($controller, 'form', $method, $user)
+        );
 
         $user = $this->dispatchEvent($method, $user);
 
         return $user;
     }
 
-    public function sendNotifyUser(FrontendUserInterface $user, string $type): FrontendUserInterface
-    {
-        $method = __FUNCTION__ . $type;
-        if (method_exists($this, $method)) {
-            $user = $this->{$method}($user);
-        } else {
-            $this->sendEmail(
-                $user,
-                $this->getUserRecipient($user),
-                'userEmail',
-                $this->getSubject($method, $user),
-                $this->renderHtmlBody('FeuserCreate', 'form', $method, $user),
-                $this->renderTextBody('FeuserCreate', 'form', $method, $user)
-            );
-        }
+    public function sendNotifyUser(
+        FrontendUserInterface $user,
+        string $controller,
+        string $action
+    ): FrontendUserInterface {
+        $method = 'NotifyUser' . $controller . $action;
+        $controller = 'Feuser' . $controller;
+
+        $this->sendEmail(
+            $user,
+            $this->getUserRecipient($user),
+            'userEmail',
+            $this->getSubject($method, $user),
+            $this->renderHtmlBody($controller, 'form', $method, $user),
+            $this->renderTextBody($controller, 'form', $method, $user)
+        );
 
         $user = $this->dispatchEvent($method, $user);
 
         return $user;
     }
-
-
-    protected function sendNotifyAdminCreateSave(FrontendUserInterface $user)
-    {
-        $this->sendEmail(
-            $user,
-            $this->getAdminRecipient(),
-            'adminEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__, $user),
-            $this->renderTextBody('FeuserCreate', 'form', __FUNCTION__, $user)
-        );
-    }
-
-    protected function sendNotifyUserCreateSave(FrontendUserInterface $user)
-    {
-        $this->sendEmail(
-            $user,
-            $this->getUserRecipient($user),
-            'userEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__, $user),
-            $this->renderTextBody('FeuserCreate', 'form', __FUNCTION__, $user)
-        );
-    }
-
-    protected function sendNotifyAdminCreateConfirm(FrontendUserInterface $user)
-    {
-        $this->sendEmail(
-            $user,
-            $this->getAdminRecipient(),
-            'adminEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserCreate', 'form', __FUNCTION__, $user),
-            $this->renderTextBody('FeuserCreate', 'form', __FUNCTION__, $user)
-        );
-    }
-
-
-    protected function sendNotifyAdminEditSave(FrontendUserInterface $user)
-    {
-        $this->sendEmail(
-            $user,
-            $this->getAdminRecipient(),
-            'adminEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserEdit', 'form', __FUNCTION__, $user),
-            $this->renderTextBody('FeuserEdit', 'form', __FUNCTION__, $user)
-        );
-    }
-
-    protected function sendNotifyUserEditSave(FrontendUserInterface $user)
-    {
-        $this->sendEmail(
-            $user,
-            $this->getUserRecipient($user),
-            'userEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserEdit', 'form', __FUNCTION__, $user),
-            $this->renderTextBody('FeuserEdit', 'form', __FUNCTION__, $user)
-        );
-    }
-
-    protected function sendNotifyAdminEditConfirm(FrontendUserInterface $user)
-    {
-        $this->sendEmail(
-            $user,
-            $this->getAdminRecipient(),
-            'adminEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderHtmlBody('FeuserEdit', 'form', __FUNCTION__, $user),
-            $this->renderTextBody('FeuserEdit', 'form', __FUNCTION__, $user)
-        );
-    }
-
 
     public function sendInvitation(FrontendUserInterface $user, string $type)
     {
@@ -196,10 +123,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
     protected function getSubject(string $method, FrontendUserInterface $user): string
     {
-        $labelIndex = 'subject' . str_replace('send', '', $method);
-
         return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-            $labelIndex,
+            'subject' . $method,
             'SfRegister',
             [$this->settings['sitename'], $user->getUsername()]
         );
@@ -253,7 +178,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             $mail->text($bodyPlain);
         }
 
-        $mail = $this->dispatchEvent('preMail', $mail, $user);
+        $mail = $this->dispatchEvent('PreSubmitMail', $mail, $user);
 
         return $mail->send();
     }
@@ -269,7 +194,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
         $context = $view->getRenderingContext();
         $context->setControllerName('Email');
-        $context->setControllerAction(str_replace('send', '', $method));
+        $context->setControllerAction($method);
+
         try {
             $view->assignMultiple([
                 'user' => $user,
@@ -295,7 +221,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
         $context = $view->getRenderingContext();
         $context->setControllerName('Email');
-        $context->setControllerAction(str_replace('send', '', $method));
+        $context->setControllerAction($method);
+
         try {
             $view->assignMultiple([
                 'user' => $user,
@@ -330,14 +257,14 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Dispatch event to listeners
      *
-     * @param string $event
+     * @param string $method
      * @param \TYPO3\CMS\Core\Mail\MailMessage|FrontendUserInterface $result
      *
      * @return \TYPO3\CMS\Core\Mail\MailMessage|FrontendUserInterface
      */
-    protected function dispatchEvent($event, $result)
+    protected function dispatchEvent($method, $result)
     {
-        $event = 'Evoweb\\SfRegister\\Services\\Event\\' . ucfirst(str_replace('send', '', $event)) . 'Event';
+        $event = 'Evoweb\\SfRegister\\Services\\Event\\' . $method . 'Event';
         $arguments = array_slice(func_get_args(), 2);
 
         $eventObject = new $event($result, $this->settings, $arguments);

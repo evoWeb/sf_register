@@ -17,7 +17,7 @@ namespace Evoweb\SfRegister\Services\Event;
 
 use TYPO3\CMS\Core\Mail\MailMessage;
 
-final class PreMailEvent
+final class PreSubmitMailEvent
 {
     /**
      * @var MailMessage

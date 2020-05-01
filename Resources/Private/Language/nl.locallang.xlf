@@ -451,27 +451,27 @@
 				<source>The %1$s is global not unique</source>
 				<target>De waarde van %1$s is globaal niet uniek</target>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationMail">
+			<trans-unit id="subjectNotifyAdminMail">
 				<source>User %2$s registered at %1$s</source>
 				<target>Gebruiker %2$s geregistreed bij %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationMailPostActivation">
+			<trans-unit id="subjectNotifyAdminMailPostActivation">
 				<source>User %2$s registered at %1$s and is now activated</source>
 				<target>Gebruikers account %2$s bij %1$s is geactiveerd</target>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationMailPreActivation">
+			<trans-unit id="subjectNotifyAdminMailPreActivation">
 				<source>User %2$s registered at %1$s and needs to be activated</source>
 				<target>Gebruiker %2$s heeft zich bij %1$s geregistreed en dient geactiveerd te worden</target>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationMail">
+			<trans-unit id="subjectNotifyUserMail">
 				<source>You registered yourself at %1$s as %2$s</source>
 				<target>Je hebt je geregistreerd als %1$s bij %2$s</target>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationMailPostActivation">
+			<trans-unit id="subjectNotifyUserMailPostActivation">
 				<source>You activated account %2$s at %1$s</source>
 				<target>Je hebt je account %2$s geactiveerd bij %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationMailPreActivation">
+			<trans-unit id="subjectNotifyUserMailPreActivation">
 				<source>You registered your account %2$s at %1$s</source>
 				<target>Je registratie van het account %2$s bij %1$s</target>
 			</trans-unit>

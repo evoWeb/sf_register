@@ -387,83 +387,83 @@
 				<source>Field %1$s is not globally unique</source>
 			</trans-unit>
 
-			<trans-unit id="subjectAdminNotificationPostCreateSave">
+			<trans-unit id="subjectNotifyAdminCreateSave">
 				<source>User %2$s registered on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateConfirm">
+			<trans-unit id="subjectNotifyAdminCreateConfirm">
 				<source>User %2$s confirmed registration on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateRefuse">
+			<trans-unit id="subjectNotifyAdminCreateRefuse">
 				<source>User %2$s refused the registration on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateAccept">
+			<trans-unit id="subjectNotifyAdminCreateAccept">
 				<source>User %2$s was accepted on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateDecline">
+			<trans-unit id="subjectNotifyAdminCreateDecline">
 				<source>User %2$s was declined on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateSave">
+			<trans-unit id="subjectNotifyUserCreateSave">
 				<source>You registered yourself at %1$s as %2$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateConfirm">
+			<trans-unit id="subjectNotifyUserCreateConfirm">
 				<source>Thank you for confirming your account %2$s at %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateRefuse">
+			<trans-unit id="subjectNotifyUserCreateRefuse">
 				<source>Sorry your refused your registration with account %2$s on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateAccept">
+			<trans-unit id="subjectNotifyUserCreateAccept">
 				<source>You registration with account %2$s on site %1$s was accepted</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateDecline">
+			<trans-unit id="subjectNotifyUserCreateDecline">
 				<source>You activated account %2$s at %1$s</source>
 			</trans-unit>
 
-			<trans-unit id="subjectAdminNotificationPostEditSave">
+			<trans-unit id="subjectNotifyAdminEditSave">
 				<source>User %2$s has edited information on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostEditConfirm">
+			<trans-unit id="subjectNotifyAdminEditConfirm">
 				<source>User %2$s has confirmed the change of information on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostEditAccept">
+			<trans-unit id="subjectNotifyAdminEditAccept">
 				<source>User %2$s change of information was accepted on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostEditSave">
+			<trans-unit id="subjectNotifyUserEditSave">
 				<source>You %2$s changed your information on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostEditConfirm">
+			<trans-unit id="subjectNotifyUserEditConfirm">
 				<source>Thank you %2$s for confirming the change of information on site %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostEditAccept">
+			<trans-unit id="subjectNotifyUserEditAccept">
 				<source>Your change of information for account %2$s on site %1$s was accepted</source>
 			</trans-unit>
 
-			<trans-unit id="subjectAdminNotificationSendInvitation">
+			<trans-unit id="subjectNotifyAdminSendInvitation">
 				<source>User invitation at %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationSendInvitation">
+			<trans-unit id="subjectNotifyUserSendInvitation">
 				<source>You invited someone to register at %1$s</source>
 			</trans-unit>
 			<trans-unit id="subjectInvitationToRegister">
 				<source>You were invite to register at %1$s</source>
 			</trans-unit>
 
-			<trans-unit id="subjectAdminNotificationPostDeleteSave">
+			<trans-unit id="subjectNotifyAdminDeleteSave">
 				<source>User %2$s requests to delete the account from %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostDeleteSave">
+			<trans-unit id="subjectNotifyUserDeleteSave">
 				<source>Your requests to delete the account %2$s from %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostDeleteConfirm">
+			<trans-unit id="subjectNotifyAdminDeleteConfirm">
 				<source>User %2$s confirmed to delete the account from %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostDeleteConfirm">
+			<trans-unit id="subjectNotifyUserDeleteConfirm">
 				<source>Your confirmed to delete the account %2$s from %1$s</source>
 			</trans-unit>
 
-			<trans-unit id="subjectAdminNotificationPostReMail">
+			<trans-unit id="subjectNotifyAdminReMail">
 				<source>User %2$s requested a resend of the activation key of the account from %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostReMail">
+			<trans-unit id="subjectNotifyUserReMail">
 				<source>Your requested a resend of the activation key of the account %2$s from %1$s</source>
 			</trans-unit>
 

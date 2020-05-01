@@ -13,7 +13,7 @@ namespace Evoweb\SfRegister\EventListener;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent;
+use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
 class FeuserControllerListener
@@ -28,7 +28,7 @@ class FeuserControllerListener
         $this->uriBuilder = $uriBuilder;
     }
 
-    public function onProcessInitializeActionEvent(ProcessInitializeActionEvent $event)
+    public function onProcessInitializeActionEvent(InitializeActionEvent $event)
     {
         if (!$this->userIsLoggedIn()) {
             $redirectEvent = $event->getSettings()['redirectEvent'];

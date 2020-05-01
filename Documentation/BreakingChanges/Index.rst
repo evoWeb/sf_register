@@ -25,11 +25,12 @@ The hole extension was refactored to make best usage of TYPO3 10 changes. Namely
 * replace switchableControllerActions with individual plugin per controller
   check what elements with list_type sfregister_form are present in table tt_content
   and replace them with their corresponding new plugin
-* change how TS config names, templates and PSR-14 event name are build based
+* change how TS names, templates, mail subject and PSR-14 event name are build based
   on controller and action name in combination with notifyAdmin and notifyUser
   * TS name is build notifyAdmin{ControllerName}{ActionName} notifyAdminCreateSave
   * Template name is build NotifyAdmin{ControllerName}{ActionName} NotifyAdminCreateSave
-  * Event name is build SendNotifyAdmin{ControllerName}{ActionName}Event NotifyAdminCreateSaveEvent
+  * Mail subject is build subjectNotifyAdmin{ControllerName}{ActionName} subjectNotifyAdminCreateSave
+  * Event name is build NotifyAdmin{ControllerName}{ActionName}Event NotifyAdminCreateSaveEvent
   * PostCreateSave replaced with CreateSave
   * PostCreateConfirm replaced with CreateConfirm
   * PostCreateRefuse replaced with CreateRefuse

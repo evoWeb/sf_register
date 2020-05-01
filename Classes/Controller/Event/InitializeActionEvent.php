@@ -17,7 +17,7 @@ namespace Evoweb\SfRegister\Controller\Event;
 
 use Evoweb\SfRegister\Controller\FeuserController;
 
-final class ProcessInitializeActionEvent
+final class InitializeActionEvent
 {
     /**
      * @var FeuserController
