@@ -3,6 +3,15 @@
 	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2018-06-26T07:34:54Z" product-name="sf_register">
 		<header/>
 		<body>
+			<trans-unit id="needTobBeLoggedIn">
+				<source>You need to be logged in</source>
+				<target>Sie muss eingeloggt sein</target>
+			</trans-unit>
+			<trans-unit id="needTobBeLoggedOut">
+				<source>You need to be logged out</source>
+				<target>Sie muss ausgeloggt sein</target>
+			</trans-unit>
+
 			<trans-unit id="uid">
 				<source>Userid</source>
 				<target>NutzerId</target>

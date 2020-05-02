@@ -26,9 +26,11 @@ class FeuserPasswordController extends FeuserController
      */
     protected $controller = 'password';
 
-    public function formAction()
+    public function formAction(\Evoweb\SfRegister\Domain\Model\Password $password = null)
     {
-        $this->eventDispatcher->dispatch(new Event\PasswordFormEvent($this->settings));
+        $this->eventDispatcher->dispatch(new Event\PasswordFormEvent($password, $this->settings));
+
+        $this->view->assign('password', $password);
     }
 
     /**

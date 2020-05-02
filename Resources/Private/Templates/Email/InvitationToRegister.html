@@ -9,7 +9,7 @@
 
 	<f:format.raw><f:translate key="email_invitee_invitation_message" arguments="{0: user.invitationEmail, 1: settings.sitename}"/></f:format.raw>
 
-	<register:link.action pageUid="{settings.createPid}" arguments="{user: {email: user.invitationEmail}}" action="form" controller="FeuserEdit" absolute="true">
+	<register:link.action pageUid="{settings.createPid}" arguments="{user: {email: user.invitationEmail}}" action="form" controller="FeuserCreate" absolute="true">
 		<f:translate key="email_invitee_register_link"/>
 	</register:link.action>
 </f:section>

@@ -29,7 +29,7 @@ final class CreateFormEvent
      */
     protected $settings;
 
-    public function __construct(FrontendUser $user, array $settings)
+    public function __construct($user, array $settings)
     {
         $this->user = $user;
         $this->settings = $settings;
@@ -38,7 +38,7 @@ final class CreateFormEvent
     /**
      * @return FrontendUser
      */
-    public function getUser(): FrontendUser
+    public function getUser()
     {
         return $this->user;
     }

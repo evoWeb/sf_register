@@ -41,8 +41,8 @@ plugin.tx_sfregister.settings {
     createAccept =
     createDecline =
 
-    deleteSave =
-    deleteConfirm =
+    deleteSave = 1
+    deleteConfirm = 1
 
     editSave =
     editConfirm =
@@ -50,7 +50,7 @@ plugin.tx_sfregister.settings {
 
     inviteInvite =
 
-    resendMail =
+    resendMail = 1
   }
 
   confirmEmailPostCreate = {$plugin.tx_sfregister.settings.confirmEmailPostCreate}

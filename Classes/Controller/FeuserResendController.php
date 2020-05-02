@@ -29,7 +29,12 @@ class FeuserResendController extends FeuserController
     {
         $email = $this->eventDispatcher->dispatch(new Event\ResendFormEvent($email, $this->settings))->getEmail();
 
-        $this->view->assign('email', $email);
+        $userId = $this->context->getAspect('frontend.user')->get('id');
+        $email = $email ?? $this->userRepository->findByUid($userId);
+
+        if ($email) {
+            $this->view->assign('email', ['email' => $email->getEmail()]);
+        }
     }
 
     /**

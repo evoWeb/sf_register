@@ -60,9 +60,9 @@ plugin.tx_sfregister.settings {
     createDecline =
 
     # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserDeleteSave
-    deleteSave =
+    deleteSave = 1
     # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserDeleteConfirm
-    deleteConfirm =
+    deleteConfirm = 1
 
     # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserEditSave
     editSave =
@@ -75,7 +75,7 @@ plugin.tx_sfregister.settings {
     inviteInvite =
 
     # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserResendMail
-    resendMail =
+    resendMail = 1
   }
 
   # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.confirmEmailPostCreate

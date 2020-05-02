@@ -7,10 +7,10 @@
 		<f:render partial="FormErrors" arguments="{for: 'email'}"/>
 
 		<div class="form-row">
-			<f:for each="{settings.fields.selected}" as="selectedField" iteration="iteration">
-				<f:alias map="{options: '{settings.fields.configuration.{selectedField}}'}">
+			<f:for each="{settings.fields.selected}" as="fieldName" iteration="iteration">
+				<f:alias map="{options: '{settings.fields.configuration.{fieldName}}'}">
 					<f:render partial="Form/{options.partial}"
-										arguments="{user: email, property: 'email', fieldName: selectedField, options: options, settings: settings, iteration: iteration}"/>
+										arguments="{user: email, fieldName: fieldName, options: options, settings: settings, iteration: iteration}"/>
 				</f:alias>
 			</f:for>
 		</div>

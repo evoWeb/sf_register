@@ -3,6 +3,13 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2018-06-26T07:34:54Z" product-name="sf_register">
 		<header/>
 		<body>
+			<trans-unit id="needTobBeLoggedIn">
+				<source>You need to be logged in</source>
+			</trans-unit>
+			<trans-unit id="needTobBeLoggedOut">
+				<source>You need to be logged out</source>
+			</trans-unit>
+
 			<trans-unit id="uid">
 				<source>Userid</source>
 			</trans-unit>
@@ -460,10 +467,10 @@
 				<source>Your confirmed to delete the account %2$s from %1$s</source>
 			</trans-unit>
 
-			<trans-unit id="subjectNotifyAdminReMail">
+			<trans-unit id="subjectNotifyAdminResendMail">
 				<source>User %2$s requested a resend of the activation key of the account from %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectNotifyUserReMail">
+			<trans-unit id="subjectNotifyUserResendMail">
 				<source>Your requested a resend of the activation key of the account %2$s from %1$s</source>
 			</trans-unit>
 

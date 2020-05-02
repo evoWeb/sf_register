@@ -29,7 +29,7 @@ final class ResendFormEvent
      */
     protected $settings;
 
-    public function __construct(Email $email, array $settings)
+    public function __construct($email, array $settings)
     {
         $this->email = $email;
         $this->settings = $settings;
@@ -38,7 +38,7 @@ final class ResendFormEvent
     /**
      * @return Email
      */
-    public function getEmail(): Email
+    public function getEmail()
     {
         return $this->email;
     }
