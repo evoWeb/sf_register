@@ -33,18 +33,18 @@ be selected in the plugin too.
 **ext_localconf.php**::
 
    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
-   '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields.typoscript">'
+   '@import 'EXT:sf_register/Configuration/TypoScript/Fields.typoscript\''
    );
 
 
 **TypoScript Setup**::
 
-   <INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields.typoscript">
+   @import 'FILE:EXT:sf_register/Configuration/TypoScript/Fields.typoscript'
 
 
 By using the same fields file both in typoscript as well as in user ts config. No additional configuration is needed.
 
-In your partials there are the following informations available
+In your partials there are the following information available
 
 * {user} the user object with previous entered values
 * {fieldName} the name of the field in the user object

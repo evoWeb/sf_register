@@ -119,9 +119,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     protected function initializeActionMethodValidators()
     {
-        if (empty($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = $this->settings['fields'][$this->controller . 'DefaultSelected'];
-        } elseif (!is_array($this->settings['fields']['selected'])) {
+        if (!is_array($this->settings['fields']['selected'])) {
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
         }
 

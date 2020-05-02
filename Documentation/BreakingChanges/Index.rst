@@ -16,6 +16,7 @@ The hole extension was refactored to make best usage of TYPO3 10 changes. Namely
 * refactor to fully match the PSR-12 standard
 * rename TypoScript setting processInitializeActionSignal to processInitializeActionEvent
 * rename TypoScript setting redirectSignal.* to redirectEvent.*
+* reorganize TypoScript setting createDefaultSelected etc to defaultSelected.create etc
 * reorganize TypoScript notifyUser* and notifyAdmin* setup and constants to notifyUser.* and notifyAdmin.*
 * modify Mail service to have better controller and action assignment
 * replace switchableControllerActions with individual plugin per controller

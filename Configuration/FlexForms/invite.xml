@@ -19,7 +19,7 @@
 								<multiple>1</multiple>
 								<size>10</size>
 								<autoSizeMax>50</autoSizeMax>
-								<itemsProcFunc>Evoweb\SfRegister\Form\ItemProcessor->getConfiguredFields</itemsProcFunc>
+								<sfRegisterForm>invite</sfRegisterForm>
 							</config>
 						</TCEforms>
 					</settings.fields.selected>

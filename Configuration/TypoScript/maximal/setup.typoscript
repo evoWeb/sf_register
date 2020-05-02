@@ -1,5 +1,5 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Common/setup.typoscript">
+@import 'FILE:EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript'
+@import 'FILE:EXT:sf_register/Configuration/TypoScript/Common/setup.typoscript'
 
 
 plugin.tx_sfregister.settings {

@@ -55,9 +55,10 @@ class FeuserCreateController extends FeuserController
             );
         }
 
-        $this->eventDispatcher->dispatch(new Event\CreateFormEvent($user, $this->settings));
-
-        $this->view->assign('user', $user);
+        if ($user) {
+            $this->eventDispatcher->dispatch(new Event\CreateFormEvent($user, $this->settings));
+            $this->view->assign('user', $user);
+        }
     }
 
     /**

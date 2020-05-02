@@ -24,6 +24,14 @@ call_user_func(function () {
         ['source' => 'EXT:sf_register/Resources/Public/Icons/Extension.svg']
     );
 
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['flexFormSegment'][
+        \Evoweb\SfRegister\Form\FormDataProvider\FormFields::class
+    ] = [
+        'before' => [
+            \TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems::class,
+        ],
+    ];
+
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'SfRegister',
         'Create',

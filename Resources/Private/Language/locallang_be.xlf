@@ -3,6 +3,9 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2018-06-26T07:34:54Z" product-name="sf_register">
 		<header/>
 		<body>
+			<trans-unit id="wizard.group.sf_register">
+				<source>Registration</source>
+			</trans-unit>
 			<trans-unit id="tt_content.list_type_create">
 				<source>Registration: Create user</source>
 			</trans-unit>

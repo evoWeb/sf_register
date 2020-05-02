@@ -28,9 +28,9 @@ As its not always needed to define your field selection there are some defaults 
 
 **Fields/setup.typoscript**::
 
-   plugin.tx_sfregister.settings.fields {
-      createDefaultSelected { }
-      editDefaultSelected { }
+   plugin.tx_sfregister.settings.fields.defaultSelected {
+      create { }
+      edit { }
    }
 
 
@@ -59,7 +59,7 @@ Per default, all templates are stored in
 Copy files you want to modify of the folder into the fileadmin.
 Don't forget to set the path to this new templates folder with.
 
-Since TYPO3 6.2 its possible to have so called fallback pathes for
+Since TYPO3 6.2 its possible to have so called fallback paths for
 template, partial and layout root paths. By this its not necessary to
 copy all files of given path any more.
 
@@ -67,15 +67,12 @@ copy all files of given path any more.
 
    plugin.tx_sfregister.view.templateRootPaths.0 = EXT:sf_register/Resources/Private/Templates/
    plugin.tx_sfregister.view.templateRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/
-   plugin.tx_sfregister.view.templateRootPaths.2 = fileadmin/extension_templates/sf_register/Private/Templates/
 
    plugin.tx_sfregister.view.partialRootPaths.0 = EXT:sf_register/Resources/Private/Partials/
    plugin.tx_sfregister.view.partialRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/Partials/
-   plugin.tx_sfregister.view.partialRootPaths.2 = fileadmin/extension_templates/sf_register/Private/Partials/
 
    plugin.tx_sfregister.view.layoutRootPaths.0 = EXT:sf_register/Resources/Private/Layouts/
-   plugin.tx_sfregister.view.layoutRootPaths.1 = fileadmin/extension_templates/sf_register/Private/Layouts/
-   plugin.tx_sfregister.view.layoutRootPaths.2 = fileadmin/extension_templates/sf_register/Private/Layouts/
+   plugin.tx_sfregister.view.layoutRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/Layouts/
 
 
 In pre and post TYPO3 6.2 version its possible to define a template rootpath in
