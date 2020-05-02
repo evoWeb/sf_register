@@ -267,6 +267,10 @@
 				<source>Password</source>
 				<target>Passwort</target>
 			</trans-unit>
+			<trans-unit id="fe_users.oldPassword">
+				<source>Old password</source>
+				<target>Altes Password</target>
+			</trans-unit>
 			<trans-unit id="passwordRepeat">
 				<source>Password repetition</source>
 				<target>Passwortwiederholung</target>

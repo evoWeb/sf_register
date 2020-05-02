@@ -122,6 +122,10 @@ plugin.tx_sfregister.settings.fields.configuration {
 
   pseudonym.partial = Textfield
 
+  oldPassword {
+    partial = Password
+  }
+
   password {
     partial = Password
     progress = show

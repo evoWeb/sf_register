@@ -53,6 +53,9 @@
 			<trans-unit id="fe_users.password">
 				<source>Password</source>
 			</trans-unit>
+			<trans-unit id="fe_users.oldPassword">
+				<source>Old password</source>
+			</trans-unit>
 			<trans-unit id="fe_users.passwordRepeat">
 				<source>Password repeat</source>
 			</trans-unit>
@@ -356,16 +359,19 @@
 				<source>Resend notification mail</source>
 			</trans-unit>
 			<trans-unit id="form_flexform.settings.fields.selected">
-				<source>Select fields to use in form</source>
+				<source>Selected fields</source>
 			</trans-unit>
-			<trans-unit id="form_flexform.settings.fields.configuredByTypoScript">
-				<source>Fields configured by TypoScript</source>
+			<trans-unit id="form_flexform.settings.fields.nonSelected">
+				<source>No fields selected. Please edit element and save with selected fields.</source>
 			</trans-unit>
 			<trans-unit id="form_flexform.settings.viewTemplateRootPath">
 				<source>Template root path (EXT:sf_register/Resources/Private/Templates)</source>
 			</trans-unit>
 			<trans-unit id="form_flexform.settings.viewTemplateRootPath.short">
 				<source>Template root path</source>
+			</trans-unit>
+			<trans-unit id="pages">
+				<source>Record Storage Page</source>
 			</trans-unit>
 		</body>
 	</file>

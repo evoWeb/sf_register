@@ -44,7 +44,7 @@ call_user_func(function () {
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         'sfregister_delete',
-        'FILE:EXT:sf_register/Configuration/FlexForms/edit.xml'
+        'FILE:EXT:sf_register/Configuration/FlexForms/delete.xml'
     );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
@@ -59,7 +59,7 @@ call_user_func(function () {
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         'sfregister_password',
-        'FILE:EXT:sf_register/Configuration/FlexForms/edit.xml'
+        'FILE:EXT:sf_register/Configuration/FlexForms/password.xml'
     );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
@@ -73,7 +73,7 @@ call_user_func(function () {
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         'sfregister_invite',
-        'FILE:EXT:sf_register/Configuration/FlexForms/edit.xml'
+        'FILE:EXT:sf_register/Configuration/FlexForms/invite.xml'
     );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
@@ -87,6 +87,6 @@ call_user_func(function () {
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         'sfregister_resend',
-        'FILE:EXT:sf_register/Configuration/FlexForms/edit.xml'
+        'FILE:EXT:sf_register/Configuration/FlexForms/resend.xml'
     );
 });

@@ -267,6 +267,10 @@
 				<source>Password</source>
 				<target>Mot de passe</target>
 			</trans-unit>
+			<trans-unit id="fe_users.oldPassword">
+				<source>Old password</source>
+				<target>Vieux mot de passe</target>
+			</trans-unit>
 			<trans-unit id="passwordRepeat">
 				<source>Password repetition</source>
 				<target>Répétition du mot de passe</target>
@@ -569,60 +573,60 @@
 
 			<trans-unit id="email_admin_account_accepted">
 				<source>The user registration was accepted.</source>
-				<target></target>
+				<target>L'inscription de l'utilisateur a été acceptée.</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_confirmed">
 				<source>The user confirmed the registration</source>
-				<target></target>
+				<target>L'utilisateur a confirmé l'inscription.</target>
 			</trans-unit>
 			<trans-unit id="email_user_accept_link">
 				<source>accept user registration</source>
-				<target></target>
+				<target>accepter l'inscription de l'utilisateur</target>
 			</trans-unit>
 			<trans-unit id="email_user_decline_link">
 				<source>decline user registration</source>
-				<target></target>
+				<target>décliner l'inscription de l'utilisateur</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_declined">
 				<source>The user registration was declined.</source>
-				<target></target>
+				<target>L'inscription de l'utilisateur a été déclinée.</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_refused">
 				<source>The user registration was refused.</source>
-				<target></target>
+				<target>L'inscription de l'utilisateur a été refusé.</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_saved">
 				<source>The user registration was saved</source>
-				<target></target>
+				<target>L'inscription de l'utilisateur a été enregistré</target>
 			</trans-unit>
 
 			<trans-unit id="email_user_account_accepted">
 				<source>Your registration was accepted.</source>
-				<target></target>
+				<target>Votre inscription a été acceptée.</target>
 			</trans-unit>
 			<trans-unit id="email_user_confirm_link">
 				<source>confirm your registration</source>
-				<target></target>
+				<target>confirmez votre inscription</target>
 			</trans-unit>
 			<trans-unit id="email_user_refuse_link">
 				<source>refuse your registration</source>
-				<target></target>
+				<target>refuser votre inscription</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_confirmed">
 				<source>Your registration was confirmed.</source>
-				<target></target>
+				<target>Votre inscription a été confirmée.</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_declined">
 				<source>Your registration was declined.</source>
-				<target></target>
+				<target>Votre inscription a été refusée.</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_refused">
 				<source>Your registration was refused.</source>
-				<target></target>
+				<target>Votre inscription a été refusée.</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_saved">
 				<source>Your registration was saved.</source>
-				<target></target>
+				<target>Votre inscription a été enregistrée.</target>
 			</trans-unit>
 		</body>
 	</file>
