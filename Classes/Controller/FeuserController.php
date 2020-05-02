@@ -223,7 +223,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         );
 
         /** @var \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface $validator */
-        $validator = GeneralUtility::makeInstance($validatorObjectName, $validateAnnotation->options);
+        $validator = $this->objectManager->get($validatorObjectName, $validateAnnotation->options);
         return $validator;
     }
 

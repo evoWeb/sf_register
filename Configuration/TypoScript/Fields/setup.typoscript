@@ -1,52 +1,17 @@
 plugin.tx_sfregister.settings.fields.defaultSelected {
   # default selected fields for create controller
   create {
-    #10 = username
-    #20 = pseudonym
-    30 = password
-    #40 = passwordRepeat
-    50 = email
-    60 = emailRepeat
-    70 = clear
+    10 = firstName
+    20 = lastName
 
-    80 = gender
-    90 = title
-    100 = clear
+    30 = email
+    40 = clear
 
-    110 = firstName
-    120 = lastName
-    130 = company
-    140 = clear
+    50 = password
+    60 = passwordRepeat
 
-    150 = telephone
-    160 = mobilephone
-    170 = fax
-    190 = clear
-
-    200 = address
-    210 = zip
-    220 = city
-    230 = staticInfoCountry
-    240 = zone
-    250 = language
-    260 = clear
-
-    270 = timezone
-    280 = daylight
-    290 = clear
-
-    300 = image
-    310 = clear
-
-    320 = dateOfBirth
-    330 = clear
-
-    340 = gtc
-    350 = privacy
-    360 = clear
-
-    370 = captcha
-    380 = clear
+    70 = privacy
+    80 = clear
 
     390 = change
     400 = submit

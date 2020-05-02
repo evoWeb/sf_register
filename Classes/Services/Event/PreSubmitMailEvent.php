@@ -57,6 +57,14 @@ final class PreSubmitMailEvent
     }
 
     /**
+     * @return MailMessage
+     */
+    public function getResult(): MailMessage
+    {
+        return $this->mail;
+    }
+
+    /**
      * @return array
      */
     public function getSettings(): array

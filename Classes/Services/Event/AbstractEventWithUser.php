@@ -50,6 +50,14 @@ abstract class AbstractEventWithUser
     }
 
     /**
+     * @return FrontendUser
+     */
+    public function getResult(): FrontendUser
+    {
+        return $this->user;
+    }
+
+    /**
      * @return array
      */
     public function getSettings(): array
