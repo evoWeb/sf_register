@@ -32,11 +32,10 @@ class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\
      */
     protected $countryRepository;
 
-    public function __construct(
+    public function injectCountryRepository(
         \Evoweb\SfRegister\Domain\Repository\StaticCountryRepository $countryRepository
     ) {
         $this->countryRepository = $countryRepository;
-        parent::__construct();
     }
 
     public function initializeArguments()

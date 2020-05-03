@@ -28,11 +28,10 @@ class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\S
      */
     protected $languageRepository;
 
-    public function __construct(
+    public function injectLanguageRepository(
         \Evoweb\SfRegister\Domain\Repository\StaticLanguageRepository $languageRepository
     ) {
         $this->languageRepository = $languageRepository;
-        parent::__construct();
     }
 
     public function initializeArguments()

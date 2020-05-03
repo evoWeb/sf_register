@@ -40,13 +40,16 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
      */
     protected $propertyMapper;
 
-    public function __construct(
-        \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService,
-        \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper
+    public function injectHashService(
+        \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService
     ) {
         $this->hashService = $hashService;
+    }
+
+    public function injectPropertyMapper(
+        \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper
+    ) {
         $this->propertyMapper = $propertyMapper;
-        parent::__construct();
     }
 
     public function initializeArguments()

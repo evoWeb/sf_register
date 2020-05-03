@@ -48,7 +48,7 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
      */
     protected $escapeChildren = false;
 
-    public function __construct(
+    public function injectConfigurationManager(
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
     ) {
         $this->configurationManager = $configurationManager;
@@ -60,7 +60,6 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
         $this->frameworkConfiguration = $this->configurationManager->getConfiguration(
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
-        parent::__construct();
     }
 
     public function initializeArguments()

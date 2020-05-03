@@ -28,11 +28,10 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
      */
     protected $countryZonesRepository;
 
-    public function __construct(
+    public function injectCountryZonesRepository(
         \Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository $countryZonesRepository
     ) {
         $this->countryZonesRepository = $countryZonesRepository;
-        parent::__construct();
     }
 
     public function initializeArguments()

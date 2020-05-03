@@ -27,11 +27,10 @@ class CaptchaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFi
      */
     protected $captchaAdapterFactory;
 
-    public function __construct(
+    public function injectCaptchaAdapterFactory(
         \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory $captchaAdapterFactory
     ) {
         $this->captchaAdapterFactory = $captchaAdapterFactory;
-        parent::__construct();
     }
 
     public function initializeArguments()
