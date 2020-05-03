@@ -4,7 +4,7 @@
 		<header/>
 		<body>
 			<trans-unit id="wizard.group.sf_register">
-				<source>Registration</source>
+				<source>User registration</source>
 			</trans-unit>
 			<trans-unit id="tt_content.list_type_create">
 				<source>Registration: Create user</source>
