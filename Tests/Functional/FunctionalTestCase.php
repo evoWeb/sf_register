@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\SfRegister\Tests\Functional;
 
 /*
@@ -12,16 +13,16 @@ namespace Evoweb\SfRegister\Tests\Functional;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Tests\Functional\SiteHandling\SiteBasedTestTrait;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Site\SiteFinder;
-use Evoweb\SfRegister\Tests\Functional\SiteHandling\SiteBasedTestTrait;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Frontend\Page\PageRepository;
 
 abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
@@ -150,6 +151,7 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
         $this->frontendUser->user = $this->frontendUser->getRawUserByUid($frontEndUserUid);
         $this->frontendUser->fetchGroupData();
 
+        /** @var \TYPO3\CMS\Core\Context\UserAspect $aspect */
         $aspect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Context\UserAspect::class,
             $this->frontendUser
@@ -167,6 +169,7 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
             \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication::class
         );
 
+        /** @var \TYPO3\CMS\Core\Context\UserAspect $aspect */
         $aspect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Context\UserAspect::class,
             $this->frontendUser

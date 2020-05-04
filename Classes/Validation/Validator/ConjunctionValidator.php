@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\SfRegister\Validation\Validator;
 
 /*
@@ -77,7 +78,7 @@ class ConjunctionValidator extends ExtbaseConjunctionValidator implements Settab
                 }
             }
         } else {
-            $result = new Result;
+            $result = new Result();
         }
 
         return $result;

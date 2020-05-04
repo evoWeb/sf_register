@@ -1,28 +1,20 @@
 <?php
+
 namespace Evoweb\SfRegister\Controller;
 
-/***************************************************************
- * Copyright notice
+/*
+ * This file is developed by evoWeb.
  *
- * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
- * All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
+use Evoweb\SfRegister\Controller\Event;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * An frontend user password controller
@@ -34,15 +26,11 @@ class FeuserPasswordController extends FeuserController
      */
     protected $controller = 'password';
 
-    public function formAction()
+    public function formAction(\Evoweb\SfRegister\Domain\Model\Password $password = null)
     {
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            __FUNCTION__,
-            [
-                'settings' => $this->settings,
-            ]
-        );
+        $this->eventDispatcher->dispatch(new Event\PasswordFormEvent($password, $this->settings));
+
+        $this->view->assign('password', $password);
     }
 
     /**
@@ -55,25 +43,19 @@ class FeuserPasswordController extends FeuserController
     public function saveAction(\Evoweb\SfRegister\Domain\Model\Password $password)
     {
         if ($this->userIsLoggedIn()) {
-            /** @noinspection PhpInternalEntityUsedInspection */
             $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
 
-            $this->signalSlotDispatcher->dispatch(
-                __CLASS__,
-                __FUNCTION__,
-                [
-                    'user' => &$user,
-                    'settings' => $this->settings
-                ]
-            );
+            $this->eventDispatcher->dispatch(new Event\PasswordSaveEvent($user, $this->settings));
 
             $user->setPassword($this->encryptPassword($password->getPassword()));
 
             $this->userRepository->update($user);
 
-            $this->objectManager->get(\Evoweb\SfRegister\Services\Session::class)->remove('captchaWasValidPreviously');
+            /** @var \Evoweb\SfRegister\Services\Session $session */
+            $session = GeneralUtility::makeInstance(\Evoweb\SfRegister\Services\Session::class);
+            $session->remove('captchaWasValidPreviously');
         }
     }
 }

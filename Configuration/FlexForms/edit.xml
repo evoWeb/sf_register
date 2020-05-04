@@ -1,0 +1,39 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:form_flexform.sheet_general</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.fields.selected>
+						<TCEforms>
+							<label>LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:form_flexform.settings.fields.selected</label>
+							<config>
+								<type>select</type>
+								<renderType>selectMultipleSideBySide</renderType>
+								<multiple>1</multiple>
+								<size>10</size>
+								<autoSizeMax>50</autoSizeMax>
+								<sfRegisterForm>edit</sfRegisterForm>
+							</config>
+						</TCEforms>
+					</settings.fields.selected>
+
+					<settings.templateRootPath>
+						<TCEforms>
+							<label>LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:form_flexform.settings.viewTemplateRootPath</label>
+							<config>
+								<type>input</type>
+							</config>
+						</TCEforms>
+					</settings.templateRootPath>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

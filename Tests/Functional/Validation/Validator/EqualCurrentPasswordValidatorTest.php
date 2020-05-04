@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 
 /*
@@ -46,6 +47,7 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
     public function isUserLoggedInReturnsFalseIfNotLoggedIn()
     {
         $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
+        /** @var \TYPO3\CMS\Core\Context\Context $context */
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         $subject->injectContext($context);
 
@@ -65,6 +67,7 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
         $this->initializeTypoScriptFrontendController();
 
         $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
+        /** @var \TYPO3\CMS\Core\Context\Context $context */
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         $subject->injectContext($context);
 

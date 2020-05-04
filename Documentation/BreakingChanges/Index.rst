@@ -6,12 +6,48 @@
 Breaking Changes
 ================
 
+2020.04.29
+''''''''''
+
+The hole extension was refactored to make best usage of TYPO3 10 changes. Namely
+
+* constructor DI
+* exchange Signal/Slot dispatcher with PSR-14 events, have a look in extendability at :ref:`PSR-14 events<Psr14Event_>`
+* refactor to fully match the PSR-12 standard
+* rename TypoScript setting processInitializeActionSignal to processInitializeActionEvent
+* rename TypoScript setting redirectSignal.* to redirectEvent.*
+* reorganize TypoScript setting createDefaultSelected etc to defaultSelected.create etc
+* reorganize TypoScript notifyUser* and notifyAdmin* setup and constants to notifyUser.* and notifyAdmin.*
+* modify Mail service to have better controller and action assignment
+* replace switchableControllerActions with individual plugin per controller
+  check what elements with list_type sfregister_form are present in table tt_content
+  and replace them with their corresponding new plugin
+* change how TS names, templates, mail subject and PSR-14 event name are build based
+  on controller and action name in combination with notifyAdmin and notifyUser
+  * TS name is build notifyAdmin.{ControllerName}{ActionName} notifyAdmin.createSave
+  * Template name is build NotifyAdmin{ControllerName}{ActionName} NotifyAdminCreateSave
+  * Mail subject is build subjectNotifyAdmin{ControllerName}{ActionName} subjectNotifyAdminCreateSave
+  * Event name is build NotifyAdmin{ControllerName}{ActionName}Event NotifyAdminCreateSaveEvent
+  * PostCreateSave replaced with CreateSave
+  * PostCreateConfirm replaced with CreateConfirm
+  * PostCreateRefuse replaced with CreateRefuse
+  * PostCreateAccept replaced with CreateAccept
+  * PostCreateDecline replaced with CreateDecline
+  * PostDeleteSave replaced with DeleteSave
+  * PostDeleteConfirm replaced with DeleteConfirm
+  * PostEditSave replaced with EditSave
+  * PostEditConfirm replaced with EditConfirm
+  * PostEditAccept replaced with EditAccept
+  * SendInvitation replaced with InviteInvite
+  * PostResendMail replaced with ResendMail
+
 2019.02.03
 ''''''''''
 
 Drop custom form styles in favor for Bootstrap 4.2 styles. Be aware, to get the styles.css
 from older releases if you depend on it. If you use the Bootstrap 4.2 form styles you are
 good to go.
+
 
 
 2019.02.02

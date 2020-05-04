@@ -1,4 +1,5 @@
 <?php
+
 defined('TYPO3_MODE') || die();
 
 call_user_func(function () {
@@ -68,7 +69,7 @@ call_user_func(function () {
         'timezone' => [
             'label' => $languageFile . 'fe_users.timezone',
             'config' => [
-                'type' => 'check',
+                'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     [$languageFile . 'fe_users.timezone.I.-12', -12],
@@ -200,12 +201,12 @@ call_user_func(function () {
         ],
         'image' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.image',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'image',
                 [
                     'maxitems' => 1,
-                    'minitems'=> 0
+                    'minitems' => 0
                 ],
                 $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
             )
@@ -237,7 +238,7 @@ call_user_func(function () {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
         'fe_users',
         '--div--;LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.div.registration,
-    activated_on, gtc, privacy, by_invitation, comments, module_sys_dmail_html'
+            activated_on, gtc, privacy, by_invitation, comments, module_sys_dmail_html'
     );
 
     if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {

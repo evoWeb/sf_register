@@ -1,30 +1,20 @@
 <?php
+
 namespace Evoweb\SfRegister\Services;
 
-/***************************************************************
- * Copyright notice
+/*
+ * This file is developed by evoWeb.
  *
- * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
- * All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
 
 use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Service to handle mail sending
@@ -32,9 +22,9 @@ use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
 class Mail implements \TYPO3\CMS\Core\SingletonInterface
 {
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     * @var \Psr\EventDispatcher\EventDispatcherInterface
      */
-    protected $objectManager;
+    protected $eventDispatcher;
 
     /**
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
@@ -51,25 +41,11 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected $frameworkConfiguration = [];
 
-    /**
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     */
-    protected $signalSlotDispatcher;
-
-
-    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
-    public function injectSignalSlotDispatcher(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher)
-    {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
-    }
-
-    public function injectConfigurationManager(
+    public function __construct(
+        \Psr\EventDispatcher\EventDispatcherInterface $eventDispatcher,
         \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
     ) {
+        $this->eventDispatcher = $eventDispatcher;
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
@@ -82,136 +58,51 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
     }
 
 
-    public function sendAdminNotification(FrontendUserInterface $user, string $type): FrontendUserInterface
-    {
-        $method = __FUNCTION__ . $type;
-        if (method_exists($this, $method)) {
-            $user = $this->{$method}($user);
-        } else {
-            $this->sendEmail(
-                $user,
-                $this->getAdminRecipient(),
-                'adminEmail',
-                $this->getSubject($method, $user),
-                $this->renderBody('FeuserCreate', 'form', $method, $user, 'html'),
-                $this->renderBody('FeuserCreate', 'form', $method, $user, 'txt')
-            );
+    public function sendNotifyAdmin(
+        FrontendUserInterface $user,
+        string $controller,
+        string $action
+    ): FrontendUserInterface {
+        $method = 'NotifyAdmin' . $controller . $action;
+        $controller = 'Feuser' . $controller;
 
-            $user = $this->dispatchSlotSignal($method . 'PostSend', $user);
-        }
+        $this->sendEmail(
+            $user,
+            $this->getAdminRecipient(),
+            'adminEmail',
+            $this->getSubject($method, $user),
+            $this->renderHtmlBody($controller, 'form', $method, $user),
+            $this->renderTextBody($controller, 'form', $method, $user)
+        );
+
+        $user = $this->dispatchEvent($method, $user);
 
         return $user;
     }
 
-    public function sendUserNotification(FrontendUserInterface $user, string $type): FrontendUserInterface
-    {
-        $method = __FUNCTION__ . $type;
-        if (method_exists($this, $method)) {
-            $user = $this->{$method}($user);
-        } else {
-            $this->sendEmail(
-                $user,
-                $this->getUserRecipient($user),
-                'userEmail',
-                $this->getSubject($method, $user),
-                $this->renderBody('FeuserCreate', 'form', $method, $user, 'html'),
-                $this->renderBody('FeuserCreate', 'form', $method, $user, 'txt')
-            );
+    public function sendNotifyUser(
+        FrontendUserInterface $user,
+        string $controller,
+        string $action
+    ): FrontendUserInterface {
+        $method = 'NotifyUser' . $controller . $action;
+        $controller = 'Feuser' . $controller;
 
-            $user = $this->dispatchSlotSignal($method . 'PostSend', $user);
-        }
+        $this->sendEmail(
+            $user,
+            $this->getUserRecipient($user),
+            'userEmail',
+            $this->getSubject($method, $user),
+            $this->renderHtmlBody($controller, 'form', $method, $user),
+            $this->renderTextBody($controller, 'form', $method, $user)
+        );
+
+        $user = $this->dispatchEvent($method, $user);
 
         return $user;
     }
 
-
-    public function sendAdminNotificationPostCreateSave(FrontendUserInterface $user): FrontendUserInterface
-    {
-        $this->sendEmail(
-            $user,
-            $this->getAdminRecipient(),
-            'adminEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'html'),
-            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'txt')
-        );
-
-        return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
-    }
-
-    public function sendUserNotificationPostCreateSave(FrontendUserInterface $user): FrontendUserInterface
-    {
-        $this->sendEmail(
-            $user,
-            $this->getUserRecipient($user),
-            'userEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'html'),
-            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'txt')
-        );
-
-        return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
-    }
-
-    public function sendAdminNotificationPostCreateConfirm(FrontendUserInterface $user): FrontendUserInterface
-    {
-        $this->sendEmail(
-            $user,
-            $this->getAdminRecipient(),
-            'adminEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'html'),
-            $this->renderBody('FeuserCreate', 'form', __FUNCTION__, $user, 'txt')
-        );
-
-        return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
-    }
-
-
-    public function sendAdminNotificationPostEditSave(FrontendUserInterface $user): FrontendUserInterface
-    {
-        $this->sendEmail(
-            $user,
-            $this->getAdminRecipient(),
-            'adminEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'html'),
-            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'txt')
-        );
-
-        return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
-    }
-
-    public function sendUserNotificationPostEditSave(FrontendUserInterface $user): FrontendUserInterface
-    {
-        $this->sendEmail(
-            $user,
-            $this->getUserRecipient($user),
-            'userEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'html'),
-            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'txt')
-        );
-
-        return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
-    }
-
-    public function sendAdminNotificationPostEditConfirm(FrontendUserInterface $user): FrontendUserInterface
-    {
-        $this->sendEmail(
-            $user,
-            $this->getAdminRecipient(),
-            'adminEmail',
-            $this->getSubject(__FUNCTION__, $user),
-            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'html'),
-            $this->renderBody('FeuserEdit', 'form', __FUNCTION__, $user, 'txt')
-        );
-
-        return $this->dispatchSlotSignal(__FUNCTION__ . 'PostSend', $user);
-    }
-
-
-    public function sendInvitation(FrontendUserInterface $user, string $type): FrontendUserInterface
+    public function sendInvitation(FrontendUserInterface $user, string $type)
     {
         $method = __FUNCTION__ . $type;
 
@@ -220,11 +111,11 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             [$user->getInvitationEmail() => ''],
             'userEmail',
             $this->getSubject($method, $user),
-            $this->renderBody('FeuserCreate', 'form', $method, $user, 'html'),
-            $this->renderBody('FeuserCreate', 'form', $method, $user, 'txt')
+            $this->renderHtmlBody('FeuserCreate', 'form', $method, $user),
+            $this->renderTextBody('FeuserCreate', 'form', $method, $user)
         );
 
-        $user = $this->dispatchSlotSignal($method . 'PostSend', $user);
+        $user = $this->dispatchEvent($method, $user);
 
         return $user;
     }
@@ -232,10 +123,8 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
     protected function getSubject(string $method, FrontendUserInterface $user): string
     {
-        $labelIndex = 'subject' . str_replace('send', '', $method);
-
         return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-            $labelIndex,
+            'subject' . $method,
             'SfRegister',
             [$this->settings['sitename'], $user->getUsername()]
         );
@@ -273,7 +162,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         $settings =& $this->settings[$typeOfEmail];
 
         /** @var \TYPO3\CMS\Core\Mail\MailMessage $mail */
-        $mail = $this->objectManager->get(\TYPO3\CMS\Core\Mail\MailMessage::class);
+        $mail = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Mail\MailMessage::class);
         $mail->setTo($recipient)
             ->setFrom([$settings['fromEmail'] => $settings['fromName']])
             ->setSubject($subject);
@@ -283,57 +172,35 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         if ($bodyHtml !== '') {
-            if (method_exists($mail, 'addPart')) {
-                // @todo remove once TYPO3 9.5 support gets dropped
-                $mail->addPart($bodyHtml, 'text/html');
-            } else {
-                $mail->html($bodyHtml);
-            }
+            $mail->html($bodyHtml);
         }
         if ($bodyPlain !== '') {
-            if (method_exists($mail, 'addPart')) {
-                // @todo remove once TYPO3 9.5 support gets dropped
-                $mail->addPart($bodyPlain, 'text/plain');
-            } else {
-                $mail->text($bodyPlain);
-            }
+            $mail->text($bodyPlain);
         }
 
-        $mail = $this->dispatchSlotSignal('sendMailPreSend', $mail, $user);
+        $mail = $this->dispatchEvent('PreSubmitMail', $mail, $user);
 
         return $mail->send();
     }
 
-    protected function renderBody(
+    protected function renderHtmlBody(
         string $controller,
         string $action,
         string $method,
-        FrontendUserInterface $user,
-        string $fileExtension = 'html'
+        FrontendUserInterface $user
     ): string {
-        $variables = [
-            'user' => $user,
-            'settings' => $this->settings
-        ];
-
-        /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
-        $view = $this->objectManager->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
-        $view->setLayoutRootPaths($this->frameworkConfiguration['view']['layoutRootPaths']);
-        $view->setPartialRootPaths($this->frameworkConfiguration['view']['partialRootPaths']);
-        $view->setTemplateRootPaths($this->frameworkConfiguration['view']['templateRootPaths']);
-
-        $request = $view->getRequest();
-        $request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
-        $request->setPluginName($this->frameworkConfiguration['pluginName']);
-        $request->setControllerName($controller);
-        $request->setControllerActionName($action);
-        $request->setFormat($fileExtension);
+        $view = $this->getView($controller, $action);
+        $view->getRequest()->setFormat('html');
 
         $context = $view->getRenderingContext();
         $context->setControllerName('Email');
-        $context->setControllerAction(str_replace('send', '', $method));
+        $context->setControllerAction($method);
+
         try {
-            $view->assignMultiple($variables);
+            $view->assignMultiple([
+                'user' => $user,
+                'settings' => $this->settings
+            ]);
 
             $body = $view->render();
         } catch (\TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException $e) {
@@ -343,24 +210,65 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $body;
     }
 
+    protected function renderTextBody(
+        string $controller,
+        string $action,
+        string $method,
+        FrontendUserInterface $user
+    ): string {
+        $view = $this->getView($controller, $action);
+        $view->getRequest()->setFormat('txt');
+
+        $context = $view->getRenderingContext();
+        $context->setControllerName('Email');
+        $context->setControllerAction($method);
+
+        try {
+            $view->assignMultiple([
+                'user' => $user,
+                'settings' => $this->settings
+            ]);
+
+            $body = $view->render();
+        } catch (\TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException $e) {
+            $body = '';
+        }
+
+        return $body;
+    }
+
+    protected function getView(string $controller, string $action): \TYPO3\CMS\Fluid\View\StandaloneView
+    {
+        /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
+        $view = GeneralUtility::getContainer()->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
+        $view->setLayoutRootPaths($this->frameworkConfiguration['view']['layoutRootPaths']);
+        $view->setPartialRootPaths($this->frameworkConfiguration['view']['partialRootPaths']);
+        $view->setTemplateRootPaths($this->frameworkConfiguration['view']['templateRootPaths']);
+
+        $request = $view->getRequest();
+        $request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
+        $request->setPluginName($this->frameworkConfiguration['pluginName']);
+        $request->setControllerName($controller);
+        $request->setControllerActionName($action);
+
+        return $view;
+    }
+
     /**
-     * Dispatch signal to registered slots
+     * Dispatch event to listeners
      *
-     * @param string $signalName
+     * @param string $method
      * @param \TYPO3\CMS\Core\Mail\MailMessage|FrontendUserInterface $result
      *
      * @return \TYPO3\CMS\Core\Mail\MailMessage|FrontendUserInterface
      */
-    protected function dispatchSlotSignal($signalName, $result)
+    protected function dispatchEvent($method, $result)
     {
-        $arguments = array_merge(array_slice(func_get_args(), 2), [$this->settings, $this->objectManager]);
+        $event = 'Evoweb\\SfRegister\\Services\\Event\\' . $method . 'Event';
+        $arguments = array_slice(func_get_args(), 2);
 
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            $signalName,
-            ['result' => &$result, 'arguments' => $arguments]
-        );
-
-        return $result;
+        $eventObject = new $event($result, $this->settings, $arguments);
+        $this->eventDispatcher->dispatch($eventObject);
+        return $eventObject->getResult();
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
 
 /*
@@ -22,7 +23,7 @@ class IsTrueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     public function setUp(): void
     {
         $this->subject = $this->getMockBuilder(\Evoweb\SfRegister\Validation\Validator\IsTrueValidator::class)
-            ->setMethods(['translateErrorMessage'])
+            ->onlyMethods(['translateErrorMessage'])
             ->getMock();
     }
 

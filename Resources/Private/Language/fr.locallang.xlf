@@ -267,6 +267,10 @@
 				<source>Password</source>
 				<target>Mot de passe</target>
 			</trans-unit>
+			<trans-unit id="fe_users.oldPassword">
+				<source>Old password</source>
+				<target>Vieux mot de passe</target>
+			</trans-unit>
 			<trans-unit id="passwordRepeat">
 				<source>Password repetition</source>
 				<target>Répétition du mot de passe</target>
@@ -452,68 +456,68 @@
 				<target>Le %1$s est global pas unique</target>
 			</trans-unit>
 
-			<trans-unit id="subjectAdminNotificationPostCreateSave">
+			<trans-unit id="subjectNotifyAdminCreateSave">
 				<source>User %2$s registered on site %1$s</source>
 				<target>L'utilisateur %2$s est enregistré sur %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateConfirm">
+			<trans-unit id="subjectNotifyAdminCreateConfirm">
 				<source>User %2$s confirmed registration on site %1$s</source>
 				<target>L'utilisateur %2$s a confirmé son enregistrement sur le site %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateRefuse">
+			<trans-unit id="subjectNotifyAdminCreateRefuse">
 				<source>User %2$s refused the registration on site %1$s</source>
 				<target>L'utilisateur %2$s a refusé l'enregistrement sur le site %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateAccept">
+			<trans-unit id="subjectNotifyAdminCreateAccept">
 				<source>User %2$s was accepted on site %1$s</source>
 				<target>L'utilisateur %2$s a été accepté sur le site %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostCreateDecline">
+			<trans-unit id="subjectNotifyAdminCreateDecline">
 				<source>User %2$s was declined on site %1$s</source>
 				<target>L'utilisateur %2$s a été refusé sur le site %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostEditSave">
+			<trans-unit id="subjectNotifyAdminEditSave">
 				<source>User %2$s has edited informations on site %1$s</source>
 				<target>L'utilisateur %2$s a édité des informations sur le site %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostEditConfirm">
+			<trans-unit id="subjectNotifyAdminEditConfirm">
 				<source>User %2$s has confirmed the change of informations on site %1$s</source>
 				<target>L'utilisateur %2$s a confirmé le changement d'informations sur le site %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectAdminNotificationPostEditAccept">
+			<trans-unit id="subjectNotifyAdminEditAccept">
 				<source>User %2$s change of informations was accepted on site %1$s</source>
 				<target>Les modifications de l'utilisateur %2$s ont été acceptées sur le site %1$s</target>
 			</trans-unit>
 
-			<trans-unit id="subjectUserNotificationPostCreateSave">
+			<trans-unit id="subjectNotifyUserCreateSave">
 				<source>You registered yourself at %1$s as %2$s</source>
 				<target>Vous vous êtes enregistré sur %1$s comme %2$s</target>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateConfirm">
+			<trans-unit id="subjectNotifyUserCreateConfirm">
 				<source>Thank you for confirming your account %2$s at %1$s</source>
 				<target>Merci de confirmer votre compte %2$s sur %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateRefuse">
+			<trans-unit id="subjectNotifyUserCreateRefuse">
 				<source>Sorry your refused your registration with account %2$s on site %1$s</source>
 				<target>Désolé, nous avons refusé votre inscription de %2$s sur le site %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateAccept">
+			<trans-unit id="subjectNotifyUserCreateAccept">
 				<source>You registration with account %2$s on site %1$s was accepted</source>
 				<target>Votre enregistrement avec le compte %2$s sur le site %1$s a été accepté</target>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostCreateDecline">
+			<trans-unit id="subjectNotifyUserCreateDecline">
 				<source>You activated account %2$s at %1$s</source>
 				<target>Malheureusement votre enregistrement avec le compte %2$s sur le site %1$s a été rejeté</target>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostEditSave">
+			<trans-unit id="subjectNotifyUserEditSave">
 				<source>You %2$s changed your information on site %1$s</source>
 				<target>Vous avez modifié les informations du compte %2$s sur le site %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostEditConfirm">
+			<trans-unit id="subjectNotifyUserEditConfirm">
 				<source>Thank you %2$s for confirming the change of informations on site %1$s</source>
 				<target>Merci de confimer les modifications du compte %2$s sur la page %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectUserNotificationPostEditAccept">
+			<trans-unit id="subjectNotifyUserEditAccept">
 				<source>Your change of informations for account %2$s on site %1$s was accepted</source>
 				<target>Vos modifications pour le compte %2$s sur le site %1$s ont été acceptées</target>
 			</trans-unit>
@@ -569,60 +573,60 @@
 
 			<trans-unit id="email_admin_account_accepted">
 				<source>The user registration was accepted.</source>
-				<target></target>
+				<target>L'inscription de l'utilisateur a été acceptée.</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_confirmed">
 				<source>The user confirmed the registration</source>
-				<target></target>
+				<target>L'utilisateur a confirmé l'inscription.</target>
 			</trans-unit>
 			<trans-unit id="email_user_accept_link">
 				<source>accept user registration</source>
-				<target></target>
+				<target>accepter l'inscription de l'utilisateur</target>
 			</trans-unit>
 			<trans-unit id="email_user_decline_link">
 				<source>decline user registration</source>
-				<target></target>
+				<target>décliner l'inscription de l'utilisateur</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_declined">
 				<source>The user registration was declined.</source>
-				<target></target>
+				<target>L'inscription de l'utilisateur a été déclinée.</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_refused">
 				<source>The user registration was refused.</source>
-				<target></target>
+				<target>L'inscription de l'utilisateur a été refusé.</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_saved">
 				<source>The user registration was saved</source>
-				<target></target>
+				<target>L'inscription de l'utilisateur a été enregistré</target>
 			</trans-unit>
 
 			<trans-unit id="email_user_account_accepted">
 				<source>Your registration was accepted.</source>
-				<target></target>
+				<target>Votre inscription a été acceptée.</target>
 			</trans-unit>
 			<trans-unit id="email_user_confirm_link">
 				<source>confirm your registration</source>
-				<target></target>
+				<target>confirmez votre inscription</target>
 			</trans-unit>
 			<trans-unit id="email_user_refuse_link">
 				<source>refuse your registration</source>
-				<target></target>
+				<target>refuser votre inscription</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_confirmed">
 				<source>Your registration was confirmed.</source>
-				<target></target>
+				<target>Votre inscription a été confirmée.</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_declined">
 				<source>Your registration was declined.</source>
-				<target></target>
+				<target>Votre inscription a été refusée.</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_refused">
 				<source>Your registration was refused.</source>
-				<target></target>
+				<target>Votre inscription a été refusée.</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_saved">
 				<source>Your registration was saved.</source>
-				<target></target>
+				<target>Votre inscription a été enregistrée.</target>
 			</trans-unit>
 		</body>
 	</file>

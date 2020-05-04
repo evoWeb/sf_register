@@ -1,0 +1,43 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
+			data-namespace-typo3-fluid="true">
+
+<f:variable name="path">LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:</f:variable>
+<table class="table table-condensed table-hover news-table">
+	<colgroup>
+		<col style="width: 40%"/>
+		<col style="width: 60%"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th colspan="2">Settings of "<f:translate id="{path}tt_content.list_type_create"/>"</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th style="vertical-align: top"><f:translate id="{path}form_flexform.settings.fields.selected"/></th>
+			<td>
+				<f:if condition="{pi_flexform_transformed.settings.fields.selected}">
+					<f:then><f:for each="{pi_flexform_transformed.settings.fields.selected -> register:explode()}" as="field" iteration="iterator">
+						<f:translate id="{path}fe_users.{field}" default="{field}"/><f:if condition="!{iterator.isLast}"><br></f:if>
+					</f:for></f:then>
+					<f:else><f:translate id="{path}form_flexform.settings.fields.nonSelected"/></f:else>
+				</f:if>
+			</td>
+		</tr>
+		<f:if condition="{pi_flexform_transformed.settings.templateRootPath}">
+		<tr>
+			<th><f:translate id="{path}form_flexform.settings.viewTemplateRootPath.short"/></th>
+			<td>{pi_flexform_transformed.settings.templateRootPath}</td>
+		</tr>
+		</f:if>
+		<tr>
+			<th style="vertical-align: top"><f:translate id="{path}pages"/></th>
+			<td><f:for each="{register:records(uids: pages, table: 'pages')}" as="page" iteration="iterator">
+				<core:iconForRecord table="pages" row="{page}" /> {page.title}<f:if condition="!{iterator.isLast}"><br></f:if>
+			</f:for></td>
+		</tr>
+	</tbody>
+</table>
+
+</html>

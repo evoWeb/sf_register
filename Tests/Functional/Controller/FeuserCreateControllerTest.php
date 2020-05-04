@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\SfRegister\Tests\Functional\Controller;
 
 /*
@@ -12,7 +13,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -50,19 +51,21 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
             ]
         ];
 
-        /** @var FeuserCreateController $subject */
-        $subject = new FeuserCreateController();
+        /** @var Context $context */
+        $context = GeneralUtility::makeInstance(Context::class);
+
+        $subject = new \Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController($context);
 
         /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $subject->injectObjectManager($objectManager);
 
         /** @var \TYPO3\CMS\Extbase\Reflection\ReflectionService $reflectionService */
-        $reflectionService = $objectManager->get(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
+        $reflectionService = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
         $subject->injectReflectionService($reflectionService);
 
         /** @var \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validationResolver */
-        $validationResolver = $objectManager->get(\TYPO3\CMS\Extbase\Validation\ValidatorResolver::class);
+        $validationResolver = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Validation\ValidatorResolver::class);
         $subject->injectValidatorResolver($validationResolver);
 
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */

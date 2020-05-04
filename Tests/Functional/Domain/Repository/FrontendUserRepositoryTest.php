@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\SfRegister\Tests\Functional\Domain\Repository;
 
 /*
@@ -12,12 +13,13 @@ namespace Evoweb\SfRegister\Tests\Functional\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
     /**
-     * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
+     * @var FrontendUserRepository
      */
     protected $subject;
 
@@ -29,10 +31,8 @@ class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
         $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
 
-        /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-
-        $this->subject = $objectManager->get(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
+        /** @var FrontendUserRepository subject */
+        $this->subject = GeneralUtility::makeInstance(FrontendUserRepository::class);
     }
 
     public function tearDown(): void

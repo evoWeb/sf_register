@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 
 /*
@@ -38,7 +39,7 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
             'god, sex, password';
 
         $this->subject = $this->getAccessibleMock(
-            \Evoweb\SfRegister\Validation\Validator\BadWordValidator::Class,
+            \Evoweb\SfRegister\Validation\Validator\BadWordValidator::class,
             ['dummy']
         );
         $this->subject->_set(

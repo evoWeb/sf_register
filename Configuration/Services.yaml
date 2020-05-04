@@ -1,0 +1,26 @@
+# Configuration/Services.yaml
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Evoweb\SfRegister\:
+    resource: '../Classes/*'
+
+  Evoweb\StoreFinder\Cache\CoordinatesCache:
+    factory: ['Evoweb\StoreFinder\Cache\CoordinatesCache', 'getInstance']
+    shared: false
+    autoconfigure: false
+    autowire: false
+
+  Evoweb\SfRegister\Command\CleanupCommand:
+    tags:
+      - { name: 'console.command', command: 'sfregister:cleanup', schedulable: false }
+
+  Evoweb\SfRegister\EventListener\FeuserControllerListener:
+    tags:
+      - name: event.listener
+        identifier: 'sfregister_feusercontroller_processinitializeaction'
+        method: 'onProcessInitializeActionEvent'
+        event: Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent

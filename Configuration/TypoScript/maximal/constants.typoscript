@@ -1,4 +1,4 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Common/constants.typoscript">
+@import 'EXT:sf_register/Configuration/TypoScript/Common/constants.typoscript'
 
 
 plugin.tx_sfregister.settings {
@@ -16,26 +16,67 @@ plugin.tx_sfregister.settings {
   # cat=sf_register.settings/enable/40; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.useEncryptedFilename
   useEncryptedFilename =
 
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostCreateSave
-  notifyAdminPostCreateSave =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostCreateSave
-  notifyUserPostCreateSave =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostCreateConfirm
-  notifyAdminPostCreateConfirm =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostCreateConfirm
-  notifyUserPostCreateConfirm =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostCreateRefuse
-  notifyAdminPostCreateRefuse =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostCreateRefuse
-  notifyUserPostCreateRefuse =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostCreateAccept
-  notifyAdminPostCreateAccept =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostCreateAccept
-  notifyUserPostCreateAccept =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostCreateDecline
-  notifyAdminPostCreateDecline =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostCreateDecline
-  notifyUserPostCreateDecline =
+  notifyAdmin {
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminCreateSave
+    createSave =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminCreateConfirm
+    createConfirm =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminCreateRefuse
+    createRefuse =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminCreateAccept
+    createAccept =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminCreateDecline
+    createDecline =
+
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminDeleteSave
+    deleteSave =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminDeleteConfirm
+    deleteConfirm =
+
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminEditSave
+    editSave =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminEditConfirm
+    editConfirm =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminEditAccept
+    editAccept =
+
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminInviteInvite
+    inviteInvite =
+
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminResendMail
+    resendMail =
+  }
+
+  notifyUser {
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserCreateSave
+    createSave =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserCreateConfirm
+    createConfirm =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserCreateRefuse
+    createRefuse =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserCreateAccept
+    createAccept =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserCreateDecline
+    createDecline =
+
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserDeleteSave
+    deleteSave = 1
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserDeleteConfirm
+    deleteConfirm = 1
+
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserEditSave
+    editSave =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserEditConfirm
+    editConfirm =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserEditAccept
+    editAccept =
+
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserInviteInvite
+    inviteInvite =
+
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserResendMail
+    resendMail = 1
+  }
 
   # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.confirmEmailPostCreate
   confirmEmailPostCreate =
@@ -47,43 +88,10 @@ plugin.tx_sfregister.settings {
   # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.acceptEmailPostConfirm
   acceptEmailPostConfirm =
 
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostEditSave
-  notifyAdminPostEditSave =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostEditSave
-  notifyUserPostEditSave =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostEditConfirm
-  notifyAdminPostEditConfirm =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostEditConfirm
-  notifyUserPostEditConfirm =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostEditAccept
-  notifyAdminPostEditAccept =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostEditAccept
-  notifyUserPostEditAccept =
-
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminSendInvitation
-  notifyAdminSendInvitation =
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserSendInvitation
-  notifyUserSendInvitation =
-
   # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.confirmEmailPostEdit
   confirmEmailPostEdit =
   # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.acceptEmailPostEdit
   acceptEmailPostEdit =
-
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostDeleteSave
-  notifyAdminPostDeleteSave = 0
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostDeleteSave
-  notifyUserPostDeleteSave = 1
-
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostDeleteConfirm
-  notifyAdminPostDeleteConfirm = 0
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostDeleteConfirm
-  notifyUserPostDeleteConfirm = 0
-
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminPostResendMail
-  notifyAdminPostResendMail = 0
-  # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserPostResendMail
-  notifyUserPostResendMail = 1
 
   # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.autologinPostRegistration
   autologinPostRegistration = 0

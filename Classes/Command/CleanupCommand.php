@@ -1,8 +1,10 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
+
 namespace Evoweb\SfRegister\Command;
 
-/**
+/*
  * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
@@ -19,25 +21,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class CleanupCommand extends \Symfony\Component\Console\Command\Command
 {
-    /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
-
     /**
      * @var ResourceFactory
      */
     protected $resourceFactory;
 
-    public function __construct(string $name = null)
+    public function __construct(ResourceFactory $resourceFactory = null)
     {
-        parent::__construct($name);
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->resourceFactory = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance();
+        $this->resourceFactory = $resourceFactory;
+        parent::__construct(null);
     }
 
     /**
@@ -105,10 +100,9 @@ class CleanupCommand extends \Symfony\Component\Console\Command\Command
                     $queryBuilder->createNamedParameter(time() - (3600 * 24 * $days), \PDO::PARAM_INT)
                 )
             )
-            ->execute()
-            ->fetchAll();
+            ->execute();
 
-        return $result;
+        return $result->fetchAll();
     }
 
     protected function removeUser(array $user)
@@ -139,10 +133,9 @@ class CleanupCommand extends \Symfony\Component\Console\Command\Command
                     $queryBuilder->createNamedParameter($user['uid'], \PDO::PARAM_INT)
                 )
             )
-            ->execute()
-            ->fetchAll();
+            ->execute();
 
-        return $result;
+        return $result->fetchAll();
     }
 
     protected function removeReference(array $user)
@@ -166,8 +159,10 @@ class CleanupCommand extends \Symfony\Component\Console\Command\Command
 
     protected function getQueryBuilderForTable(string $table): \TYPO3\CMS\Core\Database\Query\QueryBuilder
     {
-        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+        /** @var \TYPO3\CMS\Core\Database\ConnectionPool $pool */
+        $pool = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Database\ConnectionPool::class
-        )->getQueryBuilderForTable($table);
+        );
+        return $pool->getQueryBuilderForTable($table);
     }
 }

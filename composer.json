@@ -7,6 +7,7 @@
 	"license": "GPL-2.0-or-later",
 
 	"support": {
+		"docs": "https://docs.typo3.org/p/evoweb/sf-register/master/en-us/",
 		"issues": "https://github.com/evoWeb/sf_register/issues"
 	},
 
@@ -16,14 +17,17 @@
 		"Frontend",
 		"Edit user data",
 		"Double-optin",
-		"Delete account"
+		"Delete account",
+		"Resend optin mail"
 	],
 
 	"require": {
-		"typo3/cms-core": "^9.5 || ^10.1"
+		"typo3/cms-core": "^10.4",
+		"typo3/cms-extbase": "^10.4",
+		"typo3/cms-fluid": "^10.4"
 	},
 	"suggest": {
-		"evoweb/recaptcha": "^9.0"
+		"evoweb/recaptcha": "^10.0"
 	},
 
 	"autoload": {
@@ -38,8 +42,7 @@
 	},
 
 	"config": {
-		"vendor-dir": ".Build/vendor",
-		"bin-dir": ".Build/bin"
+		"vendor-dir": ".Build/Web/vendor"
 	},
 	"extra": {
 		"typo3/cms": {

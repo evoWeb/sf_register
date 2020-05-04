@@ -1,0 +1,22 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
+	data-namespace-typo3-fluid="true">
+
+<f:layout name="Email" />
+
+<f:section name="Main">
+	<f:format.raw><f:translate key="email_user_salutation"/></f:format.raw>,
+
+	<f:format.raw><f:translate key="email_user_account_saved" arguments="{0: user.username}"/></f:format.raw>
+
+	<f:if condition="{settings.confirmEmailPostCreate}">
+		<register:link.action pageUid="{settings.createPid}" arguments="{user: user.uid}" action="confirm" controller="FeuserCreate" absolute="true">
+			<f:translate key="email_user_confirm_link"/>
+		</register:link.action>
+		<register:link.action pageUid="{settings.createPid}" arguments="{user: user.uid}" action="refuse" controller="FeuserCreate" absolute="true">
+			<f:translate key="email_user_refuse_link"/>
+		</register:link.action>
+	</f:if>
+</f:section>
+
+</html>

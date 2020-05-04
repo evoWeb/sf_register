@@ -1,9 +1,17 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Common/constants.typoscript">
+@import 'EXT:sf_register/Configuration/TypoScript/Common/constants.typoscript'
 
 
 plugin.tx_sfregister.settings {
   # cat=sf_register.settings//50; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.badWordList
   badWordList = god, sex, password
+
+  confirmEmailPostCreate =
+  acceptEmailPostCreate =
+  confirmEmailPostAccept =
+  acceptEmailPostConfirm =
+
+  confirmEmailPostEdit =
+  acceptEmailPostEdit =
 
   # cat=sf_register.settings//50; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.redirectPostActivationPageId
   redirectPostActivationPageId =

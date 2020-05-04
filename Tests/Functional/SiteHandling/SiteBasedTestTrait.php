@@ -1,5 +1,7 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
+
 namespace Evoweb\SfRegister\Tests\Functional\SiteHandling;
 
 /*
@@ -16,7 +18,6 @@ namespace Evoweb\SfRegister\Tests\Functional\SiteHandling;
  */
 
 use TYPO3\CMS\Core\Configuration\SiteConfiguration;
-use TYPO3\CMS\Core\Tests\Functional\Fixtures\Frontend\PhpError;
 
 /**
  * Trait used for test classes that want to set up (= write) site configuration files.
@@ -175,7 +176,7 @@ trait SiteBasedTestTrait
             ];
         } elseif ($handler === 'PHP') {
             $baseConfiguration = [
-                'errorPhpClassFQCN' => PhpError::class,
+                'errorPhpClassFQCN' => \TYPO3\CMS\Core\Tests\Functional\Fixtures\Frontend\PhpError::class,
             ];
         } else {
             throw new \LogicException(

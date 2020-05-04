@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\SfRegister\Tests\Functional\Controller;
 
 /*
@@ -14,6 +15,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
 
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
@@ -37,9 +39,10 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $this->createEmptyFrontendUser();
         $this->initializeTypoScriptFrontendController();
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController();
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-        $subject->injectContext($context);
+        /** @var Context $context */
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
+
+        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController($context);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         $this->assertFalse($method->invoke($subject));
@@ -56,9 +59,10 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         ]);
         $this->initializeTypoScriptFrontendController();
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController();
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-        $subject->injectContext($context);
+        /** @var Context $context */
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
+
+        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController($context);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         $this->assertTrue($method->invoke($subject));
@@ -82,38 +86,43 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $this->initializeTypoScriptFrontendController();
         $GLOBALS['TSFE'] = $this->typoScriptFrontendController;
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController();
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-        $subject->injectContext($context);
-
-        $property = $this->getPrivateProperty($subject, 'settings');
-        $property->setValue($subject, ['encryptPassword' => '']);
+        /** @var Context $context */
+        $context = GeneralUtility::makeInstance(Context::class);
 
         // we need to clone the create object, else the isClone parameter is not set and both object wont match
         $userMock = clone(new \Evoweb\SfRegister\Domain\Model\FrontendUser());
         $userMock->setPassword($expected);
 
+        /** @var FrontendUserRepository|MockObject $userRepositoryMock */
+        $userRepositoryMock = $this->getMockBuilder(FrontendUserRepository::class)
+            ->onlyMethods(['findByUid', 'update'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $userRepositoryMock->expects($this->once())
+            ->method('findByUid')
+            ->with($this->equalTo($userId))
+            ->willReturn($userMock);
+        $userRepositoryMock->expects($this->once())
+            ->method('update')
+            ->with($this->equalTo($userMock));
+
+        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController(
+            $context,
+            null,
+            $userRepositoryMock,
+            null
+        );
+
         /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $subject->injectObjectManager($objectManager);
 
-        /** @var FrontendUserRepository|MockObject $repositoryMock */
-        $repositoryMock = $this->getMockBuilder(FrontendUserRepository::class)
-            ->setMethods(['findByUid', 'update'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $repositoryMock->expects($this->once())
-            ->method('findByUid')
-            ->with($this->equalTo($userId))
-            ->willReturn($userMock);
-        $repositoryMock->expects($this->once())
-            ->method('update')
-            ->with($this->equalTo($userMock));
-        $subject->injectUserRepository($repositoryMock);
+        $property = $this->getPrivateProperty($subject, 'settings');
+        $property->setValue($subject, ['encryptPassword' => '']);
 
-        /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
-        $signalSlotDispatcher = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
-        $subject->injectSignalSlotDispatcher($signalSlotDispatcher);
+        /** @var \TYPO3\CMS\Core\EventDispatcher\EventDispatcher $eventDispatcher */
+        $eventDispatcher = GeneralUtility::makeInstance(\TYPO3\CMS\Core\EventDispatcher\EventDispatcher::class);
+        $subject->injectEventDispatcher($eventDispatcher);
 
         /** @var \Evoweb\SfRegister\Domain\Model\Password $passwordMock */
         $passwordMock = GeneralUtility::makeInstance(\Evoweb\SfRegister\Domain\Model\Password::class);

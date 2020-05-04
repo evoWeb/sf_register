@@ -3,11 +3,44 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2018-06-26T07:34:54Z" product-name="sf_register">
 		<header/>
 		<body>
-			<trans-unit id="tt_content.list_type_form">
-				<source>Feuser Register</source>
+			<trans-unit id="wizard.group.sf_register">
+				<source>User registration</source>
 			</trans-unit>
-			<trans-unit id="tt_content.list_type_form_description">
-				<source>Registration for create, edit or delete Frontend Users</source>
+			<trans-unit id="tt_content.list_type_create">
+				<source>Registration: Create user</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_create_description">
+				<source>Registration: Create user with confirmation and acceptance</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_edit">
+				<source>Registration: Edit user</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_edit_description">
+				<source>Registration: Edit user with confirmation and acceptance</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_delete">
+				<source>Registration: Delete user</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_delete_description">
+				<source>Registration: Delete user with confirmation</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_password">
+				<source>Registration: Change password</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_password_description">
+				<source>Registration: Change password</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_invite">
+				<source>Registration: Invite user</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_invite_description">
+				<source>Registration: Invite user</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_resend">
+				<source>Registration: Resent confirmation</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_resend_description">
+				<source>Registration: Resent confirmation</source>
 			</trans-unit>
 
 			<trans-unit id="felogin_redirectPid">
@@ -19,6 +52,9 @@
 			</trans-unit>
 			<trans-unit id="fe_users.password">
 				<source>Password</source>
+			</trans-unit>
+			<trans-unit id="fe_users.oldPassword">
+				<source>Old password</source>
 			</trans-unit>
 			<trans-unit id="fe_users.passwordRepeat">
 				<source>Password repeat</source>
@@ -323,16 +359,19 @@
 				<source>Resend notification mail</source>
 			</trans-unit>
 			<trans-unit id="form_flexform.settings.fields.selected">
-				<source>Select fields to use in form</source>
+				<source>Selected fields</source>
 			</trans-unit>
-			<trans-unit id="form_flexform.settings.fields.configuredByTypoScript">
-				<source>Fields configured by TypoScript</source>
+			<trans-unit id="form_flexform.settings.fields.nonSelected">
+				<source>No fields selected. Please edit element and save with selected fields.</source>
 			</trans-unit>
 			<trans-unit id="form_flexform.settings.viewTemplateRootPath">
 				<source>Template root path (EXT:sf_register/Resources/Private/Templates)</source>
 			</trans-unit>
 			<trans-unit id="form_flexform.settings.viewTemplateRootPath.short">
 				<source>Template root path</source>
+			</trans-unit>
+			<trans-unit id="pages">
+				<source>Record Storage Page</source>
 			</trans-unit>
 		</body>
 	</file>

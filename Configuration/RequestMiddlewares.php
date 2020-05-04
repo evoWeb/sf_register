@@ -1,4 +1,5 @@
 <?php
+
 return [
     'frontend' => [
         'sf-register-ajax' => [

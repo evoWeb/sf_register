@@ -1,19 +1,19 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<f:layout name="Default" />
+<f:layout name="LoggedOut"/>
 
 <f:section name="Main">
 	<f:form action="preview" name="user" id="sfrForm" class="px-3" object="{user}" enctype="multipart/form-data">
-		<f:render partial="FormErrors" arguments="{for: 'user'}" />
-		<f:render partial="FieldError" arguments="{field: 'uid'}" />
+		<f:render partial="FormErrors" arguments="{for: 'user'}"/>
+		<f:render partial="FieldError" arguments="{field: 'uid'}"/>
 
 		<div class="form-row">
-		<f:for each="{settings.fields.selected}" as="selectedField" iteration="iteration">
-			<f:alias map="{options: '{settings.fields.configuration.{selectedField}}'}">
-				<f:render partial="Form/{options.partial}"
-					arguments="{user: user, fieldName: selectedField, options: options, settings: settings, iteration: iteration}"/>
-			</f:alias>
-		</f:for>
+			<f:for each="{settings.fields.selected}" as="fieldName" iteration="iteration">
+				<f:alias map="{options: '{settings.fields.configuration.{fieldName}}'}">
+					<f:render partial="Form/{options.partial}"
+										arguments="{user: user, fieldName: fieldName, options: options, settings: settings, iteration: iteration}"/>
+				</f:alias>
+			</f:for>
 		</div>
 	</f:form>
 

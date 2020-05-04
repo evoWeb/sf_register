@@ -33,18 +33,18 @@ be selected in the plugin too.
 **ext_localconf.php**::
 
    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
-   '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields.typoscript">'
+   '@import 'EXT:sf_register/Configuration/TypoScript/Fields.typoscript\''
    );
 
 
 **TypoScript Setup**::
 
-   <INCLUDE_TYPOSCRIPT: source="FILE:EXT:sf_register/Configuration/TypoScript/Fields.typoscript">
+   @import 'FILE:EXT:sf_register/Configuration/TypoScript/Fields.typoscript'
 
 
 By using the same fields file both in typoscript as well as in user ts config. No additional configuration is needed.
 
-In your partials there are the following informations available
+In your partials there are the following information available
 
 * {user} the user object with previous entered values
 * {fieldName} the name of the field in the user object
@@ -131,135 +131,106 @@ following taken from recaptcha_:
    }
 
 
-.. _SignalSlotDispatcher:
+.. _Psr14Event:
 
-Hooks / Signal-Slot-Dispatcher
-------------------------------
+PSR-14 Events
+-------------
 
-Because of signal-slot-dispatcher are the new hotness all hooks got replaced with
-the call of this dispatcher. Well its not really this simple, but as signal-slot-dispatcher
-are the extbase way of giving the opportunity to have some custom methods called
-at a certain process, this will be the way to go in the future. Beside of obeying
-this paradigm there are a lot more dispatcher call spread across the different
-tasks.
+This kind of event is superseding Hooks and Signal-Slots in TYPO3 and are the
+way to go. That's why all signals are replaced with their event counterparts.
 
 
 How to implement a slot
 -----------------------
 
-As the different tasks emits signals there could be slots that fulfill them. To
-have your own slots please understand how slots_ work.
-After you read that introduction, here is a short example:
+An overview_ on how to configure and interact with events was given on the
+Developer Days in 2019. The detailed example shows how to configure them in the
+Services.yaml:
 
-.. _slots: http://blog.foertel.com/2011/10/using-signalslots-in-extbase/
+**Services.yaml**::
 
-**ext_localconf.php**::
-
-	/** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
-	$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class)
-		->get(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
-	$signalSlotDispatcher->connect(
-		\Evoweb\SfRegister\Controller\FeuserCreateController::class,
-		'formAction',
-		'ExampleClassName',
-		'ExampleMethodName',
-		TRUE
-	);
+  Evoweb\SfRegister\EventListener\FeuserControllerListener:
+    tags:
+      - name: event.listener
+        identifier: 'sfregister_feusercontroller_processinitializeaction'
+        method: 'onProcessInitializeActionEvent'
+        event: Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent
 
 
-The code above show how to get an instance of the signal slot dispatcher and
-then connect a slot for form action in the frontend user create controller to
-your own slot with ExampleClassName and ExampleMethodName.
-Its possible to have a optional fifth parameter that hands the information
-about the calling signal to the slot. This would be useful if you want to
-handle multiple signals with only one defined slot. Although this is possible
-it's also highly discourage, because the scope is lost to easily.
+The code above shows how to get an event listener is registered to an event.
 
-Available signals
------------------
 
-All classnames need to be fully qualified. So please prefix all controllers
-with Evoweb\\SfRegister\\Controller\\ and all services with
-Evoweb\\SfRegister\\Services\\
+Available events
+----------------
 
-.. container:: ts-properties
-
-  ===================================================== ============================================================ =================================
-  Class                                                 Method                                                       Parameter
-  ===================================================== ============================================================ =================================
-  FeuserCreateController                                formAction                                                   user, settings
-  FeuserCreateController                                previewAction                                                user, settings
-  FeuserCreateController                                saveAction                                                   user, settings
-  FeuserCreateController                                confirmAction                                                user, settings
-  FeuserCreateController                                refuseAction                                                 user, settings
-  FeuserCreateController                                acceptAction                                                 user, settings
-  FeuserCreateController                                declineAction                                                user, settings
-  ===================================================== ============================================================ =================================
-
-.. container:: ts-properties
-
-  ===================================================== ============================================================ =================================
-  Class                                                 Method                                                       Parameter
-  ===================================================== ============================================================ =================================
-  FeuserEditController                                  formAction                                                   user, settings
-  FeuserEditController                                  previewAction                                                user, settings
-  FeuserEditController                                  saveAction                                                   user, settings
-  FeuserEditController                                  confirmAction                                                user, settings
-  FeuserEditController                                  acceptAction                                                 user, settings
-  ===================================================== ============================================================ =================================
-
-.. container:: ts-properties
-
-  ===================================================== ============================================================ =================================
-  Class                                                 Method                                                       Parameter
-  ===================================================== ============================================================ =================================
-  FeuserPasswordController                              formAction                                                   settings
-  FeuserPasswordController                              saveAction                                                   settings
-  ===================================================== ============================================================ =================================
-
-.. container:: ts-properties
-
-  +----------------------------------------------------+------------------------------------------------------------+----------------------------------+
-  | Class                                              | Method                                                     | Parameter                        |
-  +====================================================+============================================================+==================================+
-  | Services\Login                                     | initFEuser                                                 | frontend                         |
-  +----------------------------------------------------+------------------------------------------------------------+----------------------------------+
-  | Services\Mail                                      | sendAdminNotificationPostCreateSavePostSend                | result, arguments[mail, user,    |
-  |                                                    +------------------------------------------------------------+ settings, objectManager]         |
-  |                                                    | sendUserNotificationPostCreateSavePostSend                 |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendAdminNotificationPostCreateConfirmPostSend             |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendUserNotificationPostCreateConfirmPostSend              |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendAdminNotificationPostCreateRefusePostSend              |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendUserNotificationPostCreateRefusePostSend               |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendAdminNotificationPostCreateAcceptPostSend              |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendUserNotificationPostCreateAcceptPostSend               |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendAdminNotificationPostCreateDeclinePostSend             |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendUserNotificationPostCreateDeclinePostSend              |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendAdminNotificationPostEditSavePostSend                  |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendUserNotificationPostEditSavePostSend                   |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendAdminNotificationPostEditConfirmPostSend               |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendUserNotificationPostEditConfirmPostSend                |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendAdminNotificationPostEditAcceptPostSend                |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendUserNotificationPostEditAcceptPostSend                 |                                  |
-  |                                                    +------------------------------------------------------------+                                  |
-  |                                                    | sendMailPreSend                                            |                                  |
-  +----------------------------------------------------+------------------------------------------------------------+----------------------------------+
++-----------------------------------------------------------------------+----------------------------------------------------------------------+
+| Event                                                                 | Parameter                                                            |
++=======================================================================+======================================================================+
+| :php:`Evoweb\SfRegister\Controller\Event\InitializeActionEvent`       | :php:`FeuserController`, `array`                                     |
++-----------------------------------------------------------------------+----------------------------------------------------------------------+
+| FeuserCreateController                                                |                                                                      |
+| :php:`Evoweb\SfRegister\Controller\Event\CreateFormEvent`             | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\CreatePreviewEvent`          | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\CreateSaveEvent`             | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\CreateConfirmEvent`          | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\CreateRefuseEvent`           | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\CreateAcceptEvent`           | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\CreateDeclineEvent`          | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
++-----------------------------------------------------------------------+----------------------------------------------------------------------+
+| FeuserDeleteController                                                |                                                                      |
+| :php:`Evoweb\SfRegister\Controller\Event\DeleteFormEvent`             | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\DeleteSaveEvent`             | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\DeleteConfirmEvent`          | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
++-----------------------------------------------------------------------+----------------------------------------------------------------------+
+| FeuserEditController                                                  |                                                                      |
+| :php:`Evoweb\SfRegister\Controller\Event\EditFormEvent`               | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\EditPreviewEvent`            | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\EditSaveEvent`               | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\EditConfirmEvent`            | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\EditAcceptEvent`             | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
++-----------------------------------------------------------------------+----------------------------------------------------------------------+
+| FeuserInviteController                                                |                                                                      |
+| :php:`Evoweb\SfRegister\Controller\Event\InviteFormEvent`             | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
+| :php:`Evoweb\SfRegister\Controller\Event\InviteInviteEvent`           | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `bool`  |
++-----------------------------------------------------------------------+----------------------------------------------------------------------+
+| FeuserPasswordController                                              |                                                                      |
+| :php:`Evoweb\SfRegister\Controller\Event\PasswordFormEvent`           | :php:`array`                                                         |
+| :php:`Evoweb\SfRegister\Controller\Event\PasswordSaveEvent`           | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`          |
++-----------------------------------------------------------------------+----------------------------------------------------------------------+
+| FeuserResendController                                                |                                                                      |
+| :php:`Evoweb\SfRegister\Controller\Event\ResendFormEvent`             | :php:`Evoweb\SfRegister\Domain\Model\Email`, `array`                 |
+| :php:`Evoweb\SfRegister\Controller\Event\ResendMailEvent`             | :php:`Evoweb\SfRegister\Domain\Model\Email`, `array`                 |
++-----------------------------------------------------------------------+----------------------------------------------------------------------+
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminCreateAcceptEvent`  | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminCreateConfirmEvent` | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminCreateDeclineEvent` | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminCreateRefuseEvent`  | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminCreateSaveEvent`    | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminDeleteConfirmEvent` | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminDeleteSaveEvent`    | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminEditAcceptEvent`    | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminEditConfirmEvent`   | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminEditSaveEvent`      | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminInviteInviteEvent`  | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyAdminResendMailEvent`    | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserCreateAcceptEvent`   | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserCreateConfirmEvent`  | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserCreateDeclineEvent`  | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserCreateRefuseEvent`   | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserCreateSaveEvent`     | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserDeleteConfirmEvent`  | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserDeleteSaveEvent`     | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserEditAcceptEvent`     | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserEditConfirmEvent`    | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserEditSaveEvent`       | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserInviteInviteEvent`   | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\NotifyUserResendMailEvent`     | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\InvitationToRegisterEvent`     | :php:`Evoweb\SfRegister\Domain\Model\FrontendUser`, `array`, `array` |
+| :php:`Evoweb\SfRegister\Services\Event\PreSubmitMailEvent`            | :php:`TYPO3\CMS\Core\Mail\MailMessage`, `array`, `array`             |
++-----------------------------------------------------------------------+----------------------------------------------------------------------+
 
 
 .. _extender: https://github.com/evoWeb/extender
 .. _recaptcha: https://github.com/evoWeb/recaptcha
 .. _example: https://github.com/evoWeb/ew_sfregister_extended
+.. _overview: https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/ApiOverview/Hooks/EventDispatcher/Index.html

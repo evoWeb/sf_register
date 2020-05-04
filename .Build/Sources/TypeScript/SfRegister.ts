@@ -215,7 +215,7 @@ export default class SfRegister {
   submitForm() {
     let form = document.getElementById('sfrForm');
     if (form) {
-      (form as HTMLFormElement).reset();
+      (form as HTMLFormElement).submit();
     }
   };
 }
