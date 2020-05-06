@@ -1,78 +1,97 @@
 'use strict';
 
-import gulp from 'gulp';
-import log from 'gulplog';
+// Common
+import {src, dest, series} from 'gulp';
 
+// JS
 import browserify from 'browserify';
-import buffer from 'vinyl-buffer';
-import rename from 'gulp-rename';
 import source from 'vinyl-source-stream';
-import sourcemaps from 'gulp-sourcemaps';
+import buffer from 'vinyl-buffer';
 import tsify from 'tsify';
-import uglify from 'gulp-uglify';
+import terser from 'gulp-terser';
+import rename from 'gulp-rename';
 
+// CSS
+import sourcemaps from 'gulp-sourcemaps';
+import sass from 'gulp-sass';
+import cssnano from 'gulp-cssnano';
 import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
-import sass from 'gulp-sass';
 
 const paths = {
-	src: './Sources',
-	dest: '../Resources/Public'
+  src: './Sources',
+  dest: '../Resources/Public'
 };
 
 const tasks = {
-	typescript: {
-		src: `${paths.src}/TypeScript/sf_register.ts`,
-		dest: `${paths.dest}/JavaScript/`
-	},
-	scss: {
-		src: `${paths.src}/Scss/*.scss`,
-		dest: `${paths.dest}/Stylesheets/`
-	}
+  typescript: {
+    src: `${paths.src}/TypeScript/sf_register.ts`,
+    dest: `${paths.dest}/JavaScript/`
+  },
+  scss: {
+    src: `${paths.src}/Scss/*.scss`,
+    dest: `${paths.dest}/Stylesheets/`
+  },
+  cssnano: {
+    src: [
+      `${paths.dest}/Stylesheets/*.css`,
+      `!${paths.dest}/Stylesheets/*.min.css`
+    ],
+    rename: {extname: '.min.css'},
+    dest: `${paths.dest}/Stylesheets/`
+  },
 };
 
 let typescriptTask = () => {
-	let b = browserify({
-		entries: [tasks.typescript.src],
-		debug: true
-	});
+  let b = browserify({
+    entries: [tasks.typescript.src],
+    debug: true
+  });
 
-	return b
-		.plugin(tsify)
-		.bundle()
-		.pipe(source('sf_register.js'))
-		.pipe(buffer())
-		.pipe(sourcemaps.init({loadMaps: true}))
-		// This will output the non-minified version
-		.pipe(gulp.dest(tasks.typescript.dest))
-		// Add transformation tasks to the pipeline here.
-		.pipe(uglify())
-		.on('error', log.error)
-		.pipe(rename({ extname: '.min.js' }))
-		.pipe(sourcemaps.write('./', {
-			mapFile: function(mapFilePath) {
-				// source map files are named *.map instead of *.js.map
-				return mapFilePath.replace('.min.js.map', '.js.map');
-			}
-		}))
-		.pipe(gulp.dest(tasks.typescript.dest));
+  return b
+    .plugin(tsify)
+    .bundle()
+    .pipe(source('sf_register.js'))
+    .pipe(buffer())
+
+    // This will output the non-minified version
+    .pipe(dest(tasks.typescript.dest))
+
+    .pipe(sourcemaps.init({loadMaps: true}))
+    // Add transformation tasks to the pipeline here.
+    .pipe(terser())
+    .on('error', console.log)
+    .pipe(rename({extname: '.min.js'}))
+    .pipe(sourcemaps.write('./', {
+      mapFile: function (mapFilePath) {
+        // source map files are named *.map instead of *.js.map
+        return mapFilePath.replace('.min.js.map', '.js.map');
+      }
+    }))
+
+    .pipe(dest(tasks.typescript.dest));
 };
 
 let stylesTask = () => {
-	return gulp.src(tasks.scss.src)
-		.pipe(sourcemaps.init())
-		.pipe(
-			sass({
-				includePaths: require('node-normalize-scss').includePaths
-			}).on('error', log.error)
-		)
-		.pipe(postcss([autoprefixer()]))
-		.pipe(sourcemaps.write('./'))
-		.pipe(gulp.dest(tasks.scss.dest));
+  return src(tasks.scss.src)
+
+    .pipe(sourcemaps.init())
+    .pipe(sass().on('error', console.log))
+    .pipe(postcss([autoprefixer()]))
+    .pipe(sourcemaps.write('./'))
+
+    .pipe(dest(tasks.scss.dest));
+};
+
+let cssnanoTask = () => {
+  return src(tasks.cssnano.src)
+    .pipe(cssnano())
+    .pipe(rename(tasks.cssnano.rename))
+    .pipe(dest(tasks.cssnano.dest));
 };
 
 exports.typescript = typescriptTask;
 
-exports.scss = stylesTask;
+exports.scss = series(stylesTask, cssnanoTask);
 
-exports.build = gulp.series(typescriptTask, stylesTask);
+exports.build = series(typescriptTask, stylesTask, cssnanoTask);
