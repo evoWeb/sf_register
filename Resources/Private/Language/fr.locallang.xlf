@@ -296,11 +296,11 @@
 				<target>Date de naissance</target>
 			</trans-unit>
 			<trans-unit id="image">
-				<source>Profilimage</source>
+				<source>Profile Image</source>
 				<target>Image de profil</target>
 			</trans-unit>
 			<trans-unit id="image_none">
-				<source>Profilimage not uploaded</source>
+				<source>Profile Image not uploaded</source>
 				<target>Image de profil pas chargée</target>
 			</trans-unit>
 			<trans-unit id="edit_saved">
