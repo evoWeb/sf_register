@@ -296,11 +296,11 @@
 				<target>Geboortedatum</target>
 			</trans-unit>
 			<trans-unit id="image">
-				<source>Profilimage</source>
+				<source>Profile Image</source>
 				<target>Profiel afbeelding</target>
 			</trans-unit>
 			<trans-unit id="image_none">
-				<source>Profilimage not uploaded</source>
+				<source>Profile Image not uploaded</source>
 				<target>Profiel afbeelding niet geupload</target>
 			</trans-unit>
 			<trans-unit id="edit_saved">
