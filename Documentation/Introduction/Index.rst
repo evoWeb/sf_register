@@ -16,28 +16,29 @@ What does it do?
 Registration with admin review and all notifications:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The new user registers hinself with his data. He gets support by
-password strength indicator and required fields validation.
-Emailaddress and password are inserted twice to prevend misspelling.
-After send the user can review his data on a review site to change
-something. If he consists, all data are stored in the database with a
-temporary usergroup. Uploaded pictures are stored in a temporary
-folder until activation. Cleanup is simlified by this.
+When a new user fills in the registration form they will see the
+strength of their password, along with additional email address
+and password fields to ensure they are filled in correctly.
 
-After storage of data the user gets an email with a link in it to
-verify his emailaddress. This is the double opt in subscription.
+Upon submitting the form, the user will have their data presented
+to them for review, just in case they want to change something.
+If the user submits again, the data is then stored in the database
+with a temporary usergroup. Any uploaded pictures are stored in a
+temporary folder until the user is activated.
 
-In the same time the admin gets an email with the notification of user
-registration.
+The user is then sent an email with a link to verify their email address.
+The website administrator also receives an email to notify them that
+a new user has registered.
 
-After the user has verified hin emailaddress, the admin gets another
-mail with an activation link. If he decides to accept the new user, he
-uses this link and the stored data will be updated with the regular
-usergroup for users. After this the user is able to log into his
-account and see all the pages and contents his usergroup allowes him
-to see. To make sure the user notices his acception, there will be one
-last email to the user, telling him he may enter.
+Once the user has verified their email address, the admin will be sent
+another notification, but this time containing an activation link.
+If the admin decides to accept the new user, they can click the link
+which will then update the database and set a regular usergroup for
+that user's account. One final email notification is sent to the user
+to inform them that their account is now active.
 
+The new user will be able to log in and see all the pages and content
+that their usergroup permits!
 
 Features:
 ~~~~~~~~~~~~~~
