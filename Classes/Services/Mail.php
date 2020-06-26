@@ -190,7 +190,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         FrontendUserInterface $user
     ): string {
         $view = $this->getView($controller, $action);
-        $view->getRequest()->setFormat('html');
+        $view->setFormat('html');
 
         $context = $view->getRenderingContext();
         $context->setControllerName('Email');
@@ -217,7 +217,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         FrontendUserInterface $user
     ): string {
         $view = $this->getView($controller, $action);
-        $view->getRequest()->setFormat('txt');
+        $view->setFormat('txt');
 
         $context = $view->getRenderingContext();
         $context->setControllerName('Email');
