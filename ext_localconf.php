@@ -29,7 +29,7 @@ call_user_func(function () {
         $createController = 'FeuserCreate';
         $editController = 'FeuserEdit';
         $passwordController = 'FeuserPassword';
-        $inviteController = 'FeuserPassword';
+        $inviteController = 'FeuserInvite';
         $deleteController = 'FeuserDelete';
         $resendController = 'FeuserResend';
     } else {
