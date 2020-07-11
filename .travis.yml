@@ -10,7 +10,7 @@ addons:
 branches:
   only:
     - master
-    - develop
+    - 9.4.x
     - /^[0-9]+\.[0-9]+\.[0-9]+$/
 
 cache:
