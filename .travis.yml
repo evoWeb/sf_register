@@ -21,17 +21,20 @@ notifications:
   email:
     - typo3@evoweb.de
 
+# This is executed for all stages
 before_install:
-  - composer require phwoolcon/ci-pecl-cacher -n
+  - if php -i | grep -v TRAVIS_CMD | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
+  #- composer require phwoolcon/ci-pecl-cacher -n
+  #- rm composer.lock
   # Cache till new version
-  - .Build/bin/ci-pecl-install swoole
+  #- .Build/bin/ci-pecl-install swoole
 
 install:
-  - >
-    export TYPO3_PATH_WEB=$PWD/.Build/Web;
+  - export TYPO3_PATH_WEB=$PWD/.Build/Web;
+  - |
     composer require typo3/cms-core="$TYPO3_VERSION" $PREFER_LOWEST;
     if [ ! -z "$TESTING_FRAMEWORK" ]; then composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"; fi;
-    git checkout composer.json;
+  - git checkout composer.json;
 
 before_script:
   - phpenv config-rm xdebug.ini
@@ -39,18 +42,14 @@ before_script:
 script:
   - >
     echo "Running ${TYPO3_VERSION} unit tests";
-    php .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/${UNIT_TESTING_FOLDER}/;
-    echo "Running functional tests";
+    php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/${UNIT_TESTING_FOLDER}/;
+    echo "Running ${TYPO3_VERSION} functional tests";
     export typo3DatabaseDriver="pdo_sqlite";
-    php .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/${FUNCTIONAL_TESTING_FOLDER}/;
-
-matrix:
-  fast_finish: true
+    php .Build/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/${FUNCTIONAL_TESTING_FOLDER}/;
 
 jobs:
   allow_failures:
-    - env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11"
+    - env: TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11"
 
   include:
     - stage: test
@@ -78,38 +77,32 @@ jobs:
 
     - stage: test
       php: 7.3
-      env:
-        - TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
+      env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
     - stage: test
       php: 7.2
-      env:
-        - TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
+      env: TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" UNIT_TESTING_FOLDER="Unit9" FUNCTIONAL_TESTING_FOLDER="Functional9"
     - stage: test
       php: 7.3
-      env:
-        - TYPO3_VERSION="^10.1.0" TESTING_FRAMEWORK="~5.0.16" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+      env: TYPO3_VERSION="^10.1.0" TESTING_FRAMEWORK="~5.0.16" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
     - stage: test
       php: 7.2
-      env:
-        - TYPO3_VERSION="^10.1.0" TESTING_FRAMEWORK="~5.0.16" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+      env: TYPO3_VERSION="^10.1.0" TESTING_FRAMEWORK="~5.0.16" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
     - stage: test
       php: 7.2
-      env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
+      env: TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
 
     - stage: publish in ter
       if: tag IS present
-      php: 7.1
+      php: 7.2
       before_install: skip
       install: skip
-      before_script: skip
       script:
         - |
-          if [ -n "$TYPO3_ORG_USERNAME" ] && [ -n "$TYPO3_ORG_PASSWORD" ]; then
+          if [[ "$TRAVIS_TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] && [ -n "$TYPO3_ORG_USERNAME" ] && [ -n "$TYPO3_ORG_PASSWORD" ]; then
             echo -e "Preparing upload of release ${TRAVIS_TAG} to TER\n";
 
             # Install requirements
-            composer global require helhum/ter-client dev-master
+            composer global require helhum/ter-client
 
             # Cleanup before we upload
             git reset --hard HEAD && git clean -fx

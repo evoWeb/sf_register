@@ -7,6 +7,7 @@
 	"license": "GPL-2.0-or-later",
 
 	"support": {
+		"docs": "https://docs.typo3.org/p/evoweb/sf-register/master/en-us/",
 		"issues": "https://github.com/evoWeb/sf_register/issues"
 	},
 
@@ -38,8 +39,7 @@
 	},
 
 	"config": {
-		"vendor-dir": ".Build/vendor",
-		"bin-dir": ".Build/bin"
+		"vendor-dir": ".Build/Web/vendor"
 	},
 	"extra": {
 		"typo3/cms": {
