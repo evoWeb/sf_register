@@ -31,6 +31,8 @@ install:
     composer require typo3/cms-core="$TYPO3_VERSION" $PREFER_LOWEST;
     if [ ! -z "$TESTING_FRAMEWORK" ]; then composer require --dev typo3/testing-framework="$TESTING_FRAMEWORK"; fi;
   - git checkout composer.json;
+  - ls -la .Build/;
+  - ls -la .Build/Web/;
 
 before_script:
   - phpenv config-rm xdebug.ini
