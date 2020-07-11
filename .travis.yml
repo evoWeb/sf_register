@@ -23,11 +23,7 @@ notifications:
 
 # This is executed for all stages
 before_install:
-  - if php -i | grep -v TRAVIS_CMD | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
-  #- composer require phwoolcon/ci-pecl-cacher -n
-  #- rm composer.lock
-  # Cache till new version
-  #- .Build/bin/ci-pecl-install swoole
+  -
 
 install:
   - export TYPO3_PATH_WEB=$PWD/.Build/Web;
