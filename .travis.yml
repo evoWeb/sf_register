@@ -83,9 +83,6 @@ jobs:
     - stage: test
       php: 7.2
       env: TYPO3_VERSION="^10.1.0" TESTING_FRAMEWORK="~5.0.16" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
-    - stage: test
-      php: 7.2
-      env: TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11" UNIT_TESTING_FOLDER="Unit" FUNCTIONAL_TESTING_FOLDER="Functional"
 
     - stage: publish in ter
       if: tag IS present
