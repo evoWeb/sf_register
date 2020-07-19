@@ -72,7 +72,7 @@ jobs:
         with:
           php-version: ${{ matrix.env.php }}
           tools: composer
-          extensions: pdo
+          extensions: pdo, sqlite3
 
       # Directory permissions for .composer are wrong, so we remove the complete directory
       # https://github.com/actions/virtual-environments/issues/824
@@ -104,7 +104,6 @@ jobs:
         run: |
           echo "Running ${TYPO3_VERSION} functional tests with $(which php)";
           export typo3DatabaseDriver="pdo_sqlite";
-          echo $typo3DatabaseDriver;
           php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
 
   publish:
