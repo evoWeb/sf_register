@@ -25,7 +25,7 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     public function setUp(): void
     {
         $this->subject = $this->getMockBuilder(\Evoweb\SfRegister\Validation\Validator\UniqueValidator::class)
-            ->onlyMethods(['translateErrorMessage'])
+            ->setMethods(['translateErrorMessage'])
             ->getMock();
     }
 
