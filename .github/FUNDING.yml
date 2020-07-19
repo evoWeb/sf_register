@@ -1,0 +1,12 @@
+# These are supported funding model platforms
+
+community_bridge: # Replace with a single Community Bridge project-name e.g., cloud-foundry
+github: [garbast]
+issuehunt: # Replace with a single IssueHunt username
+ko_fi: # Replace with a single Ko-fi username
+liberapay: # Replace with a single Liberapay username
+open_collective: # Replace with a single Open Collective username
+otechie: # Replace with a single Otechie username
+patreon: # Replace with a single Patreon username
+tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
+custom: ['https://www.paypal.me/garbast']
