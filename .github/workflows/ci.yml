@@ -62,7 +62,7 @@ jobs:
 
     env: ${{ matrix.env }}
 
-    name: Run unit tests
+    name: Run unit and functional tests with PHP${{ matrix.env.php }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -72,6 +72,7 @@ jobs:
         with:
           php-version: ${{ matrix.env.php }}
           tools: composer
+          extensions: pdo
 
       # Directory permissions for .composer are wrong, so we remove the complete directory
       # https://github.com/actions/virtual-environments/issues/824
