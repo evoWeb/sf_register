@@ -1,5 +1,5 @@
 # TYPO3 Extension ``sf_register``
-[![Build Status](https://travis-ci.org/evoWeb/sf_register.svg?branch=develop)](https://travis-ci.org/evoWeb/sf_register)
+![build](https://github.com/evoWeb/sf_register/workflows/build/badge.svg?branch=develop)
 [![Latest Stable Version](https://poser.pugx.org/evoweb/sf-register/v/stable)](https://packagist.org/packages/evoweb/sf-register)
 [![Monthly Downloads](https://poser.pugx.org/evoweb/sf-register/d/monthly)](https://packagist.org/packages/evoweb/sf-register)
 [![Total Downloads](https://poser.pugx.org/evoweb/sf-register/downloads)](https://packagist.org/packages/evoweb/sf-register)

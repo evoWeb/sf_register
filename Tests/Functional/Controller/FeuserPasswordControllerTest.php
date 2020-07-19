@@ -95,7 +95,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
 
         /** @var FrontendUserRepository|MockObject $userRepositoryMock */
         $userRepositoryMock = $this->getMockBuilder(FrontendUserRepository::class)
-            ->onlyMethods(['findByUid', 'update'])
+            ->setMethods(['findByUid', 'update'])
             ->disableOriginalConstructor()
             ->getMock();
         $userRepositoryMock->expects($this->once())
