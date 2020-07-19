@@ -1,5 +1,5 @@
 # TYPO3 Extension ``sf_register``
-[![Build Status](https://travis-ci.org/evoWeb/sf_register.svg?branch=develop)](https://travis-ci.org/evoWeb/sf_register)
+![build](https://github.com/evoWeb/sf_register/workflows/build/badge.svg?branch=develop)
 [![Latest Stable Version](https://poser.pugx.org/evoweb/sf-register/v/stable)](https://packagist.org/packages/evoweb/sf-register)
 [![Monthly Downloads](https://poser.pugx.org/evoweb/sf-register/d/monthly)](https://packagist.org/packages/evoweb/sf-register)
 [![Total Downloads](https://poser.pugx.org/evoweb/sf-register/downloads)](https://packagist.org/packages/evoweb/sf-register)
@@ -8,20 +8,20 @@
 
 ### via Composer
 
-The recommended way to install TYPO3 Console is by using [Composer](https://getcomposer.org):
+The recommended way to install sf_register is by using [Composer](https://getcomposer.org):
 
     composer require evoweb/sf-register
 
 **Installation from TYPO3 Extension Repository**
 
 Download and install the extension with the extension manager module or directly from the
-[TER](https://typo3.org/extensions/repository/view/sf_register).
+[TER](https://extensions.typo3.org/extension/sf_register).
 
 Repository and Issue Tracker can be found at https://github.com/evoWeb/sf_register
 
 Suits all your needs to handle frontend users like register new users, edit data and change password.
 
-So whats already in there?
+So what's already in there?
 
 - creating frontend user
     - flexible form generation by selecting fields in plugin
@@ -34,7 +34,7 @@ So whats already in there?
     - old password verification before setting new password
     - password strength indicator without need of any js lib
     - email/password repeat validation
-    - profilimage upload, remove and edit with plain or encrypted filename
+    - profile image upload, remove and edit with plain or encrypted filename
     - country as selectbox (values from static_info_tables)
     - country zone as selectbox (values from static_info_tables)
     - country zone change with ajax if country selectbox changed
@@ -77,4 +77,4 @@ How could you help?
 - file issues about bugs and if you already have a solution send the patch in
 - sponsor features you are in need of
 
-Homepage http://www.evoweb.de/
+Homepage https://www.evoweb.de/

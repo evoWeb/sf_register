@@ -309,11 +309,11 @@
 				<target>Verifizierungscode</target>
 			</trans-unit>
 			<trans-unit id="image">
-				<source>Profilimage</source>
+				<source>Profile Image</source>
 				<target>Profilbild</target>
 			</trans-unit>
 			<trans-unit id="image_none">
-				<source>Profilimage not uploaded</source>
+				<source>Profile Image not uploaded</source>
 				<target>Profilbild nicht hochgeladen</target>
 			</trans-unit>
 			<trans-unit id="choose_file">

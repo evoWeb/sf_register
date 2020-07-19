@@ -16,7 +16,7 @@ namespace Evoweb\SfRegister\Domain\Model;
 use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
 
 /**
- * An extended frontend user with more attributes
+ * An extended frontend user with more area
  */
 class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implements FrontendUserInterface
 {

@@ -49,7 +49,7 @@ class FeuserEditController extends FeuserController
                 $originalRequest->getArgument('user');
 
             // only reconstitute user object if given user uid equals logged in user uid
-            if ($userData['uid'] == $userId) {
+            if (is_array($userData) && $userData['uid'] == $userId) {
                 /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
                 $propertyMapper = GeneralUtility::getContainer()
                     ->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);

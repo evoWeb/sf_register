@@ -18,11 +18,11 @@ class FrontendUserGroup extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGrou
     /**
      * @var int
      */
-    protected $feloginRedirectPid;
+    protected $feloginRedirectPid = 0;
 
     public function getFeloginRedirectPid(): int
     {
-        return $this->feloginRedirectPid;
+        return (int)$this->feloginRedirectPid;
     }
 
     public function setFeloginRedirectPid(int $feloginRedirectPid)
