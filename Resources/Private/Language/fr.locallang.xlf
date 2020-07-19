@@ -73,7 +73,7 @@
 			</trans-unit>
 			<trans-unit id="zip">
 				<source>Zip</source>
-				<target>NPA</target>
+				<target>CP</target>
 			</trans-unit>
 			<trans-unit id="city">
 				<source>City</source>
