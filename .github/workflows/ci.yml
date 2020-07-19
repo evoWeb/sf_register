@@ -70,7 +70,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ php }}
+          php-version: ${{ matrix.env.php }}
           tools: composer
 
       # Directory permissions for .composer are wrong, so we remove the complete directory
