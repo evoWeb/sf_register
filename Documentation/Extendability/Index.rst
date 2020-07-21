@@ -33,13 +33,13 @@ be selected in the plugin too.
 **ext_localconf.php**::
 
    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
-   '@import 'EXT:sf_register/Configuration/TypoScript/Fields.typoscript\''
+   '@import \'EXT:sf_register/Configuration/TypoScript/Fields.typoscript\''
    );
 
 
 **TypoScript Setup**::
 
-   @import 'FILE:EXT:sf_register/Configuration/TypoScript/Fields.typoscript'
+   @import 'EXT:sf_register/Configuration/TypoScript/Fields.typoscript'
 
 
 By using the same fields file both in typoscript as well as in user ts config. No additional configuration is needed.
@@ -70,7 +70,7 @@ For highlighting purpose its adviced to let the domain model extend from \\Evowe
 **ext_localconf.php**::
 
 	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['extender']['FrontendUser']['sfregister_extended'] =
-	'EXT:ew_sfregister_extended/Classes/Domain/Model/FrontendUser.php';
+	'EXT:sfregister_extended/Classes/Domain/Model/FrontendUser.php';
 
 
 Beside extending the domain model with property and get-/set-method a field needs to be
@@ -86,7 +86,7 @@ created for sql and registered in TCA.
 	);
 
 
-**ext_tables.php**::
+**TCA/Overrides/fe_users.php**::
 
 	$temporaryColumns = array(
 		'extending' => array(
@@ -99,8 +99,8 @@ created for sql and registered in TCA.
 		),
 	);
 
-	t3lib_extMgm::addTCAcolumns('fe_users', $temporaryColumns, 1);
-	t3lib_extMgm::addToAllTCAtypes('fe_users', 'extending');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $temporaryColumns, 1);
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'extending');
 
 
 .. _AddCustomCaptcha:
