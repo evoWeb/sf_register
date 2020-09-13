@@ -3,7 +3,10 @@
 <f:layout name="Default" />
 
 <f:section name="Main">
-	<f:translate id="resend_mail_sent"/>
+    <f:if condition="{userUnknown}">
+        <f:then><f:translate id="account_unknown"/></f:then>
+        <f:else><f:translate id="delete_link_send"/></f:else>
+    </f:if>
 </f:section>
 
 </html>

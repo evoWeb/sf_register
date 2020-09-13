@@ -4,13 +4,13 @@
 
 <f:section name="Main">
 	<f:if condition="{userNotFound}">
-		<f:translate key="account_not_found"/>
+		<f:translate id="account_not_found"/>
 	</f:if><f:if condition="{userAlreadyConfirmed}">
-		<f:translate key="email_already_activated"/>
+		<f:translate id="email_already_activated"/>
 	</f:if><f:if condition="{userNotConfirmed}">
-		<f:format.raw><f:translate key="account_not_activated" arguments="{0: user.username}"/></f:format.raw>
+		<f:format.raw><f:translate id="account_not_activated" arguments="{0: user.username}"/></f:format.raw>
 	</f:if><f:if condition="{userConfirmed}">
-		<f:format.raw><f:translate key="email_successful_activated" arguments="{0: user.email}"/></f:format.raw>
+		<f:format.raw><f:translate id="email_successful_activated" arguments="{0: user.email}"/></f:format.raw>
 	</f:if>
 </f:section>
 

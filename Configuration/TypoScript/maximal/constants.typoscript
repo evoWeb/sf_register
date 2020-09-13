@@ -32,6 +32,8 @@ plugin.tx_sfregister.settings {
     deleteSave =
     # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminDeleteConfirm
     deleteConfirm =
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminDeleteSendLink
+    deleteSendLink =
 
     # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyAdminEditSave
     editSave =
@@ -63,6 +65,8 @@ plugin.tx_sfregister.settings {
     deleteSave = 1
     # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserDeleteConfirm
     deleteConfirm = 1
+    # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserDeleteSendLink
+    deleteSendLink = 1
 
     # cat=sf_register.settings/enable/20; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.notifyUserEditSave
     editSave =

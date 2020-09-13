@@ -71,6 +71,19 @@ call_user_func(function () {
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'SfRegister',
+        'RequestLink',
+        [
+            \Evoweb\SfRegister\Controller\FeuserDeleteController::class =>
+                'request, sendLink',
+        ],
+        [
+            \Evoweb\SfRegister\Controller\FeuserDeleteController::class =>
+                'request, sendLink',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'SfRegister',
         'Password',
         [
             \Evoweb\SfRegister\Controller\FeuserPasswordController::class => 'form, save',

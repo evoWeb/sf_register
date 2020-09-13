@@ -24,6 +24,12 @@
 			<trans-unit id="tt_content.list_type_delete_description">
 				<source>Registration: Delete user with confirmation</source>
 			</trans-unit>
+			<trans-unit id="tt_content.list_type_requestlink">
+				<source>Registration: Request delete link</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_requestlink_description">
+				<source>Registration: Request delete link by email</source>
+			</trans-unit>
 			<trans-unit id="tt_content.list_type_password">
 				<source>Registration: Change password</source>
 			</trans-unit>

@@ -30,7 +30,7 @@ So what's already in there?
     - notification email after activation
     - configure email addresses for user and admin mails separately
     - set different usergroup pre and post activation
-    - general terms and conditions acception as checkbox
+    - agree to general terms and conditions as checkbox
     - old password verification before setting new password
     - password strength indicator without need of any js lib
     - email/password repeat validation
@@ -60,15 +60,15 @@ So what's already in there?
     - static info tables selectboxes
 - edit frontend user
 - change password
-- different template file for every form, preview, save and email view, configurable so they do not need to stay in extension
+- different template file for every form, preview, save and email view, configurable to be overridden in sitepackages
 - override template rootpath in plugin
 
 If all that is already in, what is missing?
 
 - complete documentation
 - ajax handling
-    - javascript validators in jquery, extjs you name it
-- add interface for user model to enable other extension to extend the model (still needs changes to extbase)
+    - javascript validators in jquery
+- model is extendable by other extensions
 - better extendability of frontend user model, well this needs some love in extbase
 - multistep creation and editing
 

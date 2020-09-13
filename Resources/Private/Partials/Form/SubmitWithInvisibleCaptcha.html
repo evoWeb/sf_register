@@ -10,13 +10,13 @@
 		<f:if condition="{showCaptcha}">
 			<f:then>
 				<f:form.submit
-					value="{f:translate(key:'submit_create')}"
+					value="{f:translate(id: 'submit_create')}"
 					class="btn btn-primary g-recaptcha"
 					data="{sitekey: settings.recaptcha.public_key, callback: 'sfRegister_submitForm'}" />
 			</f:then>
 			<f:else>
 				<f:form.submit
-					value="{f:translate(key:'submit_create')}"
+					value="{f:translate(id: 'submit_create')}"
 					class="btn btn-primary" />
 				<div class="recaptcha-development-mode">
 					Development mode active. Do not expect the captcha to appear

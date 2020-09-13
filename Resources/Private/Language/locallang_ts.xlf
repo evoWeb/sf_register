@@ -49,6 +49,9 @@
 			<trans-unit id="maximal.notifyAdminDeleteConfirm">
 				<source>the admin should get an email after a delete request was confirmed</source>
 			</trans-unit>
+			<trans-unit id="maximal.notifyAdminDeleteSendLink">
+				<source>the admin should get an email with a delete link</source>
+			</trans-unit>
 			<trans-unit id="maximal.notifyAdminEditSave">
 				<source>the admin should get an email after saving on edit</source>
 			</trans-unit>
@@ -85,6 +88,9 @@
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserDeleteConfirm">
 				<source>the user should get an email after a delete request was confirmed</source>
+			</trans-unit>
+			<trans-unit id="maximal.notifyUserDeleteSendLink">
+				<source>the user should get an email with a delete link</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserEditSave">
 				<source>the user should get an email after saving on edit</source>

@@ -72,6 +72,8 @@ plugin.tx_sfregister.settings.fields.defaultSelected {
   delete {
     10 = disabledEmail
 
+    30 = email
+
     20 = delete
   }
 

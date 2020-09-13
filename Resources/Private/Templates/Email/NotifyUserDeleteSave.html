@@ -5,12 +5,12 @@
 <f:layout name="Email" />
 
 <f:section name="Main">
-	<f:format.raw><f:translate key="email_user_salutation"/></f:format.raw>,
+	<f:format.raw><f:translate id="email_user_salutation"/></f:format.raw>,
 
-	<f:format.raw><f:translate key="email_user_account_delete" arguments="{0: user.username}"/></f:format.raw>
+	<f:format.raw><f:translate id="email_user_account_delete" arguments="{0: user.username}"/></f:format.raw>
 
 	<register:link.action arguments="{user: user.uid}" action="confirm" controller="FeuserDelete" absolute="true">
-		<f:translate key="email_user_delete_link"/>
+		<f:translate id="email_user_delete_link"/>
 	</register:link.action>
 </f:section>
 
