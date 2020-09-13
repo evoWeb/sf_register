@@ -3,9 +3,9 @@
 <f:layout name="Email" />
 
 <f:section name="Main">
-	<f:format.raw><f:translate key="email_user_salutation"/></f:format.raw>,
+	<f:format.raw><f:translate id="email_user_salutation"/></f:format.raw>,
 
-	<f:format.raw><f:translate key="email_user_account_refused" arguments="{0: user.username}"/></f:format.raw>
+	<f:format.raw><f:translate id="email_user_account_refused" arguments="{0: user.username}"/></f:format.raw>
 </f:section>
 
 </html>

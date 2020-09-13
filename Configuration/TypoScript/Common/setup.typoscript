@@ -97,6 +97,10 @@ plugin.tx_sfregister.settings {
   }
 
   validation.delete {
+    email {
+      1 = "Evoweb.SfRegister:Required"
+      2 = "EmailAddress"
+    }
   }
 
   validation.resend {
@@ -140,37 +144,4 @@ plugin.tx_sfregister._LOCAL_LANG.default {
   title_dr = Dr.
   title_prof = Prof.
   title_profdr = Prof. Dr.
-}
-
-config.tx_extbase {
-  persistence.classes {
-    Evoweb\SfRegister\Domain\Model\FrontendUser {
-      mapping {
-        tableName = fe_users
-      }
-    }
-    Evoweb\SfRegister\Domain\Model\FrontendUserGroup {
-      mapping {
-        tableName = fe_groups
-        columns {
-          felogin_redirectPid.mapOnProperty = feloginRedirectPid
-        }
-      }
-    }
-    Evoweb\SfRegister\Domain\Model\StaticCountry {
-      mapping {
-        tableName = static_countries
-      }
-    }
-    Evoweb\SfRegister\Domain\Model\StaticCountryZone {
-      mapping {
-        tableName = static_country_zones
-      }
-    }
-    Evoweb\SfRegister\Domain\Model\StaticLanguage {
-      mapping {
-        tableName = static_languages
-      }
-    }
-  }
 }

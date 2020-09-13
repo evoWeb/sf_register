@@ -42,6 +42,15 @@ call_user_func(function () {
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['sfregister_delete'] = 'layout, select_key';
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['sfregister_delete'] = 'pi_flexform';
 
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+        'sf_register',
+        'RequestLink',
+        $languageFile . 'tt_content.list_type_requestlink'
+    );
+
+    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['sfregister_requestlink'] =
+        'layout, select_key';
+
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         'sfregister_delete',
         'FILE:EXT:sf_register/Configuration/FlexForms/delete.xml'

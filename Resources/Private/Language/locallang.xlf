@@ -304,27 +304,33 @@
 			<trans-unit id="account_successful_activated">
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is now active.</source>
 			</trans-unit>
-			<trans-unit id="account_not_activated" approved="yes">
+			<trans-unit id="account_not_activated">
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is not active.</source>
 			</trans-unit>
-			<trans-unit id="email_already_activated" approved="yes">
+			<trans-unit id="email_already_activated">
 				<source>Your new email is already active.</source>
 			</trans-unit>
-			<trans-unit id="email_successful_activated" approved="yes">
+			<trans-unit id="email_successful_activated">
 				<source>Your new email adress was successfully saved.</source>
 			</trans-unit>
 
-			<trans-unit id="submit_delete" approved="yes">
+			<trans-unit id="submit_delete">
 				<source>delete</source>
 			</trans-unit>
-			<trans-unit id="delete_saved" approved="yes">
+			<trans-unit id="delete_saved">
 				<source>You requested to delete your account. We send an email with a link with which you can confirm this request.</source>
 			</trans-unit>
-			<trans-unit id="account_already_deleted" approved="yes">
+			<trans-unit id="account_already_deleted">
 				<source>Account was already deleted.</source>
 			</trans-unit>
-			<trans-unit id="account_deleted" approved="yes">
+			<trans-unit id="account_deleted">
 				<source>Account deleted.</source>
+			</trans-unit>
+			<trans-unit id="account_unknown">
+				<source>No known account for the given e-mail addresse.</source>
+			</trans-unit>
+			<trans-unit id="delete_link_send">
+				<source>Delete link was send.</source>
 			</trans-unit>
 
 			<trans-unit id="error_noteempty">
@@ -466,6 +472,12 @@
 			<trans-unit id="subjectNotifyUserDeleteConfirm">
 				<source>Your confirmed to delete the account %2$s from %1$s</source>
 			</trans-unit>
+			<trans-unit id="subjectNotifyAdminDeleteSendLink">
+				<source>User %2$s requests to delete the account from %1$s</source>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserDeleteSendLink">
+				<source>You request to delete the account %2$s from %1$s</source>
+			</trans-unit>
 
 			<trans-unit id="subjectNotifyAdminResendMail">
 				<source>User %2$s requested a resend of the activation key of the account from %1$s</source>
@@ -538,6 +550,9 @@
 			<trans-unit id="email_admin_account_deleted">
 				<source>The user %1$s confirmed to delete the account</source>
 			</trans-unit>
+			<trans-unit id="email_admin_account_sendlink">
+				<source>The user %1$s requests a delete link</source>
+			</trans-unit>
 
 			<trans-unit id="email_user_account_accepted">
 				<source>Your registration was accepted.</source>
@@ -568,6 +583,12 @@
 			</trans-unit>
 			<trans-unit id="email_user_delete_link">
 				<source>Confirm to delete your account</source>
+			</trans-unit>
+			<trans-unit id="email_email_account_sendlink">
+				<source>Use the link to delete your account</source>
+			</trans-unit>
+			<trans-unit id="email_email_account_sendlink_link">
+				<source>Delete</source>
 			</trans-unit>
 
 			<trans-unit id="email_admin_invitation_message">

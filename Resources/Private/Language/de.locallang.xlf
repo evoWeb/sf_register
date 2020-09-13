@@ -583,6 +583,31 @@
 				<target>Ihre Änderungen an Ihrem Account %2$s auf Seite %1$s wurden akzeptiert</target>
 			</trans-unit>
 
+			<trans-unit id="subjectNotifyAdminDeleteSave">
+				<source>User %2$s requests to delete the account from %1$s</source>
+				<target>Nutzer %2$s will den Account auf %1$s löschen</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserDeleteSave">
+				<source>Your requests to delete the account %2$s from %1$s</source>
+				<target>Sie haben die Löschen des Accounts %2$s von %1$s angefordert</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminDeleteConfirm">
+				<source>User %2$s confirmed to delete the account from %1$s</source>
+				<target>Nutzer %2$s bestätigt das Löschen des Accounts von %1$s </target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserDeleteConfirm">
+				<source>Your confirmed to delete the account %2$s from %1$s</source>
+				<target>Sie haben die Löschung des Accounts %2$s von %1$s bestätigt</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminDeleteSendLink">
+				<source>User %2$s requests to delete the account from %1$s</source>
+				<target>Nutzer %2$s will den Account auf %1$s löschen</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserDeleteSendLink">
+				<source>You request to delete the account %2$s from %1$s</source>
+				<target>Sie haben die Löschen des Accounts %2$s von %1$s angefordert</target>
+			</trans-unit>
+
 			<trans-unit id="submit_delete" approved="yes">
 				<source>delete</source>
 				<target>löschen</target>
@@ -598,6 +623,14 @@
 			<trans-unit id="account_deleted" approved="yes">
 				<source>Account deleted.</source>
 				<target>Account wurde gelöscht.</target>
+			</trans-unit>
+			<trans-unit id="account_unknown">
+				<source>No known account for the given e-mail addresse.</source>
+				<target>Für die angegeben E-Mail Adresse ist kein Account bekannt.</target>
+			</trans-unit>
+			<trans-unit id="delete_link_send">
+				<source>Delete link was send.</source>
+				<target>Link zum löschen wurde verschickt.</target>
 			</trans-unit>
 
 			<trans-unit id="email_admin_salutation">

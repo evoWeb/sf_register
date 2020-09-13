@@ -4,9 +4,9 @@
 
 <f:section name="Main">
 	<f:if condition="{userAlreadyDeleted}">
-		<f:translate key="account_already_deleted"/>
+		<f:translate id="account_already_deleted"/>
 	</f:if><f:if condition="{userDeleted}">
-		<f:format.raw><f:translate key="account_deleted" arguments="{0: user.username}"/></f:format.raw>
+		<f:format.raw><f:translate id="account_deleted" arguments="{0: user.username}"/></f:format.raw>
 	</f:if>
 </f:section>
 

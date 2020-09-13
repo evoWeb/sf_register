@@ -29,7 +29,7 @@ class FeuserDeleteController extends FeuserController
     /**
      * @var array
      */
-    protected $ignoredActions = ['confirmAction'];
+    protected $ignoredActions = ['confirmAction', 'requestAction'];
 
     public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {
@@ -93,8 +93,8 @@ class FeuserDeleteController extends FeuserController
     /**
      * Confirm delete process by user
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-     * @param string $hash
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|null $user
+     * @param string|null $hash
      */
     public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, string $hash = null)
     {
@@ -113,6 +113,30 @@ class FeuserDeleteController extends FeuserController
             $this->persistAll();
 
             $this->view->assign('userDeleted', 1);
+        }
+    }
+
+    public function requestAction(string $email = null)
+    {
+        $this->view->assign('user', ['email' => $email]);
+    }
+
+    /**
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     *
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
+     */
+    public function sendLinkAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
+    {
+        /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+        $user = $this->userRepository->findByEmail($user->getEmail());
+
+        if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
+            $this->view->assign('userUnknown', 1);
+        } else {
+            $this->view->assign('user', $user);
+
+            $this->sendEmails($user, __FUNCTION__);
         }
     }
 }

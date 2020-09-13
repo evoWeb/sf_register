@@ -24,6 +24,7 @@ plugin.tx_sfregister.settings {
 
     deleteSave = {$plugin.tx_sfregister.settings.notifyAdmin.deleteSave}
     deleteConfirm = {$plugin.tx_sfregister.settings.notifyAdmin.deleteConfirm}
+    deleteSendLink = {$plugin.tx_sfregister.settings.notifyAdmin.deleteSendLink}
 
     editSave = {$plugin.tx_sfregister.settings.notifyAdmin.editSave}
     editConfirm = {$plugin.tx_sfregister.settings.notifyAdmin.editConfirm}
@@ -43,6 +44,7 @@ plugin.tx_sfregister.settings {
 
     deleteSave = {$plugin.tx_sfregister.settings.notifyUser.deleteSave}
     deleteConfirm = {$plugin.tx_sfregister.settings.notifyUser.deleteConfirm}
+    deleteSendLink = {$plugin.tx_sfregister.settings.notifyUser.deleteSendLink}
 
     editSave = {$plugin.tx_sfregister.settings.notifyUser.editSave}
     editConfirm = {$plugin.tx_sfregister.settings.notifyUser.editConfirm}
