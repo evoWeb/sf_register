@@ -74,11 +74,6 @@ jobs:
           tools: composer
           extensions: pdo, sqlite3
 
-      # Directory permissions for .composer are wrong, so we remove the complete directory
-      # https://github.com/actions/virtual-environments/issues/824
-      - name: Delete .composer directory
-        run: sudo rm -rf ~/.composer
-
       - name: Validate composer.json and composer.lock
         run: composer validate
 
@@ -114,7 +109,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['7.2']
+        php-versions: ['7.4']
 
     env:
       EXTENSION: sf_register
