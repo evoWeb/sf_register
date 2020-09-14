@@ -122,11 +122,11 @@ class FeuserDeleteController extends FeuserController
     }
 
     /**
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $requestUser
      *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
-    public function sendLinkAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
+    public function sendLinkAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $requestUser)
     {
         /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
         $user = $this->userRepository->findByEmail($user->getEmail());
@@ -135,6 +135,7 @@ class FeuserDeleteController extends FeuserController
             $this->view->assign('userUnknown', 1);
         } else {
             $this->view->assign('user', $user);
+            $this->view->assign('requestUser', $requestUser);
 
             $this->sendEmails($user, __FUNCTION__);
         }
