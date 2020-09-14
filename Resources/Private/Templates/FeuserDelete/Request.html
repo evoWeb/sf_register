@@ -3,7 +3,7 @@
 <f:layout name="Default" />
 
 <f:section name="Main">
-    <f:form action="sendLink" name="user" id="sfrForm" class="px-3" object="{user}" enctype="multipart/form-data">
+    <f:form action="sendLink" name="requestUser" id="sfrForm" class="px-3" object="{user}" enctype="multipart/form-data">
         <div class="form-row">
             <f:for each="{0: 'email', 1: 'delete'}" as="fieldName">
                 <f:alias map="{options: '{settings.fields.configuration.{fieldName}}'}">

@@ -129,7 +129,7 @@ class FeuserDeleteController extends FeuserController
     public function sendLinkAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $requestUser)
     {
         /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
-        $user = $this->userRepository->findByEmail($user->getEmail());
+        $user = $this->userRepository->findByEmail($requestUser->getEmail());
 
         if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
             $this->view->assign('userUnknown', 1);
