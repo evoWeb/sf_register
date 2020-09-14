@@ -124,7 +124,7 @@ class FeuserDeleteController extends FeuserController
     /**
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $requestUser
      *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="requestUser")
      */
     public function sendLinkAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $requestUser)
     {
