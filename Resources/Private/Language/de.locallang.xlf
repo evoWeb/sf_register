@@ -5,11 +5,11 @@
 		<body>
 			<trans-unit id="needTobBeLoggedIn">
 				<source>You need to be logged in</source>
-				<target>Sie muss eingeloggt sein</target>
+				<target>Sie müssen eingeloggt sein</target>
 			</trans-unit>
 			<trans-unit id="needTobBeLoggedOut">
 				<source>You need to be logged out</source>
-				<target>Sie muss ausgeloggt sein</target>
+				<target>Sie müssen ausgeloggt sein</target>
 			</trans-unit>
 
 			<trans-unit id="uid">

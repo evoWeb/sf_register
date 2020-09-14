@@ -145,6 +145,15 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     protected function actionIsIgnored(): bool
     {
+        if (
+            isset($this->settings['ignoredActions'][$this->controller])
+            && is_array($this->settings['ignoredActions'][$this->controller])
+        ) {
+            $this->ignoredActions = array_merge(
+                $this->settings['ignoredActions'][$this->controller],
+                $this->ignoredActions
+            );
+        }
         return in_array($this->actionMethodName, $this->ignoredActions);
     }
 
