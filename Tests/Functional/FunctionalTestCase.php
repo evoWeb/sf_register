@@ -22,6 +22,7 @@ use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
@@ -89,7 +90,8 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
             GeneralUtility::makeInstance(Context::class),
             $site,
             $site->getDefaultLanguage(),
-            new PageArguments(1, '0', [])
+            new PageArguments(1, '0', []),
+            new FrontendUserAuthentication()
         );
         $this->typoScriptFrontendController->sys_page = GeneralUtility::makeInstance(PageRepository::class);
         $this->typoScriptFrontendController->tmpl = GeneralUtility::makeInstance(TemplateService::class);
