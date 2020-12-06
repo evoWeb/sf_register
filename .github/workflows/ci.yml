@@ -56,11 +56,11 @@ jobs:
           - { php: 7.3, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.5.0 }
           - { php: 7.2, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.5.0 }
           - { php: 7.2, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^5.0.14, PREFER_LOWEST: "--prefer-lowest" }
-          - { php: 7.4, TYPO3_VERSION: "dev-master as 10.4.2", TESTING_FRAMEWORK: ^6.5.0, experimental: true }
+          - { php: 7.4, TYPO3_VERSION: "dev-master", TESTING_FRAMEWORK: ^6.5.0, experimental: true }
 
     env: ${{ matrix.env }}
 
-    name: Run unit and functional tests with PHP${{ matrix.env.php }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
+    name: Run unit and/or functional tests on TYPO3 ${{ matrix.env.TYPO3_VERSION }} with PHP${{ matrix.env.php }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -80,6 +80,12 @@ jobs:
         with:
           path: ~/.composer/cache
           key: dependencies-composer-${{ hashFiles('composer.json') }}
+
+      - name: Ensure stability dev
+        if: ${{ matrix.env.TYPO3_VERSION == 'dev-master' }}
+        run: |
+          composer config minimum-stability dev
+          composer config prefer-stable true
 
       - name: Install TYPO3 core
         run: composer require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
