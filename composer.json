@@ -23,8 +23,8 @@
 
 	"require": {
 		"typo3/cms-core": "^10.4",
-		"typo3/cms-extbase": "^10.4",
-		"typo3/cms-fluid": "^10.4"
+		"typo3/cms-extbase": "*",
+		"typo3/cms-fluid": "*"
 	},
 	"suggest": {
 		"evoweb/recaptcha": "^10.0"
