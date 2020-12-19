@@ -69,8 +69,7 @@ For highlighting purpose its adviced to let the domain model extend from \\Evowe
 
 **ext_localconf.php**::
 
-	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sf_register']['extender']['FrontendUser']['sfregister_extended'] =
-	'EXT:sfregister_extended/Classes/Domain/Model/FrontendUser.php';
+	$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['sf_register']['extender'][\Evoweb\SfRegister\Domain\Model\FrontendUser::class]['cem_sitepackage'] = 'EXT:cem_sitepackage/Classes/Domain/Model/FrontendUser.php';
 
 
 Beside extending the domain model with property and get-/set-method a field needs to be
