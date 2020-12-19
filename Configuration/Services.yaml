@@ -24,3 +24,6 @@ services:
         identifier: 'sfregister_feusercontroller_processinitializeaction'
         method: 'onProcessInitializeActionEvent'
         event: Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent
+
+  Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter:
+    public: true
