@@ -6,7 +6,7 @@
 <div>
     <f:if condition="{captcha.image}">
         <f:then>
-            <f:render arguments="{user:user, fieldName: 'captcha', options: options}" partial="Form/TextField"/>
+            <f:render arguments="{user:user, fieldName: 'captcha', options: options}" partial="Form/Textfield"/>
             <f:format.raw>{captcha.image}</f:format.raw>
             <f:format.raw>{captcha.notice}</f:format.raw>
             <f:format.raw>{captcha.cantRead}</f:format.raw>
