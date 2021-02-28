@@ -42,9 +42,9 @@ class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTi
      * @param mixed $source
      * @param string $targetType
      * @param array $convertedChildProperties
-     * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
+     * @param ?\TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
      *
-     * @return mixed|\TYPO3\CMS\Extbase\Error\Error target type, or an error object
+     * @return \DateTime|\TYPO3\CMS\Extbase\Error\Error|null
      */
     public function convertFrom(
         $source,

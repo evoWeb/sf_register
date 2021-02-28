@@ -39,7 +39,7 @@ final class PreSubmitMailEvent
      *
      * @param MailMessage $mail
      * @param array $settings
-     * @param array[FrontendUser] $arguments
+     * @param array $arguments
      */
     public function __construct(MailMessage $mail, array $settings, array $arguments)
     {

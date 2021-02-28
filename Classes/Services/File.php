@@ -115,7 +115,6 @@ class File implements \TYPO3\CMS\Core\SingletonInterface, \Psr\Log\LoggerAwareIn
         if (!$this->storage) {
             /** @var \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory */
             $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
-            /** @var \TYPO3\CMS\Core\Resource\ResourceStorage $storage */
             $this->storage = $resourceFactory->getStorageObject($this->storageUid);
         }
 
