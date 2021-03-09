@@ -13,6 +13,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Controller\FeuserPasswordController as FeuserPasswordController;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
@@ -22,6 +23,7 @@ use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
@@ -65,7 +67,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var Session $session */
         $session = GeneralUtility::makeInstance(Session::class, $frontendUser);
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController(
+        $subject = new FeuserPasswordController(
             $context,
             $file,
             $userRepository,
@@ -109,7 +111,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var Session $session */
         $session = GeneralUtility::makeInstance(Session::class, $frontendUser);
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController(
+        $subject = new FeuserPasswordController(
             $context,
             $file,
             $userRepository,
@@ -174,7 +176,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
             ->method('update')
             ->with(self::equalTo($userMock));
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController(
+        $subject = new FeuserPasswordController(
             $context,
             $file,
             $userRepositoryMock,
@@ -188,6 +190,10 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
 
         $property = $this->getPrivateProperty($subject, 'settings');
         $property->setValue($subject, ['encryptPassword' => '']);
+
+        $view = new StandaloneView();
+        $property = $this->getPrivateProperty($subject, 'view');
+        $property->setValue($subject, $view);
 
         /** @var \TYPO3\CMS\Core\EventDispatcher\EventDispatcher $eventDispatcher */
         $eventDispatcher = GeneralUtility::makeInstance(\TYPO3\CMS\Core\EventDispatcher\EventDispatcher::class);
