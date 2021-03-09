@@ -13,7 +13,9 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -42,7 +44,21 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var Context $context */
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController($context);
+        /** @var File $file */
+        $file = GeneralUtility::makeInstance(File::class);
+
+        /** @var FrontendUserRepository $userRepository */
+        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
+
+        /** @var FrontendUserGroupRepository $userGroupRepository */
+        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
+
+        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController(
+            $context,
+            $file,
+            $userRepository,
+            $userGroupRepository
+        );
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         self::assertFalse($method->invoke($subject));
@@ -62,7 +78,21 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var Context $context */
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController($context);
+        /** @var File $file */
+        $file = GeneralUtility::makeInstance(File::class);
+
+        /** @var FrontendUserRepository $userRepository */
+        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
+
+        /** @var FrontendUserGroupRepository $userGroupRepository */
+        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
+
+        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController(
+            $context,
+            $file,
+            $userRepository,
+            $userGroupRepository
+        );
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         self::assertTrue($method->invoke($subject));
@@ -89,6 +119,12 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
 
+        /** @var File $file */
+        $file = GeneralUtility::makeInstance(File::class);
+
+        /** @var FrontendUserGroupRepository $userGroupRepository */
+        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
+
         // we need to clone the create object, else the isClone parameter is not set and both object wont match
         $userMock = clone new \Evoweb\SfRegister\Domain\Model\FrontendUser();
         $userMock->setPassword($expected);
@@ -108,9 +144,9 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
 
         $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController(
             $context,
-            null,
+            $file,
             $userRepositoryMock,
-            null
+            $userGroupRepository
         );
 
         /** @var ObjectManager $objectManager */
