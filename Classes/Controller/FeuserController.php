@@ -57,7 +57,7 @@ class FeuserController extends ActionController
 
     protected array $ignoredActions = [];
 
-    protected \TYPO3\CMS\Core\Context\Context $context;
+    protected Context $context;
 
     protected ?FrontendUserRepository $userRepository;
 
