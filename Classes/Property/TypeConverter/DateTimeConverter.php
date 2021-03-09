@@ -13,8 +13,8 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
+use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 
 class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter
 {

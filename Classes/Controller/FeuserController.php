@@ -13,40 +13,40 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Core\Context\Context;
-use Evoweb\SfRegister\Services\File;
-use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
-use Evoweb\SfRegister\Validation\Validator\UserValidator;
-use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
-use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
-use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-use TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver;
-use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
-use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
-use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use Evoweb\SfRegister\Services\Mail;
-use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
-use TYPO3\CMS\Core\Registry;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use Doctrine\Common\Annotations\DocParser;
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
+use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\Mail;
+use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
+use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
+use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
 use Evoweb\SfRegister\Validation\Validator\SettableInterface;
+use Evoweb\SfRegister\Validation\Validator\UserValidator;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\ReferringRequest;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
+use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
+use TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * An frontend user controller containing common methods
@@ -101,7 +101,6 @@ class FeuserController extends ActionController
         $this->userRepository = $userRepository;
         $this->userGroupRepository = $userGroupRepository;
     }
-
 
     /**
      * Disable flash messages
@@ -311,7 +310,6 @@ class FeuserController extends ActionController
         }
     }
 
-
     /**
      * Proxy action
      *
@@ -431,7 +429,6 @@ class FeuserController extends ActionController
         $this->redirectToUri($url);
     }
 
-
     protected function sendEmails(FrontendUser $user, string $action): FrontendUser
     {
         $action = ucfirst(str_replace('Action', '', $action));
@@ -470,7 +467,6 @@ class FeuserController extends ActionController
         $notifySettings = $this->settings['notifyUser'];
         return isset($notifySettings[$type]) && !empty($notifySettings[$type]);
     }
-
 
     /**
      * Determines whether a user is in a given user group.
@@ -537,7 +533,7 @@ class FeuserController extends ActionController
 
         $userGroups = [];
         foreach ($settingsUserGroupKeys as $settingsUserGroupKey) {
-            $userGroup = (int) $this->settings[$settingsUserGroupKey];
+            $userGroup = (int)$this->settings[$settingsUserGroupKey];
             if ($userGroup) {
                 $userGroups[$settingsUserGroupKey] = $userGroup;
             }
@@ -564,12 +560,11 @@ class FeuserController extends ActionController
         return $entityUids;
     }
 
-
     protected function changeUsergroup(FrontendUser $user, int $userGroupIdToAdd): FrontendUser
     {
         $this->removePreviousUserGroups($user);
 
-        $userGroupIdToAdd = (int) $userGroupIdToAdd;
+        $userGroupIdToAdd = (int)$userGroupIdToAdd;
         if ($userGroupIdToAdd) {
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUserGroup $userGroupToAdd */
             $userGroupToAdd = $this->userGroupRepository->findByUid($userGroupIdToAdd);
@@ -600,7 +595,6 @@ class FeuserController extends ActionController
         }
     }
 
-
     protected function autoLogin(FrontendUser $user, int $redirectPageId)
     {
         session_start();
@@ -613,7 +607,7 @@ class FeuserController extends ActionController
         $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
 
         // if redirect was empty by now set it to current page
-        if (intval($redirectPageId) == 0) {
+        if ((int)$redirectPageId == 0) {
             $redirectPageId = $this->getTypoScriptFrontendController()->id;
         }
 
@@ -628,7 +622,7 @@ class FeuserController extends ActionController
         }
 
         if ($redirectPageId > 0) {
-            $this->redirectToPage((int) $redirectPageId);
+            $this->redirectToPage((int)$redirectPageId);
         }
     }
 

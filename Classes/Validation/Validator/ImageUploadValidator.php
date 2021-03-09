@@ -13,8 +13,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use Evoweb\SfRegister\Services\File;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Validator to check if the uploaded image could be handled

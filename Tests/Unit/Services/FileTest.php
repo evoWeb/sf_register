@@ -20,6 +20,6 @@ class FileTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function isValid()
     {
-        $this->markTestIncomplete('not implemented by now');
+        self::markTestIncomplete('not implemented by now');
     }
 }

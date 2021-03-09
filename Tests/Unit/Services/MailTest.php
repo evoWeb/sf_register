@@ -20,6 +20,6 @@ class MailTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function sendEmail()
     {
-        $this->markTestIncomplete('not implemented by now');
+        self::markTestIncomplete('not implemented by now');
     }
 }

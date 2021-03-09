@@ -13,10 +13,10 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use Evoweb\SfRegister\Services\Session;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * = Examples =

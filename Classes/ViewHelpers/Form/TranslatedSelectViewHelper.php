@@ -13,8 +13,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
 
 /**
  * View helper to render a selectbox with labels that need to be translated

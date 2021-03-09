@@ -13,9 +13,9 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use Evoweb\SfRegister\Validation\Validator\RequiredValidator;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
 
 /**
  * View helper to render a select box with values

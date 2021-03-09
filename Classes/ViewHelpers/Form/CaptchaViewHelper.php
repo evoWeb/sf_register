@@ -13,8 +13,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
 use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
+use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
 
 /**
  * View helper to output a captcha in a form

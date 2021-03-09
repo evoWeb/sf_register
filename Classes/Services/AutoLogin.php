@@ -14,8 +14,8 @@ namespace Evoweb\SfRegister\Services;
  */
 
 use TYPO3\CMS\Core\Authentication\AuthenticationService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Registry;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Service to handle user login
@@ -44,10 +44,10 @@ class AutoLogin extends AuthenticationService
         $user = $this->fetchUserRecord(
             $userId,
             '',
-            array_merge($this->db_user, ['username_column' => 'uid','check_pid_clause' => ''])
+            array_merge($this->db_user, ['username_column' => 'uid', 'check_pid_clause' => ''])
         );
 
-        self::$autoLoginActivated = intval($userId) > 0 && !empty($user);
+        self::$autoLoginActivated = (int)$userId > 0 && !empty($user);
 
         return $user;
     }

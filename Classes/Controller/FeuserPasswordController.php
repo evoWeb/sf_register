@@ -13,10 +13,10 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Domain\Model\Password;
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Controller\Event\PasswordFormEvent;
 use Evoweb\SfRegister\Controller\Event\PasswordSaveEvent;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Services\Session;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;

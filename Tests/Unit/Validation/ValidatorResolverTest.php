@@ -20,6 +20,6 @@ class ValidatorResolverTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCa
      */
     public function getParsedValidatorAnnotation()
     {
-        $this->markTestIncomplete('not implemented by now');
+        self::markTestIncomplete('not implemented by now');
     }
 }

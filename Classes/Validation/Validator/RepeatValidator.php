@@ -15,8 +15,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * A repeated value validator

@@ -58,7 +58,7 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
      */
     public function settingsContainsValidTyposcriptSettings()
     {
-        $this->assertArrayHasKey(
+        self::assertArrayHasKey(
             'badWordList',
             $this->subject->_get('settings')
         );
@@ -76,7 +76,7 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
 
         $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageService::class);
 
-        $this->assertTrue($this->subject->validate(current($words))->hasErrors());
+        self::assertTrue($this->subject->validate(current($words))->hasErrors());
     }
 
     /**
@@ -84,6 +84,6 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
      */
     public function isValidReturnsTrueForGoodPassword()
     {
-        $this->assertFalse($this->subject->validate('4dw$koL')->hasErrors());
+        self::assertFalse($this->subject->validate('4dw$koL')->hasErrors());
     }
 }

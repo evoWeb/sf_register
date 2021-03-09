@@ -15,11 +15,11 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\Password;
 use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator as ExtbaseConjunctionValidator;
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\Password;
 
 /**
  * Validator to chain many validators in a conjunction (logical and).

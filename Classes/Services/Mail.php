@@ -13,15 +13,15 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\SingletonInterface;
+use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Core\Mail\MailMessage;
-use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 use TYPO3\CMS\Fluid\View\StandaloneView;
-use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 
 /**
  * Service to handle mail sending
@@ -51,7 +51,6 @@ class Mail implements SingletonInterface
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
     }
-
 
     public function sendNotifyAdmin(
         FrontendUserInterface $user,
@@ -115,7 +114,6 @@ class Mail implements SingletonInterface
         return $user;
     }
 
-
     protected function getSubject(string $method, FrontendUserInterface $user): string
     {
         return LocalizationUtility::translate(
@@ -144,7 +142,6 @@ class Mail implements SingletonInterface
             trim($user->getEmail()) => $name
         ];
     }
-
 
     protected function sendEmail(
         FrontendUserInterface $user,

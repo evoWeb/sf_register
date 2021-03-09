@@ -13,13 +13,13 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Core\Context\Context;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Validator to check against current password

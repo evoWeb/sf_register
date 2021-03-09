@@ -13,14 +13,14 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Controller\Event\DeleteConfirmEvent;
+use Evoweb\SfRegister\Controller\Event\DeleteFormEvent;
+use Evoweb\SfRegister\Controller\Event\DeleteSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Extbase\Property\PropertyMapper;
-use Evoweb\SfRegister\Controller\Event\DeleteFormEvent;
-use Evoweb\SfRegister\Controller\Event\DeleteSaveEvent;
-use Evoweb\SfRegister\Controller\Event\DeleteConfirmEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Property\PropertyMapper;
 
 /**
  * An frontend user create controller

@@ -13,10 +13,10 @@ namespace Evoweb\SfRegister\EventListener;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\Utility\HttpUtility;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
+use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class FeuserControllerListener
 {
@@ -32,8 +32,8 @@ class FeuserControllerListener
         if (!$this->userIsLoggedIn()) {
             $redirectEvent = $event->getSettings()['redirectEvent'];
 
-            if ((int) $redirectEvent['page']) {
-                $this->redirectToPage((int) $redirectEvent['page']);
+            if ((int)$redirectEvent['page']) {
+                $this->redirectToPage((int)$redirectEvent['page']);
             } else {
                 $event->getController()->forward($redirectEvent['action'], $redirectEvent['controller'] ?? null);
             }

@@ -52,7 +52,7 @@ class Session implements SingletonInterface
     public function fetch(): self
     {
         if ($this->values === null) {
-            $this->values = (array) unserialize($this->frontendUser->getKey('ses', $this->sessionKey));
+            $this->values = (array)unserialize($this->frontendUser->getKey('ses', $this->sessionKey));
         }
 
         return $this;

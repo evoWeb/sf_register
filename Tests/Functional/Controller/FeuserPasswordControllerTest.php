@@ -45,7 +45,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController($context);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        $this->assertFalse($method->invoke($subject));
+        self::assertFalse($method->invoke($subject));
     }
 
     /**
@@ -65,7 +65,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController($context);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        $this->assertTrue($method->invoke($subject));
+        self::assertTrue($method->invoke($subject));
     }
 
     /**
@@ -74,7 +74,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository()
     {
         if (!defined('PASSWORD_ARGON2I')) {
-            $this->markTestSkipped('Due to missing Argon2 in travisci.');
+            self::markTestSkipped('Due to missing Argon2 in travisci.');
         }
 
         $expected = 'myPassword';
@@ -90,7 +90,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $context = GeneralUtility::makeInstance(Context::class);
 
         // we need to clone the create object, else the isClone parameter is not set and both object wont match
-        $userMock = clone(new \Evoweb\SfRegister\Domain\Model\FrontendUser());
+        $userMock = clone new \Evoweb\SfRegister\Domain\Model\FrontendUser();
         $userMock->setPassword($expected);
 
         /** @var FrontendUserRepository|MockObject $userRepositoryMock */
@@ -98,13 +98,13 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
             ->setMethods(['findByUid', 'update'])
             ->disableOriginalConstructor()
             ->getMock();
-        $userRepositoryMock->expects($this->once())
+        $userRepositoryMock->expects(self::once())
             ->method('findByUid')
-            ->with($this->equalTo($userId))
+            ->with(self::equalTo($userId))
             ->willReturn($userMock);
-        $userRepositoryMock->expects($this->once())
+        $userRepositoryMock->expects(self::once())
             ->method('update')
-            ->with($this->equalTo($userMock));
+            ->with(self::equalTo($userMock));
 
         $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController(
             $context,

@@ -26,13 +26,13 @@ namespace Evoweb\SfRegister\ViewHelpers;
  * This copyright notice MUST APPEAR in all copies of the script!
  */
 
-use TYPO3\CMS\Core\Http\ApplicationType;
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Http\ApplicationType;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * View helper to output the configured language
@@ -108,20 +108,17 @@ class LanguageKeyViewHelper extends AbstractViewHelper
         return $result;
     }
 
-
     protected function getConnection(string $tableName): Connection
     {
-        return GeneralUtility::makeInstance(
-            ConnectionPool::class
-        )->getConnectionForTable($tableName);
+        return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($tableName);
     }
 
-    protected function getTypoScriptFrontendController(): TypoScriptFrontendController
+    protected function getTypoScriptFrontendController(): ?TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
     }
 
-    protected function getBackendUserAuthentication(): BackendUserAuthentication
+    protected function getBackendUserAuthentication(): ?BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }

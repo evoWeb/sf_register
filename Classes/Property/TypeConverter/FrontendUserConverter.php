@@ -13,10 +13,10 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
+use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 
 class FrontendUserConverter extends AbstractTypeConverter
 {

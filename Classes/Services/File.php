@@ -13,20 +13,20 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\SingletonInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Resource\FileInterface;
+use TYPO3\CMS\Core\Resource\Folder;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\ResourceStorage;
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
-use TYPO3\CMS\Extbase\Validation\Error;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Resource\Folder;
-use TYPO3\CMS\Core\Resource\ResourceStorage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Core\Resource\FileInterface;
+use TYPO3\CMS\Extbase\Validation\Error;
 
 /**
  * Service to handle file upload and deletion
@@ -34,7 +34,6 @@ use TYPO3\CMS\Core\Resource\FileInterface;
 class File implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
-
 
     protected ?ConfigurationManager $configurationManager;
 
@@ -46,9 +45,7 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     protected int $maxFilesize = 0;
 
-
     protected array $errors = [];
-
 
     protected int $storageUid = 1;
 
@@ -81,7 +78,6 @@ class File implements SingletonInterface, LoggerAwareInterface
             ini_get('upload_max_filesize') :
             ini_get('post_max_size'));
     }
-
 
     public function getStorage(): ?ResourceStorage
     {
@@ -145,7 +141,7 @@ class File implements SingletonInterface, LoggerAwareInterface
                 break;
         }
 
-        return (int) $value;
+        return (int)$value;
     }
 
     public function getErrors(): array
@@ -205,7 +201,6 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $fileData;
     }
 
-
     public function isValid(): bool
     {
         $result = true;
@@ -213,7 +208,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         $fileData = $this->getUploadedFileInfo();
         $filePathInfo = pathinfo($fileData['filename']);
 
-        $result = $this->isAllowedFilesize((int) $fileData['size']) && $result;
+        $result = $this->isAllowedFilesize((int)$fileData['size']) && $result;
         $result = $this->isAllowedFileExtension($filePathInfo['extension'] ?? '') && $result;
 
         return $result;
@@ -246,7 +241,6 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $result;
     }
 
-
     /**
      * Move an temporary uploaded file to the upload folder
      *
@@ -259,7 +253,7 @@ class File implements SingletonInterface, LoggerAwareInterface
 
         if (count($fileData)) {
             $fileExtension = pathinfo($fileData['filename'], PATHINFO_EXTENSION);
-            $filename = uniqid('sf_register') . '.' .  $fileExtension;
+            $filename = uniqid('sf_register') . '.' . $fileExtension;
 
             /** @var ResourceStorage $resourceStorage */
             $resourceStorage = GeneralUtility::makeInstance(ResourceStorage::class);

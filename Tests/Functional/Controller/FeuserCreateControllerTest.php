@@ -101,6 +101,6 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         $arguments = $subject->get('arguments');
         $validator = $arguments->getArgument('user')->getValidator();
 
-        $this->assertInstanceOf(\Evoweb\SfRegister\Validation\Validator\UserValidator::class, $validator);
+        self::assertInstanceOf(\Evoweb\SfRegister\Validation\Validator\UserValidator::class, $validator);
     }
 }

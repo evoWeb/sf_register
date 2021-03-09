@@ -13,10 +13,10 @@ namespace Evoweb\SfRegister\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser as ExtbaseFrontendUser;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use TYPO3\CMS\Extbase\Domain\Model\Category;
-use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
 
 /**
  * An extended frontend user with more area
@@ -243,7 +243,7 @@ class FrontendUser extends ExtbaseFrontendUser implements FrontendUserInterface
 
     public function getDisable(): bool
     {
-        return (bool) $this->disable;
+        return (bool)$this->disable;
     }
 
     public function getActivatedOn(): ?\DateTime

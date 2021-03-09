@@ -20,6 +20,6 @@ class ImageUploadValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTes
      */
     public function isValid()
     {
-        $this->markTestIncomplete('not implemented by now');
+        self::markTestIncomplete('not implemented by now');
     }
 }

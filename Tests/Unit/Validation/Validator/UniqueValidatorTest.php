@@ -39,14 +39,14 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         /** @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
-        $repositoryMock->expects($this->once())
+        $repositoryMock->expects(self::once())
             ->method('countByField')
             ->with($fieldName, $expected)
-            ->will($this->returnValue(0));
+            ->willReturn(0);
         $this->subject->injectUserRepository($repositoryMock);
         $this->subject->setPropertyName($fieldName);
 
-        $this->assertFalse($this->subject->validate($expected)->hasErrors());
+        self::assertFalse($this->subject->validate($expected)->hasErrors());
     }
 
     /**
@@ -59,14 +59,14 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         /** @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
-        $repositoryMock->expects($this->once())
+        $repositoryMock->expects(self::once())
             ->method('countByField')
             ->with($fieldName, $expected)
-            ->will($this->returnValue(1));
+            ->willReturn(1);
         $this->subject->injectUserRepository($repositoryMock);
         $this->subject->setPropertyName($fieldName);
 
-        $this->assertTrue($this->subject->validate($expected)->hasErrors());
+        self::assertTrue($this->subject->validate($expected)->hasErrors());
     }
 
     /**
@@ -79,18 +79,18 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         /** @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
-        $repositoryMock->expects($this->once())
+        $repositoryMock->expects(self::once())
             ->method('countByField')
             ->with($fieldName, $expected)
-            ->will($this->returnValue(0));
-        $repositoryMock->expects($this->any())
+            ->willReturn(0);
+        $repositoryMock->expects(self::any())
             ->method('countByFieldGlobal')
             ->with($fieldName, $expected)
-            ->will($this->returnValue(0));
+            ->willReturn(0);
         $this->subject->injectUserRepository($repositoryMock);
         $this->subject->setPropertyName($fieldName);
 
-        $this->assertFalse($this->subject->validate($expected)->hasErrors());
+        self::assertFalse($this->subject->validate($expected)->hasErrors());
     }
 
     /**
@@ -105,17 +105,17 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $repositoryMock = $this->createMock(
             \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class
         );
-        $repositoryMock->expects($this->once())
+        $repositoryMock->expects(self::once())
             ->method('countByField')
             ->with($fieldName, $expected)
-            ->will($this->returnValue(0));
-        $repositoryMock->expects($this->any())
+            ->willReturn(0);
+        $repositoryMock->expects(self::any())
             ->method('countByFieldGlobal')
             ->with($fieldName, $expected)
-            ->will($this->returnValue(1));
+            ->willReturn(1);
         $this->subject->injectUserRepository($repositoryMock);
         $this->subject->setPropertyName($fieldName);
 
-        $this->assertTrue($this->subject->validate($expected)->hasErrors());
+        self::assertTrue($this->subject->validate($expected)->hasErrors());
     }
 }

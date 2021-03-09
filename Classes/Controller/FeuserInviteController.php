@@ -13,9 +13,9 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Controller\Event\InviteFormEvent;
 use Evoweb\SfRegister\Controller\Event\InviteInviteEvent;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Services\Mail;
 use Evoweb\SfRegister\Services\Session;
 use Psr\Http\Message\ResponseInterface;

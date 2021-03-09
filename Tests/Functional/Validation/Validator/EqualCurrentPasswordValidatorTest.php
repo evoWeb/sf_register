@@ -35,7 +35,7 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
      */
     public function settingsContainsValidTyposcriptSettings()
     {
-        $this->assertArrayHasKey(
+        self::assertArrayHasKey(
             'badWordList',
             $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
         );
@@ -52,7 +52,7 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
         $subject->injectContext($context);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        $this->assertFalse($method->invoke($subject));
+        self::assertFalse($method->invoke($subject));
     }
 
     /**
@@ -72,6 +72,6 @@ class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functio
         $subject->injectContext($context);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        $this->assertTrue($method->invoke($subject));
+        self::assertTrue($method->invoke($subject));
     }
 }

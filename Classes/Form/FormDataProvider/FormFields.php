@@ -13,9 +13,9 @@ namespace Evoweb\SfRegister\Form\FormDataProvider;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Backend\Form\FormDataProvider\AbstractItemProvider;
 use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 
 class FormFields extends AbstractItemProvider implements FormDataProviderInterface
 {

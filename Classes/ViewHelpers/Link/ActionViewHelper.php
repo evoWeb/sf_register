@@ -19,8 +19,6 @@ use TYPO3\CMS\Fluid\ViewHelpers\Link\ActionViewHelper as ExtbaseActionViewHelper
 /**
  * Link Action view helper that automatically
  * adds a "hash" argument on the "user" and "action" arguments
- *
- * @package Evoweb\SfRegister\Property
  */
 class ActionViewHelper extends ExtbaseActionViewHelper
 {

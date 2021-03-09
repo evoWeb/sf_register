@@ -48,7 +48,7 @@ class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
         $user = $this->subject->findByUid(1);
 
-        $this->assertInstanceOf(\Evoweb\SfRegister\Domain\Model\FrontendUser::class, $user);
-        $this->assertEquals('loginuser', $user->getUsername());
+        self::assertInstanceOf(\Evoweb\SfRegister\Domain\Model\FrontendUser::class, $user);
+        self::assertEquals('loginuser', $user->getUsername());
     }
 }

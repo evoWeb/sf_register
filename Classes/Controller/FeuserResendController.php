@@ -13,10 +13,10 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\Email;
 use Evoweb\SfRegister\Controller\Event\ResendFormEvent;
 use Evoweb\SfRegister\Controller\Event\ResendMailEvent;
+use Evoweb\SfRegister\Domain\Model\Email;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 

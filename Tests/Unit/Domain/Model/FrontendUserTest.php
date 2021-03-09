@@ -30,7 +30,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function disableDefaultToFalseOnInitialize()
     {
-        $this->assertFalse($this->subject->getDisable());
+        self::assertFalse($this->subject->getDisable());
     }
 
     public function notEmptyDataProvider(): array
@@ -51,7 +51,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     {
         $this->subject->setDisable($input);
 
-        $this->assertTrue($this->subject->getDisable());
+        self::assertTrue($this->subject->getDisable());
     }
 
     /**
@@ -59,8 +59,8 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function imageContainsEmptyObjectStorageOnInitialize()
     {
-        $this->assertInstanceOf(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, $this->subject->getImage());
-        $this->assertEquals(0, $this->subject->getImage()->count());
+        self::assertInstanceOf(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, $this->subject->getImage());
+        self::assertEquals(0, $this->subject->getImage()->count());
     }
 
     /**
@@ -72,7 +72,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         $this->subject->setImage($expected);
 
-        $this->assertSame($expected, $this->subject->getImage());
+        self::assertSame($expected, $this->subject->getImage());
     }
 
     /**
@@ -80,7 +80,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function imageAsImageListAddFilenameToImage()
     {
-        $this->markTestSkipped('needs to be changed to ObjectStorage');
+        self::markTestSkipped('needs to be changed to ObjectStorage');
         $expected1 = 'foo.gif';
         $expected2 = 'bar.jpg';
 
@@ -88,7 +88,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $this->subject->addImage($expected1);
         $this->subject->addImage($expected2);
 
-        $this->assertSame(implode(',', [$expected1, $expected2]), $this->subject->getImage());
+        self::assertSame(implode(',', [$expected1, $expected2]), $this->subject->getImage());
     }
 
     /**
@@ -96,7 +96,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function imageAsImageListRemoveFilenameFromImage()
     {
-        $this->markTestSkipped('needs to be changed to ObjectStorage');
+        self::markTestSkipped('needs to be changed to ObjectStorage');
         $expected1 = 'foo.gif';
         $expected2 = 'bar.jpg';
 
@@ -104,7 +104,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $this->subject->setImage(implode(',', [$expected1, $expected2]));
         $this->subject->removeImage();
 
-        $this->assertSame($expected2, $this->subject->getImage());
+        self::assertSame($expected2, $this->subject->getImage());
     }
 
     /**
@@ -112,7 +112,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function gtcDefaultToFalseOnInitialize()
     {
-        $this->assertFalse($this->subject->getDisable());
+        self::assertFalse($this->subject->getDisable());
     }
 
     /**
@@ -124,7 +124,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     {
         $this->subject->setDisable($input);
 
-        $this->assertTrue($this->subject->getDisable());
+        self::assertTrue($this->subject->getDisable());
     }
 
     /**
@@ -132,7 +132,7 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function mobilephoneOnInitializeIsEmpty()
     {
-        $this->assertEquals('', $this->subject->getMobilephone());
+        self::assertEquals('', $this->subject->getMobilephone());
     }
 
     /**
@@ -144,6 +144,6 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         $this->subject->setMobilephone($expected);
 
-        $this->assertSame($expected, $this->subject->getMobilephone());
+        self::assertSame($expected, $this->subject->getMobilephone());
     }
 }

@@ -13,8 +13,8 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * A repository for static info tables language

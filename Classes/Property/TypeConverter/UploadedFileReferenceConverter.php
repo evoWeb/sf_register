@@ -26,8 +26,6 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Resource\FileReference as FalFileReference;
@@ -35,10 +33,12 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Resource\Security\FileNameValidator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
+use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 
 class UploadedFileReferenceConverter extends AbstractTypeConverter
@@ -129,12 +129,11 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
                         return $this->createFileReferenceFromFalFileObject(
                             $this->resourceFactory->getFileObject($fileUid)
                         );
-                    } else {
-                        return $this->createFileReferenceFromFalFileReferenceObject(
-                            $this->resourceFactory->getFileReferenceObject($resourcePointer),
-                            $resourcePointer
-                        );
                     }
+                    return $this->createFileReferenceFromFalFileReferenceObject(
+                        $this->resourceFactory->getFileReferenceObject($resourcePointer),
+                        $resourcePointer
+                    );
                 } catch (\InvalidArgumentException $e) {
                     // Nothing to do. No file is uploaded and resource pointer is invalid. Discard!
                 }

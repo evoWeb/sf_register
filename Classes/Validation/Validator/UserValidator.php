@@ -84,9 +84,6 @@ class UserValidator extends GenericObjectValidator
      */
     public function canValidate($object): bool
     {
-        return (
-            $object instanceof FrontendUser
-            || $object instanceof Password
-        );
+        return $object instanceof FrontendUser || $object instanceof Password;
     }
 }

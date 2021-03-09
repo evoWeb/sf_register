@@ -13,19 +13,19 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Controller\Event\EditAcceptEvent;
+use Evoweb\SfRegister\Controller\Event\EditConfirmEvent;
+use Evoweb\SfRegister\Controller\Event\EditFormEvent;
+use Evoweb\SfRegister\Controller\Event\EditPreviewEvent;
+use Evoweb\SfRegister\Controller\Event\EditSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Extbase\Http\ForwardResponse;
-use TYPO3\CMS\Extbase\Property\PropertyMapper;
-use Evoweb\SfRegister\Controller\Event\EditFormEvent;
-use Evoweb\SfRegister\Controller\Event\EditPreviewEvent;
-use TYPO3\CMS\Extbase\Persistence\Generic\Session;
-use Evoweb\SfRegister\Controller\Event\EditSaveEvent;
-use Evoweb\SfRegister\Controller\Event\EditConfirmEvent;
-use Evoweb\SfRegister\Controller\Event\EditAcceptEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Extbase\Persistence\Generic\Session;
+use TYPO3\CMS\Extbase\Property\PropertyMapper;
 
 /**
  * An frontend user edit controller
@@ -189,11 +189,11 @@ class FeuserEditController extends FeuserController
 
             if ($this->settings['autologinPostConfirmation']) {
                 $this->persistAll();
-                $this->autoLogin($user, (int) $this->settings['redirectPostActivationPageId']);
+                $this->autoLogin($user, (int)$this->settings['redirectPostActivationPageId']);
             }
 
             if ($this->settings['redirectPostActivationPageId']) {
-                $this->redirectToPage((int) $this->settings['redirectPostActivationPageId']);
+                $this->redirectToPage((int)$this->settings['redirectPostActivationPageId']);
             }
         }
 
@@ -228,7 +228,7 @@ class FeuserEditController extends FeuserController
                 $this->sendEmails($user, __FUNCTION__);
 
                 if ($this->settings['redirectPostActivationPageId']) {
-                    $this->redirectToPage((int) $this->settings['redirectPostActivationPageId']);
+                    $this->redirectToPage((int)$this->settings['redirectPostActivationPageId']);
                 }
 
                 $this->view->assign('adminAccept', 1);

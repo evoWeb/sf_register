@@ -28,10 +28,10 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
-use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
-use TYPO3\CMS\Extbase\Property\PropertyMapper;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Property\PropertyMapper;
+use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelper as ExtbaseUploadViewHelper;
 
 class UploadViewHelper extends ExtbaseUploadViewHelper

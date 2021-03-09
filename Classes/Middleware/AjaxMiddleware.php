@@ -13,14 +13,14 @@ namespace Evoweb\SfRegister\Middleware;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Psr\Http\Server\MiddlewareInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Http\JsonResponse;
-use TYPO3\CMS\Core\Utility\MathUtility;
 use Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use TYPO3\CMS\Core\Http\JsonResponse;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
  * Api to get information via ajax calls
@@ -93,7 +93,7 @@ class AjaxMiddleware implements MiddlewareInterface
             ->get(StaticCountryZoneRepository::class);
 
         if (MathUtility::canBeInterpretedAsInteger($parent)) {
-            $zones = $zoneRepository->findAllByParentUid((int) $parent);
+            $zones = $zoneRepository->findAllByParentUid((int)$parent);
         } else {
             $zones = $zoneRepository->findAllByIso2(strtoupper(preg_replace('/[^A-Za-z]{2}/', '', $parent)));
         }

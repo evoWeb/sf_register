@@ -13,10 +13,10 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * A validator to check if a value is unique only if current value has changed
