@@ -25,7 +25,7 @@ class FrontendUserConverter extends AbstractTypeConverter
     /**
      * @var array<string>
      */
-    protected $sourceTypes = ['integer', 'string'];
+    protected $sourceTypes = ['int', 'string'];
 
     /**
      * @var string
