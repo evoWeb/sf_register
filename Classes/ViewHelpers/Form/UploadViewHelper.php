@@ -36,9 +36,9 @@ use TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelper as ExtbaseUploadViewHelper
 
 class UploadViewHelper extends ExtbaseUploadViewHelper
 {
-    protected ?HashService $hashService;
+    protected ?HashService $hashService = null;
 
-    protected ?PropertyMapper $propertyMapper;
+    protected ?PropertyMapper $propertyMapper = null;
 
     public function injectHashService(HashService $hashService)
     {

@@ -21,9 +21,9 @@ final class InviteInviteEvent
 {
     protected FrontendUser $user;
 
-    protected array $settings;
+    protected array $settings = [];
 
-    protected bool $doNotSendInvitation;
+    protected bool $doNotSendInvitation = false;
 
     public function __construct(FrontendUser $user, array $settings, bool $doNotSendInvitation)
     {

@@ -25,189 +25,189 @@ class StaticCountry extends AbstractEntity
      *
      * @var string
      */
-    protected string $cnIso2;
+    protected string $cnIso2 = '';
 
     /**
      * ISO 3166-1 A3 Country code
      *
      * @var string
      */
-    protected string $cnIso3;
+    protected string $cnIso3 = '';
 
     /**
      * ISO 3166-1 Nr Country code
      *
      * @var int
      */
-    protected int $cnIsoNr;
+    protected int $cnIsoNr = 0;
 
     /**
      * Official name (local)
      *
      * @var string
      */
-    protected string $cnOfficialNameLocal;
+    protected string $cnOfficialNameLocal = '';
 
     /**
      * Official name (EN)
      *
      * @var string
      */
-    protected string $cnOfficialNameEn;
+    protected string $cnOfficialNameEn = '';
 
     /**
      * Short name local
      *
      * @var string
      */
-    protected string $cnShortLocal;
+    protected string $cnShortLocal = '';
 
     /**
      * Short name (EN)
      *
      * @var string
      */
-    protected string $cnShortEn;
+    protected string $cnShortEn = '';
 
     /**
      * Short name (CZ)
      *
      * @var string
      */
-    protected string $cnShortCz;
+    protected string $cnShortCz = '';
 
     /**
      * Short name (DA)
      *
      * @var string
      */
-    protected string $cnShortDa;
+    protected string $cnShortDa = '';
 
     /**
      * Short name (DE)
      *
      * @var string
      */
-    protected string $cnShortDe;
+    protected string $cnShortDe = '';
 
     /**
      * Short name (ES)
      *
      * @var string
      */
-    protected string $cnShortEs;
+    protected string $cnShortEs = '';
 
     /**
      * Short name (FR)
      *
      * @var string
      */
-    protected string $cnShortFr;
+    protected string $cnShortFr = '';
 
     /**
      * Short name (GA)
      *
      * @var string
      */
-    protected string $cnShortGa;
+    protected string $cnShortGa = '';
 
     /**
      * Short name (GL)
      *
      * @var string
      */
-    protected string $cnShortGl;
+    protected string $cnShortGl = '';
 
     /**
      * Short name (IT)
      *
      * @var string
      */
-    protected string $cnShortIt;
+    protected string $cnShortIt = '';
 
     /**
      * Short name (JA)
      *
      * @var string
      */
-    protected string $cnShortJa;
+    protected string $cnShortJa = '';
 
     /**
      * Short name (KM)
      *
      * @var string
      */
-    protected string $cnShortKm;
+    protected string $cnShortKm = '';
 
     /**
      * Short name (NL)
      *
      * @var string
      */
-    protected string $cnShortNl;
+    protected string $cnShortNl = '';
 
     /**
      * Short name (NO)
      *
      * @var string
      */
-    protected string $cnShortNo;
+    protected string $cnShortNo = '';
 
     /**
      * Short name (PL)
      *
      * @var string
      */
-    protected string $cnShortPl;
+    protected string $cnShortPl = '';
 
     /**
      * Short name (PT)
      *
      * @var string
      */
-    protected string $cnShortPt;
+    protected string $cnShortPt = '';
 
     /**
      * Short name (RO)
      *
      * @var string
      */
-    protected string $cnShortRo;
+    protected string $cnShortRo = '';
 
     /**
      * Short name (RU)
      *
      * @var string
      */
-    protected string $cnShortRu;
+    protected string $cnShortRu = '';
 
     /**
      * Short name (SK)
      *
      * @var string
      */
-    protected string $cnShortSk;
+    protected string $cnShortSk = '';
 
     /**
      * Short name (SV)
      *
      * @var string
      */
-    protected string $cnShortSv;
+    protected string $cnShortSv = '';
 
     /**
      * Short name (UA)
      *
      * @var string
      */
-    protected string $cnShortUa;
+    protected string $cnShortUa = '';
 
     /**
      * Short name (ZH)
      *
      * @var string
      */
-    protected string $cnShortZh;
+    protected string $cnShortZh = '';
 
     /**
      * Getter for ISO 3166-1 A2 Country code

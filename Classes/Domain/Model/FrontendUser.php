@@ -40,7 +40,7 @@ class FrontendUser extends ExtbaseFrontendUser implements FrontendUserInterface
      *
      * @var ?\DateTime
      */
-    protected ?\DateTime $activatedOn;
+    protected ?\DateTime $activatedOn = null;
 
     /**
      *  virtual not stored in database
@@ -82,7 +82,7 @@ class FrontendUser extends ExtbaseFrontendUser implements FrontendUserInterface
      *
      * @var ?\DateTime
      */
-    protected ?\DateTime $dateOfBirth;
+    protected ?\DateTime $dateOfBirth = null;
 
     /**
      * Day of date of birth

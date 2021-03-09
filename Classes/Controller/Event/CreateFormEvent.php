@@ -21,9 +21,9 @@ final class CreateFormEvent
 {
     protected FrontendUser $user;
 
-    protected array $settings;
+    protected array $settings = [];
 
-    public function __construct($user, array $settings)
+    public function __construct(FrontendUser $user, array $settings)
     {
         $this->user = $user;
         $this->settings = $settings;

@@ -59,11 +59,11 @@ class FeuserController extends ActionController
 
     protected Context $context;
 
-    protected ?FrontendUserRepository $userRepository;
+    protected FrontendUserRepository $userRepository;
 
-    protected ?FrontendUserGroupRepository $userGroupRepository;
+    protected FrontendUserGroupRepository $userGroupRepository;
 
-    protected ?File $fileService;
+    protected File $fileService;
 
     /**
      * The current view, as resolved by resolveView()
@@ -91,12 +91,11 @@ class FeuserController extends ActionController
 
     public function __construct(
         Context $context,
-        ?File $fileService,
-        ?FrontendUserRepository $userRepository,
-        ?FrontendUserGroupRepository $userGroupRepository
+        File $fileService,
+        FrontendUserRepository $userRepository,
+        FrontendUserGroupRepository $userGroupRepository
     ) {
         $this->context = $context;
-
         $this->fileService = $fileService;
         $this->userRepository = $userRepository;
         $this->userGroupRepository = $userGroupRepository;

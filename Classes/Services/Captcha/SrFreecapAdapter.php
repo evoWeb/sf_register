@@ -56,7 +56,7 @@ class SrFreecapAdapter extends AbstractAdapter
     /**
      * @var ?\tx_srfreecap_pi2
      */
-    protected ?object $captcha;
+    protected ?object $captcha = null;
 
     /**
      * Keys to be used as variables output
@@ -70,9 +70,6 @@ class SrFreecapAdapter extends AbstractAdapter
         'accessible',
     ];
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         if (ExtensionManagementUtility::isLoaded('sr_freecap')) {

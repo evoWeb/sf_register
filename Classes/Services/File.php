@@ -35,7 +35,7 @@ class File implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    protected ?ConfigurationManager $configurationManager;
+    protected ConfigurationManager $configurationManager;
 
     protected array $settings = [];
 
@@ -49,15 +49,15 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     protected int $storageUid = 1;
 
-    protected ?ResourceStorage $storage;
+    protected ?ResourceStorage $storage = null;
 
     protected string $tempFolderIdentifier = 'frontendusers/_temp_/';
 
-    protected ?Folder $tempFolder;
+    protected ?Folder $tempFolder = null;
 
     protected string $imageFolderIdentifier = 'frontendusers/';
 
-    protected ?Folder $imageFolder;
+    protected ?Folder $imageFolder = null;
 
     public function __construct(ConfigurationManager $configurationManager)
     {

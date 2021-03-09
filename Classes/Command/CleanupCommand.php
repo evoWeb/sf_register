@@ -27,9 +27,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CleanupCommand extends Command
 {
-    protected ?ResourceFactory $resourceFactory;
+    protected ResourceFactory $resourceFactory;
 
-    public function __construct(?ResourceFactory $resourceFactory)
+    public function __construct(ResourceFactory $resourceFactory)
     {
         $this->resourceFactory = $resourceFactory;
         parent::__construct();

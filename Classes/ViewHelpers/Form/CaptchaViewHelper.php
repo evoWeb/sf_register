@@ -25,7 +25,7 @@ use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
  */
 class CaptchaViewHelper extends AbstractFormFieldViewHelper
 {
-    protected ?CaptchaAdapterFactory $captchaAdapterFactory;
+    protected ?CaptchaAdapterFactory $captchaAdapterFactory = null;
 
     public function injectCaptchaAdapterFactory(CaptchaAdapterFactory $captchaAdapterFactory)
     {

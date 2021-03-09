@@ -27,7 +27,7 @@ use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
  */
 class SelectStaticLanguageViewHelper extends SelectViewHelper
 {
-    protected ?StaticLanguageRepository $languageRepository;
+    protected ?StaticLanguageRepository $languageRepository = null;
 
     public function injectLanguageRepository(StaticLanguageRepository $languageRepository)
     {

@@ -31,11 +31,11 @@ class EqualCurrentPasswordValidator extends AbstractValidator
      */
     protected $acceptsEmptyValues = false;
 
-    protected ?Context $context;
+    protected ?Context $context = null;
 
-    protected ?FrontendUserRepository $userRepository;
+    protected ?FrontendUserRepository $userRepository = null;
 
-    protected ?ConfigurationManager $configurationManager;
+    protected ?ConfigurationManager $configurationManager = null;
 
     protected array $settings = [];
 

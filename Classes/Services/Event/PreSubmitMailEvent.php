@@ -21,9 +21,9 @@ final class PreSubmitMailEvent
 {
     protected MailMessage $mail;
 
-    protected array $settings;
+    protected array $settings = [];
 
-    protected array $arguments;
+    protected array $arguments = [];
 
     public function __construct(MailMessage $mail, array $settings, array $arguments)
     {

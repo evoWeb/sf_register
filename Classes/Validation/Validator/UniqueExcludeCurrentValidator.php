@@ -39,14 +39,14 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Settabl
         ],
     ];
 
-    protected ?FrontendUserRepository $userRepository;
+    protected ?FrontendUserRepository $userRepository = null;
 
     /**
      * Model to take repeated value of
      *
      * @var FrontendUser|Password
      */
-    protected $model;
+    protected $model = null;
 
     protected string $propertyName = '';
 

@@ -21,7 +21,7 @@ final class DeleteSaveEvent
 {
     protected FrontendUser $user;
 
-    protected array $settings;
+    protected array $settings = [];
 
     public function __construct(FrontendUser $user, array $settings)
     {

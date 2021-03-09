@@ -21,9 +21,9 @@ abstract class AbstractEventWithUser
 {
     protected FrontendUser $user;
 
-    protected array $settings;
+    protected array $settings = [];
 
-    protected array $arguments;
+    protected array $arguments = [];
 
     public function __construct(FrontendUser $user, array $settings, array $arguments)
     {

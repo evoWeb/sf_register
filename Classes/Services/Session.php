@@ -38,7 +38,7 @@ class Session implements SingletonInterface
     /**
      * @var ?FrontendUserAuthentication
      */
-    protected ?FrontendUserAuthentication $frontendUser;
+    protected ?FrontendUserAuthentication $frontendUser = null;
 
     /**
      * Constructor

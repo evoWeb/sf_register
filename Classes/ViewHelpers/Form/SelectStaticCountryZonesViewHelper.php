@@ -27,7 +27,7 @@ use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
  */
 class SelectStaticCountryZonesViewHelper extends SelectViewHelper
 {
-    protected ?StaticCountryZoneRepository $countryZonesRepository;
+    protected ?StaticCountryZoneRepository $countryZonesRepository = null;
 
     public function injectCountryZonesRepository(StaticCountryZoneRepository $countryZonesRepository)
     {

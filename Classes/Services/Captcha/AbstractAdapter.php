@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Validation\Error;
 
 abstract class AbstractAdapter implements CaptchaInterface
 {
-    protected ?object $captcha;
+    protected ?object $captcha = null;
 
     protected array $settings = [];
 

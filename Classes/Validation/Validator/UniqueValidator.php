@@ -36,7 +36,7 @@ class UniqueValidator extends AbstractValidator implements SettableInterface
         ],
     ];
 
-    protected ?FrontendUserRepository $userRepository;
+    protected ?FrontendUserRepository $userRepository = null;
 
     /**
      * Model to take repeated value of

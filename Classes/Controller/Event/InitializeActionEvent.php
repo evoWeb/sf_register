@@ -21,7 +21,7 @@ final class InitializeActionEvent
 {
     private FeuserController $controller;
 
-    protected array $settings;
+    protected array $settings = [];
 
     public function __construct(FeuserController $controller, array $settings)
     {

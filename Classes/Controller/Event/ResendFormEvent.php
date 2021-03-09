@@ -21,9 +21,9 @@ final class ResendFormEvent
 {
     protected Email $email;
 
-    protected array $settings;
+    protected array $settings = [];
 
-    public function __construct($email, array $settings)
+    public function __construct(Email $email, array $settings)
     {
         $this->email = $email;
         $this->settings = $settings;

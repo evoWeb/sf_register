@@ -20,7 +20,7 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 class BadWordValidator extends AbstractValidator
 {
-    protected ?ConfigurationManager $configurationManager;
+    protected ?ConfigurationManager $configurationManager = null;
 
     /**
      * @var array

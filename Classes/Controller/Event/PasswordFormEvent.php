@@ -21,9 +21,9 @@ final class PasswordFormEvent
 {
     protected Password $password;
 
-    protected array $settings;
+    protected array $settings = [];
 
-    public function __construct($password, array $settings)
+    public function __construct(Password $password, array $settings)
     {
         $this->password = $password;
         $this->settings = $settings;

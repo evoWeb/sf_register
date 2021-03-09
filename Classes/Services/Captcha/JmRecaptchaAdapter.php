@@ -20,11 +20,8 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class JmRecaptchaAdapter extends AbstractAdapter
 {
-    protected ?object $captcha;
+    protected ?object $captcha = null;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         if (ExtensionManagementUtility::isLoaded('jm_recaptcha')) {

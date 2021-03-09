@@ -21,7 +21,7 @@ final class ResendMailEvent
 {
     protected Email $email;
 
-    protected array $settings;
+    protected array $settings = [];
 
     public function __construct(Email $email, array $settings)
     {
