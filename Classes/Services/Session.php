@@ -35,17 +35,11 @@ class Session implements SingletonInterface
      */
     protected array $values = [];
 
-    /**
-     * @var ?FrontendUserAuthentication
-     */
     protected ?FrontendUserAuthentication $frontendUser = null;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function __construct(?FrontendUserAuthentication $frontendUser = null)
     {
-        $this->frontendUser = &$GLOBALS['TSFE']->fe_user;
+        $this->frontendUser = $frontendUser ? $frontendUser : $GLOBALS['TSFE']->fe_user;
         $this->fetch();
     }
 
