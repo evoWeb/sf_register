@@ -191,7 +191,10 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $property = $this->getPrivateProperty($subject, 'settings');
         $property->setValue($subject, ['encryptPassword' => '']);
 
-        $view = new StandaloneView();
+        $view = $this->getMockBuilder(StandaloneView::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['render'])
+            ->getMock();
         $property = $this->getPrivateProperty($subject, 'view');
         $property->setValue($subject, $view);
 
