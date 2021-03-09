@@ -19,15 +19,9 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 
 final class EditConfirmEvent
 {
-    /**
-     * @var FrontendUser
-     */
-    protected $user;
+    protected FrontendUser $user;
 
-    /**
-     * @var array
-     */
-    protected $settings;
+    protected array $settings;
 
     public function __construct(FrontendUser $user, array $settings)
     {
@@ -35,17 +29,11 @@ final class EditConfirmEvent
         $this->settings = $settings;
     }
 
-    /**
-     * @return FrontendUser
-     */
     public function getUser(): FrontendUser
     {
         return $this->user;
     }
 
-    /**
-     * @return array
-     */
     public function getSettings(): array
     {
         return $this->settings;

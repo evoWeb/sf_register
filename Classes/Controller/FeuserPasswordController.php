@@ -13,7 +13,13 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Controller\Event;
+use Evoweb\SfRegister\Domain\Model\Password;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Controller\Event\PasswordFormEvent;
+use Evoweb\SfRegister\Controller\Event\PasswordSaveEvent;
+use Evoweb\SfRegister\Services\Session;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -21,41 +27,44 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class FeuserPasswordController extends FeuserController
 {
-    /**
-     * @var string
-     */
-    protected $controller = 'password';
+    protected string $controller = 'password';
 
-    public function formAction(\Evoweb\SfRegister\Domain\Model\Password $password = null)
+    public function formAction(Password $password = null): ResponseInterface
     {
-        $this->eventDispatcher->dispatch(new Event\PasswordFormEvent($password, $this->settings));
+        $this->eventDispatcher->dispatch(new PasswordFormEvent($password, $this->settings));
 
         $this->view->assign('password', $password);
+
+        return new HtmlResponse($this->view->render());
     }
 
     /**
      * Save action
      *
-     * @param \Evoweb\SfRegister\Domain\Model\Password $password
+     * @param Password $password
+     *
+     * @return ResponseInterface
      *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="password")
      */
-    public function saveAction(\Evoweb\SfRegister\Domain\Model\Password $password)
+    public function saveAction(Password $password): ResponseInterface
     {
         if ($this->userIsLoggedIn()) {
             $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
-            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+            /** @var FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
 
-            $this->eventDispatcher->dispatch(new Event\PasswordSaveEvent($user, $this->settings));
+            $this->eventDispatcher->dispatch(new PasswordSaveEvent($user, $this->settings));
 
             $user->setPassword($this->encryptPassword($password->getPassword()));
 
             $this->userRepository->update($user);
 
-            /** @var \Evoweb\SfRegister\Services\Session $session */
-            $session = GeneralUtility::makeInstance(\Evoweb\SfRegister\Services\Session::class);
+            /** @var Session $session */
+            $session = GeneralUtility::makeInstance(Session::class);
             $session->remove('captchaWasValidPreviously');
         }
+
+        return new HtmlResponse($this->view->render());
     }
 }

@@ -26,6 +26,9 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
+use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Resource\FileReference as FalFileReference;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -38,7 +41,7 @@ use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 
-class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter
+class UploadedFileReferenceConverter extends AbstractTypeConverter
 {
     /**
      * Folder where the file upload should go to (including storage).
@@ -57,10 +60,7 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
      */
     public const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
 
-    /**
-     * @var string
-     */
-    protected $defaultUploadFolder = '1:/user_upload/';
+    protected string $defaultUploadFolder = '1:/user_upload/';
 
     /**
      * @var array<string>
@@ -70,7 +70,7 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
     /**
      * @var string
      */
-    protected $targetType = \TYPO3\CMS\Extbase\Domain\Model\FileReference::class;
+    protected $targetType = FileReference::class;
 
     /**
      * Take precedence over the available FileReferenceConverter
@@ -79,25 +79,16 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
      */
     protected $priority = 31;
 
-    /**
-     * @var ResourceFactory
-     */
-    protected $resourceFactory;
+    protected ResourceFactory $resourceFactory;
+
+    protected HashService $hashService;
+
+    protected PersistenceManager $persistenceManager;
 
     /**
-     * @var HashService
+     * @var FileReference[]
      */
-    protected $hashService;
-
-    /**
-     * @var PersistenceManager
-     */
-    protected $persistenceManager;
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference[]
-     */
-    protected $convertedResources = [];
+    protected array $convertedResources = [];
 
     public function __construct(
         ResourceFactory $resourceFactory,
@@ -116,15 +107,15 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
      * @param array $source
      * @param string $targetType
      * @param array $convertedChildProperties
-     * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
+     * @param ?PropertyMappingConfigurationInterface $configuration
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference|Error
+     * @return FileReference|Error
      */
     public function convertFrom(
         $source,
-        $targetType,
+        string $targetType,
         array $convertedChildProperties = [],
-        PropertyMappingConfigurationInterface $configuration = null
+        ?PropertyMappingConfigurationInterface $configuration = null
     ) {
         if (!isset($source['error']) || $source['error'] === \UPLOAD_ERR_NO_FILE) {
             if (isset($source['submittedFile']['resourcePointer'])) {
@@ -210,14 +201,14 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
      * @param array $uploadInfo
      * @param PropertyMappingConfigurationInterface $configuration
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference
+     * @return FileReference
      *
      * @throws TypeConverterException
      */
     protected function importUploadedResource(
         array $uploadInfo,
         PropertyMappingConfigurationInterface $configuration
-    ): \TYPO3\CMS\Extbase\Domain\Model\FileReference {
+    ): FileReference {
         /** @var FileNameValidator $fileNameValidator */
         $fileNameValidator = GeneralUtility::makeInstance(FileNameValidator::class);
         if (!$fileNameValidator->isValid((string)$uploadInfo['name'])) {
@@ -244,7 +235,7 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
         $conflictMode = $configuration->getConfigurationValue(
             self::class,
             self::CONFIGURATION_UPLOAD_CONFLICT_MODE
-        ) ?: \TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME;
+        ) ?: DuplicationBehavior::RENAME;
 
         $uploadFolder = $this->resourceFactory->retrieveFileOrFolderObject($uploadFolderId);
         $uploadedFile = $uploadFolder->addUploadedFile($uploadInfo, $conflictMode);
@@ -260,7 +251,7 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
     protected function createFileReferenceFromFalFileObject(
         FalFile $file,
         int $resourcePointer = null
-    ): \TYPO3\CMS\Extbase\Domain\Model\FileReference {
+    ): FileReference {
         $fileReference = $this->resourceFactory->createFileReferenceObject(
             [
                 'uid_local' => $file->getUid(),
@@ -276,14 +267,14 @@ class UploadedFileReferenceConverter extends \TYPO3\CMS\Extbase\Property\TypeCon
     protected function createFileReferenceFromFalFileReferenceObject(
         FalFileReference $falFileReference,
         int $resourcePointer = null
-    ): \TYPO3\CMS\Extbase\Domain\Model\FileReference {
+    ): FileReference {
         if ($resourcePointer === null) {
-            /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileReference */
-            $fileReference = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Domain\Model\FileReference::class);
+            /** @var FileReference $fileReference */
+            $fileReference = GeneralUtility::makeInstance(FileReference::class);
         } else {
             $fileReference = $this->persistenceManager->getObjectByIdentifier(
                 $resourcePointer,
-                \TYPO3\CMS\Extbase\Domain\Model\FileReference::class,
+                FileReference::class,
                 false
             );
         }

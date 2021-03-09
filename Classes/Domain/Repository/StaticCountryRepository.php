@@ -13,12 +13,15 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Persistence\Repository;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+
 /**
  * A repository for static info tables country
  */
-class StaticCountryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class StaticCountryRepository extends Repository
 {
-    public function findAll(): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+    public function findAll(): QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()
@@ -27,7 +30,7 @@ class StaticCountryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query->execute();
     }
 
-    public function findByCnIso2(array $cnIso2): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+    public function findByCnIso2(array $cnIso2): QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()

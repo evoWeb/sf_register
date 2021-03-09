@@ -13,6 +13,9 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use Evoweb\SfRegister\Services\Session;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -51,16 +54,16 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class SrFreecapAdapter extends AbstractAdapter
 {
     /**
-     * @var \tx_srfreecap_pi2
+     * @var ?\tx_srfreecap_pi2
      */
-    protected $captcha;
+    protected ?object $captcha;
 
     /**
      * Keys to be used as variables output
      *
      * @var array
      */
-    protected $keys = [
+    protected array $keys = [
         'image',
         'notice',
         'cantRead',
@@ -72,11 +75,11 @@ class SrFreecapAdapter extends AbstractAdapter
      */
     public function __construct()
     {
-        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('sr_freecap')) {
+        if (ExtensionManagementUtility::isLoaded('sr_freecap')) {
             /** @noinspection PhpIncludeInspection */
-            require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('sr_freecap') .
+            require_once(ExtensionManagementUtility::extPath('sr_freecap') .
                 'pi2/class.tx_srfreecap_pi2.php');
-            $this->captcha = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_srfreecap_pi2');
+            $this->captcha = GeneralUtility::makeInstance('tx_srfreecap_pi2');
         }
     }
 
@@ -85,15 +88,15 @@ class SrFreecapAdapter extends AbstractAdapter
      */
     public function render()
     {
-        /** @var \Evoweb\SfRegister\Services\Session $session */
-        $session = GeneralUtility::makeInstance(\Evoweb\SfRegister\Services\Session::class);
+        /** @var Session $session */
+        $session = GeneralUtility::makeInstance(Session::class);
         $session->remove('captchaWasValidPreviously');
 
         if ($this->captcha !== null) {
             $values = array_values($this->captcha->makeCaptcha());
             $output = array_combine($this->keys, $values);
         } else {
-            $output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+            $output = LocalizationUtility::translate(
                 'error_captcha_notinstalled',
                 'SfRegister',
                 ['sr_freecap']
@@ -107,14 +110,14 @@ class SrFreecapAdapter extends AbstractAdapter
     {
         $validCaptcha = true;
 
-        /** @var \Evoweb\SfRegister\Services\Session $session */
-        $session = GeneralUtility::makeInstance(\Evoweb\SfRegister\Services\Session::class);
+        /** @var Session $session */
+        $session = GeneralUtility::makeInstance(Session::class);
         $captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
         if ($this->captcha !== null && $captchaWasValidPreviously !== true) {
             if (!$this->captcha->checkWord($value)) {
                 $validCaptcha = false;
                 $this->addError(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                    LocalizationUtility::translate(
                         'error_captcha_notcorrect',
                         'SfRegister'
                     ),

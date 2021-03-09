@@ -13,6 +13,10 @@ namespace Evoweb\SfRegister\Middleware;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Psr\Http\Server\MiddlewareInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Http\JsonResponse;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -24,34 +28,34 @@ use Psr\Http\Server\RequestHandlerInterface;
  * Call eid like
  * ?eID=sf_register&tx_sfregister[action]=zones&tx_sfregister[parent]=DE
  */
-class AjaxMiddleware implements \Psr\Http\Server\MiddlewareInterface
+class AjaxMiddleware implements MiddlewareInterface
 {
     /**
      * Status of the request returned with every response
      *
      * @var string
      */
-    protected $status = 'success';
+    protected string $status = 'success';
 
     /**
      * Message related to the status returned with every response
      *
      * @var string
      */
-    protected $message = '';
+    protected string $message = '';
 
     /**
      * Result of every action that gets returned with every response
      *
      * @var array
      */
-    protected $result = [];
+    protected array $result = [];
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $requestArguments = $this->getParamFromRequest($request, 'tx_sfregister');
 
-        if (!\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('ajax') == 'sf_register') {
+        if (!GeneralUtility::_GET('ajax') == 'sf_register') {
             $response = $handler->handle($request);
         } else {
             switch ($requestArguments['action']) {
@@ -63,7 +67,7 @@ class AjaxMiddleware implements \Psr\Http\Server\MiddlewareInterface
                     $this->errorAction();
             }
 
-            $response = new \TYPO3\CMS\Core\Http\JsonResponse([
+            $response = new JsonResponse([
                 'status' => $this->status,
                 'message' => $this->message,
                 'data' => $this->result,
@@ -80,15 +84,15 @@ class AjaxMiddleware implements \Psr\Http\Server\MiddlewareInterface
     }
 
     /**
-     * @param int|string $parent
+     * @param string $parent
      */
-    protected function zonesAction($parent)
+    protected function zonesAction(string $parent)
     {
         /** @var StaticCountryZoneRepository $zoneRepository */
-        $zoneRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::getContainer()
+        $zoneRepository = GeneralUtility::getContainer()
             ->get(StaticCountryZoneRepository::class);
 
-        if (\TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($parent)) {
+        if (MathUtility::canBeInterpretedAsInteger($parent)) {
             $zones = $zoneRepository->findAllByParentUid((int) $parent);
         } else {
             $zones = $zoneRepository->findAllByIso2(strtoupper(preg_replace('/[^A-Za-z]{2}/', '', $parent)));
@@ -100,7 +104,7 @@ class AjaxMiddleware implements \Psr\Http\Server\MiddlewareInterface
         } else {
             $result = [];
 
-            $zones = $zones->fetchAll();
+            $zones = $zones->fetchAllAssociative();
             array_walk($zones, function ($zone) use (&$result) {
                 /** @var array $zone */
                 $result[] = [

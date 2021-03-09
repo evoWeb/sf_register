@@ -13,52 +13,47 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use TYPO3\CMS\Core\Context\Context;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+
 /**
  * Validator to check against current password
  */
-class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+class EqualCurrentPasswordValidator extends AbstractValidator
 {
     /**
      * @var bool
      */
     protected $acceptsEmptyValues = false;
 
-    /**
-     * @var \TYPO3\CMS\Core\Context\Context
-     */
-    protected $context;
+    protected ?Context $context;
 
-    /**
-     * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
-     */
-    protected $userRepository;
+    protected ?FrontendUserRepository $userRepository;
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
-     */
-    protected $configurationManager;
+    protected ?ConfigurationManager $configurationManager;
 
-    /**
-     * @var array
-     */
-    protected $settings = [];
+    protected array $settings = [];
 
-    public function injectContext(\TYPO3\CMS\Core\Context\Context $context)
+    public function injectContext(Context $context)
     {
         $this->context = $context;
     }
 
-    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
+    public function injectUserRepository(FrontendUserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
 
-    public function injectConfigurationManager(
-        \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
-    ) {
+    public function injectConfigurationManager(ConfigurationManager $configurationManager)
+    {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'SfRegister',
             'Form'
         );
@@ -80,8 +75,8 @@ class EqualCurrentPasswordValidator extends \TYPO3\CMS\Extbase\Validation\Valida
             $user = $this->userRepository->findByUid($this->context->getAspect('frontend.user')->get('id'));
 
             /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
-            $passwordHashFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-                \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
+            $passwordHashFactory = GeneralUtility::makeInstance(
+                PasswordHashFactory::class
             );
             $passwordHash = $passwordHashFactory->get($user->getPassword(), 'FE');
             if (!$passwordHash->checkPassword($password, $user->getPassword())) {

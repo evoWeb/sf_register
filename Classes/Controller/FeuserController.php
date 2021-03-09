@@ -13,6 +13,28 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Core\Context\Context;
+use Evoweb\SfRegister\Services\File;
+use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
+use Evoweb\SfRegister\Validation\Validator\UserValidator;
+use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
+use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
+use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
+use TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
+use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use Evoweb\SfRegister\Services\Mail;
+use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
+use TYPO3\CMS\Core\Registry;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use Doctrine\Common\Annotations\DocParser;
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
@@ -27,45 +49,21 @@ use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
 /**
- * An frontend user controller
+ * An frontend user controller containing common methods
  */
-class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class FeuserController extends ActionController
 {
-    /**
-     * @var string
-     */
-    protected $controller = '';
+    protected string $controller = '';
 
-    /**
-     * @var array
-     */
-    protected $ignoredActions = [];
+    protected array $ignoredActions = [];
 
-    /**
-     * @var \TYPO3\CMS\Core\Context\Context
-     */
-    protected $context;
+    protected \TYPO3\CMS\Core\Context\Context $context;
 
-    /**
-     * User repository
-     *
-     * @var FrontendUserRepository
-     */
-    protected $userRepository;
+    protected ?FrontendUserRepository $userRepository;
 
-    /**
-     * Usergroup repository
-     *
-     * @var FrontendUserGroupRepository
-     */
-    protected $userGroupRepository;
+    protected ?FrontendUserGroupRepository $userGroupRepository;
 
-    /**
-     * File service
-     *
-     * @var \Evoweb\SfRegister\Services\File
-     */
-    protected $fileService;
+    protected ?File $fileService;
 
     /**
      * The current view, as resolved by resolveView()
@@ -78,26 +76,24 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * The current request.
      *
-     * @var \TYPO3\CMS\Extbase\Mvc\Web\Request
+     * @var \TYPO3\CMS\Extbase\Mvc\Request
      * @api
      */
     protected $request;
 
     /**
-     * Active if autologgin was set.
+     * Active if autologin was set.
      *
      * Used to define of on page redirect an additional
      * query parameter should be set.
-     *
-     * @var bool
      */
-    protected $autoLoginTriggered = false;
+    protected bool $autoLoginTriggered = false;
 
     public function __construct(
-        \TYPO3\CMS\Core\Context\Context $context,
-        \Evoweb\SfRegister\Services\File $fileService = null,
-        FrontendUserRepository $userRepository = null,
-        FrontendUserGroupRepository $userGroupRepository = null
+        Context $context,
+        ?File $fileService,
+        ?FrontendUserRepository $userRepository,
+        ?FrontendUserGroupRepository $userGroupRepository
     ) {
         $this->context = $context;
 
@@ -109,8 +105,6 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     /**
      * Disable flash messages
-     *
-     * @return bool
      */
     protected function getErrorFlashMessage(): bool
     {
@@ -158,13 +152,13 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
     protected function modifyValidatorsBasedOnSettings(
-        \TYPO3\CMS\Extbase\Mvc\Controller\Argument $argument,
+        Argument $argument,
         array $configuredValidators
     ) {
         $parser = new DocParser();
 
         /** @var \Evoweb\SfRegister\Validation\Validator\UserValidator $validator */
-        $validator = GeneralUtility::makeInstance(\Evoweb\SfRegister\Validation\Validator\UserValidator::class);
+        $validator = GeneralUtility::makeInstance(UserValidator::class);
         foreach ($configuredValidators as $fieldName => $configuredValidator) {
             if (!in_array($fieldName, $this->settings['fields']['selected'])) {
                 continue;
@@ -181,7 +175,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
                 }
             } else {
                 $validatorInstance = GeneralUtility::makeInstance(
-                    \Evoweb\SfRegister\Validation\Validator\ConjunctionValidator::class
+                    ConjunctionValidator::class
                 );
                 foreach ($configuredValidator as $individualConfiguredValidator) {
                     $individualValidatorInstance = $this->getValidatorByConfiguration(
@@ -201,9 +195,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
 
         if (in_array($this->controller, ['edit', 'delete'])) {
-            $validatorName = \Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator::class;
+            $validatorName = EqualCurrentUserValidator::class;
         } else {
-            $validatorName = \Evoweb\SfRegister\Validation\Validator\EmptyValidator::class;
+            $validatorName = EmptyValidator::class;
         }
         $validatorInstance = $this->getValidatorByConfiguration($validatorName, $parser);
         $validator->addPropertyValidator('uid', $validatorInstance);
@@ -211,13 +205,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $argument->setValidator($validator);
     }
 
-    /**
-     * @param string $configuration
-     * @param \Doctrine\Common\Annotations\DocParser $parser
-     *
-     * @return \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface
-     */
-    protected function getValidatorByConfiguration(string $configuration, DocParser $parser)
+    protected function getValidatorByConfiguration(string $configuration, DocParser $parser): ValidatorInterface
     {
         if (strpos($configuration, '"') === false && strpos($configuration, '(') === false) {
             $configuration = '"' . $configuration . '"';
@@ -227,11 +215,11 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $validateAnnotation = current($parser->parse(
             '@TYPO3\CMS\Extbase\Annotation\Validate(' . $configuration . ')'
         ));
-        $validatorObjectName = \TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver::resolve(
+        $validatorObjectName = ValidatorClassNameResolver::resolve(
             $validateAnnotation->validator
         );
 
-        /** @var \TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface $validator */
+        /** @var ValidatorInterface $validator */
         $validator = $this->objectManager->get($validatorObjectName, $validateAnnotation->options);
         return $validator;
     }
@@ -257,26 +245,15 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     {
         $argumentName = 'user';
         if ($this->request->hasArgument($argumentName)) {
-            /** @var PropertyMappingConfiguration $configuration */
             $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
             /** @var array $user */
-            $user = $this->request->getArgument('user');
-
-            $this->getPropertyMappingConfiguration(
-                $configuration,
-                $user
-            );
+            $user = $this->request->getArgument($argumentName);
+            $this->getPropertyMappingConfiguration($configuration, $user);
         }
     }
 
-    /**
-     * @param PropertyMappingConfiguration|null $configuration
-     * @param array $userData
-     *
-     * @return PropertyMappingConfiguration
-     */
     protected function getPropertyMappingConfiguration(
-        PropertyMappingConfiguration $configuration = null,
+        ?PropertyMappingConfiguration $configuration,
         $userData = []
     ): PropertyMappingConfiguration {
         if (is_null($configuration)) {
@@ -321,9 +298,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Initialize an view object to be able to set templateRootPath from flex form
      *
-     * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
+     * @param ViewInterface $view
      */
-    protected function initializeView(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view)
+    protected function initializeView(ViewInterface $view)
     {
         if (isset($this->settings['templateRootPath']) && !empty($this->settings['templateRootPath'])) {
             $templateRootPath = GeneralUtility::getFileAbsFileName($this->settings['templateRootPath']);
@@ -340,18 +317,16 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      *
+     * @return ResponseInterface
+     *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
-    public function proxyAction(
-        \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-    ) {
-        $action = 'save';
+    public function proxyAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user): ResponseInterface
+    {
+        $action = $this->request->hasArgument('form') ? 'form' : 'save';
 
-        if ($this->request->hasArgument('form')) {
-            $action = 'form';
-        }
-
-        $this->forward($action, null, null, ['user' => $user]);
+        return (new ForwardResponse($action))
+            ->withArguments(['user' => $user]);
     }
 
     /**
@@ -359,11 +334,13 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      *
      * @param FrontendUser $user
      *
+     * @return ResponseInterface
+     *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $user
      */
-    protected function removeImageAction(FrontendUser $user)
+    protected function removeImageAction(FrontendUser $user): ResponseInterface
     {
-        /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $image */
+        /** @var FileReference $image */
         $image = $user->getImage()->current();
 
         $this->fileService->removeFile($image);
@@ -375,7 +352,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $referringRequestArguments = $this->request->getInternalArguments()['__referrer']['@request'] ?? null;
         if (is_string($referringRequestArguments)) {
             /** @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService */
-            $hashService = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Security\Cryptography\HashService::class);
+            $hashService = GeneralUtility::makeInstance(HashService::class);
             $referrerArray = json_decode(
                 $hashService->validateAndStripHmac($referringRequestArguments),
                 true
@@ -386,13 +363,15 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
 
         if ($referringRequest !== null) {
-            $this->forward(
-                $referringRequest->getControllerActionName(),
-                $referringRequest->getControllerName(),
-                $referringRequest->getControllerExtensionName(),
-                $this->request->getArguments()
-            );
+            $response = (new ForwardResponse($referringRequest->getControllerActionName()))
+                ->withControllerName($referringRequest->getControllerName())
+                ->withExtensionName($referringRequest->getControllerExtensionName())
+                ->withArguments($this->request->getArguments());
+        } else {
+            $response = new HtmlResponse($this->view->render());
         }
+
+        return $response;
     }
 
     protected function removeImageFromUserAndRequest(FrontendUser $user): FrontendUser
@@ -420,9 +399,9 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
     public function encryptPassword(string $password): string
     {
-        /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
+        /** @var PasswordHashFactory $passwordHashFactory */
         $passwordHashFactory = GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
+            PasswordHashFactory::class
         );
         $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
         return $passwordHash->getHashedPassword($password);
@@ -431,7 +410,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function persistAll()
     {
         GeneralUtility::getContainer()
-            ->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class)->persistAll();
+            ->get(PersistenceManager::class)->persistAll();
     }
 
     protected function redirectToPage(int $pageId)
@@ -465,7 +444,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $type = $controller . $action;
 
         /** @var \Evoweb\SfRegister\Services\Mail $mailService */
-        $mailService = GeneralUtility::getContainer()->get(\Evoweb\SfRegister\Services\Mail::class);
+        $mailService = GeneralUtility::getContainer()->get(Mail::class);
 
         if ($this->isNotifyAdmin($type)) {
             $user = $mailService->sendNotifyAdmin($user, $controller, $action);
@@ -497,7 +476,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * Determines whether a user is in a given user group.
      *
      * @param FrontendUser $user
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUserGroup|string|int $userGroup
+     * @param FrontendUserGroup|string|int $userGroup
      *
      * @return bool
      */
@@ -505,7 +484,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     {
         $return = false;
 
-        if ($userGroup instanceof \Evoweb\SfRegister\Domain\Model\FrontendUserGroup) {
+        if ($userGroup instanceof FrontendUserGroup) {
             $return = $user->getUsergroup()->contains($userGroup);
         } elseif (!empty($userGroup)) {
             $userGroupUids = $this->getEntityUids(
@@ -519,10 +498,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
     /**
-     * Determines whether a user is in a given user group.
+     * Determines whether a user is in given user groups.
      *
      * @param FrontendUser $user
-     * @param array|\Evoweb\SfRegister\Domain\Model\FrontendUserGroup[] $userGroups
+     * @param FrontendUserGroup[] $userGroups
      *
      * @return bool
      */
@@ -539,7 +518,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         return $return;
     }
 
-    protected function getFollowingUserGroups(int $currentUserGroup): array
+    protected function getConfiguredUserGroups(int $currentUserGroup): array
     {
         $userGroups = $this->getUserGroupIds();
         $currentIndex = array_search((int)$currentUserGroup, array_values($userGroups));
@@ -615,7 +594,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     protected function moveTemporaryImage(FrontendUser $user)
     {
         if ($user->getImage()->count()) {
-            /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $image */
+            /** @var FileReference $image */
             $image = $user->getImage()->current();
             $this->fileService->moveFileFromTempFolderToUploadFolder($image);
         }
@@ -630,7 +609,7 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         $_SESSION['sf-register-user'] = GeneralUtility::hmac('auto-login::' . $user->getUid(), $GLOBALS['EXEC_TIME']);
 
         /** @var \TYPO3\CMS\Core\Registry $registry */
-        $registry = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Registry::class);
+        $registry = GeneralUtility::makeInstance(Registry::class);
         $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
 
         // if redirect was empty by now set it to current page
@@ -661,34 +640,26 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     }
 
     /**
-     * Determines the frontend user, either if it's
-     * already submitted, or by looking up the mail hash code.
+     * Determines the frontend user, either if it's already submitted, or by looking up the mail hash code.
      *
-     * @param NULL|FrontendUser $user
-     * @param NULL|string $hash
+     * @param ?FrontendUser $user
+     * @param ?string $hash
      *
-     * @return NULL|FrontendUser
+     * @return ?FrontendUser
      */
-    protected function determineFrontendUser(FrontendUser $user = null, string $hash = null)
+    protected function determineFrontendUser(?FrontendUser $user, ?string $hash): ?FrontendUser
     {
         $frontendUser = null;
 
         $requestArguments = $this->request->getArguments();
         if ($user !== null && $hash !== null) {
-            $calculatedHash = GeneralUtility::hmac(
-                $requestArguments['action'] . '::' . $user->getUid()
-            );
+            $calculatedHash = GeneralUtility::hmac($requestArguments['action'] . '::' . $user->getUid());
             if ($hash === $calculatedHash) {
                 $frontendUser = $user;
             }
         }
 
         return $frontendUser;
-    }
-
-    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-    {
-        return $GLOBALS['TSFE'];
     }
 
     /**
@@ -731,5 +702,10 @@ class FeuserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
         }
 
         return $defaultOrder;
+    }
+
+    protected function getTypoScriptFrontendController(): ?TypoScriptFrontendController
+    {
+        return $GLOBALS['TSFE'];
     }
 }

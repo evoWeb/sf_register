@@ -13,7 +13,18 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Controller\Event;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Services\Session as SessionService;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Extbase\Property\PropertyMapper;
+use Evoweb\SfRegister\Controller\Event\EditFormEvent;
+use Evoweb\SfRegister\Controller\Event\EditPreviewEvent;
+use TYPO3\CMS\Extbase\Persistence\Generic\Session;
+use Evoweb\SfRegister\Controller\Event\EditSaveEvent;
+use Evoweb\SfRegister\Controller\Event\EditConfirmEvent;
+use Evoweb\SfRegister\Controller\Event\EditAcceptEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -21,17 +32,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class FeuserEditController extends FeuserController
 {
-    /**
-     * @var string
-     */
-    protected $controller = 'edit';
+    protected string $controller = 'edit';
 
-    /**
-     * @var array
-     */
-    protected $ignoredActions = ['confirmAction', 'acceptAction'];
+    protected array $ignoredActions = ['confirmAction', 'acceptAction'];
 
-    public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
+    public function formAction(FrontendUser $user = null): ResponseInterface
     {
         $userId = $this->context->getAspect('frontend.user')->get('id');
 
@@ -50,15 +55,15 @@ class FeuserEditController extends FeuserController
 
             // only reconstitute user object if given user uid equals logged in user uid
             if (is_array($userData) && $userData['uid'] == $userId) {
-                /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
+                /** @var PropertyMapper $propertyMapper */
                 $propertyMapper = GeneralUtility::getContainer()
-                    ->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
-                $user = $propertyMapper->convert($userData, \Evoweb\SfRegister\Domain\Model\FrontendUser::class);
+                    ->get(PropertyMapper::class);
+                $user = $propertyMapper->convert($userData, FrontendUser::class);
             }
         }
 
         if ($user == null) {
-            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+            /** @var FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
         }
 
@@ -66,9 +71,11 @@ class FeuserEditController extends FeuserController
             $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
         }
 
-        $this->eventDispatcher->dispatch(new Event\EditFormEvent($user, $this->settings));
+        $this->eventDispatcher->dispatch(new EditFormEvent($user, $this->settings));
 
         $this->view->assign('user', $user);
+
+        return new HtmlResponse($this->view->render());
     }
 
     /**
@@ -76,38 +83,44 @@ class FeuserEditController extends FeuserController
      *
      * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
      *
+     * @return ResponseInterface
+     *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
-    public function previewAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
+    public function previewAction(FrontendUser $user): ResponseInterface
     {
         if ($this->request->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
 
-        $this->eventDispatcher->dispatch(new Event\EditPreviewEvent($user, $this->settings));
+        $this->eventDispatcher->dispatch(new EditPreviewEvent($user, $this->settings));
 
         $this->view->assign('user', $user);
+
+        return new HtmlResponse($this->view->render());
     }
 
     /**
      * Save action
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
+     *
+     * @return ResponseInterface
      *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
-    public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
+    public function saveAction(FrontendUser $user): ResponseInterface
     {
         if (
             ($this->isNotifyAdmin('PostEditSave') || $this->isNotifyUser('PostEditSave'))
             && ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit'])
         ) {
             // Remove user object from session to fetch it really from database
-            /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Session $session */
-            $session = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\Session::class);
+            /** @var Session $session */
+            $session = GeneralUtility::makeInstance(Session::class);
             $session->unregisterObject($user);
 
-            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $userBeforeEdit */
+            /** @var FrontendUser $userBeforeEdit */
             $userBeforeEdit = $this->userRepository->findByUid($user->getUid());
 
             // Now remove the fresh fetched and add the updated one to make it known again
@@ -120,29 +133,32 @@ class FeuserEditController extends FeuserController
             $user->setUsername($user->getEmail());
         }
 
-        $this->eventDispatcher->dispatch(new Event\EditSaveEvent($user, $this->settings));
+        $this->eventDispatcher->dispatch(new EditSaveEvent($user, $this->settings));
 
         $user = $this->sendEmails($user, __FUNCTION__);
 
         $this->userRepository->update($user);
         $this->persistAll();
 
-        /** @var \Evoweb\SfRegister\Services\Session $session */
-        $session = GeneralUtility::makeInstance(\Evoweb\SfRegister\Services\Session::class);
+        /** @var SessionService $session */
+        $session = GeneralUtility::makeInstance(SessionService::class);
         $session->remove('captchaWasValidPreviously');
 
         if ($this->settings['forwardToEditAfterSave']) {
-            $this->forward('form');
+            $response = new ForwardResponse('form');
+        } else {
+            $this->view->assign('user', $user);
+            $response = new HtmlResponse($this->view->render());
         }
 
-        $this->view->assign('user', $user);
+        return $response;
     }
 
-    public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, string $hash = null)
+    public function confirmAction(FrontendUser $user = null, string $hash = null): ResponseInterface
     {
         $user = $this->determineFrontendUser($user, $hash);
 
-        if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
+        if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
             $this->view->assign('user', $user);
@@ -162,7 +178,7 @@ class FeuserEditController extends FeuserController
                     }
                 }
 
-                $this->eventDispatcher->dispatch(new Event\EditConfirmEvent($user, $this->settings));
+                $this->eventDispatcher->dispatch(new EditConfirmEvent($user, $this->settings));
 
                 $this->userRepository->update($user);
 
@@ -180,13 +196,15 @@ class FeuserEditController extends FeuserController
                 $this->redirectToPage((int) $this->settings['redirectPostActivationPageId']);
             }
         }
+
+        return new HtmlResponse($this->view->render());
     }
 
-    public function acceptAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, string $hash = null)
+    public function acceptAction(FrontendUser $user = null, string $hash = null): ResponseInterface
     {
         $user = $this->determineFrontendUser($user, $hash);
 
-        if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
+        if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
             $this->view->assign('user', $user);
@@ -203,7 +221,7 @@ class FeuserEditController extends FeuserController
                     $user->setUsername($user->getEmail());
                 }
 
-                $this->eventDispatcher->dispatch(new Event\EditAcceptEvent($user, $this->settings));
+                $this->eventDispatcher->dispatch(new EditAcceptEvent($user, $this->settings));
 
                 $this->userRepository->update($user);
 
@@ -216,5 +234,7 @@ class FeuserEditController extends FeuserController
                 $this->view->assign('adminAccept', 1);
             }
         }
+
+        return new HtmlResponse($this->view->render());
     }
 }

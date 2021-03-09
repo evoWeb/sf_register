@@ -13,6 +13,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
+
 /**
  * View helper to render a select box with values
  * in given steps from start to end value
@@ -21,28 +23,28 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * <register:form.rangeSelect property="day" start="1" end="31"/>
  * </code>
  */
-class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
+class RangeSelectViewHelper extends SelectViewHelper
 {
     /**
      * Value to start range with
      *
      * @var int
      */
-    protected $start = 0;
+    protected int $start = 0;
 
     /**
      * Value to end range with
      *
      * @var int
      */
-    protected $end = PHP_INT_MAX;
+    protected int $end = PHP_INT_MAX;
 
     /**
      * Step to increase value of each option
      *
      * @var int
      */
-    protected $step = 1;
+    protected int $step = 1;
 
     /**
      * In case of a value lower then 10 and digits
@@ -50,7 +52,7 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
      *
      * @var int
      */
-    protected $digits = 2;
+    protected int $digits = 2;
 
     public function initializeArguments()
     {
@@ -85,8 +87,8 @@ class RangeSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectView
 
     public function render(): string
     {
-        $this->start = $this->arguments['start'];
-        $this->end = $this->arguments['end'];
+        $this->start = (int)$this->arguments['start'];
+        $this->end = (int)$this->arguments['end'];
         $this->step = (int)$this->arguments['step'];
         $this->digits = (int)$this->arguments['digits'];
 

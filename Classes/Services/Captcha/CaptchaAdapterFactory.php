@@ -13,6 +13,7 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
@@ -21,15 +22,12 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
  */
 class CaptchaAdapterFactory
 {
-    /**
-     * @var array
-     */
-    protected $settings = [];
+    protected array $settings = [];
 
     public function __construct(ConfigurationManager $configurationManager)
     {
         $this->settings = $configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'SfRegister',
             'Form'
         );
@@ -49,7 +47,7 @@ class CaptchaAdapterFactory
             $type = 'Evoweb\\SfRegister\\Services\\Captcha\\' . ucfirst(strtolower($type)) . 'Adapter';
         }
 
-        /** @var \Evoweb\SfRegister\Services\Captcha\AbstractAdapter $captchaAdapter */
+        /** @var AbstractAdapter $captchaAdapter */
         $captchaAdapter = GeneralUtility::getContainer()->get($type);
         $captchaAdapter->setSettings($settings);
 

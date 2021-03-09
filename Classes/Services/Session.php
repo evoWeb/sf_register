@@ -13,29 +13,32 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+
 /**
  * Service to handle the user session
  */
-class Session implements \TYPO3\CMS\Core\SingletonInterface
+class Session implements SingletonInterface
 {
     /**
      * String to identify session values
      *
      * @var string
      */
-    protected $sessionKey = 'sf_register';
+    protected string $sessionKey = 'sf_register';
 
     /**
      * Values stored in session
      *
      * @var array
      */
-    protected $values = null;
+    protected array $values = [];
 
     /**
-     * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication
+     * @var ?FrontendUserAuthentication
      */
-    protected $frontendUser;
+    protected ?FrontendUserAuthentication $frontendUser;
 
     /**
      * Constructor

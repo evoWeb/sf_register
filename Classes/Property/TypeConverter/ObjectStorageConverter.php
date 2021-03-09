@@ -28,7 +28,9 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
-class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\ObjectStorageConverter
+use TYPO3\CMS\Extbase\Property\TypeConverter\ObjectStorageConverter as ExtbaseObjectStorageConverter;
+
+class ObjectStorageConverter extends ExtbaseObjectStorageConverter
 {
     /**
      * @var string[]

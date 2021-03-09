@@ -13,24 +13,25 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+class BadWordValidator extends AbstractValidator
 {
-    /**
-     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
-     */
-    protected $configurationManager;
+    protected ?ConfigurationManager $configurationManager;
 
     /**
      * @var array
      */
-    protected $settings = [];
+    protected array $settings = [];
 
-    public function injectConfigurationManager(
-        \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
-    ) {
+    public function injectConfigurationManager(ConfigurationManager $configurationManager)
+    {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'SfRegister',
             'Form'
         );
@@ -43,7 +44,7 @@ class BadWordValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
      */
     public function isValid($value)
     {
-        $badWordItems = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['badWordList']);
+        $badWordItems = GeneralUtility::trimExplode(',', $this->settings['badWordList']);
 
         if (in_array(strtolower($value), $badWordItems)) {
             $this->addError(

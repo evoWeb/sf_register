@@ -13,88 +13,61 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\SingletonInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Extbase\Validation\Error;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Resource\FileInterface;
 
 /**
  * Service to handle file upload and deletion
  */
-class File implements \TYPO3\CMS\Core\SingletonInterface, \Psr\Log\LoggerAwareInterface
+class File implements SingletonInterface, LoggerAwareInterface
 {
-    use \Psr\Log\LoggerAwareTrait;
+    use LoggerAwareTrait;
 
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
-     */
-    protected $configurationManager;
+    protected ?ConfigurationManager $configurationManager;
 
-    /**
-     * @var array
-     */
-    protected $settings = [];
+    protected array $settings = [];
 
-    /**
-     * @var string
-     */
-    protected $namespace = '';
+    protected string $namespace = '';
 
-    /**
-     * @var string
-     */
-    protected $allowedFileExtensions = '';
+    protected string $allowedFileExtensions = '';
 
-    /**
-     * @var int
-     */
-    protected $maxFilesize = 0;
+    protected int $maxFilesize = 0;
 
 
-    /**
-     * @var array
-     */
-    protected $errors = [];
+    protected array $errors = [];
 
 
-    /**
-     * @var int
-     */
-    protected $storageUid = 1;
+    protected int $storageUid = 1;
 
-    /**
-     * @var ResourceStorage
-     */
-    protected $storage;
+    protected ?ResourceStorage $storage;
 
-    /**
-     * @var string
-     */
-    protected $tempFolderIdentifier = 'frontendusers/_temp_/';
+    protected string $tempFolderIdentifier = 'frontendusers/_temp_/';
 
-    /**
-     * @var Folder
-     */
-    protected $tempFolder;
+    protected ?Folder $tempFolder;
 
-    /**
-     * @var string
-     */
-    protected $imageFolderIdentifier = 'frontendusers/';
+    protected string $imageFolderIdentifier = 'frontendusers/';
 
-    /**
-     * @var Folder
-     */
-    protected $imageFolder;
+    protected ?Folder $imageFolder;
 
-    public function __construct(
-        \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
-    ) {
+    public function __construct(ConfigurationManager $configurationManager)
+    {
         $this->configurationManager = $configurationManager;
 
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'SfRegister',
             'Form'
         );
@@ -110,12 +83,12 @@ class File implements \TYPO3\CMS\Core\SingletonInterface, \Psr\Log\LoggerAwareIn
     }
 
 
-    public function getStorage(): ResourceStorage
+    public function getStorage(): ?ResourceStorage
     {
         if (!$this->storage) {
-            /** @var \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory */
-            $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
-            /** @var \TYPO3\CMS\Core\Resource\ResourceStorage $storage */
+            /** @var ResourceFactory $resourceFactory */
+            $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
+            /** @var ResourceStorage $storage */
             $this->storage = $resourceFactory->getStorageObject($this->storageUid);
         }
 
@@ -134,7 +107,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface, \Psr\Log\LoggerAwareIn
             $this->createFolderIfNotExist($this->imageFolderIdentifier);
 
             /** @var \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory */
-            $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
+            $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
             $this->imageFolder = $resourceFactory->retrieveFileOrFolderObject($this->imageFolderIdentifier);
         }
         return $this->imageFolder;
@@ -182,14 +155,14 @@ class File implements \TYPO3\CMS\Core\SingletonInterface, \Psr\Log\LoggerAwareIn
 
     protected function addError(string $message, int $code)
     {
-        $this->errors[] = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Validation\Error::class, $message, $code);
+        $this->errors[] = GeneralUtility::makeInstance(Error::class, $message, $code);
     }
 
     protected function getNamespace(): string
     {
         if ($this->namespace === '') {
             $frameworkSettings = $this->configurationManager->getConfiguration(
-                \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
             );
             $this->namespace = strtolower(
                 'tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']
@@ -277,9 +250,9 @@ class File implements \TYPO3\CMS\Core\SingletonInterface, \Psr\Log\LoggerAwareIn
     /**
      * Move an temporary uploaded file to the upload folder
      *
-     * @return \TYPO3\CMS\Core\Resource\FileInterface|NULL
+     * @return ?FileInterface
      */
-    public function moveTempFileToTempFolder()
+    public function moveTempFileToTempFolder(): ?FileInterface
     {
         $result = null;
         $fileData = $this->getUploadedFileInfo();
@@ -303,7 +276,7 @@ class File implements \TYPO3\CMS\Core\SingletonInterface, \Psr\Log\LoggerAwareIn
         }
     }
 
-    public function moveFileFromTempFolderToUploadFolder(\TYPO3\CMS\Extbase\Domain\Model\FileReference $image)
+    public function moveFileFromTempFolderToUploadFolder(FileReference $image)
     {
         if (empty($image)) {
             return;
@@ -317,11 +290,11 @@ class File implements \TYPO3\CMS\Core\SingletonInterface, \Psr\Log\LoggerAwareIn
         }
     }
 
-    public function removeFile(\TYPO3\CMS\Extbase\Domain\Model\FileReference $fileReference): string
+    public function removeFile(FileReference $fileReference): string
     {
         $image = $fileReference->getOriginalResource()->getOriginalFile();
         $folder = $image->getParentFolder();
-        $imageNameAndPath = \TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/'
+        $imageNameAndPath = Environment::getPublicPath() . '/'
             . $folder->getName() . '/' . $image->getIdentifier();
 
         if (@file_exists($imageNameAndPath)) {

@@ -1,6 +1,6 @@
 <?php
 
-defined('TYPO3_MODE') || die();
+defined('TYPO3') or die();
 
 call_user_func(function () {
     $languageFile = 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:';

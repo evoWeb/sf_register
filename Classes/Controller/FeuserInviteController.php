@@ -13,57 +13,66 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Controller\Event;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Controller\Event\InviteFormEvent;
+use Evoweb\SfRegister\Controller\Event\InviteInviteEvent;
+use Evoweb\SfRegister\Services\Mail;
+use Evoweb\SfRegister\Services\Session;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * An frontend user create controller
+ * An frontend user invite controller
  */
 class FeuserInviteController extends FeuserController
 {
-    /**
-     * @var string
-     */
-    protected $controller = 'invite';
+    protected string $controller = 'invite';
 
-    public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
+    public function formAction(FrontendUser $user = null): ResponseInterface
     {
         if (is_null($user) && $this->userIsLoggedIn()) {
             $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
-            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+            /** @var FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
         }
 
-        $this->eventDispatcher->dispatch(new Event\InviteFormEvent($user, $this->settings));
+        $this->eventDispatcher->dispatch(new InviteFormEvent($user, $this->settings));
 
         $this->view->assign('user', $user);
+
+        return new HtmlResponse($this->view->render());
     }
 
     /**
-     * Save action
+     * Invite action
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
+     *
+     * @return ResponseInterface
      *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
-    public function inviteAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
+    public function inviteAction(FrontendUser $user): ResponseInterface
     {
-        $event = new Event\InviteInviteEvent($user, $this->settings, false);
+        $event = new InviteInviteEvent($user, $this->settings, false);
         $this->eventDispatcher->dispatch($event);
         $doNotSendInvitation = $event->isDoNotSendInvitation();
 
         $user = $this->sendEmails($user, __FUNCTION__);
 
         if (!$doNotSendInvitation) {
-            /** @var \Evoweb\SfRegister\Services\Mail $mailService */
-            $mailService = GeneralUtility::getContainer()->get(\Evoweb\SfRegister\Services\Mail::class);
+            /** @var Mail $mailService */
+            $mailService = GeneralUtility::getContainer()->get(Mail::class);
             $user = $mailService->sendInvitation($user, 'ToRegister');
         }
 
-        /** @var \Evoweb\SfRegister\Services\Session $session */
-        $session = GeneralUtility::makeInstance(\Evoweb\SfRegister\Services\Session::class);
+        /** @var Session $session */
+        $session = GeneralUtility::makeInstance(Session::class);
         $session->remove('captchaWasValidPreviously');
 
         $this->view->assign('user', $user);
+
+        return new HtmlResponse($this->view->render());
     }
 }

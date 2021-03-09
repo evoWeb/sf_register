@@ -13,10 +13,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+
 /**
  * A empty validator this is used in validation of a new created user to ensure that the uid is empty
  */
-class EmptyValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+class EmptyValidator extends AbstractValidator
 {
     /**
      * @var bool

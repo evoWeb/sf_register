@@ -13,25 +13,18 @@ namespace Evoweb\SfRegister\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * A password object for validation
  */
-class Password extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Password extends AbstractEntity
 {
-    /**
-     * @var string
-     */
-    protected $password = '';
+    protected string $password = '';
 
-    /**
-     * @var string
-     */
-    protected $passwordRepeat = '';
+    protected string $passwordRepeat = '';
 
-    /**
-     * @var string
-     */
-    protected $oldPassword = '';
+    protected string $oldPassword = '';
 
     public function getPassword(): string
     {

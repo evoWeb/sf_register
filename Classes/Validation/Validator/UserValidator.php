@@ -13,11 +13,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\Password;
 use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ObjectValidatorInterface;
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
-class UserValidator extends GenericObjectValidator implements ValidatorInterface
+class UserValidator extends GenericObjectValidator
 {
     /**
      * Model that gets validated currently
@@ -84,8 +85,8 @@ class UserValidator extends GenericObjectValidator implements ValidatorInterface
     public function canValidate($object): bool
     {
         return (
-            $object instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser
-            || $object instanceof \Evoweb\SfRegister\Domain\Model\Password
+            $object instanceof FrontendUser
+            || $object instanceof Password
         );
     }
 }

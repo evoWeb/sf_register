@@ -19,15 +19,9 @@ use Evoweb\SfRegister\Domain\Model\Password;
 
 final class PasswordFormEvent
 {
-    /**
-     * @var Password
-     */
-    protected $password;
+    protected Password $password;
 
-    /**
-     * @var array
-     */
-    protected $settings;
+    protected array $settings;
 
     public function __construct($password, array $settings)
     {
@@ -35,17 +29,11 @@ final class PasswordFormEvent
         $this->settings = $settings;
     }
 
-    /**
-     * @return Password
-     */
-    public function getPassword()
+    public function getPassword(): Password
     {
         return $this->password;
     }
 
-    /**
-     * @return array
-     */
     public function getSettings(): array
     {
         return $this->settings;

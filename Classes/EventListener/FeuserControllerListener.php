@@ -13,15 +13,14 @@ namespace Evoweb\SfRegister\EventListener;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
 class FeuserControllerListener
 {
-    /**
-     * @var UriBuilder
-     */
-    protected $uriBuilder;
+    protected UriBuilder $uriBuilder;
 
     public function __construct(UriBuilder $uriBuilder)
     {
@@ -49,10 +48,10 @@ class FeuserControllerListener
     protected function redirectToPage(int $pageId)
     {
         $url = $this->uriBuilder->setTargetPageUid($pageId)->build();
-        \TYPO3\CMS\Core\Utility\HttpUtility::redirect($url);
+        HttpUtility::redirect($url);
     }
 
-    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+    protected function getTypoScriptFrontendController(): ?TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
     }

@@ -13,10 +13,12 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository as ExtbaseFrontendUserRepository;
+
 /**
- * A repository for feusers
+ * A repository for frontend user models
  */
-class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository
+class FrontendUserRepository extends ExtbaseFrontendUserRepository
 {
     /**
      * Finds an object matching the given identifier.
@@ -79,7 +81,7 @@ class FrontendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Fronte
      *
      * @param string $field
      * @param string $value
-     * @param boolean $respectStoragePage
+     * @param bool $respectStoragePage
      *
      * @return int
      */

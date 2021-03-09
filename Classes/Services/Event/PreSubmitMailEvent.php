@@ -19,28 +19,12 @@ use TYPO3\CMS\Core\Mail\MailMessage;
 
 final class PreSubmitMailEvent
 {
-    /**
-     * @var MailMessage
-     */
-    protected $mail;
+    protected MailMessage $mail;
 
-    /**
-     * @var array
-     */
-    protected $settings;
+    protected array $settings;
 
-    /**
-     * @var array
-     */
-    protected $arguments;
+    protected array $arguments;
 
-    /**
-     * SendMailEvent constructor.
-     *
-     * @param MailMessage $mail
-     * @param array $settings
-     * @param array[FrontendUser] $arguments
-     */
     public function __construct(MailMessage $mail, array $settings, array $arguments)
     {
         $this->mail = $mail;
@@ -48,33 +32,21 @@ final class PreSubmitMailEvent
         $this->arguments = $arguments;
     }
 
-    /**
-     * @return MailMessage
-     */
     public function getMail(): MailMessage
     {
         return $this->mail;
     }
 
-    /**
-     * @return MailMessage
-     */
     public function getResult(): MailMessage
     {
         return $this->mail;
     }
 
-    /**
-     * @return array
-     */
     public function getSettings(): array
     {
         return $this->settings;
     }
 
-    /**
-     * @return array
-     */
     public function getArguments(): array
     {
         return $this->arguments;

@@ -13,6 +13,9 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
+use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
+
 class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter
 {
     /**
@@ -42,19 +45,19 @@ class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTi
      * @param mixed $source
      * @param string $targetType
      * @param array $convertedChildProperties
-     * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
+     * @param ?PropertyMappingConfigurationInterface $configuration
      *
      * @return mixed|\TYPO3\CMS\Extbase\Error\Error target type, or an error object
      */
     public function convertFrom(
         $source,
-        $targetType,
+        string $targetType,
         array $convertedChildProperties = [],
-        \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration = null
+        ?PropertyMappingConfigurationInterface $configuration = null
     ): ?object {
         try {
             $date = parent::convertFrom($source, $targetType, $convertedChildProperties, $configuration);
-        } catch (\TYPO3\CMS\Extbase\Property\Exception\TypeConverterException $e) {
+        } catch (TypeConverterException $e) {
             $date = null;
         }
 

@@ -19,15 +19,9 @@ use Evoweb\SfRegister\Domain\Model\Email;
 
 final class ResendFormEvent
 {
-    /**
-     * @var Email
-     */
-    protected $email;
+    protected Email $email;
 
-    /**
-     * @var array
-     */
-    protected $settings;
+    protected array $settings;
 
     public function __construct($email, array $settings)
     {
@@ -35,17 +29,11 @@ final class ResendFormEvent
         $this->settings = $settings;
     }
 
-    /**
-     * @return Email
-     */
-    public function getEmail()
+    public function getEmail(): Email
     {
         return $this->email;
     }
 
-    /**
-     * @return array
-     */
     public function getSettings(): array
     {
         return $this->settings;

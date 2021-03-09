@@ -15,6 +15,9 @@ namespace Evoweb\SfRegister\Command;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Symfony\Component\Console\Command\Command;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,17 +25,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class CleanupCommand extends \Symfony\Component\Console\Command\Command
+class CleanupCommand extends Command
 {
-    /**
-     * @var ResourceFactory
-     */
-    protected $resourceFactory;
+    protected ?ResourceFactory $resourceFactory;
 
-    public function __construct(ResourceFactory $resourceFactory = null)
+    public function __construct(?ResourceFactory $resourceFactory)
     {
         $this->resourceFactory = $resourceFactory;
-        parent::__construct(null);
+        parent::__construct();
     }
 
     /**
@@ -64,22 +64,23 @@ class CleanupCommand extends \Symfony\Component\Console\Command\Command
         $inactiveGroups = GeneralUtility::intExplode(',', $input->getArgument('inactiveGroups'));
         if (empty($inactiveGroups)) {
             $io->comment('List of group marking inactive users may not be empty to prevent unwanted behaviour!');
-            return;
-        }
+        } else {
+            $days = (int)$input->getArgument('days');
 
-        $days = (int)$input->getArgument('days');
-
-        foreach ($inactiveGroups as $inactiveGroup) {
-            $users = $this->findInOutdatedTemporaryUsers($inactiveGroup, $days);
-            foreach ($users as $user) {
-                $this->removeUser($user);
-                $references = $this->fetchReference($user);
-                $this->removeReference($user);
-                $this->removeImage($references);
+            foreach ($inactiveGroups as $inactiveGroup) {
+                $users = $this->findInOutdatedTemporaryUsers($inactiveGroup, $days);
+                foreach ($users as $user) {
+                    $this->removeUser($user);
+                    $references = $this->fetchReference($user);
+                    $this->removeReference($user);
+                    $this->removeImage($references);
+                }
             }
+
+            $io->comment('Cleaned up all outdated temporary accounts.');
         }
 
-        $io->comment('Cleaned up all outdated temporary accounts.');
+        return 0;
     }
 
     protected function findInOutdatedTemporaryUsers(int $inactiveUserGroup, int $days): array
@@ -102,7 +103,7 @@ class CleanupCommand extends \Symfony\Component\Console\Command\Command
             )
             ->execute();
 
-        return $result->fetchAll();
+        return $result->fetchAllAssociative();
     }
 
     protected function removeUser(array $user)
@@ -135,7 +136,7 @@ class CleanupCommand extends \Symfony\Component\Console\Command\Command
             )
             ->execute();
 
-        return $result->fetchAll();
+        return $result->fetchAllAssociative();
     }
 
     protected function removeReference(array $user)
@@ -157,12 +158,10 @@ class CleanupCommand extends \Symfony\Component\Console\Command\Command
         }
     }
 
-    protected function getQueryBuilderForTable(string $table): \TYPO3\CMS\Core\Database\Query\QueryBuilder
+    protected function getQueryBuilderForTable(string $table): QueryBuilder
     {
-        /** @var \TYPO3\CMS\Core\Database\ConnectionPool $pool */
-        $pool = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Database\ConnectionPool::class
-        );
+        /** @var ConnectionPool $pool */
+        $pool = GeneralUtility::makeInstance(ConnectionPool::class);
         return $pool->getQueryBuilderForTable($table);
     }
 }

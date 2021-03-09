@@ -13,12 +13,17 @@ namespace Evoweb\SfRegister\ViewHelpers;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class ExplodeViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+class ExplodeViewHelper extends AbstractViewHelper
 {
-    use \TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
+    use CompileWithRenderStatic;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $escapeOutput = false;
 
@@ -39,11 +44,11 @@ class ExplodeViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHe
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
-        \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+        RenderingContextInterface $renderingContext
     ) {
         $string = $arguments['string'] !== '' ? $arguments['string'] : $renderChildrenClosure();
         $delimiter = $arguments['delimiter'];
 
-        return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode($delimiter, $string);
+        return GeneralUtility::trimExplode($delimiter, $string);
     }
 }

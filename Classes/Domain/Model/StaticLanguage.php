@@ -13,171 +13,173 @@ namespace Evoweb\SfRegister\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * A static language
  */
-class StaticLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class StaticLanguage extends AbstractEntity
 {
     /**
      * ISO 639-1 A2 Language code
      *
      * @var string
      */
-    protected $lgIso2;
+    protected string $lgIso2;
 
     /**
      * Name
      *
      * @var string
      */
-    protected $lgNameLocal;
+    protected string $lgNameLocal;
 
     /**
      * Name (EN)
      *
      * @var string
      */
-    protected $lgNameEn;
+    protected string $lgNameEn;
 
     /**
      * Short name (CZ)
      *
      * @var string
      */
-    protected $lgNameCz;
+    protected string $lgNameCz;
 
     /**
      * Short name (DA)
      *
      * @var string
      */
-    protected $lgNameDa;
+    protected string $lgNameDa;
 
     /**
      * Short name (DE)
      *
      * @var string
      */
-    protected $lgNameDe;
+    protected string $lgNameDe;
 
     /**
      * Short name (ES)
      *
      * @var string
      */
-    protected $lgNameEs;
+    protected string $lgNameEs;
 
     /**
      * Short name (FR)
      *
      * @var string
      */
-    protected $lgNameFr;
+    protected string $lgNameFr;
 
     /**
      * Short name (GA)
      *
      * @var string
      */
-    protected $lgNameGa;
+    protected string $lgNameGa;
 
     /**
      * Short name (GL)
      *
      * @var string
      */
-    protected $lgNameGl;
+    protected string $lgNameGl;
 
     /**
      * Short name (IT)
      *
      * @var string
      */
-    protected $lgNameIt;
+    protected string $lgNameIt;
 
     /**
      * Short name (JA)
      *
      * @var string
      */
-    protected $lgNameJa;
+    protected string $lgNameJa;
 
     /**
      * Short name (KM)
      *
      * @var string
      */
-    protected $lgNameKm;
+    protected string $lgNameKm;
 
     /**
      * Short name (NL)
      *
      * @var string
      */
-    protected $lgNameNl;
+    protected string $lgNameNl;
 
     /**
      * Short name (NO)
      *
      * @var string
      */
-    protected $lgNameNo;
+    protected string $lgNameNo;
 
     /**
      * Short name (PL)
      *
      * @var string
      */
-    protected $lgNamePl;
+    protected string $lgNamePl;
 
     /**
      * Short name (PT)
      *
      * @var string
      */
-    protected $lgNamePt;
+    protected string $lgNamePt;
 
     /**
      * Short name (RO)
      *
      * @var string
      */
-    protected $lgNameRo;
+    protected string $lgNameRo;
 
     /**
      * Short name (RU)
      *
      * @var string
      */
-    protected $lgNameRu;
+    protected string $lgNameRu;
 
     /**
      * Short name (SK)
      *
      * @var string
      */
-    protected $lgNameSk;
+    protected string $lgNameSk;
 
     /**
      * Short name (SV)
      *
      * @var string
      */
-    protected $lgNameSv;
+    protected string $lgNameSv;
 
     /**
      * Short name (UA)
      *
      * @var string
      */
-    protected $lgNameUa;
+    protected string $lgNameUa;
 
     /**
      * Short name (ZH)
      *
      * @var string
      */
-    protected $lgNameZh;
+    protected string $lgNameZh;
 
     public function getLgIso2(): string
     {

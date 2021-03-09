@@ -19,15 +19,9 @@ use Evoweb\SfRegister\Controller\FeuserController;
 
 final class InitializeActionEvent
 {
-    /**
-     * @var FeuserController
-     */
-    private $controller;
+    private FeuserController $controller;
 
-    /**
-     * @var array
-     */
-    protected $settings;
+    protected array $settings;
 
     public function __construct(FeuserController $controller, array $settings)
     {

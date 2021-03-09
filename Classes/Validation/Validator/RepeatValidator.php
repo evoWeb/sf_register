@@ -13,12 +13,15 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\Password;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
  * A repeated value validator
  */
-class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements SettableInterface
+class RepeatValidator extends AbstractValidator implements SettableInterface
 {
     /**
      * @var bool
@@ -28,19 +31,16 @@ class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
     /**
      * Model to take repeated value of
      *
-     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password
+     * @var FrontendUser|Password
      */
     protected $model;
 
-    /**
-     * @var string
-     */
-    protected $propertyName;
+    protected string $propertyName = '';
 
     /**
      * Setter for model
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
+     * @param FrontendUser|Password $model
      */
     public function setModel($model)
     {
@@ -82,7 +82,7 @@ class RepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
      *
      * @return mixed
      */
-    protected function getPropertyValue($object, string $propertyName)
+    protected function getPropertyValue(object $object, string $propertyName)
     {
         // @todo add support for lazy loading proxies, if needed
         return ObjectAccess::getProperty($object, $propertyName);

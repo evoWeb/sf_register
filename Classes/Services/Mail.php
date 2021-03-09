@@ -13,47 +13,42 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\SingletonInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
+use TYPO3\CMS\Fluid\View\StandaloneView;
 use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Service to handle mail sending
  */
-class Mail implements \TYPO3\CMS\Core\SingletonInterface
+class Mail implements SingletonInterface
 {
-    /**
-     * @var \Psr\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-     */
-    protected $configurationManager;
+    protected ConfigurationManagerInterface $configurationManager;
 
-    /**
-     * @var array
-     */
-    protected $settings = [];
+    protected array $settings = [];
 
-    /**
-     * @var array
-     */
-    protected $frameworkConfiguration = [];
+    protected array $frameworkConfiguration = [];
 
     public function __construct(
-        \Psr\EventDispatcher\EventDispatcherInterface $eventDispatcher,
-        \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
+        EventDispatcherInterface $eventDispatcher,
+        ConfigurationManagerInterface $configurationManager
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'SfRegister',
             'Form'
         );
         $this->frameworkConfiguration = $configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
     }
 
@@ -102,7 +97,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $user;
     }
 
-    public function sendInvitation(FrontendUserInterface $user, string $type)
+    public function sendInvitation(FrontendUserInterface $user, string $type): FrontendUserInterface
     {
         $method = __FUNCTION__ . $type;
 
@@ -123,7 +118,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
     protected function getSubject(string $method, FrontendUserInterface $user): string
     {
-        return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+        return LocalizationUtility::translate(
             'subject' . $method,
             'SfRegister',
             [$this->settings['sitename'], $user->getUsername()]
@@ -162,7 +157,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         $settings =& $this->settings[$typeOfEmail];
 
         /** @var \TYPO3\CMS\Core\Mail\MailMessage $mail */
-        $mail = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Mail\MailMessage::class);
+        $mail = GeneralUtility::makeInstance(MailMessage::class);
         $mail->setTo($recipient)
             ->setFrom([$settings['fromEmail'] => $settings['fromName']])
             ->setSubject($subject);
@@ -178,7 +173,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             $mail->text($bodyPlain);
         }
 
-        $mail = $this->dispatchEvent('PreSubmitMail', $mail, $user);
+        $mail = $this->dispatchEvent('PreSubmitMail', $user, $mail);
 
         return $mail->send();
     }
@@ -203,7 +198,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             ]);
 
             $body = $view->render();
-        } catch (\TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException $e) {
+        } catch (InvalidTemplateResourceException $e) {
             $body = '';
         }
 
@@ -230,17 +225,17 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
             ]);
 
             $body = $view->render();
-        } catch (\TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException $e) {
+        } catch (InvalidTemplateResourceException $e) {
             $body = '';
         }
 
         return $body;
     }
 
-    protected function getView(string $controller, string $action): \TYPO3\CMS\Fluid\View\StandaloneView
+    protected function getView(string $controller, string $action): StandaloneView
     {
         /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
-        $view = GeneralUtility::getContainer()->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
+        $view = GeneralUtility::getContainer()->get(StandaloneView::class);
         $view->setLayoutRootPaths($this->frameworkConfiguration['view']['layoutRootPaths']);
         $view->setPartialRootPaths($this->frameworkConfiguration['view']['partialRootPaths']);
         $view->setTemplateRootPaths($this->frameworkConfiguration['view']['templateRootPaths']);
@@ -254,16 +249,11 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
         return $view;
     }
 
-    /**
-     * Dispatch event to listeners
-     *
-     * @param string $method
-     * @param \TYPO3\CMS\Core\Mail\MailMessage|FrontendUserInterface $result
-     *
-     * @return \TYPO3\CMS\Core\Mail\MailMessage|FrontendUserInterface
-     */
-    protected function dispatchEvent($method, $result)
-    {
+    protected function dispatchEvent(
+        string $method,
+        FrontendUserInterface $result,
+        ?MailMessage $mail = null
+    ): FrontendUserInterface {
         $event = 'Evoweb\\SfRegister\\Services\\Event\\' . $method . 'Event';
         $arguments = array_slice(func_get_args(), 2);
 

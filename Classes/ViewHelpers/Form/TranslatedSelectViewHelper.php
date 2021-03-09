@@ -13,6 +13,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -23,7 +24,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *  <register:form.translatedSelect name="language" options="{0: 'label_key1', 1: 'label_key2'}"/>
  * </code>
  */
-class TranslatedSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
+class TranslatedSelectViewHelper extends SelectViewHelper
 {
     public function initializeArguments()
     {

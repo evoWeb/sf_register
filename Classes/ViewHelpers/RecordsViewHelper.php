@@ -60,6 +60,7 @@ class RecordsViewHelper extends AbstractViewHelper
 
     protected static function getRecordsFromTable($table, $uids): array
     {
+        /** @var ConnectionPool $connectionPool */
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
         $queryBuilder = $connectionPool->getQueryBuilderForTable($table);
         $queryBuilder->getRestrictions()->removeAll();
@@ -75,7 +76,7 @@ class RecordsViewHelper extends AbstractViewHelper
                 )
                 ->orderBy('uid')
                 ->execute()
-                ->fetchAll();
+                ->fetchAllAssociative();
         } catch (\Exception $e) {
             throw new \RuntimeException(
                 'Database query failed. Error was: ' . $e->getPrevious()->getMessage(),

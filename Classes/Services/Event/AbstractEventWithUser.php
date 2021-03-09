@@ -19,20 +19,11 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 
 abstract class AbstractEventWithUser
 {
-    /**
-     * @var FrontendUser
-     */
-    protected $user;
+    protected FrontendUser $user;
 
-    /**
-     * @var array
-     */
-    protected $settings;
+    protected array $settings;
 
-    /**
-     * @var array
-     */
-    protected $arguments;
+    protected array $arguments;
 
     public function __construct(FrontendUser $user, array $settings, array $arguments)
     {
@@ -41,33 +32,21 @@ abstract class AbstractEventWithUser
         $this->arguments = $arguments;
     }
 
-    /**
-     * @return FrontendUser
-     */
     public function getUser(): FrontendUser
     {
         return $this->user;
     }
 
-    /**
-     * @return FrontendUser
-     */
     public function getResult(): FrontendUser
     {
         return $this->user;
     }
 
-    /**
-     * @return array
-     */
     public function getSettings(): array
     {
         return $this->settings;
     }
 
-    /**
-     * @return array
-     */
     public function getArguments(): array
     {
         return $this->arguments;

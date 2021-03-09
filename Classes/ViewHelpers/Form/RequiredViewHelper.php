@@ -13,6 +13,10 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use Evoweb\SfRegister\Validation\Validator\RequiredValidator;
+
 /**
  * View helper to render a select box with values
  * in given steps from start to end value
@@ -21,22 +25,11 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * <register:form.required fieldName="'username"/>
  * </code>
  */
-class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper
+class RequiredViewHelper extends AbstractFormFieldViewHelper
 {
-    /**
-     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
-     */
-    protected $configurationManager;
+    protected array $settings = [];
 
-    /**
-     * @var array
-     */
-    protected $settings = [];
-
-    /**
-     * @var array
-     */
-    protected $frameworkConfiguration = [];
+    protected array $frameworkConfiguration = [];
 
     /**
      * @var bool
@@ -48,17 +41,16 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
      */
     protected $escapeChildren = false;
 
-    public function injectConfigurationManager(
-        \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
-    ) {
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'SfRegister',
             'Form'
         );
         $this->frameworkConfiguration = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
     }
 
@@ -84,14 +76,14 @@ class RequiredViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormF
             (
                 is_array($fieldSettings)
                 && (
-                    in_array(\Evoweb\SfRegister\Validation\Validator\RequiredValidator::class, $fieldSettings)
+                    in_array(RequiredValidator::class, $fieldSettings)
                     || in_array('"Evoweb.SfRegister:Required"', $fieldSettings)
                 )
             )
             || (
                 is_string($fieldSettings)
                 && (
-                    $fieldSettings === \Evoweb\SfRegister\Validation\Validator\RequiredValidator::class
+                    $fieldSettings === RequiredValidator::class
                     || $fieldSettings === '"Evoweb.SfRegister:Required"'
                 )
             )

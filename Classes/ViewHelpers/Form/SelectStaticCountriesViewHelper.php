@@ -13,6 +13,10 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
+use Evoweb\SfRegister\Domain\Repository\StaticCountryRepository;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
 /**
  * View helper to render a select box with values of static info tables countries
  *
@@ -25,23 +29,19 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  *  <register:form.selectStaticCountries name="country" optionLabelField="cnShortDe"/>
  * </code>
  */
-class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
+class SelectStaticCountriesViewHelper extends SelectViewHelper
 {
-    /**
-     * @var \Evoweb\SfRegister\Domain\Repository\StaticCountryRepository
-     */
-    protected $countryRepository;
+    protected ?StaticCountryRepository $countryRepository;
 
-    public function injectCountryRepository(
-        \Evoweb\SfRegister\Domain\Repository\StaticCountryRepository $countryRepository
-    ) {
+    public function injectCountryRepository(StaticCountryRepository $countryRepository)
+    {
         $this->countryRepository = $countryRepository;
     }
 
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->overrideArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', false, true);
+        $this->overrideArgument('sortByOptionLabel', 'bool', 'If true, List will be sorted by label.', false, true);
         $this->registerArgument(
             'allowedCountries',
             'array',
@@ -69,7 +69,7 @@ class SelectStaticCountriesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\
     {
         parent::initialize();
 
-        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
+        if (ExtensionManagementUtility::isLoaded('static_info_tables')) {
             if ($this->hasArgument('allowedCountries') && count($this->arguments['allowedCountries'])) {
                 $options = $this->countryRepository->findByCnIso2($this->arguments['allowedCountries']);
             } else {
