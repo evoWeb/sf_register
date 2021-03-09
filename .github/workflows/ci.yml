@@ -27,7 +27,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['7.2', '7.3', '7.4']
+        php-versions: ['7.4']
 
     name: Lint PHP ${{ matrix.php-versions }}
     steps:
@@ -52,11 +52,9 @@ jobs:
       fail-fast: false
       matrix:
         env:
-          - { php: 7.4, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.5.0 }
-          - { php: 7.3, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.5.0 }
-          - { php: 7.2, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.5.0 }
-          - { php: 7.2, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^5.0.14, PREFER_LOWEST: "--prefer-lowest" }
-          - { php: 7.4, TYPO3_VERSION: "dev-master", TESTING_FRAMEWORK: ^6.5.0, experimental: true }
+          - { php: 7.4, TYPO3_VERSION: ^11.0, TESTING_FRAMEWORK: ^6.6.2 }
+          - { php: 7.4, TYPO3_VERSION: ^11.0, TESTING_FRAMEWORK: ^6.6.2, PREFER_LOWEST: "--prefer-lowest" }
+          - { php: 7.4, TYPO3_VERSION: "dev-master", TESTING_FRAMEWORK: ^6.6.2, experimental: true }
 
     env: ${{ matrix.env }}
 
