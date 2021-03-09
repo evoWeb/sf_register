@@ -23,13 +23,10 @@ abstract class AbstractEventWithUser
 
     protected array $settings = [];
 
-    protected array $arguments = [];
-
-    public function __construct(FrontendUser $user, array $settings, array $arguments)
+    public function __construct(FrontendUser $user, array $settings)
     {
         $this->user = $user;
         $this->settings = $settings;
-        $this->arguments = $arguments;
     }
 
     public function getUser(): FrontendUser
@@ -37,18 +34,8 @@ abstract class AbstractEventWithUser
         return $this->user;
     }
 
-    public function getResult(): FrontendUser
-    {
-        return $this->user;
-    }
-
     public function getSettings(): array
     {
         return $this->settings;
-    }
-
-    public function getArguments(): array
-    {
-        return $this->arguments;
     }
 }

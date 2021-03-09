@@ -25,7 +25,7 @@ final class PreSubmitMailEvent
 
     protected array $arguments = [];
 
-    public function __construct(MailMessage $mail, array $settings, array $arguments)
+    public function __construct(MailMessage $mail, array $settings, array $arguments = [])
     {
         $this->mail = $mail;
         $this->settings = $settings;
@@ -33,11 +33,6 @@ final class PreSubmitMailEvent
     }
 
     public function getMail(): MailMessage
-    {
-        return $this->mail;
-    }
-
-    public function getResult(): MailMessage
     {
         return $this->mail;
     }

@@ -14,6 +14,7 @@ namespace Evoweb\SfRegister\Services;
  */
 
 use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
+use Evoweb\SfRegister\Services\Event\PreSubmitMailEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -69,7 +70,7 @@ class Mail implements SingletonInterface
             $this->renderTextBody($controller, 'form', $method, $user)
         );
 
-        $user = $this->dispatchEvent($method, $user);
+        $user = $this->dispatchUserEvent($method, $user);
 
         return $user;
     }
@@ -91,7 +92,7 @@ class Mail implements SingletonInterface
             $this->renderTextBody($controller, 'form', $method, $user)
         );
 
-        $user = $this->dispatchEvent($method, $user);
+        $user = $this->dispatchUserEvent($method, $user);
 
         return $user;
     }
@@ -109,7 +110,7 @@ class Mail implements SingletonInterface
             $this->renderTextBody('FeuserCreate', 'form', $method, $user)
         );
 
-        $user = $this->dispatchEvent($method, $user);
+        $user = $this->dispatchUserEvent($method, $user);
 
         return $user;
     }
@@ -170,7 +171,7 @@ class Mail implements SingletonInterface
             $mail->text($bodyPlain);
         }
 
-        $mail = $this->dispatchEvent('PreSubmitMail', $user, $mail);
+        $mail = $this->dispatchMailEvent($mail, $user);
 
         return $mail->send();
     }
@@ -246,16 +247,19 @@ class Mail implements SingletonInterface
         return $view;
     }
 
-    protected function dispatchEvent(
-        string $method,
-        FrontendUserInterface $result,
-        ?MailMessage $mail = null
-    ): FrontendUserInterface {
-        $event = 'Evoweb\\SfRegister\\Services\\Event\\' . $method . 'Event';
-        $arguments = array_slice(func_get_args(), 2);
-
-        $eventObject = new $event($result, $this->settings, $arguments);
+    protected function dispatchMailEvent(MailMessage $mail, FrontendUserInterface $user): MailMessage
+    {
+        $eventObject = new PreSubmitMailEvent($mail, $this->settings, ['user' => $user]);
         $this->eventDispatcher->dispatch($eventObject);
-        return $eventObject->getResult();
+        return $eventObject->getMail();
+    }
+
+    protected function dispatchUserEvent(string $method, FrontendUserInterface $user): FrontendUserInterface
+    {
+        $event = 'Evoweb\\SfRegister\\Services\\Event\\' . $method . 'Event';
+        /** @var \Evoweb\SfRegister\Services\Event\AbstractEventWithUser $eventObject */
+        $eventObject = new $event($user, $this->settings);
+        $this->eventDispatcher->dispatch($eventObject);
+        return $eventObject->getUser();
     }
 }
