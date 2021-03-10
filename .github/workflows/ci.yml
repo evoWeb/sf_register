@@ -107,52 +107,21 @@ jobs:
       - name: Reset composer.json
         run: git checkout composer.json;
 
-  publish:
+  TERUpload:
     needs: [ xliff, lint, phpunit ]
     if: startsWith(github.ref, 'refs/tags/')
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     strategy:
-      matrix:
-        php-versions: ['7.4']
-
-    env:
-      EXTENSION: sf_register
-      USERNAME: ${{ secrets.typo3Username }}
-      PASSWORD: ${{ secrets.typo3Password }}
+      fail-fast: false
 
     name: TYPO3 TER release
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - name: Publish to TER
+        uses: tomasnorre/typo3-upload-ter@v1
         with:
-          php-version: ${{ matrix.php-versions }}
-
-      - name: publish in ter
-        run: |
-          TAG="$(echo ${GITHUB_REF} | cut -d / -f 3)"
-          if [[ "${TAG}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] && [ -n "${USERNAME}" ] && [ -n "${PASSWORD}" ]; then
-            echo -e "Preparing upload of release ${TAG} to TER\n";
-
-            # Install requirements
-            composer global require helhum/ter-client
-
-            # Cleanup before we upload
-            git reset --hard HEAD && git clean -fx
-
-            # Remove folder that shouldn't to get uploaded
-            rm -rf .Build
-            rm -rf .github
-
-            # Set version number from TAG
-            sed -i "s/version' => '.*'/version' => '${TAG}'/" ext_emconf.php
-
-            # Upload
-            TAG_MESSAGE=`git tag -n10 -l ${TAG} | sed 's/^[0-9.]*[ ]*//g'`
-            echo "Uploading release ${TAG} to TER"
-            $HOME/.composer/vendor/bin/ter-client upload ${EXTENSION} . -u "${USERNAME}" -p "${PASSWORD}" -m "${TAG_MESSAGE}"
-          fi;
+          api-token: ${{ secrets.TYPO3_API_TOKEN }}
