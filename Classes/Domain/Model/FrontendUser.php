@@ -494,15 +494,12 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         return $this->language;
     }
 
-    public function setModuleSysDmailCategory(array $moduleSysDmailCategory)
+    public function setModuleSysDmailCategory(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $moduleSysDmailCategory)
     {
         $this->moduleSysDmailCategory = $moduleSysDmailCategory;
     }
 
-    /**
-     * @return array|null|\TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    public function getModuleSysDmailCategory()
+    public function getModuleSysDmailCategory(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
     {
         return $this->moduleSysDmailCategory;
     }
