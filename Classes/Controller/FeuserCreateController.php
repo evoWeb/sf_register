@@ -25,7 +25,6 @@ use Evoweb\SfRegister\Services\Session;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Property\PropertyMapper;
 
 /**
  * An frontend user create controller
@@ -47,17 +46,6 @@ class FeuserCreateController extends FeuserController
             if ($userData->getUid()) {
                 $userData->_setProperty('uid', null);
             }
-
-            $propertyMappingConfiguration = $this->getPropertyMappingConfiguration(null, $userData);
-
-            /** @var PropertyMapper $propertyMapper */
-            $propertyMapper = GeneralUtility::getContainer()
-                ->get(PropertyMapper::class);
-            $user = $propertyMapper->convert(
-                $userData,
-                FrontendUser::class,
-                $propertyMappingConfiguration
-            );
         }
 
         if ($user) {

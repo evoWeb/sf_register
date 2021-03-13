@@ -25,7 +25,6 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
-use TYPO3\CMS\Extbase\Property\PropertyMapper;
 
 /**
  * An frontend user edit controller
@@ -48,17 +47,12 @@ class FeuserEditController extends FeuserController
             )
             && $this->userIsLoggedIn()
         ) {
-            /** @var array $userData */
+            /** @var FrontendUser $userData */
             $userData = $this->request->hasArgument('user') ?
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');
-
-            // only reconstitute user object if given user uid equals logged in user uid
-            if (is_array($userData) && $userData['uid'] == $userId) {
-                /** @var PropertyMapper $propertyMapper */
-                $propertyMapper = GeneralUtility::getContainer()
-                    ->get(PropertyMapper::class);
-                $user = $propertyMapper->convert($userData, FrontendUser::class);
+            if ($userData->getUid() != $userId) {
+                $user = null;
             }
         }
 
@@ -67,7 +61,7 @@ class FeuserEditController extends FeuserController
             $user = $this->userRepository->findByUid($userId);
         }
 
-        if ($originalRequest && $originalRequest->hasArgument('temporaryImage')) {
+        if ($originalRequest !== null && $originalRequest->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
         }
 

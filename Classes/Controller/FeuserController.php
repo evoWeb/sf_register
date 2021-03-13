@@ -111,6 +111,8 @@ class FeuserController extends ActionController
 
     protected function initializeActionMethodValidators()
     {
+        $this->settings['hasOriginalRequest'] = $this->request->getOriginalRequest() !== null;
+
         if (!is_array($this->settings['fields']['selected'])) {
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
         }
