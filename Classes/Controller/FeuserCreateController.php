@@ -40,12 +40,12 @@ class FeuserCreateController extends FeuserController
     {
         $originalRequest = $this->request->getOriginalRequest();
         if ($originalRequest !== null && $originalRequest->hasArgument('user')) {
-            /** @var array $userData */
+            /** @var FrontendUser $userData */
             $userData = $this->request->hasArgument('user') ?
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');
-            if (isset($userData['uid'])) {
-                unset($userData['uid']);
+            if ($userData->getUid()) {
+                $userData->_setProperty('uid', null);
             }
 
             $propertyMappingConfiguration = $this->getPropertyMappingConfiguration(null, $userData);

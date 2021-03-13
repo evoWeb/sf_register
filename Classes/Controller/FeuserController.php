@@ -316,7 +316,7 @@ class FeuserController extends ActionController
      *
      * @return ResponseInterface
      *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
      */
     public function proxyAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user): ResponseInterface
     {
@@ -333,7 +333,7 @@ class FeuserController extends ActionController
      *
      * @return ResponseInterface
      *
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $user
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
      */
     protected function removeImageAction(FrontendUser $user): ResponseInterface
     {
