@@ -84,7 +84,6 @@ class File implements SingletonInterface, LoggerAwareInterface
         if (!$this->storage) {
             /** @var ResourceFactory $resourceFactory */
             $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
-            /** @var ResourceStorage $storage */
             $this->storage = $resourceFactory->getStorageObject($this->storageUid);
         }
 

@@ -26,7 +26,7 @@ class FrontendUser extends ExtbaseFrontendUser implements FrontendUserInterface
     /**
      * @var ObjectStorage<FrontendUserGroup>
      */
-    protected $usergroup;
+    protected $usergroup = null;
 
     /**
      * If the account is disabled or not
@@ -201,7 +201,7 @@ class FrontendUser extends ExtbaseFrontendUser implements FrontendUserInterface
      *
      * @var ?ObjectStorage<Category>
      */
-    protected ObjectStorage $moduleSysDmailCategory;
+    protected ?ObjectStorage $moduleSysDmailCategory = null;
 
     /**
      * new email address before edit

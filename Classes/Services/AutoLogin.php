@@ -27,7 +27,7 @@ class AutoLogin extends AuthenticationService
     /**
      * Find a user (eg. look up the user record in database when a login is sent)
      *
-     * @return array|bool User array or FALSE
+     * @return array User array or null
      */
     public function getUser(): ?array
     {
@@ -49,7 +49,7 @@ class AutoLogin extends AuthenticationService
 
         self::$autoLoginActivated = (int)$userId > 0 && !empty($user);
 
-        return $user;
+        return is_array($user) ? $user : null;
     }
 
     /**

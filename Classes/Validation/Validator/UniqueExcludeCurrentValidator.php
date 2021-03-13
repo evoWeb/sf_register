@@ -46,7 +46,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Settabl
      *
      * @var FrontendUser|Password
      */
-    protected $model = null;
+    protected $model;
 
     protected string $propertyName = '';
 

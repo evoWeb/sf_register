@@ -243,7 +243,7 @@ class FeuserCreateController extends FeuserController
      *
      * @return ResponseInterface
      */
-    public function acceptAction(?FrontendUser $user, string $hash): ResponseInterface
+    public function acceptAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
         $user = $this->determineFrontendUser($user, $hash);
 

@@ -61,7 +61,7 @@ class FrontendUserConverter extends AbstractTypeConverter
      * @param array $convertedChildProperties
      * @param ?PropertyMappingConfigurationInterface $configuration
      *
-     * @return mixed|\TYPO3\CMS\Extbase\Error\Error target type, or an error object
+     * @return ?object target type, or an error object
      */
     public function convertFrom(
         $source,
