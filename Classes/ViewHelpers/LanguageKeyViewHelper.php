@@ -57,7 +57,7 @@ class LanguageKeyViewHelper extends AbstractViewHelper
     public function render(): string
     {
         $languageCode = '';
-        if (ApplicationType::fromRequest($GLOBALS['REQUEST_TYPE'])->isFrontend()) {
+        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
             $languageCode = $this->getTypoScriptFrontendController()->config['config']['language'] ?: 'default';
         } elseif ($this->getBackendUserAuthentication()->uc['lang'] != '') {
             $languageCode = $this->getBackendUserAuthentication()->uc['lang'];
