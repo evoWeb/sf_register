@@ -37,6 +37,8 @@ class FeuserCreateController extends FeuserController
 
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
+        $setupResponse = $this->setupCheck();
+
         $originalRequest = $this->request->getOriginalRequest();
         if ($originalRequest !== null && $originalRequest->hasArgument('user')) {
             /** @var FrontendUser $userData */
@@ -53,7 +55,7 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('user', $user);
         }
 
-        return new HtmlResponse($this->view->render());
+        return $setupResponse ?? new HtmlResponse($this->view->render());
     }
 
     /**
@@ -295,5 +297,43 @@ class FeuserCreateController extends FeuserController
         }
 
         return new HtmlResponse($this->view->render());
+    }
+
+    protected function setupCheck(): ?ResponseInterface
+    {
+        $result = null;
+
+        if (
+            $this->settings['notifyUser']['createSave']
+            && (empty($this->settings['usergroupPostSave']) || empty($this->settings['usergroupPostConfirm']))
+        ) {
+            $result = new HtmlResponse(
+                '<h3>Please check your setup.</h3>
+                You need to configure usergroups to get double optin to work as intended.<br>
+                Please have a look into TypoScript <b>constants</b>:
+                <ul>
+                <li>plugin.tx_sfregister.settings.usergroupPostSave</li>
+                <li>plugin.tx_sfregister.settings.usergroupPostConfirm</li>
+                </ul>'
+            );
+        }
+
+        if (
+            $this->settings['useEmailAddressAsUsername']
+            && in_array('username', $this->settings['fields']['selected'])
+        ) {
+            $result = new HtmlResponse(
+                '<h3>Please check your setup.</h3>
+                If the email should be used as username the field username should be left out of the selected fields<br>
+                Please have a look into TypoScript <b>setup</b>:
+                <ul>
+                  <li>selected fields in the registration plugin</li>
+                  <li>plugin.tx_sfregister.settings.useEmailAddressAsUsername</li>
+                  <li>plugin.tx_sfregister.settings.fields.selected</li>
+                </ul>'
+            );
+        }
+
+        return $result;
     }
 }

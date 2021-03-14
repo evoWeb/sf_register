@@ -5,7 +5,7 @@ plugin.tx_sfregister.settings {
   # cat=sf_register.settings//50; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.badWordList
   badWordList = god, sex, password
 
-  confirmEmailPostCreate =
+  confirmEmailPostCreate = 1
   acceptEmailPostCreate =
   confirmEmailPostAccept =
   acceptEmailPostConfirm =
