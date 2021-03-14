@@ -28,27 +28,25 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
-class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelper
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Property\PropertyMapper;
+use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
+use TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelper as ExtbaseUploadViewHelper;
+
+class UploadViewHelper extends ExtbaseUploadViewHelper
 {
-    /**
-     * @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService
-     */
-    protected $hashService;
+    protected ?HashService $hashService = null;
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Property\PropertyMapper
-     */
-    protected $propertyMapper;
+    protected ?PropertyMapper $propertyMapper = null;
 
-    public function injectHashService(
-        \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService
-    ) {
+    public function injectHashService(HashService $hashService)
+    {
         $this->hashService = $hashService;
     }
 
-    public function injectPropertyMapper(
-        \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper
-    ) {
+    public function injectPropertyMapper(PropertyMapper $propertyMapper)
+    {
         $this->propertyMapper = $propertyMapper;
     }
 
@@ -77,7 +75,7 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage|array $resources
+     * @param ObjectStorage|array $resources
      *
      * @return string
      */
@@ -85,6 +83,7 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
     {
         $output = '';
 
+        /** @var FileReference $resource */
         foreach ($resources as $resource) {
             $resourcePointerIdAttribute = '';
             if ($this->hasArgument('id')) {
@@ -113,14 +112,14 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage|array $resources
+     * @param ObjectStorage|array $resources
      *
      * @return bool
      */
     protected function isRenderUpload($resources): bool
     {
         return is_null($resources)
-            || ($resources instanceof \TYPO3\CMS\Extbase\Persistence\ObjectStorage && count($resources) === 0)
+            || ($resources instanceof ObjectStorage && count($resources) === 0)
             || (is_array($resources) && count($resources) === 0)
             || ($this->hasArgument('alwaysShowUpload') && $this->arguments['alwaysShowUpload']);
     }
@@ -138,13 +137,13 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
         if (!$this->getMappingResultsForProperty()->hasErrors()) {
             $resource = $this->getValueAttribute();
 
-            if ($resource instanceof \TYPO3\CMS\Extbase\Domain\Model\FileReference) {
+            if ($resource instanceof FileReference) {
                 $result = [$resource];
-            } elseif ($resource instanceof \TYPO3\CMS\Extbase\Persistence\ObjectStorage) {
+            } elseif ($resource instanceof ObjectStorage) {
                 $result = $resource->toArray();
             } elseif ($resource !== null) {
                 $result = [
-                    $this->propertyMapper->convert($resource, \TYPO3\CMS\Extbase\Domain\Model\FileReference::class)
+                    $this->propertyMapper->convert($resource, FileReference::class),
                 ];
             }
         }

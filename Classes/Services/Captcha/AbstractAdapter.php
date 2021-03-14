@@ -13,22 +13,16 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaInterface
+use Evoweb\SfRegister\Interfaces\CaptchaInterface;
+use TYPO3\CMS\Extbase\Validation\Error;
+
+abstract class AbstractAdapter implements CaptchaInterface
 {
-    /**
-     * @var object
-     */
-    protected $captcha;
+    protected ?object $captcha = null;
 
-    /**
-     * @var array
-     */
-    protected $settings = [];
+    protected array $settings = [];
 
-    /**
-     * @var array
-     */
-    protected $errors = [];
+    protected array $errors = [];
 
     /**
      * Renders the output of an concrete captcha
@@ -53,7 +47,7 @@ abstract class AbstractAdapter implements \Evoweb\SfRegister\Interfaces\CaptchaI
 
     protected function addError(string $message, int $code)
     {
-        $this->errors[] = new \TYPO3\CMS\Extbase\Validation\Error($message, $code);
+        $this->errors[] = new Error($message, $code);
     }
 
     public function getErrors(): array

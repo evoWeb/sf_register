@@ -13,21 +13,23 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Controller\Event;
+use Evoweb\SfRegister\Controller\Event\ResendFormEvent;
+use Evoweb\SfRegister\Controller\Event\ResendMailEvent;
+use Evoweb\SfRegister\Domain\Model\Email;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\HtmlResponse;
 
 /**
  * An frontend user resend controller
  */
 class FeuserResendController extends FeuserController
 {
-    /**
-     * @var string
-     */
-    protected $controller = 'resend';
+    protected string $controller = 'resend';
 
-    public function formAction(\Evoweb\SfRegister\Domain\Model\Email $email = null)
+    public function formAction(Email $email = null): ResponseInterface
     {
-        $email = $this->eventDispatcher->dispatch(new Event\ResendFormEvent($email, $this->settings))->getEmail();
+        $email = $this->eventDispatcher->dispatch(new ResendFormEvent($email, $this->settings))->getEmail();
 
         $userId = $this->context->getAspect('frontend.user')->get('id');
         $email = $email ?? $this->userRepository->findByUid($userId);
@@ -35,24 +37,30 @@ class FeuserResendController extends FeuserController
         if ($email) {
             $this->view->assign('email', ['email' => $email->getEmail()]);
         }
+
+        return new HtmlResponse($this->view->render());
     }
 
     /**
      * Save action
      *
-     * @param \Evoweb\SfRegister\Domain\Model\Email $email
+     * @param Email $email
+     *
+     * @return ResponseInterface
      *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="email")
      */
-    public function mailAction(\Evoweb\SfRegister\Domain\Model\Email $email)
+    public function mailAction(Email $email): ResponseInterface
     {
-        $email = $this->eventDispatcher->dispatch(new Event\ResendMailEvent($email, $this->settings))->getEmail();
+        $email = $this->eventDispatcher->dispatch(new ResendMailEvent($email, $this->settings))->getEmail();
 
-        /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+        /** @var FrontendUser $user */
         $user = $this->userRepository->findByEmail($email->getEmail());
 
         if ($user) {
             $this->sendEmails($user, __FUNCTION__);
         }
+
+        return new HtmlResponse($this->view->render());
     }
 }

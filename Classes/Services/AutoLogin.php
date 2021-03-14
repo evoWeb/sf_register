@@ -13,28 +13,29 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Authentication\AuthenticationService;
+use TYPO3\CMS\Core\Registry;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Service to handle user login
  */
-class AutoLogin extends \TYPO3\CMS\Core\Authentication\AuthenticationService
+class AutoLogin extends AuthenticationService
 {
-    /**
-     * @var bool
-     */
-    protected static $autoLoginActivated = false;
+    protected static bool $autoLoginActivated = false;
 
     /**
      * Find a user (eg. look up the user record in database when a login is sent)
      *
-     * @return array|bool User array or FALSE
+     * @return array User array or null
      */
-    public function getUser()
+    public function getUser(): ?array
     {
         session_start();
         $hmac = $_SESSION['sf-register-user'];
 
         /** @var \TYPO3\CMS\Core\Registry $registry */
-        $registry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Registry::class);
+        $registry = GeneralUtility::makeInstance(Registry::class);
         $userId = $registry->get('sf-register', $hmac);
 
         $registry->remove('sf-register', $hmac);
@@ -43,12 +44,12 @@ class AutoLogin extends \TYPO3\CMS\Core\Authentication\AuthenticationService
         $user = $this->fetchUserRecord(
             $userId,
             '',
-            array_merge($this->db_user, ['username_column' => 'uid','check_pid_clause' => ''])
+            array_merge($this->db_user, ['username_column' => 'uid', 'check_pid_clause' => ''])
         );
 
-        self::$autoLoginActivated = intval($userId) > 0 && !empty($user);
+        self::$autoLoginActivated = (int)$userId > 0 && !empty($user);
 
-        return $user;
+        return is_array($user) ? $user : null;
     }
 
     /**

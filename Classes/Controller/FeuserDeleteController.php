@@ -13,25 +13,25 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Controller\Event;
+use Evoweb\SfRegister\Controller\Event\DeleteConfirmEvent;
+use Evoweb\SfRegister\Controller\Event\DeleteFormEvent;
+use Evoweb\SfRegister\Controller\Event\DeleteSaveEvent;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Property\PropertyMapper;
 
 /**
  * An frontend user create controller
  */
 class FeuserDeleteController extends FeuserController
 {
-    /**
-     * @var string
-     */
-    protected $controller = 'delete';
+    protected string $controller = 'delete';
 
-    /**
-     * @var array
-     */
-    protected $ignoredActions = ['confirmAction', 'requestAction'];
+    protected array $ignoredActions = ['confirmAction', 'requestAction'];
 
-    public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
+    public function formAction(FrontendUser $user = null): ResponseInterface
     {
         $userId = $this->context->getAspect('frontend.user')->get('id');
 
@@ -52,8 +52,8 @@ class FeuserDeleteController extends FeuserController
             if ($userData['uid'] == $userId) {
                 /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
                 $propertyMapper = GeneralUtility::getContainer()
-                    ->get(\TYPO3\CMS\Extbase\Property\PropertyMapper::class);
-                $user = $propertyMapper->convert($userData, \Evoweb\SfRegister\Domain\Model\FrontendUser::class);
+                    ->get(PropertyMapper::class);
+                $user = $propertyMapper->convert($userData, FrontendUser::class);
             }
         }
 
@@ -62,21 +62,25 @@ class FeuserDeleteController extends FeuserController
             $user = $this->userRepository->findByUid($userId);
         }
 
-        $this->eventDispatcher->dispatch(new Event\DeleteFormEvent($user, $this->settings));
+        $this->eventDispatcher->dispatch(new DeleteFormEvent($user, $this->settings));
 
         $this->view->assign('user', $user);
+
+        return new HtmlResponse($this->view->render());
     }
 
     /**
      * Save action
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
+     *
+     * @return ResponseInterface
      *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
-    public function saveAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user)
+    public function saveAction(FrontendUser $user): ResponseInterface
     {
-        $this->eventDispatcher->dispatch(new Event\DeleteSaveEvent($user, $this->settings));
+        $this->eventDispatcher->dispatch(new DeleteSaveEvent($user, $this->settings));
 
         if (!$user->getUsername()) {
             $user->setUsername($user->getEmail());
@@ -88,24 +92,28 @@ class FeuserDeleteController extends FeuserController
         $user = $this->sendEmails($user, __FUNCTION__);
 
         $this->view->assign('user', $user);
+
+        return new HtmlResponse($this->view->render());
     }
 
     /**
      * Confirm delete process by user
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|null $user
-     * @param string|null $hash
+     * @param ?FrontendUser $user
+     * @param ?string $hash
+     *
+     * @return ResponseInterface
      */
-    public function confirmAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null, string $hash = null)
+    public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
         $user = $this->determineFrontendUser($user, $hash);
 
-        if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
+        if (!($user instanceof FrontendUser)) {
             $this->view->assign('userAlreadyDeleted', 1);
         } else {
             $this->view->assign('user', $user);
 
-            $this->eventDispatcher->dispatch(new Event\DeleteConfirmEvent($user, $this->settings));
+            $this->eventDispatcher->dispatch(new DeleteConfirmEvent($user, $this->settings));
 
             $this->sendEmails($user, __FUNCTION__);
 
@@ -114,24 +122,30 @@ class FeuserDeleteController extends FeuserController
 
             $this->view->assign('userDeleted', 1);
         }
+
+        return new HtmlResponse($this->view->render());
     }
 
-    public function requestAction(string $email = null)
+    public function requestAction(?string $email): ResponseInterface
     {
         $this->view->assign('user', ['email' => $email]);
+
+        return new HtmlResponse($this->view->render());
     }
 
     /**
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $requestUser
+     * @param FrontendUser $requestUser
+     *
+     * @return ResponseInterface
      *
      * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="requestUser")
      */
-    public function sendLinkAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $requestUser)
+    public function sendLinkAction(FrontendUser $requestUser): ResponseInterface
     {
-        /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+        /** @var FrontendUser $user */
         $user = $this->userRepository->findByEmail($requestUser->getEmail());
 
-        if (!($user instanceof \Evoweb\SfRegister\Domain\Model\FrontendUser)) {
+        if (!($user instanceof FrontendUser)) {
             $this->view->assign('userUnknown', 1);
         } else {
             $this->view->assign('user', $user);
@@ -139,5 +153,7 @@ class FeuserDeleteController extends FeuserController
 
             $this->sendEmails($user, __FUNCTION__);
         }
+
+        return new HtmlResponse($this->view->render());
     }
 }

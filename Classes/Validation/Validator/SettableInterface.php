@@ -13,19 +13,17 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\Password;
+
 interface SettableInterface
 {
     /**
      * Setter for model
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
+     * @param FrontendUser|Password $model
      */
     public function setModel($model);
 
-    /**
-     * Setter for propertyName
-     *
-     * @param string $propertyName
-     */
     public function setPropertyName(string $propertyName);
 }

@@ -8,11 +8,13 @@ services:
   Evoweb\SfRegister\:
     resource: '../Classes/*'
 
-  Evoweb\StoreFinder\Cache\CoordinatesCache:
-    factory: ['Evoweb\StoreFinder\Cache\CoordinatesCache', 'getInstance']
-    shared: false
-    autoconfigure: false
-    autowire: false
+  Evoweb\SfRegister\Services\Setup\CheckFactory:
+    arguments:
+      $configuration:
+        checks:
+            - Evoweb\SfRegister\Services\Setup\UserGroupCheck
+            - Evoweb\SfRegister\Services\Setup\UsernameCheck
+    public: true
 
   Evoweb\SfRegister\Command\CleanupCommand:
     tags:
@@ -24,3 +26,6 @@ services:
         identifier: 'sfregister_feusercontroller_processinitializeaction'
         method: 'onProcessInitializeActionEvent'
         event: Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent
+
+  Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter:
+    public: true

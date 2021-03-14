@@ -13,9 +13,11 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Persistence\Repository;
+
 /**
  * A Frontend User Group Repository
  */
-class FrontendUserGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class FrontendUserGroupRepository extends Repository
 {
 }

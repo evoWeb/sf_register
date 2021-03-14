@@ -13,6 +13,9 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -54,7 +57,21 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
 
-        $subject = new \Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController($context);
+        /** @var File $file */
+        $file = GeneralUtility::makeInstance(File::class);
+
+        /** @var FrontendUserRepository $userRepository */
+        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
+
+        /** @var FrontendUserGroupRepository $userGroupRepository */
+        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
+
+        $subject = new \Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController(
+            $context,
+            $file,
+            $userRepository,
+            $userGroupRepository
+        );
 
         /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
@@ -101,6 +118,6 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         $arguments = $subject->get('arguments');
         $validator = $arguments->getArgument('user')->getValidator();
 
-        $this->assertInstanceOf(\Evoweb\SfRegister\Validation\Validator\UserValidator::class, $validator);
+        self::assertInstanceOf(\Evoweb\SfRegister\Validation\Validator\UserValidator::class, $validator);
     }
 }

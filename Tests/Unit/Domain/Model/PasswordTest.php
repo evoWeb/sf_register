@@ -35,7 +35,7 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function passwordOnInitializeIsEmptyString()
     {
-        $this->assertEquals('', $this->subject->getPassword());
+        self::assertEquals('', $this->subject->getPassword());
     }
 
     /**
@@ -47,7 +47,7 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         $this->subject->setPassword($expected);
 
-        $this->assertSame($expected, $this->subject->getPassword());
+        self::assertSame($expected, $this->subject->getPassword());
     }
 
     /**
@@ -55,7 +55,7 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function passwordRepeatOnInitializeIsEmptyString()
     {
-        $this->assertEquals('', $this->subject->getPasswordRepeat());
+        self::assertEquals('', $this->subject->getPasswordRepeat());
     }
 
     /**
@@ -67,7 +67,7 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         $this->subject->setPasswordRepeat($expected);
 
-        $this->assertSame($expected, $this->subject->getPasswordRepeat());
+        self::assertSame($expected, $this->subject->getPasswordRepeat());
     }
 
     /**
@@ -75,7 +75,7 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function oldPasswordOnInitializeIsEmptyString()
     {
-        $this->assertEquals('', $this->subject->getOldPassword());
+        self::assertEquals('', $this->subject->getOldPassword());
     }
 
     /**
@@ -87,6 +87,6 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         $this->subject->setOldPassword($expected);
 
-        $this->assertSame($expected, $this->subject->getOldPassword());
+        self::assertSame($expected, $this->subject->getOldPassword());
     }
 }

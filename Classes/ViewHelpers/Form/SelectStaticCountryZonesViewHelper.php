@@ -13,6 +13,10 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
+
 /**
  * View helper to render a select box with values of static info tables country zones
  *
@@ -21,16 +25,12 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  *  <register:form.selectStaticCountryZones name="zone" parent="US"/>
  * </code>
  */
-class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
+class SelectStaticCountryZonesViewHelper extends SelectViewHelper
 {
-    /**
-     * @var \Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository
-     */
-    protected $countryZonesRepository;
+    protected ?StaticCountryZoneRepository $countryZonesRepository = null;
 
-    public function injectCountryZonesRepository(
-        \Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository $countryZonesRepository
-    ) {
+    public function injectCountryZonesRepository(StaticCountryZoneRepository $countryZonesRepository)
+    {
         $this->countryZonesRepository = $countryZonesRepository;
     }
 
@@ -38,7 +38,7 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
     {
         parent::initializeArguments();
         $this->registerArgument('parent', 'string', 'Parent of this zone');
-        $this->overrideArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', false, true);
+        $this->overrideArgument('sortByOptionLabel', 'bool', 'If true, List will be sorted by label.', false, true);
         $this->overrideArgument(
             'optionValueField',
             'string',
@@ -62,10 +62,10 @@ class SelectStaticCountryZonesViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Fo
         if (
             $this->hasArgument('parent')
             && $this->arguments['parent'] != ''
-            && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')
+            && ExtensionManagementUtility::isLoaded('static_info_tables')
         ) {
             $options = $this->countryZonesRepository->findAllByIso2($this->arguments['parent']);
-            $options = $options->fetchAll();
+            $options = $options->fetchAllAssociative();
 
             if ($this->hasArgument('disabled')) {
                 $value = $this->getSelectedValue();

@@ -13,19 +13,26 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Doctrine\DBAL\Driver\Statement;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
+
 /**
  * A repository for static info tables country zones
  */
-class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class StaticCountryZoneRepository extends Repository
 {
     /**
      * @var array
      */
     protected $defaultOrderings = [
-        'zn_name_local' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+        'zn_name_local' => QueryInterface::ORDER_ASCENDING
     ];
 
-    public function findAllByParentUid(int $parent): \Doctrine\DBAL\Driver\Statement
+    public function findAllByParentUid(int $parent): Statement
     {
         $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
         $queryBuilder->select('zones.*')
@@ -45,26 +52,24 @@ class StaticCountryZoneRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
         return $queryBuilder->execute();
     }
 
-    public function findAllByIso2(string $iso2): \Doctrine\DBAL\Driver\Statement
+    public function findAllByIso2(string $iso2): Statement
     {
         $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
         $queryBuilder->select('*')
             ->from('static_country_zones')
             ->where($queryBuilder->expr()->eq(
                 'zn_country_iso_2',
-                $queryBuilder->createNamedParameter($iso2, \PDO::PARAM_STR)
+                $queryBuilder->createNamedParameter($iso2)
             ))
             ->orderBy('zn_name_local');
 
         return $queryBuilder->execute();
     }
 
-    protected function getQueryBuilderForTable(string $table): \TYPO3\CMS\Core\Database\Query\QueryBuilder
+    protected function getQueryBuilderForTable(string $table): QueryBuilder
     {
-        /** @var \TYPO3\CMS\Core\Database\ConnectionPool $pool */
-        $pool = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Database\ConnectionPool::class
-        );
+        /** @var ConnectionPool $pool */
+        $pool = GeneralUtility::makeInstance(ConnectionPool::class);
         return $pool->getQueryBuilderForTable($table);
     }
 }

@@ -13,7 +13,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator implements SettableInterface
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\Password;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+
+class UniqueValidator extends AbstractValidator implements SettableInterface
 {
     /**
      * @var bool
@@ -27,31 +32,25 @@ class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
         'global' => [
             true,
             'Whether to check uniqueness globally',
-            'boolean'
+            'bool'
         ],
     ];
 
-    /**
-     * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
-     */
-    protected $userRepository;
+    protected ?FrontendUserRepository $userRepository = null;
 
     /**
      * Model to take repeated value of
      *
-     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password
+     * @var FrontendUser|Password
      */
     protected $model;
 
-    /**
-     * @var string
-     */
-    protected $propertyName;
+    protected string $propertyName = '';
 
     /**
      * Setter for model
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
+     * @param FrontendUser|Password $model
      */
     public function setModel($model)
     {
@@ -63,7 +62,7 @@ class UniqueValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractVa
         $this->propertyName = $propertyName;
     }
 
-    public function injectUserRepository(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository)
+    public function injectUserRepository(FrontendUserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }

@@ -13,31 +13,32 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class FrontendUserConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
+use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
+
+class FrontendUserConverter extends AbstractTypeConverter
 {
-    /**
-     * @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository
-     */
-    protected $frontendUserRepository;
+    protected FrontendUserRepository $frontendUserRepository;
 
     /**
      * @var array<string>
      */
-    protected $sourceTypes = ['integer', 'string'];
+    protected $sourceTypes = ['int', 'string'];
 
     /**
      * @var string
      */
-    protected $targetType = \Evoweb\SfRegister\Domain\Model\FrontendUser::class;
+    protected $targetType = FrontendUser::class;
 
     /**
      * @var int
      */
     protected $priority = 31;
 
-    public function __construct(
-        \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository $userRepository
-    ) {
+    public function __construct(FrontendUserRepository $userRepository)
+    {
         $this->frontendUserRepository = $userRepository;
     }
 
@@ -58,16 +59,16 @@ class FrontendUserConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\Ab
      * @param mixed $source
      * @param string $targetType
      * @param array $convertedChildProperties
-     * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
+     * @param ?PropertyMappingConfigurationInterface $configuration
      *
-     * @return mixed|\TYPO3\CMS\Extbase\Error\Error target type, or an error object
+     * @return ?object target type, or an error object
      */
     public function convertFrom(
         $source,
-        $targetType,
+        string $targetType,
         array $convertedChildProperties = [],
-        \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration = null
-    ) {
+        ?PropertyMappingConfigurationInterface $configuration = null
+    ): ?object {
         return $this->frontendUserRepository->findByUid($source);
     }
 }

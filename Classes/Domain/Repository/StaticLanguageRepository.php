@@ -13,12 +13,15 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
+
 /**
  * A repository for static info tables language
  */
-class StaticLanguageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class StaticLanguageRepository extends Repository
 {
-    public function findAll(): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+    public function findAll(): QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()
@@ -27,7 +30,7 @@ class StaticLanguageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query->execute();
     }
 
-    public function findByLgCollateLocale(array $lgCollateLocale): \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+    public function findByLgCollateLocale(array $lgCollateLocale): QueryResultInterface
     {
         $query = $this->createQuery();
         $query->getQuerySettings()

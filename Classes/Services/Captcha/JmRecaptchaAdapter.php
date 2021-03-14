@@ -13,28 +13,22 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-// @todo remove support
+use Evoweb\SfRegister\Services\Session;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class JmRecaptchaAdapter extends AbstractAdapter
 {
-    /**
-     * Captcha object
-     *
-     * @var \tx_jmrecaptcha
-     */
-    protected $captcha = null;
+    protected ?object $captcha = null;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
-        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('jm_recaptcha')) {
+        if (ExtensionManagementUtility::isLoaded('jm_recaptcha')) {
             /** @noinspection PhpIncludeInspection */
-            require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('jm_recaptcha')
+            require_once(ExtensionManagementUtility::extPath('jm_recaptcha')
                 . 'class.tx_jmrecaptcha.php');
-            $this->captcha = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_jmrecaptcha');
+            $this->captcha = GeneralUtility::makeInstance('tx_jmrecaptcha');
         }
     }
 
@@ -43,14 +37,14 @@ class JmRecaptchaAdapter extends AbstractAdapter
      */
     public function render()
     {
-        /** @var \Evoweb\SfRegister\Services\Session $session */
-        $session = GeneralUtility::makeInstance(\Evoweb\SfRegister\Services\Session::class);
+        /** @var Session $session */
+        $session = GeneralUtility::makeInstance(Session::class);
         $session->remove('captchaWasValidPreviously');
 
         if ($this->captcha !== null) {
             $output = $this->captcha->getReCaptcha($this->settings['error']);
         } else {
-            $output = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+            $output = LocalizationUtility::translate(
                 'error_captcha.notinstalled',
                 'SfRegister',
                 ['jm_recaptcha']
@@ -64,8 +58,8 @@ class JmRecaptchaAdapter extends AbstractAdapter
     {
         $validCaptcha = true;
 
-        /** @var \Evoweb\SfRegister\Services\Session $session */
-        $session = GeneralUtility::makeInstance(\Evoweb\SfRegister\Services\Session::class);
+        /** @var Session $session */
+        $session = GeneralUtility::makeInstance(Session::class);
         $captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
         if ($this->captcha !== null && $captchaWasValidPreviously !== true) {
             $_POST['recaptcha_response_field'] = $value;
@@ -74,7 +68,7 @@ class JmRecaptchaAdapter extends AbstractAdapter
             if ($status == false || $status['error'] !== null) {
                 $validCaptcha = false;
                 $this->addError(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                    LocalizationUtility::translate(
                         'error_jmrecaptcha' . (isset($status['error']) ? '_' . $status['error'] : ''),
                         'SfRegister'
                     ),

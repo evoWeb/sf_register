@@ -48,8 +48,13 @@ plugin.tx_sfregister.settings {
     email {
       1 = "Evoweb.SfRegister:Required"
       2 = "EmailAddress"
+      3 = "Evoweb.SfRegister:Unique"
     }
     emailRepeat = "Evoweb.SfRegister:Repeat"
+    privacy {
+      1 = "Evoweb.SfRegister:Required"
+      2 = "Evoweb.SfRegister:IsTrue"
+    }
     gtc {
       1 = "Evoweb.SfRegister:Required"
       2 = "Evoweb.SfRegister:IsTrue"

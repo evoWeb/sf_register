@@ -26,6 +26,14 @@ namespace Evoweb\SfRegister\ViewHelpers;
  * This copyright notice MUST APPEAR in all copies of the script!
  */
 
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Http\ApplicationType;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * View helper to output the configured language
  *
@@ -35,7 +43,7 @@ namespace Evoweb\SfRegister\ViewHelpers;
  *  {register:languageKey(type: 'countries')}
  * </code>
  */
-class LanguageKeyViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
+class LanguageKeyViewHelper extends AbstractViewHelper
 {
     public function initializeArguments()
     {
@@ -49,7 +57,7 @@ class LanguageKeyViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVi
     public function render(): string
     {
         $languageCode = '';
-        if (TYPO3_MODE === 'FE') {
+        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
             $languageCode = $this->getTypoScriptFrontendController()->config['config']['language'] ?: 'default';
         } elseif ($this->getBackendUserAuthentication()->uc['lang'] != '') {
             $languageCode = $this->getBackendUserAuthentication()->uc['lang'];
@@ -100,20 +108,17 @@ class LanguageKeyViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVi
         return $result;
     }
 
-
-    protected function getConnection(string $tableName): \TYPO3\CMS\Core\Database\Connection
+    protected function getConnection(string $tableName): Connection
     {
-        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Database\ConnectionPool::class
-        )->getConnectionForTable($tableName);
+        return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($tableName);
     }
 
-    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+    protected function getTypoScriptFrontendController(): ?TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
     }
 
-    protected function getBackendUserAuthentication(): \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+    protected function getBackendUserAuthentication(): ?BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }

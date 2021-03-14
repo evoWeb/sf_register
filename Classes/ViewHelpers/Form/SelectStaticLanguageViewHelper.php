@@ -13,6 +13,10 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Repository\StaticLanguageRepository;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
+
 /**
  * View helper to render a select box with values of static info tables country zones
  *
@@ -21,23 +25,19 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  *  <register:form.selectStaticLanguage name="language" allowedLanguages="{0: 'de_DE', 1: 'fr_FR'}"/>
  * </code>
  */
-class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
+class SelectStaticLanguageViewHelper extends SelectViewHelper
 {
-    /**
-     * @var \Evoweb\SfRegister\Domain\Repository\StaticLanguageRepository
-     */
-    protected $languageRepository;
+    protected ?StaticLanguageRepository $languageRepository = null;
 
-    public function injectLanguageRepository(
-        \Evoweb\SfRegister\Domain\Repository\StaticLanguageRepository $languageRepository
-    ) {
+    public function injectLanguageRepository(StaticLanguageRepository $languageRepository)
+    {
         $this->languageRepository = $languageRepository;
     }
 
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->overrideArgument('sortByOptionLabel', 'boolean', 'If true, List will be sorted by label.', false, true);
+        $this->overrideArgument('sortByOptionLabel', 'bool', 'If true, List will be sorted by label.', false, true);
         $this->registerArgument(
             'allowedLanguages',
             'array',
@@ -65,7 +65,7 @@ class SelectStaticLanguageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\S
     {
         parent::initialize();
 
-        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
+        if (ExtensionManagementUtility::isLoaded('static_info_tables')) {
             if ($this->hasArgument('allowedLanguages') && count($this->arguments['allowedLanguages'])) {
                 $options = $this->languageRepository->findByLgCollateLocale($this->arguments['allowedLanguages']);
             } else {

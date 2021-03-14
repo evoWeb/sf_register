@@ -14,6 +14,7 @@ namespace Evoweb\SfRegister\Tests\Functional;
  */
 
 use Evoweb\SfRegister\Tests\Functional\SiteHandling\SiteBasedTestTrait;
+use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -22,6 +23,7 @@ use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
@@ -89,7 +91,8 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
             GeneralUtility::makeInstance(Context::class),
             $site,
             $site->getDefaultLanguage(),
-            new PageArguments(1, '0', [])
+            new PageArguments(1, '0', []),
+            new FrontendUserAuthentication()
         );
         $this->typoScriptFrontendController->sys_page = GeneralUtility::makeInstance(PageRepository::class);
         $this->typoScriptFrontendController->tmpl = GeneralUtility::makeInstance(TemplateService::class);
@@ -148,19 +151,17 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
         $this->frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication::class
         );
+        $this->frontendUser->setLogger(new NullLogger());
+        $this->frontendUser->start();
         $this->frontendUser->user = $this->frontendUser->getRawUserByUid($frontEndUserUid);
+        $this->frontendUser->unpack_uc();
         $this->frontendUser->fetchGroupData();
 
-        /** @var \TYPO3\CMS\Core\Context\UserAspect $aspect */
-        $aspect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Context\UserAspect::class,
-            $this->frontendUser
-        );
+        $userAspect = $this->frontendUser->createUserAspect();
 
         /** @var \TYPO3\CMS\Core\Context\Context $context */
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-        $context->setAspect('frontend.user', $aspect);
-        $context->getPropertyFromAspect('frontend.user', 'isLoggedIn');
+        $context->setAspect('frontend.user', $userAspect);
     }
 
     public function createEmptyFrontendUser()

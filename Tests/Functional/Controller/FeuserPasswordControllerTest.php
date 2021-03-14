@@ -13,11 +13,18 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Controller\FeuserPasswordController as FeuserPasswordController;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\Session;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
 {
@@ -42,10 +49,34 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var Context $context */
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController($context);
+        /** @var File $file */
+        $file = GeneralUtility::makeInstance(File::class);
+
+        /** @var FrontendUserRepository $userRepository */
+        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
+
+        /** @var FrontendUserGroupRepository $userGroupRepository */
+        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
+
+        $logger = new NullLogger();
+
+        $frontendUser = new FrontendUserAuthentication();
+        $frontendUser->setLogger($logger);
+        $frontendUser->start();
+
+        /** @var Session $session */
+        $session = GeneralUtility::makeInstance(Session::class, $frontendUser);
+
+        $subject = new FeuserPasswordController(
+            $context,
+            $file,
+            $userRepository,
+            $userGroupRepository,
+            $session
+        );
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        $this->assertFalse($method->invoke($subject));
+        self::assertFalse($method->invoke($subject));
     }
 
     /**
@@ -62,10 +93,34 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var Context $context */
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController($context);
+        /** @var File $file */
+        $file = GeneralUtility::makeInstance(File::class);
+
+        /** @var FrontendUserRepository $userRepository */
+        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
+
+        /** @var FrontendUserGroupRepository $userGroupRepository */
+        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
+
+        $logger = new NullLogger();
+
+        $frontendUser = new FrontendUserAuthentication();
+        $frontendUser->setLogger($logger);
+        $frontendUser->start();
+
+        /** @var Session $session */
+        $session = GeneralUtility::makeInstance(Session::class, $frontendUser);
+
+        $subject = new FeuserPasswordController(
+            $context,
+            $file,
+            $userRepository,
+            $userGroupRepository,
+            $session
+        );
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        $this->assertTrue($method->invoke($subject));
+        self::assertTrue($method->invoke($subject));
     }
 
     /**
@@ -74,12 +129,13 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository()
     {
         if (!defined('PASSWORD_ARGON2I')) {
-            $this->markTestSkipped('Due to missing Argon2 in travisci.');
+            self::markTestSkipped('Due to missing Argon2 in travisci.');
         }
 
         $expected = 'myPassword';
 
         $userId = $this->createAndLoginFrontEndUser('2', [
+            'username' => 'unittest',
             'password' => $expected,
             'comments' => ''
         ]);
@@ -89,28 +145,38 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
 
+        /** @var File $file */
+        $file = GeneralUtility::makeInstance(File::class);
+
+        /** @var FrontendUserGroupRepository $userGroupRepository */
+        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
+
+        /** @var Session $session */
+        $session = GeneralUtility::makeInstance(Session::class, $this->frontendUser);
+
         // we need to clone the create object, else the isClone parameter is not set and both object wont match
-        $userMock = clone(new \Evoweb\SfRegister\Domain\Model\FrontendUser());
+        $userMock = clone new \Evoweb\SfRegister\Domain\Model\FrontendUser();
         $userMock->setPassword($expected);
 
         /** @var FrontendUserRepository|MockObject $userRepositoryMock */
         $userRepositoryMock = $this->getMockBuilder(FrontendUserRepository::class)
-            ->setMethods(['findByUid', 'update'])
+            ->onlyMethods(['findByUid', 'update'])
             ->disableOriginalConstructor()
             ->getMock();
-        $userRepositoryMock->expects($this->once())
+        $userRepositoryMock->expects(self::once())
             ->method('findByUid')
-            ->with($this->equalTo($userId))
+            ->with(self::equalTo($userId))
             ->willReturn($userMock);
-        $userRepositoryMock->expects($this->once())
+        $userRepositoryMock->expects(self::once())
             ->method('update')
-            ->with($this->equalTo($userMock));
+            ->with(self::equalTo($userMock));
 
-        $subject = new \Evoweb\SfRegister\Controller\FeuserPasswordController(
+        $subject = new FeuserPasswordController(
             $context,
-            null,
+            $file,
             $userRepositoryMock,
-            null
+            $userGroupRepository,
+            $session
         );
 
         /** @var ObjectManager $objectManager */
@@ -119,6 +185,13 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
 
         $property = $this->getPrivateProperty($subject, 'settings');
         $property->setValue($subject, ['encryptPassword' => '']);
+
+        $view = $this->getMockBuilder(StandaloneView::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['render'])
+            ->getMock();
+        $property = $this->getPrivateProperty($subject, 'view');
+        $property->setValue($subject, $view);
 
         /** @var \TYPO3\CMS\Core\EventDispatcher\EventDispatcher $eventDispatcher */
         $eventDispatcher = GeneralUtility::makeInstance(\TYPO3\CMS\Core\EventDispatcher\EventDispatcher::class);

@@ -13,17 +13,17 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class CaptchaValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+
+class CaptchaValidator extends AbstractValidator
 {
     /**
      * @var bool
      */
     protected $acceptsEmptyValues = false;
 
-    /**
-     * @var \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory
-     */
-    protected $captchaAdapterFactory;
+    protected CaptchaAdapterFactory $captchaAdapterFactory;
 
     /**
      * @var array
@@ -37,7 +37,7 @@ class CaptchaValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
     ];
 
     public function injectCaptchaAdapterFactory(
-        \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory $captchaAdapterFactory
+        CaptchaAdapterFactory $captchaAdapterFactory
     ) {
         $this->captchaAdapterFactory = $captchaAdapterFactory;
     }

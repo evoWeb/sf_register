@@ -15,6 +15,7 @@ namespace Evoweb\SfRegister\Form\FormDataProvider;
 
 use TYPO3\CMS\Backend\Form\FormDataProvider\AbstractItemProvider;
 use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 
 class FormFields extends AbstractItemProvider implements FormDataProviderInterface
 {
@@ -25,7 +26,7 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
      * @return array
      * @throws \UnexpectedValueException
      */
-    public function addData(array $result)
+    public function addData(array $result): array
     {
         foreach ($result['processedTca']['columns'] as $fieldName => $fieldConfig) {
             if (!isset($fieldConfig['config']['sfRegisterForm'])) {
@@ -84,7 +85,7 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
         return $this->getLanguageService()->sL($labelPath);
     }
 
-    protected function getBackendUserAuthentication(): \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+    protected function getBackendUserAuthentication(): ?BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }

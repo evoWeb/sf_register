@@ -13,15 +13,14 @@ namespace Evoweb\SfRegister\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * A email object for validation
  */
-class Email extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Email extends AbstractEntity
 {
-    /**
-     * @var string
-     */
-    protected $email = '';
+    protected string $email = '';
 
     public function getEmail(): string
     {

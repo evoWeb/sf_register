@@ -13,25 +13,22 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * A validator to check if the userid is equal to the id of the logged in user
  */
-class EqualCurrentUserValidator extends AbstractValidator implements ValidatorInterface
+class EqualCurrentUserValidator extends AbstractValidator
 {
     /**
      * @var bool
      */
     protected $acceptsEmptyValues = false;
 
-    /**
-     * @var \TYPO3\CMS\Core\Context\Context
-     */
-    protected $context;
+    protected Context $context;
 
-    public function injectContext(\TYPO3\CMS\Core\Context\Context $context)
+    public function injectContext(Context $context)
     {
         $this->context = $context;
     }

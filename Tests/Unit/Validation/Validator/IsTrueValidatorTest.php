@@ -37,7 +37,7 @@ class IsTrueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function isValidReturnsTrueIfTrueWasUsed()
     {
-        $this->assertFalse($this->subject->validate(true)->hasErrors());
+        self::assertFalse($this->subject->validate(true)->hasErrors());
     }
 
     /**
@@ -59,6 +59,6 @@ class IsTrueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function isValidReturnsFalseIfNonTrueWasUsed($input)
     {
-        $this->assertTrue($this->subject->validate($input)->hasErrors());
+        self::assertTrue($this->subject->validate($input)->hasErrors());
     }
 }

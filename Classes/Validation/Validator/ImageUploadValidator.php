@@ -13,17 +13,17 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Services\File;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+
 /**
  * Validator to check if the uploaded image could be handled
  */
-class ImageUploadValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
+class ImageUploadValidator extends AbstractValidator
 {
-    /**
-     * @var \Evoweb\SfRegister\Services\File
-     */
-    protected $fileService;
+    protected File $fileService;
 
-    public function injectFileService(\Evoweb\SfRegister\Services\File $fileService)
+    public function injectFileService(File $fileService)
     {
         $this->fileService = $fileService;
     }
@@ -31,7 +31,7 @@ class ImageUploadValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstr
     /**
      * If the given value is set
      *
-     * @param boolean $value The value
+     * @param bool $value The value
      */
     public function isValid($value)
     {

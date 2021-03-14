@@ -14,14 +14,13 @@ namespace Evoweb\SfRegister\EventListener;
  */
 
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
+use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class FeuserControllerListener
 {
-    /**
-     * @var UriBuilder
-     */
-    protected $uriBuilder;
+    protected UriBuilder $uriBuilder;
 
     public function __construct(UriBuilder $uriBuilder)
     {
@@ -33,8 +32,8 @@ class FeuserControllerListener
         if (!$this->userIsLoggedIn()) {
             $redirectEvent = $event->getSettings()['redirectEvent'];
 
-            if ((int) $redirectEvent['page']) {
-                $this->redirectToPage((int) $redirectEvent['page']);
+            if ((int)$redirectEvent['page']) {
+                $this->redirectToPage((int)$redirectEvent['page']);
             } else {
                 $event->getController()->forward($redirectEvent['action'], $redirectEvent['controller'] ?? null);
             }
@@ -49,10 +48,10 @@ class FeuserControllerListener
     protected function redirectToPage(int $pageId)
     {
         $url = $this->uriBuilder->setTargetPageUid($pageId)->build();
-        \TYPO3\CMS\Core\Utility\HttpUtility::redirect($url);
+        HttpUtility::redirect($url);
     }
 
-    protected function getTypoScriptFrontendController(): \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+    protected function getTypoScriptFrontendController(): ?TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
     }

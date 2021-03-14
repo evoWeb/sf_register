@@ -13,16 +13,15 @@ namespace Evoweb\SfRegister\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class FrontendUserGroup extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup as ExtbaseFrontendUserGroup;
+
+class FrontendUserGroup extends ExtbaseFrontendUserGroup
 {
-    /**
-     * @var int
-     */
-    protected $feloginRedirectPid = 0;
+    protected int $feloginRedirectPid = 0;
 
     public function getFeloginRedirectPid(): int
     {
-        return (int)$this->feloginRedirectPid;
+        return $this->feloginRedirectPid;
     }
 
     public function setFeloginRedirectPid(int $feloginRedirectPid)

@@ -19,20 +19,11 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 
 final class InviteInviteEvent
 {
-    /**
-     * @var FrontendUser
-     */
-    protected $user;
+    protected FrontendUser $user;
 
-    /**
-     * @var array
-     */
-    protected $settings;
+    protected array $settings = [];
 
-    /**
-     * @var bool
-     */
-    protected $doNotSendInvitation;
+    protected bool $doNotSendInvitation = false;
 
     public function __construct(FrontendUser $user, array $settings, bool $doNotSendInvitation)
     {
@@ -41,33 +32,21 @@ final class InviteInviteEvent
         $this->doNotSendInvitation = $doNotSendInvitation;
     }
 
-    /**
-     * @return FrontendUser
-     */
     public function getUser(): FrontendUser
     {
         return $this->user;
     }
 
-    /**
-     * @return array
-     */
     public function getSettings(): array
     {
         return $this->settings;
     }
 
-    /**
-     * @return bool
-     */
     public function isDoNotSendInvitation(): bool
     {
         return $this->doNotSendInvitation;
     }
 
-    /**
-     * @param bool $doNotSendInvitation
-     */
     public function setDoNotSendInvitation(bool $doNotSendInvitation): void
     {
         $this->doNotSendInvitation = $doNotSendInvitation;

@@ -13,13 +13,14 @@ namespace Evoweb\SfRegister\ViewHelpers\Link;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\ViewHelpers\Link\ActionViewHelper as ExtbaseActionViewHelper;
+
 /**
  * Link Action view helper that automatically
  * adds a "hash" argument on the "user" and "action" arguments
- *
- * @package Evoweb\SfRegister\Property
  */
-class ActionViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Link\ActionViewHelper
+class ActionViewHelper extends ExtbaseActionViewHelper
 {
     /**
      * Render method
@@ -33,7 +34,7 @@ class ActionViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Link\ActionViewHelpe
             && $this->arguments['arguments'] !== null
             && isset($this->arguments['arguments']['user'])
         ) {
-            $this->arguments['arguments']['hash'] = \TYPO3\CMS\Core\Utility\GeneralUtility::hmac(
+            $this->arguments['arguments']['hash'] = GeneralUtility::hmac(
                 $this->arguments['action'] . '::' . $this->arguments['arguments']['user']
             );
         }

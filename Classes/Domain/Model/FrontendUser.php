@@ -14,209 +14,213 @@ namespace Evoweb\SfRegister\Domain\Model;
  */
 
 use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser as ExtbaseFrontendUser;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * An extended frontend user with more area
  */
-class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implements FrontendUserInterface
+class FrontendUser extends ExtbaseFrontendUser implements FrontendUserInterface
 {
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Evoweb\SfRegister\Domain\Model\FrontendUserGroup>
+     * @var ObjectStorage<FrontendUserGroup>
      */
-    protected $usergroup;
+    protected $usergroup = null;
 
     /**
      * If the account is disabled or not
      *
      * @var bool
      */
-    protected $disable = false;
+    protected bool $disable = false;
 
     /**
      * Date on which the account was activated
      *
-     * @var \DateTime|NULL
+     * @var ?\DateTime
      */
-    protected $activatedOn;
+    protected ?\DateTime $activatedOn = null;
 
     /**
      *  virtual not stored in database
      *
      * @var string
      */
-    protected $captcha = '';
+    protected string $captcha = '';
 
     /**
      *  virtual not stored in database
      *
      * @var string
      */
-    protected $passwordRepeat = '';
+    protected string $passwordRepeat = '';
 
     /**
      *  virtual not stored in database
      *
      * @var string
      */
-    protected $emailRepeat = '';
+    protected string $emailRepeat = '';
 
     /**
      * Pseudonym
      *
      * @var string
      */
-    protected $pseudonym = '';
+    protected string $pseudonym = '';
 
     /**
      * Gender 1 or 2 for mr or mrs
      *
      * @var int
      */
-    protected $gender = 1;
+    protected int $gender = 1;
 
     /**
      * Date of birth
      *
-     * @var \DateTime
+     * @var ?\DateTime
      */
-    protected $dateOfBirth;
+    protected ?\DateTime $dateOfBirth = null;
 
     /**
      * Day of date of birth
      *
      * @var int
      */
-    protected $dateOfBirthDay = 0;
+    protected int $dateOfBirthDay = 0;
 
     /**
      * Month of date of birth
      *
      * @var int
      */
-    protected $dateOfBirthMonth = 0;
+    protected int $dateOfBirthMonth = 0;
 
     /**
      * Year of date of birth
      *
      * @var int
      */
-    protected $dateOfBirthYear = 0;
+    protected int $dateOfBirthYear = 0;
 
     /**
      * Language
      *
      * @var string
      */
-    protected $language = '';
+    protected string $language = '';
 
     /**
      * Code of state/province
      *
      * @var string
      */
-    protected $zone = '';
+    protected string $zone = '';
 
     /**
      * Timezone
      *
      * @var float
      */
-    protected $timezone = 0;
+    protected float $timezone = 0;
 
     /**
      * Daylight saving time
      *
      * @var bool
      */
-    protected $daylight = false;
+    protected bool $daylight = false;
 
     /**
      * Country with static info table code
      *
      * @var string
      */
-    protected $staticInfoCountry = '';
+    protected string $staticInfoCountry = '';
 
     /**
      * Number of mobilephone
      *
      * @var string
      */
-    protected $mobilephone = '';
+    protected string $mobilephone = '';
 
     /**
      * General terms and conditions accepted flag
      *
      * @var bool
      */
-    protected $gtc = false;
+    protected bool $gtc = false;
 
     /**
      * Privacy agreement accepted flag
      *
      * @var bool
      */
-    protected $privacy = false;
+    protected bool $privacy = false;
 
     /**
      * Status
      *
      * @var int
      */
-    protected $status = 0;
+    protected int $status = 0;
 
     /**
      * whether the user register by invitation
      *
      * @var bool
      */
-    protected $byInvitation = false;
+    protected bool $byInvitation = false;
 
     /**
      * comment of user
      *
      * @var string
      */
-    protected $comments = '';
+    protected string $comments = '';
 
     /**
      * if Dmail should be enabled
      *
      * @var bool
      */
-    protected $moduleSysDmailNewsletter = false;
+    protected bool $moduleSysDmailNewsletter = false;
 
     /**
      * if emails should be send as HTML or plain text
      *
      * @var bool
      */
-    protected $moduleSysDmailHtml = true;
+    protected bool $moduleSysDmailHtml = true;
 
     /**
      * selected Dmail categories
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     * @var ?ObjectStorage<Category>
      */
-    protected $moduleSysDmailCategory;
+    protected ?ObjectStorage $moduleSysDmailCategory = null;
 
     /**
      * new email address before edit
      *
      * @var string
      */
-    protected $emailNew = '';
+    protected string $emailNew = '';
 
     /**
      * email address of invitee
      *
      * @var string
      */
-    protected $invitationEmail = '';
+    protected string $invitationEmail = '';
 
     public function initializeObject()
     {
-        $this->moduleSysDmailCategory = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->usergroup = new ObjectStorage();
+        $this->moduleSysDmailCategory = new ObjectStorage();
     }
 
     /**
@@ -239,20 +243,15 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
     public function getDisable(): bool
     {
-        return (bool) $this->disable;
+        return (bool)$this->disable;
     }
 
-    /**
-     * Getter for activatedOn
-     *
-     * @return \DateTime|NULL
-     */
-    public function getActivatedOn()
+    public function getActivatedOn(): ?\DateTime
     {
         return $this->activatedOn;
     }
 
-    public function setActivatedOn(\DateTime $activatedOn = null)
+    public function setActivatedOn(?\DateTime $activatedOn)
     {
         $this->activatedOn = $activatedOn;
     }
@@ -289,7 +288,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 
     public function removeImage()
     {
-        $this->image = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->image = new ObjectStorage();
     }
 
     public function setPseudonym(string $pseudonym)
@@ -312,17 +311,12 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         return $this->gender;
     }
 
-    public function setDateOfBirth(\DateTime $dateOfBirth = null)
+    public function setDateOfBirth(?\DateTime $dateOfBirth)
     {
         $this->dateOfBirth = $dateOfBirth;
     }
 
-    /**
-     * Getter for dateOfBirth
-     *
-     * @return \DateTime|NULL
-     */
-    public function getDateOfBirth()
+    public function getDateOfBirth(): ?\DateTime
     {
         return $this->dateOfBirth;
     }
@@ -494,15 +488,12 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
         return $this->language;
     }
 
-    public function setModuleSysDmailCategory(array $moduleSysDmailCategory)
+    public function setModuleSysDmailCategory($moduleSysDmailCategory)
     {
         $this->moduleSysDmailCategory = $moduleSysDmailCategory;
     }
 
-    /**
-     * @return array|null|\TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    public function getModuleSysDmailCategory()
+    public function getModuleSysDmailCategory(): ObjectStorage
     {
         return $this->moduleSysDmailCategory;
     }

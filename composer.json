@@ -22,9 +22,8 @@
 	],
 
 	"require": {
-		"typo3/cms-core": "^10.4",
-		"typo3/cms-extbase": "^10.4",
-		"typo3/cms-fluid": "^10.4"
+		"typo3/cms-extbase": "*",
+		"typo3/cms-fluid": "*"
 	},
 	"suggest": {
 		"evoweb/recaptcha": "^10.0"
@@ -53,6 +52,19 @@
 	},
 
 	"scripts": {
-		"post-autoload-dump": "mkdir -p .Build/Web/typo3conf/ext/ && ln -snf ../../../.. .Build/Web/typo3conf/ext/sf_register"
+		"post-autoload-dump": "mkdir -p .Build/Web/typo3conf/ext/ && ln -snf ../../../.. .Build/Web/typo3conf/ext/sf_register",
+		"prepare-release": [
+			"rm -rf .Build",
+			"rm -rf .github",
+			"rm -rf Tests",
+			"rm .gitattributes",
+			"rm .gitignore",
+			"sed -i \"s/version' => '.*'/version' => '$(echo ${GITHUB_REF} | cut -d / -f 3)'/\" ext_emconf.php\n"
+		]
+	},
+	"require-dev": {
+		"typo3/cms-core": "^11.0.0",
+		"typo3/testing-framework": "^6.6.2",
+		"typo3/cms-extensionmanager": "^11.0.0"
 	}
 }

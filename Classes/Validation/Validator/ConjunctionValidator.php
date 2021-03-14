@@ -15,6 +15,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\Password;
 use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator as ExtbaseConjunctionValidator;
@@ -27,19 +29,16 @@ class ConjunctionValidator extends ExtbaseConjunctionValidator implements Settab
     /**
      * Model to take repeated value of
      *
-     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password
+     * @var FrontendUser|Password
      */
     protected $model;
 
-    /**
-     * @var string
-     */
-    protected $propertyName;
+    protected string $propertyName = '';
 
     /**
      * Setter for model
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $model
+     * @param FrontendUser|Password $model
      */
     public function setModel($model)
     {

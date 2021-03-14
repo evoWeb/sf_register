@@ -20,6 +20,6 @@ class FeuserControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCas
      */
     public function initializeAction()
     {
-        $this->markTestIncomplete('not implemented by now');
+        self::markTestIncomplete('not implemented by now');
     }
 }

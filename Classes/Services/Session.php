@@ -13,43 +13,47 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+
 /**
  * Service to handle the user session
  */
-class Session implements \TYPO3\CMS\Core\SingletonInterface
+class Session implements SingletonInterface
 {
     /**
      * String to identify session values
      *
      * @var string
      */
-    protected $sessionKey = 'sf_register';
+    protected string $sessionKey = 'sf_register';
 
     /**
      * Values stored in session
      *
-     * @var array
+     * @var ?array
      */
-    protected $values = null;
+    protected ?array $values = null;
 
-    /**
-     * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication
-     */
-    protected $frontendUser;
+    protected ?FrontendUserAuthentication $frontendUser;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function __construct(?FrontendUserAuthentication $frontendUser = null)
     {
-        $this->frontendUser = &$GLOBALS['TSFE']->fe_user;
+        if ($GLOBALS['TSFE']->fe_user) {
+            $this->frontendUser = $GLOBALS['TSFE']->fe_user;
+        } else {
+            $this->frontendUser = $frontendUser;
+            if ($this->frontendUser->userSession == null) {
+                $this->frontendUser->start();
+            }
+        }
         $this->fetch();
     }
 
     public function fetch(): self
     {
         if ($this->values === null) {
-            $this->values = (array) unserialize($this->frontendUser->getKey('ses', $this->sessionKey));
+            $this->values = (array)unserialize($this->frontendUser->getKey('ses', $this->sessionKey));
         }
 
         return $this;

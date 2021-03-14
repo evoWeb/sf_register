@@ -13,192 +13,194 @@ namespace Evoweb\SfRegister\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * A static country zone
  */
-class StaticCountryZone extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class StaticCountryZone extends AbstractEntity
 {
     /**
      * ISO 3166-1 A2 Country code
      *
      * @var string
      */
-    protected $znCountryIso2;
+    protected string $znCountryIso2;
 
     /**
      * ISO 3166-1 A3 Country code
      *
      * @var string
      */
-    protected $znCountryIso3;
+    protected string $znCountryIso3;
 
     /**
      * ISO 3166-1 Nr Country code
      *
      * @var int
      */
-    protected $znCountryIsoNr;
+    protected int $znCountryIsoNr;
 
     /**
      * ISO 3166-2 Country Zone code
      *
      * @var string
      */
-    protected $znCode;
+    protected string $znCode;
 
     /**
      * Name
      *
      * @var string
      */
-    protected $znNameLocal;
+    protected string $znNameLocal;
 
     /**
      * Name (EN)
      *
      * @var string
      */
-    protected $znNameEn;
+    protected string $znNameEn;
 
     /**
      * Short name (CZ)
      *
      * @var string
      */
-    protected $znNameCz;
+    protected string $znNameCz;
 
     /**
      * Short name (DA)
      *
      * @var string
      */
-    protected $znNameDa;
+    protected string $znNameDa;
 
     /**
      * Short name (DE)
      *
      * @var string
      */
-    protected $znNameDe;
+    protected string $znNameDe;
 
     /**
      * Short name (ES)
      *
      * @var string
      */
-    protected $znNameEs;
+    protected string $znNameEs;
 
     /**
      * Short name (FR)
      *
      * @var string
      */
-    protected $znNameFr;
+    protected string $znNameFr;
 
     /**
      * Short name (GA)
      *
      * @var string
      */
-    protected $znNameGa;
+    protected string $znNameGa;
 
     /**
      * Short name (GL)
      *
      * @var string
      */
-    protected $znNameGl;
+    protected string $znNameGl;
 
     /**
      * Short name (IT)
      *
      * @var string
      */
-    protected $znNameIt;
+    protected string $znNameIt;
 
     /**
      * Short name (JA)
      *
      * @var string
      */
-    protected $znNameJa;
+    protected string $znNameJa;
 
     /**
      * Short name (KM)
      *
      * @var string
      */
-    protected $znNameKm;
+    protected string $znNameKm;
 
     /**
      * Short name (NL)
      *
      * @var string
      */
-    protected $znNameNl;
+    protected string $znNameNl;
 
     /**
      * Short name (NO)
      *
      * @var string
      */
-    protected $znNameNo;
+    protected string $znNameNo;
 
     /**
      * Short name (PL)
      *
      * @var string
      */
-    protected $znNamePl;
+    protected string $znNamePl;
 
     /**
      * Short name (PT)
      *
      * @var string
      */
-    protected $znNamePt;
+    protected string $znNamePt;
 
     /**
      * Short name (RO)
      *
      * @var string
      */
-    protected $znNameRo;
+    protected string $znNameRo;
 
     /**
      * Short name (RU)
      *
      * @var string
      */
-    protected $znNameRu;
+    protected string $znNameRu;
 
     /**
      * Short name (SK)
      *
      * @var string
      */
-    protected $znNameSk;
+    protected string $znNameSk;
 
     /**
      * Short name (SV)
      *
      * @var string
      */
-    protected $znNameSv;
+    protected string $znNameSv;
 
     /**
      * Short name (UA)
      *
      * @var string
      */
-    protected $znNameUa;
+    protected string $znNameUa;
 
     /**
      * Short name (ZH)
      *
      * @var string
      */
-    protected $znNameZh;
+    protected string $znNameZh;
 
     /**
      * Getter for ISO 3166-1 A2 Country code

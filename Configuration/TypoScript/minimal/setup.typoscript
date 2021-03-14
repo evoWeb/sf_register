@@ -9,7 +9,7 @@ plugin.tx_sfregister.settings {
   redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId}
 
   # wether the email address entered should be used as username
-  useEmailAddressAsUsername =
+  useEmailAddressAsUsername = 1
 
   # boolean use encrypted filename to deny direct access on uploaded files
   useEncryptedFilename = md5
@@ -35,7 +35,7 @@ plugin.tx_sfregister.settings {
   }
 
   notifyUser {
-    createSave =
+    createSave = 1
     createConfirm =
     createRefuse =
     createAccept =

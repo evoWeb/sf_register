@@ -14,6 +14,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  */
 
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
 
 /**
  * View helper to render a selectbox with labels that need to be translated
@@ -23,7 +24,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *  <register:form.translatedSelect name="language" options="{0: 'label_key1', 1: 'label_key2'}"/>
  * </code>
  */
-class TranslatedSelectViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper
+class TranslatedSelectViewHelper extends SelectViewHelper
 {
     public function initializeArguments()
     {

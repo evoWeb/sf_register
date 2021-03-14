@@ -13,6 +13,9 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
+use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
+
 /**
  * View helper to output a captcha in a form
  * <code title="Usage">
@@ -20,16 +23,12 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * <register:form.captcha type="jmrecaptcha"/>
  * </code>
  */
-class CaptchaViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper
+class CaptchaViewHelper extends AbstractFormFieldViewHelper
 {
-    /**
-     * @var \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory
-     */
-    protected $captchaAdapterFactory;
+    protected ?CaptchaAdapterFactory $captchaAdapterFactory = null;
 
-    public function injectCaptchaAdapterFactory(
-        \Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory $captchaAdapterFactory
-    ) {
+    public function injectCaptchaAdapterFactory(CaptchaAdapterFactory $captchaAdapterFactory)
+    {
         $this->captchaAdapterFactory = $captchaAdapterFactory;
     }
 
