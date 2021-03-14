@@ -303,35 +303,13 @@ class FeuserCreateController extends FeuserController
     {
         $result = null;
 
-        if (
-            $this->settings['notifyUser']['createSave']
-            && (empty($this->settings['usergroupPostSave']) || empty($this->settings['usergroupPostConfirm']))
-        ) {
-            $result = new HtmlResponse(
-                '<h3>Please check your setup.</h3>
-                You need to configure usergroups to get double optin to work as intended.<br>
-                Please have a look into TypoScript <b>constants</b>:
-                <ul>
-                <li>plugin.tx_sfregister.settings.usergroupPostSave</li>
-                <li>plugin.tx_sfregister.settings.usergroupPostConfirm</li>
-                </ul>'
-            );
-        }
-
-        if (
-            $this->settings['useEmailAddressAsUsername']
-            && in_array('username', $this->settings['fields']['selected'])
-        ) {
-            $result = new HtmlResponse(
-                '<h3>Please check your setup.</h3>
-                If the email should be used as username the field username should be left out of the selected fields<br>
-                Please have a look into TypoScript <b>setup</b>:
-                <ul>
-                  <li>selected fields in the registration plugin</li>
-                  <li>plugin.tx_sfregister.settings.useEmailAddressAsUsername</li>
-                  <li>plugin.tx_sfregister.settings.fields.selected</li>
-                </ul>'
-            );
+        $setupChecks = GeneralUtility::makeInstance(
+            \Evoweb\SfRegister\Services\Setup\CheckFactory::class
+        )->getCheckInstances();
+        foreach ($setupChecks as $setupCheck) {
+            if (($result = $setupCheck->check($this->settings))) {
+                break;
+            }
         }
 
         return $result;

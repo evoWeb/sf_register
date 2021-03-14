@@ -135,6 +135,7 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         $expected = 'myPassword';
 
         $userId = $this->createAndLoginFrontEndUser('2', [
+            'username' => 'unittest',
             'password' => $expected,
             'comments' => ''
         ]);
@@ -150,14 +151,8 @@ class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\F
         /** @var FrontendUserGroupRepository $userGroupRepository */
         $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
 
-        $logger = new NullLogger();
-
-        $frontendUser = new FrontendUserAuthentication();
-        $frontendUser->setLogger($logger);
-        $frontendUser->start();
-
         /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class, $frontendUser);
+        $session = GeneralUtility::makeInstance(Session::class, $this->frontendUser);
 
         // we need to clone the create object, else the isClone parameter is not set and both object wont match
         $userMock = clone new \Evoweb\SfRegister\Domain\Model\FrontendUser();

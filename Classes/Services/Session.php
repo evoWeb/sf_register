@@ -43,7 +43,9 @@ class Session implements SingletonInterface
             $this->frontendUser = $GLOBALS['TSFE']->fe_user;
         } else {
             $this->frontendUser = $frontendUser;
-            $this->frontendUser->start();
+            if ($this->frontendUser->userSession == null) {
+                $this->frontendUser->start();
+            }
         }
         $this->fetch();
     }
