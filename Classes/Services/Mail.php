@@ -232,9 +232,19 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
     protected function getSubject(string $method, FrontendUserInterface $user): string
     {
-        $labelIndex = 'subject' . str_replace('send', '', $method);
 
-        return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+        $labelIndex = 'subject' . str_replace('send', '', $method);
+        $subject    = null;
+
+        if (!empty($this->settings['translation']['subjects'])) {
+            $subject = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                $this->settings['translation']['subjects'] . ':' . $labelIndex,
+                null,
+                [$this->settings['sitename'], $user->getUsername()]
+            );
+        }
+
+        return $subject ?? \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
             $labelIndex,
             'SfRegister',
             [$this->settings['sitename'], $user->getUsername()]
