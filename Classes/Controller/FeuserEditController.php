@@ -105,10 +105,7 @@ class FeuserEditController extends FeuserController
      */
     public function saveAction(FrontendUser $user): ResponseInterface
     {
-        if (
-            ($this->isNotifyAdmin('PostEditSave') || $this->isNotifyUser('PostEditSave'))
-            && ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit'])
-        ) {
+        if ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit']) {
             // Remove user object from session to fetch it really from database
             /** @var Session $session */
             $session = GeneralUtility::makeInstance(Session::class);

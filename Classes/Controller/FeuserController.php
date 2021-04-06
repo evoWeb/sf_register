@@ -433,23 +433,17 @@ class FeuserController extends ActionController
     protected function sendEmails(FrontendUser $user, string $action): FrontendUser
     {
         $action = ucfirst(str_replace('Action', '', $action));
-        $controller = str_replace(
-            ['Evoweb\\SfRegister\\Controller\\Feuser', 'Controller'],
-            '',
-            static::class
-        );
-
-        $type = $controller . $action;
+        $type = $this->controller . $action;
 
         /** @var \Evoweb\SfRegister\Services\Mail $mailService */
         $mailService = GeneralUtility::getContainer()->get(Mail::class);
 
         if ($this->isNotifyAdmin($type)) {
-            $user = $mailService->sendNotifyAdmin($user, $controller, $action);
+            $user = $mailService->sendNotifyAdmin($user, $this->controller, $action);
         }
 
         if ($this->isNotifyUser($type)) {
-            $user = $mailService->sendNotifyUser($user, $controller, $action);
+            $user = $mailService->sendNotifyUser($user, $this->controller, $action);
         }
 
         return $user;
