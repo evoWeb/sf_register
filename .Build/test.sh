@@ -4,7 +4,6 @@ export PACKAGE="evoWeb/sf-register";
 export T3EXTENSION="sf_register";
 
 runFunctionalTests () {
-    # FILTER="--filter saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository"
     local PHP=${1};
     local TYPO3_VERSION=${2};
     local TESTING_FRAMEWORK=${3};
@@ -19,7 +18,7 @@ runFunctionalTests () {
 
     ${PHP} ${COMPOSER} validate
 
-    ${PHP} ${COMPOSER} require -n -q --dev typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
+    ${PHP} ${COMPOSER} require -n -q typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
 
     if [ ! -z "${TESTING_FRAMEWORK}" ]; then ${PHP} ${COMPOSER} require --dev typo3/testing-framework="${TESTING_FRAMEWORK}"; fi;
 
@@ -32,18 +31,16 @@ runFunctionalTests () {
     export TYPO3_PATH_WEB=$PWD/.Build/Web;
     export typo3DatabaseDriver="pdo_sqlite";
     ${PHP} .Build/Web/vendor/bin/phpunit ${FILTER} --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
-exit
+
     git checkout composer.json;
     rm composer.lock
     rm -rf .Build/Web/
-    rm -rf .Build/bin/
-    rm -rf .Build/vendor/
 }
 
 cd ../;
 
-runFunctionalTests "/usr/bin/php7.4" "^11.0.0" "^6.6.2";
-runFunctionalTests "/usr/bin/php7.4" "^11.0.0" "^6.6.2" "--prefer-lowest";
-runFunctionalTests "/usr/bin/php7.4" "dev-master as 11.0.0" "^6.6.2";
+runFunctionalTests "/usr/bin/php7.4" "^11.2.0" "^6.6.2";
+#runFunctionalTests "/usr/bin/php7.4" "^11.2.0" "^6.6.2" "--prefer-lowest";
+#runFunctionalTests "/usr/bin/php7.4" "dev-master as 11.3.0" "^6.6.2";
 
 git checkout composer.json
