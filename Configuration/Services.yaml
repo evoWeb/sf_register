@@ -8,12 +8,6 @@ services:
   Evoweb\SfRegister\:
     resource: '../Classes/*'
 
-  Evoweb\StoreFinder\Cache\CoordinatesCache:
-    factory: ['Evoweb\StoreFinder\Cache\CoordinatesCache', 'getInstance']
-    shared: false
-    autoconfigure: false
-    autowire: false
-
   Evoweb\SfRegister\Command\CleanupCommand:
     tags:
       - { name: 'console.command', command: 'sfregister:cleanup', schedulable: false }
@@ -24,3 +18,6 @@ services:
         identifier: 'sfregister_feusercontroller_processinitializeaction'
         method: 'onProcessInitializeActionEvent'
         event: Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent
+
+  Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter:
+    public: true
