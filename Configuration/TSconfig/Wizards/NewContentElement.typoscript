@@ -1,5 +1,5 @@
 mod.wizards.newContentElement.wizardItems.sf_register {
-  after = common, menu, special, forms, plugins
+  after = plugins
   header = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:wizard.group.sf_register
   elements {
     sfregister_create {
