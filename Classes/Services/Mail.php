@@ -104,7 +104,7 @@ class Mail implements \TYPO3\CMS\Core\SingletonInterface
 
     public function sendInvitation(FrontendUserInterface $user, string $type)
     {
-        $method = __FUNCTION__ . $type;
+        $method = 'Invitation' . $type;
 
         $this->sendEmail(
             $user,
