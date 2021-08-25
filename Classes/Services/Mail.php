@@ -99,7 +99,7 @@ class Mail implements SingletonInterface
 
     public function sendInvitation(FrontendUserInterface $user, string $type): FrontendUserInterface
     {
-        $method = __FUNCTION__ . $type;
+        $method = 'Invitation' . $type;
 
         $this->sendEmail(
             $user,
