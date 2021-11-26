@@ -45,7 +45,7 @@ class FeuserCreateController extends FeuserController
             $userData = $this->request->hasArgument('user') ?
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');
-            if ($userData->getUid()) {
+            if ($userData instanceof FrontendUser && $userData->getUid()) {
                 $userData->_setProperty('uid', null);
             }
         }
