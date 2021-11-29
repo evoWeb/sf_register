@@ -33,6 +33,7 @@ use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 
 /**
  * View helper to output the configured language
@@ -58,7 +59,15 @@ class LanguageKeyViewHelper extends AbstractViewHelper
     {
         $languageCode = '';
         if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
-            $languageCode = $this->getTypoScriptFrontendController()->config['config']['language'] ?: 'default';
+            $request = $GLOBALS['TYPO3_REQUEST'];
+            if (class_exists(SiteLanguage::class)) {
+                $language = $request->getAttribute('language');
+                if ($language instanceof SiteLanguage && method_exists($language, 'getTwoLetterIsoCode') && trim($language->getTwoLetterIsoCode())) {
+                    $languageCode =  trim($language->getTwoLetterIsoCode());
+                }
+            }  else {
+                $languageCode = $this->getTypoScriptFrontendController()->config['config']['language'] ?: 'default';
+            }
         } elseif ($this->getBackendUserAuthentication()->uc['lang'] != '') {
             $languageCode = $this->getBackendUserAuthentication()->uc['lang'];
         }
