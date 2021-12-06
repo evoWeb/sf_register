@@ -47,6 +47,9 @@ class FeuserPasswordController extends FeuserController
 
     public function formAction(Password $password = null): ResponseInterface
     {
+        if ($password === null) {
+            $password = new Password();
+        }
         $this->eventDispatcher->dispatch(new PasswordFormEvent($password, $this->settings));
 
         $this->view->assign('password', $password);
