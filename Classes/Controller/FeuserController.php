@@ -425,6 +425,7 @@ class FeuserController extends ActionController
 
         $url = $this->uriBuilder
             ->setTargetPageUid($pageId)
+            ->setLinkAccessRestrictedPages(true)
             ->build();
 
         $this->redirectToUri($url);
