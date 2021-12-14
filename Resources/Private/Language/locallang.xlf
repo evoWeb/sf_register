@@ -9,7 +9,6 @@
 			<trans-unit id="needTobBeLoggedOut">
 				<source>You need to be logged out</source>
 			</trans-unit>
-
 			<trans-unit id="uid">
 				<source>Userid</source>
 			</trans-unit>
@@ -246,6 +245,9 @@
 			</trans-unit>
 			<trans-unit id="create_saved">
 				<source>Account created successfully</source>
+			</trans-unit>
+			<trans-unit id="create_refused">
+				<source>Sorry you refused your registration with account %2$s on site %1$s</source>
 			</trans-unit>
 			<trans-unit id="info_mandatory_fields">
 				<source>Fields marked with an asterisk (*) are mandatory</source>
@@ -590,7 +592,6 @@
 			<trans-unit id="email_email_account_sendlink_link">
 				<source>Delete</source>
 			</trans-unit>
-
 			<trans-unit id="email_admin_invitation_message">
 				<source>User "%1$s" send an invitation to "%2$s".</source>
 			</trans-unit>
