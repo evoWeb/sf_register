@@ -29,6 +29,10 @@ class FeuserResendController extends FeuserController
 
     public function formAction(Email $email = null): ResponseInterface
     {
+        if ($email === null) {
+            $email = new Email();
+        }
+
         $email = $this->eventDispatcher->dispatch(new ResendFormEvent($email, $this->settings))->getEmail();
 
         $userId = $this->context->getAspect('frontend.user')->get('id');
