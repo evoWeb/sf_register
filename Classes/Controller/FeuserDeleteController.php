@@ -62,7 +62,10 @@ class FeuserDeleteController extends FeuserController
             $user = $this->userRepository->findByUid($userId);
         }
 
-        $this->eventDispatcher->dispatch(new DeleteFormEvent($user, $this->settings));
+        // user is logged
+        if ($user !== null && $user instanceof FrontendUser) {
+            $this->eventDispatcher->dispatch(new DeleteFormEvent($user, $this->settings));
+        }
 
         $this->view->assign('user', $user);
 
