@@ -3,6 +3,14 @@
 	<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2018-06-26T07:34:54Z" product-name="sf_register">
 		<header/>
 		<body>
+			<trans-unit id="needTobBeLoggedIn">
+				<source>You need to be logged in</source>
+				<target>Vous devez être identifié</target>
+			</trans-unit>
+			<trans-unit id="needTobBeLoggedOut">
+				<source>You need to be logged out</source>
+				<target>Vous devez être déconnecté</target>
+			</trans-unit>
 			<trans-unit id="uid">
 				<source>Userid</source>
 				<target>UtilisateurId</target>
@@ -295,6 +303,10 @@
 				<source>Birth date</source>
 				<target>Date de naissance</target>
 			</trans-unit>
+			<trans-unit id="captcha">
+				<source>Verification code</source>
+				<target>Code de vérification</target>
+			</trans-unit>
 			<trans-unit id="image">
 				<source>Profile Image</source>
 				<target>Image de profil</target>
@@ -302,6 +314,14 @@
 			<trans-unit id="image_none">
 				<source>Profile Image not uploaded</source>
 				<target>Image de profil pas chargée</target>
+			</trans-unit>
+			<trans-unit id="choose_file">
+				<source>Choose File</source>
+				<target>Choisissez le fichier</target>
+			</trans-unit>
+			<trans-unit id="upload">
+				<source>upload</source>
+				<target>Transférer</target>
 			</trans-unit>
 			<trans-unit id="edit_saved">
 				<source>Userdata updated</source>
@@ -311,9 +331,17 @@
 				<source>User created</source>
 				<target>Utilisateur créé</target>
 			</trans-unit>
+			<trans-unit id="create_refused">
+				<source>Sorry you refused your registration with account %2$s on site %1$s</source>
+				<target>Désolé vous avez refusé votre inscription avec le compte %2$s sur le site %1$s</target>
+			</trans-unit>
 			<trans-unit id="info_mandatory_fields">
 				<source>Fields with &lt;span&gt;*&lt;/span&gt; are mandatory</source>
 				<target>Les champs avec &lt;span&gt;*&lt;/span&gt; sont obligatoires.</target>
+			</trans-unit>
+			<trans-unit id="invitationEmail">
+				<source>Email address of person to invite</source>
+				<target>Adresse email de la personne à inviter</target>
 			</trans-unit>
 			<trans-unit id="submit_create">
 				<source>create</source>
@@ -331,6 +359,10 @@
 				<source>update</source>
 				<target>mettre à jour</target>
 			</trans-unit>
+			<trans-unit id="submit_resend">
+				<source>resend</source>
+				<target>renvoyer</target>
+			</trans-unit>
 			<trans-unit id="submit_removeImage">
 				<source>remove</source>
 				<target>supprimer</target>
@@ -338,6 +370,10 @@
 			<trans-unit id="username">
 				<source>Username</source>
 				<target>Nom d'utilisateur</target>
+			</trans-unit>
+			<trans-unit id="usernameOrEmail">
+				<source>Username or Email</source>
+				<target>Nom d'utilisateur ou email</target>
 			</trans-unit>
 			<trans-unit id="pseudonym">
 				<source>Pseudonym</source>
@@ -359,6 +395,10 @@
 				<source>password saved</source>
 				<target>mot de passe enregistré</target>
 			</trans-unit>
+			<trans-unit id="resend_mail_sent">
+				<source>If your email address was found the confirmation mail was sent to you again.</source>
+				<target>Si votre adresse email a été trouvée, le mail de confirmation vous a été envoyé à nouveau.</target>
+			</trans-unit>
 			<trans-unit id="account_not_found">
 				<source>The account you are trying to activate is unknow to the system.</source>
 				<target>Le compte que vous essayez d'activer est inconnu par le système.</target>
@@ -370,6 +410,42 @@
 			<trans-unit id="account_successful_activated">
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is now active.</source>
 				<target>Le compte &lt;b&gt;%1$s&lt;/b&gt; est maintenant actif.</target>
+			</trans-unit>
+			<trans-unit id="account_not_activated">
+				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is not active.</source>
+				<target>Le compte &lt;b&gt;%1$s&lt;/b&gt; n'est pas actif.</target>
+			</trans-unit>
+			<trans-unit id="email_already_activated">
+				<source>Your new email is already active.</source>
+				<target>Votre nouvelle adresse email est déjà actif.</target>
+			</trans-unit>
+			<trans-unit id="email_successful_activated">
+				<source>Your new email adress was successfully saved.</source>
+				<target>Votre nouvelle adresse email a été enregistrée avec succès.</target>
+			</trans-unit>
+			<trans-unit id="submit_delete">
+				<source>delete</source>
+				<target>supprimer</target>
+			</trans-unit>
+			<trans-unit id="delete_saved">
+				<source>You requested to delete your account. We send an email with a link with which you can confirm this request.</source>
+				<target>Vous avez demandé la suppression de votre compte. Nous vous envoyons un email avec un lien qui vous permet de confirmer cette demande.</target>
+			</trans-unit>
+			<trans-unit id="account_already_deleted">
+				<source>Account was already deleted.</source>
+				<target>Le compte a déjà été supprimé.</target>
+			</trans-unit>
+			<trans-unit id="account_deleted">
+				<source>Account deleted.</source>
+				<target>Compte supprimé.</target>
+			</trans-unit>
+			<trans-unit id="account_unknown">
+				<source>No known account for the given e-mail addresse.</source>
+				<target>Aucun compte n'a été trouvé pour l'adresse email indiquée.</target>
+			</trans-unit>
+			<trans-unit id="delete_link_send">
+				<source>Delete link was send.</source>
+				<target>Le lien de suppression a été envoyé.</target>
 			</trans-unit>
 			<trans-unit id="error_noteempty">
 				<source>The %1$s was not empty which it should have been</source>
@@ -521,7 +597,50 @@
 				<source>Your change of informations for account %2$s on site %1$s was accepted</source>
 				<target>Vos modifications pour le compte %2$s sur le site %1$s ont été acceptées</target>
 			</trans-unit>
-
+			<trans-unit id="subjectNotifyAdminSendInvitation">
+				<source>User invitation at %1$s</source>
+				<target>Invitation de l'utilisateur à %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserSendInvitation">
+				<source>You invited someone to register at %1$s</source>
+				<target>Vous avez invité quelqu'un à s'inscrire à %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectInvitationToRegister">
+				<source>You were invite to register at %1$s</source>
+				<target>Vous avez été invité à vous inscrire à %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminDeleteSave">
+				<source>User %2$s requests to delete the account from %1$s</source>
+				<target>L'utilisateur %2$s demande à supprimer le compte de %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserDeleteSave">
+				<source>Your requests to delete the account %2$s from %1$s</source>
+				<target>Votre demande de suppression du compte %2$s de %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminDeleteConfirm">
+				<source>User %2$s confirmed to delete the account from %1$s</source>
+				<target>L'utilisateur %2$s a confirmé la suppression du compte de %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserDeleteConfirm">
+				<source>Your confirmed to delete the account %2$s from %1$s</source>
+				<target>Votre confirmation de suppression du compte %2$s de %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminDeleteSendLink">
+				<source>User %2$s requests to delete the account from %1$s</source>
+				<target>L'utilisateur %2$s demande à supprimer le compte de %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserDeleteSendLink">
+				<source>You request to delete the account %2$s from %1$s</source>
+				<target>Votre demande de suppresion du compte %2$s de %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminResendMail">
+				<source>User %2$s requested a resend of the activation key of the account from %1$s</source>
+				<target>L'utilisateur %2$s a demandé un renvoi de la clé d'activation du compte de %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserResendMail">
+				<source>Your requested a resend of the activation key of the account %2$s from %1$s</source>
+				<target>Vous avez demandé le renvoi de la clé d'activation du compte %2$s de %1$s.</target>
+			</trans-unit>
 			<trans-unit id="email_admin_salutation">
 				<source>dear admin</source>
 				<target>cher admin</target>
@@ -599,7 +718,18 @@
 				<source>The user registration was saved</source>
 				<target>L'inscription de l'utilisateur a été enregistré</target>
 			</trans-unit>
-
+			<trans-unit id="email_admin_account_delete">
+				<source>The user %1$s requested to delete the account</source>
+				<target>L'utilisateur %1$s a demandé à supprimer le compte</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_deleted">
+				<source>The user %1$s confirmed to delete the account</source>
+				<target>L'utilisateur %1$s a confirmé la suppression du compte</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_sendlink">
+				<source>The user %1$s requests a delete link</source>
+				<target>L'utilisateur %1$s a demandé un lien de suppression</target>
+			</trans-unit>
 			<trans-unit id="email_user_account_accepted">
 				<source>Your registration was accepted.</source>
 				<target>Votre inscription a été acceptée.</target>
@@ -627,6 +757,42 @@
 			<trans-unit id="email_user_account_saved">
 				<source>Your registration was saved.</source>
 				<target>Votre inscription a été enregistrée.</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_delete">
+				<source>Your requested to delete your account %1$s</source>
+				<target>Vous avez demandé la suppression de votre compte %1$s</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_deleted">
+				<source>Your confirmed to delete your account %1$s</source>
+				<target>Vous avez confirmé la suppression de votre compte %1$s</target>
+			</trans-unit>
+			<trans-unit id="email_user_delete_link">
+				<source>Confirm to delete your account</source>
+				<target>Confirmez la suppression de votre compte</target>
+			</trans-unit>
+			<trans-unit id="email_email_account_sendlink">
+				<source>Use the link to delete your account</source>
+				<target>Utilisez le lien pour supprimer votre compte</target>
+			</trans-unit>
+			<trans-unit id="email_email_account_sendlink_link">
+				<source>Delete</source>
+				<target>Supprimer</target>
+			</trans-unit>
+			<trans-unit id="email_admin_invitation_message">
+				<source>User &quot;%1$s&quot; send an invitation to &quot;%2$s&quot;.</source>
+				<target>L'utilisateur &quot;%1$s&quot; a envoyé une invitation à &quot;%2$s&quot;.</target>
+			</trans-unit>
+			<trans-unit id="email_user_invitation_message">
+				<source>Your invited email &quot;%1$s&quot; to register at %2$s.</source>
+				<target>Vous avez invité l'email &quot;%1$s&quot; pour s'inscrire à %2$s.</target>
+			</trans-unit>
+			<trans-unit id="email_invitee_invitation_message">
+				<source>Your were invited with email %1$s to register at &quot;%2$s&quot;.</source>
+				<target>Vous avez été invité par l'email %1$s à vous inscrire à &quot;%2$s&quot;.</target>
+			</trans-unit>
+			<trans-unit id="email_invitee_register_link">
+				<source>register</source>
+				<target>enregistrez</target>
 			</trans-unit>
 		</body>
 	</file>
