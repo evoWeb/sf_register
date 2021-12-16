@@ -144,7 +144,7 @@ call_user_func(function () {
         'status' => [
             'label' => $languageFile . 'fe_users.status',
             'config' => [
-                'type' => 'check',
+                'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     [$languageFile . 'fe_users.status.I.0', 0],
