@@ -126,6 +126,7 @@ class File implements SingletonInterface, LoggerAwareInterface
     protected function returnBytes($value): int
     {
         $last = strtolower(substr(trim($value), -1));
+        $value = (int)$value;
         switch ($last) {
             case 'g':
                 $value *= 1024 * 1024 * 1024;
@@ -140,7 +141,7 @@ class File implements SingletonInterface, LoggerAwareInterface
                 break;
         }
 
-        return (int)$value;
+        return $value;
     }
 
     public function getErrors(): array
