@@ -1,36 +1,41 @@
 #!/usr/bin/env bash
 
-export PACKAGE="evoWeb/sf-register";
-export T3EXTENSION="sf_register";
+export PACKAGE='evoWeb/sf-register';
+export T3EXTENSION='sf_register';
 
 runFunctionalTests () {
     local PHP=${1};
     local TYPO3_VERSION=${2};
     local TESTING_FRAMEWORK=${3};
     local PREFER_LOWEST=${4};
-    local COMPOSER="/usr/local/bin/composer";
+    local COMPOSER='/usr/local/bin/composer';
 
-    ${PHP} --version
-    ${PHP} ${COMPOSER} --version
+    /usr/bin/php${PHP} --version;
+    /usr/bin/php${PHP} ${COMPOSER} --version;
 
-    echo "Running php lint"
-    errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l "{}" 2>&1 >/dev/null \;) && echo "${errors}" && test -z "${errors}"
+    echo "Lint PHP ${PHP}"
+    errors=$(find . -name \*.php ! -path "./.Build/*" -exec /usr/bin/php${PHP} -d display_errors=stderr -l "{}" 2>&1 >/dev/null \;) && echo "${errors}" && test -z "${errors}";
 
-    ${PHP} ${COMPOSER} validate
+    /usr/bin/php${PHP} ${COMPOSER} validate;
 
-    ${PHP} ${COMPOSER} require -n -q typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
+    if [ "${TYPO3_VERSION}" = "dev-master" ]; then
+        /usr/bin/php${PHP} ${COMPOSER} config minimum-stability dev;
+        /usr/bin/php${PHP} ${COMPOSER} config prefer-stable true;
+    fi
 
-    if [ ! -z "${TESTING_FRAMEWORK}" ]; then ${PHP} ${COMPOSER} require --dev typo3/testing-framework="${TESTING_FRAMEWORK}"; fi;
+    /usr/bin/php${PHP} ${COMPOSER} require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
 
-    mkdir -p .Build/Web/typo3conf/ext/
-    [ -L ".Build/Web/typo3conf/ext/${T3EXTENSION}" ] || ln -snvf ../../../../. ".Build/Web/typo3conf/ext/${T3EXTENSION}"
+    if [ ! -z "${TESTING_FRAMEWORK}" ]; then
+        /usr/bin/php${PHP} ${COMPOSER} require --dev typo3/testing-framework="${TESTING_FRAMEWORK}";
+    fi
 
-    ${PHP} ${COMPOSER} require --dev typo3/cms-extensionmanager="${TYPO3_VERSION}";
+    echo "Run ${TYPO3_VERSION} unit tests with ${PHP}";
+    /usr/bin/php${PHP} .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/;
 
-    echo "Running ${TYPO3_VERSION} functional tests with $(which php)";
+    echo "Run ${TYPO3_VERSION} functional tests with ${PHP} and testing framework ${TESTING_FRAMEWORK}";
     export TYPO3_PATH_WEB=$PWD/.Build/Web;
     export typo3DatabaseDriver="pdo_sqlite";
-    ${PHP} .Build/Web/vendor/bin/phpunit ${FILTER} --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
+    /usr/bin/php${PHP} .Build/Web/vendor/bin/phpunit ${FILTER} --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
 
     git checkout composer.json;
     rm composer.lock
@@ -39,8 +44,8 @@ runFunctionalTests () {
 
 cd ../;
 
-runFunctionalTests "/usr/bin/php7.4" "^11.2.0" "^6.6.2";
-#runFunctionalTests "/usr/bin/php7.4" "^11.2.0" "^6.6.2" "--prefer-lowest";
-#runFunctionalTests "/usr/bin/php7.4" "dev-master as 11.3.0" "^6.6.2";
+runFunctionalTests "7.4" "^11.5" "^6.6.2";
+#runFunctionalTests "7.4" "^11.5" "^6.6.2" "--prefer-lowest";
+#runFunctionalTests "7.4" "dev-master" "^6.6.2";
 
 git checkout composer.json

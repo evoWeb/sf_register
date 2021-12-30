@@ -27,7 +27,8 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['7.4']
+        env:
+          - { PHP: 7.4 }
 
     name: Lint PHP ${{ matrix.php-versions }}
     steps:
@@ -37,9 +38,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.env.PHP }}
 
-      - name: Running php lint with ${{ matrix.php-versions }}
+      - name: Running php lint with ${{ matrix.env.PHP }}
         run: errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l "{}" 2>&1 >/dev/null \;) && echo "${errors}" && test -z "${errors}"
 
   phpunit:
@@ -52,13 +53,13 @@ jobs:
       fail-fast: false
       matrix:
         env:
-          - { php: 7.4, TYPO3_VERSION: ^11.0, TESTING_FRAMEWORK: ^6.6.2 }
-          - { php: 7.4, TYPO3_VERSION: ^11.0, TESTING_FRAMEWORK: ^6.6.2, PREFER_LOWEST: "--prefer-lowest" }
-          - { php: 7.4, TYPO3_VERSION: "dev-master", TESTING_FRAMEWORK: ^6.6.2, experimental: true }
+          - { PHP: 7.4, TYPO3_VERSION: "^11.5", TESTING_FRAMEWORK: "^6.6.2" }
+          - { PHP: 7.4, TYPO3_VERSION: "^11.5", TESTING_FRAMEWORK: "^6.6.2", PREFER_LOWEST: "--prefer-lowest" }
+          - { PHP: 7.4, TYPO3_VERSION: "dev-master", TESTING_FRAMEWORK: "^6.6.2", experimental: true }
 
     env: ${{ matrix.env }}
 
-    name: Run unit and/or functional tests on TYPO3 ${{ matrix.env.TYPO3_VERSION }} with PHP${{ matrix.env.php }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
+    name: Run unit and/or functional tests on TYPO3 ${{ matrix.env.TYPO3_VERSION }} with PHP${{ matrix.env.PHP }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -66,7 +67,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.env.php }}
+          php-version: ${{ matrix.env.PHP }}
           tools: composer
           extensions: pdo, sqlite3
 
@@ -92,14 +93,12 @@ jobs:
         if: ${{ matrix.env.TESTING_FRAMEWORK }}
         run: composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}";
 
-      - name: Run unit tests
+      - name: Run ${{ matrix.env.TYPO3_VERSION }} unit tests with ${{ matrix.env.PHP }}
         run: |
-          echo "Running ${TYPO3_VERSION} unit tests with $(which php)";
           php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/;
 
-      - name: Run functional tests
+      - name: Run ${{ matrix.env.TYPO3_VERSION }} functional tests with ${{ matrix.env.PHP }} and testing framework
         run: |
-          echo "Running ${TYPO3_VERSION} functional tests with $(which php)";
           export TYPO3_PATH_WEB=$PWD/.Build/Web;
           export typo3DatabaseDriver="pdo_sqlite";
           php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
