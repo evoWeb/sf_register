@@ -13,15 +13,17 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class EqualCurrentPasswordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
+use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+
+class EqualCurrentPasswordValidatorTest extends AbstractTestBase
 {
     public function setUp(): void
     {
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_users.xml');
 
         $this->createEmptyFrontendUser();
         $this->initializeTypoScriptFrontendController();

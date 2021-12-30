@@ -13,11 +13,12 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Controller\FeuserPasswordController as FeuserPasswordController;
+use Evoweb\SfRegister\Controller\FeuserPasswordController;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
 use Evoweb\SfRegister\Services\Session;
+use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Context\Context;
@@ -26,16 +27,16 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
-class FeuserPasswordControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
+class FeuserPasswordControllerTest extends AbstractTestBase
 {
     public function setUp(): void
     {
         defined('LF') ?: define('LF', chr(10));
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../Fixtures/fe_users.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
     }
 
     /**

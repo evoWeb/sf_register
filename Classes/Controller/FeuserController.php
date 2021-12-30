@@ -219,9 +219,7 @@ class FeuserController extends ActionController
             $validateAnnotation->validator
         );
 
-        /** @var ValidatorInterface $validator */
-        $validator = $this->objectManager->get($validatorObjectName, $validateAnnotation->options);
-        return $validator;
+        return new $validatorObjectName($validateAnnotation->options);
     }
 
     protected function initializeAction()

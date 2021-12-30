@@ -33,9 +33,7 @@ runFunctionalTests () {
     /usr/bin/php${PHP} .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/;
 
     echo "Run ${TYPO3_VERSION} functional tests with ${PHP} and testing framework ${TESTING_FRAMEWORK}";
-    export TYPO3_PATH_WEB=$PWD/.Build/Web;
-    export typo3DatabaseDriver="pdo_sqlite";
-    /usr/bin/php${PHP} .Build/Web/vendor/bin/phpunit ${FILTER} --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
+    TYPO3_PATH_WEB="$PWD/.Build/Web" typo3DatabaseDriver="pdo_sqlite" /usr/bin/php${PHP} .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
 
     git checkout composer.json;
     rm composer.lock
@@ -47,5 +45,3 @@ cd ../;
 runFunctionalTests "7.4" "^11.5" "^6.6.2";
 #runFunctionalTests "7.4" "^11.5" "^6.6.2" "--prefer-lowest";
 #runFunctionalTests "7.4" "dev-master" "^6.6.2";
-
-git checkout composer.json

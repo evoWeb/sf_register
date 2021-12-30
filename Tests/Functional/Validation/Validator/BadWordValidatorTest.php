@@ -13,11 +13,12 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
-class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
+class BadWordValidatorTest extends AbstractTestBase
 {
     /**
      * @var \Evoweb\SfRegister\Validation\Validator\BadWordValidator|AccessibleObjectInterface
@@ -27,10 +28,10 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
     public function setUp(): void
     {
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_users.xml');
 
         $this->createEmptyFrontendUser();
         $this->initializeTypoScriptFrontendController();

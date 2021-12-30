@@ -16,21 +16,22 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
-class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
+class FeuserCreateControllerTest extends AbstractTestBase
 {
     public function setUp(): void
     {
         defined('LF') ?: define('LF', chr(10));
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../Fixtures/fe_users.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
 
         $this->initializeTypoScriptFrontendController();
         $this->createEmptyFrontendUser();
@@ -42,13 +43,16 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
     public function isUserValidatorSet()
     {
         $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.'] = [
+            'fields' => [
+                'selected' => 'username',
+            ],
             'validation.' => [
                 'create.' => [
                     'username.' => [
-                        '1.' => '"Evoweb.SfRegister:Required"',
-                        '2.' => '"StringLength", options={"minimum": 4, "maximum": 80}',
-                        '3.' => '"Evoweb.SfRegister:Unique"',
-                        '4.' => '"Evoweb.SfRegister:Unique", options={"global": 1}',
+                        1 => '"Evoweb.SfRegister:Required"',
+                        2 => '"StringLength", options={"minimum": 4, "maximum": 80}',
+                        3 => '"Evoweb.SfRegister:Unique"',
+                        4 => '"Evoweb.SfRegister:Unique", options={"global": 1}',
                     ]
                 ]
             ]

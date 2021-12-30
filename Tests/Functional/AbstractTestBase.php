@@ -16,6 +16,7 @@ namespace Evoweb\SfRegister\Tests\Functional;
 use Evoweb\SfRegister\Tests\Functional\SiteHandling\SiteBasedTestTrait;
 use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
@@ -25,48 +26,33 @@ use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
-abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
+abstract class AbstractTestBase extends FunctionalTestCase
 {
     use SiteBasedTestTrait;
 
     /**
      * @var array
      */
-    protected $testExtensionsToLoad = ['typo3conf/ext/sf_register'];
+    protected $testExtensionsToLoad = [
+        'typo3conf/ext/sf_register'
+    ];
 
     /**
      * @var array[]
      */
     protected const LANGUAGE_PRESETS = [
-        'EN' => ['id' => 0, 'title' => 'English', 'locale' => 'en_US.UTF8'],
+        'EN' => [
+            'id' => 0,
+            'title' => 'English',
+            'locale' => 'en_US.UTF8'
+        ],
     ];
 
-    /**
-     * @var TypoScriptFrontendController
-     */
-    protected $typoScriptFrontendController;
+    protected ?TypoScriptFrontendController $typoScriptFrontendController = null;
 
-    /**
-     * @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication
-     */
-    protected $frontendUser;
-
-    public function getPrivateMethod($object, $methodName): \ReflectionMethod
-    {
-        $classReflection = new \ReflectionClass($object);
-        $methodReflection = $classReflection->getMethod($methodName);
-        $methodReflection->setAccessible(true);
-        return $methodReflection;
-    }
-
-    public function getPrivateProperty($object, $propertyName): \ReflectionProperty
-    {
-        $classReflection = new \ReflectionClass($object);
-        $propertyReflection = $classReflection->getProperty($propertyName);
-        $propertyReflection->setAccessible(true);
-        return $propertyReflection;
-    }
+    protected ?FrontendUserAuthentication $frontendUser = null;
 
     public function initializeTypoScriptFrontendController()
     {
@@ -96,7 +82,9 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
         );
         $this->typoScriptFrontendController->sys_page = GeneralUtility::makeInstance(PageRepository::class);
         $this->typoScriptFrontendController->tmpl = GeneralUtility::makeInstance(TemplateService::class);
-        $this->typoScriptFrontendController->fe_user = $this->frontendUser;
+        $this->typoScriptFrontendController->fe_user =& $this->frontendUser;
+
+        $GLOBALS['TSFE'] = $this->typoScriptFrontendController;
     }
 
     public function createAndLoginFrontEndUser(string $frontEndUserGroups = '', array $recordData = []): int
@@ -130,7 +118,7 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
     public function createRecord(string $tableName, array $insertArray): string
     {
         /** @var Connection $connection */
-        $connection = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ConnectionPool::class)
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable($tableName);
         $types = [];
         $tableDetails = $connection->getSchemaManager()->listTableDetails($tableName);
@@ -144,13 +132,11 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
 
     public function loginFrontEndUser(int $frontEndUserUid)
     {
-        if ((int)$frontEndUserUid === 0) {
+        if ($frontEndUserUid === 0) {
             throw new \InvalidArgumentException('The user ID must be > 0.', 1334439475);
         }
 
-        $this->frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication::class
-        );
+        $this->frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
         $this->frontendUser->setLogger(new NullLogger());
         $this->frontendUser->start();
         $this->frontendUser->user = $this->frontendUser->getRawUserByUid($frontEndUserUid);
@@ -159,26 +145,37 @@ abstract class FunctionalTestCase extends \TYPO3\TestingFramework\Core\Functiona
 
         $userAspect = $this->frontendUser->createUserAspect();
 
-        /** @var \TYPO3\CMS\Core\Context\Context $context */
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        /** @var Context $context */
+        $context = GeneralUtility::makeInstance(Context::class);
         $context->setAspect('frontend.user', $userAspect);
     }
 
     public function createEmptyFrontendUser()
     {
-        $this->frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication::class
-        );
+        $this->frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
 
-        /** @var \TYPO3\CMS\Core\Context\UserAspect $aspect */
-        $aspect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Context\UserAspect::class,
-            $this->frontendUser
-        );
+        /** @var UserAspect $aspect */
+        $aspect = GeneralUtility::makeInstance(UserAspect::class, $this->frontendUser);
 
-        /** @var \TYPO3\CMS\Core\Context\Context $context */
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        /** @var Context $context */
+        $context = GeneralUtility::makeInstance(Context::class);
         $context->setAspect('frontend.user', $aspect);
         $context->getPropertyFromAspect('frontend.user', 'isLoggedIn');
+    }
+
+    public function getPrivateMethod($object, $methodName): \ReflectionMethod
+    {
+        $classReflection = new \ReflectionClass($object);
+        $methodReflection = $classReflection->getMethod($methodName);
+        $methodReflection->setAccessible(true);
+        return $methodReflection;
+    }
+
+    public function getPrivateProperty($object, $propertyName): \ReflectionProperty
+    {
+        $classReflection = new \ReflectionClass($object);
+        $propertyReflection = $classReflection->getProperty($propertyName);
+        $propertyReflection->setAccessible(true);
+        return $propertyReflection;
     }
 }

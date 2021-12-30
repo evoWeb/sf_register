@@ -14,22 +14,20 @@ namespace Evoweb\SfRegister\Tests\Functional\Domain\Repository;
  */
 
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class FrontendUserRepositoryTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
+class FrontendUserRepositoryTest extends AbstractTestBase
 {
-    /**
-     * @var FrontendUserRepository
-     */
-    protected $subject;
+    protected FrontendUserRepository $subject;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_users.xml');
 
         /** @var FrontendUserRepository subject */
         $this->subject = GeneralUtility::makeInstance(FrontendUserRepository::class);

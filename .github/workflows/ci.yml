@@ -99,9 +99,7 @@ jobs:
 
       - name: Run ${{ matrix.env.TYPO3_VERSION }} functional tests with ${{ matrix.env.PHP }} and testing framework
         run: |
-          export TYPO3_PATH_WEB=$PWD/.Build/Web;
-          export typo3DatabaseDriver="pdo_sqlite";
-          php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
+          TYPO3_PATH_WEB="$PWD/.Build/Web" typo3DatabaseDriver="pdo_sqlite" php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
 
       - name: Reset composer.json
         run: git checkout composer.json;
