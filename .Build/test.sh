@@ -43,5 +43,5 @@ runFunctionalTests () {
 cd ../;
 
 runFunctionalTests "7.4" "^11.5" "^6.6.2";
-#runFunctionalTests "7.4" "^11.5.1" "^6.6.2" "--prefer-lowest";
-#runFunctionalTests "7.4" "dev-main" "^6.6.2";
+#runFunctionalTests "7.4" "^11.5.2" "^6.6.2" "--prefer-lowest";
+#runFunctionalTests "7.4" "dev-main" "dev-main";

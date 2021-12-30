@@ -55,7 +55,7 @@ jobs:
         env:
           - { PHP: 7.4, TYPO3_VERSION: "^11.5", TESTING_FRAMEWORK: "^6.6.2" }
           - { PHP: 7.4, TYPO3_VERSION: "^11.5.2", TESTING_FRAMEWORK: "^6.6.2", PREFER_LOWEST: "--prefer-lowest" }
-          - { PHP: 7.4, TYPO3_VERSION: "dev-main", TESTING_FRAMEWORK: "^6.6.2", experimental: true }
+          - { PHP: 7.4, TYPO3_VERSION: "dev-main", TESTING_FRAMEWORK: "dev-main", experimental: true }
 
     env: ${{ matrix.env }}
 
