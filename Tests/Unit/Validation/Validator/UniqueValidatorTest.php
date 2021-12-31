@@ -13,7 +13,9 @@ namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
@@ -24,7 +26,11 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
     public function setUp(): void
     {
+        /** @var FrontendUserRepository $userRepository */
+        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
+
         $this->subject = $this->getMockBuilder(\Evoweb\SfRegister\Validation\Validator\UniqueValidator::class)
+            ->setConstructorArgs([$userRepository])
             ->setMethods(['translateErrorMessage'])
             ->getMock();
     }
