@@ -16,9 +16,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
-class BadWordValidator extends AbstractValidator
+class BadWordValidator extends AbstractValidator implements InjectableInterface
 {
     protected ?ConfigurationManager $configurationManager = null;
 
@@ -27,7 +26,7 @@ class BadWordValidator extends AbstractValidator
      */
     protected array $settings = [];
 
-    public function injectConfigurationManager(ConfigurationManager $configurationManager)
+    public function __construct(ConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(

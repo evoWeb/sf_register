@@ -16,9 +16,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
-class UniqueValidator extends AbstractValidator implements SettableInterface
+class UniqueValidator extends AbstractValidator implements InjectableInterface, SettableInterface
 {
     /**
      * @var bool
@@ -47,6 +46,11 @@ class UniqueValidator extends AbstractValidator implements SettableInterface
 
     protected string $propertyName = '';
 
+    public function __construct(FrontendUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Setter for model
      *
@@ -60,11 +64,6 @@ class UniqueValidator extends AbstractValidator implements SettableInterface
     public function setPropertyName(string $propertyName)
     {
         $this->propertyName = $propertyName;
-    }
-
-    public function injectUserRepository(FrontendUserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
     }
 
     /**

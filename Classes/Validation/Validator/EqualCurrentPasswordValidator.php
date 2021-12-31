@@ -19,12 +19,11 @@ use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Validator to check against current password
  */
-class EqualCurrentPasswordValidator extends AbstractValidator
+class EqualCurrentPasswordValidator extends AbstractValidator implements InjectableInterface
 {
     /**
      * @var bool
@@ -39,18 +38,13 @@ class EqualCurrentPasswordValidator extends AbstractValidator
 
     protected array $settings = [];
 
-    public function injectContext(Context $context)
-    {
+    public function __construct(
+        Context $context,
+        FrontendUserRepository $userRepository,
+        ConfigurationManager $configurationManager
+    ) {
         $this->context = $context;
-    }
-
-    public function injectUserRepository(FrontendUserRepository $userRepository)
-    {
         $this->userRepository = $userRepository;
-    }
-
-    public function injectConfigurationManager(ConfigurationManager $configurationManager)
-    {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
@@ -62,9 +56,9 @@ class EqualCurrentPasswordValidator extends AbstractValidator
     /**
      * Validation method
      *
-     * @param mixed $password
+     * @param mixed $value
      */
-    public function isValid($password)
+    public function isValid($value)
     {
         if (!$this->userIsLoggedIn()) {
             $this->addError(
@@ -79,7 +73,7 @@ class EqualCurrentPasswordValidator extends AbstractValidator
                 PasswordHashFactory::class
             );
             $passwordHash = $passwordHashFactory->get($user->getPassword(), 'FE');
-            if (!$passwordHash->checkPassword($password, $user->getPassword())) {
+            if (!$passwordHash->checkPassword($value, $user->getPassword())) {
                 $this->addError(
                     $this->translateErrorMessage('error_changepassword_notequal', 'SfRegister'),
                     1301599507
