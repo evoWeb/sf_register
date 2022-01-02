@@ -63,6 +63,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->setConstructorArgs([$repositoryMock])
             ->setMethods(['translateErrorMessage'])
             ->getMock();
+        $subject->setPropertyName($fieldName);
 
         self::assertTrue($subject->validate($expected)->hasErrors());
     }
@@ -90,6 +91,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->setConstructorArgs([$repositoryMock])
             ->setMethods(['translateErrorMessage'])
             ->getMock();
+        $subject->setPropertyName($fieldName);
 
         self::assertFalse($subject->validate($expected)->hasErrors());
     }
@@ -117,7 +119,10 @@ class UniqueValidatorTest extends UnitTestCase
             ->setConstructorArgs([$repositoryMock])
             ->setMethods(['translateErrorMessage'])
             ->getMock();
+        $subject->setOptions(['global' => 1]);
+        $subject->setPropertyName($fieldName);
 
-        self::assertTrue($subject->validate($expected)->hasErrors());
+        $current = $subject->validate($expected);
+        self::assertTrue($current->hasErrors());
     }
 }

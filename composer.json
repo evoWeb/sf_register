@@ -22,7 +22,7 @@
 	],
 
 	"require": {
-		"typo3/cms-core": "^11.2.0",
+		"typo3/cms-core": "^11.5",
 		"typo3/cms-extbase": "*",
 		"typo3/cms-fluid": "*"
 	},
@@ -62,5 +62,8 @@
 			"rm .gitignore",
 			"sed -i \"s/version' => '.*'/version' => '$(echo ${GITHUB_REF} | cut -d / -f 3)'/\" ext_emconf.php\n"
 		]
+	},
+	"require-dev": {
+		"typo3/testing-framework": "^6.6.2"
 	}
 }

@@ -82,7 +82,11 @@ class UniqueValidator extends AbstractValidator implements InjectableInterface, 
                 ),
                 1301599608
             );
-        } elseif ($this->options['global'] && $this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
+        } elseif (
+            isset($this->options['global'])
+            && $this->options['global']
+            && $this->userRepository->countByFieldGlobal($this->propertyName, $value)
+        ) {
             $this->addError(
                 $this->translateErrorMessage(
                     'error_notunique_global',
