@@ -22,6 +22,7 @@ use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
@@ -60,9 +61,12 @@ class FeuserPasswordControllerTest extends AbstractTestBase
 
         $logger = new NullLogger();
 
+        $serverRequestFactory = new ServerRequestFactory();
+        $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
+
         $frontendUser = new FrontendUserAuthentication();
         $frontendUser->setLogger($logger);
-        $frontendUser->start();
+        $frontendUser->start($serverRequest);
 
         /** @var Session $session */
         $session = GeneralUtility::makeInstance(Session::class, $frontendUser);
@@ -104,9 +108,12 @@ class FeuserPasswordControllerTest extends AbstractTestBase
 
         $logger = new NullLogger();
 
+        $serverRequestFactory = new ServerRequestFactory();
+        $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
+
         $frontendUser = new FrontendUserAuthentication();
         $frontendUser->setLogger($logger);
-        $frontendUser->start();
+        $frontendUser->start($serverRequest);
 
         /** @var Session $session */
         $session = GeneralUtility::makeInstance(Session::class, $frontendUser);
