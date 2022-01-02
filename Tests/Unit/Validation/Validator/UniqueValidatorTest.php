@@ -13,28 +13,13 @@ namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Validation\Validator\UniqueValidator;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use PHPUnit\Framework\MockObject\MockObject;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
-class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class UniqueValidatorTest extends UnitTestCase
 {
-    /**
-     * @var \Evoweb\SfRegister\Validation\Validator\UniqueValidator
-     */
-    protected $subject;
-
-    public function setUp(): void
-    {
-        /** @var FrontendUserRepository $userRepository */
-        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
-
-        $this->subject = $this->getMockBuilder(\Evoweb\SfRegister\Validation\Validator\UniqueValidator::class)
-            ->setConstructorArgs([$userRepository])
-            ->setMethods(['translateErrorMessage'])
-            ->getMock();
-    }
-
     /**
      * @test
      */
@@ -43,16 +28,20 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $fieldName = 'username';
         $expected = 'myValue';
 
-        /** @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository|MockObject $repositoryMock */
-        $repositoryMock = $this->createMock(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
+        /** @var FrontendUserRepository|MockObject $repositoryMock */
+        $repositoryMock = $this->createMock(FrontendUserRepository::class);
         $repositoryMock->expects(self::once())
             ->method('countByField')
             ->with($fieldName, $expected)
             ->willReturn(0);
-        $this->subject->injectUserRepository($repositoryMock);
-        $this->subject->setPropertyName($fieldName);
 
-        self::assertFalse($this->subject->validate($expected)->hasErrors());
+        $subject = $this->getMockBuilder(UniqueValidator::class)
+            ->setConstructorArgs([$repositoryMock])
+            ->setMethods(['translateErrorMessage'])
+            ->getMock();
+        $subject->setPropertyName($fieldName);
+
+        self::assertFalse($subject->validate($expected)->hasErrors());
     }
 
     /**
@@ -63,16 +52,19 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $fieldName = 'username';
         $expected = 'myValue';
 
-        /** @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository|MockObject $repositoryMock */
-        $repositoryMock = $this->createMock(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
+        /** @var FrontendUserRepository|MockObject $repositoryMock */
+        $repositoryMock = $this->createMock(FrontendUserRepository::class);
         $repositoryMock->expects(self::once())
             ->method('countByField')
             ->with($fieldName, $expected)
             ->willReturn(1);
-        $this->subject->injectUserRepository($repositoryMock);
-        $this->subject->setPropertyName($fieldName);
 
-        self::assertTrue($this->subject->validate($expected)->hasErrors());
+        $subject = $this->getMockBuilder(UniqueValidator::class)
+            ->setConstructorArgs([$repositoryMock])
+            ->setMethods(['translateErrorMessage'])
+            ->getMock();
+
+        self::assertTrue($subject->validate($expected)->hasErrors());
     }
 
     /**
@@ -83,8 +75,8 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $fieldName = 'username';
         $expected = 'myValue';
 
-        /** @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository|MockObject $repositoryMock */
-        $repositoryMock = $this->createMock(\Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class);
+        /** @var FrontendUserRepository|MockObject $repositoryMock */
+        $repositoryMock = $this->createMock(FrontendUserRepository::class);
         $repositoryMock->expects(self::once())
             ->method('countByField')
             ->with($fieldName, $expected)
@@ -93,10 +85,13 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
             ->method('countByFieldGlobal')
             ->with($fieldName, $expected)
             ->willReturn(0);
-        $this->subject->injectUserRepository($repositoryMock);
-        $this->subject->setPropertyName($fieldName);
 
-        self::assertFalse($this->subject->validate($expected)->hasErrors());
+        $subject = $this->getMockBuilder(UniqueValidator::class)
+            ->setConstructorArgs([$repositoryMock])
+            ->setMethods(['translateErrorMessage'])
+            ->getMock();
+
+        self::assertFalse($subject->validate($expected)->hasErrors());
     }
 
     /**
@@ -107,10 +102,8 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $fieldName = 'username';
         $expected = 'myValue';
 
-        /** @var \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository|MockObject $repositoryMock */
-        $repositoryMock = $this->createMock(
-            \Evoweb\SfRegister\Domain\Repository\FrontendUserRepository::class
-        );
+        /** @var FrontendUserRepository|MockObject $repositoryMock */
+        $repositoryMock = $this->createMock(FrontendUserRepository::class);
         $repositoryMock->expects(self::once())
             ->method('countByField')
             ->with($fieldName, $expected)
@@ -119,9 +112,12 @@ class UniqueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
             ->method('countByFieldGlobal')
             ->with($fieldName, $expected)
             ->willReturn(1);
-        $this->subject->injectUserRepository($repositoryMock);
-        $this->subject->setPropertyName($fieldName);
 
-        self::assertTrue($this->subject->validate($expected)->hasErrors());
+        $subject = $this->getMockBuilder(UniqueValidator::class)
+            ->setConstructorArgs([$repositoryMock])
+            ->setMethods(['translateErrorMessage'])
+            ->getMock();
+
+        self::assertTrue($subject->validate($expected)->hasErrors());
     }
 }
