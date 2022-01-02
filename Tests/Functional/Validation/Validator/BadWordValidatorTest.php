@@ -16,7 +16,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\BadWordValidator;
 use PHPUnit\Framework\MockObject\MockObject;
-use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
@@ -81,7 +81,7 @@ class BadWordValidatorTest extends AbstractTestBase
             $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList']
         );
 
-        $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageService::class);
+        $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageServiceFactory::class)->create('default');
 
         self::assertTrue($this->subject->validate(current($words))->hasErrors());
     }
