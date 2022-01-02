@@ -136,6 +136,9 @@ abstract class AbstractTestBase extends FunctionalTestCase
             throw new \InvalidArgumentException('The user ID must be > 0.', 1334439475);
         }
 
+        $serverRequestFactory = new ServerRequestFactory();
+        $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
+
         $this->frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
         $this->frontendUser->setLogger(new NullLogger());
         $this->frontendUser->start();

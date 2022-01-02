@@ -59,13 +59,11 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         /** @var FrontendUserGroupRepository $userGroupRepository */
         $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
 
-        $logger = new NullLogger();
-
         $serverRequestFactory = new ServerRequestFactory();
         $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
 
         $frontendUser = new FrontendUserAuthentication();
-        $frontendUser->setLogger($logger);
+        $frontendUser->setLogger(new NullLogger());
         $frontendUser->start($serverRequest);
 
         /** @var Session $session */
@@ -106,13 +104,11 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         /** @var FrontendUserGroupRepository $userGroupRepository */
         $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
 
-        $logger = new NullLogger();
-
         $serverRequestFactory = new ServerRequestFactory();
         $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
 
         $frontendUser = new FrontendUserAuthentication();
-        $frontendUser->setLogger($logger);
+        $frontendUser->setLogger(new NullLogger());
         $frontendUser->start($serverRequest);
 
         /** @var Session $session */
