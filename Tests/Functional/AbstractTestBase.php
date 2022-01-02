@@ -145,7 +145,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
         $this->frontendUser->start($serverRequest);
         $this->frontendUser->user = $this->frontendUser->getRawUserByUid($frontEndUserUid);
         $this->frontendUser->unpack_uc();
-        $this->frontendUser->fetchGroupData();
+        $this->frontendUser->fetchGroupData($serverRequest);
 
         $userAspect = $this->frontendUser->createUserAspect();
 
