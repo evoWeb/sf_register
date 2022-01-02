@@ -77,10 +77,6 @@ class FeuserCreateControllerTest extends AbstractTestBase
             $userGroupRepository
         );
 
-        /** @var ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $subject->injectObjectManager($objectManager);
-
         /** @var \TYPO3\CMS\Extbase\Reflection\ReflectionService $reflectionService */
         $reflectionService = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
         $subject->injectReflectionService($reflectionService);

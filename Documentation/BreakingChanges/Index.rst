@@ -6,6 +6,12 @@
 Breaking Changes
 ================
 
+2022.01.01
+''''''''''
+
+Interface Evoweb\SfRegister\Interface\FrontendUserInterface is renamed to
+Evoweb\SfRegister\Domain\Model\FrontendUserInterface
+
 2021.12.31
 ''''''''''
 

@@ -115,14 +115,9 @@ call_user_func(function () {
         ]
     );
 
-    /** @var \TYPO3\CMS\Extbase\Object\Container\Container $container */
-    $container = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-        \TYPO3\CMS\Extbase\Object\Container\Container::class
-    );
-    $container->registerImplementation(
-        \Evoweb\SfRegister\Interfaces\FrontendUserInterface::class,
-        \Evoweb\SfRegister\Domain\Model\FrontendUser::class
-    );
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][
+        \Evoweb\SfRegister\Domain\Model\FrontendUserInterface::class
+    ]['className'] = \Evoweb\SfRegister\Domain\Model\FrontendUser::class;
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
         \Evoweb\SfRegister\Property\TypeConverter\FrontendUserConverter::class

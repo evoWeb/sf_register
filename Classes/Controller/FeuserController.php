@@ -39,6 +39,7 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
+use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 // @todo replace usage of forward with ForwardResponse
 use TYPO3\CMS\Extbase\Mvc\Web\ReferringRequest;
@@ -233,6 +234,14 @@ class FeuserController extends ActionController
         return $validator;
     }
 
+    protected function initializeActionMethodArguments()
+    {
+        if (!$this->arguments) {
+            $this->arguments = GeneralUtility::makeInstance(Arguments::class);
+        }
+        parent::initializeActionMethodArguments();
+    }
+
     protected function initializeAction()
     {
         $this->setTypeConverter();
@@ -323,13 +332,13 @@ class FeuserController extends ActionController
     /**
      * Proxy action
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
      *
      * @return ResponseInterface
      *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
      */
-    public function proxyAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user): ResponseInterface
+    public function proxyAction(FrontendUser $user): ResponseInterface
     {
         $action = $this->request->hasArgument('form') ? 'form' : 'save';
 

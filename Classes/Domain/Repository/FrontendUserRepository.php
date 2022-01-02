@@ -13,7 +13,7 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
+use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**

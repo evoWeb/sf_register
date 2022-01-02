@@ -23,7 +23,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
@@ -179,10 +178,6 @@ class FeuserPasswordControllerTest extends AbstractTestBase
             $userGroupRepository,
             $session
         );
-
-        /** @var ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $subject->injectObjectManager($objectManager);
 
         $property = $this->getPrivateProperty($subject, 'settings');
         $property->setValue($subject, ['encryptPassword' => '']);

@@ -13,7 +13,7 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
+use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Services\Event\PreSubmitMailEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
