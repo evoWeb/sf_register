@@ -142,7 +142,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
 
         $this->frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
         $this->frontendUser->setLogger(new NullLogger());
-        $this->frontendUser->start();
+        $this->frontendUser->start($serverRequest);
         $this->frontendUser->user = $this->frontendUser->getRawUserByUid($frontEndUserUid);
         $this->frontendUser->unpack_uc();
         $this->frontendUser->fetchGroupData();
