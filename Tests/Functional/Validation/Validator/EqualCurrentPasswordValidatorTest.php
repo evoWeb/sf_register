@@ -13,7 +13,12 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator;
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 class EqualCurrentPasswordValidatorTest extends AbstractTestBase
 {
@@ -48,10 +53,16 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
      */
     public function isUserLoggedInReturnsFalseIfNotLoggedIn()
     {
-        $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
-        /** @var \TYPO3\CMS\Core\Context\Context $context */
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-        $subject->injectContext($context);
+        /** @var Context $context */
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
+
+        /** @var FrontendUserRepository|MockObject $repositoryMock */
+        $repositoryMock = $this->createMock(FrontendUserRepository::class);
+
+        /** @var ConfigurationManager|MockObject $repositoryMock */
+        $configurationMock = $this->createMock(ConfigurationManager::class);
+
+        $subject = new EqualCurrentPasswordValidator($context, $repositoryMock, $configurationMock);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         self::assertFalse($method->invoke($subject));
@@ -68,10 +79,16 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         ]);
         $this->initializeTypoScriptFrontendController();
 
-        $subject = new \Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator();
-        /** @var \TYPO3\CMS\Core\Context\Context $context */
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-        $subject->injectContext($context);
+        /** @var Context $context */
+        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
+
+        /** @var FrontendUserRepository|MockObject $repositoryMock */
+        $repositoryMock = $this->createMock(FrontendUserRepository::class);
+
+        /** @var ConfigurationManager|MockObject $repositoryMock */
+        $configurationMock = $this->createMock(ConfigurationManager::class);
+
+        $subject = new EqualCurrentPasswordValidator($context, $repositoryMock, $configurationMock);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
         self::assertTrue($method->invoke($subject));

@@ -14,14 +14,17 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
  */
 
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use Evoweb\SfRegister\Validation\Validator\BadWordValidator;
+use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class BadWordValidatorTest extends AbstractTestBase
 {
     /**
-     * @var \Evoweb\SfRegister\Validation\Validator\BadWordValidator|AccessibleObjectInterface
+     * @var BadWordValidator|AccessibleObjectInterface
      */
     protected $subject;
 
@@ -39,10 +42,13 @@ class BadWordValidatorTest extends AbstractTestBase
         $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList'] =
             'god, sex, password';
 
-        $this->subject = $this->getAccessibleMock(
-            \Evoweb\SfRegister\Validation\Validator\BadWordValidator::class,
-            ['dummy']
-        );
+        /** @var ConfigurationManager|MockObject $repositoryMock */
+        $configurationMock = $this->createMock(ConfigurationManager::class);
+
+        $this->subject = $this->getMockBuilder($this->buildAccessibleProxy(BadWordValidator::class))
+            ->setConstructorArgs([$configurationMock])
+            ->setMethods(['dummy'])
+            ->getMock();
         $this->subject->_set(
             'settings',
             $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
