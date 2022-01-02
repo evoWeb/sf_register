@@ -62,8 +62,5 @@
 			"rm .gitignore",
 			"sed -i \"s/version' => '.*'/version' => '$(echo ${GITHUB_REF} | cut -d / -f 3)'/\" ext_emconf.php\n"
 		]
-	},
-	"require-dev": {
-		"typo3/testing-framework": "^6.6.2"
 	}
 }
