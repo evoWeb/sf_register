@@ -15,7 +15,6 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
  * View helper to render a select box with values
