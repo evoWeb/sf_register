@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 /*
@@ -30,6 +32,16 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 class SelectStaticCountryZonesViewHelper extends AbstractFormFieldViewHelper
 {
     protected ?StaticCountryZoneRepository $countryZonesRepository = null;
+
+    /**
+     * @var string
+     */
+    protected $tagName = 'select';
+
+    /**
+     * @var mixed
+     */
+    protected $selectedValue;
 
     public function injectCountryZonesRepository(StaticCountryZoneRepository $countryZonesRepository)
     {

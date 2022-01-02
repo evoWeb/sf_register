@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 /*
@@ -30,6 +32,16 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 class SelectStaticLanguageViewHelper extends AbstractFormFieldViewHelper
 {
     protected ?StaticLanguageRepository $languageRepository = null;
+
+    /**
+     * @var string
+     */
+    protected $tagName = 'select';
+
+    /**
+     * @var mixed
+     */
+    protected $selectedValue;
 
     public function injectLanguageRepository(StaticLanguageRepository $languageRepository)
     {
