@@ -153,4 +153,8 @@ call_user_func(function () {
             'className' => \Evoweb\SfRegister\Services\AutoLogin::class,
         ]
     );
+
+    // Register switchableControllerActions plugin migrator
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['sfRegisterSCAPluginUpdater']
+            = \Evoweb\SfRegister\Updates\SwitchableControllerActionsPluginUpdater::class;
 });
