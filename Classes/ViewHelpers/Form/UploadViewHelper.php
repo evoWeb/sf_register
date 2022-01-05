@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 /*
@@ -32,10 +34,15 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
-use TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelper as ExtbaseUploadViewHelper;
+use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
 
-class UploadViewHelper extends ExtbaseUploadViewHelper
+class UploadViewHelper extends AbstractFormFieldViewHelper
 {
+    /**
+     * @var string
+     */
+    protected $tagName = 'input';
+
     protected ?HashService $hashService = null;
 
     protected ?PropertyMapper $propertyMapper = null;
@@ -50,9 +57,32 @@ class UploadViewHelper extends ExtbaseUploadViewHelper
         $this->propertyMapper = $propertyMapper;
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
+        $this->registerTagAttribute(
+            'disabled',
+            'string',
+            'Specifies that the input element should be disabled when the page loads'
+        );
+        $this->registerTagAttribute(
+            'multiple',
+            'string',
+            'Specifies that the file input element should allow multiple selection of files'
+        );
+        $this->registerTagAttribute(
+            'accept',
+            'string',
+            'Specifies the allowed file extensions to upload via comma-separated list, example ".png,.gif"'
+        );
+        $this->registerArgument(
+            'errorClass',
+            'string',
+            'CSS class to set if there are errors for this ViewHelper',
+            false,
+            'f3-form-error'
+        );
+        $this->registerUniversalTagAttributes();
         $this->registerTagAttribute('alwaysShowUpload', 'string', 'Whether the upload button should be always shown.');
         $this->registerTagAttribute('accept', 'string', 'Accepted file extensions.', false, '');
     }
@@ -68,7 +98,21 @@ class UploadViewHelper extends ExtbaseUploadViewHelper
         }
 
         if ($this->isRenderUpload($resources)) {
-            $output .= parent::render();
+            $name = $this->getName();
+            $allowedFields = ['name', 'type', 'tmp_name', 'error', 'size'];
+            foreach ($allowedFields as $fieldName) {
+                $this->registerFieldNameForFormTokenGeneration($name . '[' . $fieldName . ']');
+            }
+            $this->tag->addAttribute('type', 'file');
+
+            if (isset($this->arguments['multiple'])) {
+                $this->tag->addAttribute('name', $name . '[]');
+            } else {
+                $this->tag->addAttribute('name', $name);
+            }
+
+            $this->setErrorClassAttribute();
+            $output .= $this->tag->render();
         }
 
         return $output;

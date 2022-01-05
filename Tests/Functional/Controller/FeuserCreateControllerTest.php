@@ -16,21 +16,25 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController;
+use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Reflection\ReflectionService;
+use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
 
-class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
+class FeuserCreateControllerTest extends AbstractTestBase
 {
     public function setUp(): void
     {
         defined('LF') ?: define('LF', chr(10));
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../Fixtures/fe_users.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
 
         $this->initializeTypoScriptFrontendController();
         $this->createEmptyFrontendUser();
@@ -42,13 +46,16 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
     public function isUserValidatorSet()
     {
         $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.'] = [
+            'fields' => [
+                'selected' => 'username',
+            ],
             'validation.' => [
                 'create.' => [
                     'username.' => [
-                        '1.' => '"Evoweb.SfRegister:Required"',
-                        '2.' => '"StringLength", options={"minimum": 4, "maximum": 80}',
-                        '3.' => '"Evoweb.SfRegister:Unique"',
-                        '4.' => '"Evoweb.SfRegister:Unique", options={"global": 1}',
+                        1 => '"Evoweb.SfRegister:Required"',
+                        2 => '"StringLength", options={"minimum": 4, "maximum": 80}',
+                        3 => '"Evoweb.SfRegister:Unique"',
+                        4 => '"Evoweb.SfRegister:Unique", options={"global": 1}',
                     ]
                 ]
             ]
@@ -66,23 +73,19 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         /** @var FrontendUserGroupRepository $userGroupRepository */
         $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
 
-        $subject = new \Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController(
+        $subject = new FeuserCreateController(
             $context,
             $file,
             $userRepository,
             $userGroupRepository
         );
 
-        /** @var ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $subject->injectObjectManager($objectManager);
-
-        /** @var \TYPO3\CMS\Extbase\Reflection\ReflectionService $reflectionService */
-        $reflectionService = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
+        /** @var ReflectionService $reflectionService */
+        $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
         $subject->injectReflectionService($reflectionService);
 
-        /** @var \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validationResolver */
-        $validationResolver = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Validation\ValidatorResolver::class);
+        /** @var ValidatorResolver $validationResolver */
+        $validationResolver = GeneralUtility::makeInstance(ValidatorResolver::class);
         $subject->injectValidatorResolver($validationResolver);
 
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
@@ -118,6 +121,6 @@ class FeuserCreateControllerTest extends \Evoweb\SfRegister\Tests\Functional\Fun
         $arguments = $subject->get('arguments');
         $validator = $arguments->getArgument('user')->getValidator();
 
-        self::assertInstanceOf(\Evoweb\SfRegister\Validation\Validator\UserValidator::class, $validator);
+        self::assertInstanceOf(UserValidator::class, $validator);
     }
 }

@@ -6,6 +6,53 @@
 Breaking Changes
 ================
 
+2022.01.01
+''''''''''
+
+Interface Evoweb\SfRegister\Interface\FrontendUserInterface is renamed to
+Evoweb\SfRegister\Domain\Model\FrontendUserInterface
+
+2021.12.31
+''''''''''
+
+Validator configuration is changed. As long as your custom validator has no
+injected classes like repository or likewise, you do not need to change anything.
+
+If you need something in your validator, you need to use to constructor
+injection, add an implements of InjectableInterface, make the validator a public
+service via Services.yaml and need have a way to get
+the options set.
+Options can be set by your own method or by using the AbstractValidator of
+sf_register.
+
+So if you need a class in your validator in code this changes are needed:
+* Add your validator to Services.yaml:
+* Add ```implements InjectableInterface``` to your validator
+* Use \Evoweb\SfRegister\Validation\Validator\AbstractValidator as validator base
+* Add the repository in constructor
+
+**Services.yaml**::
+
+   Evoweb\SfRegister\Validation\Validator\UniqueValidator:
+     public: true
+
+
+**Class definition**::
+
+  use Evoweb\SfRegister\Validation\Validator\AbstractValidator;
+  use Evoweb\SfRegister\Validation\Validator\InjectableInterface;
+
+  class UniqueValidator extends AbstractValidator implements InjectableInterface, ...
+
+
+**__construct**::
+
+   public function __construct(FrontendUserRepository $userRepository)
+   {
+     $this->userRepository = $userRepository;
+   }
+
+
 2020.04.29
 ''''''''''
 
@@ -118,10 +165,10 @@ ending 'Validator' with '"'
 2015.11.15
 ''''''''''
 
-- Method 'changeUsergroup' got pulled up from FeuserCreateController to FeuserController. If a controller extends
+* Method 'changeUsergroup' got pulled up from FeuserCreateController to FeuserController. If a controller extends
   FeuserCreateController the change in changeUsergroup needs to be copied.
-- Method 'changeUsergroup' got the parameter '$usergroupIdToBeRemoved' removed. This is because all known usergroups
+* Method 'changeUsergroup' got the parameter '$usergroupIdToBeRemoved' removed. This is because all known usergroups
   previously set get removed now. So only the '$user' and '$usergroupIdToAdd' need to be provided. All usage of this
   method needs to be changed accordingly.
 
-- Drop mailhash, setMailhash() and getMailhash() from frontend user model as it was deprecated since 2014.
+* Drop mailhash, setMailhash() and getMailhash() from frontend user model as it was deprecated since 2014.

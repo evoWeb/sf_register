@@ -13,43 +13,14 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
-use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository as ExtbaseFrontendUserRepository;
+use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * A repository for frontend user models
  */
-class FrontendUserRepository extends ExtbaseFrontendUserRepository
+class FrontendUserRepository extends Repository
 {
-    /**
-     * Finds an object matching the given identifier.
-     *
-     * @param mixed $identifier The identifier of the object to find
-     * @param bool $ignoreHidden Whether to ignore hidden state
-     *
-     * @return FrontendUserInterface|object|null
-     */
-    public function findByIdentifier($identifier, bool $ignoreHidden = false)
-    {
-        trigger_error('Method ' . __METHOD__ . ' will be removed in sf_register 10.0', E_USER_DEPRECATED);
-        $query = $this->createQuery();
-
-        if (!$ignoreHidden) {
-            $querySettings = $query->getQuerySettings();
-            $querySettings->setRespectStoragePage(false);
-            $querySettings->setRespectSysLanguage(false);
-            $querySettings->setIgnoreEnableFields(true);
-            $querySettings->setEnableFieldsToBeIgnored(['disabled']);
-        }
-
-        $result = $query->matching(
-            $query->equals('uid', $identifier)
-        )
-        ->execute();
-
-        return $result->getFirst();
-    }
-
     /**
      * Finds an object matching the given identifier.
      *

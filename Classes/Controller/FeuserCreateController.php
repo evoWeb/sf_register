@@ -39,17 +39,6 @@ class FeuserCreateController extends FeuserController
     {
         $setupResponse = $this->setupCheck();
 
-        $originalRequest = $this->request->getOriginalRequest();
-        if ($originalRequest !== null && $originalRequest->hasArgument('user')) {
-            /** @var FrontendUser $userData */
-            $userData = $this->request->hasArgument('user') ?
-                $this->request->getArgument('user') :
-                $originalRequest->getArgument('user');
-            if ($userData->getUid()) {
-                $userData->_setProperty('uid', null);
-            }
-        }
-
         if ($user) {
             $this->eventDispatcher->dispatch(new CreateFormEvent($user, $this->settings));
             $this->view->assign('user', $user);

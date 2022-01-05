@@ -51,7 +51,7 @@ class FeuserEditController extends FeuserController
             $userData = $this->request->hasArgument('user') ?
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');
-            if ($userData->getUid() != $userId) {
+            if ($userData instanceof FrontendUser && $userData->getUid() != $userId) {
                 $user = null;
             }
         }
@@ -65,7 +65,10 @@ class FeuserEditController extends FeuserController
             $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
         }
 
-        $this->eventDispatcher->dispatch(new EditFormEvent($user, $this->settings));
+        // user is logged
+        if ($user !== null && $user instanceof FrontendUser) {
+            $this->eventDispatcher->dispatch(new EditFormEvent($user, $this->settings));
+        }
 
         $this->view->assign('user', $user);
 
@@ -105,10 +108,7 @@ class FeuserEditController extends FeuserController
      */
     public function saveAction(FrontendUser $user): ResponseInterface
     {
-        if (
-            ($this->isNotifyAdmin('PostEditSave') || $this->isNotifyUser('PostEditSave'))
-            && ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit'])
-        ) {
+        if ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit']) {
             // Remove user object from session to fetch it really from database
             /** @var Session $session */
             $session = GeneralUtility::makeInstance(Session::class);

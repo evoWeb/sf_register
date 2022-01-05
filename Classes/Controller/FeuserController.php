@@ -26,6 +26,7 @@ use Evoweb\SfRegister\Services\Mail;
 use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
 use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
+use Evoweb\SfRegister\Validation\Validator\InjectableInterface;
 use Evoweb\SfRegister\Validation\Validator\SettableInterface;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
@@ -38,7 +39,9 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
+use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
+// @todo replace usage of forward with ForwardResponse
 use TYPO3\CMS\Extbase\Mvc\Web\ReferringRequest;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
@@ -219,9 +222,24 @@ class FeuserController extends ActionController
             $validateAnnotation->validator
         );
 
-        /** @var ValidatorInterface $validator */
-        $validator = $this->objectManager->get($validatorObjectName, $validateAnnotation->options);
+        if (in_array(InjectableInterface::class, class_implements($validatorObjectName))) {
+            /** @var ValidatorInterface|InjectableInterface $validator */
+            $validator = GeneralUtility::makeInstance($validatorObjectName);
+            $validator->setOptions($validateAnnotation->options);
+        } else {
+            /** @var ValidatorInterface $validator */
+            $validator = GeneralUtility::makeInstance($validatorObjectName, $validateAnnotation->options);
+        }
+
         return $validator;
+    }
+
+    protected function initializeActionMethodArguments()
+    {
+        if (!$this->arguments) {
+            $this->arguments = GeneralUtility::makeInstance(Arguments::class);
+        }
+        parent::initializeActionMethodArguments();
     }
 
     protected function initializeAction()
@@ -314,13 +332,13 @@ class FeuserController extends ActionController
     /**
      * Proxy action
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
      *
      * @return ResponseInterface
      *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
      */
-    public function proxyAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user): ResponseInterface
+    public function proxyAction(FrontendUser $user): ResponseInterface
     {
         $action = $this->request->hasArgument('form') ? 'form' : 'save';
 
@@ -425,6 +443,7 @@ class FeuserController extends ActionController
 
         $url = $this->uriBuilder
             ->setTargetPageUid($pageId)
+            ->setLinkAccessRestrictedPages(true)
             ->build();
 
         $this->redirectToUri($url);
@@ -433,23 +452,17 @@ class FeuserController extends ActionController
     protected function sendEmails(FrontendUser $user, string $action): FrontendUser
     {
         $action = ucfirst(str_replace('Action', '', $action));
-        $controller = str_replace(
-            ['Evoweb\\SfRegister\\Controller\\Feuser', 'Controller'],
-            '',
-            static::class
-        );
-
-        $type = $controller . $action;
+        $type = $this->controller . $action;
 
         /** @var \Evoweb\SfRegister\Services\Mail $mailService */
         $mailService = GeneralUtility::getContainer()->get(Mail::class);
 
         if ($this->isNotifyAdmin($type)) {
-            $user = $mailService->sendNotifyAdmin($user, $controller, $action);
+            $user = $mailService->sendNotifyAdmin($user, $this->controller, $action);
         }
 
         if ($this->isNotifyUser($type)) {
-            $user = $mailService->sendNotifyUser($user, $controller, $action);
+            $user = $mailService->sendNotifyUser($user, $this->controller, $action);
         }
 
         return $user;
@@ -518,7 +531,7 @@ class FeuserController extends ActionController
     protected function getConfiguredUserGroups(int $currentUserGroup): array
     {
         $userGroups = $this->getUserGroupIds();
-        $currentIndex = array_search((int)$currentUserGroup, array_values($userGroups));
+        $currentIndex = array_search($currentUserGroup, array_values($userGroups));
 
         $reducedUserGroups = [];
         if ($currentIndex !== false && $currentIndex < count($userGroups)) {
@@ -565,7 +578,6 @@ class FeuserController extends ActionController
     {
         $this->removePreviousUserGroups($user);
 
-        $userGroupIdToAdd = (int)$userGroupIdToAdd;
         if ($userGroupIdToAdd) {
             /** @var \Evoweb\SfRegister\Domain\Model\FrontendUserGroup $userGroupToAdd */
             $userGroupToAdd = $this->userGroupRepository->findByUid($userGroupIdToAdd);
@@ -608,7 +620,7 @@ class FeuserController extends ActionController
         $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
 
         // if redirect was empty by now set it to current page
-        if ((int)$redirectPageId == 0) {
+        if ($redirectPageId == 0) {
             $redirectPageId = $this->getTypoScriptFrontendController()->id;
         }
 

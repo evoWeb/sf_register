@@ -13,24 +13,28 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\Localization\LanguageService;
+use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use Evoweb\SfRegister\Validation\Validator\BadWordValidator;
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
-class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\FunctionalTestCase
+class BadWordValidatorTest extends AbstractTestBase
 {
     /**
-     * @var \Evoweb\SfRegister\Validation\Validator\BadWordValidator|AccessibleObjectInterface
+     * @var BadWordValidator|AccessibleObjectInterface
      */
     protected $subject;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/sys_template.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_groups.xml');
+        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_users.xml');
 
         $this->createEmptyFrontendUser();
         $this->initializeTypoScriptFrontendController();
@@ -38,10 +42,13 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
         $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList'] =
             'god, sex, password';
 
-        $this->subject = $this->getAccessibleMock(
-            \Evoweb\SfRegister\Validation\Validator\BadWordValidator::class,
-            ['dummy']
-        );
+        /** @var ConfigurationManager|MockObject $repositoryMock */
+        $configurationMock = $this->createMock(ConfigurationManager::class);
+
+        $this->subject = $this->getMockBuilder($this->buildAccessibleProxy(BadWordValidator::class))
+            ->setConstructorArgs([$configurationMock])
+            ->setMethods(['dummy'])
+            ->getMock();
         $this->subject->_set(
             'settings',
             $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
@@ -74,7 +81,7 @@ class BadWordValidatorTest extends \Evoweb\SfRegister\Tests\Functional\Functiona
             $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList']
         );
 
-        $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageService::class);
+        $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageServiceFactory::class)->create('default');
 
         self::assertTrue($this->subject->validate(current($words))->hasErrors());
     }

@@ -16,12 +16,11 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * A validator to check if a value is unique only if current value has changed
  */
-class UniqueExcludeCurrentValidator extends AbstractValidator implements SettableInterface
+class UniqueExcludeCurrentValidator extends AbstractValidator implements InjectableInterface, SettableInterface
 {
     /**
      * @var bool
@@ -50,6 +49,11 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Settabl
 
     protected string $propertyName = '';
 
+    public function __construct(FrontendUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Setter for model
      *
@@ -63,11 +67,6 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Settabl
     public function setPropertyName(string $propertyName)
     {
         $this->propertyName = $propertyName;
-    }
-
-    public function injectUserRepository(FrontendUserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
     }
 
     /**

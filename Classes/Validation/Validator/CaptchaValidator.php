@@ -14,9 +14,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  */
 
 use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
-class CaptchaValidator extends AbstractValidator
+class CaptchaValidator extends AbstractValidator implements InjectableInterface
 {
     /**
      * @var bool
@@ -36,9 +35,8 @@ class CaptchaValidator extends AbstractValidator
         ],
     ];
 
-    public function injectCaptchaAdapterFactory(
-        CaptchaAdapterFactory $captchaAdapterFactory
-    ) {
+    public function __construct(CaptchaAdapterFactory $captchaAdapterFactory)
+    {
         $this->captchaAdapterFactory = $captchaAdapterFactory;
     }
 

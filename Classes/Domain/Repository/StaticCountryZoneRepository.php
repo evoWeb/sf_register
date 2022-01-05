@@ -13,7 +13,7 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Doctrine\DBAL\Driver\Statement;
+use Doctrine\DBAL\Result;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -32,7 +32,7 @@ class StaticCountryZoneRepository extends Repository
         'zn_name_local' => QueryInterface::ORDER_ASCENDING
     ];
 
-    public function findAllByParentUid(int $parent): Statement
+    public function findAllByParentUid(int $parent): Result
     {
         $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
         $queryBuilder->select('zones.*')
@@ -52,7 +52,7 @@ class StaticCountryZoneRepository extends Repository
         return $queryBuilder->execute();
     }
 
-    public function findAllByIso2(string $iso2): Statement
+    public function findAllByIso2(string $iso2): Result
     {
         $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
         $queryBuilder->select('*')

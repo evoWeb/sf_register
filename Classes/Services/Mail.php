@@ -13,7 +13,7 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Interfaces\FrontendUserInterface;
+use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Services\Event\PreSubmitMailEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
@@ -99,7 +99,7 @@ class Mail implements SingletonInterface
 
     public function sendInvitation(FrontendUserInterface $user, string $type): FrontendUserInterface
     {
-        $method = __FUNCTION__ . $type;
+        $method = 'Invitation' . $type;
 
         $this->sendEmail(
             $user,

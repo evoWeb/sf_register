@@ -14,12 +14,11 @@ namespace Evoweb\SfRegister\Validation\Validator;
  */
 
 use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * A validator to check if the userid is equal to the id of the logged in user
  */
-class EqualCurrentUserValidator extends AbstractValidator
+class EqualCurrentUserValidator extends AbstractValidator implements InjectableInterface
 {
     /**
      * @var bool
@@ -28,7 +27,7 @@ class EqualCurrentUserValidator extends AbstractValidator
 
     protected Context $context;
 
-    public function injectContext(Context $context)
+    public function __construct(Context $context)
     {
         $this->context = $context;
     }
