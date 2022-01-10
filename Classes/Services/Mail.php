@@ -117,7 +117,7 @@ class Mail implements SingletonInterface
 
     protected function getSubject(string $method, FrontendUserInterface $user): string
     {
-        return LocalizationUtility::translate(
+        return (string)LocalizationUtility::translate(
             'subject' . $method,
             'SfRegister',
             [$this->settings['sitename'], $user->getUsername()]
