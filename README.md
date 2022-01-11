@@ -4,6 +4,10 @@
 [![Monthly Downloads](https://poser.pugx.org/evoweb/sf-register/d/monthly)](https://packagist.org/packages/evoweb/sf-register)
 [![Total Downloads](https://poser.pugx.org/evoweb/sf-register/downloads)](https://packagist.org/packages/evoweb/sf-register)
 
+## Documentation
+
+The rendered manual can be found here: https://docs.typo3.org/p/evoweb/sf-register/main/en-us/
+
 ## Installation
 
 ### via Composer
