@@ -24,7 +24,7 @@ class FeuserInviteController extends FeuserController
     /**
      * @var string
      */
-    protected $controller = 'invite';
+    protected $controller = 'Invite';
 
     public function formAction(\Evoweb\SfRegister\Domain\Model\FrontendUser $user = null)
     {

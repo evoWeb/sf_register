@@ -24,7 +24,7 @@ class FeuserPasswordController extends FeuserController
     /**
      * @var string
      */
-    protected $controller = 'password';
+    protected $controller = 'Password';
 
     public function formAction(\Evoweb\SfRegister\Domain\Model\Password $password = null)
     {

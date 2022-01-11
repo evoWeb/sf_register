@@ -24,7 +24,7 @@ class FeuserCreateController extends FeuserController
     /**
      * @var string
      */
-    protected $controller = 'create';
+    protected $controller = 'Create';
 
     /**
      * @var array

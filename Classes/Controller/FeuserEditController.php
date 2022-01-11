@@ -24,7 +24,7 @@ class FeuserEditController extends FeuserController
     /**
      * @var string
      */
-    protected $controller = 'edit';
+    protected $controller = 'Edit';
 
     /**
      * @var array

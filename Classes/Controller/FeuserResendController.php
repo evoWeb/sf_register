@@ -23,7 +23,7 @@ class FeuserResendController extends FeuserController
     /**
      * @var string
      */
-    protected $controller = 'resend';
+    protected $controller = 'Resend';
 
     public function formAction(\Evoweb\SfRegister\Domain\Model\Email $email = null)
     {

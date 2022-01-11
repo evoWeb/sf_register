@@ -24,7 +24,7 @@ class FeuserDeleteController extends FeuserController
     /**
      * @var string
      */
-    protected $controller = 'delete';
+    protected $controller = 'Delete';
 
     /**
      * @var array
