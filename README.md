@@ -4,9 +4,11 @@
 [![Monthly Downloads](https://poser.pugx.org/evoweb/sf-register/d/monthly)](https://packagist.org/packages/evoweb/sf-register)
 [![Total Downloads](https://poser.pugx.org/evoweb/sf-register/downloads)](https://packagist.org/packages/evoweb/sf-register)
 
-## Documentation
+## Documentation & help
 
 The rendered manual can be found here: https://docs.typo3.org/p/evoweb/sf-register/main/en-us/
+
+Repository and Issue Tracker can be found at https://github.com/evoWeb/sf_register
 
 ## Installation
 
@@ -21,11 +23,9 @@ The recommended way to install sf_register is by using [Composer](https://getcom
 Download and install the extension with the extension manager module or directly from the
 [TER](https://extensions.typo3.org/extension/sf_register).
 
-Repository and Issue Tracker can be found at https://github.com/evoWeb/sf_register
+## Features
 
 Suits all your needs to handle frontend users like register new users, edit data and change password.
-
-## Features
 
 - creating frontend user
     - flexible form generation by selecting fields in plugin
