@@ -16,7 +16,7 @@ The recommended way to install sf_register is by using [Composer](https://getcom
 
     composer require evoweb/sf-register
 
-**Installation from TYPO3 Extension Repository**
+### Installation from TYPO3 Extension Repository
 
 Download and install the extension with the extension manager module or directly from the
 [TER](https://extensions.typo3.org/extension/sf_register).
@@ -25,7 +25,7 @@ Repository and Issue Tracker can be found at https://github.com/evoWeb/sf_regist
 
 Suits all your needs to handle frontend users like register new users, edit data and change password.
 
-So what's already in there?
+## Features
 
 - creating frontend user
     - flexible form generation by selecting fields in plugin
