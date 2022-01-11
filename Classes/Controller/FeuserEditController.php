@@ -31,7 +31,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Session;
  */
 class FeuserEditController extends FeuserController
 {
-    protected string $controller = 'edit';
+    protected string $controller = 'Edit';
 
     protected array $ignoredActions = ['confirmAction', 'acceptAction'];
 

@@ -30,7 +30,7 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
  */
 class FeuserPasswordController extends FeuserController
 {
-    protected string $controller = 'password';
+    protected string $controller = 'Password';
 
     protected Session $session;
 

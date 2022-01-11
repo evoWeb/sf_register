@@ -31,7 +31,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class FeuserCreateController extends FeuserController
 {
-    protected string $controller = 'create';
+    protected string $controller = 'Create';
 
     protected array $ignoredActions = ['confirmAction', 'refuseAction', 'acceptAction', 'declineAction'];
 

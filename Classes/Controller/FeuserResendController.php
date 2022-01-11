@@ -25,7 +25,7 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
  */
 class FeuserResendController extends FeuserController
 {
-    protected string $controller = 'resend';
+    protected string $controller = 'Resend';
 
     public function formAction(Email $email = null): ResponseInterface
     {

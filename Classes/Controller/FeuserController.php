@@ -454,7 +454,7 @@ class FeuserController extends ActionController
         $action = ucfirst(str_replace('Action', '', $action));
         $type = $this->controller . $action;
 
-        /** @var \Evoweb\SfRegister\Services\Mail $mailService */
+        /** @var Mail $mailService */
         $mailService = GeneralUtility::getContainer()->get(Mail::class);
 
         if ($this->isNotifyAdmin($type)) {

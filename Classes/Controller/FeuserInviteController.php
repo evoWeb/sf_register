@@ -27,7 +27,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class FeuserInviteController extends FeuserController
 {
-    protected string $controller = 'invite';
+    protected string $controller = 'Invite';
 
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
