@@ -659,10 +659,11 @@ class FeuserController extends ActionController
         $frontendUser = null;
 
         $requestArguments = $this->request->getArguments();
-        if ($user !== null && $hash !== null) {
-            $calculatedHash = GeneralUtility::hmac($requestArguments['action'] . '::' . $user->getUid());
+        if (isset($requestArguments['user']) && $hash !== null) {
+            $calculatedHash = GeneralUtility::hmac($requestArguments['action'] . '::' . $requestArguments['user']);
             if ($hash === $calculatedHash) {
-                $frontendUser = $user;
+                /** @var FrontendUser $frontendUser */
+                $frontendUser = $this->userRepository->findByUidIgnoringDisabledField((int)$requestArguments['user']);
             }
         }
 

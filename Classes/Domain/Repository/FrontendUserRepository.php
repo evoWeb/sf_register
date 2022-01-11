@@ -21,6 +21,20 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class FrontendUserRepository extends Repository
 {
+    public function findByUidIgnoringDisabledField(int $uid)
+    {
+        $query = $this->createQuery();
+
+        $querySettings = $query->getQuerySettings();
+        $querySettings->setIgnoreEnableFields(true);
+        $querySettings->setEnableFieldsToBeIgnored(['disabled']);
+
+        $result = $query->matching($query->equals('uid', $uid))
+            ->execute();
+
+        return $result->getFirst();
+    }
+
     /**
      * Finds an object matching the given identifier.
      *
