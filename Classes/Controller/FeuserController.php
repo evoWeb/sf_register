@@ -123,7 +123,7 @@ class FeuserController extends ActionController
         if ($this->arguments->hasArgument('user') && !$this->actionIsIgnored()) {
             $this->modifyValidatorsBasedOnSettings(
                 $this->arguments->getArgument('user'),
-                $this->settings['validation'][$this->controller] ?? []
+                $this->settings['validation'][strtolower($this->controller)] ?? []
             );
         } elseif ($this->arguments->hasArgument('password') && !$this->actionIsIgnored()) {
             $this->modifyValidatorsBasedOnSettings(
@@ -133,7 +133,7 @@ class FeuserController extends ActionController
         } elseif ($this->arguments->hasArgument('email') && !$this->actionIsIgnored()) {
             $this->modifyValidatorsBasedOnSettings(
                 $this->arguments->getArgument('email'),
-                $this->settings['validation'][$this->controller] ?? []
+                $this->settings['validation'][strtolower($this->controller)] ?? []
             );
         } else {
             parent::initializeActionMethodValidators();
