@@ -27,7 +27,7 @@ use TYPO3\CMS\Extbase\Property\PropertyMapper;
  */
 class FeuserDeleteController extends FeuserController
 {
-    protected string $controller = 'delete';
+    protected string $controller = 'Delete';
 
     protected array $ignoredActions = ['confirmAction', 'requestAction'];
 
