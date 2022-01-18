@@ -194,7 +194,7 @@ class FeuserController extends ActionController
             $validator->addPropertyValidator($fieldName, $validatorInstance);
         }
 
-        if (in_array($this->controller, ['edit', 'delete'])) {
+        if (in_array($this->controller, ['Edit', 'Delete'])) {
             $validatorName = EqualCurrentUserValidator::class;
         } else {
             $validatorName = EmptyValidator::class;
