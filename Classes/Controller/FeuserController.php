@@ -121,19 +121,15 @@ class FeuserController extends ActionController
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
         }
 
-        if ($this->arguments->hasArgument('user') && !$this->actionIsIgnored()) {
+        if (
+            !$this->actionIsIgnored() && (
+                $this->arguments->hasArgument('user')
+                || $this->arguments->hasArgument('password')
+                || $this->arguments->hasArgument('email')
+            )
+        ) {
             $this->modifyValidatorsBasedOnSettings(
                 $this->arguments->getArgument('user'),
-                $this->settings['validation'][strtolower($this->controller)] ?? []
-            );
-        } elseif ($this->arguments->hasArgument('password') && !$this->actionIsIgnored()) {
-            $this->modifyValidatorsBasedOnSettings(
-                $this->arguments->getArgument('password'),
-                $this->settings['validation']['password'] ?? []
-            );
-        } elseif ($this->arguments->hasArgument('email') && !$this->actionIsIgnored()) {
-            $this->modifyValidatorsBasedOnSettings(
-                $this->arguments->getArgument('email'),
                 $this->settings['validation'][strtolower($this->controller)] ?? []
             );
         } else {
@@ -217,9 +213,7 @@ class FeuserController extends ActionController
 
         /** @var Validate $validateAnnotation */
         $validateAnnotation = current($parser->parse('@' . Validate::class . '(' . $configuration . ')'));
-        $validatorObjectName = ValidatorClassNameResolver::resolve(
-            $validateAnnotation->validator
-        );
+        $validatorObjectName = ValidatorClassNameResolver::resolve($validateAnnotation->validator);
 
         if (in_array(InjectableInterface::class, class_implements($validatorObjectName))) {
             /** @var ValidatorInterface|InjectableInterface $validator */
@@ -416,9 +410,7 @@ class FeuserController extends ActionController
     public function encryptPassword(string $password): string
     {
         /** @var PasswordHashFactory $passwordHashFactory */
-        $passwordHashFactory = GeneralUtility::makeInstance(
-            PasswordHashFactory::class
-        );
+        $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
         $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
         return $passwordHash->getHashedPassword($password);
     }
@@ -426,7 +418,8 @@ class FeuserController extends ActionController
     protected function persistAll()
     {
         GeneralUtility::getContainer()
-            ->get(PersistenceManager::class)->persistAll();
+            ->get(PersistenceManager::class)
+            ->persistAll();
     }
 
     protected function redirectToPage(int $pageId)
