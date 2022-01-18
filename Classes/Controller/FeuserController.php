@@ -35,6 +35,7 @@ use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Annotation\Validate;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -120,20 +121,16 @@ class FeuserController extends ActionController
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
         }
 
-        if ($this->arguments->hasArgument('user') && !$this->actionIsIgnored()) {
+        if (
+            !$this->actionIsIgnored() && (
+                $this->arguments->hasArgument('user')
+                || $this->arguments->hasArgument('password')
+                || $this->arguments->hasArgument('email')
+            )
+        ) {
             $this->modifyValidatorsBasedOnSettings(
                 $this->arguments->getArgument('user'),
-                $this->settings['validation'][$this->controller] ?? []
-            );
-        } elseif ($this->arguments->hasArgument('password') && !$this->actionIsIgnored()) {
-            $this->modifyValidatorsBasedOnSettings(
-                $this->arguments->getArgument('password'),
-                $this->settings['validation']['password'] ?? []
-            );
-        } elseif ($this->arguments->hasArgument('email') && !$this->actionIsIgnored()) {
-            $this->modifyValidatorsBasedOnSettings(
-                $this->arguments->getArgument('email'),
-                $this->settings['validation'][$this->controller] ?? []
+                $this->settings['validation'][strtolower($this->controller)] ?? []
             );
         } else {
             parent::initializeActionMethodValidators();
@@ -160,7 +157,7 @@ class FeuserController extends ActionController
     ) {
         $parser = new DocParser();
 
-        /** @var \Evoweb\SfRegister\Validation\Validator\UserValidator $validator */
+        /** @var UserValidator $validator */
         $validator = GeneralUtility::makeInstance(UserValidator::class);
         foreach ($configuredValidators as $fieldName => $configuredValidator) {
             if (!in_array($fieldName, $this->settings['fields']['selected'])) {
@@ -214,13 +211,9 @@ class FeuserController extends ActionController
             $configuration = '"' . $configuration . '"';
         }
 
-        /** @var \TYPO3\CMS\Extbase\Annotation\Validate $validateAnnotation */
-        $validateAnnotation = current($parser->parse(
-            '@TYPO3\CMS\Extbase\Annotation\Validate(' . $configuration . ')'
-        ));
-        $validatorObjectName = ValidatorClassNameResolver::resolve(
-            $validateAnnotation->validator
-        );
+        /** @var Validate $validateAnnotation */
+        $validateAnnotation = current($parser->parse('@' . Validate::class . '(' . $configuration . ')'));
+        $validatorObjectName = ValidatorClassNameResolver::resolve($validateAnnotation->validator);
 
         if (in_array(InjectableInterface::class, class_implements($validatorObjectName))) {
             /** @var ValidatorInterface|InjectableInterface $validator */
@@ -368,7 +361,7 @@ class FeuserController extends ActionController
         $referringRequest = null;
         $referringRequestArguments = $this->request->getInternalArguments()['__referrer']['@request'] ?? null;
         if (is_string($referringRequestArguments)) {
-            /** @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService */
+            /** @var HashService $hashService */
             $hashService = GeneralUtility::makeInstance(HashService::class);
             $referrerArray = json_decode(
                 $hashService->validateAndStripHmac($referringRequestArguments),
@@ -417,9 +410,7 @@ class FeuserController extends ActionController
     public function encryptPassword(string $password): string
     {
         /** @var PasswordHashFactory $passwordHashFactory */
-        $passwordHashFactory = GeneralUtility::makeInstance(
-            PasswordHashFactory::class
-        );
+        $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
         $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
         return $passwordHash->getHashedPassword($password);
     }
@@ -427,7 +418,8 @@ class FeuserController extends ActionController
     protected function persistAll()
     {
         GeneralUtility::getContainer()
-            ->get(PersistenceManager::class)->persistAll();
+            ->get(PersistenceManager::class)
+            ->persistAll();
     }
 
     protected function redirectToPage(int $pageId)
@@ -579,7 +571,7 @@ class FeuserController extends ActionController
         $this->removePreviousUserGroups($user);
 
         if ($userGroupIdToAdd) {
-            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUserGroup $userGroupToAdd */
+            /** @var FrontendUserGroup $userGroupToAdd */
             $userGroupToAdd = $this->userGroupRepository->findByUid($userGroupIdToAdd);
             $user->addUsergroup($userGroupToAdd);
         }
@@ -615,7 +607,7 @@ class FeuserController extends ActionController
 
         $_SESSION['sf-register-user'] = GeneralUtility::hmac('auto-login::' . $user->getUid(), $GLOBALS['EXEC_TIME']);
 
-        /** @var \TYPO3\CMS\Core\Registry $registry */
+        /** @var Registry $registry */
         $registry = GeneralUtility::makeInstance(Registry::class);
         $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
 
@@ -626,7 +618,7 @@ class FeuserController extends ActionController
 
         // get configured redirect page id if given
         $userGroups = $user->getUsergroup();
-        /** @var \Evoweb\SfRegister\Domain\Model\FrontendUserGroup $userGroup */
+        /** @var FrontendUserGroup $userGroup */
         foreach ($userGroups as $userGroup) {
             if ($userGroup->getFeloginRedirectPid()) {
                 $redirectPageId = $userGroup->getFeloginRedirectPid();

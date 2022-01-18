@@ -8,7 +8,7 @@ plugin.tx_sfregister.settings {
   # uid of the page to redirect to after confirmation
   redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId}
 
-  # wether the email address entered should be used as username
+  # whether the email address entered should be used as username
   useEmailAddressAsUsername = 1
 
   # boolean use encrypted filename to deny direct access on uploaded files
