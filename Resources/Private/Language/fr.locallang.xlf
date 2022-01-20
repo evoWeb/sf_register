@@ -447,7 +447,7 @@
 				<source>Delete link was send.</source>
 				<target>Le lien de suppression a été envoyé.</target>
 			</trans-unit>
-			<trans-unit id="error_noteempty">
+			<trans-unit id="error_notempty">
 				<source>The %1$s was not empty which it should have been</source>
 				<target>Le %1$s n'est pas vide comme il devrait l'être</target>
 			</trans-unit>

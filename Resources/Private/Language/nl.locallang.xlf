@@ -371,7 +371,7 @@
 				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is now active.</source>
 				<target>Het account &lt;b&gt;%1$s&lt;/b&gt; is geactiveerd.</target>
 			</trans-unit>
-			<trans-unit id="error_noteempty">
+			<trans-unit id="error_notempty">
 				<source>The %1$s was not empty which it should have been</source>
 				<target>Het veld %1$s is niet leeg maar zou dit wel moeten zijn</target>
 			</trans-unit>
