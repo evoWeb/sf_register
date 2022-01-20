@@ -335,7 +335,7 @@
 				<source>Delete link was send.</source>
 			</trans-unit>
 
-			<trans-unit id="error_noteempty">
+			<trans-unit id="error_notempty">
 				<source>The %1$s was not empty which it should have been</source>
 			</trans-unit>
 			<trans-unit id="error_required">
