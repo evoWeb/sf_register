@@ -284,7 +284,7 @@ class TranslatedSelectViewHelper extends AbstractFormFieldViewHelper
     /**
      * Retrieves the selected value(s)
      *
-     * @return mixed value string or an array of strings
+     * @return array|string value string or an array of strings
      */
     protected function getSelectedValue()
     {
