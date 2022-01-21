@@ -32,7 +32,7 @@ class CaptchaViewHelper extends AbstractFormFieldViewHelper
         $this->captchaAdapterFactory = $captchaAdapterFactory;
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerUniversalTagAttributes();
         $this->registerArgument('type', 'string', 'Captcha type', true);
