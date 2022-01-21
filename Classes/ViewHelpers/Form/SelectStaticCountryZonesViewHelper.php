@@ -48,7 +48,7 @@ class SelectStaticCountryZonesViewHelper extends AbstractFormFieldViewHelper
         $this->countryZonesRepository = $countryZonesRepository;
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerUniversalTagAttributes();

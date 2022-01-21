@@ -56,7 +56,7 @@ class RequiredViewHelper extends AbstractFormFieldViewHelper
         );
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerUniversalTagAttributes();
         $this->registerArgument('fieldName', 'string', 'Name of the field to render', true);
