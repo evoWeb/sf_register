@@ -43,7 +43,7 @@ class RequiredViewHelper extends AbstractFormFieldViewHelper
      */
     protected $escapeChildren = false;
 
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager): void
     {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
