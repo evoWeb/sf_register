@@ -40,7 +40,7 @@ class TranslatedSelectViewHelper extends AbstractFormFieldViewHelper
      */
     protected $selectedValue;
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerUniversalTagAttributes();

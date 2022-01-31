@@ -48,7 +48,7 @@ class SelectStaticLanguageViewHelper extends AbstractFormFieldViewHelper
         $this->languageRepository = $languageRepository;
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerUniversalTagAttributes();
