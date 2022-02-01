@@ -43,7 +43,7 @@ class RequiredViewHelper extends AbstractFormFieldViewHelper
      */
     protected $escapeChildren = false;
 
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager): void
     {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
@@ -56,7 +56,7 @@ class RequiredViewHelper extends AbstractFormFieldViewHelper
         );
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerUniversalTagAttributes();
         $this->registerArgument('fieldName', 'string', 'Name of the field to render', true);

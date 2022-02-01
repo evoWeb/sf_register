@@ -52,7 +52,7 @@ class SelectStaticCountriesViewHelper extends AbstractFormFieldViewHelper
         $this->countryRepository = $countryRepository;
     }
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerUniversalTagAttributes();
@@ -338,7 +338,7 @@ class SelectStaticCountriesViewHelper extends AbstractFormFieldViewHelper
     /**
      * Retrieves the selected value(s)
      *
-     * @return mixed value string or an array of strings
+     * @return array|string value string or an array of strings
      */
     protected function getSelectedValue()
     {

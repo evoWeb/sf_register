@@ -428,7 +428,7 @@
 				<source>Your new email adress &lt;b&gt;%1$s&lt;/b&gt; was successfully saved.</source>
 				<target>Ihre neue E-Mail-Adresse &lt;b&gt;%1$s&lt;/b&gt; wurden erfolgreich gespeichert.</target>
 			</trans-unit>
-			<trans-unit id="error_noteempty">
+			<trans-unit id="error_notempty">
 				<source>The %1$s was not empty which it should have been</source>
 				<target>Das Feld %1$s war nicht leer obwohl es hätte sein müssen</target>
 			</trans-unit>

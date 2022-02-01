@@ -67,7 +67,7 @@ class RangeSelectViewHelper extends AbstractFormFieldViewHelper
      */
     protected int $digits = 2;
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerUniversalTagAttributes();
@@ -296,7 +296,7 @@ class RangeSelectViewHelper extends AbstractFormFieldViewHelper
     /**
      * Retrieves the selected value(s)
      *
-     * @return mixed value string or an array of strings
+     * @return array|string value string or an array of strings
      */
     protected function getSelectedValue()
     {

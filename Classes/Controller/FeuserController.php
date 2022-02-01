@@ -121,19 +121,21 @@ class FeuserController extends ActionController
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
         }
 
-        if (
-            !$this->actionIsIgnored() && (
-                $this->arguments->hasArgument('user')
-                || $this->arguments->hasArgument('password')
-                || $this->arguments->hasArgument('email')
-            )
-        ) {
-            $this->modifyValidatorsBasedOnSettings(
-                $this->arguments->getArgument('user'),
-                $this->settings['validation'][strtolower($this->controller)] ?? []
-            );
-        } else {
+        if ($this->actionIsIgnored()) {
             parent::initializeActionMethodValidators();
+        } else {
+            $argumentNames = array_intersect(
+                array_values($this->arguments->getArgumentNames()),
+                ['user', 'password', 'email']
+            );
+
+            foreach ($argumentNames as $argument) {
+                $this->modifyValidatorsBasedOnSettings(
+                    $this->arguments->getArgument($argument),
+                    $this->settings['validation'][strtolower($this->controller)] ?? []
+                );
+
+            }
         }
     }
 
@@ -194,7 +196,7 @@ class FeuserController extends ActionController
             $validator->addPropertyValidator($fieldName, $validatorInstance);
         }
 
-        if (in_array($this->controller, ['edit', 'delete'])) {
+        if (in_array($this->controller, ['Edit', 'Delete'])) {
             $validatorName = EqualCurrentUserValidator::class;
         } else {
             $validatorName = EmptyValidator::class;
