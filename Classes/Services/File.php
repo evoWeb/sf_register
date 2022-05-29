@@ -181,7 +181,7 @@ class File implements SingletonInterface, LoggerAwareInterface
             $size = $uploadData['size']['image'];
 
             if ($filename !== null && $filename !== '' && GeneralUtility::validPathStr($filename)) {
-                if ($this->settings['useEncryptedFilename']) {
+                if (($this->settings['useEncryptedFilename'] ?? false)) {
                     $filenameParts = GeneralUtility::trimExplode('.', $filename);
                     $extension = array_pop($filenameParts);
                     $filename = md5($GLOBALS['EXEC_TIME'] . mt_rand() . $filename . $tmpName . '.' . $extension

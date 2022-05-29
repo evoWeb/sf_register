@@ -70,7 +70,7 @@ class RequiredViewHelper extends AbstractFormFieldViewHelper
             '',
             strtolower(key($this->frameworkConfiguration['controllerConfiguration']))
         );
-        $modeSettings = $this->settings['validation'][$mode];
+        $modeSettings = $this->settings['validation'][$mode] ?? [];
         $fieldSettings = isset($modeSettings[$fieldName]) ? $modeSettings[$fieldName] : false;
 
         $result = '';

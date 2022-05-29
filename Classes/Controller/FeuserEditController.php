@@ -108,7 +108,7 @@ class FeuserEditController extends FeuserController
      */
     public function saveAction(FrontendUser $user): ResponseInterface
     {
-        if ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit']) {
+        if (($this->settings['confirmEmailPostEdit'] ?? false) || ($this->settings['acceptEmailPostEdit'] ?? false)) {
             // Remove user object from session to fetch it really from database
             /** @var Session $session */
             $session = GeneralUtility::makeInstance(Session::class);
@@ -123,7 +123,7 @@ class FeuserEditController extends FeuserController
 
             $user->setEmailNew($user->getEmail());
             $user->setEmail($userBeforeEdit->getEmail() ?: $user->getEmail());
-        } elseif ($this->settings['useEmailAddressAsUsername']) {
+        } elseif (($this->settings['useEmailAddressAsUsername'] ?? false)) {
             $user->setUsername($user->getEmail());
         }
 
@@ -138,7 +138,7 @@ class FeuserEditController extends FeuserController
         $session = GeneralUtility::makeInstance(SessionService::class);
         $session->remove('captchaWasValidPreviously');
 
-        if ($this->settings['forwardToEditAfterSave']) {
+        if (($this->settings['forwardToEditAfterSave'] ?? false)) {
             $response = new ForwardResponse('form');
         } else {
             $this->view->assign('user', $user);
@@ -163,11 +163,11 @@ class FeuserEditController extends FeuserController
             } elseif (empty($userEmailNew)) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
-                if (!$this->settings['acceptEmailPostEdit']) {
+                if (!($this->settings['acceptEmailPostEdit'] ?? false)) {
                     $user->setEmail($user->getEmailNew());
                     $user->setEmailNew('');
 
-                    if ($this->settings['useEmailAddressAsUsername']) {
+                    if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
                         $user->setUsername($user->getEmail());
                     }
                 }
@@ -181,13 +181,13 @@ class FeuserEditController extends FeuserController
                 $this->view->assign('userConfirmed', 1);
             }
 
-            if ($this->settings['autologinPostConfirmation']) {
+            if (($this->settings['autologinPostConfirmation'] ?? false)) {
                 $this->persistAll();
-                $this->autoLogin($user, (int)$this->settings['redirectPostActivationPageId']);
+                $this->autoLogin($user, (int)($this->settings['redirectPostActivationPageId'] ?? 0));
             }
 
-            if ($this->settings['redirectPostActivationPageId']) {
-                $this->redirectToPage((int)$this->settings['redirectPostActivationPageId']);
+            if ((int)($this->settings['redirectPostActivationPageId'] > 0)) {
+                $this->redirectToPage((int)($this->settings['redirectPostActivationPageId'] ?? 0));
             }
         }
 
@@ -211,7 +211,7 @@ class FeuserEditController extends FeuserController
                     $user->setEmailNew('');
                 }
 
-                if ($this->settings['useEmailAddressAsUsername']) {
+                if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
                     $user->setUsername($user->getEmail());
                 }
 
@@ -221,8 +221,8 @@ class FeuserEditController extends FeuserController
 
                 $this->sendEmails($user, __FUNCTION__);
 
-                if ($this->settings['redirectPostActivationPageId']) {
-                    $this->redirectToPage((int)$this->settings['redirectPostActivationPageId']);
+                if ((int)($this->settings['redirectPostActivationPageId'] ?? 0) > 0) {
+                    $this->redirectToPage((int)($this->settings['redirectPostActivationPageId'] ?? 0));
                 }
 
                 $this->view->assign('adminAccept', 1);

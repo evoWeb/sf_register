@@ -43,7 +43,7 @@ class BadWordValidator extends AbstractValidator implements InjectableInterface
      */
     public function isValid($value)
     {
-        $badWordItems = GeneralUtility::trimExplode(',', $this->settings['badWordList']);
+        $badWordItems = GeneralUtility::trimExplode(',', $this->settings['badWordList'] ?? '');
 
         if (in_array(strtolower($value), $badWordItems)) {
             $this->addError(

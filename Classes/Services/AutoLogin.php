@@ -32,7 +32,10 @@ class AutoLogin extends AuthenticationService
     public function getUser(): ?array
     {
         session_start();
-        $hmac = $_SESSION['sf-register-user'];
+        $hmac = $_SESSION['sf-register-user'] ?? null;
+        if ($hmac === null) {
+            return null;
+        }
 
         /** @var \TYPO3\CMS\Core\Registry $registry */
         $registry = GeneralUtility::makeInstance(Registry::class);
