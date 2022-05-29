@@ -37,8 +37,8 @@ class CaptchaAdapterFactory
     {
         $settings = [];
 
-        if (array_key_exists($type, $this->settings['captcha'])) {
-            $settings = is_array($this->settings['captcha'][$type]) ? $this->settings['captcha'][$type] : [];
+        if (array_key_exists($type, $this->settings['captcha'] ?? [])) {
+            $settings = is_array($this->settings['captcha'][$type] ?? null) ? $this->settings['captcha'][$type] : [];
 
             $type = is_array($this->settings['captcha'][$type]) ?
                 $this->settings['captcha'][$type]['_typoScriptNodeValue'] :

@@ -117,8 +117,8 @@ class FeuserController extends ActionController
     {
         $this->settings['hasOriginalRequest'] = $this->request->getOriginalRequest() !== null;
 
-        if (!is_array($this->settings['fields']['selected'])) {
-            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
+        if (!is_array($this->settings['fields']['selected'] ?? null)) {
+            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected'] ?? '');
         }
 
         if ($this->actionIsIgnored()) {
@@ -162,7 +162,7 @@ class FeuserController extends ActionController
         /** @var UserValidator $validator */
         $validator = GeneralUtility::makeInstance(UserValidator::class);
         foreach ($configuredValidators as $fieldName => $configuredValidator) {
-            if (!in_array($fieldName, $this->settings['fields']['selected'])) {
+            if (!in_array($fieldName, $this->settings['fields']['selected'] ?? [])) {
                 continue;
             }
 
@@ -241,7 +241,7 @@ class FeuserController extends ActionController
     {
         $this->setTypeConverter();
 
-        if ($this->settings['processInitializeActionEvent']) {
+        if ($this->settings['processInitializeActionEvent'] ?? false) {
             $this->eventDispatcher->dispatch(new InitializeActionEvent($this, $this->settings));
         }
 
@@ -465,14 +465,14 @@ class FeuserController extends ActionController
     protected function isNotifyAdmin(string $type): bool
     {
         $type = lcfirst($type);
-        $notifySettings = $this->settings['notifyAdmin'];
+        $notifySettings = $this->settings['notifyAdmin'] ?? [];
         return isset($notifySettings[$type]) && !empty($notifySettings[$type]);
     }
 
     protected function isNotifyUser(string $type): bool
     {
         $type = lcfirst($type);
-        $notifySettings = $this->settings['notifyUser'];
+        $notifySettings = $this->settings['notifyUser'] ?? [];
         return isset($notifySettings[$type]) && !empty($notifySettings[$type]);
     }
 
@@ -541,7 +541,7 @@ class FeuserController extends ActionController
 
         $userGroups = [];
         foreach ($settingsUserGroupKeys as $settingsUserGroupKey) {
-            $userGroup = (int)$this->settings[$settingsUserGroupKey];
+            $userGroup = (int)($this->settings[$settingsUserGroupKey] ?? 0);
             if ($userGroup) {
                 $userGroups[$settingsUserGroupKey] = $userGroup;
             }
@@ -680,13 +680,13 @@ class FeuserController extends ActionController
         ];
 
         // Admin    [plugin.tx_sfregister.settings.acceptEmailPostCreate]
-        $confirmEmailPostCreate = (bool)$this->settings['confirmEmailPostCreate'];
+        $confirmEmailPostCreate = (bool)($this->settings['confirmEmailPostCreate'] ?? false);
         // User     [plugin.tx_sfregister.settings.confirmEmailPostAccept]
-        $acceptEmailPostCreate = (bool)$this->settings['acceptEmailPostCreate'];
+        $acceptEmailPostCreate = (bool)($this->settings['acceptEmailPostCreate'] ?? false);
         // Admin    [plugin.tx_sfregister.settings.acceptEmailPostConfirm]
-        $confirmEmailPostAccept = (bool)$this->settings['confirmEmailPostAccept'];
+        $confirmEmailPostAccept = (bool)($this->settings['confirmEmailPostAccept'] ?? false);
         // User     [plugin.tx_sfregister.settings.confirmEmailPostCreate]
-        $acceptEmailPostConfirm = (bool)$this->settings['acceptEmailPostConfirm'];
+        $acceptEmailPostConfirm = (bool)($this->settings['acceptEmailPostConfirm'] ?? false);
 
         // First User:confirm then Admin:accept
         if ($confirmEmailPostCreate && $acceptEmailPostConfirm) {

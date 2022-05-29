@@ -80,15 +80,15 @@ class FeuserCreateController extends FeuserController
      */
     public function saveAction(FrontendUser $user): ResponseInterface
     {
-        if ($this->settings['confirmEmailPostCreate'] || $this->settings['acceptEmailPostCreate']) {
+        if (($this->settings['confirmEmailPostCreate'] ?? false) || ($this->settings['acceptEmailPostCreate'] ?? false)) {
             $user->setDisable(true);
-            $user = $this->changeUsergroup($user, (int)$this->settings['usergroupPostSave']);
+            $user = $this->changeUsergroup($user, (int)($this->settings['usergroupPostSave'] ?? 0));
         } else {
-            $user = $this->changeUsergroup($user, (int)$this->settings['usergroup']);
+            $user = $this->changeUsergroup($user, (int)($this->settings['usergroup'] ?? 0));
             $this->moveTemporaryImage($user);
         }
 
-        if ($this->settings['useEmailAddressAsUsername']) {
+        if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
             $user->setUsername($user->getEmail());
         }
 
@@ -116,12 +116,12 @@ class FeuserCreateController extends FeuserController
         $session = GeneralUtility::makeInstance(Session::class);
         $session->remove('captchaWasValidPreviously');
 
-        if ($this->settings['autologinPostRegistration']) {
-            $this->autoLogin($user, (int)$this->settings['redirectPostRegistrationPageId']);
+        if (($this->settings['autologinPostRegistration'] ?? false)) {
+            $this->autoLogin($user, (int)($this->settings['redirectPostRegistrationPageId'] ?? 0));
         }
 
-        if ($this->settings['redirectPostRegistrationPageId']) {
-            $this->redirectToPage((int)$this->settings['redirectPostRegistrationPageId']);
+        if ((int)($this->settings['redirectPostRegistrationPageId'] ?? 0) > 0) {
+            $this->redirectToPage((int)($this->settings['redirectPostRegistrationPageId'] ?? 0));
         }
 
         $this->view->assign('user', $user);
@@ -150,16 +150,16 @@ class FeuserCreateController extends FeuserController
             if (
                 $user->getActivatedOn() || $this->isUserInUserGroups(
                     $user,
-                    $this->getConfiguredUserGroups((int)$this->settings['usergroupPostConfirm'])
+                    $this->getConfiguredUserGroups((int)($this->settings['usergroupPostConfirm'] ?? 0))
                 )
             ) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
-                $user = $this->changeUsergroup($user, (int)$this->settings['usergroupPostConfirm']);
+                $user = $this->changeUsergroup($user, (int)($this->settings['usergroupPostConfirm'] ?? 0));
                 $this->moveTemporaryImage($user);
                 $user->setActivatedOn(new \DateTime('now'));
 
-                if (!$this->settings['acceptEmailPostConfirm']) {
+                if (!($this->settings['acceptEmailPostConfirm'] ?? false)) {
                     $user->setDisable(false);
                 }
 
@@ -169,13 +169,13 @@ class FeuserCreateController extends FeuserController
 
                 $this->sendEmails($user, __FUNCTION__);
 
-                if ($this->settings['autologinPostConfirmation']) {
+                if (($this->settings['autologinPostConfirmation'] ?? false)) {
                     $this->persistAll();
-                    $this->autoLogin($user, (int)$this->settings['redirectPostActivationPageId']);
+                    $this->autoLogin($user, (int)($this->settings['redirectPostActivationPageId'] ?? 0));
                 }
 
-                if ($this->settings['redirectPostActivationPageId']) {
-                    $this->redirectToPage((int)$this->settings['redirectPostActivationPageId']);
+                if ((int)($this->settings['redirectPostActivationPageId'] ?? 0) > 0) {
+                    $this->redirectToPage((int)($this->settings['redirectPostActivationPageId'] ?? 0));
                 }
 
                 $this->view->assign('userConfirmed', 1);
@@ -234,15 +234,15 @@ class FeuserCreateController extends FeuserController
             if (
                 !$user->getDisable() || $this->isUserInUserGroups(
                     $user,
-                    $this->getConfiguredUserGroups((int)$this->settings['usergroupPostAccept'])
+                    $this->getConfiguredUserGroups((int)($this->settings['usergroupPostAccept'] ?? 0))
                 )
             ) {
                 $this->view->assign('userAlreadyAccepted', 1);
             } else {
-                $user = $this->changeUsergroup($user, (int)$this->settings['usergroupPostAccept']);
+                $user = $this->changeUsergroup($user, (int)($this->settings['usergroupPostAccept'] ?? 0));
                 $user->setDisable(false);
 
-                if (!$this->settings['confirmEmailPostAccept']) {
+                if (!($this->settings['confirmEmailPostAccept'] ?? false)) {
                     $user->setActivatedOn(new \DateTime('now'));
                 }
 

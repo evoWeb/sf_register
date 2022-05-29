@@ -120,14 +120,14 @@ class Mail implements SingletonInterface
         return (string)LocalizationUtility::translate(
             'subject' . $method,
             'SfRegister',
-            [$this->settings['sitename'], $user->getUsername()]
+            [$this->settings['sitename'] ?? '', $user->getUsername()]
         );
     }
 
     protected function getAdminRecipient(): array
     {
         return [
-            trim($this->settings['adminEmail']['toEmail']) => trim($this->settings['adminEmail']['toName'])
+            trim($this->settings['adminEmail']['toEmail'] ?? '') => trim($this->settings['adminEmail']['toName'] ?? '')
         ];
     }
 
