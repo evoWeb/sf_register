@@ -301,11 +301,11 @@
 			</trans-unit>
 			<trans-unit id="image_none">
 				<source>Profile Image not uploaded</source>
-				<target>Profiel afbeelding niet geupload</target>
+				<target>Profiel afbeelding niet geüpload</target>
 			</trans-unit>
 			<trans-unit id="edit_saved">
 				<source>Userdata updated</source>
-				<target>Gebruikers gegevens geupdate</target>
+				<target>Gebruikers gegevens bijgewerkt</target>
 			</trans-unit>
 			<trans-unit id="create_saved">
 				<source>User created</source>
@@ -360,7 +360,7 @@
 				<target>wachtwoord opgeslagen</target>
 			</trans-unit>
 			<trans-unit id="account_not_found">
-				<source>The account you are trying to activate is unknow to the system.</source>
+				<source>The account you are trying to activate is unknown to the system.</source>
 				<target>Het account dat je probeert te activeren is onbekend</target>
 			</trans-unit>
 			<trans-unit id="account_already_activated">
@@ -380,7 +380,7 @@
 				<target>De waarde van het verplichte veld %1$s mag niet leeg zijn</target>
 			</trans-unit>
 			<trans-unit id="error_notequalcurrentuser">
-				<source>The %1$s does not equals your own user which is not allowed</source>
+				<source>The %1$s does not equal your own user which is not allowed</source>
 				<target>De waarde van %1$s komt niet overeen met je eigen gebruiker, dit is niet toegestaan</target>
 			</trans-unit>
 			<trans-unit id="error_changepassword_notloggedin">
@@ -428,7 +428,7 @@
 				<target>Het bestand heeft en extensie die niet toegestaan is</target>
 			</trans-unit>
 			<trans-unit id="error_repeatitionwasnotequal">
-				<source>The repeatition of %1$s was not equal</source>
+				<source>The repetition of %1$s was not equal</source>
 				<target>De herhalende waarde van %1$s is niet gelijk</target>
 			</trans-unit>
 			<trans-unit id="error_captcha_notcorrect">
@@ -437,7 +437,7 @@
 			</trans-unit>
 			<trans-unit id="error_captcha_notinstalled">
 				<source>Captcha extension '%1$s' not installed error</source>
-				<target>Captcha extensie '%1$s' is niet geinstalleerd</target>
+				<target>Captcha extensie '%1$s' is niet geïnstalleerd</target>
 			</trans-unit>
 			<trans-unit id="error_jmrecaptcha_incorrect-captcha-sol">
 				<source>Incorrect captcha</source>
@@ -448,7 +448,7 @@
 				<target>De lengte van %1$s dient tussen de %2$s en %3$s te zijn</target>
 			</trans-unit>
 			<trans-unit id="error_1221559976">
-				<source>The %1$s has no valid email adress format</source>
+				<source>The %1$s has no valid email address format</source>
 				<target>De waarde van %1$s is geen geldig e-mailadres</target>
 			</trans-unit>
 			<trans-unit id="error_1296591069">
@@ -457,7 +457,7 @@
 			</trans-unit>
 			<trans-unit id="subjectNotifyAdminMail">
 				<source>User %2$s registered at %1$s</source>
-				<target>Gebruiker %2$s geregistreed bij %1$s</target>
+				<target>Gebruiker %2$s geregistreerd bij %1$s</target>
 			</trans-unit>
 			<trans-unit id="subjectNotifyAdminMailPostActivation">
 				<source>User %2$s registered at %1$s and is now activated</source>
@@ -465,7 +465,7 @@
 			</trans-unit>
 			<trans-unit id="subjectNotifyAdminMailPreActivation">
 				<source>User %2$s registered at %1$s and needs to be activated</source>
-				<target>Gebruiker %2$s heeft zich bij %1$s geregistreed en dient geactiveerd te worden</target>
+				<target>Gebruiker %2$s heeft zich bij %1$s geregistreerd en dient geactiveerd te worden</target>
 			</trans-unit>
 			<trans-unit id="subjectNotifyUserMail">
 				<source>You registered yourself at %1$s as %2$s</source>
@@ -530,60 +530,60 @@
 
 			<trans-unit id="email_admin_account_accepted">
 				<source>The user registration was accepted.</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_admin_account_confirmed">
 				<source>The user confirmed the registration</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_user_accept_link">
 				<source>accept user registration</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_user_decline_link">
 				<source>decline user registration</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_admin_account_declined">
 				<source>The user registration was declined.</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_admin_account_refused">
 				<source>The user registration was refused.</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_admin_account_saved">
 				<source>The user registration was saved</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 
 			<trans-unit id="email_user_account_accepted">
 				<source>Your registration was accepted.</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_user_confirm_link">
 				<source>confirm your registration</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_user_refuse_link">
 				<source>refuse your registration</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_user_account_confirmed">
 				<source>Your registration was confirmed.</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_user_account_declined">
 				<source>Your registration was declined.</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_user_account_refused">
 				<source>Your registration was refused.</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 			<trans-unit id="email_user_account_saved">
 				<source>Your registration was saved.</source>
-				<target></target>
+				<target/>
 			</trans-unit>
 		</body>
 	</file>

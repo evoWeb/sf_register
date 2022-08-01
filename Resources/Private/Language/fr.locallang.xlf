@@ -332,8 +332,8 @@
 				<target>Utilisateur créé</target>
 			</trans-unit>
 			<trans-unit id="create_refused">
-				<source>Sorry you refused your registration with account %2$s on site %1$s</source>
-				<target>Désolé vous avez refusé votre inscription avec le compte %2$s sur le site %1$s</target>
+				<source>Sorry you refused your registration with account %1$s on site %2$s</source>
+				<target>Désolé vous avez refusé votre inscription avec le compte %1$s sur le site %2$s</target>
 			</trans-unit>
 			<trans-unit id="info_mandatory_fields">
 				<source>Fields with &lt;span&gt;*&lt;/span&gt; are mandatory</source>
@@ -381,11 +381,11 @@
 			</trans-unit>
 			<trans-unit id="oldPassword">
 				<source>Old password</source>
-				<target>Ancien mot de passse</target>
+				<target>Ancien mot de passe</target>
 			</trans-unit>
 			<trans-unit id="newPassword1">
 				<source>New password</source>
-				<target>Nouveu mot de passe</target>
+				<target>Nouveau mot de passe</target>
 			</trans-unit>
 			<trans-unit id="newPassword2">
 				<source>repeated password</source>
@@ -400,7 +400,7 @@
 				<target>Si votre adresse email a été trouvée, le mail de confirmation vous a été envoyé à nouveau.</target>
 			</trans-unit>
 			<trans-unit id="account_not_found">
-				<source>The account you are trying to activate is unknow to the system.</source>
+				<source>The account you are trying to activate is unknown to the system.</source>
 				<target>Le compte que vous essayez d'activer est inconnu par le système.</target>
 			</trans-unit>
 			<trans-unit id="account_already_activated">
@@ -417,10 +417,10 @@
 			</trans-unit>
 			<trans-unit id="email_already_activated">
 				<source>Your new email is already active.</source>
-				<target>Votre nouvelle adresse email est déjà actif.</target>
+				<target>Votre nouvelle adresse email est déjà active.</target>
 			</trans-unit>
 			<trans-unit id="email_successful_activated">
-				<source>Your new email adress was successfully saved.</source>
+				<source>Your new email address was successfully saved.</source>
 				<target>Votre nouvelle adresse email a été enregistrée avec succès.</target>
 			</trans-unit>
 			<trans-unit id="submit_delete">
@@ -440,7 +440,7 @@
 				<target>Compte supprimé.</target>
 			</trans-unit>
 			<trans-unit id="account_unknown">
-				<source>No known account for the given e-mail addresse.</source>
+				<source>No known account for the given e-mail address.</source>
 				<target>Aucun compte n'a été trouvé pour l'adresse email indiquée.</target>
 			</trans-unit>
 			<trans-unit id="delete_link_send">
@@ -456,7 +456,7 @@
 				<target>La valeur du champ requis %1$s est vide</target>
 			</trans-unit>
 			<trans-unit id="error_notequalcurrentuser">
-				<source>The %1$s does not equals your own user which is not allowed</source>
+				<source>The %1$s does not equal your own user which is not allowed</source>
 				<target>Le %1$s n'est pas votre utilisateur qui est celui autorisé</target>
 			</trans-unit>
 			<trans-unit id="error_changepassword_notloggedin">
@@ -504,7 +504,7 @@
 				<target>Le fichier n'a pas une extension d'image autorisée</target>
 			</trans-unit>
 			<trans-unit id="error_repeatitionwasnotequal">
-				<source>The repeatition of %1$s was not equal</source>
+				<source>The repetition of %1$s was not equal</source>
 				<target>La répétition de %1$s n'est pas égale</target>
 			</trans-unit>
 			<trans-unit id="error_captcha_notcorrect">
@@ -524,7 +524,7 @@
 				<target>La longueur de %1$s n'est pas comprise entre %2$s et %3$s caractères</target>
 			</trans-unit>
 			<trans-unit id="error_1221559976">
-				<source>The %1$s has no valid email adress format</source>
+				<source>The %1$s has no valid email address format</source>
 				<target>Le %1$s n'a pas de format d'adresse email valide</target>
 			</trans-unit>
 			<trans-unit id="error_1296591069">
@@ -553,15 +553,15 @@
 				<target>L'utilisateur %2$s a été refusé sur le site %1$s</target>
 			</trans-unit>
 			<trans-unit id="subjectNotifyAdminEditSave">
-				<source>User %2$s has edited informations on site %1$s</source>
+				<source>User %2$s has edited information on site %1$s</source>
 				<target>L'utilisateur %2$s a édité des informations sur le site %1$s</target>
 			</trans-unit>
 			<trans-unit id="subjectNotifyAdminEditConfirm">
-				<source>User %2$s has confirmed the change of informations on site %1$s</source>
+				<source>User %2$s has confirmed the change of information on site %1$s</source>
 				<target>L'utilisateur %2$s a confirmé le changement d'informations sur le site %1$s</target>
 			</trans-unit>
 			<trans-unit id="subjectNotifyAdminEditAccept">
-				<source>User %2$s change of informations was accepted on site %1$s</source>
+				<source>User %2$s change of information was accepted on site %1$s</source>
 				<target>Les modifications de l'utilisateur %2$s ont été acceptées sur le site %1$s</target>
 			</trans-unit>
 
@@ -590,11 +590,11 @@
 				<target>Vous avez modifié les informations du compte %2$s sur le site %1$s</target>
 			</trans-unit>
 			<trans-unit id="subjectNotifyUserEditConfirm">
-				<source>Thank you %2$s for confirming the change of informations on site %1$s</source>
-				<target>Merci de confimer les modifications du compte %2$s sur la page %1$s</target>
+				<source>Thank you %2$s for confirming the change of information on site %1$s</source>
+				<target>Merci de confirmer les modifications du compte %2$s sur la page %1$s</target>
 			</trans-unit>
 			<trans-unit id="subjectNotifyUserEditAccept">
-				<source>Your change of informations for account %2$s on site %1$s was accepted</source>
+				<source>Your change of information for account %2$s on site %1$s was accepted</source>
 				<target>Vos modifications pour le compte %2$s sur le site %1$s ont été acceptées</target>
 			</trans-unit>
 			<trans-unit id="subjectNotifyAdminSendInvitation">
@@ -631,7 +631,7 @@
 			</trans-unit>
 			<trans-unit id="subjectNotifyUserDeleteSendLink">
 				<source>You request to delete the account %2$s from %1$s</source>
-				<target>Votre demande de suppresion du compte %2$s de %1$s</target>
+				<target>Votre demande de suppression du compte %2$s de %1$s</target>
 			</trans-unit>
 			<trans-unit id="subjectNotifyAdminResendMail">
 				<source>User %2$s requested a resend of the activation key of the account from %1$s</source>
@@ -679,7 +679,7 @@
 			</trans-unit>
 			<trans-unit id="email_user_account_available">
 				<source>your account %1$s is now available</source>
-				<target>votre compte %1$s est maitenant disponible</target>
+				<target>votre compte %1$s est maintenant disponible</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_activated">
 				<source>your account %1$s is now active</source>
