@@ -92,7 +92,9 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     public function setImageFolderIdentifier(string $imageFolder)
     {
-        list($this->storageUid, $this->imageFolderIdentifier) = GeneralUtility::trimExplode(':', $imageFolder);
+        $parts = GeneralUtility::trimExplode(':', $imageFolder);
+        $this->storageUid = (int)$parts[0];
+        $this->imageFolderIdentifier = $parts[1];
         $this->tempFolderIdentifier = rtrim($this->imageFolderIdentifier, '/') . '/_temp_/';
     }
 
@@ -203,12 +205,10 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     public function isValid(): bool
     {
-        $result = true;
-
         $fileData = $this->getUploadedFileInfo();
         $filePathInfo = pathinfo($fileData['filename']);
 
-        $result = $this->isAllowedFilesize((int)$fileData['size']) && $result;
+        $result = $this->isAllowedFilesize((int)$fileData['size']);
         $result = $this->isAllowedFileExtension($filePathInfo['extension'] ?? '') && $result;
 
         return $result;
@@ -270,17 +270,15 @@ class File implements SingletonInterface, LoggerAwareInterface
         }
     }
 
-    public function moveFileFromTempFolderToUploadFolder(FileReference $image)
+    public function moveFileFromTempFolderToUploadFolder(?FileReference $image)
     {
-        if (empty($image)) {
-            return;
-        }
-
-        $file = $image->getOriginalResource()->getOriginalFile();
-        try {
-            $file->getStorage()->moveFile($file, $this->imageFolder);
-        } catch (\Exception $e) {
-            $this->logger->info('sf_register: Image ' . $file->getName() . ' could not be moved');
+        if (!empty($image)) {
+            $file = $image->getOriginalResource()->getOriginalFile();
+            try {
+                $file->getStorage()->moveFile($file, $this->imageFolder);
+            } catch (\Exception $e) {
+                $this->logger->info('sf_register: Image ' . $file->getName() . ' could not be moved');
+            }
         }
     }
 

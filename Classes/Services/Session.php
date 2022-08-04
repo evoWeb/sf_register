@@ -43,9 +43,7 @@ class Session implements SingletonInterface
             $this->frontendUser = $GLOBALS['TSFE']->fe_user;
         } else {
             $this->frontendUser = $frontendUser;
-            if ($this->frontendUser->userSession == null) {
-                $this->frontendUser->start();
-            }
+            $this->frontendUser->start();
         }
         $this->fetch();
     }
@@ -101,7 +99,7 @@ class Session implements SingletonInterface
      * @param string $key
      * @param mixed $value
      *
-     * @return \Evoweb\SfRegister\Services\Session
+     * @return self
      */
     public function set(string $key, $value): self
     {

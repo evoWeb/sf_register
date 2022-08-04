@@ -65,8 +65,8 @@ class FeuserEditController extends FeuserController
             $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
         }
 
-        // user is logged
-        if ($user !== null && $user instanceof FrontendUser) {
+        // user is logged in
+        if ($user instanceof FrontendUser) {
             $this->eventDispatcher->dispatch(new EditFormEvent($user, $this->settings));
         }
 

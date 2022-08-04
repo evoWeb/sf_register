@@ -37,7 +37,7 @@ class AutoLogin extends AuthenticationService
             return null;
         }
 
-        /** @var \TYPO3\CMS\Core\Registry $registry */
+        /** @var Registry $registry */
         $registry = GeneralUtility::makeInstance(Registry::class);
         $userId = $registry->get('sf-register', $hmac);
 

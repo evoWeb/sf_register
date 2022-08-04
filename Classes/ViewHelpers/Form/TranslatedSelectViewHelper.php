@@ -271,7 +271,7 @@ class TranslatedSelectViewHelper extends AbstractFormFieldViewHelper
             return true;
         }
         if ($this->hasArgument('multiple')) {
-            if ($selectedValue === null && $this->arguments['selectAllByDefault'] === true) {
+            if (empty($selectedValue) && $this->arguments['selectAllByDefault'] === true) {
                 return true;
             }
             if (is_array($selectedValue) && in_array($value, $selectedValue)) {

@@ -62,7 +62,7 @@ class ConjunctionValidator extends ExtbaseConjunctionValidator implements Settab
     {
         $validators = $this->getValidators();
         if ($validators->count() > 0) {
-            /** @var Result $result */
+            /** @var ?Result $result */
             $result = null;
             /** @var AbstractValidator $validator */
             foreach ($validators as $validator) {

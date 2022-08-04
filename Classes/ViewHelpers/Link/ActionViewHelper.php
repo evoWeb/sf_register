@@ -17,6 +17,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Link;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
@@ -30,6 +31,11 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
      * @var string
      */
     protected $tagName = 'a';
+
+    /**
+     * @var RenderingContext
+     */
+    protected $renderingContext;
 
     /**
      * Arguments initialization
@@ -125,7 +131,6 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         $addQueryString = (bool)$this->arguments['addQueryString'];
         $argumentsToBeExcludedFromQueryString = (array)$this->arguments['argumentsToBeExcludedFromQueryString'];
         $parameters = $this->arguments['arguments'];
-        /** @var UriBuilder $uriBuilder */
         $uriBuilder = $this->renderingContext->getUriBuilder();
         $uriBuilder
             ->reset()

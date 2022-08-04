@@ -25,9 +25,6 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class StaticCountryZoneRepository extends Repository
 {
-    /**
-     * @var array
-     */
     protected $defaultOrderings = [
         'zn_name_local' => QueryInterface::ORDER_ASCENDING
     ];

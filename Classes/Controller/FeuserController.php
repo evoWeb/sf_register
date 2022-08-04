@@ -16,6 +16,7 @@ namespace Evoweb\SfRegister\Controller;
 use Doctrine\Common\Annotations\DocParser;
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
@@ -231,7 +232,7 @@ class FeuserController extends ActionController
 
     protected function initializeActionMethodArguments()
     {
-        if (!$this->arguments) {
+        if (!($this->arguments instanceof Arguments)) {
             $this->arguments = GeneralUtility::makeInstance(Arguments::class);
         }
         parent::initializeActionMethodArguments();
@@ -279,7 +280,7 @@ class FeuserController extends ActionController
         $configuration->forProperty('image')->allowAllProperties();
         $configuration->setTypeConverterOption(
             PersistentObjectConverter::class,
-            PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+            (string)PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
             true
         );
 
@@ -318,7 +319,7 @@ class FeuserController extends ActionController
         if (isset($this->settings['templateRootPath']) && !empty($this->settings['templateRootPath'])) {
             $templateRootPath = GeneralUtility::getFileAbsFileName($this->settings['templateRootPath']);
             if (GeneralUtility::isAllowedAbsPath($templateRootPath)) {
-                $templateRootPaths = $this->view->getTemplateRootPaths() ?? [];
+                $templateRootPaths = $this->view->getTemplateRootPaths();
                 $this->view->setTemplateRootPaths(array_merge($templateRootPaths, [$templateRootPath]));
             }
         }
@@ -443,7 +444,7 @@ class FeuserController extends ActionController
         $this->redirectToUri($url);
     }
 
-    protected function sendEmails(FrontendUser $user, string $action): FrontendUser
+    protected function sendEmails(FrontendUser $user, string $action): FrontendUserInterface
     {
         $action = ucfirst(str_replace('Action', '', $action));
         $type = $this->controller . $action;
@@ -602,7 +603,7 @@ class FeuserController extends ActionController
         }
     }
 
-    protected function autoLogin(FrontendUser $user, int $redirectPageId)
+    protected function autoLogin(FrontendUserInterface $user, int $redirectPageId)
     {
         session_start();
         $this->autoLoginTriggered = true;

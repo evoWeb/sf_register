@@ -19,9 +19,9 @@ use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter
 {
     /**
-     * @var int
+     * @var string
      */
-    public const CONFIGURATION_USER_DATA = 1;
+    public const CONFIGURATION_USER_DATA = '1';
 
     /**
      * @var int
@@ -72,10 +72,11 @@ class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTi
         );
 
         if (
-            (is_array($userData) && !empty($userData))
-            && (isset($userData['dateOfBirthDay']) && !empty($userData['dateOfBirthDay']))
-            && (isset($userData['dateOfBirthMonth']) && !empty($userData['dateOfBirthMonth']))
-            && (isset($userData['dateOfBirthYear']) && !empty($userData['dateOfBirthYear']))
+            is_array($userData)
+            && !empty($userData)
+            && !empty($userData['dateOfBirthDay'] ?? '')
+            && !empty($userData['dateOfBirthMonth'] ?? '')
+            && !empty($userData['dateOfBirthYear'] ?? '')
         ) {
             $date->setTimestamp(strtotime(
                 $userData['dateOfBirthYear'] . '-' . $userData['dateOfBirthMonth'] . '-' . $userData['dateOfBirthDay']

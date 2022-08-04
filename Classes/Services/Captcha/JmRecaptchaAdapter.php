@@ -25,7 +25,7 @@ class JmRecaptchaAdapter extends AbstractAdapter
     public function __construct()
     {
         if (ExtensionManagementUtility::isLoaded('jm_recaptcha')) {
-            /** @noinspection PhpIncludeInspection */
+            /** @noinspection */
             require_once(ExtensionManagementUtility::extPath('jm_recaptcha')
                 . 'class.tx_jmrecaptcha.php');
             $this->captcha = GeneralUtility::makeInstance('tx_jmrecaptcha');

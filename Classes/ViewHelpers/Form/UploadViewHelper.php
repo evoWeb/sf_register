@@ -83,8 +83,11 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
             'f3-form-error'
         );
         $this->registerUniversalTagAttributes();
-        $this->registerTagAttribute('alwaysShowUpload', 'string', 'Whether the upload button should be always shown.');
-        $this->registerTagAttribute('accept', 'string', 'Accepted file extensions.', false, '');
+        $this->registerTagAttribute(
+            'alwaysShowUpload',
+            'string',
+            'Whether the upload button should be always shown.'
+        );
     }
 
     public function render(): string
@@ -118,12 +121,7 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
         return $output;
     }
 
-    /**
-     * @param ObjectStorage|array $resources
-     *
-     * @return string
-     */
-    protected function renderPreview($resources): string
+    protected function renderPreview(array $resources): string
     {
         $output = '';
 
@@ -155,16 +153,9 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
         return $output;
     }
 
-    /**
-     * @param ObjectStorage|array $resources
-     *
-     * @return bool
-     */
-    protected function isRenderUpload($resources): bool
+    protected function isRenderUpload(array $resources): bool
     {
-        return is_null($resources)
-            || ($resources instanceof ObjectStorage && count($resources) === 0)
-            || (is_array($resources) && count($resources) === 0)
+        return count($resources) === 0
             || ($this->hasArgument('alwaysShowUpload') && $this->arguments['alwaysShowUpload']);
     }
 

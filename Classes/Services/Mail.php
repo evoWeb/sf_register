@@ -151,10 +151,10 @@ class Mail implements SingletonInterface
         string $subject,
         string $bodyHtml,
         string $bodyPlain
-    ): int {
+    ): bool {
         $settings =& $this->settings[$typeOfEmail];
 
-        /** @var \TYPO3\CMS\Core\Mail\MailMessage $mail */
+        /** @var MailMessage $mail */
         $mail = GeneralUtility::makeInstance(MailMessage::class);
         $mail->setTo($recipient)
             ->setFrom([$settings['fromEmail'] => $settings['fromName']])

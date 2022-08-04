@@ -898,14 +898,14 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
         return $this->zone;
     }
 
-    public function setTimezone(int $timezone)
+    public function setTimezone(float $timezone)
     {
         $this->timezone = ($timezone > 14 || $timezone < -12 ?
             $timezone / 10 :
             $timezone);
     }
 
-    public function getTimezone(): int
+    public function getTimezone(): float
     {
         return floor($this->timezone) != $this->timezone ?
             $this->timezone * 10 :

@@ -26,6 +26,14 @@
 		"typo3/cms-extbase": "*",
 		"typo3/cms-fluid": "*"
 	},
+	"require-dev": {
+		"typo3/cms-backend": "*",
+		"typo3/cms-frontend": "*",
+		"typo3/cms-install": "*",
+		"friendsoftypo3/phpstan-typo3": "^0.9.0",
+		"phpstan/phpstan": "^1.8.1",
+		"sjbr/sr-freecap": "^11.5.1"
+	},
 	"suggest": {
 		"evoweb/recaptcha": "^10.0"
 	},
@@ -42,7 +50,11 @@
 	},
 
 	"config": {
-		"vendor-dir": ".Build/Web/vendor"
+		"vendor-dir": ".Build/Web/vendor",
+		"allow-plugins": {
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true
+		}
 	},
 	"extra": {
 		"typo3/cms": {
@@ -53,7 +65,6 @@
 	},
 
 	"scripts": {
-		"post-autoload-dump": "mkdir -p .Build/Web/typo3conf/ext/ && ln -snf ../../../.. .Build/Web/typo3conf/ext/sf_register",
 		"prepare-release": [
 			"rm -rf .Build",
 			"rm -rf .github",

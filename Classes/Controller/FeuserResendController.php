@@ -61,7 +61,7 @@ class FeuserResendController extends FeuserController
         /** @var FrontendUser $user */
         $user = $this->userRepository->findByEmail($email->getEmail());
 
-        if ($user) {
+        if ($user instanceof FrontendUser) {
             $this->sendEmails($user, __FUNCTION__);
         }
 

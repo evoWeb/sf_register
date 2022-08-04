@@ -46,19 +46,19 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     /**
      * Folder where the file upload should go to (including storage).
      */
-    public const CONFIGURATION_UPLOAD_FOLDER = 1;
+    public const CONFIGURATION_UPLOAD_FOLDER = '1';
 
     /**
      * How to handle a upload when the name of the uploaded file conflicts.
      */
-    public const CONFIGURATION_UPLOAD_CONFLICT_MODE = 2;
+    public const CONFIGURATION_UPLOAD_CONFLICT_MODE = '2';
 
     /**
      * Whether to replace an already present resource.
      * Useful for "maxitems = 1" fields and properties
      * with no ObjectStorage annotation.
      */
-    public const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
+    public const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = '4';
 
     protected string $defaultUploadFolder = '1:/user_upload/';
 
@@ -118,28 +118,30 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         ?PropertyMappingConfigurationInterface $configuration = null
     ) {
         if (!isset($source['error']) || $source['error'] === \UPLOAD_ERR_NO_FILE) {
+            $result = null;
             if (isset($source['submittedFile']['resourcePointer'])) {
                 try {
                     $resourcePointer = $this->hashService->validateAndStripHmac(
                         $source['submittedFile']['resourcePointer']
                     );
                     if (strpos($resourcePointer, 'file:') === 0) {
-                        $fileUid = substr($resourcePointer, 5);
+                        $fileUid = (int)substr($resourcePointer, 5);
 
-                        return $this->createFileReferenceFromFalFileObject(
+                        $result = $this->createFileReferenceFromFalFileObject(
                             $this->resourceFactory->getFileObject($fileUid)
                         );
+                    } else {
+                        $result = $this->createFileReferenceFromFalFileReferenceObject(
+                            $this->resourceFactory->getFileReferenceObject((int)$resourcePointer),
+                            (int)$resourcePointer
+                        );
                     }
-                    return $this->createFileReferenceFromFalFileReferenceObject(
-                        $this->resourceFactory->getFileReferenceObject($resourcePointer),
-                        $resourcePointer
-                    );
                 } catch (\InvalidArgumentException $e) {
                     // Nothing to do. No file is uploaded and resource pointer is invalid. Discard!
                 }
             }
 
-            return null;
+            return $result;
         }
 
         if ($source['error'] !== \UPLOAD_ERR_OK) {
@@ -244,12 +246,12 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             $this->hashService->validateAndStripHmac($uploadInfo['submittedFile']['resourcePointer']) :
             null;
 
-        return $this->createFileReferenceFromFalFileObject($uploadedFile, $resourcePointer);
+        return $this->createFileReferenceFromFalFileObject($uploadedFile, (int)$resourcePointer);
     }
 
     protected function createFileReferenceFromFalFileObject(
         FalFile $file,
-        int $resourcePointer = null
+        int $resourcePointer = 0
     ): FileReference {
         $fileReference = $this->resourceFactory->createFileReferenceObject(
             [
@@ -265,16 +267,15 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
     protected function createFileReferenceFromFalFileReferenceObject(
         FalFileReference $falFileReference,
-        int $resourcePointer = null
+        int $resourcePointer = 0
     ): FileReference {
-        if ($resourcePointer === null) {
+        if ($resourcePointer === 0) {
             /** @var FileReference $fileReference */
             $fileReference = GeneralUtility::makeInstance(FileReference::class);
         } else {
             $fileReference = $this->persistenceManager->getObjectByIdentifier(
                 $resourcePointer,
-                FileReference::class,
-                false
+                FileReference::class
             );
         }
 

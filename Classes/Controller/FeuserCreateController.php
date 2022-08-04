@@ -112,7 +112,7 @@ class FeuserCreateController extends FeuserController
         $this->userRepository->update($user);
         $this->persistAll();
 
-        /** @var \Evoweb\SfRegister\Services\Session $session */
+        /** @var Session $session */
         $session = GeneralUtility::makeInstance(Session::class);
         $session->remove('captchaWasValidPreviously');
 

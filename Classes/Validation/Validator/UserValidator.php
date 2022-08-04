@@ -23,7 +23,7 @@ class UserValidator extends GenericObjectValidator
     /**
      * Model that gets validated currently
      *
-     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password
+     * @var FrontendUser|Password
      */
     protected $model;
 
@@ -78,7 +78,7 @@ class UserValidator extends GenericObjectValidator
     /**
      * Checks if validator can validate the object
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $object
+     * @param object|FrontendUser|Password $object
      *
      * @return bool
      */

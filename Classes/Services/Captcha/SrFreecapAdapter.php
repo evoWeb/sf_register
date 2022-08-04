@@ -14,6 +14,7 @@ namespace Evoweb\SfRegister\Services\Captcha;
  */
 
 use Evoweb\SfRegister\Services\Session;
+use SJBR\SrFreecap\PiBaseApi;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -54,7 +55,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class SrFreecapAdapter extends AbstractAdapter
 {
     /**
-     * @var ?\tx_srfreecap_pi2
+     * @var ?PiBaseApi
      */
     protected ?object $captcha = null;
 
@@ -73,10 +74,7 @@ class SrFreecapAdapter extends AbstractAdapter
     public function __construct()
     {
         if (ExtensionManagementUtility::isLoaded('sr_freecap')) {
-            /** @noinspection PhpIncludeInspection */
-            require_once(ExtensionManagementUtility::extPath('sr_freecap') .
-                'pi2/class.tx_srfreecap_pi2.php');
-            $this->captcha = GeneralUtility::makeInstance('tx_srfreecap_pi2');
+            $this->captcha = GeneralUtility::makeInstance(PiBaseApi::class);
         }
     }
 
