@@ -288,10 +288,10 @@ Special fields Validators
          :ref:`Bring in your own captcha <AddCustomCaptcha>`
 
    Options:
-         type = [srfreecap, jmrecaptcha]
+         type = [srfreecap, jmrecaptcha, recaptcha]
 
    Default:
-         srfreecap
+         recaptcha
 
 
 .. _EmptyValidator:

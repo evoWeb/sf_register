@@ -222,7 +222,8 @@ class File implements SingletonInterface, LoggerAwareInterface
     {
         $result = true;
 
-        if ($fileExtension !== ''
+        if (
+            $fileExtension !== ''
             && !GeneralUtility::inList($this->allowedFileExtensions, strtolower($fileExtension))
         ) {
             $this->addError(LocalizationUtility::translate('error_image_extension', 'SfRegister'), 1296591065);

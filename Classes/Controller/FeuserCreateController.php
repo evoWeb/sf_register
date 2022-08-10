@@ -27,7 +27,7 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * An frontend user create controller
+ * A frontend user create controller
  */
 class FeuserCreateController extends FeuserController
 {
@@ -80,7 +80,10 @@ class FeuserCreateController extends FeuserController
      */
     public function saveAction(FrontendUser $user): ResponseInterface
     {
-        if (($this->settings['confirmEmailPostCreate'] ?? false) || ($this->settings['acceptEmailPostCreate'] ?? false)) {
+        if (
+            ($this->settings['confirmEmailPostCreate'] ?? false)
+            || ($this->settings['acceptEmailPostCreate'] ?? false)
+        ) {
             $user->setDisable(true);
             $user = $this->changeUsergroup($user, (int)($this->settings['usergroupPostSave'] ?? 0));
         } else {
