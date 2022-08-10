@@ -74,9 +74,9 @@ class File implements SingletonInterface, LoggerAwareInterface
         }
 
         $this->allowedFileExtensions = $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'];
-        $this->maxFilesize = $this->returnBytes(ini_get('upload_max_filesize') < ini_get('post_max_size') ?
-            ini_get('upload_max_filesize') :
-            ini_get('post_max_size'));
+        $uploadMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('upload_max_filesize'));
+        $postMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('post_max_size'));
+        $this->maxFilesize = min($uploadMaxFileSize, $postMaxFileSize);
     }
 
     public function getStorage(): ?ResourceStorage
@@ -103,9 +103,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         if (!$this->imageFolder) {
             $this->createFolderIfNotExist($this->imageFolderIdentifier);
 
-            /** @var \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory */
-            $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
-            $this->imageFolder = $resourceFactory->retrieveFileOrFolderObject($this->imageFolderIdentifier);
+            $this->imageFolder = $this->getStorage()->getFolder($this->imageFolderIdentifier);
         }
         return $this->imageFolder;
     }
@@ -120,15 +118,11 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $this->tempFolder;
     }
 
-    /**
-     * @param string|int $value
-     *
-     * @return int
-     */
-    protected function returnBytes($value): int
+    protected function convertSizeStringToBytes(string $value): int
     {
-        $last = strtolower(substr(trim($value), -1));
-        $value = (int)$value;
+        $value = trim($value);
+        $last = strtolower(preg_replace('/[^gmk]/i', '', $value));
+        $value = (int)preg_replace('/[^\d]/', '', $value);
         switch ($last) {
             case 'g':
                 $value *= 1024 * 1024 * 1024;
@@ -182,7 +176,7 @@ class File implements SingletonInterface, LoggerAwareInterface
             $error = $uploadData['error']['image'];
             $size = $uploadData['size']['image'];
 
-            if ($filename !== null && $filename !== '' && GeneralUtility::validPathStr($filename)) {
+            if ($filename !== '' && GeneralUtility::validPathStr($filename)) {
                 if (($this->settings['useEncryptedFilename'] ?? false)) {
                     $filenameParts = GeneralUtility::trimExplode('.', $filename);
                     $extension = array_pop($filenameParts);
@@ -209,9 +203,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         $filePathInfo = pathinfo($fileData['filename']);
 
         $result = $this->isAllowedFilesize((int)$fileData['size']);
-        $result = $this->isAllowedFileExtension($filePathInfo['extension'] ?? '') && $result;
-
-        return $result;
+        return $this->isAllowedFileExtension($filePathInfo['extension'] ?? '') && $result;
     }
 
     protected function isAllowedFilesize(int $filesize): bool
@@ -230,8 +222,7 @@ class File implements SingletonInterface, LoggerAwareInterface
     {
         $result = true;
 
-        if (
-            $fileExtension !== ''
+        if ($fileExtension !== ''
             && !GeneralUtility::inList($this->allowedFileExtensions, strtolower($fileExtension))
         ) {
             $this->addError(LocalizationUtility::translate('error_image_extension', 'SfRegister'), 1296591065);
@@ -242,7 +233,7 @@ class File implements SingletonInterface, LoggerAwareInterface
     }
 
     /**
-     * Move an temporary uploaded file to the upload folder
+     * Move a temporary uploaded file to the upload folder
      *
      * @return ?FileInterface
      */
@@ -255,9 +246,13 @@ class File implements SingletonInterface, LoggerAwareInterface
             $fileExtension = pathinfo($fileData['filename'], PATHINFO_EXTENSION);
             $filename = uniqid('sf_register') . '.' . $fileExtension;
 
-            /** @var ResourceStorage $resourceStorage */
-            $resourceStorage = GeneralUtility::makeInstance(ResourceStorage::class);
-            $result = $resourceStorage->addFile($fileData['tmp_name'], $this->getTempFolder(), $filename);
+            try {
+                /** @var ResourceStorage $resourceStorage */
+                $resourceStorage = GeneralUtility::makeInstance(ResourceStorage::class);
+                $result = $resourceStorage->addFile($fileData['tmp_name'], $this->getTempFolder(), $filename);
+            } catch (\Exception $exception) {
+                $this->logger->error($exception->getMessage(), $exception->getTrace());
+            }
         }
 
         return $result;
@@ -275,9 +270,11 @@ class File implements SingletonInterface, LoggerAwareInterface
         if (!empty($image)) {
             $file = $image->getOriginalResource()->getOriginalFile();
             try {
-                $file->getStorage()->moveFile($file, $this->imageFolder);
-            } catch (\Exception $e) {
-                $this->logger->info('sf_register: Image ' . $file->getName() . ' could not be moved');
+                $file->getStorage()->moveFile($file, $this->getImageFolder());
+            } catch (\Exception $exception) {
+                $this->logger->info(
+                    'sf_register: Image ' . $file->getName() . ' could not be moved! ' . $exception->getMessage()
+                );
             }
         }
     }
