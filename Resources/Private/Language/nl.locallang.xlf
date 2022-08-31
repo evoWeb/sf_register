@@ -304,16 +304,16 @@
 				<target>Profiel afbeelding niet geüpload</target>
 			</trans-unit>
 			<trans-unit id="edit_saved">
-				<source>Userdata updated</source>
+				<source>Your account was successfully updated</source>
 				<target>Gebruikers gegevens bijgewerkt</target>
 			</trans-unit>
 			<trans-unit id="create_saved">
-				<source>User created</source>
+				<source>Account created successfully</source>
 				<target>Gebruiker aangemaakt</target>
 			</trans-unit>
 			<trans-unit id="info_mandatory_fields">
-				<source>Fields with &lt;span&gt;*&lt;/span&gt; are mandatory</source>
-				<target>Met &lt;span&gt;*&lt;/span&gt; aangeduide velden zijn verplicht</target>
+				<source>Fields marked with an asterisk (*) are mandatory</source>
+				<target>Met (*) aangeduide velden zijn verplicht</target>
 			</trans-unit>
 			<trans-unit id="submit_create">
 				<source>create</source>
@@ -356,7 +356,7 @@
 				<target>wachtwoord herhalen</target>
 			</trans-unit>
 			<trans-unit id="password_saved">
-				<source>password saved</source>
+				<source>Password successfully updated</source>
 				<target>wachtwoord opgeslagen</target>
 			</trans-unit>
 			<trans-unit id="account_not_found">
@@ -444,15 +444,15 @@
 				<target>Onjuiste controle code</target>
 			</trans-unit>
 			<trans-unit id="error_1238108067">
-				<source>The length of %1$s was not between %2$s and %3$s characters</source>
+				<source>The length of field %1$s must be between %2$s and %3$s characters</source>
 				<target>De lengte van %1$s dient tussen de %2$s en %3$s te zijn</target>
 			</trans-unit>
 			<trans-unit id="error_1221559976">
-				<source>The %1$s has no valid email address format</source>
+				<source>Field %1$s does not have a valid email address format</source>
 				<target>De waarde van %1$s is geen geldig e-mailadres</target>
 			</trans-unit>
 			<trans-unit id="error_1296591069">
-				<source>The %1$s is global not unique</source>
+				<source>Field %1$s is not globally unique</source>
 				<target>De waarde van %1$s is globaal niet uniek</target>
 			</trans-unit>
 			<trans-unit id="subjectNotifyAdminMail">
@@ -484,52 +484,52 @@
 				<target>Je registratie van het account %2$s bij %1$s</target>
 			</trans-unit>
 			<trans-unit id="email_admin_salutation">
-				<source>dear admin</source>
-				<target>beste admin</target>
+				<source>Dear admin</source>
+				<target>Beste admin</target>
 			</trans-unit>
 			<trans-unit id="email_admin_activate_message">
-				<source>please activate the account %1$s</source>
-				<target>activeer account %1$s a.u.b.</target>
+				<source>A new account "%1$s" has been requested, and you need to activate it.</source>
+				<target>Activeer account "%1$s" a.u.b.</target>
 			</trans-unit>
 			<trans-unit id="email_admin_activate_link">
-				<source>activate user account</source>
-				<target>activeer gebruikers account</target>
+				<source>Activate user account</source>
+				<target>Activeer gebruikers account</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_available">
-				<source>the account %1$s is available</source>
-				<target>het account %1$s is beschikbaar</target>
+				<source>The account "%1$s" is available</source>
+				<target>Het account "%1$s" is beschikbaar</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_activated">
-				<source>the account %1$s was activated</source>
-				<target>het account %1$s is geactiveerd</target>
+				<source>The account "%1$s" was activated</source>
+				<target>Het account "%1$s" is geactiveerd</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_edited">
-				<source>the account %1$s was edited</source>
-				<target>het account %1$s is aangepast</target>
+				<source>The account "%1$s" was edited</source>
+				<target>Het account "%1$s" is aangepast</target>
 			</trans-unit>
 			<trans-unit id="email_user_salutation">
-				<source>dear user</source>
-				<target>beste gebruiker</target>
+				<source>Dear user</source>
+				<target>Beste gebruiker</target>
 			</trans-unit>
 			<trans-unit id="email_user_activate_message">
-				<source>please activate your account %1$s</source>
-				<target>activeer je account %1$s a.u.b.</target>
+				<source>Your account "%1$s" has been created but needs to be activated.</source>
+				<target>Activeer je account "%1$s" a.u.b.</target>
 			</trans-unit>
 			<trans-unit id="email_user_activate_link">
-				<source>activate your account</source>
-				<target>activeer je account</target>
+				<source>Activate your account</source>
+				<target>Activeer je account</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_available">
-				<source>your account %1$s is now available</source>
-				<target>je account %1$s is nu beschikbaar</target>
+				<source>Your account "%1$s" is now available.</source>
+				<target>Je account "%1$s" is nu beschikbaar</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_activated">
-				<source>your account %1$s is now active</source>
-				<target>je account %1$s is nu actief</target>
+				<source>Your account "%1$s" is now active.</source>
+				<target>Je account "%1$s" is nu actief</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_edited">
-				<source>you have edited your account %1$s</source>
-				<target>je hebt je account %1$s aangepast</target>
+				<source>You have edited your account "%1$s".</source>
+				<target>Je hebt je account "%1$s" aangepast</target>
 			</trans-unit>
 
 			<trans-unit id="email_admin_account_accepted">
