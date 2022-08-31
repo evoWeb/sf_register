@@ -325,11 +325,11 @@
 				<target>hochladen</target>
 			</trans-unit>
 			<trans-unit id="edit_saved">
-				<source>Userdata updated</source>
+				<source>Your account was successfully updated</source>
 				<target>Benutzerdaten aktualisiert</target>
 			</trans-unit>
 			<trans-unit id="create_saved">
-				<source>User created</source>
+				<source>Account created successfully</source>
 				<target>Benutzer erstellt</target>
 			</trans-unit>
 			<trans-unit id="create_refused">
@@ -341,8 +341,8 @@
 				<target>Die Nutzer Registrierung wurde verweigert.</target>
 			</trans-unit>
 			<trans-unit id="info_mandatory_fields">
-				<source>Fields with &lt;span&gt;*&lt;/span&gt; are mandatory</source>
-				<target>Mit &lt;span&gt;*&lt;/span&gt; markierte Felder sind Pflichtfelder</target>
+				<source>Fields marked with an asterisk (*) are mandatory</source>
+				<target>Mit (*) markierte Felder sind Pflichtfelder</target>
 			</trans-unit>
 			<trans-unit id="invitationEmail">
 				<source>Email address of person to invite</source>
@@ -397,7 +397,7 @@
 				<target>Wiederholtes Passwort</target>
 			</trans-unit>
 			<trans-unit id="password_saved">
-				<source>password saved</source>
+				<source>Password successfully updated</source>
 				<target>Passwort gespeichert</target>
 			</trans-unit>
 			<trans-unit id="resend_mail_sent">
@@ -505,15 +505,15 @@
 				<target>Sie haben das CAPTCHA nicht korrekt eingegeben.</target>
 			</trans-unit>
 			<trans-unit id="error_1238108067">
-				<source>The length of %1$s was not between %2$s and %3$s characters</source>
+				<source>The length of field %1$s must be between %2$s and %3$s characters</source>
 				<target>Bitte geben Sie %2$s bis %3$s Zeichen ein</target>
 			</trans-unit>
 			<trans-unit id="error_1221559976">
-				<source>The %1$s has no valid email address format</source>
+				<source>Field %1$s does not have a valid email address format</source>
 				<target>Die %1$s hat kein gültiges Format</target>
 			</trans-unit>
 			<trans-unit id="error_1296591069">
-				<source>The %1$s is global not unique</source>
+				<source>Field %1$s is not globally unique</source>
 				<target>Das Feld %1$s ist nicht einmalig</target>
 			</trans-unit>
 
@@ -638,52 +638,52 @@
 			</trans-unit>
 
 			<trans-unit id="email_admin_salutation">
-				<source>dear admin</source>
+				<source>Dear admin</source>
 				<target>Sehr geehrter Admin</target>
 			</trans-unit>
 			<trans-unit id="email_admin_activate_message">
-				<source>please activate the account %1$s</source>
-				<target>bitte aktivieren Sie den Account %1$s</target>
+				<source>A new account "%1$s" has been requested, and you need to activate it.</source>
+				<target>bitte aktivieren Sie den Account "%1$s"</target>
 			</trans-unit>
 			<trans-unit id="email_admin_activate_link">
-				<source>activate user account</source>
+				<source>Activate user account</source>
 				<target>Nutzer Account aktivieren</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_available">
-				<source>the account %1$s is available</source>
-				<target>Account %1$s ist verfügbar</target>
+				<source>The account "%1$s" is available</source>
+				<target>Account "%1$s" ist verfügbar</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_activated">
-				<source>the account %1$s was activated</source>
-				<target>Account %1$s wurde aktiviert</target>
+				<source>The account "%1$s" was activated</source>
+				<target>Account "%1$s" wurde aktiviert</target>
 			</trans-unit>
 			<trans-unit id="email_admin_account_edited">
-				<source>the account %1$s was edited</source>
-				<target>Account %1$s wurde bearbeitet</target>
+				<source>The account "%1$s" was edited</source>
+				<target>Account "%1$s" wurde bearbeitet</target>
 			</trans-unit>
 			<trans-unit id="email_user_salutation">
-				<source>dear user</source>
+				<source>Dear user</source>
 				<target>Sehr geehrter Nutzer</target>
 			</trans-unit>
 			<trans-unit id="email_user_activate_message">
-				<source>please activate your account %1$s</source>
+				<source>Your account "%1$s" has been created but needs to be activated.</source>
 				<target>bitte aktivieren Sie Ihren Account %1$s</target>
 			</trans-unit>
 			<trans-unit id="email_user_activate_link">
-				<source>activate your account</source>
+				<source>Activate your account</source>
 				<target>aktivieren Ihres Accounts</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_available">
-				<source>your account %1$s is now available</source>
-				<target>Ihr Account %1$s ist jetzt verfügbar</target>
+				<source>Your account "%1$s" is now available.</source>
+				<target>Ihr Account "%1$s" ist jetzt verfügbar</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_activated">
-				<source>your account %1$s is now active</source>
-				<target>Ihr Account %1$s ist jetzt aktiv</target>
+				<source>Your account "%1$s" is now active.</source>
+				<target>Ihr Account "%1$s" ist jetzt aktiv</target>
 			</trans-unit>
 			<trans-unit id="email_user_account_edited">
-				<source>you have edited your account %1$s</source>
-				<target>Sie haben Ihren Account %1$s bearbeitet</target>
+				<source>You have edited your account "%1$s".</source>
+				<target>Sie haben Ihren Account "%1$s" bearbeitet</target>
 			</trans-unit>
 
 			<trans-unit id="email_admin_account_accepted">
