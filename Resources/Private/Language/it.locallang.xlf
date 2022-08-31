@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" target-language="it" datatype="plaintext" original="messages" date="2022-08-31T12:53:54Z" product-name="sf_register">
+		<header/>
+		<body>
+			<trans-unit id="needTobBeLoggedIn">
+				<source>You need to be logged in</source>
+				<target>Devi essere connesso</target>
+			</trans-unit>
+			<trans-unit id="needTobBeLoggedOut">
+				<source>You need to be logged out</source>
+				<target>Devi essere disconnesso</target>
+			</trans-unit>
+			<trans-unit id="uid">
+				<source>Userid</source>
+				<target>ID utente</target>
+			</trans-unit>
+			<trans-unit id="gender">
+				<source>Gender</source>
+				<target>Genere</target>
+			</trans-unit>
+			<trans-unit id="gender_1">
+				<source>Mr</source>
+				<target>Sig</target>
+			</trans-unit>
+			<trans-unit id="gender_2">
+				<source>Mrs</source>
+				<target>Sig.ra.</target>
+			</trans-unit>
+			<trans-unit id="title">
+				<source>Title</source>
+				<target>Titolo</target>
+			</trans-unit>
+			<trans-unit id="company">
+				<source>Company</source>
+				<target>Società</target>
+			</trans-unit>
+			<trans-unit id="lastName">
+				<source>Last Name</source>
+				<target>Cognome</target>
+			</trans-unit>
+			<trans-unit id="middleName">
+				<source>Middle Name</source>
+				<target>Secondo nome</target>
+			</trans-unit>
+			<trans-unit id="firstName">
+				<source>First Name</source>
+				<target>Nome di battesimo</target>
+			</trans-unit>
+			<trans-unit id="position">
+				<source>Position</source>
+				<target>Posizione</target>
+			</trans-unit>
+			<trans-unit id="email">
+				<source>Email</source>
+				<target>E-mail</target>
+			</trans-unit>
+			<trans-unit id="emailRepeat">
+				<source>Email verification</source>
+				<target>Ripetizione e-mail</target>
+			</trans-unit>
+			<trans-unit id="telephone">
+				<source>Phone</source>
+				<target>Telefono</target>
+			</trans-unit>
+			<trans-unit id="mobilephone">
+				<source>Cell Phone</source>
+				<target>Cellulare</target>
+			</trans-unit>
+			<trans-unit id="fax">
+				<source>Fax</source>
+				<target>Fax</target>
+			</trans-unit>
+			<trans-unit id="www">
+				<source>Website</source>
+				<target>Sito web</target>
+			</trans-unit>
+			<trans-unit id="address">
+				<source>Street / House Number</source>
+				<target>Via / Numero civico</target>
+			</trans-unit>
+			<trans-unit id="zip">
+				<source>Zip</source>
+				<target>Cap</target>
+			</trans-unit>
+			<trans-unit id="city">
+				<source>City</source>
+				<target>Città</target>
+			</trans-unit>
+			<trans-unit id="country">
+				<source>Country</source>
+				<target>Paese</target>
+			</trans-unit>
+			<trans-unit id="staticInfoCountry">
+				<source>Country</source>
+				<target>Nazione</target>
+			</trans-unit>
+			<trans-unit id="language">
+				<source>Language</source>
+				<target>Lingua</target>
+			</trans-unit>
+			<trans-unit id="zone">
+				<source>State/Province</source>
+				<target>Stato/Provincia</target>
+			</trans-unit>
+			<trans-unit id="no_zone_available">
+				<source>No zone available</source>
+				<target>Nessuna zona disponibile</target>
+			</trans-unit>
+			<trans-unit id="zone_loading">
+				<source>Loading Zones</source>
+				<target>Zone di carico</target>
+			</trans-unit>
+			<trans-unit id="timezone">
+				<source>Timezone</source>
+				<target>Fuso orario</target>
+			</trans-unit>
+			<trans-unit id="daylight">
+				<source>Daylight saving time</source>
+				<target>Ora legale</target>
+			</trans-unit>
+			<trans-unit id="password">
+				<source>Password</source>
+				<target>Password</target>
+			</trans-unit>
+			<trans-unit id="passwordRepeat">
+				<source>Password verification</source>
+				<target>Verifica della password</target>
+			</trans-unit>
+			<trans-unit id="gtc">
+				<source>General terms and conditions</source>
+				<target>Termini generali e condizioni</target>
+			</trans-unit>
+			<trans-unit id="gtc_checked">
+				<source>not accepted</source>
+				<target>non accettato</target>
+			</trans-unit>
+			<trans-unit id="gtc_checked1">
+				<source>accepted</source>
+				<target>accettato</target>
+			</trans-unit>
+			<trans-unit id="privacy">
+				<source>Privacy agreement</source>
+				<target>Accordo sulla privacy</target>
+			</trans-unit>
+			<trans-unit id="dateOfBirth">
+				<source>Birth date</source>
+				<target>Data di nascita</target>
+			</trans-unit>
+			<trans-unit id="captcha">
+				<source>Verification code</source>
+				<target>Codice di verifica</target>
+			</trans-unit>
+			<trans-unit id="image">
+				<source>Profile image</source>
+				<target>Immagine del profilo</target>
+			</trans-unit>
+			<trans-unit id="image_none">
+				<source>Profile image not uploaded</source>
+				<target>Immagine del profilo non caricata</target>
+			</trans-unit>
+			<trans-unit id="choose_file">
+				<source>Choose File</source>
+				<target>Scegli il file</target>
+			</trans-unit>
+			<trans-unit id="upload">
+				<source>upload</source>
+				<target>caricare</target>
+			</trans-unit>
+			<trans-unit id="edit_saved">
+				<source>Your account was successfully updated</source>
+				<target>Dati dell'utente aggiornati</target>
+			</trans-unit>
+			<trans-unit id="create_saved">
+				<source>Account created successfully</source>
+				<target>Utente creato</target>
+			</trans-unit>
+			<trans-unit id="create_refused">
+				<source>Sorry you refused your registration with account %1$s on site %2$s</source>
+				<target>Siamo spiacenti che tu abbia rifiutato di registrarti con l'account %1$s sul sito %2$s.</target>
+			</trans-unit>
+			<trans-unit id="info_mandatory_fields">
+				<source>Fields marked with an asterisk (*) are mandatory</source>
+				<target>I campi contrassegnati da un asterisco (*) sono obbligatori</target>
+			</trans-unit>
+			<trans-unit id="invitationEmail">
+				<source>Email address of person to invite</source>
+				<target>Indirizzo e-mail della persona da invitare</target>
+			</trans-unit>
+			<trans-unit id="submit_create">
+				<source>create</source>
+				<target>crea</target>
+			</trans-unit>
+			<trans-unit id="submit_change">
+				<source>change</source>
+				<target>modifica</target>
+			</trans-unit>
+			<trans-unit id="submit_save">
+				<source>save</source>
+				<target>salva</target>
+			</trans-unit>
+			<trans-unit id="submit_update">
+				<source>update</source>
+				<target>aggiorna</target>
+			</trans-unit>
+			<trans-unit id="submit_resend">
+				<source>resend</source>
+				<target>rinvia</target>
+			</trans-unit>
+			<trans-unit id="submit_removeImage">
+				<source>remove</source>
+				<target>rimuovi</target>
+			</trans-unit>
+			<trans-unit id="username">
+				<source>Username</source>
+				<target>Nome utente</target>
+			</trans-unit>
+			<trans-unit id="usernameOrEmail">
+				<source>Username or Email</source>
+				<target>Nome utente o e-mail</target>
+			</trans-unit>
+			<trans-unit id="pseudonym">
+				<source>Pseudonym</source>
+				<target>Pseudonimo</target>
+			</trans-unit>
+			<trans-unit id="oldPassword">
+				<source>Old password</source>
+				<target>Vecchia password</target>
+			</trans-unit>
+			<trans-unit id="newPassword1">
+				<source>New password</source>
+				<target>Nuova password</target>
+			</trans-unit>
+			<trans-unit id="newPassword2">
+				<source>Password verification</source>
+				<target>Ripetizione password</target>
+			</trans-unit>
+			<trans-unit id="password_saved">
+				<source>Password successfully updated</source>
+				<target>Password salvata</target>
+			</trans-unit>
+			<trans-unit id="resend_mail_sent">
+				<source>If your email address was found the confirmation mail was sent to you again.</source>
+				<target>Se il tuo indirizzo e-mail è stato trovato, la e-mail di conferma ti è stata inviata di nuovo.</target>
+			</trans-unit>
+			<trans-unit id="account_not_found">
+				<source>The account that you are trying to activate is unknown to the system.</source>
+				<target>L'account che stai cercando di attivare è sconosciuto al sistema.</target>
+			</trans-unit>
+			<trans-unit id="account_already_activated">
+				<source>The account &lt;b&gt;%1$s&lt;/b&gt; that you are trying to activate is already active.</source>
+				<target>L'account &lt;b&gt;%1$s&lt;/b&gt; che stai cercando di attivare è già attivo.</target>
+			</trans-unit>
+			<trans-unit id="account_successful_activated">
+				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is now active.</source>
+				<target>L'account &lt;b&gt;%1$s&lt;/b&gt; è ora attivo.</target>
+			</trans-unit>
+			<trans-unit id="account_not_activated">
+				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is not active.</source>
+				<target>L'account &lt;b&gt;%1$s&lt;/b&gt; non è attivo.</target>
+			</trans-unit>
+			<trans-unit id="email_already_activated">
+				<source>Your new email is already active.</source>
+				<target>Il tuo nuovo indirizzo e-mail è già attivo.</target>
+			</trans-unit>
+			<trans-unit id="email_successful_activated">
+				<source>Your new email address was successfully saved.</source>
+				<target>Il tuo nuovo indirizzo e-mail è stato salvato con successo.</target>
+			</trans-unit>
+
+			<trans-unit id="submit_delete">
+				<source>delete</source>
+				<target>cancella</target>
+			</trans-unit>
+			<trans-unit id="delete_saved">
+				<source>You requested to delete your account. We send an email with a link with which you can confirm this request.</source>
+				<target>Hai richiesto l'eliminazione del tuo account. Ti abbiamo inviato una e-mail con un link con il quale puoi confermare questa richiesta.</target>
+			</trans-unit>
+			<trans-unit id="account_already_deleted">
+				<source>Account was already deleted.</source>
+				<target>L'account è già stato eliminato.</target>
+			</trans-unit>
+			<trans-unit id="account_deleted">
+				<source>Account deleted.</source>
+				<target>Account cancellato.</target>
+			</trans-unit>
+			<trans-unit id="account_unknown">
+				<source>No known account for the given e-mail address.</source>
+				<target>Nessun account trovato per l'indirizzo e-mail indicato.</target>
+			</trans-unit>
+			<trans-unit id="delete_link_send">
+				<source>Delete link was send.</source>
+				<target>Il link di cancellazione è stato inviato.</target>
+			</trans-unit>
+
+			<trans-unit id="error_notempty">
+				<source>The %1$s was not empty which it should have been</source>
+				<target>Il campo %1$s non era vuoto, come invece avrebbe dovuto essere</target>
+			</trans-unit>
+			<trans-unit id="error_required">
+				<source>Required field %1$s may not be empty</source>
+				<target>Il campo richiesto %1$s non deve essere vuoto</target>
+			</trans-unit>
+			<trans-unit id="error_notequalcurrentuser">
+				<source>The %1$s does not equal your own user which is not allowed</source>
+				<target>Il campo %1$s non corrisponde all'utente, come avrebbe dovuto essere</target>
+			</trans-unit>
+			<trans-unit id="error_changepassword_notloggedin">
+				<source>You need to be logged in to change the password</source>
+				<target>Per modificare la password devi essere connesso</target>
+			</trans-unit>
+			<trans-unit id="error_changepassword_notequal">
+				<source>The given password was not equal to the current password</source>
+				<target>La password inserita non è uguale alla password attuale</target>
+			</trans-unit>
+			<trans-unit id="error_badword">
+				<source>The password you entered is on the disallowed list</source>
+				<target>La password inserita è presente nell'elenco delle non consentite</target>
+			</trans-unit>
+			<trans-unit id="error_nottrue">
+				<source>The %1$s was not accepted</source>
+				<target>Il camppo %1$s non è stato accettato</target>
+			</trans-unit>
+			<trans-unit id="error_passwordagain_notequal">
+				<source>Password fields are not equal</source>
+				<target>I campi  password non sono uguali</target>
+			</trans-unit>
+			<trans-unit id="error_notunique_local">
+				<source>The %1$s is not unique</source>
+				<target>Il campo %1$s non è univoco</target>
+			</trans-unit>
+			<trans-unit id="error_notunique_global">
+				<source>The %1$s is not unique</source>
+				<target>Il campo %1$s non è univoco</target>
+			</trans-unit>
+			<trans-unit id="error_notvalidatable">
+				<source>The given form does not contain data that can be validated</source>
+				<target>Il formulario trasmesso non contiene dati che possono essere validati</target>
+			</trans-unit>
+			<trans-unit id="error_notexists">
+				<source>Attribute does not exists</source>
+				<target>L'attributo non esiste</target>
+			</trans-unit>
+			<trans-unit id="error_image_filesize">
+				<source>The file was bigger than the maximum allowed file size</source>
+				<target>Il file era più grande della dimensione massima consentita</target>
+			</trans-unit>
+			<trans-unit id="error_image_extension">
+				<source>The file was not of an allowed image type</source>
+				<target>Il file non è di un tipo di immagine consentito</target>
+			</trans-unit>
+			<trans-unit id="error_repeatitionwasnotequal">
+				<source>The verification of field %1$s does not match</source>
+				<target>La ripetizione di %1$s non coincide</target>
+			</trans-unit>
+			<trans-unit id="error_captcha_notcorrect">
+				<source>The entered captcha is incorrect</source>
+				<target>Il captcha inserito non è corretto</target>
+			</trans-unit>
+			<trans-unit id="error_captcha_notinstalled">
+				<source>CAPTCHA extension '%1$s' not installed error</source>
+				<target>L'estensione CAPTCHA '%1$s' non è installata</target>
+			</trans-unit>
+			<trans-unit id="error_jmrecaptcha">
+				<source>Complete the captcha</source>
+				<target>Completare il captcha</target>
+			</trans-unit>
+			<trans-unit id="error_jmrecaptcha_incorrect-captcha-sol">
+				<source>Incorrect captcha</source>
+				<target>Captcha errato</target>
+			</trans-unit>
+			<trans-unit id="error_1238108067">
+				<source>The length of field %1$s must be between %2$s and %3$s characters</source>
+				<target>La lunghezza del campo %1$s deve essere compresa tra %2$s e %3$s caratteri</target>
+			</trans-unit>
+			<trans-unit id="error_1221559976">
+				<source>Field %1$s does not have a valid email address format</source>
+				<target>Il campo %1$s non ha un formato di indirizzo e-mail valido</target>
+			</trans-unit>
+			<trans-unit id="error_1296591069">
+				<source>Field %1$s is not globally unique</source>
+				<target>Il campo %1$s non è univoco a livello globale</target>
+			</trans-unit>
+
+			<trans-unit id="subjectNotifyAdminCreateSave">
+				<source>User %2$s registered on site %1$s</source>
+				<target>L'utente %2$s è registrato sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminCreateConfirm">
+				<source>User %2$s confirmed registration on site %1$s</source>
+				<target>L'utente %2$s ha confermato la registrazione sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminCreateRefuse">
+				<source>User %2$s refused the registration on site %1$s</source>
+				<target>L'utente %2$s ha rifiutato la registrazione sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminCreateAccept">
+				<source>User %2$s was accepted on site %1$s</source>
+				<target>L'utente %2$s è stato accettato sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminCreateDecline">
+				<source>User %2$s was declined on site %1$s</source>
+				<target>L'utente %2$s è stato rifiutato sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserCreateSave">
+				<source>You registered yourself at %1$s as %2$s</source>
+				<target>Ti sei registrato come %2$s sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserCreateConfirm">
+				<source>Thank you for confirming your account %2$s at %1$s</source>
+				<target>Grazie per aver confermato il tuo account come %2$s sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserCreateRefuse">
+				<source>Sorry your refused your registration with account %2$s on site %1$s</source>
+				<target>Siamo spiacenti che tu abbia rifiutato la registrazione come %2$s sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserCreateAccept">
+				<source>You registration with account %2$s on site %1$s was accepted</source>
+				<target>La tua registrazione con account %2$s sul sito %1$s è stata accettata</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserCreateDecline">
+				<source>You activated account %2$s at %1$s</source>
+				<target>Il tuo account %2$s è stato attivato sul sito %1$s</target>
+			</trans-unit>
+
+			<trans-unit id="subjectNotifyAdminEditSave">
+				<source>User %2$s has edited information on site %1$s</source>
+				<target>L'utente %2$s ha modificato informazioni account sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminEditConfirm">
+				<source>User %2$s has confirmed the change of information on site %1$s</source>
+				<target>L'utente %2$s ha confermato la modifica delle informazioni sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminEditAccept">
+				<source>User %2$s change of information was accepted on site %1$s</source>
+				<target>La modifica delle informazioni dell'utente %2$s sul sito %1$s è stata accettata</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserEditSave">
+				<source>You %2$s changed your information on site %1$s</source>
+				<target>Hai modificato le informazioni per account %2$s sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserEditConfirm">
+				<source>Thank you %2$s for confirming the change of information on site %1$s</source>
+				<target>Grazie  per aver confermato le modifiche sul tuo account %2$s sul sito %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserEditAccept">
+				<source>Your change of information for account %2$s on site %1$s was accepted</source>
+				<target>La tua modifica delle informazioni sull'account %2$s sul sito %1$s è stata accettata</target>
+			</trans-unit>
+
+			<trans-unit id="subjectNotifyAdminSendInvitation">
+				<source>User invitation at %1$s</source>
+				<target>Invito dell'utente a %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserSendInvitation">
+				<source>You invited someone to register at %1$s</source>
+				<target>Hai invitato qualcuno a registrarsi su %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectInvitationToRegister">
+				<source>You were invite to register at %1$s</source>
+				<target>Sei stato invitato a registrarti su %1$s</target>
+			</trans-unit>
+
+			<trans-unit id="subjectNotifyAdminDeleteSave">
+				<source>User %2$s requests to delete the account from %1$s</source>
+				<target>L'utente %2$s chiede di cancellare l'account da %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserDeleteSave">
+				<source>Your requests to delete the account %2$s from %1$s</source>
+				<target>La tua richiesta di cancellare l'account %2$s da %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminDeleteConfirm">
+				<source>User %2$s confirmed to delete the account from %1$s</source>
+				<target>L'utente %2$s ha confermato di voler cancellare l'account da %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserDeleteConfirm">
+				<source>Your confirmed to delete the account %2$s from %1$s</source>
+				<target>Hai confermato l'eliminazione dell'account %2$s da %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyAdminDeleteSendLink">
+				<source>User %2$s requests to delete the account from %1$s</source>
+				<target>L'utente %2$s chiede di cancellare l'account da %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserDeleteSendLink">
+				<source>You request to delete the account %2$s from %1$s</source>
+				<target>Hai richiesto l'eliminazione dell'account %2$s da %1$s</target>
+			</trans-unit>
+
+			<trans-unit id="subjectNotifyAdminResendMail">
+				<source>User %2$s requested a resend of the activation key of the account from %1$s</source>
+				<target>L'utente %2$s ha richiesto un nuovo invio della chiave di attivazione dell'account da %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserResendMail">
+				<source>Your requested a resend of the activation key of the account %2$s from %1$s</source>
+				<target>Hai richiesto il rinvio della chiave di attivazione dell'account %2$s da %1$s</target>
+			</trans-unit>
+
+			<trans-unit id="email_admin_salutation">
+				<source>Dear admin</source>
+				<target>Caro amministratore,</target>
+			</trans-unit>
+			<trans-unit id="email_admin_activate_message">
+				<source>A new account "%1$s" has been requested, and you need to activate it.</source>
+				<target>Attiva l'account %1$s</target>
+			</trans-unit>
+			<trans-unit id="email_admin_activate_link">
+				<source>Activate user account</source>
+				<target>Attiva account utente</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_available">
+				<source>The account "%1$s" is available</source>
+				<target>L'account %1$s è disponibile</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_activated">
+				<source>The account "%1$s" was activated</source>
+				<target>L'account %1$s è stato attivato</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_edited">
+				<source>The account "%1$s" was edited</source>
+				<target>L'account %1$s è stato modificato</target>
+			</trans-unit>
+			<trans-unit id="email_user_salutation">
+				<source>Dear user</source>
+				<target>Caro utente,</target>
+			</trans-unit>
+			<trans-unit id="email_user_activate_message">
+				<source>Your account "%1$s" has been created but needs to be activated.</source>
+				<target>Attiva il tuo account %1$s</target>
+			</trans-unit>
+			<trans-unit id="email_user_activate_link">
+				<source>Activate your account</source>
+				<target>Attiva il tuo account</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_available">
+				<source>Your account "%1$s" is now available.</source>
+				<target>Il tuo account %1$s è ora disponibile</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_activated">
+				<source>Your account "%1$s" is now active.</source>
+				<target>Il tuo account %1$s è ora attivo</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_edited">
+				<source>You have edited your account "%1$s".</source>
+				<target>Hai modificato il tuo account %1$s</target>
+			</trans-unit>
+
+			<trans-unit id="email_admin_account_accepted">
+				<source>The user registration was accepted.</source>
+				<target>La registrazione dell'utente è stata accettata.</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_confirmed">
+				<source>The user confirmed the registration</source>
+				<target>La registrazione dell'utente è stata confermata.</target>
+			</trans-unit>
+			<trans-unit id="email_user_accept_link">
+				<source>accept user registration</source>
+				<target>accetta la registrazione dell'utente</target>
+			</trans-unit>
+			<trans-unit id="email_user_decline_link">
+				<source>decline user registration</source>
+				<target>rifiuta la registrazione dell'utente</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_declined">
+				<source>The user registration was declined.</source>
+				<target>La registrazione dell'utente è stata respinta.</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_refused">
+				<source>The user registration was refused.</source>
+				<target>La registrazione dell'utente è stata rifiutata.</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_saved">
+				<source>The user registration was saved</source>
+				<target>La registrazione dell'utente è stata salvata.</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_delete">
+				<source>The user %1$s requested to delete the account</source>
+				<target>L'utente %1$s ha richiesto l'eliminazione dell'account</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_deleted">
+				<source>The user %1$s confirmed to delete the account</source>
+				<target>L'utente %1$s ha confermato l'eliminazione dell'account</target>
+			</trans-unit>
+			<trans-unit id="email_admin_account_sendlink">
+				<source>The user %1$s requests a delete link</source>
+				<target>L'utente %1$s ha richiesto un link di cancellazione</target>
+			</trans-unit>
+
+			<trans-unit id="email_user_account_accepted">
+				<source>Your registration was accepted.</source>
+				<target>La tua registrazione è stata accettata.</target>
+			</trans-unit>
+			<trans-unit id="email_user_confirm_link">
+				<source>confirm your registration</source>
+				<target>conferma la tua registrazione</target>
+			</trans-unit>
+			<trans-unit id="email_user_refuse_link">
+				<source>refuse your registration</source>
+				<target>rifiuta la tua registrazione</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_confirmed">
+				<source>Your registration was confirmed.</source>
+				<target>La tua registrazione è stata confermata.</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_declined">
+				<source>Your registration was declined.</source>
+				<target>La tua registrazione è stata respinta.</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_refused">
+				<source>Your registration was refused.</source>
+				<target>La tua registrazione è stata rifiutata.</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_saved">
+				<source>Your registration was saved.</source>
+				<target>La tua iscrizione è stata salvata.</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_delete">
+				<source>Your requested to delete your account %1$s</source>
+				<target>Hai richiesto di cancellare il tuo account %1$s</target>
+			</trans-unit>
+			<trans-unit id="email_user_account_deleted">
+				<source>Your confirmed to delete your account %1$s</source>
+				<target>Hai confermato di cancellare del tuo account %1$s</target>
+			</trans-unit>
+			<trans-unit id="email_user_delete_link">
+				<source>Confirm to delete your account</source>
+				<target>Conferma l'eliminazione del tuo account</target>
+			</trans-unit>
+			<trans-unit id="email_email_account_sendlink">
+				<source>Use the link to delete your account</source>
+				<target>Utilizza il link per eliminare il tuo account</target>
+			</trans-unit>
+			<trans-unit id="email_email_account_sendlink_link">
+				<source>Delete</source>
+				<target>Cancella</target>
+			</trans-unit>
+			<trans-unit id="email_admin_invitation_message">
+				<source>User "%1$s" send an invitation to "%2$s".</source>
+				<target>L'utente "%1$s" ha inviato un invito a "%2$s".</target>
+			</trans-unit>
+			<trans-unit id="email_user_invitation_message">
+				<source>Your invited email "%1$s" to register at %2$s.</source>
+				<target>La tua e-mail di invito "%1$s" a registrarsi a %2$s.</target>
+			</trans-unit>
+			<trans-unit id="email_invitee_invitation_message">
+				<source>Your were invited with email %1$s to register at "%2$s".</source>
+				<target>Sei stato invitato con l'e-mail %1$s a registrarti a "%2$s".</target>
+			</trans-unit>
+			<trans-unit id="email_invitee_register_link">
+				<source>register</source>
+				<target>Registrati</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
