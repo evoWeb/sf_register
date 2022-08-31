@@ -170,29 +170,30 @@ class File implements SingletonInterface, LoggerAwareInterface
         $fileData = [];
 
         if (is_array($uploadData) && count($uploadData) > 0) {
-            $filename = str_replace(chr(0), '', $uploadData['name']['image']);
-            $type = $uploadData['type']['image'];
-            $tmpName = $uploadData['tmp_name']['image'];
-            $error = $uploadData['error']['image'];
-            $size = $uploadData['size']['image'];
-
-            if ($filename !== '' && GeneralUtility::validPathStr($filename)) {
-                if (($this->settings['useEncryptedFilename'] ?? false)) {
-                    $filenameParts = GeneralUtility::trimExplode('.', $filename);
-                    $extension = array_pop($filenameParts);
+            $filename = str_replace(chr(0), '', $uploadData['name']['user']['image'][0]);
+            $type = $uploadData['type']['user']['image'];                                      
+            $tmpName = $uploadData['tmp_name']['user']['image'];                               
+            $error = $uploadData['error']['user']['image'];
+            $size = $uploadData['size']['user']['image'];                                      
+                                                                                          
+            if ($filename !== '' && GeneralUtility::validPathStr($filename)) {            
+                if (($this->settings['useEncryptedFilename'] ?? false)) {                 
+                    $filenameParts = GeneralUtility::trimExplode('.', $filename);         
+                    $extension = array_pop($filenameParts);                               
                     $filename = md5($GLOBALS['EXEC_TIME'] . mt_rand() . $filename . $tmpName . '.' . $extension
-                        . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);
-                }
-
-                $fileData = [
-                    'filename' => $filename,
-                    'type' => $type,
-                    'tmp_name' => $tmpName,
-                    'error' => $error,
-                    'size' => $size,
-                ];
-            }
-        }
+                        . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);           
+                }                                                                         
+                                                                                          
+                $fileData = [                                                             
+                    'filename' => $filename,                                              
+                    'type' => $type,                                                      
+                    'tmp_name' => $tmpName,                                               
+                    'error' => $error,                                                    
+                    'size' => $size,                                                      
+                ];                                                                        
+            }                                                                        
+        }                                                                          
+                   
 
         return $fileData;
     }
