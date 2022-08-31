@@ -475,6 +475,10 @@
 				<source>You activated account %2$s at %1$s</source>
 				<target>Je hebt je account %2$s geactiveerd bij %1$s</target>
 			</trans-unit>
+			<trans-unit id="subjectNotifyUserCreateDecline">
+				<source>Your registration with account %2$s at %1$s was rejected</source>
+				<target></target>
+			</trans-unit>
 			<trans-unit id="subjectNotifyUserMailPreActivation">
 				<source>You registered your account %2$s at %1$s</source>
 				<target>Je registratie van het account %2$s bij %1$s</target>

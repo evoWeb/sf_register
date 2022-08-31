@@ -581,8 +581,12 @@
 				<source>You registration with account %2$s on site %1$s was accepted</source>
 				<target>Votre enregistrement avec le compte %2$s sur le site %1$s a été accepté</target>
 			</trans-unit>
-			<trans-unit id="subjectNotifyUserCreateDecline">
+			<trans-unit id="subjectNotifyUserMailPostActivation">
 				<source>You activated account %2$s at %1$s</source>
+				<target>Vous avez activé le compte %2$s sur %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserCreateDecline">
+				<source>Your registration with account %2$s at %1$s was rejected</source>
 				<target>Malheureusement votre enregistrement avec le compte %2$s sur le site %1$s a été rejeté</target>
 			</trans-unit>
 			<trans-unit id="subjectNotifyUserEditSave">

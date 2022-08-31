@@ -430,6 +430,9 @@
 				<source>You registration with account %2$s on site %1$s was accepted</source>
 			</trans-unit>
 			<trans-unit id="subjectNotifyUserCreateDecline">
+				<source>Your registration with account %2$s at %1$s was rejected</source>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserMailPostActivation">
 				<source>You activated account %2$s at %1$s</source>
 			</trans-unit>
 
