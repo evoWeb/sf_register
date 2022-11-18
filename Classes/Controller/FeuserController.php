@@ -361,7 +361,7 @@ class FeuserController extends ActionController
 
         $this->request->setArgument('removeImage', false);
 
-        $referringRequest = null;
+        //$referringRequest = null;
         $referringRequestArguments = $this->request->getInternalArguments()['__referrer']['@request'] ?? null;
         if (is_string($referringRequestArguments)) {
             /** @var HashService $hashService */
@@ -370,15 +370,12 @@ class FeuserController extends ActionController
                 $hashService->validateAndStripHmac($referringRequestArguments),
                 true
             );
-            $arguments = [];
-            $referringRequest = new ReferringRequest();
-            $referringRequest->setArguments(array_replace_recursive($arguments, $referrerArray));
         }
 
-        if ($referringRequest !== null) {
-            $response = (new ForwardResponse($referringRequest->getControllerActionName()))
-                ->withControllerName($referringRequest->getControllerName())
-                ->withExtensionName($referringRequest->getControllerExtensionName())
+        if (!empty($referrerArray)) {
+            $response = (new ForwardResponse($referrerArray['@action']))
+                ->withControllerName($referrerArray['@controller'])
+                ->withExtensionName($referrerArray['@extension'])
                 ->withArguments($this->request->getArguments());
         } else {
             $response = new HtmlResponse($this->view->render());
