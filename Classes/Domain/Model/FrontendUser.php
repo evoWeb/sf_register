@@ -317,11 +317,6 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
     {
         $this->username = $username;
         $this->password = $password;
-        $this->initializeObject();
-    }
-
-    public function initializeObject()
-    {
         $this->image = $this->image ?? new ObjectStorage();
         $this->usergroup = $this->usergroup ?? new ObjectStorage();
         $this->moduleSysDmailCategory = new ObjectStorage();
