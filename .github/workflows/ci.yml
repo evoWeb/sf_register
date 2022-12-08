@@ -11,24 +11,20 @@ jobs:
   xliff:
     runs-on: ubuntu-20.04
 
-    name: XML Lint (Xliff)
+    name: Xliff Lint
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install libxml2-utils
-        run: sudo apt update && sudo apt install libxml2-utils
-
-      - name: Running xmllint (Xliff)
-        run: find Resources/Private/Language/ -name '*.xlf' -type f | xargs xmllint --noout --schema .Build/xliff-core-1.2-strict.xsd
+      - name: Run the xliff lint
+        uses: TYPO3-Continuous-Integration/TYPO3-CI-Xliff-Lint@v1
 
   lint:
     runs-on: ubuntu-20.04
 
     strategy:
       matrix:
-        env:
-          - { PHP: 7.4 }
+        php-versions: ['7.4']
 
     name: Lint PHP ${{ matrix.php-versions }}
     steps:
@@ -38,9 +34,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.env.PHP }}
+          php-version: ${{ matrix.php-versions }}
 
-      - name: Running php lint with ${{ matrix.env.PHP }}
+      - name: Running php lint with ${{ matrix.php-versions }}
         run: errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l "{}" 2>&1 >/dev/null \;) && echo "${errors}" && test -z "${errors}"
 
   phpunit:
