@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install libxml2-utils
-        run: sudo apt install libxml2-utils
+        run: sudo apt update && sudo apt install libxml2-utils
 
       - name: Running xmllint (Xliff)
         run: find Resources/Private/Language/ -name '*.xlf' -type f | xargs xmllint --noout --schema .Build/xliff-core-1.2-strict.xsd
