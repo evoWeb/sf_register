@@ -122,7 +122,7 @@ class File implements SingletonInterface, LoggerAwareInterface
     {
         $value = trim($value);
         $last = strtolower(preg_replace('/[^gmk]/i', '', $value));
-        $value = (int)preg_replace('/[^\d]/', '', $value);
+        $value = (int)preg_replace('/\D/', '', $value);
         switch ($last) {
             case 'g':
                 $value *= 1024 * 1024 * 1024;

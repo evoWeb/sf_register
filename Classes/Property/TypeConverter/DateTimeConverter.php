@@ -15,8 +15,9 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
 
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
+use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter as BaseDateTimeConverter;
 
-class DateTimeConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter
+class DateTimeConverter extends BaseDateTimeConverter
 {
     /**
      * @var string

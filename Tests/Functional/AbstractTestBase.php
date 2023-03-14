@@ -82,7 +82,6 @@ abstract class AbstractTestBase extends FunctionalTestCase
             new FrontendUserAuthentication()
         );
         $this->typoScriptFrontendController->sys_page = GeneralUtility::makeInstance(PageRepository::class);
-        $this->typoScriptFrontendController->tmpl = GeneralUtility::makeInstance(TemplateService::class);
         $this->typoScriptFrontendController->fe_user =& $this->frontendUser;
 
         $GLOBALS['TSFE'] = $this->typoScriptFrontendController;

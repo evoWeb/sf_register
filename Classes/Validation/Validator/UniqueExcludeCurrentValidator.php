@@ -45,7 +45,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Injecta
      *
      * @var FrontendUser|Password
      */
-    protected $model;
+    protected FrontendUser|Password $model;
 
     protected string $propertyName = '';
 
@@ -59,7 +59,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Injecta
      *
      * @param FrontendUser|Password $model
      */
-    public function setModel($model)
+    public function setModel(FrontendUser|Password $model)
     {
         $this->model = $model;
     }
@@ -74,7 +74,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Injecta
      *
      * @param string $value The value
      */
-    public function isValid($value)
+    public function isValid(mixed $value): void
     {
         if (!$this->model->_isDirty($this->propertyName)) {
             return;

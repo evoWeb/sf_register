@@ -16,17 +16,15 @@ namespace Evoweb\SfRegister\Controller\Event;
  */
 
 use Evoweb\SfRegister\Controller\FeuserController;
+use Psr\Http\Message\ResponseInterface;
 
 final class InitializeActionEvent
 {
-    private FeuserController $controller;
-
-    protected array $settings = [];
-
-    public function __construct(FeuserController $controller, array $settings)
-    {
-        $this->controller = $controller;
-        $this->settings = $settings;
+    public function __construct(
+        protected FeuserController $controller,
+        protected array $settings,
+        protected ?ResponseInterface $response
+    ) {
     }
 
     public function getController(): FeuserController
@@ -37,5 +35,15 @@ final class InitializeActionEvent
     public function getSettings(): array
     {
         return $this->settings;
+    }
+
+    public function getResponse(): ?ResponseInterface
+    {
+        return $this->response;
+    }
+
+    public function setResponse(ResponseInterface $response): void
+    {
+        $this->response = $response;
     }
 }

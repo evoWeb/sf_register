@@ -22,7 +22,7 @@
 	],
 
 	"require": {
-		"typo3/cms-core": "^11.5 || ^12.2 || dev-main",
+		"typo3/cms-core": "^12.2 || dev-main",
 		"typo3/cms-extbase": "*",
 		"typo3/cms-fluid": "*"
 	},
@@ -35,7 +35,7 @@
 		"sjbr/sr-freecap": "^11.5.1"
 	},
 	"suggest": {
-		"evoweb/recaptcha": "^10.0"
+		"evoweb/recaptcha": "^11.0"
 	},
 
 	"autoload": {

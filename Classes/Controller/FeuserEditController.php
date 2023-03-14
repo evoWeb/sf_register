@@ -27,7 +27,7 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 
 /**
- * An frontend user edit controller
+ * A frontend user edit controller
  */
 class FeuserEditController extends FeuserController
 {
@@ -39,7 +39,7 @@ class FeuserEditController extends FeuserController
     {
         $userId = $this->context->getAspect('frontend.user')->get('id');
 
-        $originalRequest = $this->request->getOriginalRequest();
+        $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
         if (
             (
                 $this->request->hasArgument('user')
@@ -78,7 +78,7 @@ class FeuserEditController extends FeuserController
     /**
      * Preview action
      *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
+     * @param FrontendUser $user
      *
      * @return ResponseInterface
      *

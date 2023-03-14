@@ -45,7 +45,7 @@ class CaptchaValidator extends AbstractValidator implements InjectableInterface
      *
      * @param string $value
      */
-    public function isValid($value)
+    public function isValid($value): void
     {
         $captchaAdapter = $this->captchaAdapterFactory->getCaptchaAdapter($this->options['type']);
         if (!$captchaAdapter->isValid($value)) {

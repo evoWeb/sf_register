@@ -73,14 +73,7 @@ class ObjectStorageConverter extends ExtbaseObjectStorageConverter
         return $propertiesToConvert;
     }
 
-    /**
-     * Check if this is an upload type
-     *
-     * @param mixed $propertyValue
-     *
-     * @return bool
-     */
-    protected function isUploadType($propertyValue): bool
+    protected function isUploadType(mixed $propertyValue): bool
     {
         return is_array($propertyValue) && isset($propertyValue['tmp_name']) && isset($propertyValue['error']);
     }

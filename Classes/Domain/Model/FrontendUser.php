@@ -280,7 +280,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
     protected bool $moduleSysDmailNewsletter = false;
 
     /**
-     * if emails should be send as HTML or plain text
+     * if emails should be sent as HTML or plain text
      *
      * @var bool
      */
@@ -379,7 +379,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
     }
 
     /**
-     * Adds a usergroup to the frontend user
+     * Adds an usergroup to the frontend user
      *
      * @param FrontendUserGroup $usergroup
      */
@@ -389,7 +389,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
     }
 
     /**
-     * Removes a usergroup from the frontend user
+     * Removes an usergroup from the frontend user
      *
      * @param FrontendUserGroup $usergroup
      */

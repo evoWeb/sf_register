@@ -49,7 +49,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     public const CONFIGURATION_UPLOAD_FOLDER = '1';
 
     /**
-     * How to handle a upload when the name of the uploaded file conflicts.
+     * How to handle an upload when the name of the uploaded file conflicts.
      */
     public const CONFIGURATION_UPLOAD_CONFLICT_MODE = '2';
 
@@ -124,7 +124,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
                     $resourcePointer = $this->hashService->validateAndStripHmac(
                         $source['submittedFile']['resourcePointer']
                     );
-                    if (strpos($resourcePointer, 'file:') === 0) {
+                    if (str_starts_with($resourcePointer, 'file:')) {
                         $fileUid = (int)substr($resourcePointer, 5);
 
                         $result = $this->createFileReferenceFromFalFileObject(
@@ -145,18 +145,15 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         }
 
         if ($source['error'] !== \UPLOAD_ERR_OK) {
-            switch ($source['error']) {
-                case \UPLOAD_ERR_INI_SIZE:
-                case \UPLOAD_ERR_FORM_SIZE:
-                case \UPLOAD_ERR_PARTIAL:
-                    return new Error(self::getUploadErrorMessage($source['error']), 1264440823);
-                default:
-                    return new Error(
-                        'An error occurred while uploading. Please try again or contact the administrator
+            return match ($source['error']) {
+                \UPLOAD_ERR_INI_SIZE, \UPLOAD_ERR_FORM_SIZE, \UPLOAD_ERR_PARTIAL =>
+                    new Error(self::getUploadErrorMessage($source['error']), 1264440823),
+                default => new Error(
+                    'An error occurred while uploading. Please try again or contact the administrator
                          if the problem remains',
-                        1340193849
-                    );
-            }
+                    1340193849
+                ),
+            };
         }
 
         if (isset($this->convertedResources[$source['tmp_name']])) {
@@ -176,24 +173,17 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
     public static function getUploadErrorMessage(int $errorCode): string
     {
-        switch ($errorCode) {
-            case \UPLOAD_ERR_INI_SIZE:
-                return 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
-            case \UPLOAD_ERR_FORM_SIZE:
-                return 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form';
-            case \UPLOAD_ERR_PARTIAL:
-                return 'The uploaded file was only partially uploaded';
-            case \UPLOAD_ERR_NO_FILE:
-                return 'No file was uploaded';
-            case \UPLOAD_ERR_NO_TMP_DIR:
-                return 'Missing a temporary folder';
-            case \UPLOAD_ERR_CANT_WRITE:
-                return 'Failed to write file to disk';
-            case \UPLOAD_ERR_EXTENSION:
-                return 'File upload stopped by extension';
-            default:
-                return 'Unknown upload error';
-        }
+        return match ($errorCode) {
+            \UPLOAD_ERR_INI_SIZE => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+            \UPLOAD_ERR_FORM_SIZE =>
+                'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+            \UPLOAD_ERR_PARTIAL => 'The uploaded file was only partially uploaded',
+            \UPLOAD_ERR_NO_FILE => 'No file was uploaded',
+            \UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder',
+            \UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+            \UPLOAD_ERR_EXTENSION => 'File upload stopped by extension',
+            default => 'Unknown upload error',
+        };
     }
 
     /**
@@ -242,7 +232,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         $uploadedFile = $uploadFolder->addUploadedFile($uploadInfo, $conflictMode);
 
         $resourcePointer = isset($uploadInfo['submittedFile']['resourcePointer'])
-            && strpos($uploadInfo['submittedFile']['resourcePointer'], 'file:') === false ?
+            && !str_contains($uploadInfo['submittedFile']['resourcePointer'], 'file:') ?
             $this->hashService->validateAndStripHmac($uploadInfo['submittedFile']['resourcePointer']) :
             null;
 

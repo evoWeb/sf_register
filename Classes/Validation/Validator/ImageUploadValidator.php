@@ -32,7 +32,7 @@ class ImageUploadValidator extends AbstractValidator implements InjectableInterf
      *
      * @param bool $value The value
      */
-    public function isValid($value)
+    public function isValid(mixed $value): void
     {
         if (!$this->fileService->isValid()) {
             foreach ($this->fileService->getErrors() as $error) {

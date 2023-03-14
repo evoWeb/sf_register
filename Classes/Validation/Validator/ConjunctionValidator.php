@@ -18,29 +18,24 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
 use TYPO3\CMS\Extbase\Error\Result;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractCompositeValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator as ExtbaseConjunctionValidator;
 
 /**
  * Validator to chain many validators in a conjunction (logical and).
  */
-class ConjunctionValidator extends ExtbaseConjunctionValidator implements SettableInterface
+class ConjunctionValidator extends AbstractCompositeValidator implements SettableInterface
 {
     /**
      * Model to take repeated value of
      *
      * @var FrontendUser|Password
      */
-    protected $model;
+    protected FrontendUser|Password $model;
 
     protected string $propertyName = '';
 
-    /**
-     * Setter for model
-     *
-     * @param FrontendUser|Password $model
-     */
-    public function setModel($model)
+    public function setModel(FrontendUser|Password $model)
     {
         $this->model = $model;
     }
@@ -58,26 +53,19 @@ class ConjunctionValidator extends ExtbaseConjunctionValidator implements Settab
      *
      * @return Result
      */
-    public function validate($value)
+    public function validate(mixed $value): Result
     {
+        $result = new Result();
         $validators = $this->getValidators();
         if ($validators->count() > 0) {
-            /** @var ?Result $result */
-            $result = null;
             /** @var AbstractValidator $validator */
             foreach ($validators as $validator) {
                 if (method_exists($validator, 'setModel')) {
                     $validator->setModel($this->model);
                 }
 
-                if ($result === null) {
-                    $result = $validator->validate($value);
-                } else {
-                    $result->merge($validator->validate($value));
-                }
+                $result->merge($validator->validate($value));
             }
-        } else {
-            $result = new Result();
         }
 
         return $result;

@@ -43,7 +43,7 @@ class CaptchaAdapterFactory
             $type = is_array($this->settings['captcha'][$type]) ?
                 $this->settings['captcha'][$type]['_typoScriptNodeValue'] :
                 $this->settings['captcha'][$type];
-        } elseif (strpos($type, '_') === false) {
+        } elseif (!str_contains($type, '_')) {
             $type = 'Evoweb\\SfRegister\\Services\\Captcha\\' . ucfirst(strtolower($type)) . 'Adapter';
         }
 

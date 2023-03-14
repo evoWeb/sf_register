@@ -15,24 +15,25 @@ namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
-use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
+use TYPO3\CMS\Extbase\Error\Result;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractGenericObjectValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ObjectValidatorInterface;
 
-class UserValidator extends GenericObjectValidator
+class UserValidator extends AbstractGenericObjectValidator
 {
     /**
      * Model that gets validated currently
      *
      * @var FrontendUser|Password
      */
-    protected $model;
+    protected FrontendUser|Password $model;
 
     /**
      * Checks if the given value is valid according to the property validators.
      *
      * @param mixed $object The value that should be validated
      */
-    protected function isValid($object)
+    protected function isValid(mixed $object): void
     {
         $this->model = $object;
         foreach ($this->propertyValidators as $propertyName => $validators) {
@@ -49,9 +50,9 @@ class UserValidator extends GenericObjectValidator
      * @param \Traversable $validators The validators to be called on the value
      * @param string $propertyName Name of ther property to check
      */
-    protected function checkProperty($value, $validators, $propertyName)
+    protected function checkProperty(mixed $value, \Traversable $validators, string $propertyName): void
     {
-        /** @var \TYPO3\CMS\Extbase\Error\Result $result */
+        /** @var Result $result */
         $result = null;
         foreach ($validators as $validator) {
             if ($validator instanceof SettableInterface) {

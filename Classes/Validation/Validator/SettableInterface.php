@@ -23,7 +23,7 @@ interface SettableInterface
      *
      * @param FrontendUser|Password $model
      */
-    public function setModel($model);
+    public function setModel(FrontendUser|Password $model);
 
     public function setPropertyName(string $propertyName);
 }

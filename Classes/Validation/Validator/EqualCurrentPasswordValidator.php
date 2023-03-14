@@ -15,6 +15,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
@@ -58,7 +59,7 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Injecta
      *
      * @param mixed $value
      */
-    public function isValid($value)
+    public function isValid(mixed $value): void
     {
         if (!$this->userIsLoggedIn()) {
             $this->addError(
@@ -68,7 +69,7 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Injecta
         } else {
             $user = $this->userRepository->findByUid($this->context->getAspect('frontend.user')->get('id'));
 
-            /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
+            /** @var PasswordHashFactory $passwordHashFactory */
             $passwordHashFactory = GeneralUtility::makeInstance(
                 PasswordHashFactory::class
             );
@@ -84,7 +85,7 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Injecta
 
     public function userIsLoggedIn(): bool
     {
-        /** @var \TYPO3\CMS\Core\Context\UserAspect $userAspect */
+        /** @var UserAspect $userAspect */
         $userAspect = $this->context->getAspect('frontend.user');
         return $userAspect->isLoggedIn();
     }

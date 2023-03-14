@@ -16,14 +16,6 @@ call_user_func(function () {
 @import \'EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript\'
 ' . $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'];
 
-    /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-    $iconRegistry->registerIcon(
-        'sf-register-extension',
-        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        ['source' => 'EXT:sf_register/Resources/Public/Icons/Extension.svg']
-    );
-
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['flexFormSegment'][
         \Evoweb\SfRegister\Form\FormDataProvider\FormFields::class
     ] = [
@@ -119,19 +111,6 @@ call_user_func(function () {
         \Evoweb\SfRegister\Domain\Model\FrontendUserInterface::class
     ]['className'] = \Evoweb\SfRegister\Domain\Model\FrontendUser::class;
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
-        \Evoweb\SfRegister\Property\TypeConverter\FrontendUserConverter::class
-    );
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
-        \Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter::class
-    );
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
-        \Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter::class
-    );
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
-        \Evoweb\SfRegister\Property\TypeConverter\ObjectStorageConverter::class
-    );
-
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addService(
         'sf_register',
         'auth',
@@ -148,8 +127,4 @@ call_user_func(function () {
             'className' => \Evoweb\SfRegister\Services\AutoLogin::class,
         ]
     );
-
-    // Register switchableControllerActions plugin migrator
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['sfRegisterSCAPluginUpdater']
-            = \Evoweb\SfRegister\Updates\SwitchableControllerActionsPluginUpdater::class;
 });

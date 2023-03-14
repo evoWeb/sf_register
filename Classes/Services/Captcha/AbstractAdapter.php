@@ -25,7 +25,7 @@ abstract class AbstractAdapter implements CaptchaInterface
     protected array $errors = [];
 
     /**
-     * Renders the output of an concrete captcha
+     * Renders the output of a concrete captcha
      *
      * @return string|array
      */

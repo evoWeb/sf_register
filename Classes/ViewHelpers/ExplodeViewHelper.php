@@ -37,7 +37,7 @@ class ExplodeViewHelper extends AbstractViewHelper
     /**
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
-     * @param \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+     * @param RenderingContextInterface $renderingContext
      *
      * @return array
      */

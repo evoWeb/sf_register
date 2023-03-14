@@ -46,7 +46,7 @@ class FeuserResendController extends FeuserController
     }
 
     /**
-     * Save action
+     * Mail action
      *
      * @param Email $email
      *

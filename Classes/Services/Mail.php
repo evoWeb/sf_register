@@ -14,12 +14,14 @@ namespace Evoweb\SfRegister\Services;
  */
 
 use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
+use Evoweb\SfRegister\Services\Event\AbstractEventWithUser;
 use Evoweb\SfRegister\Services\Event\PreSubmitMailEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
@@ -70,9 +72,7 @@ class Mail implements SingletonInterface
             $this->renderTextBody($controller, 'form', $method, $user)
         );
 
-        $user = $this->dispatchUserEvent($method, $user);
-
-        return $user;
+        return $this->dispatchUserEvent($method, $user);
     }
 
     public function sendNotifyUser(
@@ -92,9 +92,7 @@ class Mail implements SingletonInterface
             $this->renderTextBody($controller, 'form', $method, $user)
         );
 
-        $user = $this->dispatchUserEvent($method, $user);
-
-        return $user;
+        return $this->dispatchUserEvent($method, $user);
     }
 
     public function sendInvitation(FrontendUserInterface $user, string $type): FrontendUserInterface
@@ -110,9 +108,7 @@ class Mail implements SingletonInterface
             $this->renderTextBody('FeuserCreate', 'form', $method, $user)
         );
 
-        $user = $this->dispatchUserEvent($method, $user);
-
-        return $user;
+        return $this->dispatchUserEvent($method, $user);
     }
 
     protected function getSubject(string $method, FrontendUserInterface $user): string
@@ -232,17 +228,18 @@ class Mail implements SingletonInterface
 
     protected function getView(string $controller, string $action): StandaloneView
     {
-        /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
-        $view = GeneralUtility::getContainer()->get(StandaloneView::class);
+        /** @var StandaloneView $view */
+        $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setLayoutRootPaths($this->frameworkConfiguration['view']['layoutRootPaths']);
         $view->setPartialRootPaths($this->frameworkConfiguration['view']['partialRootPaths']);
         $view->setTemplateRootPaths($this->frameworkConfiguration['view']['templateRootPaths']);
 
-        $request = $view->getRequest();
-        $request->setControllerExtensionName($this->frameworkConfiguration['extensionName']);
-        $request->setPluginName($this->frameworkConfiguration['pluginName']);
-        $request->setControllerName($controller);
-        $request->setControllerActionName($action);
+        $request = GeneralUtility::makeInstance(Request::class);
+        $request = $request->withControllerExtensionName($this->frameworkConfiguration['extensionName']);
+        $request = $request->withPluginName($this->frameworkConfiguration['pluginName']);
+        $request = $request->withControllerName($controller);
+        $request = $request->withControllerActionName($action);
+        $view->setRequest($request);
 
         return $view;
     }
@@ -257,7 +254,7 @@ class Mail implements SingletonInterface
     protected function dispatchUserEvent(string $method, FrontendUserInterface $user): FrontendUserInterface
     {
         $event = 'Evoweb\\SfRegister\\Services\\Event\\' . $method . 'Event';
-        /** @var \Evoweb\SfRegister\Services\Event\AbstractEventWithUser $eventObject */
+        /** @var AbstractEventWithUser $eventObject */
         $eventObject = new $event($user, $this->settings);
         $this->eventDispatcher->dispatch($eventObject);
         return $eventObject->getUser();

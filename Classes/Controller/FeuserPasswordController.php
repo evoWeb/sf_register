@@ -26,7 +26,7 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 
 /**
- * An frontend user password controller
+ * A frontend user password controller
  */
 class FeuserPasswordController extends FeuserController
 {

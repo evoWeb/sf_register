@@ -46,7 +46,7 @@ class StaticCountryZoneRepository extends Repository
             )
             ->orderBy('zones.zn_name_local');
 
-        return $queryBuilder->execute();
+        return $queryBuilder->executeQuery();
     }
 
     public function findAllByIso2(string $iso2): Result
@@ -60,7 +60,7 @@ class StaticCountryZoneRepository extends Repository
             ))
             ->orderBy('zn_name_local');
 
-        return $queryBuilder->execute();
+        return $queryBuilder->executeQuery();
     }
 
     protected function getQueryBuilderForTable(string $table): QueryBuilder

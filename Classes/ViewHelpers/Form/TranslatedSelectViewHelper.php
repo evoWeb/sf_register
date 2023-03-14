@@ -35,10 +35,7 @@ class TranslatedSelectViewHelper extends AbstractFormFieldViewHelper
      */
     protected $tagName = 'select';
 
-    /**
-     * @var mixed
-     */
-    protected $selectedValue;
+    protected mixed $selectedValue;
 
     public function initializeArguments(): void
     {
@@ -264,7 +261,7 @@ class TranslatedSelectViewHelper extends AbstractFormFieldViewHelper
      * @param mixed $value Value to check for
      * @return bool True if the value should be marked as selected.
      */
-    protected function isSelected($value): bool
+    protected function isSelected(mixed $value): bool
     {
         $selectedValue = $this->getSelectedValue();
         if ($value === $selectedValue || (string)$value === $selectedValue) {
@@ -286,7 +283,7 @@ class TranslatedSelectViewHelper extends AbstractFormFieldViewHelper
      *
      * @return array|string value string or an array of strings
      */
-    protected function getSelectedValue()
+    protected function getSelectedValue(): array|string
     {
         $this->setRespectSubmittedDataValue(true);
         $value = $this->getValueAttribute();
@@ -306,15 +303,15 @@ class TranslatedSelectViewHelper extends AbstractFormFieldViewHelper
      * @param mixed $valueElement
      * @return string @todo: Does not always return string ...
      */
-    protected function getOptionValueScalar($valueElement)
+    protected function getOptionValueScalar(mixed $valueElement): string
     {
         if (is_object($valueElement)) {
             if ($this->hasArgument('optionValueField')) {
-                return ObjectAccess::getPropertyPath($valueElement, $this->arguments['optionValueField']);
+                return (string)ObjectAccess::getPropertyPath($valueElement, $this->arguments['optionValueField']);
             }
             // @todo use $this->persistenceManager->isNewObject() once it is implemented
             if ($this->persistenceManager->getIdentifierByObject($valueElement) !== null) {
-                return $this->persistenceManager->getIdentifierByObject($valueElement);
+                return (string)$this->persistenceManager->getIdentifierByObject($valueElement);
             }
             return (string)$valueElement;
         }
@@ -326,11 +323,11 @@ class TranslatedSelectViewHelper extends AbstractFormFieldViewHelper
      *
      * @param string $value value attribute of the option tag (will be escaped)
      * @param string $label content of the option tag (will be escaped)
-     * @param bool $isSelected specifies whether or not to add selected attribute
+     * @param bool $isSelected specifies whether to add selected attribute
      *
      * @return string the rendered option tag
      */
-    protected function renderOptionTag($value, $label, $isSelected): string
+    protected function renderOptionTag(string $value, string $label, bool $isSelected): string
     {
         $extensionName = $this->hasArgument('extensionName') ? $this->arguments['extensionName'] : null;
         $request = $this->getRequest();

@@ -71,7 +71,7 @@ class RequiredViewHelper extends AbstractFormFieldViewHelper
             strtolower(key($this->frameworkConfiguration['controllerConfiguration']))
         );
         $modeSettings = $this->settings['validation'][$mode] ?? [];
-        $fieldSettings = isset($modeSettings[$fieldName]) ? $modeSettings[$fieldName] : false;
+        $fieldSettings = $modeSettings[$fieldName] ?? false;
 
         $result = '';
         if (
@@ -83,11 +83,8 @@ class RequiredViewHelper extends AbstractFormFieldViewHelper
                 )
             )
             || (
-                is_string($fieldSettings)
-                && (
-                    $fieldSettings === RequiredValidator::class
-                    || $fieldSettings === '"Evoweb.SfRegister:Required"'
-                )
+                $fieldSettings === RequiredValidator::class
+                || $fieldSettings === '"Evoweb.SfRegister:Required"'
             )
         ) {
             $result = $this->renderChildren();

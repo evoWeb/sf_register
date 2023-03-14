@@ -17,8 +17,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Link;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
@@ -36,6 +36,14 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
      * @var RenderingContext
      */
     protected $renderingContext;
+
+    protected UriBuilder $uriBuilder;
+
+    public function __construct(UriBuilder $uriBuilder)
+    {
+        $this->uriBuilder = $uriBuilder;
+        parent::__construct();
+    }
 
     /**
      * Arguments initialization
@@ -131,8 +139,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         $addQueryString = (bool)$this->arguments['addQueryString'];
         $argumentsToBeExcludedFromQueryString = (array)$this->arguments['argumentsToBeExcludedFromQueryString'];
         $parameters = $this->arguments['arguments'];
-        $uriBuilder = $this->renderingContext->getUriBuilder();
-        $uriBuilder
+        $this->uriBuilder
             ->reset()
             ->setTargetPageType($pageType)
             ->setNoCache($noCache)
@@ -146,10 +153,10 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         ;
 
         if (MathUtility::canBeInterpretedAsInteger($pageUid)) {
-            $uriBuilder->setTargetPageUid((int)$pageUid);
+            $this->uriBuilder->setTargetPageUid((int)$pageUid);
         }
 
-        $uri = $uriBuilder->uriFor($action, $parameters, $controller, $extensionName, $pluginName);
+        $uri = $this->uriBuilder->uriFor($action, $parameters, $controller, $extensionName, $pluginName);
         if ($uri === '') {
             return $this->renderChildren();
         }

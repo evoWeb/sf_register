@@ -19,17 +19,13 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 
 final class EditFormEvent
 {
-    protected FrontendUser $user;
-
-    protected array $settings = [];
-
-    public function __construct(FrontendUser $user, array $settings)
-    {
-        $this->user = $user;
-        $this->settings = $settings;
+    public function __construct(
+        protected FrontendUser $user,
+        protected array $settings
+    ) {
     }
 
-    public function getUser()
+    public function getUser(): FrontendUser
     {
         return $this->user;
     }

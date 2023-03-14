@@ -23,7 +23,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
 
 /**
- * An frontend user create controller
+ * A frontend user create controller
  */
 class FeuserDeleteController extends FeuserController
 {
@@ -35,7 +35,7 @@ class FeuserDeleteController extends FeuserController
     {
         $userId = $this->context->getAspect('frontend.user')->get('id');
 
-        $originalRequest = $this->request->getOriginalRequest();
+        $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
         if (
             (
                 $this->request->hasArgument('user')
@@ -48,9 +48,9 @@ class FeuserDeleteController extends FeuserController
                 $this->request->getArgument('user') :
                 $originalRequest->getArgument('user');
 
-            // only reconstitute user object if given user uid equals logged in user uid
+            // only reconstitute user object if given user uid equals logged-in user uid
             if ($userData['uid'] == $userId) {
-                /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
+                /** @var PropertyMapper $propertyMapper */
                 $propertyMapper = GeneralUtility::getContainer()
                     ->get(PropertyMapper::class);
                 $user = $propertyMapper->convert($userData, FrontendUser::class);
@@ -58,12 +58,12 @@ class FeuserDeleteController extends FeuserController
         }
 
         if ($user == null) {
-            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+            /** @var FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
         }
 
         // user is logged
-        if ($user !== null && $user instanceof FrontendUser) {
+        if ($user instanceof FrontendUser) {
             $this->eventDispatcher->dispatch(new DeleteFormEvent($user, $this->settings));
         }
 

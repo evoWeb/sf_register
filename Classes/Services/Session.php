@@ -43,7 +43,7 @@ class Session implements SingletonInterface
             $this->frontendUser = $GLOBALS['TSFE']->fe_user;
         } else {
             $this->frontendUser = $frontendUser;
-            $this->frontendUser->start();
+            $this->frontendUser->start($GLOBALS['TYPO3_REQUEST']);
         }
         $this->fetch();
     }
@@ -81,14 +81,7 @@ class Session implements SingletonInterface
         return $result;
     }
 
-    /**
-     * Getter for value identified by key
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         $result = null;
 
@@ -99,15 +92,7 @@ class Session implements SingletonInterface
         return $result;
     }
 
-    /**
-     * Setter for key to value
-     *
-     * @param string $key
-     * @param mixed $value
-     *
-     * @return self
-     */
-    public function set(string $key, $value): self
+    public function set(string $key, mixed $value): self
     {
         $this->values[$key] = $value;
 

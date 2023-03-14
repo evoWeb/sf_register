@@ -22,6 +22,7 @@ use Evoweb\SfRegister\Controller\Event\CreateRefuseEvent;
 use Evoweb\SfRegister\Controller\Event\CreateSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Services\Session;
+use Evoweb\SfRegister\Services\Setup\CheckFactory;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -295,9 +296,7 @@ class FeuserCreateController extends FeuserController
     {
         $result = null;
 
-        $setupChecks = GeneralUtility::makeInstance(
-            \Evoweb\SfRegister\Services\Setup\CheckFactory::class
-        )->getCheckInstances();
+        $setupChecks = GeneralUtility::makeInstance(CheckFactory::class)->getCheckInstances();
         foreach ($setupChecks as $setupCheck) {
             if (($result = $setupCheck->check($this->settings))) {
                 break;

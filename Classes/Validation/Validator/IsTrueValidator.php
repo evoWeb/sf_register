@@ -32,16 +32,11 @@ class IsTrueValidator extends AbstractValidator implements SettableInterface
      *
      * @var FrontendUser|Password
      */
-    protected $model;
+    protected FrontendUser|Password $model;
 
     protected string $propertyName = '';
 
-    /**
-     * Setter for model
-     *
-     * @param FrontendUser|Password $model
-     */
-    public function setModel($model)
+    public function setModel(FrontendUser|Password $model)
     {
         $this->model = $model;
     }
@@ -56,7 +51,7 @@ class IsTrueValidator extends AbstractValidator implements SettableInterface
      *
      * @param bool $value The value
      */
-    public function isValid($value)
+    public function isValid(mixed $value): void
     {
         if ($value !== true) {
             $this->addError(

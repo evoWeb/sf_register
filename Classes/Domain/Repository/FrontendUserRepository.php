@@ -41,9 +41,9 @@ class FrontendUserRepository extends Repository
      * @param string $email The Email address of the object to find
      * @param bool $ignoreHidden Whether to ignore hidden state
      *
-     * @return FrontendUserInterface|object|null
+     * @return ?FrontendUserInterface
      */
-    public function findByEmail(string $email, bool $ignoreHidden = false)
+    public function findByEmail(string $email, bool $ignoreHidden = false): ?FrontendUserInterface
     {
         $query = $this->createQuery();
 
@@ -53,10 +53,10 @@ class FrontendUserRepository extends Repository
             $querySettings->setEnableFieldsToBeIgnored(['disabled']);
         }
 
-        $result = $query->matching($query->logicalOr([
+        $result = $query->matching($query->logicalOr(
             $query->equals('email', $email),
             $query->equals('username', $email)
-        ]))
+        ))
         ->execute();
 
         return $result->getFirst();

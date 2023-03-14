@@ -32,10 +32,7 @@ class JmRecaptchaAdapter extends AbstractAdapter
         }
     }
 
-    /**
-     * @return array|string
-     */
-    public function render()
+    public function render(): array|string
     {
         /** @var Session $session */
         $session = GeneralUtility::makeInstance(Session::class);
@@ -65,7 +62,7 @@ class JmRecaptchaAdapter extends AbstractAdapter
             $_POST['recaptcha_response_field'] = $value;
             $status = $this->captcha->validateReCaptcha();
 
-            if ($status == false || $status['error'] !== null) {
+            if (!$status || $status['error'] !== null) {
                 $validCaptcha = false;
                 $this->addError(
                     LocalizationUtility::translate(

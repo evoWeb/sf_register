@@ -79,8 +79,7 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
 
     protected function getLabel(string $fieldName, array $configuration): string
     {
-        $labelPath = isset($configuration['backendLabel']) ?
-            $configuration['backendLabel'] :
+        $labelPath = $configuration['backendLabel'] ??
             'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.' . $fieldName;
         return $this->getLanguageService()->sL($labelPath);
     }

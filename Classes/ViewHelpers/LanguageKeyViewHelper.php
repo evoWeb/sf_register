@@ -62,8 +62,8 @@ class LanguageKeyViewHelper extends AbstractViewHelper
             $request = $GLOBALS['TYPO3_REQUEST'];
             if (class_exists(SiteLanguage::class)) {
                 $language = $request->getAttribute('language');
-                if ($language instanceof SiteLanguage && method_exists($language, 'getTwoLetterIsoCode') && trim($language->getTwoLetterIsoCode())) {
-                    $languageCode =  trim($language->getTwoLetterIsoCode());
+                if ($language instanceof SiteLanguage && trim($language->getLocale()->getLanguageCode())) {
+                    $languageCode = trim($language->getLocale()->getLanguageCode());
                 }
             }  else {
                 $languageCode = $this->getTypoScriptFrontendController()->config['config']['language'] ?: 'default';
@@ -95,7 +95,7 @@ class LanguageKeyViewHelper extends AbstractViewHelper
 
     protected function getConfiguredType(): string
     {
-        $type = isset($this->arguments['type']) ? $this->arguments['type'] : '';
+        $type = $this->arguments['type'] ?? '';
 
         return in_array($type, ['countries', 'languages', 'zones']) ? $type : '';
     }
@@ -104,7 +104,7 @@ class LanguageKeyViewHelper extends AbstractViewHelper
     {
         $columns = $this
             ->getConnection($tableName)
-            ->getSchemaManager()
+            ->createSchemaManager()
             ->listTableColumns($tableName);
 
         $result = false;

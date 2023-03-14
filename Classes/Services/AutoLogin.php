@@ -25,9 +25,9 @@ class AutoLogin extends AuthenticationService
     protected static bool $autoLoginActivated = false;
 
     /**
-     * Find a user (eg. look up the user record in database when a login is sent)
+     * Find a user (e.g. look up the user record in database when a login is sent)
      *
-     * @return array User array or null
+     * @return ?array User array or null
      */
     public function getUser(): ?array
     {

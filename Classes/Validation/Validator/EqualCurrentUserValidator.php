@@ -16,7 +16,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use TYPO3\CMS\Core\Context\Context;
 
 /**
- * A validator to check if the userid is equal to the id of the logged in user
+ * A validator to check if the userid is equal to the id of the logged-in user
  */
 class EqualCurrentUserValidator extends AbstractValidator implements InjectableInterface
 {
@@ -33,11 +33,11 @@ class EqualCurrentUserValidator extends AbstractValidator implements InjectableI
     }
 
     /**
-     * If the given value is not equal to logged in user id
+     * If the given value is not equal to logged-in user id
      *
      * @param string $value The value
      */
-    public function isValid($value)
+    public function isValid(mixed $value): void
     {
         if ($value != $this->context->getAspect('frontend.user')->get('id')) {
             $this->addError(

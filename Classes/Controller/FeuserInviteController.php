@@ -38,7 +38,7 @@ class FeuserInviteController extends FeuserController
         }
 
         // user is logged
-        if ($user !== null && $user instanceof FrontendUser) {
+        if ($user instanceof FrontendUser) {
             $this->eventDispatcher->dispatch(new InviteFormEvent($user, $this->settings));
         }
 

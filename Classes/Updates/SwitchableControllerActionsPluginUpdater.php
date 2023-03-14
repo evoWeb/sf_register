@@ -11,14 +11,17 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Updates;
 
+use Doctrine\DBAL\ArrayParameterType;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
+#[UpgradeWizard('sfrSwitchableControllerActionsPluginUpdater')]
 class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
 {
     private const MIGRATION_SETTINGS = [
@@ -49,11 +52,6 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
     public function __construct()
     {
         $this->flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
-    }
-
-    public function getIdentifier(): string
-    {
-        return 'sfRegisterSCAPluginUpdater';
     }
 
     public function getTitle(): string
@@ -144,10 +142,10 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
             ->where(
                 $queryBuilder->expr()->in(
                     'list_type',
-                    $queryBuilder->createNamedParameter($checkListTypes, Connection::PARAM_STR_ARRAY)
+                    $queryBuilder->createNamedParameter($checkListTypes, ArrayParameterType::STRING)
                 )
             )
-            ->execute()
+            ->executeQuery()
             ->fetchAllAssociative();
     }
 
@@ -200,7 +198,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
                     $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
                 )
             )
-            ->execute();
+            ->executeStatement();
     }
 
     /**
@@ -226,7 +224,6 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
         ];
         $spaceInd = 4;
         $output = GeneralUtility::array2xml($input, '', 0, 'T3FlexForms', $spaceInd, $options);
-        $output = '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>' . LF . $output;
-        return $output;
+        return '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>' . LF . $output;
     }
 }

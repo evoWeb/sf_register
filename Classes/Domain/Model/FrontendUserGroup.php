@@ -129,7 +129,7 @@ class FrontendUserGroup extends AbstractEntity
      * Returns the subgroups. Keep in mind that the property is called "subgroup"
      * although it can hold several subgroups.
      *
-     * @return ObjectStorage<FrontendUserGroup> An object storage containing the subgroups
+     * @return ?ObjectStorage<FrontendUserGroup> An object storage containing the subgroups
      */
     public function getSubgroup(): ?ObjectStorage
     {

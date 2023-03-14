@@ -54,9 +54,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class SrFreecapAdapter extends AbstractAdapter
 {
-    /**
-     * @var ?PiBaseApi
-     */
     protected ?object $captcha = null;
 
     /**
@@ -78,10 +75,7 @@ class SrFreecapAdapter extends AbstractAdapter
         }
     }
 
-    /**
-     * @return array|string
-     */
-    public function render()
+    public function render(): array|string
     {
         /** @var Session $session */
         $session = GeneralUtility::makeInstance(Session::class);

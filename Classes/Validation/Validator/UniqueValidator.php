@@ -42,7 +42,7 @@ class UniqueValidator extends AbstractValidator implements InjectableInterface, 
      *
      * @var FrontendUser|Password
      */
-    protected $model;
+    protected FrontendUser|Password $model;
 
     protected string $propertyName = '';
 
@@ -56,7 +56,7 @@ class UniqueValidator extends AbstractValidator implements InjectableInterface, 
      *
      * @param FrontendUser|Password $model
      */
-    public function setModel($model)
+    public function setModel(FrontendUser|Password $model)
     {
         $this->model = $model;
     }
@@ -71,7 +71,7 @@ class UniqueValidator extends AbstractValidator implements InjectableInterface, 
      *
      * @param string $value The value
      */
-    public function isValid($value)
+    public function isValid(mixed $value): void
     {
         if ($this->userRepository->countByField($this->propertyName, $value)) {
             $this->addError(

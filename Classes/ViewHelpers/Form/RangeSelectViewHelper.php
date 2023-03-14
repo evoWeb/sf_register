@@ -33,10 +33,7 @@ class RangeSelectViewHelper extends AbstractFormFieldViewHelper
      */
     protected $tagName = 'select';
 
-    /**
-     * @var mixed
-     */
-    protected $selectedValue;
+    protected mixed $selectedValue;
 
     /**
      * Value to start range with
@@ -60,7 +57,7 @@ class RangeSelectViewHelper extends AbstractFormFieldViewHelper
     protected int $step = 1;
 
     /**
-     * In case of a value lower then 10 and digits
+     * In case of a value lower than 10 and digits
      * defined as 2 the label get prepended with a 0
      *
      * @var int
@@ -274,9 +271,9 @@ class RangeSelectViewHelper extends AbstractFormFieldViewHelper
      * Render the option tags.
      *
      * @param mixed $value Value to check for
-     * @return bool TRUE if the value should be marked a s selected; FALSE otherwise
+     * @return bool TRUE if the value should be marked as selected; FALSE otherwise
      */
-    protected function isSelected($value): bool
+    protected function isSelected(mixed $value): bool
     {
         $selectedValue = $this->getSelectedValue();
         if ($value === $selectedValue || (string)$value === $selectedValue) {
@@ -296,9 +293,9 @@ class RangeSelectViewHelper extends AbstractFormFieldViewHelper
     /**
      * Retrieves the selected value(s)
      *
-     * @return array|string value string or an array of strings
+     * @return string|array value string or an array of strings
      */
-    protected function getSelectedValue()
+    protected function getSelectedValue(): string|array
     {
         $this->setRespectSubmittedDataValue(true);
         $value = $this->getValueAttribute();
@@ -318,7 +315,7 @@ class RangeSelectViewHelper extends AbstractFormFieldViewHelper
      * @param mixed $valueElement
      * @return string
      */
-    protected function getOptionValueScalar($valueElement)
+    protected function getOptionValueScalar(mixed $valueElement): string
     {
         if (is_object($valueElement)) {
             if ($this->hasArgument('optionValueField')) {
@@ -338,7 +335,7 @@ class RangeSelectViewHelper extends AbstractFormFieldViewHelper
      *
      * @param string $value value attribute of the option tag (will be escaped)
      * @param string $label content of the option tag (will be escaped)
-     * @param bool $isSelected specifies whether or not to add selected attribute
+     * @param bool $isSelected specifies whether to add selected attribute
      * @return string the rendered option tag
      */
     protected function renderOptionTag(string $value, string $label, bool $isSelected): string

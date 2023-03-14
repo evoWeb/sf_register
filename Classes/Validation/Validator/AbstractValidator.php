@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator as BaseAbstractVali
 
 abstract class AbstractValidator extends BaseAbstractValidator
 {
-    public function setOptions(array $options = [])
+    public function setOptions(array $options = []): void
     {
         // check for options given but not supported
         if (($unsupportedOptions = array_diff_key($options, $this->supportedOptions)) !== []) {

@@ -41,8 +41,6 @@ class CleanupCommand extends Command
     protected function configure()
     {
         $this
-            ->setAliases(['sfregister:cleanup'])
-            ->setDescription('Cleanup user that did not finish the double opt in, and remove orphan images')
             ->addArgument(
                 'inactiveGroups',
                 InputArgument::REQUIRED,
@@ -80,7 +78,7 @@ class CleanupCommand extends Command
             $io->comment('Cleaned up all outdated temporary accounts.');
         }
 
-        return 0;
+        return self::SUCCESS;
     }
 
     protected function findInOutdatedTemporaryUsers(int $inactiveUserGroup, int $days): array
@@ -101,7 +99,7 @@ class CleanupCommand extends Command
                     $queryBuilder->createNamedParameter(time() - (3600 * 24 * $days), \PDO::PARAM_INT)
                 )
             )
-            ->execute();
+            ->executeQuery();
 
         return $result->fetchAllAssociative();
     }
@@ -134,7 +132,7 @@ class CleanupCommand extends Command
                     $queryBuilder->createNamedParameter($user['uid'], \PDO::PARAM_INT)
                 )
             )
-            ->execute();
+            ->executeQuery();
 
         return $result->fetchAllAssociative();
     }

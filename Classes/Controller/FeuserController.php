@@ -32,6 +32,7 @@ use Evoweb\SfRegister\Validation\Validator\SettableInterface;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Registry;
@@ -42,19 +43,20 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
-use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
-// @todo replace usage of forward with ForwardResponse
-use TYPO3\CMS\Extbase\Mvc\Web\ReferringRequest;
+use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
+use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 use TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver;
+use TYPO3\CMS\Fluid\View\TemplateView;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- * An frontend user controller containing common methods
+ * A frontend user controller containing common methods
  */
 class FeuserController extends ActionController
 {
@@ -64,16 +66,16 @@ class FeuserController extends ActionController
 
     protected Context $context;
 
+    protected File $fileService;
+
     protected FrontendUserRepository $userRepository;
 
     protected FrontendUserGroupRepository $userGroupRepository;
 
-    protected File $fileService;
-
     /**
      * The current view, as resolved by resolveView()
      *
-     * @var \TYPO3\CMS\Fluid\View\TemplateView
+     * @var TemplateView
      * @api
      */
     protected $view;
@@ -81,10 +83,10 @@ class FeuserController extends ActionController
     /**
      * The current request.
      *
-     * @var \TYPO3\CMS\Extbase\Mvc\Request
+     * @var Request
      * @api
      */
-    protected $request;
+    protected RequestInterface $request;
 
     /**
      * Active if autologin was set.
@@ -93,6 +95,8 @@ class FeuserController extends ActionController
      * query parameter should be set.
      */
     protected bool $autoLoginTriggered = false;
+
+    protected ?ResponseInterface $initializeResponse;
 
     public function __construct(
         Context $context,
@@ -114,9 +118,9 @@ class FeuserController extends ActionController
         return false;
     }
 
-    protected function initializeActionMethodValidators()
+    protected function initializeActionMethodValidators(): void
     {
-        $this->settings['hasOriginalRequest'] = $this->request->getOriginalRequest() !== null;
+        $this->settings['hasOriginalRequest'] = $this->request->getAttribute('extbase')->getOriginalRequest() !== null;
 
         if (!is_array($this->settings['fields']['selected'] ?? null)) {
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected'] ?? '');
@@ -210,7 +214,7 @@ class FeuserController extends ActionController
 
     protected function getValidatorByConfiguration(string $configuration, DocParser $parser): ValidatorInterface
     {
-        if (strpos($configuration, '"') === false && strpos($configuration, '(') === false) {
+        if (!str_contains($configuration, '"') && !str_contains($configuration, '(')) {
             $configuration = '"' . $configuration . '"';
         }
 
@@ -243,7 +247,9 @@ class FeuserController extends ActionController
         $this->setTypeConverter();
 
         if ($this->settings['processInitializeActionEvent'] ?? false) {
-            $this->eventDispatcher->dispatch(new InitializeActionEvent($this, $this->settings));
+            $event = new InitializeActionEvent($this, $this->settings, null);
+            $this->eventDispatcher->dispatch($event);
+            $this->initializeResponse = $event->getResponse();
         }
 
         if (
@@ -251,7 +257,7 @@ class FeuserController extends ActionController
             && $this->request->hasArgument('removeImage')
             && $this->request->getArgument('removeImage')
         ) {
-            $this->forward('removeImage');
+            $this->initializeResponse = new ForwardResponse('removeImage');
         }
     }
 
@@ -310,11 +316,9 @@ class FeuserController extends ActionController
     }
 
     /**
-     * Initialize an view object to be able to set templateRootPath from flex form
-     *
-     * @param ViewInterface $view
+     * Initialize a view object to be able to set templateRootPath from flex form
      */
-    protected function initializeView(ViewInterface $view)
+    protected function initializeView(): void
     {
         if (isset($this->settings['templateRootPath']) && !empty($this->settings['templateRootPath'])) {
             $templateRootPath = GeneralUtility::getFileAbsFileName($this->settings['templateRootPath']);
@@ -323,6 +327,14 @@ class FeuserController extends ActionController
                 $this->view->setTemplateRootPaths(array_merge($templateRootPaths, [$templateRootPath]));
             }
         }
+    }
+
+    protected function callActionMethod(RequestInterface $request): ResponseInterface
+    {
+        if ($this->initializeResponse) {
+            return $this->initializeResponse;
+        }
+        return parent::callActionMethod($request);
     }
 
     /**
@@ -359,27 +371,43 @@ class FeuserController extends ActionController
         $this->fileService->removeFile($image);
         $this->removeImageFromUserAndRequest($user);
 
-        $this->request->setArgument('removeImage', false);
-
-        $referringRequest = null;
-        $referringRequestArguments = $this->request->getInternalArguments()['__referrer']['@request'] ?? null;
-        if (is_string($referringRequestArguments)) {
-            /** @var HashService $hashService */
-            $hashService = GeneralUtility::makeInstance(HashService::class);
+        /** @var ForwardResponse $response */
+        $response = $this->forwardToReferringRequest();
+        if ($response !== null) {
+            /** @var ExtbaseRequestParameters $extbaseRequestParameters */
+            $extbaseRequestParameters = $this->request->getAttribute('extbase');
+            $referringRequestArguments = $extbaseRequestParameters->getInternalArgument('__referrer') ?? null;
             $referrerArray = json_decode(
-                $hashService->validateAndStripHmac($referringRequestArguments),
+                $this->hashService->validateAndStripHmac($referringRequestArguments['@request']),
                 true
             );
             $arguments = [];
-            $referringRequest = new ReferringRequest();
-            $referringRequest->setArguments(array_replace_recursive($arguments, $referrerArray));
-        }
+            if (is_string($referringRequestArguments['arguments'] ?? null)) {
+                $arguments = unserialize(
+                    base64_decode($this->hashService->validateAndStripHmac($referringRequestArguments['arguments']))
+                );
+            }
+            $replacedArguments = array_replace_recursive($arguments, $referrerArray);
+            $nonExtbaseBaseArguments = [];
+            foreach ($replacedArguments as $argumentName => $argumentValue) {
+                if (!is_string($argumentName) || $argumentName === '') {
+                    throw new InvalidArgumentNameException('Invalid argument name.', 1623940985);
+                }
+                if (str_starts_with($argumentName, '__')
+                    || in_array(
+                        $argumentName,
+                        ['@extension', '@subpackage', '@controller', '@action', '@format', 'removeImage'],
+                        true
+                    )
+                ) {
+                    // Don't handle internalArguments here, not needed for forwardResponse()
+                    continue;
+                }
+                $nonExtbaseBaseArguments[$argumentName] = $argumentValue;
+            }
 
-        if ($referringRequest !== null) {
-            $response = (new ForwardResponse($referringRequest->getControllerActionName()))
-                ->withControllerName($referringRequest->getControllerName())
-                ->withExtensionName($referringRequest->getControllerExtensionName())
-                ->withArguments($this->request->getArguments());
+
+            $response = $response->withArguments($nonExtbaseBaseArguments);
         } else {
             $response = new HtmlResponse($this->view->render());
         }
@@ -405,7 +433,7 @@ class FeuserController extends ActionController
         if (is_array($requestUser)) {
             $requestUser['image'] = $user->getImage();
         }
-        $this->request->setArgument('user', $requestUser);
+        $this->request = $this->request->withArgument('user', $requestUser);
 
         return $user;
     }
@@ -479,27 +507,10 @@ class FeuserController extends ActionController
 
     /**
      * Determines whether a user is in a given user group.
-     *
-     * @param FrontendUser $user
-     * @param FrontendUserGroup|string|int $userGroup
-     *
-     * @return bool
      */
-    protected function isUserInUserGroup(FrontendUser $user, $userGroup): bool
+    protected function isUserInUserGroup(FrontendUser $user, FrontendUserGroup $userGroup): bool
     {
-        $return = false;
-
-        if ($userGroup instanceof FrontendUserGroup) {
-            $return = $user->getUsergroup()->contains($userGroup);
-        } elseif (!empty($userGroup)) {
-            $userGroupUids = $this->getEntityUids(
-                $user->getUsergroup()->toArray()
-            );
-
-            $return = in_array($userGroup, $userGroupUids);
-        }
-
-        return $return;
+        return $user->getUsergroup()->contains($userGroup);
     }
 
     /**
@@ -549,24 +560,6 @@ class FeuserController extends ActionController
         }
 
         return $userGroups;
-    }
-
-    /**
-     * Gets the uid of each given entity.
-     *
-     * @param array|\TYPO3\CMS\Extbase\DomainObject\AbstractEntity[] $entities
-     *
-     * @return array
-     */
-    protected function getEntityUids(array $entities): array
-    {
-        $entityUids = [];
-
-        foreach ($entities as $entity) {
-            $entityUids[] = $entity->getUid();
-        }
-
-        return $entityUids;
     }
 
     protected function changeUsergroup(FrontendUser $user, int $userGroupIdToAdd): FrontendUser
@@ -630,13 +623,13 @@ class FeuserController extends ActionController
         }
 
         if ($redirectPageId > 0) {
-            $this->redirectToPage((int)$redirectPageId);
+            $this->redirectToPage($redirectPageId);
         }
     }
 
     protected function userIsLoggedIn(): bool
     {
-        /** @var \TYPO3\CMS\Core\Context\UserAspect $userAspect */
+        /** @var UserAspect $userAspect */
         $userAspect = $this->context->getAspect('frontend.user');
         return $userAspect->isLoggedIn();
     }
@@ -651,7 +644,7 @@ class FeuserController extends ActionController
      */
     protected function determineFrontendUser(?FrontendUser $user, ?string $hash): ?FrontendUser
     {
-        $frontendUser = null;
+        $frontendUser = $user;
 
         $requestArguments = $this->request->getArguments();
         if (isset($requestArguments['user']) && $hash !== null) {
