@@ -23,9 +23,11 @@ use Evoweb\SfRegister\Controller\Event\CreateSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Services\Setup\CheckFactory;
+use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
  * A frontend user create controller
@@ -50,13 +52,8 @@ class FeuserCreateController extends FeuserController
 
     /**
      * Preview action
-     *
-     * @param FrontendUser $user
-     *
-     * @return ResponseInterface
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
+    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function previewAction(FrontendUser $user): ResponseInterface
     {
         if ($this->request->hasArgument('temporaryImage')) {
@@ -72,13 +69,8 @@ class FeuserCreateController extends FeuserController
 
     /**
      * Save action
-     *
-     * @param FrontendUser $user
-     *
-     * @return ResponseInterface
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
+    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {
         if (
@@ -136,11 +128,6 @@ class FeuserCreateController extends FeuserController
     /**
      * Confirm registration process by user
      * Could be followed by acceptance of admin
-     *
-     * @param ?FrontendUser $user
-     * @param ?string $hash
-     *
-     * @return ResponseInterface
      */
     public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -191,11 +178,6 @@ class FeuserCreateController extends FeuserController
 
     /**
      * Refuse registration process by user with removing the user data
-     *
-     * @param ?FrontendUser $user
-     * @param ?string $hash
-     *
-     * @return ResponseInterface
      */
     public function refuseAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -220,11 +202,6 @@ class FeuserCreateController extends FeuserController
 
     /**
      * Accept registration process by admin after user confirmation
-     *
-     * @param ?FrontendUser $user
-     * @param ?string $hash
-     *
-     * @return ResponseInterface
      */
     public function acceptAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -265,11 +242,6 @@ class FeuserCreateController extends FeuserController
 
     /**
      * Decline registration process by admin with removing the user data
-     *
-     * @param ?FrontendUser $user
-     * @param ?string $hash
-     *
-     * @return ResponseInterface
      */
     public function declineAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {

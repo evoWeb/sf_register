@@ -17,10 +17,12 @@ use Evoweb\SfRegister\Controller\Event\DeleteConfirmEvent;
 use Evoweb\SfRegister\Controller\Event\DeleteFormEvent;
 use Evoweb\SfRegister\Controller\Event\DeleteSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
  * A frontend user create controller
@@ -74,13 +76,8 @@ class FeuserDeleteController extends FeuserController
 
     /**
      * Save action
-     *
-     * @param FrontendUser $user
-     *
-     * @return ResponseInterface
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
      */
+    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {
         $this->eventDispatcher->dispatch(new DeleteSaveEvent($user, $this->settings));
@@ -101,11 +98,6 @@ class FeuserDeleteController extends FeuserController
 
     /**
      * Confirm delete process by user
-     *
-     * @param ?FrontendUser $user
-     * @param ?string $hash
-     *
-     * @return ResponseInterface
      */
     public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -136,13 +128,7 @@ class FeuserDeleteController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * @param FrontendUser $requestUser
-     *
-     * @return ResponseInterface
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="requestUser")
-     */
+    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'requestUser'])]
     public function sendLinkAction(FrontendUser $requestUser): ResponseInterface
     {
         /** @var FrontendUser $user */

@@ -17,8 +17,10 @@ use Evoweb\SfRegister\Controller\Event\ResendFormEvent;
 use Evoweb\SfRegister\Controller\Event\ResendMailEvent;
 use Evoweb\SfRegister\Domain\Model\Email;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
  * An frontend user resend controller
@@ -47,13 +49,8 @@ class FeuserResendController extends FeuserController
 
     /**
      * Mail action
-     *
-     * @param Email $email
-     *
-     * @return ResponseInterface
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="email")
      */
+    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'email'])]
     public function mailAction(Email $email): ResponseInterface
     {
         $email = $this->eventDispatcher->dispatch(new ResendMailEvent($email, $this->settings))->getEmail();
