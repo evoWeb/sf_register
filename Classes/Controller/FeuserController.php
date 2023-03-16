@@ -139,7 +139,6 @@ class FeuserController extends ActionController
                     $this->arguments->getArgument($argument),
                     $this->settings['validation'][strtolower($this->controller)] ?? []
                 );
-
             }
         }
     }
@@ -181,8 +180,9 @@ class FeuserController extends ActionController
                     $validatorInstance->setPropertyName($fieldName);
                 }
             } else {
-                $validatorInstance = GeneralUtility::makeInstance(
-                    ConjunctionValidator::class
+                /** @var ConjunctionValidator $validatorInstance */
+                $validatorInstance = $this->validatorResolver->createValidator(
+                    ConjunctionValidator::class, []
                 );
                 foreach ($configuredValidator as $individualConfiguredValidator) {
                     $individualValidatorInstance = $this->getValidatorByConfiguration(
