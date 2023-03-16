@@ -96,7 +96,7 @@ class FeuserController extends ActionController
      */
     protected bool $autoLoginTriggered = false;
 
-    protected ?ResponseInterface $initializeResponse;
+    protected ?ResponseInterface $initializeResponse = null;
 
     public function __construct(
         Context $context,
