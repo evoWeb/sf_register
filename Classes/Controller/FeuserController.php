@@ -245,7 +245,11 @@ class FeuserController extends ActionController
         }
         parent::initializeActionMethodArguments();
 
-        $event = new OverrideSettingsEvent($this->settings, $this->controller);
+        $event = new OverrideSettingsEvent(
+            $this->settings,
+            $this->controller,
+            $this->configurationManager->getContentObject()
+        );
         $this->eventDispatcher->dispatch($event);
         $this->settings = $event->getSettings();
     }
