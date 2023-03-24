@@ -13,7 +13,7 @@
 		property="{fieldName}"
 		id="sfrZone"
 		parent="{f:if(condition: user.staticInfoCountry, then: user.staticInfoCountry, else: options.defaultValue)}"
-		class="form-control" />
+		class="form-control {options.cssClass}" />
 
 	<div id="sfrZone_empty" class="d-none form-control-plaintext"><f:translate id="no_zone_available" /></div>
 	<div id="sfrZone_loading" class="d-none spinner-border text-primary" role="status">

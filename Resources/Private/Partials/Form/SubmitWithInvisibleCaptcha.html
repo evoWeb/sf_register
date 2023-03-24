@@ -11,13 +11,13 @@
 			<f:then>
 				<f:form.submit
 					value="{f:translate(id: 'submit_create')}"
-					class="btn btn-primary g-recaptcha"
+					class="btn btn-primary g-recaptcha {options.cssClass}"
 					data="{sitekey: settings.recaptcha.public_key, callback: 'sfRegister_submitForm'}" />
 			</f:then>
 			<f:else>
 				<f:form.submit
 					value="{f:translate(id: 'submit_create')}"
-					class="btn btn-primary" />
+					class="btn btn-primary {options.cssClass}" />
 				<div class="recaptcha-development-mode">
 					Development mode active. Do not expect the captcha to appear
 				</div>

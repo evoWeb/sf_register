@@ -9,7 +9,7 @@
 	</label>
 	<f:render partial="FieldError" arguments="{for: 'user', field: '{fieldName}'}" />
 
-	<register:form.upload property="{fieldName}.0" class="form-control-file" id="uploadButton">
+	<register:form.upload property="{fieldName}.0" class="form-control-file {options.cssClass}" id="uploadButton">
 		<f:if condition="{resource}">
 			<f:image image="{resource}" alt="" width="50"/>
 			<f:form.hidden name="removeImage" id="removeImage" value="0"/>

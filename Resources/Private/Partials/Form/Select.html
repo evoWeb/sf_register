@@ -9,7 +9,7 @@
 	</label>
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
 
-	<register:form.translatedSelect property="{fieldName}" id="{fieldName}" options="{options.values}" class="form-control" />
+	<register:form.translatedSelect property="{fieldName}" id="{fieldName}" options="{options.values}" class="form-control {options.cssClass}" />
 </div>
 
 </html>
