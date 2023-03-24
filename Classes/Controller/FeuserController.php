@@ -15,6 +15,7 @@ namespace Evoweb\SfRegister\Controller;
 
 use Doctrine\Common\Annotations\DocParser;
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
+use Evoweb\SfRegister\Controller\Event\OverrideSettingsEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
@@ -122,8 +123,11 @@ class FeuserController extends ActionController
     {
         $this->settings['hasOriginalRequest'] = $this->request->getAttribute('extbase')->getOriginalRequest() !== null;
 
-        if (!is_array($this->settings['fields']['selected'] ?? null)) {
-            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected'] ?? '');
+        if (isset($this->settings['fields']['selected']) && !is_array($this->settings['fields']['selected'])) {
+            $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
+        }
+        if (!is_array($this->settings['fields']['selected'])) {
+            $this->settings['fields']['selected'] = [];
         }
 
         if ($this->actionIsIgnored()) {
@@ -182,7 +186,7 @@ class FeuserController extends ActionController
             } else {
                 /** @var ConjunctionValidator $validatorInstance */
                 $validatorInstance = $this->validatorResolver->createValidator(
-                    ConjunctionValidator::class, []
+                    ConjunctionValidator::class
                 );
                 foreach ($configuredValidator as $individualConfiguredValidator) {
                     $individualValidatorInstance = $this->getValidatorByConfiguration(
@@ -240,6 +244,10 @@ class FeuserController extends ActionController
             $this->arguments = GeneralUtility::makeInstance(Arguments::class);
         }
         parent::initializeActionMethodArguments();
+
+        $event = new OverrideSettingsEvent($this->settings, $this->controller);
+        $this->eventDispatcher->dispatch($event);
+        $this->settings = $event->getSettings();
     }
 
     protected function initializeAction()
