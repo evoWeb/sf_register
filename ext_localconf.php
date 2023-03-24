@@ -19,6 +19,9 @@ call_user_func(function () {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['flexFormSegment'][
         \Evoweb\SfRegister\Form\FormDataProvider\FormFields::class
     ] = [
+        'depends' => [
+            \TYPO3\CMS\Backend\Form\FormDataProvider\TcaCheckboxItems::class,
+        ],
         'before' => [
             \TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems::class,
         ],
