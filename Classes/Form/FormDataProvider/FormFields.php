@@ -36,7 +36,7 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
             $result['processedTca']['columns'][$fieldName] = $this->getAvailableFields($fieldConfig);
 
             $currentDatabaseValuesArray = $this->processDatabaseFieldValue($result['databaseRow'], $fieldName);
-            if (empty($currentDatabaseValuesArray)) {
+            if (empty($currentDatabaseValuesArray) && !($fieldConfig['config']['doNotPreSelect'] ?? false)) {
                 $result['databaseRow'][$fieldName] = $this->getSelectedFields($fieldConfig['config']['sfRegisterForm']);
             }
         }
@@ -51,7 +51,7 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
         foreach ($configuredFields as $fieldName => $configuration) {
             $fieldName = rtrim($fieldName, '.');
             $label = $this->getLabel($fieldName, $configuration);
-            $items[] = [$label, $fieldName];
+            $items[] = ['label' => $label, 'value' => $fieldName];
         }
         $fieldConfig['config']['items'] = $items;
 
