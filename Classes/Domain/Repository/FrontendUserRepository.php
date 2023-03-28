@@ -26,10 +26,14 @@ class FrontendUserRepository extends Repository
         $query = $this->createQuery();
 
         $querySettings = $query->getQuerySettings();
+        $querySettings->setRespectStoragePage(false);
         $querySettings->setIgnoreEnableFields(true);
         $querySettings->setEnableFieldsToBeIgnored(['disabled']);
 
-        $result = $query->matching($query->equals('uid', $uid))
+        $result = $query
+            ->matching(
+                $query->equals('uid', $uid)
+            )
             ->execute();
 
         return $result->getFirst();
