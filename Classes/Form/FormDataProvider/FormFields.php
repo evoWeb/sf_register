@@ -49,9 +49,11 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
         $items = [];
         $configuredFields = $this->getAvailableFieldsFromTsConfig();
         foreach ($configuredFields as $fieldName => $configuration) {
-            $fieldName = rtrim($fieldName, '.');
-            $label = $this->getLabel($fieldName, $configuration);
-            $items[] = ['label' => $label, 'value' => $fieldName];
+            if ($configuration) {
+                $fieldName = rtrim($fieldName, '.');
+                $label = $this->getLabel($fieldName, $configuration);
+                $items[] = ['label' => $label, 'value' => $fieldName];
+            }
         }
         $fieldConfig['config']['items'] = $items;
 
@@ -77,7 +79,7 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
         return $pluginConfiguration['settings.']['fields.']['defaultSelected.'] ?? [];
     }
 
-    protected function getLabel(string $fieldName, array $configuration): string
+    protected function getLabel(string $fieldName, array|string $configuration): string
     {
         $labelPath = $configuration['backendLabel'] ??
             'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.' . $fieldName;

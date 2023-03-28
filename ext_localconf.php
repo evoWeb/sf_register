@@ -7,7 +7,7 @@ call_user_func(function () {
      * Page TypoScript for mod wizards
      */
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        '@import \'EXT:sf_register/Configuration/TSconfig/Wizards/NewContentElement.typoscript\''
+        '@import \'EXT:sf_register/Configuration/TSconfig/Wizards/NewContentElement.tsconfig\''
     );
 
     // Needs to be added on top so others can extend regardless of load order

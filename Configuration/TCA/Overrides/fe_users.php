@@ -2,7 +2,7 @@
 
 defined('TYPO3') or die();
 
-call_user_func(function () {
+call_user_func(static function () {
     $languageFile = 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:';
 
     $temporaryColumns = [
@@ -16,7 +16,6 @@ call_user_func(function () {
                 'eval' => 'datetime',
             ]
         ],
-
         'pseudonym' => [
             'label' => $languageFile . 'fe_users.pseudonym',
             'config' => [
@@ -31,8 +30,8 @@ call_user_func(function () {
             'config' => [
                 'type' => 'radio',
                 'items' => [
-                    [$languageFile . 'fe_users.gender.I.1', '1'],
-                    [$languageFile . 'fe_users.gender.I.2', '2']
+                    ['label' => $languageFile . 'fe_users.gender.I.1', 'value' => 1],
+                    ['label' => $languageFile . 'fe_users.gender.I.2', 'value' => 2]
                 ],
             ]
         ],
@@ -72,44 +71,44 @@ call_user_func(function () {
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    [$languageFile . 'fe_users.timezone.I.-12', -12],
-                    [$languageFile . 'fe_users.timezone.I.-11', -11],
-                    [$languageFile . 'fe_users.timezone.I.-10', -10],
-                    [$languageFile . 'fe_users.timezone.I.-9.5', -9.5],
-                    [$languageFile . 'fe_users.timezone.I.-9', -9],
-                    [$languageFile . 'fe_users.timezone.I.-8', -8],
-                    [$languageFile . 'fe_users.timezone.I.-7', -7],
-                    [$languageFile . 'fe_users.timezone.I.-6', -6],
-                    [$languageFile . 'fe_users.timezone.I.-5', -5],
-                    [$languageFile . 'fe_users.timezone.I.-4.5', -4.5],
-                    [$languageFile . 'fe_users.timezone.I.-4', -4],
-                    [$languageFile . 'fe_users.timezone.I.-3.5', -3.5],
-                    [$languageFile . 'fe_users.timezone.I.-3', -3],
-                    [$languageFile . 'fe_users.timezone.I.-2', -2],
-                    [$languageFile . 'fe_users.timezone.I.-1', -1],
-                    [$languageFile . 'fe_users.timezone.I.0', 0],
-                    [$languageFile . 'fe_users.timezone.I.1', 1],
-                    [$languageFile . 'fe_users.timezone.I.2', 2],
-                    [$languageFile . 'fe_users.timezone.I.3', 3],
-                    [$languageFile . 'fe_users.timezone.I.3.5', 3.5],
-                    [$languageFile . 'fe_users.timezone.I.4', 4],
-                    [$languageFile . 'fe_users.timezone.I.4.5', 4.5],
-                    [$languageFile . 'fe_users.timezone.I.5', 5],
-                    [$languageFile . 'fe_users.timezone.I.5.5', 5.5],
-                    [$languageFile . 'fe_users.timezone.I.5.75', 5.75],
-                    [$languageFile . 'fe_users.timezone.I.6', 6],
-                    [$languageFile . 'fe_users.timezone.I.6.5', 6.5],
-                    [$languageFile . 'fe_users.timezone.I.7', 7],
-                    [$languageFile . 'fe_users.timezone.I.8', 8],
-                    [$languageFile . 'fe_users.timezone.I.9', 9],
-                    [$languageFile . 'fe_users.timezone.I.9.5', 9.5],
-                    [$languageFile . 'fe_users.timezone.I.10', 10],
-                    [$languageFile . 'fe_users.timezone.I.11', 11],
-                    [$languageFile . 'fe_users.timezone.I.11.5', 11.5],
-                    [$languageFile . 'fe_users.timezone.I.12', 12],
-                    [$languageFile . 'fe_users.timezone.I.12.75', 12.75],
-                    [$languageFile . 'fe_users.timezone.I.13', 13],
-                    [$languageFile . 'fe_users.timezone.I.14', 14],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-12', 'value' => -12],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-11', 'value' => -11],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-10', 'value' => -10],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-9.5', 'value' => -9.5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-9', 'value' => -9],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-8', 'value' => -8],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-7', 'value' => -7],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-6', 'value' => -6],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-5', 'value' => -5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-4.5', 'value' => -4.5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-4', 'value' => -4],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-3.5', 'value' => -3.5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-3', 'value' => -3],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-2', 'value' => -2],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-1', 'value' => -1],
+                    ['label' => $languageFile . 'fe_users.timezone.I.0', 'value' => 0],
+                    ['label' => $languageFile . 'fe_users.timezone.I.1', 'value' => 1],
+                    ['label' => $languageFile . 'fe_users.timezone.I.2', 'value' => 2],
+                    ['label' => $languageFile . 'fe_users.timezone.I.3', 'value' => 3],
+                    ['label' => $languageFile . 'fe_users.timezone.I.3.5', 'value' => 3.5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.4', 'value' => 4],
+                    ['label' => $languageFile . 'fe_users.timezone.I.4.5', 'value' => 4.5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.5', 'value' => 5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.5.5', 'value' => 5.5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.5.75', 'value' => 5.75],
+                    ['label' => $languageFile . 'fe_users.timezone.I.6', 'value' => 6],
+                    ['label' => $languageFile . 'fe_users.timezone.I.6.5', 'value' => 6.5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.7', 'value' => 7],
+                    ['label' => $languageFile . 'fe_users.timezone.I.8', 'value' => 8],
+                    ['label' => $languageFile . 'fe_users.timezone.I.9', 'value' => 9],
+                    ['label' => $languageFile . 'fe_users.timezone.I.9.5', 'value' => 9.5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.10', 'value' => 10],
+                    ['label' => $languageFile . 'fe_users.timezone.I.11', 'value' => 11],
+                    ['label' => $languageFile . 'fe_users.timezone.I.11.5', 'value' => 11.5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.12', 'value' => 12],
+                    ['label' => $languageFile . 'fe_users.timezone.I.12.75', 'value' => 12.75],
+                    ['label' => $languageFile . 'fe_users.timezone.I.13', 'value' => 13],
+                    ['label' => $languageFile . 'fe_users.timezone.I.14', 'value' => 14],
                 ],
                 'default' => 0,
             ]
@@ -147,11 +146,11 @@ call_user_func(function () {
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    [$languageFile . 'fe_users.status.I.0', 0],
-                    [$languageFile . 'fe_users.status.I.1', 1],
-                    [$languageFile . 'fe_users.status.I.2', 2],
-                    [$languageFile . 'fe_users.status.I.3', 3],
-                    [$languageFile . 'fe_users.status.I.4', 4],
+                    ['label' => $languageFile . 'fe_users.status.I.0', 'value' => 0],
+                    ['label' => $languageFile . 'fe_users.status.I.1', 'value' => 1],
+                    ['label' => $languageFile . 'fe_users.status.I.2', 'value' => 2],
+                    ['label' => $languageFile . 'fe_users.status.I.3', 'value' => 3],
+                    ['label' => $languageFile . 'fe_users.status.I.4', 'value' => 4],
                 ],
             ]
         ],

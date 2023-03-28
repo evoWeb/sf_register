@@ -112,17 +112,18 @@ class FeuserCreateController extends FeuserController
         $session = GeneralUtility::makeInstance(Session::class);
         $session->remove('captchaWasValidPreviously');
 
+        $this->view->assign('user', $user);
+
+        $redirectResponse = null;
         if (($this->settings['autologinPostRegistration'] ?? false)) {
-            $this->autoLogin($user, (int)($this->settings['redirectPostRegistrationPageId'] ?? 0));
+            $redirectResponse = $this->autoLogin($user, (int)($this->settings['redirectPostRegistrationPageId'] ?? 0));
         }
 
         if ((int)($this->settings['redirectPostRegistrationPageId'] ?? 0) > 0) {
-            $this->redirectToPage((int)($this->settings['redirectPostRegistrationPageId'] ?? 0));
+            $redirectResponse = $this->redirectToPage((int)($this->settings['redirectPostRegistrationPageId'] ?? 0));
         }
 
-        $this->view->assign('user', $user);
-
-        return new HtmlResponse($this->view->render());
+        return $redirectResponse ?: new HtmlResponse($this->view->render());
     }
 
     /**
@@ -133,6 +134,7 @@ class FeuserCreateController extends FeuserController
     {
         $user = $this->determineFrontendUser($user, $hash);
 
+        $redirectResponse = null;
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
@@ -156,24 +158,24 @@ class FeuserCreateController extends FeuserController
 
                 $this->eventDispatcher->dispatch(new CreateConfirmEvent($user, $this->settings));
 
-                $this->userRepository->update($user);
+                $user = $this->sendEmails($user, __FUNCTION__);
 
-                $this->sendEmails($user, __FUNCTION__);
+                $this->userRepository->update($user);
+                $this->persistAll();
+
+                $this->view->assign('userConfirmed', 1);
 
                 if (($this->settings['autologinPostConfirmation'] ?? false)) {
-                    $this->persistAll();
-                    $this->autoLogin($user, (int)($this->settings['redirectPostActivationPageId'] ?? 0));
+                    $redirectResponse = $this->autoLogin($user, (int)($this->settings['redirectPostActivationPageId'] ?? 0));
                 }
 
                 if ((int)($this->settings['redirectPostActivationPageId'] ?? 0) > 0) {
-                    $this->redirectToPage((int)($this->settings['redirectPostActivationPageId'] ?? 0));
+                    $redirectResponse = $this->redirectToPage((int)($this->settings['redirectPostActivationPageId'] ?? 0));
                 }
-
-                $this->view->assign('userConfirmed', 1);
             }
         }
 
-        return new HtmlResponse($this->view->render());
+        return $redirectResponse ?: new HtmlResponse($this->view->render());
     }
 
     /**

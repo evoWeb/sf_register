@@ -465,7 +465,7 @@ class FeuserController extends ActionController
             ->persistAll();
     }
 
-    protected function redirectToPage(int $pageId)
+    protected function redirectToPage(int $pageId): ResponseInterface
     {
         $this->uriBuilder->reset();
         if ($this->autoLoginTriggered) {
@@ -481,7 +481,7 @@ class FeuserController extends ActionController
             ->setLinkAccessRestrictedPages(true)
             ->build();
 
-        $this->redirectToUri($url);
+        return $this->redirectToUri($url);
     }
 
     protected function sendEmails(FrontendUser $user, string $action): FrontendUserInterface
@@ -608,7 +608,7 @@ class FeuserController extends ActionController
         }
     }
 
-    protected function autoLogin(FrontendUserInterface $user, int $redirectPageId)
+    protected function autoLogin(FrontendUserInterface $user, int $redirectPageId): ?ResponseInterface
     {
         session_start();
         $this->autoLoginTriggered = true;
@@ -634,9 +634,11 @@ class FeuserController extends ActionController
             }
         }
 
+        $response = null;
         if ($redirectPageId > 0) {
-            $this->redirectToPage($redirectPageId);
+            $response = $this->redirectToPage($redirectPageId);
         }
+        return $response;
     }
 
     protected function userIsLoggedIn(): bool
