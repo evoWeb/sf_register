@@ -521,25 +521,30 @@ class FeuserController extends ActionController
     /**
      * Determines whether a user is in a given user group.
      */
-    protected function isUserInUserGroup(FrontendUser $user, FrontendUserGroup $userGroup): bool
+    protected function isUserInUserGroup(FrontendUser $user, int $userGroupUid): bool
     {
-        return $user->getUsergroup()->contains($userGroup);
+        $in = false;
+        /** @var FrontendUserGroup $userGroup */
+        foreach ($user->getUsergroup() as $userGroup) {
+            $in = $in || $userGroup->getUid() == $userGroupUid;
+        }
+        return $in;
     }
 
     /**
      * Determines whether a user is in given user groups.
      *
      * @param FrontendUser $user
-     * @param FrontendUserGroup[] $userGroups
+     * @param int[] $userGroupUids
      *
      * @return bool
      */
-    protected function isUserInUserGroups(FrontendUser $user, array $userGroups): bool
+    protected function isUserInUserGroups(FrontendUser $user, array $userGroupUids): bool
     {
         $return = false;
 
-        foreach ($userGroups as $userGroup) {
-            if ($this->isUserInUserGroup($user, $userGroup)) {
+        foreach ($userGroupUids as $userGroupUid) {
+            if ($this->isUserInUserGroup($user, $userGroupUid)) {
                 $return = true;
             }
         }
