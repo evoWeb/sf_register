@@ -21,7 +21,7 @@ use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
@@ -31,20 +31,16 @@ use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
  */
 class Mail implements SingletonInterface
 {
-    protected EventDispatcherInterface $eventDispatcher;
-
-    protected ConfigurationManagerInterface $configurationManager;
-
     protected array $settings = [];
 
     protected array $frameworkConfiguration = [];
 
+    protected RequestInterface $request;
+
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        ConfigurationManagerInterface $configurationManager
+        protected EventDispatcherInterface $eventDispatcher,
+        protected ConfigurationManagerInterface $configurationManager
     ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'SfRegister',
@@ -53,6 +49,11 @@ class Mail implements SingletonInterface
         $this->frameworkConfiguration = $configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
+    }
+
+    public function setRequest(RequestInterface $request): void
+    {
+        $this->request = $request;
     }
 
     public function sendNotifyAdmin(
@@ -234,8 +235,7 @@ class Mail implements SingletonInterface
         $view->setPartialRootPaths($this->frameworkConfiguration['view']['partialRootPaths']);
         $view->setTemplateRootPaths($this->frameworkConfiguration['view']['templateRootPaths']);
 
-        $request = GeneralUtility::makeInstance(Request::class);
-        $request = $request->withControllerExtensionName($this->frameworkConfiguration['extensionName']);
+        $request = $this->request->withControllerExtensionName($this->frameworkConfiguration['extensionName']);
         $request = $request->withPluginName($this->frameworkConfiguration['pluginName']);
         $request = $request->withControllerName($controller);
         $request = $request->withControllerActionName($action);

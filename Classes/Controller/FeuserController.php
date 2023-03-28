@@ -491,6 +491,7 @@ class FeuserController extends ActionController
 
         /** @var Mail $mailService */
         $mailService = GeneralUtility::getContainer()->get(Mail::class);
+        $mailService->setRequest($this->request);
 
         if ($this->isNotifyAdmin($type)) {
             $user = $mailService->sendNotifyAdmin($user, $this->controller, $action);

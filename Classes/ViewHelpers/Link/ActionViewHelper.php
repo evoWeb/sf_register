@@ -17,6 +17,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Link;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
@@ -32,23 +33,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
      */
     protected $tagName = 'a';
 
-    /**
-     * @var RenderingContext
-     */
-    protected $renderingContext;
-
-    protected UriBuilder $uriBuilder;
-
-    public function __construct(UriBuilder $uriBuilder)
-    {
-        $this->uriBuilder = $uriBuilder;
-        parent::__construct();
-    }
-
-    /**
-     * Arguments initialization
-     */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerUniversalTagAttributes();
@@ -69,7 +54,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         $this->registerArgument(
             'extensionName',
             'string',
-            'Target Extension Name (without "tx_" prefix and no underscores). If NULL the current
+            'Target Extension Name (without `tx_` prefix and no underscores). If NULL the current
              extension name is used'
         );
         $this->registerArgument('pluginName', 'string', 'Target plugin. If empty, the current plugin name is used');
@@ -107,13 +92,19 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         $this->registerArgument('arguments', 'array', 'Arguments for the controller action, associative array');
     }
 
-    /**
-     * Render method
-     *
-     * @return string Rendered link
-     */
-    public function render()
+    public function render(): string
     {
+        /** @var RenderingContext $renderingContext */
+        $renderingContext = $this->renderingContext;
+        $request = $renderingContext->getRequest();
+        if (!$request instanceof RequestInterface) {
+            throw new \RuntimeException(
+                'ViewHelper f:link.action can be used only in extbase context and needs a request
+                 implementing extbase RequestInterface.',
+                1639818540
+            );
+        }
+
         if (
             $this->arguments['action'] !== null
             && $this->arguments['arguments'] !== null
@@ -139,8 +130,11 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         $addQueryString = (bool)$this->arguments['addQueryString'];
         $argumentsToBeExcludedFromQueryString = (array)$this->arguments['argumentsToBeExcludedFromQueryString'];
         $parameters = $this->arguments['arguments'];
-        $this->uriBuilder
+
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        $uriBuilder
             ->reset()
+            ->setRequest($request)
             ->setTargetPageType($pageType)
             ->setNoCache($noCache)
             ->setSection($section)
@@ -153,10 +147,10 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         ;
 
         if (MathUtility::canBeInterpretedAsInteger($pageUid)) {
-            $this->uriBuilder->setTargetPageUid((int)$pageUid);
+            $uriBuilder->setTargetPageUid((int)$pageUid);
         }
 
-        $uri = $this->uriBuilder->uriFor($action, $parameters, $controller, $extensionName, $pluginName);
+        $uri = $uriBuilder->uriFor($action, $parameters, $controller, $extensionName, $pluginName);
         if ($uri === '') {
             return $this->renderChildren();
         }
