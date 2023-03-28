@@ -305,17 +305,16 @@ class TranslatedSelectViewHelper extends AbstractFormFieldViewHelper
      */
     protected function getOptionValueScalar(mixed $valueElement): string
     {
+        $result = $valueElement;
         if (is_object($valueElement)) {
             if ($this->hasArgument('optionValueField')) {
-                return (string)ObjectAccess::getPropertyPath($valueElement, $this->arguments['optionValueField']);
+                $result = ObjectAccess::getPropertyPath($valueElement, $this->arguments['optionValueField']);
+            } elseif ($this->persistenceManager->getIdentifierByObject($valueElement) !== null) {
+                // @todo use $this->persistenceManager->isNewObject() once it is implemented
+                $result = $this->persistenceManager->getIdentifierByObject($valueElement);
             }
-            // @todo use $this->persistenceManager->isNewObject() once it is implemented
-            if ($this->persistenceManager->getIdentifierByObject($valueElement) !== null) {
-                return (string)$this->persistenceManager->getIdentifierByObject($valueElement);
-            }
-            return (string)$valueElement;
         }
-        return $valueElement;
+        return (string)$result;
     }
 
     /**
