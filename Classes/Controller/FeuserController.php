@@ -238,7 +238,7 @@ class FeuserController extends ActionController
         return $validator;
     }
 
-    protected function initializeActionMethodArguments()
+    protected function initializeActionMethodArguments(): void
     {
         if (!($this->arguments instanceof Arguments)) {
             $this->arguments = GeneralUtility::makeInstance(Arguments::class);
