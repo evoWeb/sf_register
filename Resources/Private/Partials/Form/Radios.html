@@ -1,0 +1,18 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<div class="col-md-6 mb-3 form-check {fieldName}">
+    <div class="custom-control custom-checkbox mr-sm-2">
+        <span class="label">
+            <f:translate id="{fieldName}" />
+            <f:render partial="Required" arguments="{field: fieldName, options: options}" />
+        </span>
+        <f:if condition="{options.additionalText}"><span class="additional-text">{options.additionalText}</span></f:if>
+
+        <f:for each="{options.values}" as="value" key="key">
+            <f:form.radio property="{fieldName}" value="{key}" id="{fieldName}_{key}" /> <label for="{fieldName}_{key}"><f:translate id="{value}"/></label>
+        </f:for>
+    </div>
+    <f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
+</div>
+
+</html>
