@@ -1,0 +1,3 @@
+"fe_users"
+,"uid","pid","username","password","usergroup"
+,1,2,"loginuser","$pbkdf2-sha256$25000$5UlrT3Wy1AJLwh.k5DjJbw$dU6H2Y8KA/ss.ZgEJ5B2SJKyE4/b7xUsiv2j2mHXOWI",2

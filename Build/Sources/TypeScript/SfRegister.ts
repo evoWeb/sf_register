@@ -5,7 +5,7 @@ interface SelectOption {
   value: string,
 }
 
-let document = window.document;
+const document = window.document;
 
 export default class SfRegister {
   public loading: boolean = false;
@@ -33,18 +33,14 @@ export default class SfRegister {
     if (this.barGraph) {
       this.barGraph.classList.add('show');
       this.passwordStrengthCalculator = new PasswordStrengthCalculator();
-      if (this.isInternetExplorer()) {
-        this.loadInternetExplorerPolyfill();
-      } else {
-        this.attachToElementById('sfrpassword', 'keyup', this.callTestPassword.bind(this));
-      }
+      this.attachToElementById('sfrpassword', 'keyup', this.callTestPassword.bind(this));
     }
 
     this.attachToElementById('sfrCountry', 'change', this.countryChanged.bind(this));
     this.attachToElementById('sfrCountry', 'keyup', this.countryChanged.bind(this));
     this.attachToElementById('uploadButton', 'change', this.uploadFile.bind(this));
     this.attachToElementById('removeImageButton', 'click', this.removeFile.bind(this));
-  };
+  }
 
   /**
    * Add class d-block remove class d-none
@@ -52,7 +48,7 @@ export default class SfRegister {
   showElement(element: HTMLElement) {
     element.classList.remove('d-none');
     element.classList.add('d-block');
-  };
+  }
 
   /**
    * Add class d-none remove class d-block
@@ -60,10 +56,10 @@ export default class SfRegister {
   hideElement(element: HTMLElement) {
     element.classList.remove('d-block');
     element.classList.add('d-none');
-  };
+  }
 
   attachToElementById(id: string, eventName: string, callback: EventListenerOrEventListenerObject) {
-    let element = document.getElementById(id);
+    const element = document.getElementById(id);
     this.attachToElement(element, eventName, callback);
   }
 
@@ -71,27 +67,27 @@ export default class SfRegister {
     if (element) {
       element.addEventListener(eventName, callback);
     }
-  };
+  }
 
   /**
    * Gets password meter element and sets the value with
    * the result of the calculate password strength function
    */
   callTestPassword(this: SfRegister, event: Event) {
-    let element = (event.target as HTMLInputElement),
+    const element = (event.target as HTMLInputElement),
       meterResult = this.passwordStrengthCalculator.calculate(element.value);
 
     if (this.barGraph.tagName.toLowerCase() === 'meter') {
       this.barGraph.value = meterResult.score;
     } else {
-      let barGraph = (this.barGraph as unknown as HTMLIFrameElement),
+      const barGraph = (this.barGraph as unknown as HTMLIFrameElement),
         percentScore = Math.min((Math.floor(meterResult.score / 3.4)), 10),
         blinds = (
           barGraph.contentDocument || barGraph.contentWindow.document
         ).getElementsByClassName('blind');
 
       for (let index = 0; index < blinds.length; index++) {
-        let blind = (blinds[index] as HTMLElement);
+        const blind = (blinds[index] as HTMLElement);
         if (index < percentScore) {
           this.hideElement(blind);
         } else {
@@ -99,27 +95,7 @@ export default class SfRegister {
         }
       }
     }
-  };
-
-  isInternetExplorer(): boolean {
-    let userAgent = navigator.userAgent;
-    /* MSIE used to detect old browsers and Trident used to newer ones*/
-    return userAgent.indexOf('MSIE ') > -1 || userAgent.indexOf('Trident/') > -1;
-  };
-
-  loadInternetExplorerPolyfill(this: SfRegister) {
-    let body = document.getElementsByTagName('body').item(0),
-      js = document.createElement('script');
-    js.setAttribute('type', 'text/javascript');
-    js.setAttribute('src', 'https://unpkg.com/meter-polyfill/dist/meter-polyfill.min.js');
-    js.onload = () => {
-      // @ts-ignore
-      meterPolyfill(this.barGraph);
-      this.attachToElementById('sfrpassword', 'keyup', this.callTestPassword);
-    };
-    body.appendChild(js);
-  };
-
+  }
 
   /**
    * Change value of zone selectbox
@@ -133,7 +109,7 @@ export default class SfRegister {
       && this.loading !== true
     ) {
       if (this.zone) {
-        let target = ((event.target || event.srcElement) as HTMLSelectElement),
+        const target = ((event.target || event.srcElement) as HTMLSelectElement),
           countrySelectedValue = target.options[target.selectedIndex].value;
 
         this.loading = true;
@@ -149,17 +125,17 @@ export default class SfRegister {
         this.ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
       }
     }
-  };
+  }
 
   /**
    * Process ajax response and display error message or
    * hand data received to add zone option function
    */
-  xhrReadyOnLoad(this: SfRegister, stateChanged: ProgressEvent): any {
-    let xhrResponse = (stateChanged.target as XMLHttpRequest);
+  xhrReadyOnLoad(this: SfRegister, stateChanged: ProgressEvent) {
+    const xhrResponse = (stateChanged.target as XMLHttpRequest);
 
     if (xhrResponse.readyState === 4 && xhrResponse.status === 200) {
-      let xhrResponseData = JSON.parse(xhrResponse.responseText);
+      const xhrResponseData = JSON.parse(xhrResponse.responseText);
       this.hideElement(this.zoneLoading);
 
       if (xhrResponseData.status === 'error' || xhrResponseData.data.length === 0) {
@@ -170,12 +146,12 @@ export default class SfRegister {
     }
 
     this.loading = false;
-  };
+  }
 
   /**
    * Process data received with xhr response
    */
-  addZoneOptions(this: SfRegister, options: Array<Object>) {
+  addZoneOptions(this: SfRegister, options: SelectOption[]) {
     while (this.zone.length) {
       this.zone.removeChild(this.zone[0]);
     }
@@ -185,37 +161,36 @@ export default class SfRegister {
     });
 
     this.zone.disabled = false;
-  };
-
+  }
 
   /**
    * Adds a preview information about file to upload in a label
    */
   uploadFile(this: HTMLInputElement) {
-    let information = document.getElementById('uploadFile');
+    const information = document.getElementById('uploadFile');
     if (information) {
       (information as HTMLInputElement).value = this.value;
     }
-  };
+  }
 
   /**
    * Handle remove image button clicked
    */
   removeFile() {
-    let remove = document.getElementById('removeImage');
+    const remove = document.getElementById('removeImage') as HTMLInputElement;
     if (remove) {
-      (remove as HTMLInputElement).value = '1';
+      remove.value = '1';
     }
     this.submitForm();
-  };
+  }
 
   /**
    * Selects the form and triggers submit
    */
   submitForm() {
-    let form = document.getElementById('sfrForm');
+    const form = document.getElementById('sfrForm') as HTMLFormElement;
     if (form) {
-      (form as HTMLFormElement).submit();
+      form.submit();
     }
-  };
+  }
 }

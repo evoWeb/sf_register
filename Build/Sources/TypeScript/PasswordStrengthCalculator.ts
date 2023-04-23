@@ -7,15 +7,16 @@ interface Verdict {
 export default class PasswordStrengthCalculator {
   /**
    * password length:
-   * level 0 (0 point): less than 4 characters
-   * level 1 (6 points): between 5 and 7 characters
-   * level 2 (12 points): between 8 and 15 characters
-   * level 3 (18 points): 16 or more characters
+   *   level 0 (0 point): less than 4 characters
+   *   level 1 (6 points): between 5 and 7 characters
+   *   level 2 (12 points): between 8 and 15 characters
+   *   level 3 (18 points): 16 or more characters
    */
-  verdictLength(password: String): Verdict {
-    let score = 0,
-      log = '',
-      length = password.length;
+  verdictLength(password: string): Verdict {
+    const length = password.length;
+    let score,
+      log;
+
     switch (true) {
       case length > 0 && length < 5:
         log = '3 points for length (' + length + ')';
@@ -32,26 +33,28 @@ export default class PasswordStrengthCalculator {
         score = 12;
         break;
 
-      case length > 15:
+      default:
         log = '18 points for length (' + length + ')';
         score = 18;
         break;
     }
-    return {score: score, log: log};
-  };
+
+    return { score: score, log: log };
+  }
 
   /**
    * letters:
-   * level 0 (0 points): no letters
-   * level 1 (5 points): all letters are lower case
-   * level 1 (5 points): all letters are upper case
-   * level 2 (7 points): letters are mixed case
+   *   level 0 (0 points): no letters
+   *   level 1 (5 points): all letters are lower case
+   *   level 1 (5 points): all letters are upper case
+   *   level 2 (7 points): letters are mixed case
    */
-  verdictLetter(password: String): Verdict {
-    let score = 0,
-      log = '',
-      matchLower = password.match(/[a-z]/),
+  verdictLetter(password: string): Verdict {
+    const matchLower = password.match(/[a-z]/),
       matchUpper = password.match(/[A-Z]/);
+    let score = 0,
+      log = '';
+
     if (matchLower) {
       if (matchUpper) {
         score = 7;
@@ -64,19 +67,21 @@ export default class PasswordStrengthCalculator {
       score = 5;
       log = '5 points for at least one upper case char';
     }
-    return {score: score, log: log};
-  };
+
+    return { score: score, log: log };
+  }
 
   /**
    * numbers:
-   * level 0 (0 points): no numbers exist
-   * level 1 (5 points): one number exists
-   * level 1 (7 points): 3 or more numbers exists
+   *   level 0 (0 points): no numbers exist
+   *   level 1 (5 points): one number exists
+   *   level 1 (7 points): 3 or more numbers exists
    */
-  verdictNumbers(password: String): Verdict {
+  verdictNumbers(password: string): Verdict {
+    const numbers = password.replace(/\D/gi, '');
     let score = 0,
-      log = '',
-      numbers = password.replace(/\D/gi, '');
+      log = '';
+
     if (numbers.length > 1) {
       score = 7;
       log = '7 points for at least three numbers';
@@ -84,19 +89,21 @@ export default class PasswordStrengthCalculator {
       score = 5;
       log = '5 points for at least one number';
     }
-    return {score: score, log: log};
-  };
+
+    return { score: score, log: log };
+  }
 
   /**
    * special characters:
-   * level 0 (0 points): no special characters
-   * level 1 (5 points): one special character exists
-   * level 2 (10 points): more than one special character exists
+   *   level 0 (0 points): no special characters
+   *   level 1 (5 points): one special character exists
+   *   level 2 (10 points): more than one special character exists
    */
-  verdictSpecialChars(password: String): Verdict {
+  verdictSpecialChars(password: string): Verdict {
+    const specialCharacters = password.replace(/[\w\s]/gi, '');
     let score = 0,
-      log = '',
-      specialCharacters = password.replace(/[\w\s]/gi, '');
+      log = '';
+
     if (specialCharacters.length > 1) {
       score = 10;
       log = '10 points for at least two special chars';
@@ -104,8 +111,9 @@ export default class PasswordStrengthCalculator {
       score = 5;
       log = '5 points for at least one special char';
     }
-    return {score: score, log: log};
-  };
+
+    return { score: score, log: log };
+  }
 
   /**
    * combinations:
@@ -118,6 +126,7 @@ export default class PasswordStrengthCalculator {
   verdictCombos(letter: number, number: number, special: number): Verdict {
     let score = 0,
       log = '';
+
     if (letter === 7 && number > 0 && special > 0) {
       score = 6;
       log = '6 combo points for letters, numbers and special characters';
@@ -134,14 +143,16 @@ export default class PasswordStrengthCalculator {
       score = 1;
       log = '1 combo points for mixed case letters';
     }
-    return {score: score, log: log};
-  };
+
+    return { score: score, log: log };
+  }
 
   /**
    * final verdict base on final score
    */
   finalVerdict(finalScore: number): string {
-    let strVerdict = '';
+    let strVerdict;
+
     if (finalScore < 16) {
       strVerdict = 'very weak';
     } else if (finalScore > 15 && finalScore < 25) {
@@ -153,32 +164,32 @@ export default class PasswordStrengthCalculator {
     } else {
       strVerdict = 'stronger';
     }
+
     return strVerdict;
-  };
+  }
 
   calculate(password: string): Verdict {
-    let lengthVerdict = this.verdictLength(password);
-    let letterVerdict = this.verdictLetter(password);
-    let numberVerdict = this.verdictNumbers(password);
-    let specialVerdict = this.verdictSpecialChars(password);
-    let combosVerdict = this.verdictCombos(letterVerdict.score, numberVerdict.score, specialVerdict.score);
+    const lengthVerdict = this.verdictLength(password),
+      letterVerdict = this.verdictLetter(password),
+      numberVerdict = this.verdictNumbers(password),
+      specialVerdict = this.verdictSpecialChars(password),
+      combosVerdict = this.verdictCombos(letterVerdict.score, numberVerdict.score, specialVerdict.score);
 
-    let score =
+    const score =
       lengthVerdict.score
       + letterVerdict.score
       + numberVerdict.score
       + specialVerdict.score
-      + combosVerdict.score;
+      + combosVerdict.score,
+      log = [
+        lengthVerdict.log,
+        letterVerdict.log,
+        numberVerdict.log,
+        specialVerdict.log,
+        combosVerdict.log,
+        score + ' points final score'
+      ].join('\n');
 
-    let log = [
-      lengthVerdict.log,
-      letterVerdict.log,
-      numberVerdict.log,
-      specialVerdict.log,
-      combosVerdict.log,
-      score + ' points final score'
-    ].join("\n");
-
-    return {score: score, verdict: this.finalVerdict(score), log: log};
+    return { score: score, verdict: this.finalVerdict(score), log: log };
   }
 }

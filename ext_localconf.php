@@ -2,11 +2,26 @@
 
 defined('TYPO3') or die();
 
+use Evoweb\SfRegister\Controller\FeuserCreateController;
+use Evoweb\SfRegister\Controller\FeuserDeleteController;
+use Evoweb\SfRegister\Controller\FeuserEditController;
+use Evoweb\SfRegister\Controller\FeuserInviteController;
+use Evoweb\SfRegister\Controller\FeuserPasswordController;
+use Evoweb\SfRegister\Controller\FeuserResendController;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
+use Evoweb\SfRegister\Form\FormDataProvider\FormFields;
+use Evoweb\SfRegister\Services\AutoLogin;
+use TYPO3\CMS\Backend\Form\FormDataProvider\TcaCheckboxItems;
+use TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
 call_user_func(function () {
     /**
      * Page TypoScript for mod wizards
      */
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+    ExtensionManagementUtility::addPageTSConfig(
         '@import \'EXT:sf_register/Configuration/TSconfig/Wizards/NewContentElement.tsconfig\''
     );
 
@@ -16,108 +31,72 @@ call_user_func(function () {
 @import \'EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript\'
 ' . $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'];
 
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['flexFormSegment'][
-        \Evoweb\SfRegister\Form\FormDataProvider\FormFields::class
-    ] = [
-        'depends' => [
-            \TYPO3\CMS\Backend\Form\FormDataProvider\TcaCheckboxItems::class,
-        ],
-        'before' => [
-            \TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems::class,
-        ],
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['flexFormSegment'][FormFields::class] = [
+        'depends' => [ TcaCheckboxItems::class ],
+        'before' => [ TcaSelectItems::class ],
     ];
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'SfRegister',
         'Create',
         [
-            \Evoweb\SfRegister\Controller\FeuserCreateController::class =>
+            FeuserCreateController::class =>
                 'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage',
         ],
         [
-            \Evoweb\SfRegister\Controller\FeuserCreateController::class =>
+            FeuserCreateController::class =>
                 'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage',
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'SfRegister',
         'Edit',
-        [
-            \Evoweb\SfRegister\Controller\FeuserEditController::class =>
-                'form, preview, proxy, save, confirm, accept, removeImage',
-        ],
-        [
-            \Evoweb\SfRegister\Controller\FeuserEditController::class =>
-                'form, preview, proxy, save, confirm, accept, removeImage',
-        ]
+        [ FeuserEditController::class => 'form, preview, proxy, save, confirm, accept, removeImage' ],
+        [ FeuserEditController::class => 'form, preview, proxy, save, confirm, accept, removeImage' ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'SfRegister',
         'Delete',
-        [
-            \Evoweb\SfRegister\Controller\FeuserDeleteController::class => 'form, save, confirm',
-        ],
-        [
-            \Evoweb\SfRegister\Controller\FeuserDeleteController::class => 'form, save, confirm',
-        ]
+        [ FeuserDeleteController::class => 'form, save, confirm' ],
+        [ FeuserDeleteController::class => 'form, save, confirm' ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'SfRegister',
         'RequestLink',
-        [
-            \Evoweb\SfRegister\Controller\FeuserDeleteController::class =>
-                'request, sendLink',
-        ],
-        [
-            \Evoweb\SfRegister\Controller\FeuserDeleteController::class =>
-                'request, sendLink',
-        ]
+        [ FeuserDeleteController::class => 'request, sendLink' ],
+        [ FeuserDeleteController::class => 'request, sendLink' ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'SfRegister',
         'Password',
-        [
-            \Evoweb\SfRegister\Controller\FeuserPasswordController::class => 'form, save',
-        ],
-        [
-            \Evoweb\SfRegister\Controller\FeuserPasswordController::class => 'form, save',
-        ]
+        [ FeuserPasswordController::class => 'form, save' ],
+        [ FeuserPasswordController::class => 'form, save' ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'SfRegister',
         'Invite',
-        [
-            \Evoweb\SfRegister\Controller\FeuserInviteController::class => 'form, invite',
-        ],
-        [
-            \Evoweb\SfRegister\Controller\FeuserInviteController::class => 'form, invite',
-        ]
+        [ FeuserInviteController::class => 'form, invite' ],
+        [ FeuserInviteController::class => 'form, invite' ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'SfRegister',
         'Resend',
-        [
-            \Evoweb\SfRegister\Controller\FeuserResendController::class => 'form, mail',
-        ],
-        [
-            \Evoweb\SfRegister\Controller\FeuserResendController::class => 'form, mail',
-        ]
+        [ FeuserResendController::class => 'form, mail' ],
+        [ FeuserResendController::class => 'form, mail' ]
     );
 
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][
-        \Evoweb\SfRegister\Domain\Model\FrontendUserInterface::class
-    ]['className'] = \Evoweb\SfRegister\Domain\Model\FrontendUser::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][FrontendUserInterface::class]['className'] = FrontendUser::class;
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addService(
+    ExtensionManagementUtility::addService(
         'sf_register',
         'auth',
-        \Evoweb\SfRegister\Services\AutoLogin::class,
+        AutoLogin::class,
         [
             'title' => 'Auto login for users of sf_register',
             'description' => 'Authenticates user with given session value',
@@ -127,7 +106,7 @@ call_user_func(function () {
             'quality' => 75,
             'os' => '',
             'exec' => '',
-            'className' => \Evoweb\SfRegister\Services\AutoLogin::class,
+            'className' => AutoLogin::class,
         ]
     );
 });

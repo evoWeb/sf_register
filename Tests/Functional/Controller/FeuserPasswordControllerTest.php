@@ -31,12 +31,24 @@ class FeuserPasswordControllerTest extends AbstractTestBase
 {
     public function setUp(): void
     {
-        defined('LF') ?: define('LF', chr(10));
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
+        $this->importCSVDataSet(__DIR__ . '/../Fixtures/pages.csv');
+        $this->importCSVDataSet(__DIR__ . '/../Fixtures/fe_groups.csv');
+        $this->importCSVDataSet(__DIR__ . '/../Fixtures/fe_users.csv');
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'constants' => [
+                    'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
+                    'EXT:sf_register/Configuration/TypoScript/minimal/constants.typoscript',
+                ],
+                'setup' => [
+                    'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
+                    'EXT:sf_register/Configuration/TypoScript/minimal/setup.typoscript',
+                    __DIR__ . '/../Fixtures/PageWithUserObjectUsingSlWithLLL.typoscript'
+                ]
+            ]
+        );
     }
 
     /**

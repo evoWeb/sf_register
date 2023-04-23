@@ -23,24 +23,33 @@ use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class BadWordValidatorTest extends AbstractTestBase
 {
-    /**
-     * @var BadWordValidator|AccessibleObjectInterface
-     */
-    protected $subject;
+    protected BadWordValidator|AccessibleObjectInterface|Mockobject $subject;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_users.xml');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_groups.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_users.csv');
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'constants' => [
+                    'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
+                    'EXT:sf_register/Configuration/TypoScript/minimal/constants.typoscript',
+                ],
+                'setup' => [
+                    'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
+                    'EXT:sf_register/Configuration/TypoScript/minimal/setup.typoscript',
+                    __DIR__ . '/../Fixtures/PageWithUserObjectUsingSlWithLLL.typoscript'
+                ]
+            ]
+        );
 
         $this->createEmptyFrontendUser();
         $this->initializeTypoScriptFrontendController();
 
-        $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList'] =
-            'god, sex, password';
+        $typoScriptSetupArray = $request->getAttribute('frontend.typoscript')->getSetupArray();
 
         /** @var ConfigurationManager|MockObject $repositoryMock */
         $configurationMock = $this->createMock(ConfigurationManager::class);

@@ -12,7 +12,7 @@ $EM_CONF['sf_register'] = [
     'version' => '12.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.2.0-12.9.99',
+            'typo3' => '12.2.0-12.4.99',
         ],
         'suggests' => [
             'extender' => '12.0.0-',

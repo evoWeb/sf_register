@@ -10,10 +10,10 @@ call_user_func(static function () {
             'exclude' => true,
             'label' => $languageFile . 'fe_users.activated_on',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'readOnly' => true,
-                'eval' => 'datetime',
+                'format' => 'datetime',
+                'eval' => 'int',
             ]
         ],
         'pseudonym' => [
@@ -38,10 +38,10 @@ call_user_func(static function () {
         'date_of_birth' => [
             'label' => $languageFile . 'fe_users.date_of_birth',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 10,
-                'eval' => 'date',
+                'format' => 'date',
+                'eval' => 'int',
                 'default' => 0
             ]
         ],

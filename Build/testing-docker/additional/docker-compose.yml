@@ -1,0 +1,107 @@
+version: '2.3'
+services:
+  composer_require_package:
+    image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
+    user: "${HOST_UID}"
+    volumes:
+      - ${CORE_ROOT}:${CORE_ROOT}
+    working_dir: ${CORE_ROOT}
+    environment:
+      COMPOSER_CACHE_DIR: "Build/.cache/composer"
+    command: >
+      /bin/sh -c "
+        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+          set -x
+        fi
+        composer require -W -n ${COMPOSER_PARAMETER} ${PACKAGE};
+      "
+
+  lint_php:
+    image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
+    user: "${HOST_UID}"
+    volumes:
+      - ${CORE_ROOT}:${CORE_ROOT}
+    working_dir: ${CORE_ROOT}
+    command: >
+      /bin/sh -c "
+        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+          set -x
+        fi
+        php -v | grep '^PHP'
+        find Classes/ -name \\*.php -print0 | xargs -0 -n1 -P4 php -dxdebug.mode=off -l > /dev/null;
+      "
+
+  lint_scss:
+    image: typo3/core-testing-nodejs16:latest
+    user: "${HOST_UID}"
+    volumes:
+      - ${CORE_ROOT}:${CORE_ROOT}
+    environment:
+      HOME: "${CORE_ROOT}/.cache"
+    working_dir: ${CORE_ROOT}/Build
+    command: >
+      /bin/sh -c "
+        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+          set -x
+        fi
+        mkdir -p ${CORE_ROOT}/.cache
+        npm ci || exit 1
+        npm run lint:css;
+      "
+
+  lint_typescript:
+    image: typo3/core-testing-nodejs16:latest
+    user: "${HOST_UID}"
+    volumes:
+      - ${CORE_ROOT}:${CORE_ROOT}
+    environment:
+      HOME: "${CORE_ROOT}/.cache"
+    working_dir: ${CORE_ROOT}/Build
+    command: >
+      /bin/sh -c "
+        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+          set -x
+        fi
+        mkdir -p ${CORE_ROOT}/.cache
+        npm ci || exit 1
+        npm run lint:ts;
+      "
+
+  lint_xliff:
+    image: container.registry.gitlab.typo3.org/qa/example-extension:typo3-ci-xliff-lint
+    user: "${HOST_UID}"
+    volumes:
+      - ${CORE_ROOT}:${CORE_ROOT}
+    working_dir: ${CORE_ROOT}/Resources/Private/Language
+    entrypoint: >
+      /bin/sh -c "
+        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+          set -x
+        fi
+        xmllint --schema /xliff-core-1.2-strict.xsd --noout *.xlf;
+      "
+
+  makedoc:
+    image: ghcr.io/t3docs/render-documentation:v3.0.dev30
+    volumes:
+      - ${CORE_ROOT}:/PROJECT:ro
+      - ${CORE_ROOT}/Documentation-GENERATED-temp:/RESULT
+    entrypoint: >
+      /bin/sh -c "
+        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+          set -x
+        fi
+        /ALL/Menu/mainmenu.sh makehtml;
+      "
+
+  removedoc:
+    image: ghcr.io/t3docs/render-documentation:v3.0.dev30
+    volumes:
+      - ${CORE_ROOT}:/PROJECT
+    entrypoint: >
+      /bin/sh -c "
+        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+          set -x
+        fi
+        rm -rf /PROJECT/Documentation-GENERATED-temp;
+      "
