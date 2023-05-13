@@ -34,23 +34,9 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/pages.csv');
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/fe_groups.csv');
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/fe_users.csv');
-        $this->setUpFrontendRootPage(
-            1,
-            [
-                'constants' => [
-                    'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
-                    'EXT:sf_register/Configuration/TypoScript/minimal/constants.typoscript',
-                ],
-                'setup' => [
-                    'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
-                    'EXT:sf_register/Configuration/TypoScript/minimal/setup.typoscript',
-                    __DIR__ . '/../Fixtures/PageWithUserObjectUsingSlWithLLL.typoscript'
-                ]
-            ]
-        );
 
-        $this->initializeTypoScriptFrontendController();
         $this->createEmptyFrontendUser();
+        $this->request = $this->initializeTypoScriptFrontendController();
     }
 
     /**

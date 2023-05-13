@@ -29,33 +29,9 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_groups.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_users.csv');
-        $this->setUpFrontendRootPage(
-            1,
-            [
-                'constants' => [
-                    'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
-                    'EXT:sf_register/Configuration/TypoScript/minimal/constants.typoscript',
-                ],
-                'setup' => [
-                    'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
-                    'EXT:sf_register/Configuration/TypoScript/minimal/setup.typoscript',
-                    __DIR__ . '/../Fixtures/PageWithUserObjectUsingSlWithLLL.typoscript'
-                ]
-            ]
-        );
-        $this->writeSiteConfiguration(
-            'website-local',
-            $this->buildSiteConfiguration(1, 'http://localhost/'),
-            [
-                $this->buildDefaultLanguageConfiguration('EN', '/'),
-            ]
-        );
 
         $this->createEmptyFrontendUser();
-        $this->initializeTypoScriptFrontendController();
-
-        $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList'] =
-            'god, sex, password';
+        $this->request = $this->initializeTypoScriptFrontendController();
     }
 
     /**
@@ -63,9 +39,10 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
      */
     public function settingsContainsValidTyposcriptSettings()
     {
+        $typoScriptSetup = $this->request->getAttribute('frontend.typoscript')->getSetupArray();
         self::assertArrayHasKey(
             'badWordList',
-            $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
+            $typoScriptSetup['plugin.']['tx_sfregister.']['settings.']
         );
     }
 

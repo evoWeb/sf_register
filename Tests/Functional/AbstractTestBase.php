@@ -19,7 +19,7 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Site\SiteFinder;
@@ -51,11 +51,27 @@ abstract class AbstractTestBase extends FunctionalTestCase
 
     protected ?FrontendUserAuthentication $frontendUser = null;
 
-    public function initializeTypoScriptFrontendController()
+    protected ServerRequest $request;
+
+    public function initializeTypoScriptFrontendController(): ServerRequest
     {
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'constants' => [
+                    'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
+                    'EXT:sf_register/Configuration/TypoScript/minimal/constants.typoscript',
+                ],
+                'setup' => [
+                    'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
+                    'EXT:sf_register/Configuration/TypoScript/minimal/setup.typoscript',
+                    __DIR__ . '/../Fixtures/PageWithUserObjectUsingSlWithLLL.typoscript'
+                ]
+            ]
+        );
         $this->writeSiteConfiguration(
-            'test',
-            $this->buildSiteConfiguration(1, '/'),
+            'website-local',
+            $this->buildSiteConfiguration(1, 'http://localhost/'),
             [
                 $this->buildDefaultLanguageConfiguration('EN', '/en/'),
             ],
@@ -67,20 +83,31 @@ abstract class AbstractTestBase extends FunctionalTestCase
         $_SERVER['REQUEST_URI'] = '/en/';
         $_GET['id'] = 1;
         GeneralUtility::flushInternalRuntimeCaches();
-        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByIdentifier('test');
 
-        $this->typoScriptFrontendController = GeneralUtility::makeInstance(
+        $request = ServerRequestFactory::fromGlobals();
+        $request = $request->withQueryParams($_GET);
+
+        $context = GeneralUtility::makeInstance(Context::class);
+
+        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByIdentifier('website-local');
+        $request->withAttribute('site', $site);
+
+        $pageArguments = new PageArguments(1, '0', []);
+
+        $controller = GeneralUtility::makeInstance(
             TypoScriptFrontendController::class,
-            GeneralUtility::makeInstance(Context::class),
+            $context,
             $site,
-            $site->getDefaultLanguage(),
-            new PageArguments(1, '0', []),
-            new FrontendUserAuthentication()
+            $request->getAttribute('language', $site->getDefaultLanguage()),
+            $pageArguments,
+            $this->frontendUser
         );
-        $this->typoScriptFrontendController->sys_page = GeneralUtility::makeInstance(PageRepository::class);
-        $this->typoScriptFrontendController->fe_user =& $this->frontendUser;
+        $controller->no_cache = true;
+        $controller->determineId($request);
+        $request = $request->withAttribute('frontend.controller', $controller);
+        $request = $controller->getFromCache($request);
 
-        $GLOBALS['TSFE'] = $this->typoScriptFrontendController;
+        return $request;
     }
 
     public function createAndLoginFrontEndUser(string $frontEndUserGroups = '', array $recordData = []): int

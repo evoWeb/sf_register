@@ -31,36 +31,21 @@ class BadWordValidatorTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_groups.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_users.csv');
-        $this->setUpFrontendRootPage(
-            1,
-            [
-                'constants' => [
-                    'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
-                    'EXT:sf_register/Configuration/TypoScript/minimal/constants.typoscript',
-                ],
-                'setup' => [
-                    'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
-                    'EXT:sf_register/Configuration/TypoScript/minimal/setup.typoscript',
-                    __DIR__ . '/../Fixtures/PageWithUserObjectUsingSlWithLLL.typoscript'
-                ]
-            ]
-        );
 
         $this->createEmptyFrontendUser();
-        $this->initializeTypoScriptFrontendController();
-
-        $typoScriptSetupArray = $request->getAttribute('frontend.typoscript')->getSetupArray();
+        $this->request = $this->initializeTypoScriptFrontendController();
+        $controller = $this->request->getAttribute('frontend.controller', null);
 
         /** @var ConfigurationManager|MockObject $repositoryMock */
         $configurationMock = $this->createMock(ConfigurationManager::class);
 
         $this->subject = $this->getMockBuilder($this->buildAccessibleProxy(BadWordValidator::class))
             ->setConstructorArgs([$configurationMock])
-            ->setMethods(['dummy'])
+            ->onlyMethods(['validate'])
             ->getMock();
         $this->subject->_set(
             'settings',
-            $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
+            $controller->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
         );
     }
 
@@ -85,9 +70,10 @@ class BadWordValidatorTest extends AbstractTestBase
      */
     public function isValidReturnsFalseForWordOnBadwordlist()
     {
-        $words = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
+        $controller = $this->request->getAttribute('frontend.controller', null);
+        $words = GeneralUtility::trimExplode(
             ',',
-            $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList']
+            $controller->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList']
         );
 
         $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageServiceFactory::class)->create('default');
