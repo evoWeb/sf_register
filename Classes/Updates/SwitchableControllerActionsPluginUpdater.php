@@ -45,6 +45,11 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
             'switchableControllerActions' => 'FeuserInvite->form;FeuserInvite->invite',
             'targetListType' => 'sfregister_invite'
         ],
+        [
+            'sourceListType' => 'sfregister_form',
+            'switchableControllerActions' => 'FeuserResend->form;FeuserResend->mail',
+            'targetListType' => 'sfregister_resend'
+        ],
     ];
 
     protected FlexFormService $flexFormService;
