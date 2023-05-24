@@ -15,15 +15,14 @@ namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
 
 use Evoweb\SfRegister\Validation\Validator\UniqueValidator;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class UniqueValidatorTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
-    public function isValidReturnsTrueIfCountOfValueInFieldReturnsZeroForLocalSearch()
+    #[Test]
+    public function isValidReturnsTrueIfCountOfValueInFieldReturnsZeroForLocalSearch(): void
     {
         $fieldName = 'username';
         $expected = 'myValue';
@@ -37,17 +36,15 @@ class UniqueValidatorTest extends UnitTestCase
 
         $subject = $this->getMockBuilder(UniqueValidator::class)
             ->setConstructorArgs([$repositoryMock])
-            ->setMethods(['translateErrorMessage'])
+            ->onlyMethods(['translateErrorMessage'])
             ->getMock();
         $subject->setPropertyName($fieldName);
 
         self::assertFalse($subject->validate($expected)->hasErrors());
     }
 
-    /**
-     * @test
-     */
-    public function isValidReturnsFalseIfCountOfValueInFieldReturnsHigherThenZeroForLocalSearch()
+    #[Test]
+    public function isValidReturnsFalseIfCountOfValueInFieldReturnsHigherThenZeroForLocalSearch(): void
     {
         $fieldName = 'username';
         $expected = 'myValue';
@@ -61,17 +58,15 @@ class UniqueValidatorTest extends UnitTestCase
 
         $subject = $this->getMockBuilder(UniqueValidator::class)
             ->setConstructorArgs([$repositoryMock])
-            ->setMethods(['translateErrorMessage'])
+            ->onlyMethods(['translateErrorMessage'])
             ->getMock();
         $subject->setPropertyName($fieldName);
 
         self::assertTrue($subject->validate($expected)->hasErrors());
     }
 
-    /**
-     * @test
-     */
-    public function isValidReturnsTrueIfCountOfValueInFieldReturnsZeroForLocalAndGlobalSearch()
+    #[Test]
+    public function isValidReturnsTrueIfCountOfValueInFieldReturnsZeroForLocalAndGlobalSearch(): void
     {
         $fieldName = 'username';
         $expected = 'myValue';
@@ -89,17 +84,15 @@ class UniqueValidatorTest extends UnitTestCase
 
         $subject = $this->getMockBuilder(UniqueValidator::class)
             ->setConstructorArgs([$repositoryMock])
-            ->setMethods(['translateErrorMessage'])
+            ->onlyMethods(['translateErrorMessage'])
             ->getMock();
         $subject->setPropertyName($fieldName);
 
         self::assertFalse($subject->validate($expected)->hasErrors());
     }
 
-    /**
-     * @test
-     */
-    public function isValidReturnsFalseIfCountOfValueInFieldReturnsZeroForLocalAndHigherThenZeroForGlobalSearch()
+    #[Test]
+    public function isValidReturnsFalseIfCountOfValueInFieldReturnsZeroForLocalAndHigherThenZeroForGlobalSearch(): void
     {
         $fieldName = 'username';
         $expected = 'myValue';
@@ -117,7 +110,7 @@ class UniqueValidatorTest extends UnitTestCase
 
         $subject = $this->getMockBuilder(UniqueValidator::class)
             ->setConstructorArgs([$repositoryMock])
-            ->setMethods(['translateErrorMessage'])
+            ->onlyMethods(['translateErrorMessage'])
             ->getMock();
         $subject->setOptions(['global' => 1]);
         $subject->setPropertyName($fieldName);

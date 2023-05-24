@@ -13,11 +13,12 @@ namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class UserValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+use PHPUnit\Framework\Attributes\Test;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
+class UserValidatorTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function isValid()
     {
         self::markTestIncomplete('not implemented by now');

@@ -57,8 +57,6 @@ runFunctionalTests () {
     local PHP_VERSION="${1}"
     local TYPO3_VERSION=${2}
     local TESTING_FRAMEWORK=${3}
-    local TEST_PATH=${4}
-    local PREFER_LOWEST=${5}
 
     echo "#################################################################" >&2
     echo "Run unit and/or functional tests on TYPO3 ${TYPO3_VERSION}" >&2
@@ -85,14 +83,16 @@ runFunctionalTests () {
 
     ./additionalTests.sh -p ${PHP_VERSION} \
         -s composerInstallPackage \
-        -q "typo3/testing-framework:${TESTING_FRAMEWORK}" \
-        -o " --dev ${PREFER_LOWEST}" || exit 1 ; \
+        -q "typo3/testing-framework:${TESTING_FRAMEWORK}" || exit 1 ; \
         EXIT_CODE_FRAMEWORK=$?
 
     ./runTests.sh -p ${PHP_VERSION} -s composerValidate || exit 1 ; \
         EXIT_CODE_VALIDATE=$?
 
-    ./runTests.sh -p ${PHP_VERSION} -d sqlite -s functional ${TEST_PATH} || exit 1 ; \
+#    ./runTests.sh -p ${PHP_VERSION} -d sqlite -s functional Tests/Functional || exit 1 ; \
+#        EXIT_CODE_FUNCTIONAL=$?
+
+    ./runTests.sh -p ${PHP_VERSION} -d sqlite -s unit Tests/Unit || exit 1 ; \
         EXIT_CODE_FUNCTIONAL=$?
 
     echo "#################################################################" >&2
@@ -127,8 +127,8 @@ cleanup () {
 
 checkResources
 
-runFunctionalTests "8.2" "^12.0" "dev-main" "Tests/Functional" || exit 1
-runFunctionalTests "8.2" "^12.0" "dev-main" "Tests/Functional" "--prefer-lowest" || exit 1
+runFunctionalTests "8.2" "^12.0" "dev-main" || exit 1
+#runFunctionalTests "8.2" "dev-main" "dev-main" || exit 1
 # runFunctionalTests "8.1" "dev-main" "dev-main" "Tests/Functional" || exit 1
 
 cleanup

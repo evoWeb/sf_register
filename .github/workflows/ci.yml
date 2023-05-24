@@ -43,10 +43,8 @@ jobs:
         packages:
           - core: '^12.0'
             framework: 'dev-main'
-            prefer: ''
-          - core: '^12.0'
+          - core: 'dev-main'
             framework: 'dev-main'
-            prefer: '--prefer-lowest'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -67,14 +65,16 @@ jobs:
         run: |
           Build/Scripts/additionalTests.sh -p ${{ matrix.php }} \
             -s composerInstallPackage \
-            -q "typo3/testing-framework:${{ matrix.packages.framework }}" \
-            -o " --dev ${{ matrix.packages.prefer }}"
+            -q "typo3/testing-framework:${{ matrix.packages.framework }}"
 
       - name: Composer validate
         run: Build/Scripts/runTests.sh -s composerValidate
 
       - name: Functional tests with sqlite
         run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d sqlite -s functional Tests/Functional
+
+      - name: Functional tests with sqlite
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d sqlite -s unit Tests/Unit
 
       - name: Cleanup
         run: |

@@ -13,16 +13,18 @@ namespace Evoweb\SfRegister\Tests\Unit\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+use Evoweb\SfRegister\Domain\Model\Password;
+use PHPUnit\Framework\Attributes\Test;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
+class PasswordTest extends UnitTestCase
 {
-    /**
-     * @var \Evoweb\SfRegister\Domain\Model\Password
-     */
-    protected $subject;
+    protected Password $subject;
 
     public function setUp(): void
     {
-        $this->subject = new \Evoweb\SfRegister\Domain\Model\Password();
+        parent::setUp();
+        $this->subject = new Password();
     }
 
     public function tearDown(): void
@@ -30,18 +32,14 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         unset($this->subject);
     }
 
-    /**
-     * @test
-     */
-    public function passwordOnInitializeIsEmptyString()
+    #[Test]
+    public function passwordOnInitializeIsEmptyString(): void
     {
         self::assertEquals('', $this->subject->getPassword());
     }
 
-    /**
-     * @test
-     */
-    public function passwordReturnsStringSetBySetPassword()
+    #[Test]
+    public function passwordReturnsStringSetBySetPassword(): void
     {
         $expected = 'test string';
 
@@ -50,18 +48,14 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         self::assertSame($expected, $this->subject->getPassword());
     }
 
-    /**
-     * @test
-     */
-    public function passwordRepeatOnInitializeIsEmptyString()
+    #[Test]
+    public function passwordRepeatOnInitializeIsEmptyString(): void
     {
         self::assertEquals('', $this->subject->getPasswordRepeat());
     }
 
-    /**
-     * @test
-     */
-    public function passwordAgainReturnsStringSetBySetPassword()
+    #[Test]
+    public function passwordAgainReturnsStringSetBySetPassword(): void
     {
         $expected = 'test string';
 
@@ -70,18 +64,14 @@ class PasswordTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         self::assertSame($expected, $this->subject->getPasswordRepeat());
     }
 
-    /**
-     * @test
-     */
-    public function oldPasswordOnInitializeIsEmptyString()
+    #[Test]
+    public function oldPasswordOnInitializeIsEmptyString(): void
     {
         self::assertEquals('', $this->subject->getOldPassword());
     }
 
-    /**
-     * @test
-     */
-    public function oldPasswordReturnsStringSetBySetPassword()
+    #[Test]
+    public function oldPasswordReturnsStringSetBySetPassword(): void
     {
         $expected = 'test string';
 

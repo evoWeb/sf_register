@@ -13,17 +13,20 @@ namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class IsTrueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+use Evoweb\SfRegister\Validation\Validator\IsTrueValidator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
+class IsTrueValidatorTest extends UnitTestCase
 {
-    /**
-     * @var \Evoweb\SfRegister\Validation\Validator\IsTrueValidator
-     */
-    protected $subject;
+    protected IsTrueValidator $subject;
 
     public function setUp(): void
     {
-        $this->subject = $this->getMockBuilder(\Evoweb\SfRegister\Validation\Validator\IsTrueValidator::class)
-            ->setMethods(['translateErrorMessage'])
+        parent::setUp();
+        $this->subject = $this->getMockBuilder(IsTrueValidator::class)
+            ->onlyMethods(['translateErrorMessage'])
             ->getMock();
     }
 
@@ -32,18 +35,13 @@ class IsTrueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         unset($this->subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isValidReturnsTrueIfTrueWasUsed()
     {
         self::assertFalse($this->subject->validate(true)->hasErrors());
     }
 
-    /**
-     * @return array
-     */
-    public function nonTrueValues()
+    public static function nonTrueValues(): array
     {
         return [
             'stringIsNonTrue' => ['true'],
@@ -52,12 +50,9 @@ class IsTrueValidatorTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         ];
     }
 
-    /**
-     * @param mixed $input
-     * @test
-     * @dataProvider nonTrueValues
-     */
-    public function isValidReturnsFalseIfNonTrueWasUsed($input)
+    #[Test]
+    #[DataProvider('nonTrueValues')]
+    public function isValidReturnsFalseIfNonTrueWasUsed(mixed $input): void
     {
         self::assertTrue($this->subject->validate($input)->hasErrors());
     }
