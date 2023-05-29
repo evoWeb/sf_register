@@ -89,8 +89,8 @@ runFunctionalTests () {
     ./runTests.sh -p ${PHP_VERSION} -s composerValidate || exit 1 ; \
         EXIT_CODE_VALIDATE=$?
 
-#    ./runTests.sh -p ${PHP_VERSION} -d sqlite -s functional Tests/Functional || exit 1 ; \
-#        EXIT_CODE_FUNCTIONAL=$?
+    ./runTests.sh -p ${PHP_VERSION} -d sqlite -s functional Tests/Functional || exit 1 ; \
+        EXIT_CODE_FUNCTIONAL=$?
 
     ./runTests.sh -p ${PHP_VERSION} -d sqlite -s unit Tests/Unit || exit 1 ; \
         EXIT_CODE_FUNCTIONAL=$?

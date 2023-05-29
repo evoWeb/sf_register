@@ -19,9 +19,11 @@ use Evoweb\SfRegister\Services\File;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
@@ -39,10 +41,8 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $this->request = $this->initializeTypoScriptFrontendController();
     }
 
-    /**
-     * @test
-     */
-    public function isUserValidatorSet()
+    #[Test]
+    public function isUserValidatorSet(): void
     {
         $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.'] = [
             'fields' => [
@@ -89,9 +89,9 @@ class FeuserCreateControllerTest extends AbstractTestBase
 
         /** @var Request $request */
         $request = $this->getAccessibleMock(Request::class);
-        $request->setArgument('action', 'preview');
-        $request->setArgument('controller', 'FeuserCreate');
-        $request->setArgument('user', [
+        $request = $request->withArgument('action', 'preview');
+        $request = $request->withArgument('controller', 'FeuserCreate');
+        $request = $request->withArgument('user', [
             'gender' => 1,
             'title' => 'none',
             'firstName' => '',
@@ -116,7 +116,7 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $subject->call('initializeActionMethodArguments');
         $subject->call('initializeActionMethodValidators');
 
-        /** @var \TYPO3\CMS\Extbase\Mvc\Controller\Arguments $arguments */
+        /** @var Arguments $arguments */
         $arguments = $subject->get('arguments');
         $validator = $arguments->getArgument('user')->getValidator();
 

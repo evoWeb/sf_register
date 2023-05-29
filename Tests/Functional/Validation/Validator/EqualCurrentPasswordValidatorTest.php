@@ -16,6 +16,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -34,10 +35,8 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         $this->request = $this->initializeTypoScriptFrontendController();
     }
 
-    /**
-     * @test
-     */
-    public function settingsContainsValidTyposcriptSettings()
+    #[Test]
+    public function settingsContainsValidTyposcriptSettings(): void
     {
         $typoScriptSetup = $this->request->getAttribute('frontend.typoscript')->getSetupArray();
         self::assertArrayHasKey(
@@ -46,10 +45,8 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         );
     }
 
-    /**
-     * @test
-     */
-    public function isUserLoggedInReturnsFalseIfNotLoggedIn()
+    #[Test]
+    public function isUserLoggedInReturnsFalseIfNotLoggedIn(): void
     {
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
@@ -66,10 +63,8 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         self::assertFalse($method->invoke($subject));
     }
 
-    /**
-     * @test
-     */
-    public function isUserLoggedInReturnsTrueIfLoggedIn()
+    #[Test]
+    public function isUserLoggedInReturnsTrueIfLoggedIn(): void
     {
         $this->createAndLoginFrontEndUser('2', [
             'password' => 'testOld',

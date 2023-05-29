@@ -30,6 +30,7 @@ class PasswordTest extends UnitTestCase
     public function tearDown(): void
     {
         unset($this->subject);
+        parent::tearDown();
     }
 
     #[Test]

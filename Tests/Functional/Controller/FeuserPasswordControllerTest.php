@@ -21,6 +21,7 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Context\Context;
@@ -40,10 +41,8 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/fe_users.csv');
     }
 
-    /**
-     * @test
-     */
-    public function userIsLoggedInReturnsFalseIfNotLoggedIn()
+    #[Test]
+    public function userIsLoggedInReturnsFalseIfNotLoggedIn(): void
     {
         $this->createEmptyFrontendUser();
         $this->request = $this->initializeTypoScriptFrontendController();
@@ -82,10 +81,8 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         self::assertFalse($method->invoke($subject));
     }
 
-    /**
-     * @test
-     */
-    public function userIsLoggedInReturnsTrueIfLoggedIn()
+    #[Test]
+    public function userIsLoggedInReturnsTrueIfLoggedIn(): void
     {
         $this->createAndLoginFrontEndUser('2', [
             'password' => 'testOld',
@@ -127,10 +124,8 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         self::assertTrue($method->invoke($subject));
     }
 
-    /**
-     * @test
-     */
-    public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository()
+    #[Test]
+    public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository(): void
     {
         if (!defined('PASSWORD_ARGON2I')) {
             self::markTestSkipped('Due to missing Argon2 in travisci.');

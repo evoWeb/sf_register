@@ -153,7 +153,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
         return $connection->lastInsertId($tableName);
     }
 
-    public function loginFrontEndUser(int $frontEndUserUid)
+    public function loginFrontEndUser(int $frontEndUserUid): void
     {
         if ($frontEndUserUid === 0) {
             throw new \InvalidArgumentException('The user ID must be > 0.', 1334439475);
@@ -176,7 +176,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
         $context->setAspect('frontend.user', $userAspect);
     }
 
-    public function createEmptyFrontendUser()
+    public function createEmptyFrontendUser(): void
     {
         $this->frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
 
@@ -192,16 +192,12 @@ abstract class AbstractTestBase extends FunctionalTestCase
     public function getPrivateMethod($object, $methodName): \ReflectionMethod
     {
         $classReflection = new \ReflectionClass($object);
-        $methodReflection = $classReflection->getMethod($methodName);
-        $methodReflection->setAccessible(true);
-        return $methodReflection;
+        return $classReflection->getMethod($methodName);
     }
 
     public function getPrivateProperty($object, $propertyName): \ReflectionProperty
     {
         $classReflection = new \ReflectionClass($object);
-        $propertyReflection = $classReflection->getProperty($propertyName);
-        $propertyReflection->setAccessible(true);
-        return $propertyReflection;
+        return $classReflection->getProperty($propertyName);
     }
 }

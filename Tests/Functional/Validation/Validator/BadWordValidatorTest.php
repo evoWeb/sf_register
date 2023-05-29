@@ -15,6 +15,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\BadWordValidator;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -52,12 +53,11 @@ class BadWordValidatorTest extends AbstractTestBase
     public function tearDown(): void
     {
         unset($this->subject);
+        parent::tearDown();
     }
 
-    /**
-     * @test
-     */
-    public function settingsContainsValidTyposcriptSettings()
+    #[Test]
+    public function settingsContainsValidTyposcriptSettings(): void
     {
         self::assertArrayHasKey(
             'badWordList',
@@ -65,12 +65,10 @@ class BadWordValidatorTest extends AbstractTestBase
         );
     }
 
-    /**
-     * @test
-     */
-    public function isValidReturnsFalseForWordOnBadwordlist()
+    #[Test]
+    public function isValidReturnsFalseForWordOnBadwordlist(): void
     {
-        $controller = $this->request->getAttribute('frontend.controller', null);
+        $controller = $this->request->getAttribute('frontend.controller');
         $words = GeneralUtility::trimExplode(
             ',',
             $controller->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList']
@@ -81,10 +79,8 @@ class BadWordValidatorTest extends AbstractTestBase
         self::assertTrue($this->subject->validate(current($words))->hasErrors());
     }
 
-    /**
-     * @test
-     */
-    public function isValidReturnsTrueForGoodPassword()
+    #[Test]
+    public function isValidReturnsTrueForGoodPassword(): void
     {
         self::assertFalse($this->subject->validate('4dw$koL')->hasErrors());
     }

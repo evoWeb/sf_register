@@ -16,6 +16,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Domain\Repository;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class FrontendUserRepositoryTest extends AbstractTestBase
@@ -35,12 +36,11 @@ class FrontendUserRepositoryTest extends AbstractTestBase
     public function tearDown(): void
     {
         unset($this->subject);
+        parent::tearDown();
     }
 
-    /**
-     * @test
-     */
-    public function findByUid()
+    #[Test]
+    public function findByUid(): void
     {
         /** @var FrontendUser $user */
         $user = $this->subject->findByUid(1);
