@@ -101,6 +101,11 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
         foreach ($records as $record) {
             $flexFormData = GeneralUtility::xml2array($record['pi_flexform']);
             $flexForm = $this->flexFormService->convertFlexFormContentToArray($record['pi_flexform']);
+
+            if (!isset($flexForm['switchableControllerActions'])) {
+                continue;
+            }
+            
             $targetListType = $this->getTargetListType(
                 $record['list_type'],
                 $flexForm['switchableControllerActions']
@@ -169,7 +174,12 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
 
     protected function getAllowedSettingsFromFlexForm(string $listType): array
     {
-        $flexFormFile = $GLOBALS['TCA']['tt_content']['columns']['pi_flexform']['config']['ds'][$listType . ',list'];
+        $flexFormFile = $GLOBALS['TCA']['tt_content']['columns']['pi_flexform']['config']['ds'][$listType . ',list'] ?? null;
+
+        if ($flexFormFile === null) {
+            return [];
+        }
+        
         $flexFormContent = file_get_contents(GeneralUtility::getFileAbsFileName(substr(trim($flexFormFile), 5)));
         $flexFormData = GeneralUtility::xml2array($flexFormContent);
 
