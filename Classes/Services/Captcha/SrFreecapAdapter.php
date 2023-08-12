@@ -54,7 +54,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class SrFreecapAdapter extends AbstractAdapter
 {
-    protected ?object $captcha = null;
+    protected ?object $captchaService = null;
 
     /**
      * Keys to be used as variables output
@@ -68,21 +68,19 @@ class SrFreecapAdapter extends AbstractAdapter
         'accessible',
     ];
 
-    public function __construct()
+    public function __construct(protected Session $session)
     {
         if (ExtensionManagementUtility::isLoaded('sr_freecap')) {
-            $this->captcha = GeneralUtility::makeInstance(PiBaseApi::class);
+            $this->captchaService = GeneralUtility::makeInstance(PiBaseApi::class);
         }
     }
 
     public function render(): array|string
     {
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class);
-        $session->remove('captchaWasValidPreviously');
+        $this->session->remove('captchaWasValid');
 
-        if ($this->captcha !== null) {
-            $values = array_values($this->captcha->makeCaptcha());
+        if ($this->captchaService !== null) {
+            $values = array_values($this->captchaService->makeCaptcha());
             $output = array_combine($this->keys, $values);
         } else {
             $output = LocalizationUtility::translate(
@@ -99,11 +97,8 @@ class SrFreecapAdapter extends AbstractAdapter
     {
         $validCaptcha = true;
 
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class);
-        $captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
-        if ($this->captcha !== null && $captchaWasValidPreviously !== true) {
-            if (!$this->captcha->checkWord($value)) {
+        if ($this->captchaService !== null && $this->session->get('captchaWasValid') !== true) {
+            if (!$this->captchaService->checkWord($value)) {
                 $validCaptcha = false;
                 $this->addError(
                     LocalizationUtility::translate(
@@ -113,9 +108,9 @@ class SrFreecapAdapter extends AbstractAdapter
                     1306910429
                 );
             }
-        }
 
-        $session->set('captchaWasValidPreviously', $validCaptcha);
+            $this->session->set('captchaWasValid', $validCaptcha);
+        }
 
         return $validCaptcha;
     }
