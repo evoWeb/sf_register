@@ -15,8 +15,6 @@ namespace Evoweb\SfRegister\Services\Captcha;
 
 use Evoweb\SfRegister\Services\Session;
 use SJBR\SrFreecap\PiBaseApi;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -68,42 +66,24 @@ class SrFreecapAdapter extends AbstractAdapter
         'accessible',
     ];
 
-    public function __construct()
+    public function __construct(protected PiBaseApi $captchaService, protected Session $session)
     {
-        if (ExtensionManagementUtility::isLoaded('sr_freecap')) {
-            $this->captcha = GeneralUtility::makeInstance(PiBaseApi::class);
-        }
     }
 
     public function render(): array|string
     {
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class);
-        $session->remove('captchaWasValidPreviously');
-
-        if ($this->captcha !== null) {
-            $values = array_values($this->captcha->makeCaptcha());
-            $output = array_combine($this->keys, $values);
-        } else {
-            $output = LocalizationUtility::translate(
-                'error_captcha_notinstalled',
-                'SfRegister',
-                ['sr_freecap']
-            );
-        }
-
-        return $output;
+        $this->session->remove('captchaWasValid');
+        return array_combine($this->keys, $this->captcha->makeCaptcha());
     }
 
     public function isValid(string $value): bool
     {
         $validCaptcha = true;
 
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class);
-        $captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
-        if ($this->captcha !== null && $captchaWasValidPreviously !== true) {
-            if (!$this->captcha->checkWord($value)) {
+        if ($this->session->get('captchaWasValid') !== true) {
+            $status = $this->captchaService->checkWord($value);
+
+            if (!$status) {
                 $validCaptcha = false;
                 $this->addError(
                     LocalizationUtility::translate(
@@ -113,9 +93,9 @@ class SrFreecapAdapter extends AbstractAdapter
                     1306910429
                 );
             }
-        }
 
-        $session->set('captchaWasValidPreviously', $validCaptcha);
+            $this->session->set('captchaWasValid', $validCaptcha);
+        }
 
         return $validCaptcha;
     }
