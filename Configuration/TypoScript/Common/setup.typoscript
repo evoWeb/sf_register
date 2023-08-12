@@ -129,8 +129,6 @@ plugin.tx_sfregister.settings {
   imageFolder = 1:frontendusers
 
   captcha {
-    # Needs EXT:jm_recaptcha to be installed
-    jmrecaptcha = Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter
     # Needs EXT:sr_freecap to be installed
     srfreecap = Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter
     # Needs EXT:recaptcha to be installed

@@ -26,10 +26,8 @@ abstract class AbstractAdapter implements CaptchaInterface
 
     /**
      * Renders the output of a concrete captcha
-     *
-     * @return string|array
      */
-    abstract public function render();
+    abstract public function render(): string|array;
 
     /**
      * Returns if the result of the validation was valid or not
@@ -40,12 +38,12 @@ abstract class AbstractAdapter implements CaptchaInterface
      */
     abstract public function isValid(string $value): bool;
 
-    public function setSettings(array $settings)
+    public function setSettings(array $settings): void
     {
         $this->settings = $settings;
     }
 
-    protected function addError(string $message, int $code)
+    protected function addError(string $message, int $code): void
     {
         $this->errors[] = new Error($message, $code);
     }
