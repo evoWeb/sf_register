@@ -226,14 +226,9 @@ class FeuserController extends ActionController
         $validateAnnotation = current($parser->parse('@' . Validate::class . '(' . $configuration . ')'));
         $validatorObjectName = ValidatorClassNameResolver::resolve($validateAnnotation->validator);
 
-        if (in_array(InjectableInterface::class, class_implements($validatorObjectName))) {
-            /** @var ValidatorInterface|InjectableInterface $validator */
-            $validator = GeneralUtility::makeInstance($validatorObjectName);
-            $validator->setOptions($validateAnnotation->options);
-        } else {
-            /** @var ValidatorInterface $validator */
-            $validator = GeneralUtility::makeInstance($validatorObjectName, $validateAnnotation->options);
-        }
+        /** @var ValidatorInterface $validator */
+        $validator = GeneralUtility::makeInstance($validatorObjectName);
+        $validator->setOptions($validateAnnotation->options);
 
         return $validator;
     }
