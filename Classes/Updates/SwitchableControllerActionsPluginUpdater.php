@@ -63,10 +63,9 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
 
     public function getDescription(): string
     {
-        $description = 'The old sf_register plugin using switchableControllerActions has been split into 4 separate plugins. ';
-        $description .= 'This update wizard migrates all existing plugin settings and changes the Plugin (list_type) ';
-        $description .= 'to use the new plugins available.';
-        return $description;
+        return 'The old sf_register plugin using switchableControllerActions has been split into 4 separate
+            plugins. This update wizard migrates all existing plugin settings and changes the Plugin (list_type)
+            to use the new plugins available.';
     }
 
     public function getPrerequisites(): array
@@ -148,7 +147,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
                 )
             )
             ->execute()
-            ->fetchAllAssociative();
+            ->fetchAll();
     }
 
     protected function getTargetListType(string $sourceListType, string $switchableControllerActions): string
@@ -166,7 +165,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
 
     protected function getAllowedSettingsFromFlexForm(string $listType): array
     {
-        $flexFormFile = $GLOBALS['TCA']['tt_content']['columns']['pi_flexform']['config']['ds'][$listType . ',list'];
+        $flexFormFile = $GLOBALS['TCA']['tt_content']['columns']['pi_flexform']['config']['ds'][$listType . ',list'] ?? '';
         $flexFormContent = file_get_contents(GeneralUtility::getFileAbsFileName(substr(trim($flexFormFile), 5)));
         $flexFormData = GeneralUtility::xml2array($flexFormContent);
 
