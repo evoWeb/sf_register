@@ -15,18 +15,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
 
-class CaptchaValidator extends AbstractValidator implements InjectableInterface
+class CaptchaValidator extends AbstractValidator implements SetOptionsInterface
 {
-    /**
-     * @var bool
-     */
     protected $acceptsEmptyValues = false;
 
     protected CaptchaAdapterFactory $captchaAdapterFactory;
 
-    /**
-     * @var array
-     */
     protected $supportedOptions = [
         'type' => [
             'srfreecap',
@@ -42,10 +36,8 @@ class CaptchaValidator extends AbstractValidator implements InjectableInterface
 
     /**
      * If the given captcha is valid
-     *
-     * @param string $value
      */
-    public function isValid($value): void
+    public function isValid(mixed $value): void
     {
         $captchaAdapter = $this->captchaAdapterFactory->getCaptchaAdapter($this->options['type']);
         if (!$captchaAdapter->isValid($value)) {

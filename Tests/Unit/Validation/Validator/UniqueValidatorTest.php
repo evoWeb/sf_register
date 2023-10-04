@@ -108,6 +108,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->with($fieldName, $expected)
             ->willReturn(1);
 
+        /** @var UniqueValidator $subject */
         $subject = $this->getMockBuilder(UniqueValidator::class)
             ->setConstructorArgs([$repositoryMock])
             ->onlyMethods(['translateErrorMessage'])

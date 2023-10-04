@@ -13,7 +13,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-interface InjectableInterface
+interface SetOptionsInterface
 {
-    public function setOptions(array $options);
+    public function setOptions(array $options): void;
 }

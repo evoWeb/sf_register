@@ -17,16 +17,12 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 
-class UniqueValidator extends AbstractValidator implements InjectableInterface, SettableInterface
+class UniqueValidator
+    extends AbstractValidator
+    implements SetModelInterface, SetOptionsInterface, SetPropertyNameInterface
 {
-    /**
-     * @var bool
-     */
     protected $acceptsEmptyValues = false;
 
-    /**
-     * @var array
-     */
     protected $supportedOptions = [
         'global' => [
             true,
@@ -38,9 +34,7 @@ class UniqueValidator extends AbstractValidator implements InjectableInterface, 
     protected ?FrontendUserRepository $userRepository = null;
 
     /**
-     * Model to take repeated value of
-     *
-     * @var FrontendUser|Password
+     * Model to access user properties
      */
     protected FrontendUser|Password $model;
 
@@ -51,50 +45,43 @@ class UniqueValidator extends AbstractValidator implements InjectableInterface, 
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * Setter for model
-     *
-     * @param FrontendUser|Password $model
-     */
-    public function setModel(FrontendUser|Password $model)
+    public function setModel(FrontendUser|Password $model): void
     {
         $this->model = $model;
     }
 
-    public function setPropertyName(string $propertyName)
+    public function setPropertyName(string $propertyName): void
     {
         $this->propertyName = $propertyName;
     }
 
     /**
-     * If the given passwords are valid
-     *
-     * @param string $value The value
+     * If the given value is unique either global or local
      */
     public function isValid(mixed $value): void
     {
-        if ($this->userRepository->countByField($this->propertyName, $value)) {
-            $this->addError(
-                $this->translateErrorMessage(
-                    'error_notunique_local',
-                    'SfRegister',
-                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
-                ),
-                1301599608
-            );
-        } elseif (
-            isset($this->options['global'])
-            && $this->options['global']
-            && $this->userRepository->countByFieldGlobal($this->propertyName, $value)
-        ) {
-            $this->addError(
-                $this->translateErrorMessage(
-                    'error_notunique_global',
-                    'SfRegister',
-                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
-                ),
-                1301599619
-            );
+        if ($this->options['global']) {
+            if ($this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
+                $this->addError(
+                    $this->translateErrorMessage(
+                        'error_notunique_global',
+                        'SfRegister',
+                        [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                    ),
+                    1301599619
+                );
+            }
+        } else {
+            if ($this->userRepository->countByField($this->propertyName, $value)) {
+                $this->addError(
+                    $this->translateErrorMessage(
+                        'error_notunique_local',
+                        'SfRegister',
+                        [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                    ),
+                    1301599608
+                );
+            }
         }
     }
 }

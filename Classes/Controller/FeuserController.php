@@ -28,8 +28,7 @@ use Evoweb\SfRegister\Services\Mail;
 use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
 use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
-use Evoweb\SfRegister\Validation\Validator\InjectableInterface;
-use Evoweb\SfRegister\Validation\Validator\SettableInterface;
+use Evoweb\SfRegister\Validation\Validator\SetPropertyNameInterface;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
@@ -180,7 +179,7 @@ class FeuserController extends ActionController
                     $parser
                 );
 
-                if ($validatorInstance instanceof SettableInterface) {
+                if ($validatorInstance instanceof SetPropertyNameInterface) {
                     $validatorInstance->setPropertyName($fieldName);
                 }
             } else {
@@ -194,7 +193,7 @@ class FeuserController extends ActionController
                         $parser
                     );
 
-                    if ($individualValidatorInstance instanceof SettableInterface) {
+                    if ($individualValidatorInstance instanceof SetPropertyNameInterface) {
                         $individualValidatorInstance->setPropertyName($fieldName);
                     }
 

@@ -1,7 +1,5 @@
 <?php
 
-defined('TYPO3') or die();
-
 use Evoweb\SfRegister\Controller\FeuserCreateController;
 use Evoweb\SfRegister\Controller\FeuserDeleteController;
 use Evoweb\SfRegister\Controller\FeuserEditController;
@@ -16,6 +14,8 @@ use TYPO3\CMS\Backend\Form\FormDataProvider\TcaCheckboxItems;
 use TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
+defined('TYPO3') or die();
 
 call_user_func(function () {
     /**

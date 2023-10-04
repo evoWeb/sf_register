@@ -22,9 +22,7 @@ use TYPO3\CMS\Extbase\Validation\Validator\ObjectValidatorInterface;
 class UserValidator extends AbstractGenericObjectValidator
 {
     /**
-     * Model that gets validated currently
-     *
-     * @var FrontendUser|Password
+     * Model to access user properties
      */
     protected FrontendUser|Password $model;
 
@@ -55,7 +53,7 @@ class UserValidator extends AbstractGenericObjectValidator
         /** @var Result $result */
         $result = null;
         foreach ($validators as $validator) {
-            if ($validator instanceof SettableInterface) {
+            if ($validator instanceof SetModelInterface) {
                 $validator->setModel($this->model);
             }
 

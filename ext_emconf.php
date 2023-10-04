@@ -15,8 +15,8 @@ $EM_CONF['sf_register'] = [
             'typo3' => '12.2.0-12.4.99',
         ],
         'suggests' => [
-            'extender' => '12.0.0-',
-            'recaptcha' => '10.0.0-',
+            'extender' => '10.0.0-',
+            'recaptcha' => '12.0.0-',
         ],
     ],
 ];

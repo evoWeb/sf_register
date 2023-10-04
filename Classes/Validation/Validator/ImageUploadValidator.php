@@ -18,7 +18,7 @@ use Evoweb\SfRegister\Services\File;
 /**
  * Validator to check if the uploaded image could be handled
  */
-class ImageUploadValidator extends AbstractValidator implements InjectableInterface
+class ImageUploadValidator extends AbstractValidator implements SetOptionsInterface
 {
     protected File $fileService;
 
@@ -28,7 +28,7 @@ class ImageUploadValidator extends AbstractValidator implements InjectableInterf
     }
 
     /**
-     * If the given value is set
+     * If the given value is a valid image
      *
      * @param bool $value The value
      */

@@ -13,41 +13,35 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /**
  * Validator to check against current password
  */
-class EqualCurrentPasswordValidator extends AbstractValidator implements InjectableInterface
+class EqualCurrentPasswordValidator extends AbstractValidator implements SetOptionsInterface
 {
-    /**
-     * @var bool
-     */
     protected $acceptsEmptyValues = false;
 
     protected ?Context $context = null;
 
     protected ?FrontendUserRepository $userRepository = null;
 
-    protected ?ConfigurationManager $configurationManager = null;
-
     protected array $settings = [];
 
     public function __construct(
         Context $context,
         FrontendUserRepository $userRepository,
-        ConfigurationManager $configurationManager
+        ConfigurationManagerInterface $configurationManager
     ) {
         $this->context = $context;
         $this->userRepository = $userRepository;
-        $this->configurationManager = $configurationManager;
-        $this->settings = $this->configurationManager->getConfiguration(
+        $this->settings = $configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'SfRegister',
             'Form'
@@ -55,24 +49,27 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Injecta
     }
 
     /**
-     * Validation method
-     *
-     * @param mixed $value
+     * If value is equal with the current password
      */
     public function isValid(mixed $value): void
     {
-        if (!$this->userIsLoggedIn()) {
-            $this->addError(
-                $this->translateErrorMessage('error_changepassword_notloggedin', 'SfRegister'),
-                1301599489
-            );
-        } else {
-            $user = $this->userRepository->findByUid($this->context->getAspect('frontend.user')->get('id'));
+        try {
+            /** @var UserAspect $userAspect */
+            $userAspect = $this->context->getAspect('frontend.user');
 
+            if (!$userAspect->isLoggedIn()) {
+                $this->addError(
+                    $this->translateErrorMessage('error_changepassword_notloggedin', 'SfRegister'),
+                    1301599489
+                );
+                return;
+            }
+
+            /** @var FrontendUser $user */
+            $user = $this->userRepository->findByUid($userAspect->get('id'));
             /** @var PasswordHashFactory $passwordHashFactory */
-            $passwordHashFactory = GeneralUtility::makeInstance(
-                PasswordHashFactory::class
-            );
+            $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
+
             $passwordHash = $passwordHashFactory->get($user->getPassword(), 'FE');
             if (!$passwordHash->checkPassword($value, $user->getPassword())) {
                 $this->addError(
@@ -80,13 +77,8 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements Injecta
                     1301599507
                 );
             }
+        } catch (\Exception $e) {
+            $this->addError($e->getMessage(), $e->getCode());
         }
-    }
-
-    public function userIsLoggedIn(): bool
-    {
-        /** @var UserAspect $userAspect */
-        $userAspect = $this->context->getAspect('frontend.user');
-        return $userAspect->isLoggedIn();
     }
 }

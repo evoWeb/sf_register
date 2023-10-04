@@ -20,17 +20,12 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
  */
 class EmptyValidator extends AbstractValidator
 {
-    /**
-     * @var bool
-     */
     protected $acceptsEmptyValues = false;
 
     /**
      * If the given value is empty
-     *
-     * @param string $value The value
      */
-    public function isValid($value): void
+    public function isValid(mixed $value): void
     {
         if (!empty($value)) {
             $this->addError(

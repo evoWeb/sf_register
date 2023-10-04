@@ -24,23 +24,21 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 /**
  * Validator to chain many validators in a conjunction (logical and).
  */
-class ConjunctionValidator extends AbstractCompositeValidator implements SettableInterface
+class ConjunctionValidator extends AbstractCompositeValidator implements SetModelInterface, SetPropertyNameInterface
 {
     /**
-     * Model to take repeated value of
-     *
-     * @var FrontendUser|Password
+     * Model to access user properties
      */
     protected FrontendUser|Password $model;
 
     protected string $propertyName = '';
 
-    public function setModel(FrontendUser|Password $model)
+    public function setModel(FrontendUser|Password $model): void
     {
         $this->model = $model;
     }
 
-    public function setPropertyName(string $propertyName)
+    public function setPropertyName(string $propertyName): void
     {
         $this->propertyName = $propertyName;
     }
@@ -48,24 +46,18 @@ class ConjunctionValidator extends AbstractCompositeValidator implements Settabl
     /**
      * Checks if the given value is valid according to the validators of the conjunction.
      * Every validator has to be valid, to make the whole conjunction valid.
-     *
-     * @param mixed $value The value that should be validated
-     *
-     * @return Result
      */
     public function validate(mixed $value): Result
     {
         $result = new Result();
-        $validators = $this->getValidators();
-        if ($validators->count() > 0) {
-            /** @var AbstractValidator $validator */
-            foreach ($validators as $validator) {
-                if (method_exists($validator, 'setModel')) {
-                    $validator->setModel($this->model);
-                }
 
-                $result->merge($validator->validate($value));
+        /** @var AbstractValidator $validator */
+        foreach ($this->getValidators() as $validator) {
+            if ($validator instanceof SetModelInterface) {
+                $validator->setModel($this->model);
             }
+
+            $result->merge($validator->validate($value));
         }
 
         return $result;

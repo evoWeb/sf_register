@@ -21,65 +21,46 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 /**
  * A repeated value validator
  */
-class RepeatValidator extends AbstractValidator implements SettableInterface
+class RepeatValidator extends AbstractValidator implements SetModelInterface, SetPropertyNameInterface
 {
-    /**
-     * @var bool
-     */
     protected $acceptsEmptyValues = false;
 
     /**
-     * Model to take repeated value of
-     *
-     * @var FrontendUser|Password
+     * Model to access user properties
      */
     protected FrontendUser|Password $model;
 
     protected string $propertyName = '';
 
-    public function setModel(FrontendUser|Password $model)
+    public function setModel(FrontendUser|Password $model): void
     {
         $this->model = $model;
     }
 
-    public function setPropertyName(string $propertyName)
+    public function setPropertyName(string $propertyName): void
     {
         $this->propertyName = $propertyName;
     }
 
     /**
      * If the given value is equal to the repetition
-     *
-     * @param string $value The value
      */
     public function isValid(mixed $value): void
     {
-        $propertyName = str_replace('Repeat', '', $this->propertyName);
-        if ($value != $this->getPropertyValue($this->model, $propertyName)) {
-            $this->addError(
-                $this->translateErrorMessage(
-                    'error_repeatitionwasnotequal',
-                    'SfRegister',
-                    [$this->translateErrorMessage($propertyName, 'SfRegister')]
-                ),
-                1307965971
-            );
+        try {
+            $propertyName = str_replace('Repeat', '', $this->propertyName);
+            if ($value != ObjectAccess::getProperty($this->model, $propertyName)) {
+                $this->addError(
+                    $this->translateErrorMessage(
+                        'error_repeatitionwasnotequal',
+                        'SfRegister',
+                        [$this->translateErrorMessage($propertyName, 'SfRegister')]
+                    ),
+                    1307965971
+                );
+            }
+        } catch (\Exception $e) {
+            $this->addError($e->getMessage(), $e->getCode());
         }
-    }
-
-    /**
-     * Load the property value to be used for validation.
-     *
-     * In case the object is a doctrine proxy, we need to load the real instance first.
-     *
-     * @param object $object
-     * @param string $propertyName
-     *
-     * @return mixed
-     */
-    protected function getPropertyValue(object $object, string $propertyName): mixed
-    {
-        // @todo add support for lazy loading proxies, if needed
-        return ObjectAccess::getProperty($object, $propertyName);
     }
 }

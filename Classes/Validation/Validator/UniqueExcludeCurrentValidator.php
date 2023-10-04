@@ -20,16 +20,12 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 /**
  * A validator to check if a value is unique only if current value has changed
  */
-class UniqueExcludeCurrentValidator extends AbstractValidator implements InjectableInterface, SettableInterface
+class UniqueExcludeCurrentValidator
+    extends AbstractValidator
+    implements SetModelInterface, SetOptionsInterface, SetPropertyNameInterface
 {
-    /**
-     * @var bool
-     */
     protected $acceptsEmptyValues = false;
 
-    /**
-     * @var array
-     */
     protected $supportedOptions = [
         'global' => [
             true,
@@ -41,9 +37,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Injecta
     protected ?FrontendUserRepository $userRepository = null;
 
     /**
-     * Model to take repeated value of
-     *
-     * @var FrontendUser|Password
+     * Model to access user properties
      */
     protected FrontendUser|Password $model;
 
@@ -54,25 +48,18 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Injecta
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * Setter for model
-     *
-     * @param FrontendUser|Password $model
-     */
-    public function setModel(FrontendUser|Password $model)
+    public function setModel(FrontendUser|Password $model): void
     {
         $this->model = $model;
     }
 
-    public function setPropertyName(string $propertyName)
+    public function setPropertyName(string $propertyName): void
     {
         $this->propertyName = $propertyName;
     }
 
     /**
      * If the given passwords are valid
-     *
-     * @param string $value The value
      */
     public function isValid(mixed $value): void
     {

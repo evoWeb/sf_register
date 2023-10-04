@@ -52,9 +52,12 @@ cleanBuildFiles() {
         ../../../Build/testing-docker/local/.env \
         ../../../public/ \
         ../../../typo3temp/ \
+        ../../../var/ \
         ../../../vendor/ \
         ../../../composer.lock ; \
         echo "done"
+    git checkout ../../../composer.json ; \
+        echo "composer.json reset"
 }
 
 cleanRenderedDocumentationFiles() {
@@ -129,16 +132,25 @@ OPTIND=1
 # Array for invalid options
 INVALID_OPTIONS=();
 # Simple option parsing based on getopts (! not getopt)
-while getopts ":a:s:c:d:i:j:k:p:e:xy:q:o:nhuv" OPT; do
+while getopts ":a:s:c:d:i:j:k:p:e:xy:q:r:o:nhuv" OPT; do
     case ${OPT} in
         s)
             TEST_SUITE=${OPTARG}
             ;;
+        p)
+            PHP_VERSION=${OPTARG}
+            if ! [[ ${PHP_VERSION} =~ ^(8.1|8.2)$ ]]; then
+                INVALID_OPTIONS+=("${OPTARG}")
+            fi
+            ;;
         q)
             PACKAGE=${OPTARG}
             ;;
-        o)
+        r)
             COMPOSER_PARAMETER=${OPTARG}
+            ;;
+        v)
+            SCRIPT_VERBOSE=1
             ;;
     esac
 done
