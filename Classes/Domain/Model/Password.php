@@ -31,7 +31,7 @@ class Password extends AbstractEntity
         return $this->password;
     }
 
-    public function setPassword(string $password)
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
@@ -41,7 +41,7 @@ class Password extends AbstractEntity
         return $this->passwordRepeat;
     }
 
-    public function setPasswordRepeat(string $passwordRepeat)
+    public function setPasswordRepeat(string $passwordRepeat): void
     {
         $this->passwordRepeat = $passwordRepeat;
     }
@@ -51,7 +51,7 @@ class Password extends AbstractEntity
         return $this->oldPassword;
     }
 
-    public function setOldPassword(string $oldPassword)
+    public function setOldPassword(string $oldPassword): void
     {
         $this->oldPassword = $oldPassword;
     }

@@ -15,6 +15,21 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Controller\Event;
 
-final class EditFormEvent extends AbstractEventWithUserAndSettings
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+
+abstract class AbstractEventWithUserAndSettings
 {
+    public function __construct(protected FrontendUser $user, protected array $settings)
+    {
+    }
+
+    public function getUser(): FrontendUser
+    {
+        return $this->user;
+    }
+
+    public function getSettings(): array
+    {
+        return $this->settings;
+    }
 }

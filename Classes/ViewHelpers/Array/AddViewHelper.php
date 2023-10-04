@@ -13,7 +13,6 @@ namespace Evoweb\SfRegister\ViewHelpers\Array;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
@@ -36,10 +35,6 @@ class AddViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     *
      * @return array
      */
     public static function renderStatic(
@@ -51,6 +46,8 @@ class AddViewHelper extends AbstractViewHelper
         $key = $arguments['key'];
         $value = $arguments['value'] ?: $renderChildrenClosure();
 
-        return $array + [$key => $value];
+        $array[$key] = $value;
+
+        return $array;
     }
 }

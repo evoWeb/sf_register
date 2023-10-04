@@ -16,10 +16,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
-class UniqueValidator
-    extends AbstractValidator
-    implements SetModelInterface, SetOptionsInterface, SetPropertyNameInterface
+class UniqueValidator extends AbstractValidator implements
+    SetModelInterface,
+    SetOptionsInterface,
+    SetPropertyNameInterface
 {
     protected $acceptsEmptyValues = false;
 
@@ -31,8 +33,6 @@ class UniqueValidator
         ],
     ];
 
-    protected ?FrontendUserRepository $userRepository = null;
-
     /**
      * Model to access user properties
      */
@@ -40,9 +40,8 @@ class UniqueValidator
 
     protected string $propertyName = '';
 
-    public function __construct(FrontendUserRepository $userRepository)
+    public function __construct(protected FrontendUserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
     }
 
     public function setModel(FrontendUser|Password $model): void

@@ -36,7 +36,10 @@ class StaticLanguageRepository extends Repository
         $query->getQuerySettings()
             ->setRespectStoragePage(false);
 
-        $query->matching($query->in('lg_collate_locale', $lgCollateLocale));
+        try {
+            $query->matching($query->in('lg_collate_locale', $lgCollateLocale));
+        } catch (\Exception) {
+        }
 
         return $query->execute();
     }

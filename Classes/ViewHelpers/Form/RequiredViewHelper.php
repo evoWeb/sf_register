@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\ViewHelpers\Form;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -14,6 +12,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 use Evoweb\SfRegister\Validation\Validator\RequiredValidator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -27,7 +27,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
  *
  * <code title="Usage">
  * {namespace register=Evoweb\SfRegister\ViewHelpers}
- * <register:form.required fieldName="'username"><f:then>*</f:then></register:form.required>
+ * <register:form.required fieldName="username"><f:then>*</f:then></register:form.required>
  * </code>
  */
 class RequiredViewHelper extends AbstractConditionViewHelper
@@ -55,17 +55,25 @@ class RequiredViewHelper extends AbstractConditionViewHelper
     protected static function getSettings(): array
     {
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-        $settings = $configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'SfRegister',
-            'Form'
-        );
-        $frameworkConfiguration = $configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-        );
+        try {
+            $settings = $configurationManager->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+                'SfRegister',
+                'Form'
+            );
+            $frameworkConfiguration = $configurationManager->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+            );
+        } catch (\Exception) {
+            $settings = [];
+            $frameworkConfiguration = [];
+        }
         return [$settings, $frameworkConfiguration];
     }
 
+    /**
+     * @return bool
+     */
     public static function verdict(array $arguments, RenderingContextInterface $renderingContext)
     {
         [$settings, $frameworkConfiguration] = static::getSettings();
@@ -73,7 +81,7 @@ class RequiredViewHelper extends AbstractConditionViewHelper
         $mode = str_replace(
             ['evoweb\\sfregister\\controller\\feuser', 'controller'],
             '',
-            strtolower(key($frameworkConfiguration['controllerConfiguration']))
+            strtolower(key($frameworkConfiguration['controllerConfiguration'] ?? ''))
         );
         $controllerSettings = $settings['validation'][$mode] ?? [];
 

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\ViewHelpers\Link;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -15,11 +13,19 @@ namespace Evoweb\SfRegister\ViewHelpers\Link;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\ViewHelpers\Link;
+
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Mvc\RequestInterface;
-use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface as ExtbaseRequestInterface;
+use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder as ExtbaseUriBuilder;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Typolink\LinkFactory;
+use TYPO3\CMS\Frontend\Typolink\UnableToLinkException;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
@@ -65,6 +71,12 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
             'bool',
             'Set this to disable caching for the target page. You should not need this.'
         );
+        $this->registerArgument(
+            'language',
+            'string',
+            'link to a specific language - defaults to the current language, use a language ID or "current"
+            to enforce a specific language'
+        );
         $this->registerArgument('section', 'string', 'The anchor to be added to the URI');
         $this->registerArgument('format', 'string', 'The requested format, e.g. ".html');
         $this->registerArgument(
@@ -94,17 +106,6 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
 
     public function render(): string
     {
-        /** @var RenderingContext $renderingContext */
-        $renderingContext = $this->renderingContext;
-        $request = $renderingContext->getRequest();
-        if (!$request instanceof RequestInterface) {
-            throw new \RuntimeException(
-                'ViewHelper f:link.action can be used only in extbase context and needs a request
-                 implementing extbase RequestInterface.',
-                1639818540
-            );
-        }
-
         if (
             $this->arguments['action'] !== null
             && $this->arguments['arguments'] !== null
@@ -115,28 +116,152 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
             );
         }
 
+        /** @var RenderingContext $renderingContext */
+        $renderingContext = $this->renderingContext;
+        $request = $renderingContext->getRequest();
+        if ($request instanceof ExtbaseRequestInterface) {
+            return $this->renderWithExtbaseContext($request);
+        }
+        if ($request instanceof ServerRequestInterface && ApplicationType::fromRequest($request)->isFrontend()) {
+            return $this->renderFrontendLinkWithCoreContext($request);
+        }
+        throw new \RuntimeException(
+            'The rendering context of ViewHelper f:link.action is missing a valid request object.',
+            1690365240
+        );
+    }
+
+    protected function renderFrontendLinkWithCoreContext(ServerRequestInterface $request): string
+    {
+        // No support for following arguments:
+        //  * format
+        $pageUid = (int)($this->arguments['pageUid'] ?? 0);
+        $pageType = (int)($this->arguments['pageType'] ?? 0);
+        $noCache = (bool)($this->arguments['noCache'] ?? false);
+        /** @var string|null $language */
+        $language = $this->arguments['language'] ?? null;
+        /** @var string|null $section */
+        $section = $this->arguments['section'] ?? null;
+        $linkAccessRestrictedPages = (bool)($this->arguments['linkAccessRestrictedPages'] ?? false);
+        /** @var array|null $additionalParams */
+        $additionalParams = $this->arguments['additionalParams'] ?? null;
+        $absolute = (bool)($this->arguments['absolute'] ?? false);
+        /** @var bool|string $addQueryString */
+        $addQueryString = $this->arguments['addQueryString'] ?? false;
+        /** @var array|null $argumentsToBeExcludedFromQueryString */
+        $argumentsToBeExcludedFromQueryString = $this->arguments['argumentsToBeExcludedFromQueryString'] ?? null;
+        /** @var string|null $action */
+        $action = $this->arguments['action'] ?? null;
+        /** @var string|null $controller */
+        $controller = $this->arguments['controller'] ?? null;
+        /** @var string|null $extensionName */
+        $extensionName = $this->arguments['extensionName'] ?? null;
+        /** @var string|null $pluginName */
+        $pluginName = $this->arguments['pluginName'] ?? null;
+        /** @var array|null $arguments */
+        $arguments = $this->arguments['arguments'] ?? [];
+
+        $allExtbaseArgumentsAreSet = (
+            is_string($extensionName) && $extensionName !== ''
+            && is_string($pluginName) && $pluginName !== ''
+            && is_string($controller) && $controller !== ''
+            && is_string($action) && $action !== ''
+        );
+        if (!$allExtbaseArgumentsAreSet) {
+            throw new \RuntimeException(
+                'ViewHelper f:link.action needs either all extbase arguments set'
+                . ' ("extensionName", "pluginName", "controller", "action")'
+                . ' or needs a request implementing extbase RequestInterface.',
+                1690370264
+            );
+        }
+
+        // Provide extbase default and custom arguments as prefixed additional params
+        $extbaseArgumentNamespace = 'tx_'
+            . str_replace('_', '', strtolower($extensionName))
+            . '_'
+            . str_replace('_', '', strtolower($pluginName));
+        $additionalParams ??= [];
+        $additionalParams[$extbaseArgumentNamespace] = array_replace(
+            [
+                'controller' => $controller,
+                'action' => $action,
+            ],
+            $arguments
+        );
+
+        $typolinkConfiguration = [
+            'parameter' => $pageUid,
+        ];
+        if ($pageType) {
+            $typolinkConfiguration['parameter'] .= ',' . $pageType;
+        }
+        if ($language !== null) {
+            $typolinkConfiguration['language'] = $language;
+        }
+        if ($noCache) {
+            $typolinkConfiguration['no_cache'] = 1;
+        }
+        if ($section) {
+            $typolinkConfiguration['section'] = $section;
+        }
+        if ($linkAccessRestrictedPages) {
+            $typolinkConfiguration['linkAccessRestrictedPages'] = 1;
+        }
+        $typolinkConfiguration['additionalParams'] = HttpUtility::buildQueryString($additionalParams, '&');
+        if ($absolute) {
+            $typolinkConfiguration['forceAbsoluteUrl'] = true;
+        }
+        if ($addQueryString && $addQueryString !== 'false') {
+            $typolinkConfiguration['addQueryString'] = $addQueryString;
+            if ($argumentsToBeExcludedFromQueryString !== []) {
+                $typolinkConfiguration['addQueryString.']['exclude'] =
+                    implode(',', $argumentsToBeExcludedFromQueryString);
+            }
+        }
+
+        try {
+            $cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+            $cObj->setRequest($request);
+            /** @var LinkFactory $linkFactory */
+            $linkFactory = GeneralUtility::makeInstance(LinkFactory::class);
+            $linkResult = $linkFactory->create((string)$this->renderChildren(), $typolinkConfiguration, $cObj);
+            $this->tag->addAttributes($linkResult->getAttributes());
+            $this->tag->setContent($this->renderChildren());
+            $this->tag->forceClosingTag(true);
+            return $this->tag->render();
+        } catch (UnableToLinkException) {
+            return (string)$this->renderChildren();
+        }
+    }
+
+    protected function renderWithExtbaseContext(ExtbaseRequestInterface $request): string
+    {
         $action = $this->arguments['action'];
         $controller = $this->arguments['controller'];
         $extensionName = $this->arguments['extensionName'];
         $pluginName = $this->arguments['pluginName'];
         $pageUid = (int)$this->arguments['pageUid'] ?: null;
-        $pageType = (int)$this->arguments['pageType'];
-        $noCache = (bool)$this->arguments['noCache'];
+        $pageType = (int)($this->arguments['pageType'] ?? 0);
+        $noCache = (bool)($this->arguments['noCache'] ?? false);
+        $language = $this->arguments['language'] ?? null;
         $section = (string)$this->arguments['section'];
         $format = (string)$this->arguments['format'];
-        $linkAccessRestrictedPages = (bool)$this->arguments['linkAccessRestrictedPages'];
+        $linkAccessRestrictedPages = (bool)($this->arguments['linkAccessRestrictedPages'] ?? false);
         $additionalParams = (array)$this->arguments['additionalParams'];
-        $absolute = (bool)$this->arguments['absolute'];
-        $addQueryString = (bool)$this->arguments['addQueryString'];
+        $absolute = (bool)($this->arguments['absolute'] ?? false);
+        $addQueryString = $this->arguments['addQueryString'] ?? false;
         $argumentsToBeExcludedFromQueryString = (array)$this->arguments['argumentsToBeExcludedFromQueryString'];
         $parameters = $this->arguments['arguments'];
 
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        /** @var ExtbaseUriBuilder $uriBuilder */
+        $uriBuilder = GeneralUtility::makeInstance(ExtbaseUriBuilder::class);
         $uriBuilder
             ->reset()
             ->setRequest($request)
             ->setTargetPageType($pageType)
             ->setNoCache($noCache)
+            ->setLanguage($language)
             ->setSection($section)
             ->setFormat($format)
             ->setLinkAccessRestrictedPages($linkAccessRestrictedPages)
@@ -149,7 +274,6 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         if (MathUtility::canBeInterpretedAsInteger($pageUid)) {
             $uriBuilder->setTargetPageUid((int)$pageUid);
         }
-
         $uri = $uriBuilder->uriFor($action, $parameters, $controller, $extensionName, $pluginName);
         if ($uri === '') {
             return $this->renderChildren();

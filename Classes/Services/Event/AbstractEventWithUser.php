@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\Services\Event;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -15,18 +13,14 @@ namespace Evoweb\SfRegister\Services\Event;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Services\Event;
+
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 
 abstract class AbstractEventWithUser
 {
-    protected FrontendUser $user;
-
-    protected array $settings = [];
-
-    public function __construct(FrontendUser $user, array $settings)
+    public function __construct(protected FrontendUser $user, protected array $settings)
     {
-        $this->user = $user;
-        $this->settings = $settings;
     }
 
     public function getUser(): FrontendUser

@@ -50,9 +50,9 @@ class FeuserEditController extends FeuserController
             && $this->userIsLoggedIn()
         ) {
             /** @var FrontendUser $userData */
-            $userData = $this->request->hasArgument('user') ?
-                $this->request->getArgument('user') :
-                $originalRequest->getArgument('user');
+            $userData = $this->request->hasArgument('user')
+                ? $this->request->getArgument('user')
+                : $originalRequest->getArgument('user');
             if ($userData instanceof FrontendUser && $userData->getUid() != $userId) {
                 $user = null;
             }
@@ -77,9 +77,6 @@ class FeuserEditController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Preview action
-     */
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function previewAction(FrontendUser $user): ResponseInterface
     {
@@ -94,9 +91,6 @@ class FeuserEditController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Save action
-     */
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {

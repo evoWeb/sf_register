@@ -1,0 +1,20 @@
+"tt_content"
+,"uid","pid","list_type","pi_flexform"
+,1,1,"sfregister_form","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
+<T3FlexForms>
+   <data>
+       <sheet index=""sDEF"">
+           <language index=""lDEF"">
+            <field index=""switchableControllerActions"">
+                <value index=""vDEF"">FeuserCreate->form;FeuserCreate->preview;FeuserCreate->proxy;FeuserCreate->save;FeuserCreate->confirm;FeuserCreate->accept;FeuserCreate->decline;FeuserCreate->refuse;FeuserCreate->removeImage</value>
+            </field>
+               <field index=""settings.fields.selected"">
+                   <value index=""vDEF"">firstName,lastName,email,clear,password,passwordRepeat,privacy,clear,image,change,submit</value>
+               </field>
+               <field index=""settings.templateRootPath"">
+                   <value index=""vDEF""></value>
+               </field>
+           </language>
+       </sheet>
+   </data>
+</T3FlexForms>"

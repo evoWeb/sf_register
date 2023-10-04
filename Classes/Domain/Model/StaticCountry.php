@@ -22,221 +22,167 @@ class StaticCountry extends AbstractEntity
 {
     /**
      * ISO 3166-1 A2 Country code
-     *
-     * @var string
      */
     protected string $cnIso2 = '';
 
     /**
      * ISO 3166-1 A3 Country code
-     *
-     * @var string
      */
     protected string $cnIso3 = '';
 
     /**
      * ISO 3166-1 Nr Country code
-     *
-     * @var int
      */
     protected int $cnIsoNr = 0;
 
     /**
      * Official name (local)
-     *
-     * @var string
      */
     protected string $cnOfficialNameLocal = '';
 
     /**
      * Official name (EN)
-     *
-     * @var string
      */
     protected string $cnOfficialNameEn = '';
 
     /**
      * Short name local
-     *
-     * @var string
      */
     protected string $cnShortLocal = '';
 
     /**
      * Short name (EN)
-     *
-     * @var string
      */
     protected string $cnShortEn = '';
 
     /**
      * Short name (CZ)
-     *
-     * @var string
      */
     protected string $cnShortCz = '';
 
     /**
      * Short name (DA)
-     *
-     * @var string
      */
     protected string $cnShortDa = '';
 
     /**
      * Short name (DE)
-     *
-     * @var string
      */
     protected string $cnShortDe = '';
 
     /**
      * Short name (ES)
-     *
-     * @var string
      */
     protected string $cnShortEs = '';
 
     /**
      * Short name (FR)
-     *
-     * @var string
      */
     protected string $cnShortFr = '';
 
     /**
      * Short name (GA)
-     *
-     * @var string
      */
     protected string $cnShortGa = '';
 
     /**
      * Short name (GL)
-     *
-     * @var string
      */
     protected string $cnShortGl = '';
 
     /**
      * Short name (IT)
-     *
-     * @var string
      */
     protected string $cnShortIt = '';
 
     /**
      * Short name (JA)
-     *
-     * @var string
      */
     protected string $cnShortJa = '';
 
     /**
      * Short name (KM)
-     *
-     * @var string
      */
     protected string $cnShortKm = '';
 
     /**
      * Short name (NL)
-     *
-     * @var string
      */
     protected string $cnShortNl = '';
 
     /**
      * Short name (NO)
-     *
-     * @var string
      */
     protected string $cnShortNo = '';
 
     /**
      * Short name (PL)
-     *
-     * @var string
      */
     protected string $cnShortPl = '';
 
     /**
      * Short name (PT)
-     *
-     * @var string
      */
     protected string $cnShortPt = '';
 
     /**
      * Short name (RO)
-     *
-     * @var string
      */
     protected string $cnShortRo = '';
 
     /**
      * Short name (RU)
-     *
-     * @var string
      */
     protected string $cnShortRu = '';
 
     /**
      * Short name (SK)
-     *
-     * @var string
      */
     protected string $cnShortSk = '';
 
     /**
      * Short name (SV)
-     *
-     * @var string
      */
     protected string $cnShortSv = '';
 
     /**
      * Short name (UA)
-     *
-     * @var string
      */
     protected string $cnShortUa = '';
 
     /**
      * Short name (ZH)
-     *
-     * @var string
      */
     protected string $cnShortZh = '';
 
-    /**
-     * Getter for ISO 3166-1 A2 Country code
-     *
-     * @return string
-     */
     public function getCnIso2(): string
     {
         return $this->cnIso2;
     }
 
-    /**
-     * Getter for ISO 3166-1 A3 Country code
-     *
-     * @return string
-     */
+    public function setCnIso2(string $cnIso2): void
+    {
+        $this->cnIso2 = $cnIso2;
+    }
+
     public function getCnIso3(): string
     {
         return $this->cnIso3;
     }
 
-    /**
-     * Getter for ISO 3166-1 Nr Country code
-     *
-     * @return int
-     */
+    public function setCnIso3(string $cnIso3): void
+    {
+        $this->cnIso3 = $cnIso3;
+    }
+
     public function getCnIsoNr(): int
     {
         return $this->cnIsoNr;
+    }
+
+    public function setCnIsoNr(int $cnIsoNr): void
+    {
+        $this->cnIsoNr = $cnIsoNr;
     }
 
     public function getCnOfficialNameLocal(): string
@@ -244,9 +190,29 @@ class StaticCountry extends AbstractEntity
         return $this->cnOfficialNameLocal;
     }
 
+    public function setCnOfficialNameLocal(string $cnOfficialNameLocal): void
+    {
+        $this->cnOfficialNameLocal = $cnOfficialNameLocal;
+    }
+
     public function getCnOfficialNameEn(): string
     {
         return $this->cnOfficialNameEn;
+    }
+
+    public function setCnOfficialNameEn(string $cnOfficialNameEn): void
+    {
+        $this->cnOfficialNameEn = $cnOfficialNameEn;
+    }
+
+    public function getCnShortLocal(): string
+    {
+        return $this->cnShortLocal;
+    }
+
+    public function setCnShortLocal(string $cnShortLocal): void
+    {
+        $this->cnShortLocal = $cnShortLocal;
     }
 
     public function getCnShortEn(): string
@@ -254,9 +220,19 @@ class StaticCountry extends AbstractEntity
         return $this->cnShortEn;
     }
 
+    public function setCnShortEn(string $cnShortEn): void
+    {
+        $this->cnShortEn = $cnShortEn;
+    }
+
     public function getCnShortCz(): string
     {
         return $this->cnShortCz;
+    }
+
+    public function setCnShortCz(string $cnShortCz): void
+    {
+        $this->cnShortCz = $cnShortCz;
     }
 
     public function getCnShortDa(): string
@@ -264,9 +240,19 @@ class StaticCountry extends AbstractEntity
         return $this->cnShortDa;
     }
 
+    public function setCnShortDa(string $cnShortDa): void
+    {
+        $this->cnShortDa = $cnShortDa;
+    }
+
     public function getCnShortDe(): string
     {
         return $this->cnShortDe;
+    }
+
+    public function setCnShortDe(string $cnShortDe): void
+    {
+        $this->cnShortDe = $cnShortDe;
     }
 
     public function getCnShortEs(): string
@@ -274,9 +260,19 @@ class StaticCountry extends AbstractEntity
         return $this->cnShortEs;
     }
 
+    public function setCnShortEs(string $cnShortEs): void
+    {
+        $this->cnShortEs = $cnShortEs;
+    }
+
     public function getCnShortFr(): string
     {
         return $this->cnShortFr;
+    }
+
+    public function setCnShortFr(string $cnShortFr): void
+    {
+        $this->cnShortFr = $cnShortFr;
     }
 
     public function getCnShortGa(): string
@@ -284,9 +280,19 @@ class StaticCountry extends AbstractEntity
         return $this->cnShortGa;
     }
 
+    public function setCnShortGa(string $cnShortGa): void
+    {
+        $this->cnShortGa = $cnShortGa;
+    }
+
     public function getCnShortGl(): string
     {
         return $this->cnShortGl;
+    }
+
+    public function setCnShortGl(string $cnShortGl): void
+    {
+        $this->cnShortGl = $cnShortGl;
     }
 
     public function getCnShortIt(): string
@@ -294,9 +300,19 @@ class StaticCountry extends AbstractEntity
         return $this->cnShortIt;
     }
 
+    public function setCnShortIt(string $cnShortIt): void
+    {
+        $this->cnShortIt = $cnShortIt;
+    }
+
     public function getCnShortJa(): string
     {
         return $this->cnShortJa;
+    }
+
+    public function setCnShortJa(string $cnShortJa): void
+    {
+        $this->cnShortJa = $cnShortJa;
     }
 
     public function getCnShortKm(): string
@@ -304,9 +320,19 @@ class StaticCountry extends AbstractEntity
         return $this->cnShortKm;
     }
 
+    public function setCnShortKm(string $cnShortKm): void
+    {
+        $this->cnShortKm = $cnShortKm;
+    }
+
     public function getCnShortNl(): string
     {
         return $this->cnShortNl;
+    }
+
+    public function setCnShortNl(string $cnShortNl): void
+    {
+        $this->cnShortNl = $cnShortNl;
     }
 
     public function getCnShortNo(): string
@@ -314,9 +340,19 @@ class StaticCountry extends AbstractEntity
         return $this->cnShortNo;
     }
 
+    public function setCnShortNo(string $cnShortNo): void
+    {
+        $this->cnShortNo = $cnShortNo;
+    }
+
     public function getCnShortPl(): string
     {
         return $this->cnShortPl;
+    }
+
+    public function setCnShortPl(string $cnShortPl): void
+    {
+        $this->cnShortPl = $cnShortPl;
     }
 
     public function getCnShortPt(): string
@@ -324,9 +360,19 @@ class StaticCountry extends AbstractEntity
         return $this->cnShortPt;
     }
 
+    public function setCnShortPt(string $cnShortPt): void
+    {
+        $this->cnShortPt = $cnShortPt;
+    }
+
     public function getCnShortRo(): string
     {
         return $this->cnShortRo;
+    }
+
+    public function setCnShortRo(string $cnShortRo): void
+    {
+        $this->cnShortRo = $cnShortRo;
     }
 
     public function getCnShortRu(): string
@@ -334,9 +380,19 @@ class StaticCountry extends AbstractEntity
         return $this->cnShortRu;
     }
 
+    public function setCnShortRu(string $cnShortRu): void
+    {
+        $this->cnShortRu = $cnShortRu;
+    }
+
     public function getCnShortSk(): string
     {
         return $this->cnShortSk;
+    }
+
+    public function setCnShortSk(string $cnShortSk): void
+    {
+        $this->cnShortSk = $cnShortSk;
     }
 
     public function getCnShortSv(): string
@@ -344,9 +400,19 @@ class StaticCountry extends AbstractEntity
         return $this->cnShortSv;
     }
 
+    public function setCnShortSv(string $cnShortSv): void
+    {
+        $this->cnShortSv = $cnShortSv;
+    }
+
     public function getCnShortUa(): string
     {
         return $this->cnShortUa;
+    }
+
+    public function setCnShortUa(string $cnShortUa): void
+    {
+        $this->cnShortUa = $cnShortUa;
     }
 
     public function getCnShortZh(): string
@@ -354,8 +420,8 @@ class StaticCountry extends AbstractEntity
         return $this->cnShortZh;
     }
 
-    public function getCnShortLocal(): string
+    public function setCnShortZh(string $cnShortZh): void
     {
-        return $this->cnShortLocal;
+        $this->cnShortZh = $cnShortZh;
     }
 }

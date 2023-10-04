@@ -46,15 +46,14 @@ class FeuserDeleteController extends FeuserController
             && $this->userIsLoggedIn()
         ) {
             /** @var array $userData */
-            $userData = $this->request->hasArgument('user') ?
-                $this->request->getArgument('user') :
-                $originalRequest->getArgument('user');
+            $userData = $this->request->hasArgument('user')
+                ? $this->request->getArgument('user')
+                : $originalRequest->getArgument('user');
 
             // only reconstitute user object if given user uid equals logged-in user uid
             if ($userData['uid'] == $userId) {
                 /** @var PropertyMapper $propertyMapper */
-                $propertyMapper = GeneralUtility::getContainer()
-                    ->get(PropertyMapper::class);
+                $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
                 $user = $propertyMapper->convert($userData, FrontendUser::class);
             }
         }
@@ -74,9 +73,6 @@ class FeuserDeleteController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Save action
-     */
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {

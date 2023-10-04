@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\Controller\Event;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -15,27 +13,8 @@ namespace Evoweb\SfRegister\Controller\Event;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Domain\Model\Email;
+namespace Evoweb\SfRegister\Controller\Event;
 
-final class ResendFormEvent
+final class ResendFormEvent extends AbstractEventWithUserAndSettings
 {
-    protected Email $email;
-
-    protected array $settings = [];
-
-    public function __construct(Email $email, array $settings)
-    {
-        $this->email = $email;
-        $this->settings = $settings;
-    }
-
-    public function getEmail(): Email
-    {
-        return $this->email;
-    }
-
-    public function getSettings(): array
-    {
-        return $this->settings;
-    }
 }

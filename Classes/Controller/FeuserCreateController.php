@@ -50,9 +50,6 @@ class FeuserCreateController extends FeuserController
         return $setupResponse ?? new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Preview action
-     */
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function previewAction(FrontendUser $user): ResponseInterface
     {
@@ -67,9 +64,6 @@ class FeuserCreateController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Save action
-     */
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {
@@ -127,8 +121,7 @@ class FeuserCreateController extends FeuserController
     }
 
     /**
-     * Confirm registration process by user
-     * Could be followed by acceptance of admin
+     * Confirm registration process by user. Can be followed by acceptance of admin
      */
     public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -166,11 +159,16 @@ class FeuserCreateController extends FeuserController
                 $this->view->assign('userConfirmed', 1);
 
                 if (($this->settings['autologinPostConfirmation'] ?? false)) {
-                    $redirectResponse = $this->autoLogin($user, (int)($this->settings['redirectPostActivationPageId'] ?? 0));
+                    $redirectResponse = $this->autoLogin(
+                        $user,
+                        (int)($this->settings['redirectPostActivationPageId'] ?? 0)
+                    );
                 }
 
                 if ((int)($this->settings['redirectPostActivationPageId'] ?? 0) > 0) {
-                    $redirectResponse = $this->redirectToPage((int)($this->settings['redirectPostActivationPageId'] ?? 0));
+                    $redirectResponse = $this->redirectToPage(
+                        (int)($this->settings['redirectPostActivationPageId'] ?? 0)
+                    );
                 }
             }
         }

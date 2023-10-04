@@ -59,7 +59,7 @@ services:
       - name: extbase.type_converter
         priority: 2
         target: DateTime
-        sources: string, integer, array
+        sources: integer, string, array
 
   Evoweb\SfRegister\Property\TypeConverter\FrontendUserConverter:
     tags:

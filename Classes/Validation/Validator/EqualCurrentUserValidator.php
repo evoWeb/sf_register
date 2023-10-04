@@ -14,6 +14,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
  */
 
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * A validator to check if the userid is equal to the id of the logged-in user
@@ -22,11 +23,8 @@ class EqualCurrentUserValidator extends AbstractValidator implements SetOptionsI
 {
     protected $acceptsEmptyValues = false;
 
-    protected Context $context;
-
-    public function __construct(Context $context)
+    public function __construct(protected Context $context)
     {
-        $this->context = $context;
     }
 
     /**
@@ -41,8 +39,8 @@ class EqualCurrentUserValidator extends AbstractValidator implements SetOptionsI
                     1305009260
                 );
             }
-        } catch (\Exception $e) {
-            $this->addError($e->getMessage(), $e->getCode());
+        } catch (\Exception $exception) {
+            $this->addError($exception->getMessage(), $exception->getCode());
         }
     }
 }

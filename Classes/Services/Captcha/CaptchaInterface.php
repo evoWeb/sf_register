@@ -1,6 +1,6 @@
 <?php
 
-namespace Evoweb\SfRegister\Interfaces;
+namespace Evoweb\SfRegister\Services\Captcha;
 
 /*
  * This file is developed by evoWeb.
@@ -15,8 +15,6 @@ namespace Evoweb\SfRegister\Interfaces;
 
 /**
  * Interface to be implemented by every captcha adapter that should get used with this registration
- *
- * @deprecated as of 12.x use Evoweb\SfRegister\Services\Captcha\CaptchaInterface instead
  */
 interface CaptchaInterface
 {

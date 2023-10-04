@@ -32,14 +32,14 @@ class FeuserResendController extends FeuserController
     public function formAction(Email $email = null): ResponseInterface
     {
         if ($email === null) {
-            $email = new Email();
+            try {
+                $userId = $this->context->getAspect('frontend.user')->get('id');
+                $email = $this->userRepository->findByUid($userId);
+            } catch (\Exception) {
+            }
         }
 
         $email = $this->eventDispatcher->dispatch(new ResendFormEvent($email, $this->settings))->getEmail();
-
-        $userId = $this->context->getAspect('frontend.user')->get('id');
-        $email = $email ?? $this->userRepository->findByUid($userId);
-
         if ($email) {
             $this->view->assign('email', ['email' => $email->getEmail()]);
         }
@@ -47,9 +47,6 @@ class FeuserResendController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Mail action
-     */
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'email'])]
     public function mailAction(Email $email): ResponseInterface
     {

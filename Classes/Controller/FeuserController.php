@@ -13,6 +13,7 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\DocParser;
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use Evoweb\SfRegister\Controller\Event\OverrideSettingsEvent;
@@ -44,12 +45,17 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
+use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
-use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
+use TYPO3\CMS\Extbase\Security\Exception\InvalidArgumentForHashGenerationException;
+use TYPO3\CMS\Extbase\Security\Exception\InvalidHashException;
+use TYPO3\CMS\Extbase\Validation\Exception\NoSuchValidatorException;
 use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 use TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver;
 use TYPO3\CMS\Fluid\View\TemplateView;
@@ -64,14 +70,6 @@ class FeuserController extends ActionController
 
     protected array $ignoredActions = [];
 
-    protected Context $context;
-
-    protected File $fileService;
-
-    protected FrontendUserRepository $userRepository;
-
-    protected FrontendUserGroupRepository $userGroupRepository;
-
     /**
      * The current view, as resolved by resolveView()
      *
@@ -82,39 +80,22 @@ class FeuserController extends ActionController
 
     /**
      * The current request.
-     *
-     * @var Request
-     * @api
      */
     protected RequestInterface $request;
-
-    /**
-     * Active if autologin was set.
-     *
-     * Used to define of on page redirect an additional
-     * query parameter should be set.
-     */
-    protected bool $autoLoginTriggered = false;
 
     protected ?ResponseInterface $initializeResponse = null;
 
     public function __construct(
-        Context $context,
-        File $fileService,
-        FrontendUserRepository $userRepository,
-        FrontendUserGroupRepository $userGroupRepository
+        protected Context $context,
+        protected File $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected FrontendUserGroupRepository $userGroupRepository
     ) {
-        $this->context = $context;
-        $this->fileService = $fileService;
-        $this->userRepository = $userRepository;
-        $this->userGroupRepository = $userGroupRepository;
     }
 
-    /**
-     * Disable flash messages
-     */
     protected function getErrorFlashMessage(): bool
     {
+        // Disable flash messages
         return false;
     }
 
@@ -138,10 +119,13 @@ class FeuserController extends ActionController
             );
 
             foreach ($argumentNames as $argument) {
-                $this->modifyValidatorsBasedOnSettings(
-                    $this->arguments->getArgument($argument),
-                    $this->settings['validation'][strtolower($this->controller)] ?? []
-                );
+                try {
+                    $this->modifyValidatorsBasedOnSettings(
+                        $this->arguments->getArgument($argument),
+                        $this->settings['validation'][strtolower($this->controller)] ?? []
+                    );
+                } catch (NoSuchArgumentException) {
+                }
             }
         }
     }
@@ -160,10 +144,8 @@ class FeuserController extends ActionController
         return in_array($this->actionMethodName, $this->ignoredActions);
     }
 
-    protected function modifyValidatorsBasedOnSettings(
-        Argument $argument,
-        array $configuredValidators
-    ) {
+    protected function modifyValidatorsBasedOnSettings(Argument $argument, array $configuredValidators): void
+    {
         $parser = new DocParser();
 
         /** @var UserValidator $validator */
@@ -173,11 +155,20 @@ class FeuserController extends ActionController
                 continue;
             }
 
+            if (is_array($configuredValidator) && count($configuredValidator) === 1) {
+                $configuredValidator = reset($configuredValidator);
+            }
+
             if (!is_array($configuredValidator)) {
-                $validatorInstance = $this->getValidatorByConfiguration(
-                    $configuredValidator,
-                    $parser
-                );
+                try {
+                    $validatorInstance = $this->getValidatorByConfiguration(
+                        $configuredValidator,
+                        $parser
+                    );
+                } catch (\Exception) {
+                    continue;
+                }
+
 
                 if ($validatorInstance instanceof SetPropertyNameInterface) {
                     $validatorInstance->setPropertyName($fieldName);
@@ -188,10 +179,14 @@ class FeuserController extends ActionController
                     ConjunctionValidator::class
                 );
                 foreach ($configuredValidator as $individualConfiguredValidator) {
-                    $individualValidatorInstance = $this->getValidatorByConfiguration(
-                        $individualConfiguredValidator,
-                        $parser
-                    );
+                    try {
+                        $individualValidatorInstance = $this->getValidatorByConfiguration(
+                            $individualConfiguredValidator,
+                            $parser
+                        );
+                    } catch (\Exception) {
+                        continue;
+                    }
 
                     if ($individualValidatorInstance instanceof SetPropertyNameInterface) {
                         $individualValidatorInstance->setPropertyName($fieldName);
@@ -209,12 +204,21 @@ class FeuserController extends ActionController
         } else {
             $validatorName = EmptyValidator::class;
         }
-        $validatorInstance = $this->getValidatorByConfiguration($validatorName, $parser);
-        $validator->addPropertyValidator('uid', $validatorInstance);
+
+        try {
+            $validatorInstance = $this->getValidatorByConfiguration($validatorName, $parser);
+            $validator->addPropertyValidator('uid', $validatorInstance);
+        } catch (\Exception) {
+        }
 
         $argument->setValidator($validator);
     }
 
+    /**
+     * @throws \ReflectionException
+     * @throws NoSuchValidatorException
+     * @throws AnnotationException
+     */
     protected function getValidatorByConfiguration(string $configuration, DocParser $parser): ValidatorInterface
     {
         if (!str_contains($configuration, '"') && !str_contains($configuration, '(')) {
@@ -242,7 +246,7 @@ class FeuserController extends ActionController
         $event = new OverrideSettingsEvent(
             $this->settings,
             $this->controller,
-            $this->configurationManager->getContentObject()
+            $this->request->getAttribute('currentContentObject')
         );
         $this->eventDispatcher->dispatch($event);
         $this->settings = $event->getSettings();
@@ -267,7 +271,7 @@ class FeuserController extends ActionController
         }
     }
 
-    protected function setTypeConverter()
+    protected function setTypeConverter(): void
     {
         $argumentName = 'user';
         if ($this->request->hasArgument($argumentName)) {
@@ -344,12 +348,6 @@ class FeuserController extends ActionController
     }
 
     /**
-     * Proxy action
-     *
-     * @param FrontendUser $user
-     *
-     * @return ResponseInterface
-     *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
      */
     public function proxyAction(FrontendUser $user): ResponseInterface
@@ -363,9 +361,11 @@ class FeuserController extends ActionController
     /**
      * Remove an image and forward to the action where it was called
      *
-     * @param FrontendUser $user
-     *
-     * @return ResponseInterface
+     * @throws IllegalObjectTypeException
+     * @throws InvalidArgumentForHashGenerationException
+     * @throws InvalidArgumentNameException
+     * @throws InvalidHashException
+     * @throws UnknownObjectException
      *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
      */
@@ -399,7 +399,8 @@ class FeuserController extends ActionController
                 if (!is_string($argumentName) || $argumentName === '') {
                     throw new InvalidArgumentNameException('Invalid argument name.', 1623940985);
                 }
-                if (str_starts_with($argumentName, '__')
+                if (
+                    str_starts_with($argumentName, '__')
                     || in_array(
                         $argumentName,
                         ['@extension', '@subpackage', '@controller', '@action', '@format', 'removeImage'],
@@ -421,6 +422,10 @@ class FeuserController extends ActionController
         return $response;
     }
 
+    /**
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
+     */
     protected function removeImageFromUserAndRequest(FrontendUser $user): FrontendUser
     {
         if ($user->getUid() !== null) {
@@ -446,27 +451,30 @@ class FeuserController extends ActionController
 
     public function encryptPassword(string $password): string
     {
-        /** @var PasswordHashFactory $passwordHashFactory */
-        $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
-        $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
-        return $passwordHash->getHashedPassword($password);
+        try {
+            /** @var PasswordHashFactory $passwordHashFactory */
+            $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
+            $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
+            return $passwordHash->getHashedPassword($password);
+        } catch (\Exception) {
+            return (string)time();
+        }
     }
 
-    protected function persistAll()
+    protected function persistAll(): void
     {
-        GeneralUtility::getContainer()
-            ->get(PersistenceManager::class)
-            ->persistAll();
+        /** @var PersistenceManager $persistenceManager */
+        $persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
+        $persistenceManager->persistAll();
     }
 
-    protected function redirectToPage(int $pageId): ResponseInterface
+    protected function redirectToPage(int $pageId, bool $autologin = false): ResponseInterface
     {
         $this->uriBuilder->reset();
-        if ($this->autoLoginTriggered) {
-            $statusField = $this->getTypoScriptFrontendController()->fe_user->formfield_permanent;
+        if ($autologin) {
             $this->uriBuilder->setArguments([
                 'logintype' => 'login',
-                $statusField => 'login'
+                'permalogin' => 'login'
             ]);
         }
 
@@ -484,7 +492,7 @@ class FeuserController extends ActionController
         $type = $this->controller . $action;
 
         /** @var Mail $mailService */
-        $mailService = GeneralUtility::getContainer()->get(Mail::class);
+        $mailService = GeneralUtility::makeInstance(Mail::class);
         $mailService->setRequest($this->request);
 
         if ($this->isNotifyAdmin($type)) {
@@ -502,14 +510,14 @@ class FeuserController extends ActionController
     {
         $type = lcfirst($type);
         $notifySettings = $this->settings['notifyAdmin'] ?? [];
-        return isset($notifySettings[$type]) && !empty($notifySettings[$type]);
+        return !empty($notifySettings[$type]);
     }
 
     protected function isNotifyUser(string $type): bool
     {
         $type = lcfirst($type);
         $notifySettings = $this->settings['notifyUser'] ?? [];
-        return isset($notifySettings[$type]) && !empty($notifySettings[$type]);
+        return !empty($notifySettings[$type]);
     }
 
     /**
@@ -587,7 +595,7 @@ class FeuserController extends ActionController
         return $user;
     }
 
-    protected function removePreviousUserGroups(FrontendUser $user)
+    protected function removePreviousUserGroups(FrontendUser $user): void
     {
         $userGroupIds = $this->getUserGroupIds();
         $assignedUserGroups = $user->getUsergroup();
@@ -599,7 +607,7 @@ class FeuserController extends ActionController
         $user->setUsergroup($assignedUserGroups);
     }
 
-    protected function moveTemporaryImage(FrontendUser $user)
+    protected function moveTemporaryImage(FrontendUser $user): void
     {
         if ($user->getImage()->count()) {
             /** @var FileReference $image */
@@ -611,7 +619,6 @@ class FeuserController extends ActionController
     protected function autoLogin(FrontendUserInterface $user, int $redirectPageId): ?ResponseInterface
     {
         session_start();
-        $this->autoLoginTriggered = true;
 
         $_SESSION['sf-register-user'] = GeneralUtility::hmac('auto-login::' . $user->getUid(), $GLOBALS['EXEC_TIME']);
 
@@ -636,16 +643,21 @@ class FeuserController extends ActionController
 
         $response = null;
         if ($redirectPageId > 0) {
-            $response = $this->redirectToPage($redirectPageId);
+            $response = $this->redirectToPage($redirectPageId, true);
         }
         return $response;
     }
 
     protected function userIsLoggedIn(): bool
     {
-        /** @var UserAspect $userAspect */
-        $userAspect = $this->context->getAspect('frontend.user');
-        return $userAspect->isLoggedIn();
+        $result = false;
+        try {
+            /** @var UserAspect $userAspect */
+            $userAspect = $this->context->getAspect('frontend.user');
+            $result = $userAspect->isLoggedIn();
+        } catch (\Exception) {
+        }
+        return $result;
     }
 
     /**

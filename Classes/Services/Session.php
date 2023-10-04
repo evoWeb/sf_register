@@ -23,27 +23,23 @@ class Session implements SingletonInterface
 {
     /**
      * String to identify session values
-     *
-     * @var string
      */
     protected string $sessionKey = 'sf_register';
 
     /**
      * Values stored in session
-     *
-     * @var ?array
      */
     protected ?array $values = null;
 
-    protected ?FrontendUserAuthentication $frontendUser;
-
-    public function __construct(?FrontendUserAuthentication $frontendUser = null)
+    public function __construct(protected ?FrontendUserAuthentication $frontendUser = null)
     {
         if ($GLOBALS['TSFE']->fe_user) {
             $this->frontendUser = $GLOBALS['TSFE']->fe_user;
         } else {
-            $this->frontendUser = $frontendUser;
-            $this->frontendUser->start($GLOBALS['TYPO3_REQUEST']);
+            try {
+                $this->frontendUser->start($GLOBALS['TYPO3_REQUEST']);
+            } catch (\Exception) {
+            }
         }
         $this->fetch();
     }

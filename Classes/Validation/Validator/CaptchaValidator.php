@@ -14,12 +14,11 @@ namespace Evoweb\SfRegister\Validation\Validator;
  */
 
 use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 class CaptchaValidator extends AbstractValidator implements SetOptionsInterface
 {
     protected $acceptsEmptyValues = false;
-
-    protected CaptchaAdapterFactory $captchaAdapterFactory;
 
     protected $supportedOptions = [
         'type' => [
@@ -29,9 +28,8 @@ class CaptchaValidator extends AbstractValidator implements SetOptionsInterface
         ],
     ];
 
-    public function __construct(CaptchaAdapterFactory $captchaAdapterFactory)
+    public function __construct(protected CaptchaAdapterFactory $captchaAdapterFactory)
     {
-        $this->captchaAdapterFactory = $captchaAdapterFactory;
     }
 
     /**

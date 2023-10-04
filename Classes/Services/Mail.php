@@ -193,7 +193,7 @@ class Mail implements SingletonInterface
             ]);
 
             $body = $view->render();
-        } catch (InvalidTemplateResourceException $e) {
+        } catch (InvalidTemplateResourceException) {
             $body = '';
         }
 
@@ -220,7 +220,7 @@ class Mail implements SingletonInterface
             ]);
 
             $body = $view->render();
-        } catch (InvalidTemplateResourceException $e) {
+        } catch (InvalidTemplateResourceException) {
             $body = '';
         }
 

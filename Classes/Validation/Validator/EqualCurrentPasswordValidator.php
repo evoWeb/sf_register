@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Validator to check against current password
@@ -28,19 +29,13 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements SetOpti
 {
     protected $acceptsEmptyValues = false;
 
-    protected ?Context $context = null;
-
-    protected ?FrontendUserRepository $userRepository = null;
-
     protected array $settings = [];
 
     public function __construct(
-        Context $context,
-        FrontendUserRepository $userRepository,
+        protected Context $context,
+        protected FrontendUserRepository $userRepository,
         ConfigurationManagerInterface $configurationManager
     ) {
-        $this->context = $context;
-        $this->userRepository = $userRepository;
         $this->settings = $configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'SfRegister',
@@ -77,8 +72,8 @@ class EqualCurrentPasswordValidator extends AbstractValidator implements SetOpti
                     1301599507
                 );
             }
-        } catch (\Exception $e) {
-            $this->addError($e->getMessage(), $e->getCode());
+        } catch (\Exception $exception) {
+            $this->addError($exception->getMessage(), $exception->getCode());
         }
     }
 }

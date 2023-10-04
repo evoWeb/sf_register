@@ -1,6 +1,6 @@
 <?php
 
-namespace Evoweb\SfRegister\Services;
+declare(strict_types=1);
 
 /*
  * This file is developed by evoWeb.
@@ -12,6 +12,8 @@ namespace Evoweb\SfRegister\Services;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Services;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -35,8 +37,6 @@ class File implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    protected ConfigurationManager $configurationManager;
-
     protected array $settings = [];
 
     protected string $namespace = '';
@@ -59,15 +59,16 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     protected ?Folder $imageFolder = null;
 
-    public function __construct(ConfigurationManager $configurationManager)
+    public function __construct(protected ConfigurationManager $configurationManager)
     {
-        $this->configurationManager = $configurationManager;
-
-        $this->settings = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'SfRegister',
-            'Form'
-        );
+        try {
+            $this->settings = $this->configurationManager->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+                'SfRegister',
+                'Form'
+            );
+        } catch (\Exception) {
+        }
 
         if (isset($this->settings['imageFolder']) && !empty($this->settings['imageFolder'])) {
             $this->setImageFolderIdentifier($this->settings['imageFolder']);
@@ -90,7 +91,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $this->storage;
     }
 
-    public function setImageFolderIdentifier(string $imageFolder)
+    public function setImageFolderIdentifier(string $imageFolder): void
     {
         $parts = GeneralUtility::trimExplode(':', $imageFolder);
         $this->storageUid = (int)$parts[0];
@@ -103,7 +104,10 @@ class File implements SingletonInterface, LoggerAwareInterface
         if (!$this->imageFolder) {
             $this->createFolderIfNotExist($this->imageFolderIdentifier);
 
-            $this->imageFolder = $this->getStorage()->getFolder($this->imageFolderIdentifier);
+            try {
+                $this->imageFolder = $this->getStorage()->getFolder($this->imageFolderIdentifier);
+            } catch (\Exception) {
+            }
         }
         return $this->imageFolder;
     }
@@ -113,7 +117,10 @@ class File implements SingletonInterface, LoggerAwareInterface
         if (!$this->tempFolder) {
             $this->createFolderIfNotExist($this->tempFolderIdentifier);
 
-            $this->tempFolder = $this->getStorage()->getFolder($this->tempFolderIdentifier);
+            try {
+                $this->tempFolder = $this->getStorage()->getFolder($this->tempFolderIdentifier);
+            } catch (\Exception) {
+            }
         }
         return $this->tempFolder;
     }
@@ -145,7 +152,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $this->errors;
     }
 
-    protected function addError(string $message, int $code)
+    protected function addError(string $message, int $code): void
     {
         $this->errors[] = GeneralUtility::makeInstance(Error::class, $message, $code);
     }
@@ -153,12 +160,16 @@ class File implements SingletonInterface, LoggerAwareInterface
     protected function getNamespace(): string
     {
         if ($this->namespace === '') {
-            $frameworkSettings = $this->configurationManager->getConfiguration(
-                ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-            );
-            $this->namespace = strtolower(
-                'tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']
-            );
+            try {
+                $frameworkSettings = $this->configurationManager->getConfiguration(
+                    ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+                );
+                $this->namespace = strtolower(
+                    'tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']
+                );
+            } catch (\Exception) {
+                $this->namespace = 'tx_sfregister_create';
+            }
         }
 
         return $this->namespace;
@@ -259,14 +270,17 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $result;
     }
 
-    protected function createFolderIfNotExist(string $uploadFolder)
+    protected function createFolderIfNotExist(string $uploadFolder): void
     {
         if (!$this->getStorage()->hasFolder($uploadFolder)) {
-            $this->getStorage()->createFolder($uploadFolder);
+            try {
+                $this->getStorage()->createFolder($uploadFolder);
+            } catch (\Exception) {
+            }
         }
     }
 
-    public function moveFileFromTempFolderToUploadFolder(?FileReference $image)
+    public function moveFileFromTempFolderToUploadFolder(?FileReference $image): void
     {
         if (!empty($image)) {
             $file = $image->getOriginalResource()->getOriginalFile();

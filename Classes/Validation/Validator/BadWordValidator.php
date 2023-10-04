@@ -15,6 +15,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 class BadWordValidator extends AbstractValidator implements SetOptionsInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+namespace Evoweb\SfRegister\Services\Setup;
 
 /*
  * This file is developed by evoWeb.
@@ -13,8 +13,9 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Evoweb\SfRegister\Controller\Event;
+use Psr\Http\Message\ResponseInterface;
 
-final class EditFormEvent extends AbstractEventWithUserAndSettings
+interface CheckInterface
 {
+    public function check(array $settings): ?ResponseInterface;
 }

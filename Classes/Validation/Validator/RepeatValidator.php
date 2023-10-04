@@ -59,8 +59,8 @@ class RepeatValidator extends AbstractValidator implements SetModelInterface, Se
                     1307965971
                 );
             }
-        } catch (\Exception $e) {
-            $this->addError($e->getMessage(), $e->getCode());
+        } catch (\Exception $exception) {
+            $this->addError($exception->getMessage(), $exception->getCode());
         }
     }
 }

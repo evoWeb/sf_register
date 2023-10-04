@@ -22,13 +22,13 @@ class Email extends AbstractEntity
 {
     protected string $email = '';
 
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
     public function getEmail(): string
     {
         return $this->email;
-    }
-
-    public function setEmail(string $email)
-    {
-        $this->email = $email;
     }
 }

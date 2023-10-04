@@ -17,6 +17,7 @@ $EM_CONF['sf_register'] = [
         'suggests' => [
             'extender' => '10.0.0-',
             'recaptcha' => '12.0.0-',
+            'static_info_tables' => '12.0.0-',
         ],
     ],
 ];

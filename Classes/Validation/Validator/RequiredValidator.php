@@ -42,9 +42,7 @@ class RequiredValidator extends AbstractValidator implements SetModelInterface, 
     }
 
     /**
-     * If the given value is empty
-     *
-     * @param string $value The value
+     * If the given value is not empty
      */
     public function isValid(mixed $value): void
     {

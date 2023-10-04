@@ -34,16 +34,13 @@ class FeuserPasswordController extends FeuserController
 {
     protected string $controller = 'Password';
 
-    protected Session $session;
-
     public function __construct(
-        Context $context,
-        File $fileService,
-        FrontendUserRepository $userRepository,
-        FrontendUserGroupRepository $userGroupRepository,
-        Session $session
+        protected Context $context,
+        protected File $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected FrontendUserGroupRepository $userGroupRepository,
+        protected Session $session
     ) {
-        $this->session = $session;
         parent::__construct($context, $fileService, $userRepository, $userGroupRepository);
     }
 
@@ -59,9 +56,6 @@ class FeuserPasswordController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Save action
-     */
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'password'])]
     public function saveAction(Password $password): ResponseInterface
     {

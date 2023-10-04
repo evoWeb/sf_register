@@ -14,23 +14,19 @@ namespace Evoweb\SfRegister\Validation\Validator;
  */
 
 use Evoweb\SfRegister\Services\File;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Validator to check if the uploaded image could be handled
  */
 class ImageUploadValidator extends AbstractValidator implements SetOptionsInterface
 {
-    protected File $fileService;
-
-    public function __construct(File $fileService)
+    public function __construct(protected File $fileService)
     {
-        $this->fileService = $fileService;
     }
 
     /**
      * If the given value is a valid image
-     *
-     * @param bool $value The value
      */
     public function isValid(mixed $value): void
     {

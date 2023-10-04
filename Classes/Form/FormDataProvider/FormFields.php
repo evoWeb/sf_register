@@ -22,8 +22,6 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
     /**
      * Resolve select items
      *
-     * @param array $result
-     * @return array
      * @throws \UnexpectedValueException
      */
     public function addData(array $result): array
@@ -81,8 +79,8 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
 
     protected function getLabel(string $fieldName, array|string $configuration): string
     {
-        $labelPath = $configuration['backendLabel'] ??
-            'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.' . $fieldName;
+        $labelPath = $configuration['backendLabel']
+            ?? 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.' . $fieldName;
         return $this->getLanguageService()->sL($labelPath);
     }
 

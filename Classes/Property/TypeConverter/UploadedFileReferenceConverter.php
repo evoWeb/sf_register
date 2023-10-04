@@ -27,6 +27,7 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  */
 
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
+use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Resource\FileReference as FalFileReference;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -40,6 +41,8 @@ use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
+use TYPO3\CMS\Extbase\Security\Exception\InvalidArgumentForHashGenerationException;
+use TYPO3\CMS\Extbase\Security\Exception\InvalidHashException;
 
 class UploadedFileReferenceConverter extends AbstractTypeConverter
 {
@@ -63,62 +66,30 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     protected string $defaultUploadFolder = '1:/user_upload/';
 
     /**
-     * @var array<string>
-     */
-    protected $sourceTypes = ['array'];
-
-    /**
-     * @var string
-     */
-    protected $targetType = FileReference::class;
-
-    /**
-     * Take precedence over the available FileReferenceConverter
-     *
-     * @var int
-     */
-    protected $priority = 31;
-
-    protected ResourceFactory $resourceFactory;
-
-    protected HashService $hashService;
-
-    protected PersistenceManager $persistenceManager;
-
-    /**
      * @var FileReference[]
      */
     protected array $convertedResources = [];
 
     public function __construct(
-        ResourceFactory $resourceFactory,
-        HashService $hashService,
-        PersistenceManager $persistenceManager
+        protected ResourceFactory $resourceFactory,
+        protected HashService $hashService,
+        protected PersistenceManager $persistenceManager
     ) {
-        $this->resourceFactory = $resourceFactory;
-        $this->hashService = $hashService;
-        $this->persistenceManager = $persistenceManager;
     }
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
      * built $convertedChildProperties and $configuration.
-     *
-     * @param array $source
-     * @param string $targetType
-     * @param array $convertedChildProperties
-     * @param ?PropertyMappingConfigurationInterface $configuration
-     *
-     * @return FileReference|Error
      */
     public function convertFrom(
         $source,
         string $targetType,
         array $convertedChildProperties = [],
         ?PropertyMappingConfigurationInterface $configuration = null
-    ) {
+    ): FileReference|Error {
         if (!isset($source['error']) || $source['error'] === \UPLOAD_ERR_NO_FILE) {
             $result = null;
+
             if (isset($source['submittedFile']['resourcePointer'])) {
                 try {
                     $resourcePointer = $this->hashService->validateAndStripHmac(
@@ -136,7 +107,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
                             (int)$resourcePointer
                         );
                     }
-                } catch (\InvalidArgumentException $e) {
+                } catch (\Exception) {
                     // Nothing to do. No file is uploaded and resource pointer is invalid. Discard!
                 }
             }
@@ -162,8 +133,8 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
         try {
             $resource = $this->importUploadedResource($source, $configuration);
-        } catch (\Exception $e) {
-            return new Error($e->getMessage(), $e->getCode());
+        } catch (\Exception $exception) {
+            return new Error($exception->getMessage(), $exception->getCode());
         }
 
         $this->convertedResources[$source['tmp_name']] = $resource;
@@ -175,8 +146,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     {
         return match ($errorCode) {
             \UPLOAD_ERR_INI_SIZE => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
-            \UPLOAD_ERR_FORM_SIZE =>
-                'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+            \UPLOAD_ERR_FORM_SIZE => 'The uploaded file exceeds the MAX_FILE_SIZE directive in the HTML form',
             \UPLOAD_ERR_PARTIAL => 'The uploaded file was only partially uploaded',
             \UPLOAD_ERR_NO_FILE => 'No file was uploaded',
             \UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder',
@@ -189,12 +159,10 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     /**
      * Import a resource and respect configuration given for properties
      *
-     * @param array $uploadInfo
-     * @param PropertyMappingConfigurationInterface $configuration
-     *
-     * @return FileReference
-     *
      * @throws TypeConverterException
+     * @throws ResourceDoesNotExistException
+     * @throws InvalidArgumentForHashGenerationException
+     * @throws InvalidHashException
      */
     protected function importUploadedResource(
         array $uploadInfo,
@@ -232,9 +200,9 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         $uploadedFile = $uploadFolder->addUploadedFile($uploadInfo, $conflictMode);
 
         $resourcePointer = isset($uploadInfo['submittedFile']['resourcePointer'])
-            && !str_contains($uploadInfo['submittedFile']['resourcePointer'], 'file:') ?
-            $this->hashService->validateAndStripHmac($uploadInfo['submittedFile']['resourcePointer']) :
-            null;
+            && !str_contains($uploadInfo['submittedFile']['resourcePointer'], 'file:')
+            ? $this->hashService->validateAndStripHmac($uploadInfo['submittedFile']['resourcePointer'])
+            : null;
 
         return $this->createFileReferenceFromFalFileObject($uploadedFile, (int)$resourcePointer);
     }

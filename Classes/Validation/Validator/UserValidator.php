@@ -28,8 +28,6 @@ class UserValidator extends AbstractGenericObjectValidator
 
     /**
      * Checks if the given value is valid according to the property validators.
-     *
-     * @param mixed $object The value that should be validated
      */
     protected function isValid(mixed $object): void
     {
@@ -76,12 +74,8 @@ class UserValidator extends AbstractGenericObjectValidator
 
     /**
      * Checks if validator can validate the object
-     *
-     * @param object|FrontendUser|Password $object
-     *
-     * @return bool
      */
-    public function canValidate($object): bool
+    public function canValidate(mixed $object): bool
     {
         return $object instanceof FrontendUser || $object instanceof Password;
     }

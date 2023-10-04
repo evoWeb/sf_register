@@ -16,13 +16,15 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * A validator to check if a value is unique only if current value has changed
  */
-class UniqueExcludeCurrentValidator
-    extends AbstractValidator
-    implements SetModelInterface, SetOptionsInterface, SetPropertyNameInterface
+class UniqueExcludeCurrentValidator extends AbstractValidator implements
+    SetModelInterface,
+    SetOptionsInterface,
+    SetPropertyNameInterface
 {
     protected $acceptsEmptyValues = false;
 
@@ -34,8 +36,6 @@ class UniqueExcludeCurrentValidator
         ],
     ];
 
-    protected ?FrontendUserRepository $userRepository = null;
-
     /**
      * Model to access user properties
      */
@@ -43,9 +43,8 @@ class UniqueExcludeCurrentValidator
 
     protected string $propertyName = '';
 
-    public function __construct(FrontendUserRepository $userRepository)
+    public function __construct(protected FrontendUserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
     }
 
     public function setModel(FrontendUser|Password $model): void
@@ -59,7 +58,7 @@ class UniqueExcludeCurrentValidator
     }
 
     /**
-     * If the given passwords are valid
+     * If the given value is unique either global or local
      */
     public function isValid(mixed $value): void
     {
@@ -67,24 +66,28 @@ class UniqueExcludeCurrentValidator
             return;
         }
 
-        if ($this->userRepository->countByField($this->propertyName, $value)) {
-            $this->addError(
-                $this->translateErrorMessage(
-                    'error_notunique_local',
-                    'SfRegister',
-                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
-                ),
-                1301599608
-            );
-        } elseif ($this->options['global'] && $this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
-            $this->addError(
-                $this->translateErrorMessage(
-                    'error_notunique_global',
-                    'SfRegister',
-                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
-                ),
-                1301599619
-            );
+        if ($this->options['global']) {
+            if ($this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
+                $this->addError(
+                    $this->translateErrorMessage(
+                        'error_notunique_global',
+                        'SfRegister',
+                        [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                    ),
+                    1301599619
+                );
+            }
+        } else {
+            if ($this->userRepository->countByField($this->propertyName, $value)) {
+                $this->addError(
+                    $this->translateErrorMessage(
+                        'error_notunique_local',
+                        'SfRegister',
+                        [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                    ),
+                    1301599608
+                );
+            }
         }
     }
 }
