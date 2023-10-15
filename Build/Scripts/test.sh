@@ -42,6 +42,8 @@ checkResources () {
     fi
     echo "#################################################################" >&2
     echo "" >&2
+
+    cleanup
 }
 
 #################################################
@@ -57,11 +59,11 @@ runFunctionalTests () {
     local PHP_VERSION="${1}"
     local TYPO3_VERSION=${2}
     local TESTING_FRAMEWORK=${3}
-    local PREFER_LOWEST=${4}
-    local TEST_PATH="Tests/Functional"
+    local TEST_PATH=${4}
+    local PREFER_LOWEST=${5}
 
     echo "###########################################################################" >&2
-    echo "Run unit and/or functional tests with" >&2
+    echo " Run unit and/or functional tests with" >&2
     echo " - TYPO3 ${TYPO3_VERSION}" >&2
     echo " - PHP ${PHP_VERSION}">&2
     echo " - Testing framework ${TESTING_FRAMEWORK}">&2
@@ -97,12 +99,17 @@ runFunctionalTests () {
 
     ./runTests.sh \
         -p ${PHP_VERSION} \
+        -s unit Tests/Unit || exit 1 ; \
+        EXIT_CODE_UNIT=$?
+
+    ./runTests.sh \
+        -p ${PHP_VERSION} \
         -d sqlite \
         -s functional ${TEST_PATH} || exit 1 ; \
         EXIT_CODE_FUNCTIONAL=$?
 
     echo "###########################################################################" >&2
-    echo "Finished unit and/or functional tests with" >&2
+    echo " Finished unit and/or functional tests with" >&2
     echo " - TYPO3 ${TYPO3_VERSION}" >&2
     echo " - PHP ${PHP_VERSION}">&2
     echo " - Testing framework ${TESTING_FRAMEWORK}">&2
@@ -113,7 +120,8 @@ runFunctionalTests () {
         [[ ${EXIT_CODE_CORE} -eq 0 ]] && \
         [[ ${EXIT_CODE_FRAMEWORK} -eq 0 ]] && \
         [[ ${EXIT_CODE_VALIDATE} -eq 0 ]] && \
-        [[ ${EXIT_CODE_FUNCTIONAL} -eq 0 ]]
+        [[ ${EXIT_CODE_FUNCTIONAL} -eq 0 ]] && \
+        [[ ${EXIT_CODE_UNIT} -eq 0 ]]
     then
         echo -e "${GREEN}SUCCESS${NC}" >&2
     else
@@ -122,6 +130,7 @@ runFunctionalTests () {
     fi
     echo "###########################################################################" >&2
     echo "" >&2
+    cleanup
 }
 
 #################################################
@@ -132,22 +141,25 @@ runFunctionalTests () {
 cleanup () {
     ./runTests.sh -s clean
     ./additionalTests.sh -s clean
-    git checkout ../../composer.json
+    echo "Cleaned up all test related files"
 }
 
-DEBUG_TESTS=false
+LOWEST="--prefer-lowest"
+TCORE="^12.4"
+TFRAMEWORK="^8.0.6"
+TPATH="Tests/Functional"
+DEBUG_TESTS=true
 if [[ $DEBUG_TESTS != true ]]; then
     checkResources
 
-    runFunctionalTests "8.1" "^12.4" "^8.0.6" || exit 1
-    cleanup
-    runFunctionalTests "8.1" "^12.4" "^8.0.6" "--prefer-lowest" || exit 1
-    cleanup
-    runFunctionalTests "8.2" "^12.4" "^8.0.6" || exit 1
-    cleanup
-    runFunctionalTests "8.2" "^12.4" "^8.0.6" "--prefer-lowest" || exit 1
+    runFunctionalTests "8.1" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
+    runFunctionalTests "8.1" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
+    runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
+    runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
 else
     cleanup
-    runFunctionalTests "8.1" "^12.4" "^8.0.6" || exit 1
+    runFunctionalTests "8.1" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
     cleanup
+    # ./runTests.sh -x -p 8.2 -d sqlite -s functional -e "--group selected" Tests/Functional12
+    # ./runTests.sh -p "8.1" -x -d sqlite -s functional Tests/Functional;
 fi

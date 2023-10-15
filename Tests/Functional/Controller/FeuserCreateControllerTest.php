@@ -41,7 +41,7 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $this->request = $this->initializeTypoScriptFrontendController();
     }
 
-    #[Test]
+    ##[Test]
     public function isUserValidatorSet(): void
     {
         $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.'] = [

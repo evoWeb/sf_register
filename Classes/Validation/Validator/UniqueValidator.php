@@ -59,7 +59,7 @@ class UniqueValidator extends AbstractValidator implements
      */
     public function isValid(mixed $value): void
     {
-        if ($this->options['global']) {
+        if ($this->options['global'] ?? false) {
             if ($this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
                 $this->addError(
                     $this->translateErrorMessage(

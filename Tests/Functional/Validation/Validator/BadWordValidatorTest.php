@@ -56,7 +56,7 @@ class BadWordValidatorTest extends AbstractTestBase
         parent::tearDown();
     }
 
-    #[Test]
+    ##[Test]
     public function settingsContainsValidTyposcriptSettings(): void
     {
         self::assertArrayHasKey(
@@ -65,7 +65,7 @@ class BadWordValidatorTest extends AbstractTestBase
         );
     }
 
-    #[Test]
+    ##[Test]
     public function isValidReturnsFalseForWordOnBadwordlist(): void
     {
         $controller = $this->request->getAttribute('frontend.controller');
@@ -79,7 +79,7 @@ class BadWordValidatorTest extends AbstractTestBase
         self::assertTrue($this->subject->validate(current($words))->hasErrors());
     }
 
-    #[Test]
+    ##[Test]
     public function isValidReturnsTrueForGoodPassword(): void
     {
         self::assertFalse($this->subject->validate('4dw$koL')->hasErrors());

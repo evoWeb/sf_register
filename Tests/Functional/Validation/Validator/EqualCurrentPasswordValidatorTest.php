@@ -35,7 +35,7 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         $this->request = $this->initializeTypoScriptFrontendController();
     }
 
-    #[Test]
+    ##[Test]
     public function settingsContainsValidTyposcriptSettings(): void
     {
         $typoScriptSetup = $this->request->getAttribute('frontend.typoscript')->getSetupArray();
@@ -45,7 +45,7 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         );
     }
 
-    #[Test]
+    ##[Test]
     public function isUserLoggedInReturnsFalseIfNotLoggedIn(): void
     {
         /** @var Context $context */
@@ -63,7 +63,7 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         self::assertFalse($method->invoke($subject));
     }
 
-    #[Test]
+    ##[Test]
     public function isUserLoggedInReturnsTrueIfLoggedIn(): void
     {
         $this->createAndLoginFrontEndUser('2', [

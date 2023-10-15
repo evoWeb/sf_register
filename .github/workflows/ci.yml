@@ -30,51 +30,79 @@ jobs:
 
       - name: Cleanup
         run: |
-          Build/Scripts/runTests.sh -s clean ; \
-          Build/Scripts/additionalTests.sh -s clean ; \
-          git checkout composer.json
+          Build/Scripts/runTests.sh -s clean
+          Build/Scripts/additionalTests.sh -s clean
 
   testsuite:
     name: All php tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ '8.2' ]
         packages:
-          - core: '^12.0'
-            framework: 'dev-main'
-          - core: 'dev-main'
-            framework: 'dev-main'
+          - php: '8.1'
+            core: '^12.4'
+            framework: '^8.0.6'
+            prefer: ''
+            testpath: 'Tests/Functional'
+          - php: '8.1'
+            core: '^12.4'
+            framework: '^8.0.6'
+            prefer: '--prefer-lowest'
+            testpath: 'Tests/Functional'
+          - php: '8.2'
+            core: '^12.4'
+            framework: '^8.0.6'
+            prefer: ''
+            testpath: 'Tests/Functional'
+          - php: '8.2'
+            core: '^12.4'
+            framework: '^8.0.6'
+            prefer: '--prefer-lowest'
+            testpath: 'Tests/Functional'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Composer
-        run: Build/Scripts/additionalTests.sh -p ${{ matrix.php }} -s lintPhp
-
-      - name: Composer install
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s composerInstall
+      - name: Lint php
+        run: |
+          Build/Scripts/additionalTests.sh \
+            -p ${{ matrix.packages.php }} \
+            -s lintPhp
 
       - name: Composer install core
         run: |
-          Build/Scripts/additionalTests.sh -p ${{ matrix.php }} \
+          Build/Scripts/additionalTests.sh \
+            -p ${{ matrix.packages.php }} \
             -s composerInstallPackage \
-            -q "typo3/cms-core:${{ matrix.packages.core }}"
+            -q "typo3/cms-core:${{ matrix.packages.core }}" \
+            -r " ${{ matrix.packages.prefer }}"
 
       - name: Composer install framework
         run: |
-          Build/Scripts/additionalTests.sh -p ${{ matrix.php }} \
+          Build/Scripts/additionalTests.sh \
+            -p ${{ matrix.packages.php }} \
             -s composerInstallPackage \
-            -q "typo3/testing-framework:${{ matrix.packages.framework }}"
+            -q "typo3/testing-framework:${{ matrix.packages.framework }}" \
+            -r " --dev ${{ matrix.packages.prefer }}"
 
       - name: Composer validate
-        run: Build/Scripts/runTests.sh -s composerValidate
+        run: |
+          Build/Scripts/runTests.sh \
+            -p ${{ matrix.packages.php }} \
+            -s composerValidate
 
       - name: Functional tests with sqlite
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d sqlite -s functional Tests/Functional
+        run: |
+          Build/Scripts/runTests.sh \
+            -p ${{ matrix.packages.php }} \
+            -d sqlite \
+            -s functional ${{ matrix.packages.testpath }}
 
-      - name: Functional tests with sqlite
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d sqlite -s unit Tests/Unit
+      - name: Unit tests with sqlite
+        run: |
+          Build/Scripts/runTests.sh \
+            -p ${{ matrix.packages.php }} \
+            -s unit Tests/Unit
 
       - name: Cleanup
         run: |

@@ -8,8 +8,8 @@
 	"version": "9.2.0",
 	"license": "GPL-2.0-or-later",
 	"engines": {
-		"node": ">=14.15.0 <17.0.0",
-		"npm": ">=8.0.0 <10.0.0"
+		"node": ">=14.15.0 <19.0.0",
+		"npm": ">=9.0.0 <11.0.0"
 	},
 	"devDependencies": {
 		"webpack": "^5.79.0",
@@ -27,21 +27,21 @@
 		"terser": "^5.16.9",
 
 		"@types/grecaptcha": "^3.0.4",
-		"@typescript-eslint/eslint-plugin": "^5.55.0",
-		"@typescript-eslint/parser": "^5.55.0",
-		"@typescript-eslint/typescript-estree": "^5.55.0",
-		"eslint": "^8.36.0",
-		"eslint-plugin-lit": "^1.8.2",
+		"@typescript-eslint/eslint-plugin": "^6.6.0",
+		"@typescript-eslint/parser": "^6.6.0",
+		"@typescript-eslint/typescript-estree": "^6.6.0",
+		"eslint": "^8.38.0",
+		"eslint-plugin-lit": "^1.8.3",
 		"eslint-plugin-wc": "^1.4.0",
 		"postcss-scss": "^4.0.6",
-		"stylelint": "^15.10.1",
-		"stylelint-order": "^5.0.0",
-		"stylelint-scss": "^4.3.0",
-		"typescript": "^5.0.4"
+		"stylelint": "^15.10.3",
+		"stylelint-order": "^6.0.3",
+		"stylelint-scss": "^5.1.0",
+		"typescript": "^5.2.2"
 	},
 	"scripts": {
 		"lint:css": "stylelint Sources/Scss/*.scss",
-		"lint:ts": "eslint -c .eslintrc.json Sources/TypeScript/*.ts",
+		"lint:ts": "eslint -c .eslintrc.js Sources/TypeScript/*.ts",
 		"build:css": "npm run lint:css Sources/Scss/*.scss && webpack --mode=production --config webpack.css.config.js",
 		"build:js": "npm run lint:ts && webpack --mode=development --config webpack.js.config.js && webpack --mode=production --config webpack.js.config.js",
 		"build:module": "tsc --project tsconfig.build.json && rollup -c"

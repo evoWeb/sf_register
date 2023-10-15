@@ -39,7 +39,7 @@ class FrontendUserRepositoryTest extends AbstractTestBase
         parent::tearDown();
     }
 
-    #[Test]
+    ##[Test]
     public function findByUid(): void
     {
         /** @var FrontendUser $user */

@@ -41,7 +41,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/fe_users.csv');
     }
 
-    #[Test]
+    ##[Test]
     public function userIsLoggedInReturnsFalseIfNotLoggedIn(): void
     {
         $this->createEmptyFrontendUser();
@@ -81,7 +81,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         self::assertFalse($method->invoke($subject));
     }
 
-    #[Test]
+    ##[Test]
     public function userIsLoggedInReturnsTrueIfLoggedIn(): void
     {
         $this->createAndLoginFrontEndUser('2', [
@@ -124,7 +124,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         self::assertTrue($method->invoke($subject));
     }
 
-    #[Test]
+    ##[Test]
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository(): void
     {
         if (!defined('PASSWORD_ARGON2I')) {
