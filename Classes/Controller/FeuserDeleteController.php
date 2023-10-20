@@ -89,7 +89,10 @@ class FeuserDeleteController extends FeuserController
             $user = $this->userRepository->findByEmail($user->getEmail());
         }
 
-        $user = $this->sendEmails($user, __FUNCTION__);
+        if ($user instanceof FrontendUser && $user->getUid()) {
+            $user = $this->sendEmails($user, __FUNCTION__);
+            $this->view->assign('userNotFound', true);
+        }
 
         $this->view->assign('user', $user);
 
