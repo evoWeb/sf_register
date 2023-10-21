@@ -378,7 +378,7 @@ class FeuserController extends ActionController
         if ($referringRequest !== null) {
             $response = (new ForwardResponse($referringRequest->getControllerActionName()))
                 ->withControllerName($referringRequest->getControllerName())
-                ->withExtensionName($referringRequest->getControllerExtensionName())
+                ->withExtensionName($this->request->getControllerExtensionName())
                 ->withArguments($this->request->getArguments());
         } else {
             $response = new HtmlResponse($this->view->render());
