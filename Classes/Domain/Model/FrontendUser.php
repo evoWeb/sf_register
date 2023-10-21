@@ -324,7 +324,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
     {
         $this->image = $this->image ?? new ObjectStorage();
         $this->usergroup = $this->usergroup ?? new ObjectStorage();
-        $this->moduleSysDmailCategory = new ObjectStorage();
+        $this->moduleSysDmailCategory = $this->moduleSysDmailCategory ?? new ObjectStorage();
     }
 
     /**
@@ -404,7 +404,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
      *
      * @return ObjectStorage<FrontendUserGroup> An object storage containing the usergroup
      */
-    public function getUsergroup(): ObjectStorage
+    public function getUsergroup(): ?ObjectStorage
     {
         return $this->usergroup;
     }
@@ -704,7 +704,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
      *
      * @return ObjectStorage<FileReference>
      */
-    public function getImage(): ObjectStorage
+    public function getImage(): ?ObjectStorage
     {
         return $this->image;
     }
@@ -987,7 +987,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
         $this->moduleSysDmailCategory = $moduleSysDmailCategory;
     }
 
-    public function getModuleSysDmailCategory(): ObjectStorage
+    public function getModuleSysDmailCategory(): ?ObjectStorage
     {
         return $this->moduleSysDmailCategory;
     }
