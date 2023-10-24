@@ -55,7 +55,7 @@ class AjaxMiddleware implements MiddlewareInterface
     {
         $requestArguments = $this->getParamFromRequest($request, 'tx_sfregister');
 
-        if (!GeneralUtility::_GET('ajax') == 'sf_register') {
+        if ((GeneralUtility::_GET('ajax') ?? '') !== 'sf_register') {
             $response = $handler->handle($request);
         } else {
             switch ($requestArguments['action']) {
