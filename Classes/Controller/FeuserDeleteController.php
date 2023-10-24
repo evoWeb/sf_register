@@ -89,14 +89,16 @@ class FeuserDeleteController extends FeuserController
             $user = $this->userRepository->findByEmail($user->getEmail());
         }
 
-        if ($user instanceof FrontendUser && $user->getUid()) {
+        if ($this->settings['notifyUser']['deleteSave'] == 0) {
+            $this->userRepository->remove($user);
+            $this->persistAll();
+        } elseif ($user instanceof FrontendUser && $user->getUid()) {
             $user = $this->sendEmails($user, __FUNCTION__);
+            $this->view->assign('user', $user);
         } else {
             $this->view->assign('userNotFound', true);
         }
-
-        $this->view->assign('user', $user);
-
+        
         return new HtmlResponse($this->view->render());
     }
 
