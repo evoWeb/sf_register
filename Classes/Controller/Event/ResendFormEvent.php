@@ -15,6 +15,21 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Controller\Event;
 
-final class ResendFormEvent extends AbstractEventWithUserAndSettings
+use Evoweb\SfRegister\Domain\Model\Email;
+
+final class ResendFormEvent
 {
+    public function __construct(protected Email $email, protected array $settings)
+    {
+    }
+
+    public function getEmail(): Email
+    {
+        return $this->email;
+    }
+
+    public function getSettings(): array
+    {
+        return $this->settings;
+    }
 }

@@ -58,8 +58,7 @@ abstract class AbstractValidator extends BaseAbstractValidator
             $this->supportedOptions,
             static function (array $supportedOptionData, string $supportedOptionName, array $options): void {
                 if (
-                    isset($supportedOptionData[3])
-                    && $supportedOptionData[3] === true
+                    ($supportedOptionData[3] ?? false) === true
                     && !array_key_exists($supportedOptionName, $options)
                 ) {
                     throw new InvalidValidationOptionsException(

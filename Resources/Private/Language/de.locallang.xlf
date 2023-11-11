@@ -352,6 +352,10 @@
 				<source>Email address of person to invite</source>
 				<target>Email Adresse der einzuladenden Person</target>
 			</trans-unit>
+			<trans-unit id="invitation_send">
+				<source>Invitation was send</source>
+				<target>Einladung wurde versandt</target>
+			</trans-unit>
 			<trans-unit id="submit_create">
 				<source>create</source>
 				<target>registrieren</target>
@@ -375,6 +379,14 @@
 			<trans-unit id="submit_removeImage">
 				<source>remove</source>
 				<target>entfernen</target>
+			</trans-unit>
+			<trans-unit id="submit_invite">
+				<source>invite</source>
+				<target>einladen</target>
+			</trans-unit>
+			<trans-unit id="submit_password">
+				<source>change</source>
+				<target>ändern</target>
 			</trans-unit>
 			<trans-unit id="username">
 				<source>Username</source>
@@ -616,6 +628,10 @@
 				<target>Sie haben die Löschung des Accounts %2$s von %1$s angefordert</target>
 			</trans-unit>
 
+			<trans-unit id="please_select">
+				<source>Please select</source>
+				<target>Bitte wählen</target>
+			</trans-unit>
 			<trans-unit id="submit_delete" approved="yes">
 				<source>delete</source>
 				<target>löschen</target>
@@ -746,6 +762,23 @@
 			<trans-unit id="email_user_account_saved">
 				<source>Your registration was saved.</source>
 				<target>Ihre Registrierung wurde gespeichert.</target>
+			</trans-unit>
+
+			<trans-unit id="email_admin_invitation_message">
+				<source>User "%1$s" send an invitation to "%2$s".</source>
+				<target>Nutzer "%1$s" hat eine Einladung an "%2$s" gesendet.</target>
+			</trans-unit>
+			<trans-unit id="email_user_invitation_message">
+				<source>You invited email "%1$s" to register at %2$s.</source>
+				<target>Sie haben E-Mail "%1$s" eingeladen sich auf %2$s zu registrieren.</target>
+			</trans-unit>
+			<trans-unit id="email_invitee_invitation_message">
+				<source>You were invited with email %1$s to register at "%2$s".</source>
+				<target>Sie wurden mit E-Mail %1$s eingeladen sich auf "%2$s" zu registrieren.</target>
+			</trans-unit>
+			<trans-unit id="email_invitee_register_link">
+				<source>register</source>
+				<target>registrieren</target>
 			</trans-unit>
 		</body>
 	</file>

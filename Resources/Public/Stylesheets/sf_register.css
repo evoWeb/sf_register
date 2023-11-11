@@ -1,3 +1,6 @@
+.d-none {
+    display: none; }
+
 .tx_evoweb_sfregister iframe#bargraph {
   display: none;
   height: 14px;

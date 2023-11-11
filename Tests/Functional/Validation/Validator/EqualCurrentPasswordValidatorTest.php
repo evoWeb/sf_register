@@ -16,6 +16,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Context\Context;
@@ -27,15 +28,16 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
     public function setUp(): void
     {
         parent::setUp();
-        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
-        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_groups.csv');
-        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_users.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/pages.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_groups.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_users.csv');
 
         $this->createEmptyFrontendUser();
         $this->request = $this->initializeTypoScriptFrontendController();
     }
 
-    ##[Test]
+    #[Test]
+    #[RequiresPhp('9.3.0')]
     public function settingsContainsValidTyposcriptSettings(): void
     {
         $typoScriptSetup = $this->request->getAttribute('frontend.typoscript')->getSetupArray();
@@ -45,7 +47,8 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         );
     }
 
-    ##[Test]
+    #[Test]
+    #[RequiresPhp('9.3.0')]
     public function isUserLoggedInReturnsFalseIfNotLoggedIn(): void
     {
         /** @var Context $context */
@@ -63,7 +66,8 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         self::assertFalse($method->invoke($subject));
     }
 
-    ##[Test]
+    #[Test]
+    #[RequiresPhp('9.3.0')]
     public function isUserLoggedInReturnsTrueIfLoggedIn(): void
     {
         $this->createAndLoginFrontEndUser('2', [

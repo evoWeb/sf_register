@@ -13,10 +13,9 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\Password;
+use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
 
 interface SetModelInterface
 {
-    public function setModel(FrontendUser|Password $model): void;
+    public function setModel(ValidatableInterface $model): void;
 }

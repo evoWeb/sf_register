@@ -22,7 +22,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * An extended frontend user with more area
  */
-class FrontendUser extends AbstractEntity implements FrontendUserInterface
+class FrontendUser extends AbstractEntity implements FrontendUserInterface, ValidatableInterface
 {
     protected string $username = '';
 

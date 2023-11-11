@@ -135,7 +135,7 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
         $childContent = $this->renderChildren();
         $viewHelperVariableContainer->remove(self::class, 'selectedValue');
         $viewHelperVariableContainer->remove(self::class, 'registerFieldNameForFormTokenGeneration');
-        if (isset($this->arguments['optionsAfterContent']) && $this->arguments['optionsAfterContent']) {
+        if (($this->arguments['optionsAfterContent'] ?? false)) {
             $tagContent = $childContent . $tagContent;
         } else {
             $tagContent .= $childContent;

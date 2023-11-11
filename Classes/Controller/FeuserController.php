@@ -30,27 +30,31 @@ use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
 use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
 use Evoweb\SfRegister\Validation\Validator\SetPropertyNameInterface;
+use Evoweb\SfRegister\Validation\Validator\SetRequestInterface;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation\Validate;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
+use TYPO3\CMS\Extbase\Mvc\Controller\Exception\RequiredArgumentMissingException;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
-use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Extbase\Property\Exception\TargetNotFoundException;
+use TYPO3\CMS\Extbase\Property\PropertyMapper;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Security\Exception\InvalidArgumentForHashGenerationException;
@@ -103,45 +107,42 @@ class FeuserController extends ActionController
     {
         $this->settings['hasOriginalRequest'] = $this->request->getAttribute('extbase')->getOriginalRequest() !== null;
 
-        if (isset($this->settings['fields']['selected']) && !is_array($this->settings['fields']['selected'])) {
+        if (!is_array($this->settings['fields']['selected'] ?? [])) {
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
         }
         if (!is_array($this->settings['fields']['selected'])) {
             $this->settings['fields']['selected'] = [];
         }
 
-        if ($this->actionIsIgnored()) {
+        if ($this->actionIsIgnored() || $this->skipValidation()) {
             parent::initializeActionMethodValidators();
         } else {
-            $argumentNames = array_intersect(
-                array_values($this->arguments->getArgumentNames()),
-                ['user', 'password', 'email']
-            );
-
-            foreach ($argumentNames as $argument) {
-                try {
-                    $this->modifyValidatorsBasedOnSettings(
-                        $this->arguments->getArgument($argument),
-                        $this->settings['validation'][strtolower($this->controller)] ?? []
-                    );
-                } catch (NoSuchArgumentException) {
+            foreach ($this->arguments as $argumentName => $argument) {
+                if (!in_array($argumentName, ['user', 'password', 'email'])) {
+                    continue;
                 }
+                $this->modifyValidatorsBasedOnSettings(
+                    $argument,
+                    $this->settings['validation'][strtolower($this->controller)] ?? []
+                );
             }
         }
     }
 
     protected function actionIsIgnored(): bool
     {
-        if (
-            isset($this->settings['ignoredActions'][$this->controller])
-            && is_array($this->settings['ignoredActions'][$this->controller])
-        ) {
+        if (is_array($this->settings['ignoredActions'][$this->controller] ?? '')) {
             $this->ignoredActions = array_merge(
                 $this->settings['ignoredActions'][$this->controller],
                 $this->ignoredActions
             );
         }
         return in_array($this->actionMethodName, $this->ignoredActions);
+    }
+
+    protected function skipValidation(): bool
+    {
+        return false;
     }
 
     protected function modifyValidatorsBasedOnSettings(Argument $argument, array $configuredValidators): void
@@ -163,15 +164,11 @@ class FeuserController extends ActionController
                 try {
                     $validatorInstance = $this->getValidatorByConfiguration(
                         $configuredValidator,
-                        $parser
+                        $parser,
+                        $fieldName
                     );
                 } catch (\Exception) {
                     continue;
-                }
-
-
-                if ($validatorInstance instanceof SetPropertyNameInterface) {
-                    $validatorInstance->setPropertyName($fieldName);
                 }
             } else {
                 /** @var ConjunctionValidator $validatorInstance */
@@ -182,14 +179,11 @@ class FeuserController extends ActionController
                     try {
                         $individualValidatorInstance = $this->getValidatorByConfiguration(
                             $individualConfiguredValidator,
-                            $parser
+                            $parser,
+                            $fieldName
                         );
                     } catch (\Exception) {
                         continue;
-                    }
-
-                    if ($individualValidatorInstance instanceof SetPropertyNameInterface) {
-                        $individualValidatorInstance->setPropertyName($fieldName);
                     }
 
                     $validatorInstance->addValidator($individualValidatorInstance);
@@ -199,17 +193,7 @@ class FeuserController extends ActionController
             $validator->addPropertyValidator($fieldName, $validatorInstance);
         }
 
-        if (in_array($this->controller, ['Edit', 'Delete'])) {
-            $validatorName = EqualCurrentUserValidator::class;
-        } else {
-            $validatorName = EmptyValidator::class;
-        }
-
-        try {
-            $validatorInstance = $this->getValidatorByConfiguration($validatorName, $parser);
-            $validator->addPropertyValidator('uid', $validatorInstance);
-        } catch (\Exception) {
-        }
+        $this->addUidValidator($validator);
 
         $argument->setValidator($validator);
     }
@@ -219,19 +203,47 @@ class FeuserController extends ActionController
      * @throws NoSuchValidatorException
      * @throws AnnotationException
      */
-    protected function getValidatorByConfiguration(string $configuration, DocParser $parser): ValidatorInterface
-    {
+    protected function getValidatorByConfiguration(
+        string $configuration,
+        DocParser $parser,
+        string $fieldName
+    ): ValidatorInterface {
         if (!str_contains($configuration, '"') && !str_contains($configuration, '(')) {
             $configuration = '"' . $configuration . '"';
         }
 
-        /** @var Validate $validateAnnotation */
-        $validateAnnotation = current($parser->parse('@' . Validate::class . '(' . $configuration . ')'));
+        /** @var Extbase\Validate $validateAnnotation */
+        $validateAnnotation = current($parser->parse('@' . Extbase\Validate::class . '(' . $configuration . ')'));
         $validatorObjectName = ValidatorClassNameResolver::resolve($validateAnnotation->validator);
 
         /** @var ValidatorInterface $validator */
         $validator = GeneralUtility::makeInstance($validatorObjectName);
         $validator->setOptions($validateAnnotation->options);
+
+        if ($validator instanceof SetRequestInterface) {
+            $validator->setRequest($this->request);
+        }
+
+        if ($validator instanceof SetPropertyNameInterface) {
+            $validator->setPropertyName($fieldName);
+        }
+
+        return $validator;
+    }
+
+    protected function addUidValidator(UserValidator $validator): UserValidator
+    {
+        if (in_array($this->controller, ['Edit', 'Delete'])) {
+            $validatorName = EqualCurrentUserValidator::class;
+        } else {
+            $validatorName = EmptyValidator::class;
+        }
+
+        try {
+            $validatorInstance = GeneralUtility::makeInstance($validatorName);
+            $validator->addPropertyValidator('uid', $validatorInstance);
+        } catch (\Exception) {
+        }
 
         return $validator;
     }
@@ -325,12 +337,130 @@ class FeuserController extends ActionController
         return $configuration;
     }
 
+    /* Fix for some problem with RequestBuilder::build https://forge.typo3.org/issues/102364  begin */
+
+    /**
+     * @var PropertyMapper
+     * @internal only to be used within Extbase, not part of TYPO3 Core API.
+     */
+    private $propertyMapper;
+
+    /**
+     * @internal only to be used within Extbase, not part of TYPO3 Core API.
+     */
+    public function injectPropertyMapper(PropertyMapper $propertyMapper): void
+    {
+        $this->propertyMapper = $propertyMapper;
+    }
+
+    /**
+     * Maps arguments delivered by the request object to the local controller arguments.
+     *
+     * @throws RequiredArgumentMissingException
+     *
+     * @internal only to be used within Extbase, not part of TYPO3 Core API.
+     */
+    protected function mapRequestArgumentsToControllerArguments()
+    {
+        /** @var Argument $argument */
+        foreach ($this->arguments as $argument) {
+            $argumentName = $argument->getName();
+            if ($this->request->hasArgument($argumentName)) {
+                $rawValue = $this->request->getArgument($argumentName);
+                if (is_array($rawValue)) {
+                    $uploads = $this->mapUploadedFilesToParameters(
+                        $this->request->getUploadedFiles()[$argumentName] ?? [],
+                        []
+                    );
+                    $rawValue = [...$rawValue, ...$uploads];
+                }
+                $this->setArgumentValue($argument, $rawValue);
+            } elseif ($argument->isRequired()) {
+                throw new RequiredArgumentMissingException(
+                    'Required argument "' . $argumentName . '" is not set for '
+                    . $this->request->getControllerObjectName() . '->'
+                    . $this->request->getControllerActionName() . '.',
+                    1298012500
+                );
+            }
+        }
+    }
+
+    /**
+     * @param mixed $rawValue
+     */
+    private function setArgumentValue(Argument $argument, $rawValue): void
+    {
+        if ($rawValue === null) {
+            $argument->setValue(null);
+            return;
+        }
+        $dataType = $argument->getDataType();
+        if ($rawValue instanceof $dataType) {
+            $argument->setValue($rawValue);
+            return;
+        }
+        $this->propertyMapper->resetMessages();
+        try {
+            $argument->setValue(
+                $this->propertyMapper->convert(
+                    $rawValue,
+                    $dataType,
+                    $argument->getPropertyMappingConfiguration()
+                )
+            );
+        } catch (TargetNotFoundException $e) {
+            // for optional arguments no exception is thrown.
+            if ($argument->isRequired()) {
+                throw $e;
+            }
+        }
+        $argument->getValidationResults()->merge($this->propertyMapper->getMessages());
+    }
+
+    protected function mapUploadedFilesToParameters(array|UploadedFile $files, array $parameters)
+    {
+        if (is_array($files)) {
+            foreach ($files as $key => $file) {
+                if (is_array($file)) {
+                    $parameters[$key] = $this->mapUploadedFilesToParameters($file, $parameters[$key] ?? []);
+                } else {
+                    $parameters[$key] = $this->mapUploadedFileToParameters($file);
+                }
+            }
+        } else {
+            $parameters = $this->mapUploadedFileToParameters($files);
+        }
+        return $parameters;
+    }
+
+    /**
+     * Backwards Compatibility File Mapping to Parameters
+     *
+     * @deprecated since v12, will be removed in v13. Use $request->getUploadedFiles() instead
+     */
+    protected function mapUploadedFileToParameters(UploadedFile $uploadedFile): array
+    {
+        $parameters = [];
+        $parameters['name'] = $uploadedFile->getClientFilename();
+        $parameters['type'] = $uploadedFile->getClientMediaType();
+        $parameters['error'] = $uploadedFile->getError();
+        if ($uploadedFile->getSize() > 0) {
+            $parameters['size'] = $uploadedFile->getSize();
+        }
+        $parameters['tmp_name'] = $uploadedFile->getTemporaryFileName();
+        return $parameters;
+    }
+
+    /* Fix for some problem with RequestBuilder::build https://forge.typo3.org/issues/102364 end */
+
+
     /**
      * Initialize a view object to be able to set templateRootPath from flex form
      */
     protected function initializeView(): void
     {
-        if (isset($this->settings['templateRootPath']) && !empty($this->settings['templateRootPath'])) {
+        if (($this->settings['templateRootPath'] ?? '') !== '') {
             $templateRootPath = GeneralUtility::getFileAbsFileName($this->settings['templateRootPath']);
             if (GeneralUtility::isAllowedAbsPath($templateRootPath)) {
                 $templateRootPaths = $this->view->getTemplateRootPaths();
@@ -347,9 +477,7 @@ class FeuserController extends ActionController
         return parent::callActionMethod($request);
     }
 
-    /**
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
-     */
+    #[Extbase\IgnoreValidation(['value' => 'user'])]
     public function proxyAction(FrontendUser $user): ResponseInterface
     {
         $action = $this->request->hasArgument('form') ? 'form' : 'save';
@@ -366,9 +494,8 @@ class FeuserController extends ActionController
      * @throws InvalidArgumentNameException
      * @throws InvalidHashException
      * @throws UnknownObjectException
-     *
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
      */
+    #[Extbase\IgnoreValidation(['value' => 'user'])]
     protected function removeImageAction(FrontendUser $user): ResponseInterface
     {
         /** @var FileReference $image */
@@ -535,11 +662,6 @@ class FeuserController extends ActionController
 
     /**
      * Determines whether a user is in given user groups.
-     *
-     * @param FrontendUser $user
-     * @param int[] $userGroupUids
-     *
-     * @return bool
      */
     protected function isUserInUserGroups(FrontendUser $user, array $userGroupUids): bool
     {
@@ -662,11 +784,6 @@ class FeuserController extends ActionController
 
     /**
      * Determines the frontend user, either if it's already submitted, or by looking up the mail hash code.
-     *
-     * @param ?FrontendUser $user
-     * @param ?string $hash
-     *
-     * @return ?FrontendUser
      */
     protected function determineFrontendUser(?FrontendUser $user, ?string $hash): ?FrontendUser
     {
@@ -687,8 +804,6 @@ class FeuserController extends ActionController
     /**
      * Return the keys of the TypoScript configuration in the order which is relevant for the configured
      * registration workflow
-     *
-     * @return array
      */
     protected function getUserGroupIdSettingKeys(): array
     {

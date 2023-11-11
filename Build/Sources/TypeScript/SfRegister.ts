@@ -97,6 +97,20 @@ export default class SfRegister {
     }
   }
 
+  loadCountryZonesByCountry(countrySelectedValue: string) {
+    this.loading = true;
+
+    this.zone.disabled = true;
+    this.hideElement(this.zoneEmpty);
+    this.showElement(this.zoneLoading);
+
+    this.ajaxRequest = new XMLHttpRequest();
+    this.ajaxRequest.onload = this.xhrReadyOnLoad.bind(this);
+    this.ajaxRequest.open('POST', '/index.php?ajax=sf_register');
+    this.ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    this.ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+  }
+
   /**
    * Change value of zone selectbox
    */
@@ -112,17 +126,7 @@ export default class SfRegister {
         const target = ((event.target || event.srcElement) as HTMLSelectElement),
           countrySelectedValue = target.options[target.selectedIndex].value;
 
-        this.loading = true;
-
-        this.zone.disabled = true;
-        this.hideElement(this.zoneEmpty);
-        this.showElement(this.zoneLoading);
-
-        this.ajaxRequest = new XMLHttpRequest();
-        this.ajaxRequest.onload = this.xhrReadyOnLoad.bind(this);
-        this.ajaxRequest.open('POST', 'index.php?ajax=sf_register');
-        this.ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        this.ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+        this.loadCountryZonesByCountry(countrySelectedValue);
       }
     }
   }

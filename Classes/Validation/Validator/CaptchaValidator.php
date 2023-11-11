@@ -16,7 +16,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
-class CaptchaValidator extends AbstractValidator implements SetOptionsInterface
+class CaptchaValidator extends AbstractValidator
 {
     protected $acceptsEmptyValues = false;
 

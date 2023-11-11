@@ -14,7 +14,7 @@ cd "$THIS_SCRIPT_DIR" || exit 1
 #################################################
 checkResources () {
     echo "#################################################################" >&2
-    echo "Checking documentation, TypeScript and Scss files" >&2
+    echo " Checking documentation, TypeScript and Scss files" >&2
     echo "#################################################################" >&2
 
     ./additionalTests.sh -s lintScss
@@ -30,7 +30,7 @@ checkResources () {
     EXIT_CODE_DOCUMENTATION=$?
 
     echo "#################################################################" >&2
-    echo "Checked documentation, TypeScript and Scss files" >&2
+    echo " Checked documentation, TypeScript and Scss files" >&2
     if [[ ${EXIT_CODE_SCSS} -eq 0 ]] && \
         [[ ${EXIT_CODE_TYPESCRIPT} -eq 0 ]] && \
         [[ ${EXIT_CODE_XLIFF} -eq 0 ]] && \
@@ -144,14 +144,14 @@ cleanup () {
     echo "Cleaned up all test related files"
 }
 
-LOWEST="--prefer-lowest"
-TCORE="^12.4"
-TFRAMEWORK="^8.0.6"
-TPATH="Tests/Functional"
 DEBUG_TESTS=true
 if [[ $DEBUG_TESTS != true ]]; then
     checkResources
 
+    LOWEST="--prefer-lowest"
+    TCORE="^12.4"
+    TFRAMEWORK="^8.0.6"
+    TPATH="Tests/Functional"
     runFunctionalTests "8.1" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
     runFunctionalTests "8.1" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
     runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1

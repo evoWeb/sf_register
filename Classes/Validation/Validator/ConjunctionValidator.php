@@ -15,8 +15,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\Password;
+use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
 use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractCompositeValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
@@ -29,11 +28,11 @@ class ConjunctionValidator extends AbstractCompositeValidator implements SetMode
     /**
      * Model to access user properties
      */
-    protected FrontendUser|Password $model;
+    protected ValidatableInterface $model;
 
     protected string $propertyName = '';
 
-    public function setModel(FrontendUser|Password $model): void
+    public function setModel(ValidatableInterface $model): void
     {
         $this->model = $model;
     }

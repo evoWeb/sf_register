@@ -23,11 +23,28 @@ class UsernameCheck implements CheckInterface
         $result = null;
         if (
             ($settings['useEmailAddressAsUsername'] ?? false)
-            || !in_array('username', $settings['fields']['selected'])
+            && in_array('username', $settings['fields']['selected'])
         ) {
             $result = new HtmlResponse(
                 '<h3>Please check your setup.</h3>
-                If the email should be used as username the field username should be left out of the selected fields<br>
+                Either the email should be the username or the username should be entered,
+                but not both should be configured<br>
+                Please have a look into TypoScript <b>setup</b>:
+                <ul>
+                  <li>selected fields in the registration plugin</li>
+                  <li>plugin.tx_sfregister.settings.useEmailAddressAsUsername</li>
+                  <li>plugin.tx_sfregister.settings.fields.selected</li>
+                </ul>'
+            );
+        }
+        if (
+            !($settings['useEmailAddressAsUsername'] ?? false)
+            && !in_array('username', $settings['fields']['selected'])
+        ) {
+            $result = new HtmlResponse(
+                '<h3>Please check your setup.</h3>
+                Either the email should be the username or the username should be entered,
+                but non was configured<br>
                 Please have a look into TypoScript <b>setup</b>:
                 <ul>
                   <li>selected fields in the registration plugin</li>

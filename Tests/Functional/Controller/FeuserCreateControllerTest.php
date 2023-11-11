@@ -19,6 +19,7 @@ use Evoweb\SfRegister\Services\File;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
@@ -41,7 +42,8 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $this->request = $this->initializeTypoScriptFrontendController();
     }
 
-    ##[Test]
+    #[Test]
+    #[RequiresPhp('9.3.0')]
     public function isUserValidatorSet(): void
     {
         $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.'] = [

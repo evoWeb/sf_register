@@ -122,7 +122,7 @@ class FeuserEditController extends FeuserController
 
         /** @var SessionService $session */
         $session = GeneralUtility::makeInstance(SessionService::class);
-        $session->remove('captchaWasValidPreviously');
+        $session->remove('captchaWasValid');
 
         if (($this->settings['forwardToEditAfterSave'] ?? false)) {
             $response = new ForwardResponse('form');

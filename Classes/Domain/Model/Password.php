@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * A password object for validation
  */
-class Password extends AbstractEntity
+class Password extends AbstractEntity implements ValidatableInterface
 {
     protected string $password = '';
 

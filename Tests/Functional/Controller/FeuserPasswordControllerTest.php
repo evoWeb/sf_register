@@ -21,6 +21,7 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
@@ -41,7 +42,8 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/fe_users.csv');
     }
 
-    ##[Test]
+    #[Test]
+    #[RequiresPhp('9.3.0')]
     public function userIsLoggedInReturnsFalseIfNotLoggedIn(): void
     {
         $this->createEmptyFrontendUser();
@@ -81,7 +83,8 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         self::assertFalse($method->invoke($subject));
     }
 
-    ##[Test]
+    #[Test]
+    #[RequiresPhp('9.3.0')]
     public function userIsLoggedInReturnsTrueIfLoggedIn(): void
     {
         $this->createAndLoginFrontEndUser('2', [
@@ -124,7 +127,8 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         self::assertTrue($method->invoke($subject));
     }
 
-    ##[Test]
+    #[Test]
+    #[RequiresPhp('9.3.0')]
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository(): void
     {
         if (!defined('PASSWORD_ARGON2I')) {

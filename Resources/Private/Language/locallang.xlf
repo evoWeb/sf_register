@@ -258,6 +258,9 @@
 			<trans-unit id="invitationEmail">
 				<source>Email address of person to invite</source>
 			</trans-unit>
+			<trans-unit id="invitation_send">
+				<source>Invitation was send</source>
+			</trans-unit>
 			<trans-unit id="submit_create">
 				<source>create</source>
 			</trans-unit>
@@ -275,6 +278,12 @@
 			</trans-unit>
 			<trans-unit id="submit_removeImage">
 				<source>remove</source>
+			</trans-unit>
+			<trans-unit id="submit_invite">
+				<source>invite</source>
+			</trans-unit>
+			<trans-unit id="submit_password">
+				<source>change</source>
 			</trans-unit>
 			<trans-unit id="username">
 				<source>Username</source>
@@ -304,13 +313,13 @@
 				<source>The account that you are trying to activate is unknown to the system.</source>
 			</trans-unit>
 			<trans-unit id="account_already_activated">
-				<source>The account &lt;b&gt;%1$s&lt;/b&gt; that you are trying to activate is already active.</source>
+				<source><![CDATA[The account <b>%1$s</b> that you are trying to activate is already active.]]></source>
 			</trans-unit>
 			<trans-unit id="account_successful_activated">
-				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is now active.</source>
+				<source><![CDATA[The account <b>%1$s</b> is now active.]]></source>
 			</trans-unit>
 			<trans-unit id="account_not_activated">
-				<source>The account &lt;b&gt;%1$s&lt;/b&gt; is not active.</source>
+				<source><![CDATA[The account <b>%1$s</b> is not active.]]></source>
 			</trans-unit>
 			<trans-unit id="email_already_activated">
 				<source>Your new email is already active.</source>
@@ -319,6 +328,9 @@
 				<source>Your new email address was successfully saved.</source>
 			</trans-unit>
 
+			<trans-unit id="please_select">
+				<source>Please select</source>
+			</trans-unit>
 			<trans-unit id="submit_delete">
 				<source>delete</source>
 			</trans-unit>
@@ -602,10 +614,10 @@
 				<source>User "%1$s" send an invitation to "%2$s".</source>
 			</trans-unit>
 			<trans-unit id="email_user_invitation_message">
-				<source>Your invited email "%1$s" to register at %2$s.</source>
+				<source>You invited email "%1$s" to register at %2$s.</source>
 			</trans-unit>
 			<trans-unit id="email_invitee_invitation_message">
-				<source>Your were invited with email %1$s to register at "%2$s".</source>
+				<source>You were invited with email %1$s to register at "%2$s".</source>
 			</trans-unit>
 			<trans-unit id="email_invitee_register_link">
 				<source>register</source>

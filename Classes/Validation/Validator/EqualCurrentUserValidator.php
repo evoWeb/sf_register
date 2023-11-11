@@ -19,7 +19,7 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 /**
  * A validator to check if the userid is equal to the id of the logged-in user
  */
-class EqualCurrentUserValidator extends AbstractValidator implements SetOptionsInterface
+class EqualCurrentUserValidator extends AbstractValidator
 {
     protected $acceptsEmptyValues = false;
 

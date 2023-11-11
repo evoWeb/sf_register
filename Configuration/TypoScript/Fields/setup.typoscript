@@ -55,8 +55,7 @@ plugin.tx_sfregister.settings.fields.defaultSelected {
     50 = captcha
     60 = clear
 
-    70 = change
-    80 = submit
+    80 = invite
   }
 
   password {
@@ -66,7 +65,7 @@ plugin.tx_sfregister.settings.fields.defaultSelected {
     30 = password
     40 = passwordRepeat
 
-    50 = submit
+    50 = passwordButton
   }
 
   delete {
@@ -180,15 +179,12 @@ plugin.tx_sfregister.settings.fields.configuration {
       -12 = timezone_I_-12
       -11 = timezone_I_-11
       -10 = timezone_I_-10
-      -95 = timezone_I_-9_5
       -9 = timezone_I_-9
       -8 = timezone_I_-8
       -7 = timezone_I_-7
       -6 = timezone_I_-6
       -5 = timezone_I_-5
-      -45 = timezone_I_-4_5
       -4 = timezone_I_-4
-      -35 = timezone_I_-3_5
       -3 = timezone_I_-3
       -2 = timezone_I_-2
       -1 = timezone_I_-1
@@ -196,23 +192,15 @@ plugin.tx_sfregister.settings.fields.configuration {
       1 = timezone_I_1
       2 = timezone_I_2
       3 = timezone_I_3
-      35 = timezone_I_3_5
       4 = timezone_I_4
-      45 = timezone_I_4_5
       5 = timezone_I_5
-      55 = timezone_I_5_5
-      575 = timezone_I_5_75
       6 = timezone_I_6
-      65 = timezone_I_6_5
       7 = timezone_I_7
       8 = timezone_I_8
       9 = timezone_I_9
-      95 = timezone_I_9_5
       10 = timezone_I_10
       11 = timezone_I_11
-      115 = timezone_I_11_5
       12 = timezone_I_12
-      1275 = timezone_I_12_75
       13 = timezone_I_13
       14 = timezone_I_14
     }
@@ -223,6 +211,11 @@ plugin.tx_sfregister.settings.fields.configuration {
   image.partial = Upload
 
   dateOfBirth.partial = DateSelect
+
+  byInvitation {
+    partial = Hidden
+    backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.by_invitation
+  }
 
   gtc {
     partial = Checkbox
@@ -254,4 +247,11 @@ plugin.tx_sfregister.settings.fields.configuration {
   delete.partial = Delete
 
   resend.partial = Resend
+
+  invite.partial = Invite
+
+  passwordButton {
+    partial = PasswordButton
+    backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.password_button
+  }
 }

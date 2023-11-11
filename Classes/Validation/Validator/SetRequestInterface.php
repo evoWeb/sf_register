@@ -13,7 +13,9 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-interface SetOptionsInterface
+use Psr\Http\Message\ServerRequestInterface;
+
+interface SetRequestInterface
 {
-    public function setOptions(array $options): void;
+    public function setRequest(ServerRequestInterface $request): void;
 }

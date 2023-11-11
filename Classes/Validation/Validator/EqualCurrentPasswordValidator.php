@@ -25,7 +25,7 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 /**
  * Validator to check against current password
  */
-class EqualCurrentPasswordValidator extends AbstractValidator implements SetOptionsInterface
+class EqualCurrentPasswordValidator extends AbstractValidator
 {
     protected $acceptsEmptyValues = false;
 

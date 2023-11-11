@@ -13,15 +13,11 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\Password;
+use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
-class UniqueValidator extends AbstractValidator implements
-    SetModelInterface,
-    SetOptionsInterface,
-    SetPropertyNameInterface
+class UniqueValidator extends AbstractValidator implements SetModelInterface, SetPropertyNameInterface
 {
     protected $acceptsEmptyValues = false;
 
@@ -36,7 +32,7 @@ class UniqueValidator extends AbstractValidator implements
     /**
      * Model to access user properties
      */
-    protected FrontendUser|Password $model;
+    protected ValidatableInterface $model;
 
     protected string $propertyName = '';
 
@@ -44,7 +40,7 @@ class UniqueValidator extends AbstractValidator implements
     {
     }
 
-    public function setModel(FrontendUser|Password $model): void
+    public function setModel(ValidatableInterface $model): void
     {
         $this->model = $model;
     }

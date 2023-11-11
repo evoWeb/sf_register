@@ -15,9 +15,11 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Services;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -38,6 +40,8 @@ class File implements SingletonInterface, LoggerAwareInterface
     use LoggerAwareTrait;
 
     protected array $settings = [];
+
+    protected ServerRequestInterface $request;
 
     protected string $namespace = '';
 
@@ -64,13 +68,12 @@ class File implements SingletonInterface, LoggerAwareInterface
         try {
             $this->settings = $this->configurationManager->getConfiguration(
                 ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-                'SfRegister',
-                'Form'
+                'SfRegister'
             );
         } catch (\Exception) {
         }
 
-        if (isset($this->settings['imageFolder']) && !empty($this->settings['imageFolder'])) {
+        if (($this->settings['imageFolder'] ?? '') !== '') {
             $this->setImageFolderIdentifier($this->settings['imageFolder']);
         }
 
@@ -78,6 +81,11 @@ class File implements SingletonInterface, LoggerAwareInterface
         $uploadMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('upload_max_filesize'));
         $postMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('post_max_size'));
         $this->maxFilesize = min($uploadMaxFileSize, $postMaxFileSize);
+    }
+
+    public function setRequest(ServerRequestInterface $request): void
+    {
+        $this->request = $request;
     }
 
     public function getStorage(): ?ResourceStorage
@@ -175,33 +183,29 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $this->namespace;
     }
 
-    protected function getUploadedFileInfo(): array
+    protected function getUploadedFileInfo(): ?UploadedFile
     {
-        $uploadData = $_FILES[$this->getNamespace()];
-        $fileData = [];
+        $fileData = $this->request->getUploadedFiles()['user']['image'][0] ?? null;
 
-        if (is_array($uploadData) && count($uploadData) > 0) {
-            $filename = str_replace(chr(0), '', $uploadData['name']['image']);
-            $type = $uploadData['type']['image'];
-            $tmpName = $uploadData['tmp_name']['image'];
-            $error = $uploadData['error']['image'];
-            $size = $uploadData['size']['image'];
-
+        if ($fileData instanceof UploadedFile) {
+            $filename = str_replace([chr(0), ' '], ['', '_'], $fileData->getClientFilename());
             if ($filename !== '' && GeneralUtility::validPathStr($filename)) {
                 if (($this->settings['useEncryptedFilename'] ?? false)) {
-                    $filenameParts = GeneralUtility::trimExplode('.', $filename);
-                    $extension = array_pop($filenameParts);
-                    $filename = md5($GLOBALS['EXEC_TIME'] . mt_rand() . $filename . $tmpName . '.' . $extension
-                        . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);
+                    $extension = pathinfo($filename, PATHINFO_EXTENSION);
+                    $filename = sha1(
+                        $filename . uniqid('sfregister')
+                        . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']
+                    )  . '.' . $extension;
                 }
-
-                $fileData = [
-                    'filename' => $filename,
-                    'type' => $type,
-                    'tmp_name' => $tmpName,
-                    'error' => $error,
-                    'size' => $size,
-                ];
+                if ($fileData->getClientFilename() !== $filename) {
+                    $fileData = new UploadedFile(
+                        $fileData->getStream(),
+                        $fileData->getSize(),
+                        $fileData->getError(),
+                        $filename,
+                        $fileData->getClientMediaType(),
+                    );
+                }
             }
         }
 
@@ -211,10 +215,15 @@ class File implements SingletonInterface, LoggerAwareInterface
     public function isValid(): bool
     {
         $fileData = $this->getUploadedFileInfo();
-        $filePathInfo = pathinfo($fileData['filename']);
+        if ($fileData instanceof UploadedFile) {
+            $fileExtension = pathinfo($fileData->getClientFilename(), PATHINFO_EXTENSION);
 
-        $result = $this->isAllowedFilesize((int)$fileData['size']);
-        return $this->isAllowedFileExtension($filePathInfo['extension'] ?? '') && $result;
+            $result = $this->isAllowedFilesize((int)$fileData->getSize());
+            $result = $result && $this->isAllowedFileExtension($fileExtension);
+        } else {
+            $result = true;
+        }
+        return $result;
     }
 
     protected function isAllowedFilesize(int $filesize): bool
@@ -251,17 +260,19 @@ class File implements SingletonInterface, LoggerAwareInterface
      */
     public function moveTempFileToTempFolder(): ?FileInterface
     {
+        // @todo where is this called?
         $result = null;
         $fileData = $this->getUploadedFileInfo();
 
-        if (count($fileData)) {
-            $fileExtension = pathinfo($fileData['filename'], PATHINFO_EXTENSION);
-            $filename = uniqid('sf_register') . '.' . $fileExtension;
-
+        if ($fileData instanceof UploadedFile) {
             try {
                 /** @var ResourceStorage $resourceStorage */
                 $resourceStorage = GeneralUtility::makeInstance(ResourceStorage::class);
-                $result = $resourceStorage->addFile($fileData['tmp_name'], $this->getTempFolder(), $filename);
+                $result = $resourceStorage->addFile(
+                    $fileData->getTemporaryFileName(),
+                    $this->getTempFolder(),
+                    $fileData->getClientFilename()
+                );
             } catch (\Exception $exception) {
                 $this->logger->error($exception->getMessage(), $exception->getTrace());
             }
