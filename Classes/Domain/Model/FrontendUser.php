@@ -404,7 +404,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
      *
      * @return ObjectStorage<FrontendUserGroup> An object storage containing the usergroup
      */
-    public function getUsergroup(): ?ObjectStorage
+    public function getUsergroup(): ObjectStorage
     {
         return $this->usergroup;
     }
