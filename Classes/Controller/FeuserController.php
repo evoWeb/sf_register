@@ -38,7 +38,7 @@ use TYPO3\CMS\Core\Context\SecurityAspect;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Core\Http\RedirectResponse;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Security\RequestToken;
@@ -611,7 +611,7 @@ class FeuserController extends ActionController
         return $this->redirectToUri($uri);
     }
 
-    protected function autoLogin(FrontendUserInterface $user, int $redirectPageId): ?ResponseInterface
+    protected function autoLogin(FrontendUserInterface $user, int $redirectPageId): void
     {
         // get given redirect page id
         $userGroups = $user->getUsergroup();
@@ -636,26 +636,22 @@ class FeuserController extends ActionController
         $registry = GeneralUtility::makeInstance(Registry::class);
         $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
 
-        $response = null;
         if ($redirectPageId > 0) {
-            /** @var RedirectResponse $response */
-            $response = $this->redirectToPage($redirectPageId);
-
             $nonce = SecurityAspect::provideIn($this->context)->provideNonce();
-            $requestToken = RequestToken::create('core/user-auth/fe');
 
-            $response = $response->withHeader(
-                'location',
-                $response->getHeaderLine('location') . '?logintype=login'
-                . '&' . RequestToken::PARAM_NAME . '=' . $requestToken->toHashSignedJwt($nonce)
-            );
+            $parameter = [
+                'logintype' => 'login',
+                RequestToken::PARAM_NAME => RequestToken::create('core/user-auth/fe')->toHashSignedJwt($nonce),
+            ];
 
-//            $response = $response->withHeader(
-//                RequestToken::HEADER_NAME,
-//                $requestToken->toHashSignedJwt($nonce)
-//            );
+            $response = $this->redirectToPage($redirectPageId);
+            $response = $response
+                ->withHeader(
+                    'location',
+                    $response->getHeaderLine('location') . '?' . http_build_query($parameter)
+                );
+            throw new PropagateResponseException($response);
         }
-        return $response;
     }
 
     protected function sendEmails(FrontendUser $user, string $action): FrontendUserInterface

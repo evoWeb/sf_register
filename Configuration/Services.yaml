@@ -27,6 +27,10 @@ services:
     tags:
       - name: event.listener
 
+  Evoweb\SfRegister\EventListener\BeforeRequestTokenProcessedListener:
+    tags:
+      - name: event.listener
+
   Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter:
     public: true
 
