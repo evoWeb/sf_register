@@ -34,11 +34,14 @@ use Evoweb\SfRegister\Validation\Validator\SetRequestInterface;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\SecurityAspect;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Registry;
+use TYPO3\CMS\Core\Security\RequestToken;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -595,22 +598,64 @@ class FeuserController extends ActionController
         $persistenceManager->persistAll();
     }
 
-    protected function redirectToPage(int $pageId, bool $autologin = false): ResponseInterface
+    protected function redirectToPage(int $pageId): ResponseInterface
     {
         $this->uriBuilder->reset();
-        if ($autologin) {
-            $this->uriBuilder->setArguments([
-                'logintype' => 'login',
-                'permalogin' => 'login'
-            ]);
-        }
 
-        $url = $this->uriBuilder
+        $uri = $this->uriBuilder
             ->setTargetPageUid($pageId)
             ->setLinkAccessRestrictedPages(true)
             ->build();
+        $uri = $this->addBaseUriIfNecessary($uri);
 
-        return $this->redirectToUri($url);
+        return $this->redirectToUri($uri);
+    }
+
+    protected function autoLogin(FrontendUserInterface $user, int $redirectPageId): ?ResponseInterface
+    {
+        // get given redirect page id
+        $userGroups = $user->getUsergroup();
+        /** @var FrontendUserGroup $userGroup */
+        foreach ($userGroups as $userGroup) {
+            if ($userGroup->getFeloginRedirectPid()) {
+                $redirectPageId = $userGroup->getFeloginRedirectPid();
+                break;
+            }
+        }
+
+        // if redirect is empty set it to current page
+        if ($redirectPageId == 0) {
+            $redirectPageId = $this->getTypoScriptFrontendController()->id;
+        }
+
+        session_start();
+
+        $_SESSION['sf-register-user'] = GeneralUtility::hmac('auto-login::' . $user->getUid(), $GLOBALS['EXEC_TIME']);
+
+        /** @var Registry $registry */
+        $registry = GeneralUtility::makeInstance(Registry::class);
+        $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
+
+        $response = null;
+        if ($redirectPageId > 0) {
+            /** @var RedirectResponse $response */
+            $response = $this->redirectToPage($redirectPageId);
+
+            $nonce = SecurityAspect::provideIn($this->context)->provideNonce();
+            $requestToken = RequestToken::create('core/user-auth/fe');
+
+            $response = $response->withHeader(
+                'location',
+                $response->getHeaderLine('location') . '?logintype=login'
+                . '&' . RequestToken::PARAM_NAME . '=' . $requestToken->toHashSignedJwt($nonce)
+            );
+
+//            $response = $response->withHeader(
+//                RequestToken::HEADER_NAME,
+//                $requestToken->toHashSignedJwt($nonce)
+//            );
+        }
+        return $response;
     }
 
     protected function sendEmails(FrontendUser $user, string $action): FrontendUserInterface
@@ -738,38 +783,6 @@ class FeuserController extends ActionController
         }
     }
 
-    protected function autoLogin(FrontendUserInterface $user, int $redirectPageId): ?ResponseInterface
-    {
-        session_start();
-
-        $_SESSION['sf-register-user'] = GeneralUtility::hmac('auto-login::' . $user->getUid(), $GLOBALS['EXEC_TIME']);
-
-        /** @var Registry $registry */
-        $registry = GeneralUtility::makeInstance(Registry::class);
-        $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
-
-        // if redirect was empty by now set it to current page
-        if ($redirectPageId == 0) {
-            $redirectPageId = $this->getTypoScriptFrontendController()->id;
-        }
-
-        // get configured redirect page id if given
-        $userGroups = $user->getUsergroup();
-        /** @var FrontendUserGroup $userGroup */
-        foreach ($userGroups as $userGroup) {
-            if ($userGroup->getFeloginRedirectPid()) {
-                $redirectPageId = $userGroup->getFeloginRedirectPid();
-                break;
-            }
-        }
-
-        $response = null;
-        if ($redirectPageId > 0) {
-            $response = $this->redirectToPage($redirectPageId, true);
-        }
-        return $response;
-    }
-
     protected function userIsLoggedIn(): bool
     {
         $result = false;
@@ -843,6 +856,6 @@ class FeuserController extends ActionController
 
     protected function getTypoScriptFrontendController(): ?TypoScriptFrontendController
     {
-        return $GLOBALS['TSFE'];
+        return $this->request->getAttribute('frontend.controller');
     }
 }

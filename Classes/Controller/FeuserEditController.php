@@ -138,6 +138,7 @@ class FeuserEditController extends FeuserController
     {
         $user = $this->determineFrontendUser($user, $hash);
 
+        $redirectResponse = null;
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
@@ -167,23 +168,25 @@ class FeuserEditController extends FeuserController
                 $this->view->assign('userConfirmed', 1);
             }
 
+            $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
             if (($this->settings['autologinPostConfirmation'] ?? false)) {
                 $this->persistAll();
-                $this->autoLogin($user, (int)($this->settings['redirectPostActivationPageId'] ?? 0));
+                $redirectResponse = $this->autoLogin($user, $redirectPageId);
             }
 
-            if ((int)($this->settings['redirectPostActivationPageId'] > 0)) {
-                $this->redirectToPage((int)($this->settings['redirectPostActivationPageId'] ?? 0));
+            if ($redirectResponse === null && $redirectPageId > 0) {
+                $redirectResponse = $this->redirectToPage($redirectPageId);
             }
         }
 
-        return new HtmlResponse($this->view->render());
+        return $redirectResponse ?: new HtmlResponse($this->view->render());
     }
 
     public function acceptAction(FrontendUser $user = null, string $hash = null): ResponseInterface
     {
         $user = $this->determineFrontendUser($user, $hash);
 
+        $redirectResponse = null;
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
@@ -207,14 +210,15 @@ class FeuserEditController extends FeuserController
 
                 $this->sendEmails($user, __FUNCTION__);
 
-                if ((int)($this->settings['redirectPostActivationPageId'] ?? 0) > 0) {
-                    $this->redirectToPage((int)($this->settings['redirectPostActivationPageId'] ?? 0));
+                $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
+                if ($redirectPageId > 0) {
+                    $redirectResponse = $this->redirectToPage($redirectPageId);
                 }
 
                 $this->view->assign('adminAccept', 1);
             }
         }
 
-        return new HtmlResponse($this->view->render());
+        return $redirectResponse ?: new HtmlResponse($this->view->render());
     }
 }

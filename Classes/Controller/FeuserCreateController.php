@@ -123,12 +123,13 @@ class FeuserCreateController extends FeuserController
         $this->view->assign('user', $user);
 
         $redirectResponse = null;
+        $redirectPageId = (int)($this->settings['redirectPostRegistrationPageId'] ?? 0);
         if (($this->settings['autologinPostRegistration'] ?? false)) {
-            $redirectResponse = $this->autoLogin($user, (int)($this->settings['redirectPostRegistrationPageId'] ?? 0));
+            $redirectResponse = $this->autoLogin($user, $redirectPageId);
         }
 
-        if ((int)($this->settings['redirectPostRegistrationPageId'] ?? 0) > 0) {
-            $redirectResponse = $this->redirectToPage((int)($this->settings['redirectPostRegistrationPageId'] ?? 0));
+        if ($redirectResponse === null && $redirectPageId > 0) {
+            $redirectResponse = $this->redirectToPage($redirectPageId);
         }
 
         return $redirectResponse ?: new HtmlResponse($this->view->render());
@@ -175,17 +176,13 @@ class FeuserCreateController extends FeuserController
 
                 $this->view->assign('userConfirmed', 1);
 
+                $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
                 if (($this->settings['autologinPostConfirmation'] ?? false)) {
-                    $redirectResponse = $this->autoLogin(
-                        $user,
-                        (int)($this->settings['redirectPostActivationPageId'] ?? 0)
-                    );
+                    $redirectResponse = $this->autoLogin($user, $redirectPageId);
                 }
 
-                if ((int)($this->settings['redirectPostActivationPageId'] ?? 0) > 0) {
-                    $redirectResponse = $this->redirectToPage(
-                        (int)($this->settings['redirectPostActivationPageId'] ?? 0)
-                    );
+                if ($redirectResponse === null && $redirectPageId > 0) {
+                    $redirectResponse = $this->redirectToPage($redirectPageId);
                 }
             }
         }

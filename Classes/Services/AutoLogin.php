@@ -36,14 +36,11 @@ class AutoLogin extends AuthenticationService
 
         /** @var Registry $registry */
         $registry = GeneralUtility::makeInstance(Registry::class);
-        $userId = $registry->get('sf-register', $hmac);
+        $userId = (int)$registry->get('sf-register', $hmac);
         $registry->remove('sf-register', $hmac);
 
-        $user = $this->fetchUserRecord(
-            $userId,
-            '',
-            array_merge($this->db_user, ['username_column' => 'uid', 'check_pid_clause' => ''])
-        );
+        $dbUserSetup = [...$this->db_user, 'username_column' => 'uid', 'enable_clause' => ''];
+        $user = $this->fetchUserRecord($userId, '', $dbUserSetup);
 
         if (!empty($user)) {
             $user['sf-register-autoload'] = true;
