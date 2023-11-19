@@ -13,12 +13,13 @@ namespace Evoweb\SfRegister\Tests\Unit\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class FeuserCreateControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+use PHPUnit\Framework\Attributes\Test;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
+class FeuserCreateControllerTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
-    public function initializeAction()
+    #[Test]
+    public function initializeAction(): void
     {
         self::markTestIncomplete('not implemented by now');
     }

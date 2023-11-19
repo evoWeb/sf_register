@@ -16,21 +16,16 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
- * A empty validator this is used in validation of a new created user to ensure that the uid is empty
+ * An empty validator this is used in validation of a new created user to ensure that the uid is empty
  */
 class EmptyValidator extends AbstractValidator
 {
-    /**
-     * @var bool
-     */
     protected $acceptsEmptyValues = false;
 
     /**
      * If the given value is empty
-     *
-     * @param string $value The value
      */
-    public function isValid($value)
+    public function isValid(mixed $value): void
     {
         if (!empty($value)) {
             $this->addError(

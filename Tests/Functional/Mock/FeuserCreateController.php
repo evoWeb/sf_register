@@ -2,7 +2,10 @@
 
 namespace Evoweb\SfRegister\Tests\Functional\Mock;
 
-class FeuserCreateController extends \Evoweb\SfRegister\Controller\FeuserCreateController
+use Evoweb\SfRegister\Controller\FeuserCreateController as BaseFeuserCreateController;
+use Evoweb\SfRegister\Tests\Functional\SettableCallable;
+
+class FeuserCreateController extends BaseFeuserCreateController
 {
-    use \Evoweb\SfRegister\Tests\Functional\SettableCallable;
+    use SettableCallable;
 }

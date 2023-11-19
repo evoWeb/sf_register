@@ -18,14 +18,18 @@ services:
 
   Evoweb\SfRegister\Command\CleanupCommand:
     tags:
-      - { name: 'console.command', command: 'sfregister:cleanup', schedulable: false }
+      - name: 'console.command'
+        command: 'sfregister:cleanup'
+        description: 'Cleanup user that did not finish the double opt in, and remove orphan images'
+        schedulable: false
 
   Evoweb\SfRegister\EventListener\FeuserControllerListener:
     tags:
       - name: event.listener
-        identifier: 'sfregister_feusercontroller_processinitializeaction'
-        method: 'onProcessInitializeActionEvent'
-        event: Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent
+
+  Evoweb\SfRegister\EventListener\BeforeRequestTokenProcessedListener:
+    tags:
+      - name: event.listener
 
   Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter:
     public: true
@@ -50,3 +54,34 @@ services:
 
   Evoweb\SfRegister\Validation\Validator\UniqueValidator:
     public: true
+
+  Evoweb\SfRegister\ViewHelpers\Link\ActionViewHelper:
+    public: true
+
+  Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter:
+    tags:
+      - name: extbase.type_converter
+        priority: 2
+        target: DateTime
+        sources: integer, string, array
+
+  Evoweb\SfRegister\Property\TypeConverter\FrontendUserConverter:
+    tags:
+      - name: extbase.type_converter
+        priority: 31
+        target: Evoweb\SfRegister\Domain\Model\FrontendUser
+        sources: integer, string
+
+  Evoweb\SfRegister\Property\TypeConverter\ObjectStorageConverter:
+    tags:
+      - name: extbase.type_converter
+        priority: 21
+        target: TYPO3\CMS\Extbase\Persistence\ObjectStorage
+        sources: array
+
+  Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter:
+    tags:
+      - name: extbase.type_converter
+        priority: 31
+        target: TYPO3\CMS\Extbase\Domain\Model\FileReference
+        sources: array

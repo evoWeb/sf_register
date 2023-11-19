@@ -13,26 +13,22 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\Password;
-use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
+use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
+use TYPO3\CMS\Extbase\Error\Result;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractGenericObjectValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ObjectValidatorInterface;
 
-class UserValidator extends GenericObjectValidator
+class UserValidator extends AbstractGenericObjectValidator
 {
     /**
-     * Model that gets validated currently
-     *
-     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password
+     * Model to access user properties
      */
-    protected $model;
+    protected ValidatableInterface $model;
 
     /**
      * Checks if the given value is valid according to the property validators.
-     *
-     * @param mixed $object The value that should be validated
      */
-    protected function isValid($object)
+    protected function isValid(mixed $object): void
     {
         $this->model = $object;
         foreach ($this->propertyValidators as $propertyName => $validators) {
@@ -49,12 +45,12 @@ class UserValidator extends GenericObjectValidator
      * @param \Traversable $validators The validators to be called on the value
      * @param string $propertyName Name of ther property to check
      */
-    protected function checkProperty($value, $validators, $propertyName)
+    protected function checkProperty(mixed $value, \Traversable $validators, string $propertyName): void
     {
-        /** @var \TYPO3\CMS\Extbase\Error\Result $result */
+        /** @var Result $result */
         $result = null;
         foreach ($validators as $validator) {
-            if ($validator instanceof SettableInterface) {
+            if ($validator instanceof SetModelInterface) {
                 $validator->setModel($this->model);
             }
 
@@ -77,13 +73,9 @@ class UserValidator extends GenericObjectValidator
 
     /**
      * Checks if validator can validate the object
-     *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser|\Evoweb\SfRegister\Domain\Model\Password $object
-     *
-     * @return bool
      */
-    public function canValidate($object): bool
+    public function canValidate(mixed $object): bool
     {
-        return $object instanceof FrontendUser || $object instanceof Password;
+        return $object instanceof ValidatableInterface;
     }
 }

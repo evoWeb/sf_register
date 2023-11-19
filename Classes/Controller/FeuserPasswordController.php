@@ -21,27 +21,26 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
 use Evoweb\SfRegister\Services\Session;
+use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
- * An frontend user password controller
+ * A frontend user password controller
  */
 class FeuserPasswordController extends FeuserController
 {
     protected string $controller = 'Password';
 
-    protected Session $session;
-
     public function __construct(
-        Context $context,
-        File $fileService,
-        FrontendUserRepository $userRepository,
-        FrontendUserGroupRepository $userGroupRepository,
-        Session $session
+        protected Context $context,
+        protected File $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected FrontendUserGroupRepository $userGroupRepository,
+        protected Session $session
     ) {
-        $this->session = $session;
         parent::__construct($context, $fileService, $userRepository, $userGroupRepository);
     }
 
@@ -57,15 +56,7 @@ class FeuserPasswordController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Save action
-     *
-     * @param Password $password
-     *
-     * @return ResponseInterface
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="password")
-     */
+    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'password'])]
     public function saveAction(Password $password): ResponseInterface
     {
         if ($this->userIsLoggedIn()) {

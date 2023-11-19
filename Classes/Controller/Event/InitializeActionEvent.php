@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\Controller\Event;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -15,18 +13,18 @@ namespace Evoweb\SfRegister\Controller\Event;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Controller\Event;
+
 use Evoweb\SfRegister\Controller\FeuserController;
+use Psr\Http\Message\ResponseInterface;
 
 final class InitializeActionEvent
 {
-    private FeuserController $controller;
-
-    protected array $settings = [];
-
-    public function __construct(FeuserController $controller, array $settings)
-    {
-        $this->controller = $controller;
-        $this->settings = $settings;
+    public function __construct(
+        protected readonly FeuserController $controller,
+        protected readonly array $settings,
+        protected ?ResponseInterface $response
+    ) {
     }
 
     public function getController(): FeuserController
@@ -37,5 +35,15 @@ final class InitializeActionEvent
     public function getSettings(): array
     {
         return $this->settings;
+    }
+
+    public function getResponse(): ?ResponseInterface
+    {
+        return $this->response;
+    }
+
+    public function setResponse(ResponseInterface $response): void
+    {
+        $this->response = $response;
     }
 }

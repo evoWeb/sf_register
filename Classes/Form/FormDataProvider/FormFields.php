@@ -22,8 +22,6 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
     /**
      * Resolve select items
      *
-     * @param array $result
-     * @return array
      * @throws \UnexpectedValueException
      */
     public function addData(array $result): array
@@ -36,7 +34,7 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
             $result['processedTca']['columns'][$fieldName] = $this->getAvailableFields($fieldConfig);
 
             $currentDatabaseValuesArray = $this->processDatabaseFieldValue($result['databaseRow'], $fieldName);
-            if (empty($currentDatabaseValuesArray)) {
+            if (empty($currentDatabaseValuesArray) && !($fieldConfig['config']['doNotPreSelect'] ?? false)) {
                 $result['databaseRow'][$fieldName] = $this->getSelectedFields($fieldConfig['config']['sfRegisterForm']);
             }
         }
@@ -49,9 +47,11 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
         $items = [];
         $configuredFields = $this->getAvailableFieldsFromTsConfig();
         foreach ($configuredFields as $fieldName => $configuration) {
-            $fieldName = rtrim($fieldName, '.');
-            $label = $this->getLabel($fieldName, $configuration);
-            $items[] = [$label, $fieldName];
+            if ($configuration) {
+                $fieldName = rtrim($fieldName, '.');
+                $label = $this->getLabel($fieldName, $configuration);
+                $items[] = ['label' => $label, 'value' => $fieldName];
+            }
         }
         $fieldConfig['config']['items'] = $items;
 
@@ -77,11 +77,10 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
         return $pluginConfiguration['settings.']['fields.']['defaultSelected.'] ?? [];
     }
 
-    protected function getLabel(string $fieldName, array $configuration): string
+    protected function getLabel(string $fieldName, array|string $configuration): string
     {
-        $labelPath = isset($configuration['backendLabel']) ?
-            $configuration['backendLabel'] :
-            'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.' . $fieldName;
+        $labelPath = $configuration['backendLabel']
+            ?? 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.' . $fieldName;
         return $this->getLanguageService()->sL($labelPath);
     }
 

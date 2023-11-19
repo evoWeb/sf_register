@@ -18,23 +18,47 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator as BaseAbstractVali
 
 abstract class AbstractValidator extends BaseAbstractValidator
 {
-    public function setOptions(array $options = [])
+    /**
+     * @throws InvalidValidationOptionsException
+     */
+    public function setOptions(array $options = []): void
     {
-        // check for options given but not supported
+        $this->assertAllOptionsAreAllowed($options);
+        $this->assertAllRequiredOptionsArePresent($options);
+
+        // merge with default values
+        $this->options = array_merge(
+            array_map(
+                static fn (array $value): mixed => $value[0],
+                $this->supportedOptions
+            ),
+            $options
+        );
+    }
+
+    /**
+     * @throws InvalidValidationOptionsException
+     */
+    protected function assertAllOptionsAreAllowed(array $options): void
+    {
         if (($unsupportedOptions = array_diff_key($options, $this->supportedOptions)) !== []) {
             throw new InvalidValidationOptionsException(
                 'Unsupported validation option(s) found: ' . implode(', ', array_keys($unsupportedOptions)),
                 1379981890
             );
         }
+    }
 
-        // check for required options being set
+    /**
+     * @throws InvalidValidationOptionsException
+     */
+    protected function assertAllRequiredOptionsArePresent(array $options): void
+    {
         array_walk(
             $this->supportedOptions,
-            static function ($supportedOptionData, $supportedOptionName, $options) {
+            static function (array $supportedOptionData, string $supportedOptionName, array $options): void {
                 if (
-                    isset($supportedOptionData[3])
-                    && $supportedOptionData[3] === true
+                    ($supportedOptionData[3] ?? false) === true
                     && !array_key_exists($supportedOptionName, $options)
                 ) {
                     throw new InvalidValidationOptionsException(
@@ -43,17 +67,6 @@ abstract class AbstractValidator extends BaseAbstractValidator
                     );
                 }
             },
-            $options
-        );
-
-        // merge with default values
-        $this->options = array_merge(
-            array_map(
-                static function ($value) {
-                    return $value[0];
-                },
-                $this->supportedOptions
-            ),
             $options
         );
     }

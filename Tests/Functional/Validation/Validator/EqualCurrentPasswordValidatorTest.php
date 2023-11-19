@@ -16,8 +16,11 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 class EqualCurrentPasswordValidatorTest extends AbstractTestBase
@@ -25,36 +28,31 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
     public function setUp(): void
     {
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_users.xml');
+        $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/pages.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_groups.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_users.csv');
 
         $this->createEmptyFrontendUser();
-        $this->initializeTypoScriptFrontendController();
-
-        $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList'] =
-            'god, sex, password';
+        $this->request = $this->initializeTypoScriptFrontendController();
     }
 
-    /**
-     * @test
-     */
-    public function settingsContainsValidTyposcriptSettings()
+    #[Test]
+    #[RequiresPhp('9.3.0')]
+    public function settingsContainsValidTyposcriptSettings(): void
     {
+        $typoScriptSetup = $this->request->getAttribute('frontend.typoscript')->getSetupArray();
         self::assertArrayHasKey(
             'badWordList',
-            $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
+            $typoScriptSetup['plugin.']['tx_sfregister.']['settings.']
         );
     }
 
-    /**
-     * @test
-     */
-    public function isUserLoggedInReturnsFalseIfNotLoggedIn()
+    #[Test]
+    #[RequiresPhp('9.3.0')]
+    public function isUserLoggedInReturnsFalseIfNotLoggedIn(): void
     {
         /** @var Context $context */
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
+        $context = GeneralUtility::makeInstance(Context::class);
 
         /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
@@ -68,10 +66,9 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         self::assertFalse($method->invoke($subject));
     }
 
-    /**
-     * @test
-     */
-    public function isUserLoggedInReturnsTrueIfLoggedIn()
+    #[Test]
+    #[RequiresPhp('9.3.0')]
+    public function isUserLoggedInReturnsTrueIfLoggedIn(): void
     {
         $this->createAndLoginFrontEndUser('2', [
             'password' => 'testOld',
@@ -80,7 +77,7 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         $this->initializeTypoScriptFrontendController();
 
         /** @var Context $context */
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
+        $context = GeneralUtility::makeInstance(Context::class);
 
         /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);

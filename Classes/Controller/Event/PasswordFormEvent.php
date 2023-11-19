@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\Controller\Event;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -15,18 +13,14 @@ namespace Evoweb\SfRegister\Controller\Event;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Controller\Event;
+
 use Evoweb\SfRegister\Domain\Model\Password;
 
 final class PasswordFormEvent
 {
-    protected Password $password;
-
-    protected array $settings = [];
-
-    public function __construct(Password $password, array $settings)
+    public function __construct(protected Password $password, protected array $settings)
     {
-        $this->password = $password;
-        $this->settings = $settings;
     }
 
     public function getPassword(): Password

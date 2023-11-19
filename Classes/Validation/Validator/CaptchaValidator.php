@@ -14,19 +14,12 @@ namespace Evoweb\SfRegister\Validation\Validator;
  */
 
 use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
-class CaptchaValidator extends AbstractValidator implements InjectableInterface
+class CaptchaValidator extends AbstractValidator
 {
-    /**
-     * @var bool
-     */
     protected $acceptsEmptyValues = false;
 
-    protected CaptchaAdapterFactory $captchaAdapterFactory;
-
-    /**
-     * @var array
-     */
     protected $supportedOptions = [
         'type' => [
             'srfreecap',
@@ -35,17 +28,14 @@ class CaptchaValidator extends AbstractValidator implements InjectableInterface
         ],
     ];
 
-    public function __construct(CaptchaAdapterFactory $captchaAdapterFactory)
+    public function __construct(protected CaptchaAdapterFactory $captchaAdapterFactory)
     {
-        $this->captchaAdapterFactory = $captchaAdapterFactory;
     }
 
     /**
      * If the given captcha is valid
-     *
-     * @param string $value
      */
-    public function isValid($value)
+    public function isValid(mixed $value): void
     {
         $captchaAdapter = $this->captchaAdapterFactory->getCaptchaAdapter($this->options['type']);
         if (!$captchaAdapter->isValid($value)) {

@@ -13,13 +13,13 @@
 				<source>Uid of the page to redirect to after the creation is confirmed (not after saving)</source>
 			</trans-unit>
 			<trans-unit id="maximal.useEmailAddressAsUsername">
-				<source>Wether the email address should be used as username</source>
+				<source>Whether the email address should be used as username</source>
 			</trans-unit>
 			<trans-unit id="maximal.useEncryptedFilename">
 				<source>Use encrypted filename: to deny direct access on uploaded files</source>
 			</trans-unit>
 			<trans-unit id="maximal.useEncryptedFilename.0">
-				<source>plaintext no encrytion at all</source>
+				<source>plaintext no encryption at all</source>
 			</trans-unit>
 			<trans-unit id="maximal.useEncryptedFilename.1">
 				<source>md5-hash of password</source>
@@ -128,31 +128,31 @@
 			</trans-unit>
 
 			<trans-unit id="maximal.autologinPostRegistration">
-				<source>whether the user should get logged in after registration</source>
+				<source>Whether the user should get logged in after registration</source>
 			</trans-unit>
 			<trans-unit id="maximal.autologinPostConfirmation">
-				<source>whether the user should get logged in after activation</source>
+				<source>Whether the user should get logged in after activation</source>
 			</trans-unit>
 			<trans-unit id="maximal.usergroupPostSave">
-				<source>usergroup set if an account waits for activation</source>
+				<source>Usergroup set if an account waits for activation</source>
 			</trans-unit>
 			<trans-unit id="maximal.usergroupPostConfirm">
-				<source>usergroup set if the account was activate</source>
+				<source>Usergroup set if the account was activate</source>
 			</trans-unit>
 			<trans-unit id="maximal.usergroupPostAccept">
-				<source>usergroup set if the account was activate</source>
+				<source>Usergroup set if the account was activate</source>
 			</trans-unit>
 			<trans-unit id="maximal.usergroup">
-				<source>usergroup set if no activation is needed</source>
+				<source>Usergroup set if no activation is needed</source>
 			</trans-unit>
 			<trans-unit id="maximal.sitename">
 				<source>Name of the site used in email subject</source>
 			</trans-unit>
 			<trans-unit id="maximal.userEmail.fromName">
-				<source>from name used in email to user</source>
+				<source>From name used in email to user</source>
 			</trans-unit>
 			<trans-unit id="maximal.userEmail.fromEmail">
-				<source>from email used in email to user</source>
+				<source>From email used in email to user</source>
 			</trans-unit>
 			<trans-unit id="maximal.userEmail.replyName">
 				<source>reply name used in email to user</source>
@@ -187,35 +187,35 @@
 			</trans-unit>
 
 			<trans-unit id="minimal.badWordList">
-				<source>comma separated list of words used in bad word validator</source>
+				<source>Comma separated list of words used in bad word validator</source>
 			</trans-unit>
 			<trans-unit id="minimal.redirectPostActivationPageId">
 				<source>Uid of the page to redirect to after the creation is confirmed (not after saving)</source>
 			</trans-unit>
 			<trans-unit id="minimal.autologinPostRegistration">
-				<source>whether the user should get logged in after registration</source>
+				<source>Whether the user should get logged in after registration</source>
 			</trans-unit>
 			<trans-unit id="minimal.autologinPostConfirmation">
-				<source>whether the user should get logged in after activation</source>
+				<source>Whether the user should get logged in after activation</source>
 			</trans-unit>
 			<trans-unit id="minimal.usergroupPostSave">
-				<source>usergroup set if an account waits for activation</source>
+				<source>Usergroup set if an account waits for activation</source>
 			</trans-unit>
 			<trans-unit id="minimal.usergroup">
-				<source>usergroup set if no activation is needed</source>
+				<source>Usergroup set if no activation is needed</source>
 			</trans-unit>
 			<trans-unit id="minimal.emailSitename">
 				<source>Name of the site used in email subject</source>
 			</trans-unit>
 			<trans-unit id="minimal.emailName">
-				<source>Name used in every occurance of emails</source>
+				<source>Name used in every occupancy of emails</source>
 			</trans-unit>
 			<trans-unit id="minimal.emailAddress">
-				<source>Address used in every occurance of emails</source>
+				<source>Address used in every occupancy of emails</source>
 			</trans-unit>
 
 			<trans-unit id="extmgm.typoscriptComplexity">
-				<source>TypoScript complexity: wether to show minimal or maximal settings</source>
+				<source>TypoScript complexity: whether to show minimal or maximal settings</source>
 			</trans-unit>
 			<trans-unit id="extmgm.typoscriptComplexity.0">
 				<source>minimal</source>

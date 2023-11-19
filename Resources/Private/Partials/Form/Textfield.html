@@ -7,7 +7,7 @@
 	</label>
 	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
 
-	<f:form.textfield property="{fieldName}" id="{fieldName}" placeholder="{options.placeholder}" class="form-control" />
+	<f:form.textfield property="{fieldName}" id="{fieldName}" placeholder="{options.placeholder}" class="form-control {options.cssClass}" />
 </div>
 
 </html>

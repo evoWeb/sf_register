@@ -11,25 +11,36 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Updates;
 
+use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\Exception as DbalException;
+use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
+use TYPO3\CMS\Install\Updates\ChattyInterface;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
-class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
+#[UpgradeWizard('sfrSwitchableControllerActionsPluginUpdater')]
+class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface, ChattyInterface
 {
+    private const TABLE_NAME = 'tt_content';
+
     private const MIGRATION_SETTINGS = [
         [
             'sourceListType' => 'sfregister_form',
-            'switchableControllerActions' => 'FeuserCreate->form;FeuserCreate->preview;FeuserCreate->proxy;FeuserCreate->save;FeuserCreate->confirm;FeuserCreate->accept;FeuserCreate->decline;FeuserCreate->refuse;FeuserCreate->removeImage',
+            'switchableControllerActions' => 'FeuserCreate->form;FeuserCreate->preview;FeuserCreate->proxy;'
+                . 'FeuserCreate->save;FeuserCreate->confirm;FeuserCreate->accept;FeuserCreate->decline;'
+                . 'FeuserCreate->refuse;FeuserCreate->removeImage',
             'targetListType' => 'sfregister_create'
         ],
         [
             'sourceListType' => 'sfregister_form',
-            'switchableControllerActions' => 'FeuserEdit->form;FeuserEdit->preview;FeuserEdit->proxy;FeuserEdit->save;FeuserEdit->confirm;FeuserEdit->accept;FeuserEdit->removeImage',
+            'switchableControllerActions' => 'FeuserEdit->form;FeuserEdit->preview;FeuserEdit->proxy;'
+                . 'FeuserEdit->save;FeuserEdit->confirm;FeuserEdit->accept;FeuserEdit->removeImage',
             'targetListType' => 'sfregister_edit'
         ],
         [
@@ -42,18 +53,30 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
             'switchableControllerActions' => 'FeuserInvite->form;FeuserInvite->invite',
             'targetListType' => 'sfregister_invite'
         ],
+        [
+            'sourceListType' => 'sfregister_form',
+            'switchableControllerActions' => 'FeuserDelete->form;FeuserDelete->save;FeuserDelete->confirm',
+            'targetListType' => 'sfregister_delete'
+        ],
+        [
+            'sourceListType' => 'sfregister_form',
+            'switchableControllerActions' => 'FeuserResend->form;FeuserResend->mail',
+            'targetListType' => 'sfregister_resend'
+        ],
     ];
 
     protected FlexFormService $flexFormService;
+
+    protected OutputInterface $output;
 
     public function __construct()
     {
         $this->flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
     }
 
-    public function getIdentifier(): string
+    public function setOutput(OutputInterface $output): void
     {
-        return 'sfRegisterSCAPluginUpdater';
+        $this->output = $output;
     }
 
     public function getTitle(): string
@@ -63,10 +86,9 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
 
     public function getDescription(): string
     {
-        $description = 'The old sf_register plugin using switchableControllerActions has been split into 4 separate plugins. ';
-        $description .= 'This update wizard migrates all existing plugin settings and changes the Plugin (list_type) ';
-        $description .= 'to use the new plugins available.';
-        return $description;
+        return 'The old sf_register plugin using switchableControllerActions has been split into six separate plugins.
+            This update wizard migrates all existing plugin settings and changes the Plugin (list_type) to use the new
+            plugins available.';
     }
 
     public function getPrerequisites(): array
@@ -78,99 +100,91 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
 
     public function updateNecessary(): bool
     {
-        return $this->checkIfWizardIsRequired();
+        try {
+            $necessary = count($this->getRecordsToUpdate()) > 0;
+        } catch (\Exception) {
+            $necessary = 0;
+        }
+        return $necessary;
     }
 
     public function executeUpdate(): bool
     {
-        return $this->performMigration();
-    }
-
-    public function checkIfWizardIsRequired(): bool
-    {
-        return count($this->getMigrationRecords()) > 0;
-    }
-
-    public function performMigration(): bool
-    {
-        $records = $this->getMigrationRecords();
+        try {
+            $records = $this->getRecordsToUpdate();
+        } catch (\Exception) {
+            return false;
+        }
 
         foreach ($records as $record) {
-            $flexFormData = GeneralUtility::xml2array($record['pi_flexform']);
+            if (!str_contains($record['pi_flexform'], 'switchableControllerActions')) {
+                continue;
+            }
+
             $flexForm = $this->flexFormService->convertFlexFormContentToArray($record['pi_flexform']);
-            $targetListType = $this->getTargetListType(
-                $record['list_type'],
-                $flexForm['switchableControllerActions']
-            );
-            $allowedSettings = $this->getAllowedSettingsFromFlexForm($targetListType);
+            $newListType = $this->getTargetListType($record['list_type'], $flexForm['switchableControllerActions']);
+            $allowedSettings = $this->getSettingsFromFlexFormDataStructureFile($newListType);
 
-            // Remove flexform data which do not exist in flexform of new plugin
-            foreach ($flexFormData['data'] as $sheetKey => $sheetData) {
-                foreach ($sheetData['lDEF'] as $settingName => $setting) {
-                    if (!in_array($settingName, $allowedSettings, true)) {
-                        unset($flexFormData['data'][$sheetKey]['lDEF'][$settingName]);
-                    }
-                }
+            $flexFormData = GeneralUtility::xml2array($record['pi_flexform']);
+            $flexFormData = $this->removeFieldsNotPresentInDataStructure($flexFormData, $allowedSettings);
+            $newFlexform = count($flexFormData['data']) ? $this->transformArrayToXml($flexFormData) : '';
 
-                // Remove empty sheets
-                if (!count($flexFormData['data'][$sheetKey]['lDEF']) > 0) {
-                    unset($flexFormData['data'][$sheetKey]);
-                }
-            }
-
-            if (count($flexFormData['data']) > 0) {
-                $newFlexform = $this->array2xml($flexFormData);
-            } else {
-                $newFlexform = '';
-            }
-
-            $this->updateContentElement($record['uid'], $targetListType, $newFlexform);
+            $this->updateRecordWithNewListTypeAndFormData($record['uid'], $newListType, $newFlexform);
         }
 
         return true;
     }
 
-    protected function getMigrationRecords(): array
+    /**
+     * @throws DbalException
+     */
+    protected function getRecordsToUpdate(): array
     {
         $checkListTypes = array_unique(array_column(self::MIGRATION_SETTINGS, 'sourceListType'));
 
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-        $queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
-        $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-
+        $queryBuilder = $this->getPreparedQueryBuilder();
         return $queryBuilder
             ->select('uid', 'list_type', 'pi_flexform')
-            ->from('tt_content')
+            ->from(self::TABLE_NAME)
             ->where(
                 $queryBuilder->expr()->in(
                     'list_type',
-                    $queryBuilder->createNamedParameter($checkListTypes, Connection::PARAM_STR_ARRAY)
+                    $queryBuilder->createNamedParameter($checkListTypes, ArrayParameterType::STRING)
                 )
             )
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
     }
 
     protected function getTargetListType(string $sourceListType, string $switchableControllerActions): string
     {
+        $result = '';
+
         foreach (self::MIGRATION_SETTINGS as $setting) {
-            if ($setting['sourceListType'] === $sourceListType &&
-                $setting['switchableControllerActions'] === $switchableControllerActions
+            if (
+                $setting['sourceListType'] === $sourceListType
+                && $setting['switchableControllerActions'] === $switchableControllerActions
             ) {
-                return $setting['targetListType'];
+                $result = $setting['targetListType'];
+                break;
             }
         }
 
-        return '';
+        return $result;
     }
 
-    protected function getAllowedSettingsFromFlexForm(string $listType): array
+    protected function getSettingsFromFlexFormDataStructureFile(string $listType): array
     {
-        $flexFormFile = $GLOBALS['TCA']['tt_content']['columns']['pi_flexform']['config']['ds'][$listType . ',list'];
+        $flexFormFile =
+            $GLOBALS['TCA'][self::TABLE_NAME]['columns']['pi_flexform']['config']['ds'][$listType . ',list'] ?? null;
+
+        if ($flexFormFile === null) {
+            return [];
+        }
+
         $flexFormContent = file_get_contents(GeneralUtility::getFileAbsFileName(substr(trim($flexFormFile), 5)));
         $flexFormData = GeneralUtility::xml2array($flexFormContent);
 
-        // Iterate each sheet and extract all settings
         $settings = [];
         foreach ($flexFormData['sheets'] as $sheet) {
             foreach ($sheet['ROOT']['el'] as $setting => $tceForms) {
@@ -181,36 +195,49 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
         return $settings;
     }
 
-    /**
-     * Updates list_type and pi_flexform of the given content element UID
-     *
-     * @param int $uid
-     * @param string $newListType
-     * @param string $flexform
-     */
-    protected function updateContentElement(int $uid, string $newListType, string $flexform): void
+    protected function removeFieldsNotPresentInDataStructure(array $flexFormData, array $allowedSettings): array
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
-        $queryBuilder->update('tt_content')
+        foreach ($flexFormData['data'] as $sheetKey => $sheetData) {
+            foreach ($sheetData['lDEF'] as $settingName => $setting) {
+                // Remove fields which do not exist in flexform data structure of new plugin
+                if (!in_array($settingName, $allowedSettings, true)) {
+                    unset($flexFormData['data'][$sheetKey]['lDEF'][$settingName]);
+                }
+            }
+
+            // Remove empty sheets
+            if (!count($flexFormData['data'][$sheetKey]['lDEF']) > 0) {
+                unset($flexFormData['data'][$sheetKey]);
+            }
+        }
+
+        return $flexFormData;
+    }
+
+    protected function updateRecordWithNewListTypeAndFormData(int $uid, string $newListType, string $newFlexform): void
+    {
+        $queryBuilder = $this->getPreparedQueryBuilder();
+        $queryBuilder->update(self::TABLE_NAME)
             ->set('list_type', $newListType)
-            ->set('pi_flexform', $flexform)
+            ->set('pi_flexform', $newFlexform)
             ->where(
                 $queryBuilder->expr()->in(
                     'uid',
                     $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
                 )
             )
-            ->execute();
+            ->executeStatement();
     }
 
     /**
-     * Transforms the given array to FlexForm XML
-     *
-     * @param array $input
-     * @return string
+     * Transforms the flexform data array to FlexForm XML
      */
-    protected function array2xml(array $input = []): string
+    protected function transformArrayToXml(array $input = []): string
     {
+        $nsPrefix = '';
+        $level = 0;
+        $docTag = 'T3FlexForms';
+        $spaceInd = 4;
         $options = [
             'parentTagMap' => [
                 'data' => 'sheet',
@@ -224,9 +251,26 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
             ],
             'disableTypeAttrib' => 2
         ];
-        $spaceInd = 4;
-        $output = GeneralUtility::array2xml($input, '', 0, 'T3FlexForms', $spaceInd, $options);
-        $output = '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>' . LF . $output;
-        return $output;
+
+        return '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>'
+            . LF
+            . GeneralUtility::array2xml($input, $nsPrefix, $level, $docTag, $spaceInd, $options);
+    }
+
+    protected function getPreparedQueryBuilder(): QueryBuilder
+    {
+        $queryBuilder = $this
+            ->getConnectionPool()
+            ->getQueryBuilderForTable(self::TABLE_NAME);
+        $queryBuilder
+            ->getRestrictions()
+            ->removeAll();
+
+        return $queryBuilder;
+    }
+
+    protected function getConnectionPool(): ConnectionPool
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }

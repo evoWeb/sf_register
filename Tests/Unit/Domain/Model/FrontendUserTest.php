@@ -13,27 +13,29 @@ namespace Evoweb\SfRegister\Tests\Unit\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
+class FrontendUserTest extends UnitTestCase
 {
-    /**
-     * @var \Evoweb\SfRegister\Domain\Model\FrontendUser
-     */
-    protected $subject;
+    protected FrontendUser $subject;
 
     public function setUp(): void
     {
-        $this->subject = new \Evoweb\SfRegister\Domain\Model\FrontendUser();
+        parent::setUp();
+        $this->subject = new FrontendUser();
     }
 
-    /**
-     * @test
-     */
-    public function disableDefaultToFalseOnInitialize()
+    #[Test]
+    public function disableDefaultToFalseOnInitialize(): void
     {
         self::assertFalse($this->subject->getDisable());
     }
 
-    public function notEmptyDataProvider(): array
+    public static function notEmptyDataProvider(): array
     {
         return [
             'integerGreaterZero' => [1],
@@ -42,43 +44,34 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         ];
     }
 
-    /**
-     * @param mixed $input
-     * @test
-     * @dataProvider notEmptyDataProvider
-     */
-    public function disableReturnsTrueIfSetNotEmpty($input)
+    #[Test]
+    #[DataProvider('notEmptyDataProvider')]
+    public function disableReturnsTrueIfSetNotEmpty(mixed $input): void
     {
         $this->subject->setDisable($input);
 
         self::assertTrue($this->subject->getDisable());
     }
 
-    /**
-     * @test
-     */
-    public function imageContainsEmptyObjectStorageOnInitialize()
+    #[Test]
+    public function imageContainsEmptyObjectStorageOnInitialize(): void
     {
-        self::assertInstanceOf(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class, $this->subject->getImage());
+        self::assertInstanceOf(ObjectStorage::class, $this->subject->getImage());
         self::assertEquals(0, $this->subject->getImage()->count());
     }
 
-    /**
-     * @test
-     */
-    public function imageReturnsStringSetBySetImage()
+    #[Test]
+    public function imageReturnsStringSetBySetImage(): void
     {
-        $expected = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $expected = new ObjectStorage();
 
         $this->subject->setImage($expected);
 
         self::assertSame($expected, $this->subject->getImage());
     }
 
-    /**
-     * @test
-     */
-    public function imageAsImageListAddFilenameToImage()
+    #[Test]
+    public function imageAsImageListAddFilenameToImage(): void
     {
         self::markTestSkipped('needs to be changed to ObjectStorage');
         $expected1 = 'foo.gif';
@@ -91,10 +84,8 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         self::assertSame(implode(',', [$expected1, $expected2]), $this->subject->getImage());
     }
 
-    /**
-     * @test
-     */
-    public function imageAsImageListRemoveFilenameFromImage()
+    #[Test]
+    public function imageAsImageListRemoveFilenameFromImage(): void
     {
         self::markTestSkipped('needs to be changed to ObjectStorage');
         $expected1 = 'foo.gif';
@@ -107,38 +98,29 @@ class FrontendUserTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         self::assertSame($expected2, $this->subject->getImage());
     }
 
-    /**
-     * @test
-     */
-    public function gtcDefaultToFalseOnInitialize()
+    #[Test]
+    public function gtcDefaultToFalseOnInitialize(): void
     {
         self::assertFalse($this->subject->getDisable());
     }
 
-    /**
-     * @param mixed $input
-     * @test
-     * @dataProvider notEmptyDataProvider
-     */
-    public function gtcReturnsTrueIfSetNotEmpty($input)
+    #[Test]
+    #[DataProvider('notEmptyDataProvider')]
+    public function gtcReturnsTrueIfSetNotEmpty(mixed $input): void
     {
         $this->subject->setDisable($input);
 
         self::assertTrue($this->subject->getDisable());
     }
 
-    /**
-     * @test
-     */
-    public function mobilephoneOnInitializeIsEmpty()
+    #[Test]
+    public function mobilephoneOnInitializeIsEmpty(): void
     {
         self::assertEquals('', $this->subject->getMobilephone());
     }
 
-    /**
-     * @test
-     */
-    public function getMobilephoneReturnsStringSetBySetMobilephone()
+    #[Test]
+    public function getMobilephoneReturnsStringSetBySetMobilephone(): void
     {
         $expected = 'teststring';
 

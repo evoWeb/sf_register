@@ -23,28 +23,22 @@ class Session implements SingletonInterface
 {
     /**
      * String to identify session values
-     *
-     * @var string
      */
     protected string $sessionKey = 'sf_register';
 
     /**
      * Values stored in session
-     *
-     * @var ?array
      */
     protected ?array $values = null;
 
-    protected ?FrontendUserAuthentication $frontendUser;
-
-    public function __construct(?FrontendUserAuthentication $frontendUser = null)
+    public function __construct(protected ?FrontendUserAuthentication $frontendUser = null)
     {
         if ($GLOBALS['TSFE']->fe_user) {
             $this->frontendUser = $GLOBALS['TSFE']->fe_user;
         } else {
-            $this->frontendUser = $frontendUser;
-            if ($this->frontendUser->userSession == null) {
-                $this->frontendUser->start();
+            try {
+                $this->frontendUser->start($GLOBALS['TYPO3_REQUEST']);
+            } catch (\Exception) {
             }
         }
         $this->fetch();
@@ -53,7 +47,13 @@ class Session implements SingletonInterface
     public function fetch(): self
     {
         if ($this->values === null) {
-            $this->values = (array)unserialize($this->frontendUser->getKey('ses', $this->sessionKey));
+            $sessionValue = $this->frontendUser->getKey('ses', $this->sessionKey);
+            if (!empty($sessionValue)) {
+                $this->values = unserialize($sessionValue);
+            }
+            if (!is_array($this->values)) {
+                $this->values = [];
+            }
         }
 
         return $this;
@@ -77,14 +77,7 @@ class Session implements SingletonInterface
         return $result;
     }
 
-    /**
-     * Getter for value identified by key
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         $result = null;
 
@@ -95,15 +88,7 @@ class Session implements SingletonInterface
         return $result;
     }
 
-    /**
-     * Setter for key to value
-     *
-     * @param string $key
-     * @param mixed $value
-     *
-     * @return \Evoweb\SfRegister\Services\Session
-     */
-    public function set(string $key, $value): self
+    public function set(string $key, mixed $value): self
     {
         $this->values[$key] = $value;
 

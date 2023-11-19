@@ -13,50 +13,37 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\Password;
+use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Validator to check if a given value is equal to true
  */
-class IsTrueValidator extends AbstractValidator implements SettableInterface
+class IsTrueValidator extends AbstractValidator implements SetModelInterface, SetPropertyNameInterface
 {
-    /**
-     * @var bool
-     */
     protected $acceptsEmptyValues = false;
 
     /**
-     * Model to take repeated value of
-     *
-     * @var FrontendUser|Password
+     * Model to access user properties
      */
-    protected $model;
+    protected ValidatableInterface $model;
 
     protected string $propertyName = '';
 
-    /**
-     * Setter for model
-     *
-     * @param FrontendUser|Password $model
-     */
-    public function setModel($model)
+    public function setModel(ValidatableInterface $model): void
     {
         $this->model = $model;
     }
 
-    public function setPropertyName(string $propertyName)
+    public function setPropertyName(string $propertyName): void
     {
         $this->propertyName = $propertyName;
     }
 
     /**
-     * If the given value is set
-     *
-     * @param bool $value The value
+     * If the given value is true
      */
-    public function isValid($value)
+    public function isValid(mixed $value): void
     {
         if ($value !== true) {
             $this->addError(

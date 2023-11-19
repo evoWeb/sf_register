@@ -2,6 +2,9 @@
 	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
 	data-namespace-typo3-fluid="true">
 
+<f:asset.css identifier="sfregister_css" href="EXT:sf_register/Resources/Public/Stylesheets/sf_register{settings.minified}.css"/>
+<f:asset.script identifier="sfregister_js" src="EXT:sf_register/Resources/Public/JavaScript/sf_register{settings.minified}.js"/>
+
 <div class="col-md-6 mb-3 {fieldName}">
 	<label for="sfrZone">
 		<f:translate id="{fieldName}" />
@@ -12,8 +15,9 @@
 	<register:form.selectStaticCountryZones
 		property="{fieldName}"
 		id="sfrZone"
+        prependOptionLabel="{f:translate(id: 'please_select')}"
 		parent="{f:if(condition: user.staticInfoCountry, then: user.staticInfoCountry, else: options.defaultValue)}"
-		class="form-control" />
+		class="form-control {options.cssClass}" />
 
 	<div id="sfrZone_empty" class="d-none form-control-plaintext"><f:translate id="no_zone_available" /></div>
 	<div id="sfrZone_loading" class="d-none spinner-border text-primary" role="status">

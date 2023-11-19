@@ -13,11 +13,12 @@ namespace Evoweb\SfRegister\Tests\Unit\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-class MailTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+use PHPUnit\Framework\Attributes\Test;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
+class MailTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function sendEmail()
     {
         self::markTestIncomplete('not implemented by now');

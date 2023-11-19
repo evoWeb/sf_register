@@ -4,22 +4,17 @@ namespace Evoweb\SfRegister\Tests\Functional;
 
 trait SettableCallable
 {
-    /**
-     * @param string $name
-     *
-     * @return mixed
-     */
-    public function get(string $name)
+    public function get(string $name): mixed
     {
         return $this->{$name};
     }
 
-    public function set(string $name, $value)
+    public function set(string $name, mixed $value): void
     {
         $this->{$name} = $value;
     }
 
-    public function call(string $name)
+    public function call(string $name): void
     {
         $this->{$name}();
     }

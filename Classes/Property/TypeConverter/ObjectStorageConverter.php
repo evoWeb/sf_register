@@ -33,30 +33,14 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\ObjectStorageConverter as ExtbaseOb
 class ObjectStorageConverter extends ExtbaseObjectStorageConverter
 {
     /**
-     * @var string[]
-     */
-    protected $sourceTypes = ['array'];
-
-    /**
-     * Take precedence over the available ObjectStorageConverter
-     *
-     * @var int
-     */
-    protected $priority = 21;
-
-    /**
      * Return the source, if it is an array, otherwise an empty array.
      * Filter out empty uploads
-     *
-     * @param mixed $source
-     *
-     * @return array
      */
-    public function getSourceChildPropertiesToBeConverted($source): array
+    public function getSourceChildPropertiesToBeConverted(mixed $source): array
     {
         $propertiesToConvert = [];
 
-        // TODO: Find a nicer way to throw away empty uploads
+        // @todo: Find a nicer way to throw away empty uploads
         foreach ($source as $propertyName => $propertyValue) {
             if ($this->isUploadType($propertyValue)) {
                 if (
@@ -73,14 +57,7 @@ class ObjectStorageConverter extends ExtbaseObjectStorageConverter
         return $propertiesToConvert;
     }
 
-    /**
-     * Check if this is an upload type
-     *
-     * @param mixed $propertyValue
-     *
-     * @return bool
-     */
-    protected function isUploadType($propertyValue): bool
+    protected function isUploadType(mixed $propertyValue): bool
     {
         return is_array($propertyValue) && isset($propertyValue['tmp_name']) && isset($propertyValue['error']);
     }

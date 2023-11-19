@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
 defined('TYPO3') or die();
 
-call_user_func(function () {
+(static function () {
     $languageFile = 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:';
 
     $temporaryColumns = [
@@ -10,13 +14,12 @@ call_user_func(function () {
             'exclude' => true,
             'label' => $languageFile . 'fe_users.activated_on',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'readOnly' => true,
-                'eval' => 'datetime',
+                'format' => 'datetime',
+                'eval' => 'int',
             ]
         ],
-
         'pseudonym' => [
             'label' => $languageFile . 'fe_users.pseudonym',
             'config' => [
@@ -31,18 +34,18 @@ call_user_func(function () {
             'config' => [
                 'type' => 'radio',
                 'items' => [
-                    [$languageFile . 'fe_users.gender.I.1', '1'],
-                    [$languageFile . 'fe_users.gender.I.2', '2']
+                    ['label' => $languageFile . 'fe_users.gender.I.1', 'value' => 1],
+                    ['label' => $languageFile . 'fe_users.gender.I.2', 'value' => 2]
                 ],
             ]
         ],
         'date_of_birth' => [
             'label' => $languageFile . 'fe_users.date_of_birth',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 10,
-                'eval' => 'date',
+                'format' => 'date',
+                'eval' => 'int',
                 'default' => 0
             ]
         ],
@@ -72,44 +75,33 @@ call_user_func(function () {
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    [$languageFile . 'fe_users.timezone.I.-12', -12],
-                    [$languageFile . 'fe_users.timezone.I.-11', -11],
-                    [$languageFile . 'fe_users.timezone.I.-10', -10],
-                    [$languageFile . 'fe_users.timezone.I.-9.5', -9.5],
-                    [$languageFile . 'fe_users.timezone.I.-9', -9],
-                    [$languageFile . 'fe_users.timezone.I.-8', -8],
-                    [$languageFile . 'fe_users.timezone.I.-7', -7],
-                    [$languageFile . 'fe_users.timezone.I.-6', -6],
-                    [$languageFile . 'fe_users.timezone.I.-5', -5],
-                    [$languageFile . 'fe_users.timezone.I.-4.5', -4.5],
-                    [$languageFile . 'fe_users.timezone.I.-4', -4],
-                    [$languageFile . 'fe_users.timezone.I.-3.5', -3.5],
-                    [$languageFile . 'fe_users.timezone.I.-3', -3],
-                    [$languageFile . 'fe_users.timezone.I.-2', -2],
-                    [$languageFile . 'fe_users.timezone.I.-1', -1],
-                    [$languageFile . 'fe_users.timezone.I.0', 0],
-                    [$languageFile . 'fe_users.timezone.I.1', 1],
-                    [$languageFile . 'fe_users.timezone.I.2', 2],
-                    [$languageFile . 'fe_users.timezone.I.3', 3],
-                    [$languageFile . 'fe_users.timezone.I.3.5', 3.5],
-                    [$languageFile . 'fe_users.timezone.I.4', 4],
-                    [$languageFile . 'fe_users.timezone.I.4.5', 4.5],
-                    [$languageFile . 'fe_users.timezone.I.5', 5],
-                    [$languageFile . 'fe_users.timezone.I.5.5', 5.5],
-                    [$languageFile . 'fe_users.timezone.I.5.75', 5.75],
-                    [$languageFile . 'fe_users.timezone.I.6', 6],
-                    [$languageFile . 'fe_users.timezone.I.6.5', 6.5],
-                    [$languageFile . 'fe_users.timezone.I.7', 7],
-                    [$languageFile . 'fe_users.timezone.I.8', 8],
-                    [$languageFile . 'fe_users.timezone.I.9', 9],
-                    [$languageFile . 'fe_users.timezone.I.9.5', 9.5],
-                    [$languageFile . 'fe_users.timezone.I.10', 10],
-                    [$languageFile . 'fe_users.timezone.I.11', 11],
-                    [$languageFile . 'fe_users.timezone.I.11.5', 11.5],
-                    [$languageFile . 'fe_users.timezone.I.12', 12],
-                    [$languageFile . 'fe_users.timezone.I.12.75', 12.75],
-                    [$languageFile . 'fe_users.timezone.I.13', 13],
-                    [$languageFile . 'fe_users.timezone.I.14', 14],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-12', 'value' => -12],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-11', 'value' => -11],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-10', 'value' => -10],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-9', 'value' => -9],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-8', 'value' => -8],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-7', 'value' => -7],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-6', 'value' => -6],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-5', 'value' => -5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-4', 'value' => -4],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-3', 'value' => -3],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-2', 'value' => -2],
+                    ['label' => $languageFile . 'fe_users.timezone.I.-1', 'value' => -1],
+                    ['label' => $languageFile . 'fe_users.timezone.I.0', 'value' => 0],
+                    ['label' => $languageFile . 'fe_users.timezone.I.1', 'value' => 1],
+                    ['label' => $languageFile . 'fe_users.timezone.I.2', 'value' => 2],
+                    ['label' => $languageFile . 'fe_users.timezone.I.3', 'value' => 3],
+                    ['label' => $languageFile . 'fe_users.timezone.I.4', 'value' => 4],
+                    ['label' => $languageFile . 'fe_users.timezone.I.5', 'value' => 5],
+                    ['label' => $languageFile . 'fe_users.timezone.I.6', 'value' => 6],
+                    ['label' => $languageFile . 'fe_users.timezone.I.7', 'value' => 7],
+                    ['label' => $languageFile . 'fe_users.timezone.I.8', 'value' => 8],
+                    ['label' => $languageFile . 'fe_users.timezone.I.9', 'value' => 9],
+                    ['label' => $languageFile . 'fe_users.timezone.I.10', 'value' => 10],
+                    ['label' => $languageFile . 'fe_users.timezone.I.11', 'value' => 11],
+                    ['label' => $languageFile . 'fe_users.timezone.I.12', 'value' => 12],
+                    ['label' => $languageFile . 'fe_users.timezone.I.13', 'value' => 13],
+                    ['label' => $languageFile . 'fe_users.timezone.I.14', 'value' => 14],
                 ],
                 'default' => 0,
             ]
@@ -147,11 +139,11 @@ call_user_func(function () {
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    [$languageFile . 'fe_users.status.I.0', 0],
-                    [$languageFile . 'fe_users.status.I.1', 1],
-                    [$languageFile . 'fe_users.status.I.2', 2],
-                    [$languageFile . 'fe_users.status.I.3', 3],
-                    [$languageFile . 'fe_users.status.I.4', 4],
+                    ['label' => $languageFile . 'fe_users.status.I.0', 'value' => 0],
+                    ['label' => $languageFile . 'fe_users.status.I.1', 'value' => 1],
+                    ['label' => $languageFile . 'fe_users.status.I.2', 'value' => 2],
+                    ['label' => $languageFile . 'fe_users.status.I.3', 'value' => 3],
+                    ['label' => $languageFile . 'fe_users.status.I.4', 'value' => 4],
                 ],
             ]
         ],
@@ -201,47 +193,45 @@ call_user_func(function () {
         ],
         'image' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf',
-            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
-                'image',
-                [
-                    'maxitems' => 1,
-                    'minitems' => 0
-                ],
-                $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
-            )
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.image',
+            'config' => [
+                'type' => 'file',
+                'allowed' => 'common-image-types',
+                'maxitems' => 1,
+                'minitems' => 0
+            ]
         ],
     ];
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $temporaryColumns);
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'gender', '', 'before:name');
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'pseudonym', '', 'after:username');
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'email_new', '', 'after:email');
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+    ExtensionManagementUtility::addTCAcolumns('fe_users', $temporaryColumns);
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'gender', '', 'before:name');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'pseudonym', '', 'after:username');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'email_new', '', 'after:email');
+    ExtensionManagementUtility::addToAllTCAtypes(
         'fe_users',
         'date_of_birth, language, status',
         '',
         'after:name'
     );
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+    ExtensionManagementUtility::addToAllTCAtypes(
         'fe_users',
         'zone, timezone, daylight',
         '',
         'after:city'
     );
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+    ExtensionManagementUtility::addToAllTCAtypes(
         'fe_users',
         'mobilephone',
         '',
         'after:telephone'
     );
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+    ExtensionManagementUtility::addToAllTCAtypes(
         'fe_users',
         '--div--;LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.div.registration,
             activated_on, gtc, privacy, by_invitation, comments, module_sys_dmail_newsletter, module_sys_dmail_html'
     );
 
-    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('static_info_tables')) {
+    if (ExtensionManagementUtility::isLoaded('static_info_tables')) {
         $tempColumns = [
             'static_info_country' => [
                 'exclude' => 0,
@@ -255,12 +245,12 @@ call_user_func(function () {
                 ]
             ],
         ];
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+        ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
+        ExtensionManagementUtility::addToAllTCAtypes(
             'fe_users',
             'static_info_country',
             '',
             'after:zone'
         );
     }
-});
+})();

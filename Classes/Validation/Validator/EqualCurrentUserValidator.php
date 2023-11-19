@@ -14,36 +14,33 @@ namespace Evoweb\SfRegister\Validation\Validator;
  */
 
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
- * A validator to check if the userid is equal to the id of the logged in user
+ * A validator to check if the userid is equal to the id of the logged-in user
  */
-class EqualCurrentUserValidator extends AbstractValidator implements InjectableInterface
+class EqualCurrentUserValidator extends AbstractValidator
 {
-    /**
-     * @var bool
-     */
     protected $acceptsEmptyValues = false;
 
-    protected Context $context;
-
-    public function __construct(Context $context)
+    public function __construct(protected Context $context)
     {
-        $this->context = $context;
     }
 
     /**
-     * If the given value is not equal to logged in user id
-     *
-     * @param string $value The value
+     * If the given value is not equal to logged-in user id
      */
-    public function isValid($value)
+    public function isValid(mixed $value): void
     {
-        if ($value != $this->context->getAspect('frontend.user')->get('id')) {
-            $this->addError(
-                $this->translateErrorMessage('error_notequalcurrentuser', 'SfRegister'),
-                1305009260
-            );
+        try {
+            if ($value != $this->context->getAspect('frontend.user')->get('id')) {
+                $this->addError(
+                    $this->translateErrorMessage('error_notequalcurrentuser', 'SfRegister'),
+                    1305009260
+                );
+            }
+        } catch (\Exception $exception) {
+            $this->addError($exception->getMessage(), $exception->getCode());
         }
     }
 }

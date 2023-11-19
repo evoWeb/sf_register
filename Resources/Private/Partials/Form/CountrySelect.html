@@ -13,10 +13,11 @@
 	<register:form.selectStaticCountries
 		property="{fieldName}"
 		id="sfrCountry"
+        prependOptionLabel="{f:translate(id: 'please_select')}"
 		value="{f:if(condition: '{user.{fieldName}}', then: '{user.{fieldName}}', else: options.defaultValue)}"
 		allowedCountries="{options.allowedCountries}"
 		optionLabelField="cnShort{languageKey}"
-		class="form-control" />
+		class="form-control {options.cssClass}" />
 </div>
 
 </html>

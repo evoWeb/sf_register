@@ -26,10 +26,14 @@ class FrontendUserRepository extends Repository
         $query = $this->createQuery();
 
         $querySettings = $query->getQuerySettings();
+        $querySettings->setRespectStoragePage(false);
         $querySettings->setIgnoreEnableFields(true);
         $querySettings->setEnableFieldsToBeIgnored(['disabled']);
 
-        $result = $query->matching($query->equals('uid', $uid))
+        $result = $query
+            ->matching(
+                $query->equals('uid', $uid)
+            )
             ->execute();
 
         return $result->getFirst();
@@ -37,13 +41,8 @@ class FrontendUserRepository extends Repository
 
     /**
      * Finds an object matching the given identifier.
-     *
-     * @param string $email The Email address of the object to find
-     * @param bool $ignoreHidden Whether to ignore hidden state
-     *
-     * @return FrontendUserInterface|object|null
      */
-    public function findByEmail(string $email, bool $ignoreHidden = false)
+    public function findByEmail(string $email, bool $ignoreHidden = false): ?FrontendUserInterface
     {
         $query = $this->createQuery();
 
@@ -53,10 +52,12 @@ class FrontendUserRepository extends Repository
             $querySettings->setEnableFieldsToBeIgnored(['disabled']);
         }
 
-        $result = $query->matching($query->logicalOr([
-            $query->equals('email', $email),
-            $query->equals('username', $email)
-        ]))
+        $result = $query->matching(
+            $query->logicalOr(
+                $query->equals('email', $email),
+                $query->equals('username', $email)
+            )
+        )
         ->execute();
 
         return $result->getFirst();
@@ -64,12 +65,6 @@ class FrontendUserRepository extends Repository
 
     /**
      * Count users in storage folder which have a field that contains the value
-     *
-     * @param string $field
-     * @param string $value
-     * @param bool $respectStoragePage
-     *
-     * @return int
      */
     public function countByField(string $field, string $value, bool $respectStoragePage = true): int
     {

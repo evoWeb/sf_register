@@ -13,8 +13,11 @@ namespace Evoweb\SfRegister\Tests\Functional\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class FrontendUserRepositoryTest extends AbstractTestBase
@@ -24,29 +27,27 @@ class FrontendUserRepositoryTest extends AbstractTestBase
     public function setUp(): void
     {
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_users.xml');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_groups.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_users.csv');
 
-        /** @var FrontendUserRepository subject */
         $this->subject = GeneralUtility::makeInstance(FrontendUserRepository::class);
     }
 
     public function tearDown(): void
     {
         unset($this->subject);
+        parent::tearDown();
     }
 
-    /**
-     * @test
-     */
-    public function findByUid()
+    #[Test]
+    #[RequiresPhp('9.3.0')]
+    public function findByUid(): void
     {
-        /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+        /** @var FrontendUser $user */
         $user = $this->subject->findByUid(1);
 
-        self::assertInstanceOf(\Evoweb\SfRegister\Domain\Model\FrontendUser::class, $user);
+        self::assertInstanceOf(FrontendUser::class, $user);
         self::assertEquals('loginuser', $user->getUsername());
     }
 }

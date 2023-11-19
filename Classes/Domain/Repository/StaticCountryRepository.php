@@ -36,7 +36,10 @@ class StaticCountryRepository extends Repository
         $query->getQuerySettings()
             ->setRespectStoragePage(false);
 
-        $query->matching($query->in('cn_iso_2', $cnIso2));
+        try {
+            $query->matching($query->in('cn_iso_2', $cnIso2));
+        } catch (\Exception) {
+        }
 
         return $query->execute();
     }

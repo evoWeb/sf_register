@@ -19,11 +19,10 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -33,10 +32,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
 {
     use SiteBasedTestTrait;
 
-    /**
-     * @var array
-     */
-    protected $testExtensionsToLoad = [
+    protected array $testExtensionsToLoad = [
         'typo3conf/ext/sf_register'
     ];
 
@@ -55,11 +51,27 @@ abstract class AbstractTestBase extends FunctionalTestCase
 
     protected ?FrontendUserAuthentication $frontendUser = null;
 
-    public function initializeTypoScriptFrontendController()
+    protected ServerRequest $request;
+
+    public function initializeTypoScriptFrontendController(): ServerRequest
     {
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'constants' => [
+                    'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
+                    'EXT:sf_register/Configuration/TypoScript/minimal/constants.typoscript',
+                ],
+                'setup' => [
+                    'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
+                    'EXT:sf_register/Configuration/TypoScript/minimal/setup.typoscript',
+                    __DIR__ . '/../Fixtures/PageWithUserObjectUsingSlWithLLL.typoscript'
+                ]
+            ]
+        );
         $this->writeSiteConfiguration(
-            'test',
-            $this->buildSiteConfiguration(1, '/'),
+            'website-local',
+            $this->buildSiteConfiguration(1, 'http://localhost/'),
             [
                 $this->buildDefaultLanguageConfiguration('EN', '/en/'),
             ],
@@ -71,21 +83,31 @@ abstract class AbstractTestBase extends FunctionalTestCase
         $_SERVER['REQUEST_URI'] = '/en/';
         $_GET['id'] = 1;
         GeneralUtility::flushInternalRuntimeCaches();
-        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByIdentifier('test');
 
-        $this->typoScriptFrontendController = GeneralUtility::makeInstance(
+        $request = ServerRequestFactory::fromGlobals();
+        $request = $request->withQueryParams($_GET);
+
+        $context = GeneralUtility::makeInstance(Context::class);
+
+        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByIdentifier('website-local');
+        $request->withAttribute('site', $site);
+
+        $pageArguments = new PageArguments(1, '0', []);
+
+        $controller = GeneralUtility::makeInstance(
             TypoScriptFrontendController::class,
-            GeneralUtility::makeInstance(Context::class),
+            $context,
             $site,
-            $site->getDefaultLanguage(),
-            new PageArguments(1, '0', []),
-            new FrontendUserAuthentication()
+            $request->getAttribute('language', $site->getDefaultLanguage()),
+            $pageArguments,
+            $this->frontendUser
         );
-        $this->typoScriptFrontendController->sys_page = GeneralUtility::makeInstance(PageRepository::class);
-        $this->typoScriptFrontendController->tmpl = GeneralUtility::makeInstance(TemplateService::class);
-        $this->typoScriptFrontendController->fe_user =& $this->frontendUser;
+        $controller->no_cache = true;
+        $controller->determineId($request);
+        $request = $request->withAttribute('frontend.controller', $controller);
+        $request = $controller->getFromCache($request);
 
-        $GLOBALS['TSFE'] = $this->typoScriptFrontendController;
+        return $request;
     }
 
     public function createAndLoginFrontEndUser(string $frontEndUserGroups = '', array $recordData = []): int
@@ -131,7 +153,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
         return $connection->lastInsertId($tableName);
     }
 
-    public function loginFrontEndUser(int $frontEndUserUid)
+    public function loginFrontEndUser(int $frontEndUserUid): void
     {
         if ($frontEndUserUid === 0) {
             throw new \InvalidArgumentException('The user ID must be > 0.', 1334439475);
@@ -154,7 +176,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
         $context->setAspect('frontend.user', $userAspect);
     }
 
-    public function createEmptyFrontendUser()
+    public function createEmptyFrontendUser(): void
     {
         $this->frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
 
@@ -170,16 +192,12 @@ abstract class AbstractTestBase extends FunctionalTestCase
     public function getPrivateMethod($object, $methodName): \ReflectionMethod
     {
         $classReflection = new \ReflectionClass($object);
-        $methodReflection = $classReflection->getMethod($methodName);
-        $methodReflection->setAccessible(true);
-        return $methodReflection;
+        return $classReflection->getMethod($methodName);
     }
 
     public function getPrivateProperty($object, $propertyName): \ReflectionProperty
     {
         $classReflection = new \ReflectionClass($object);
-        $propertyReflection = $classReflection->getProperty($propertyName);
-        $propertyReflection->setAccessible(true);
-        return $propertyReflection;
+        return $classReflection->getProperty($propertyName);
     }
 }

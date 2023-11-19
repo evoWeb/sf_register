@@ -17,13 +17,20 @@ use Evoweb\SfRegister\Controller\Event\DeleteConfirmEvent;
 use Evoweb\SfRegister\Controller\Event\DeleteFormEvent;
 use Evoweb\SfRegister\Controller\Event\DeleteSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
+use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
+use TYPO3\CMS\Extbase\Property\Exception;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
- * An frontend user create controller
+ * A frontend user create controller
  */
 class FeuserDeleteController extends FeuserController
 {
@@ -31,11 +38,18 @@ class FeuserDeleteController extends FeuserController
 
     protected array $ignoredActions = ['confirmAction', 'requestAction'];
 
+    /**
+     * @throws Exception
+     */
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        $userId = $this->context->getAspect('frontend.user')->get('id');
+        $userId = 0;
+        try {
+            $userId = $this->context->getAspect('frontend.user')?->get('id');
+        } catch (AspectNotFoundException | AspectPropertyNotFoundException) {
+        }
 
-        $originalRequest = $this->request->getOriginalRequest();
+        $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
         if (
             (
                 $this->request->hasArgument('user')
@@ -44,26 +58,25 @@ class FeuserDeleteController extends FeuserController
             && $this->userIsLoggedIn()
         ) {
             /** @var array $userData */
-            $userData = $this->request->hasArgument('user') ?
-                $this->request->getArgument('user') :
-                $originalRequest->getArgument('user');
+            $userData = $this->request->hasArgument('user')
+                ? $this->request->getArgument('user')
+                : $originalRequest->getArgument('user');
 
-            // only reconstitute user object if given user uid equals logged in user uid
+            // only reconstitute user object if given user uid equals logged-in user uid
             if ($userData['uid'] == $userId) {
-                /** @var \TYPO3\CMS\Extbase\Property\PropertyMapper $propertyMapper */
-                $propertyMapper = GeneralUtility::getContainer()
-                    ->get(PropertyMapper::class);
+                /** @var PropertyMapper $propertyMapper */
+                $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
                 $user = $propertyMapper->convert($userData, FrontendUser::class);
             }
         }
 
         if ($user == null) {
-            /** @var \Evoweb\SfRegister\Domain\Model\FrontendUser $user */
+            /** @var FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
         }
 
         // user is logged
-        if ($user !== null && $user instanceof FrontendUser) {
+        if ($user instanceof FrontendUser) {
             $this->eventDispatcher->dispatch(new DeleteFormEvent($user, $this->settings));
         }
 
@@ -72,15 +85,7 @@ class FeuserDeleteController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Save action
-     *
-     * @param FrontendUser $user
-     *
-     * @return ResponseInterface
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
-     */
+    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {
         $this->eventDispatcher->dispatch(new DeleteSaveEvent($user, $this->settings));
@@ -92,7 +97,11 @@ class FeuserDeleteController extends FeuserController
             $user = $this->userRepository->findByEmail($user->getEmail());
         }
 
-        $user = $this->sendEmails($user, __FUNCTION__);
+        if ($user instanceof FrontendUser && $user->getUid()) {
+            $user = $this->sendEmails($user, __FUNCTION__);
+        } else {
+            $this->view->assign('userNotFound', true);
+        }
 
         $this->view->assign('user', $user);
 
@@ -102,10 +111,8 @@ class FeuserDeleteController extends FeuserController
     /**
      * Confirm delete process by user
      *
-     * @param ?FrontendUser $user
-     * @param ?string $hash
-     *
-     * @return ResponseInterface
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      */
     public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -119,6 +126,12 @@ class FeuserDeleteController extends FeuserController
             $this->eventDispatcher->dispatch(new DeleteConfirmEvent($user, $this->settings));
 
             $this->sendEmails($user, __FUNCTION__);
+
+            if ($user->getImage()->count()) {
+                $image = $user->getImage()->current();
+                $this->fileService->removeFile($image);
+                $this->removeImageFromUserAndRequest($user);
+            }
 
             $this->userRepository->remove($user);
             $this->persistAll();
@@ -136,13 +149,7 @@ class FeuserDeleteController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * @param FrontendUser $requestUser
-     *
-     * @return ResponseInterface
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="requestUser")
-     */
+    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'requestUser'])]
     public function sendLinkAction(FrontendUser $requestUser): ResponseInterface
     {
         /** @var FrontendUser $user */

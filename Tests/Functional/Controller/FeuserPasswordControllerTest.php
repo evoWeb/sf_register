@@ -14,14 +14,19 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  */
 
 use Evoweb\SfRegister\Controller\FeuserPasswordController;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -31,24 +36,21 @@ class FeuserPasswordControllerTest extends AbstractTestBase
 {
     public function setUp(): void
     {
-        defined('LF') ?: define('LF', chr(10));
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../../Fixtures/fe_users.xml');
+        $this->importCSVDataSet(__DIR__ . '/../Fixtures/pages.csv');
+        $this->importCSVDataSet(__DIR__ . '/../Fixtures/fe_groups.csv');
+        $this->importCSVDataSet(__DIR__ . '/../Fixtures/fe_users.csv');
     }
 
-    /**
-     * @test
-     */
-    public function userIsLoggedInReturnsFalseIfNotLoggedIn()
+    #[Test]
+    #[RequiresPhp('9.3.0')]
+    public function userIsLoggedInReturnsFalseIfNotLoggedIn(): void
     {
         $this->createEmptyFrontendUser();
-        $this->initializeTypoScriptFrontendController();
+        $this->request = $this->initializeTypoScriptFrontendController();
 
         /** @var Context $context */
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
+        $context = GeneralUtility::makeInstance(Context::class);
 
         /** @var File $file */
         $file = GeneralUtility::makeInstance(File::class);
@@ -81,19 +83,18 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         self::assertFalse($method->invoke($subject));
     }
 
-    /**
-     * @test
-     */
-    public function userIsLoggedInReturnsTrueIfLoggedIn()
+    #[Test]
+    #[RequiresPhp('9.3.0')]
+    public function userIsLoggedInReturnsTrueIfLoggedIn(): void
     {
         $this->createAndLoginFrontEndUser('2', [
             'password' => 'testOld',
             'comments' => ''
         ]);
-        $this->initializeTypoScriptFrontendController();
+        $this->request = $this->initializeTypoScriptFrontendController();
 
         /** @var Context $context */
-        $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(Context::class);
+        $context = GeneralUtility::makeInstance(Context::class);
 
         /** @var File $file */
         $file = GeneralUtility::makeInstance(File::class);
@@ -126,10 +127,9 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         self::assertTrue($method->invoke($subject));
     }
 
-    /**
-     * @test
-     */
-    public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository()
+    #[Test]
+    #[RequiresPhp('9.3.0')]
+    public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository(): void
     {
         if (!defined('PASSWORD_ARGON2I')) {
             self::markTestSkipped('Due to missing Argon2 in travisci.');
@@ -142,7 +142,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
             'password' => $expected,
             'comments' => ''
         ]);
-        $this->initializeTypoScriptFrontendController();
+        $this->request = $this->initializeTypoScriptFrontendController();
         $GLOBALS['TSFE'] = $this->typoScriptFrontendController;
 
         /** @var Context $context */
@@ -157,8 +157,8 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         /** @var Session $session */
         $session = GeneralUtility::makeInstance(Session::class, $this->frontendUser);
 
-        // we need to clone the create object, else the isClone parameter is not set and both object wont match
-        $userMock = clone new \Evoweb\SfRegister\Domain\Model\FrontendUser();
+        // we need to clone to create the object, else the isClone parameter is not set and both object wont match
+        $userMock = clone new FrontendUser();
         $userMock->setPassword($expected);
 
         /** @var FrontendUserRepository|MockObject $userRepositoryMock */
@@ -192,12 +192,12 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $property = $this->getPrivateProperty($subject, 'view');
         $property->setValue($subject, $view);
 
-        /** @var \TYPO3\CMS\Core\EventDispatcher\EventDispatcher $eventDispatcher */
-        $eventDispatcher = GeneralUtility::makeInstance(\TYPO3\CMS\Core\EventDispatcher\EventDispatcher::class);
+        /** @var EventDispatcher $eventDispatcher */
+        $eventDispatcher = GeneralUtility::makeInstance(EventDispatcher::class);
         $subject->injectEventDispatcher($eventDispatcher);
 
-        /** @var \Evoweb\SfRegister\Domain\Model\Password $passwordMock */
-        $passwordMock = GeneralUtility::makeInstance(\Evoweb\SfRegister\Domain\Model\Password::class);
+        /** @var Password $passwordMock */
+        $passwordMock = GeneralUtility::makeInstance(Password::class);
         $passwordMock->_setProperty('password', $expected);
         $subject->saveAction($passwordMock);
     }

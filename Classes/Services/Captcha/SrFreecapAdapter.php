@@ -14,6 +14,7 @@ namespace Evoweb\SfRegister\Services\Captcha;
  */
 
 use Evoweb\SfRegister\Services\Session;
+use SJBR\SrFreecap\PiBaseApi;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -28,6 +29,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *    <f:format.html>{x.accessible}</f:format.html>
  * </f:alias>
  * </code>
+ *
  * <output>
  * <p class="bodytext">
  *    <img class="tx-srfreecap-pi2-image" id="tx_srfreecap_pi2_captcha_image_50a3f"
@@ -42,8 +44,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *            this.blur();
  *            newFreeCap(
  *                '50a3f',
- *                'Sorry, we cannot autoreload a new image. ' +
- *                    'Submit the form and a new image will be loaded.'
+ *                'Sorry, we cannot auto reload a new image. Submit the form and a new image will be loaded.'
  *            );
  *            return false;
  *        ">click here</a>.
@@ -53,15 +54,10 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class SrFreecapAdapter extends AbstractAdapter
 {
-    /**
-     * @var ?\tx_srfreecap_pi2
-     */
-    protected ?object $captcha = null;
+    protected ?object $captchaService = null;
 
     /**
      * Keys to be used as variables output
-     *
-     * @var array
      */
     protected array $keys = [
         'image',
@@ -70,27 +66,19 @@ class SrFreecapAdapter extends AbstractAdapter
         'accessible',
     ];
 
-    public function __construct()
+    public function __construct(protected Session $session)
     {
         if (ExtensionManagementUtility::isLoaded('sr_freecap')) {
-            /** @noinspection PhpIncludeInspection */
-            require_once(ExtensionManagementUtility::extPath('sr_freecap') .
-                'pi2/class.tx_srfreecap_pi2.php');
-            $this->captcha = GeneralUtility::makeInstance('tx_srfreecap_pi2');
+            $this->captchaService = GeneralUtility::makeInstance(PiBaseApi::class);
         }
     }
 
-    /**
-     * @return array|string
-     */
-    public function render()
+    public function render(): array|string
     {
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class);
-        $session->remove('captchaWasValidPreviously');
+        $this->session->remove('captchaWasValid');
 
-        if ($this->captcha !== null) {
-            $values = array_values($this->captcha->makeCaptcha());
+        if ($this->captchaService !== null) {
+            $values = array_values($this->captchaService->makeCaptcha());
             $output = array_combine($this->keys, $values);
         } else {
             $output = LocalizationUtility::translate(
@@ -107,11 +95,8 @@ class SrFreecapAdapter extends AbstractAdapter
     {
         $validCaptcha = true;
 
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class);
-        $captchaWasValidPreviously = $session->get('captchaWasValidPreviously');
-        if ($this->captcha !== null && $captchaWasValidPreviously !== true) {
-            if (!$this->captcha->checkWord($value)) {
+        if ($this->captchaService !== null && $this->session->get('captchaWasValid') !== true) {
+            if (!$this->captchaService->checkWord($value)) {
                 $validCaptcha = false;
                 $this->addError(
                     LocalizationUtility::translate(
@@ -121,9 +106,9 @@ class SrFreecapAdapter extends AbstractAdapter
                     1306910429
                 );
             }
-        }
 
-        $session->set('captchaWasValidPreviously', $validCaptcha);
+            $this->session->set('captchaWasValid', $validCaptcha);
+        }
 
         return $validCaptcha;
     }

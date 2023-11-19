@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\ViewHelpers\Form;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -15,19 +13,24 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\ViewHelpers\Form;
+
 use Evoweb\SfRegister\Validation\Validator\RequiredValidator;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 /**
- * View helper to render a select box with values
- * in given steps from start to end value
+ * View helper to render content based if a field is configured as required
+ *
  * <code title="Usage">
  * {namespace register=Evoweb\SfRegister\ViewHelpers}
- * <register:form.required fieldName="'username"/>
+ * <register:form.required fieldName="username"><f:then>*</f:then></register:form.required>
  * </code>
  */
-class RequiredViewHelper extends AbstractFormFieldViewHelper
+class RequiredViewHelper extends AbstractConditionViewHelper
 {
     protected array $settings = [];
 
@@ -43,54 +46,61 @@ class RequiredViewHelper extends AbstractFormFieldViewHelper
      */
     protected $escapeChildren = false;
 
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager): void
-    {
-        $this->configurationManager = $configurationManager;
-        $this->settings = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'SfRegister',
-            'Form'
-        );
-        $this->frameworkConfiguration = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-        );
-    }
-
     public function initializeArguments(): void
     {
-        $this->registerUniversalTagAttributes();
+        parent::initializeArguments();
         $this->registerArgument('fieldName', 'string', 'Name of the field to render', true);
     }
 
-    public function render(): string
+    protected static function getSettings(): array
     {
-        $fieldName = $this->arguments['fieldName'];
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        try {
+            $settings = $configurationManager->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+                'SfRegister',
+                'Form'
+            );
+            $frameworkConfiguration = $configurationManager->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+            );
+        } catch (\Exception) {
+            $settings = [];
+            $frameworkConfiguration = [];
+        }
+        return [$settings, $frameworkConfiguration];
+    }
+
+    /**
+     * @return bool
+     */
+    public static function verdict(array $arguments, RenderingContextInterface $renderingContext)
+    {
+        [$settings, $frameworkConfiguration] = static::getSettings();
+
         $mode = str_replace(
             ['evoweb\\sfregister\\controller\\feuser', 'controller'],
             '',
-            strtolower(key($this->frameworkConfiguration['controllerConfiguration']))
+            strtolower(key($frameworkConfiguration['controllerConfiguration'] ?? ''))
         );
-        $modeSettings = $this->settings['validation'][$mode];
-        $fieldSettings = isset($modeSettings[$fieldName]) ? $modeSettings[$fieldName] : false;
+        $controllerSettings = $settings['validation'][$mode] ?? [];
 
-        $result = '';
+        $fieldName = $arguments['fieldName'];
+        $fieldSettings = $controllerSettings[$fieldName] ?? false;
+
+        $result = false;
         if (
-            (
+            $fieldSettings === RequiredValidator::class
+            || $fieldSettings === '"Evoweb.SfRegister:Required"'
+            || (
                 is_array($fieldSettings)
                 && (
                     in_array(RequiredValidator::class, $fieldSettings)
                     || in_array('"Evoweb.SfRegister:Required"', $fieldSettings)
                 )
             )
-            || (
-                is_string($fieldSettings)
-                && (
-                    $fieldSettings === RequiredValidator::class
-                    || $fieldSettings === '"Evoweb.SfRegister:Required"'
-                )
-            )
         ) {
-            $result = $this->renderChildren();
+            $result = true;
         }
 
         return $result;

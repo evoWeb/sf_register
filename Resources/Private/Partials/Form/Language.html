@@ -13,10 +13,11 @@
 	<register:form.selectStaticLanguage
 		property="{fieldName}"
 		id="{fieldName}"
+        prependOptionLabel="{f:translate(id: 'please_select')}"
 		value="{f:if(condition: '{user.{fieldName}}', then: '{user.{fieldName}}', else: options.defaultValue)}"
 		allowedLanguages="{options.allowedLanguages}"
 		optionLabelField="lgName{languageKey}"
-		class="form-control" />
+		class="form-control {options.cssClass}" />
 </div>
 
 </html>

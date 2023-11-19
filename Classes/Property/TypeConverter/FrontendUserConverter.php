@@ -13,33 +13,14 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 
 class FrontendUserConverter extends AbstractTypeConverter
 {
-    protected FrontendUserRepository $frontendUserRepository;
-
-    /**
-     * @var array<string>
-     */
-    protected $sourceTypes = ['int', 'string'];
-
-    /**
-     * @var string
-     */
-    protected $targetType = FrontendUser::class;
-
-    /**
-     * @var int
-     */
-    protected $priority = 31;
-
-    public function __construct(FrontendUserRepository $userRepository)
+    public function __construct(protected FrontendUserRepository $frontendUserRepository)
     {
-        $this->frontendUserRepository = $userRepository;
     }
 
     /**
@@ -50,18 +31,11 @@ class FrontendUserConverter extends AbstractTypeConverter
      *   This is the normal case.
      * - NULL, indicating that this object should *not* be mapped
      *   (i.e. a "File Upload" Converter could return NULL if no file has been
-     *   uploaded, and a silent failure should occur.
+     *   uploaded, and a silent failure should occur.)
      * - An instance of \TYPO3\CMS\Extbase\Error\Error
      *   This will be a user-visible error message later on.
      * Furthermore, it should throw an Exception if an unexpected failure
      * (like a security error) occurred or a configuration issue happened.
-     *
-     * @param mixed $source
-     * @param string $targetType
-     * @param array $convertedChildProperties
-     * @param ?PropertyMappingConfigurationInterface $configuration
-     *
-     * @return ?object target type, or an error object
      */
     public function convertFrom(
         $source,

@@ -1,8 +1,10 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<f:if condition="!{settings.hasOriginalRequest}">
-<div class="col-md-6 mb-3 {fieldName}">
-	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
+<f:asset.css identifier="sfregister_css" href="EXT:sf_register/Resources/Public/Stylesheets/sf_register{settings.minified}.css"/>
+
+<f:variable name="hasCapchaError"><f:form.validationResults for="user.{fieldName}">{validationResults.flattenedErrors -> f:count()}</f:form.validationResults></f:variable>
+<f:if condition="!{settings.hasOriginalRequest}||{hasCapchaError}">
+<div class="col-md-6 mb-3 {fieldName} {options.cssClass}">
 	<f:form.hidden property="{fieldName}" id="{fieldName}" value="" />
 
 	<f:render partial="Captcha{options.type -> f:format.case(mode: 'capital')}" />

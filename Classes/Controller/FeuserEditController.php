@@ -20,14 +20,16 @@ use Evoweb\SfRegister\Controller\Event\EditPreviewEvent;
 use Evoweb\SfRegister\Controller\Event\EditSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Services\Session as SessionService;
+use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
- * An frontend user edit controller
+ * A frontend user edit controller
  */
 class FeuserEditController extends FeuserController
 {
@@ -39,7 +41,7 @@ class FeuserEditController extends FeuserController
     {
         $userId = $this->context->getAspect('frontend.user')->get('id');
 
-        $originalRequest = $this->request->getOriginalRequest();
+        $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
         if (
             (
                 $this->request->hasArgument('user')
@@ -48,9 +50,9 @@ class FeuserEditController extends FeuserController
             && $this->userIsLoggedIn()
         ) {
             /** @var FrontendUser $userData */
-            $userData = $this->request->hasArgument('user') ?
-                $this->request->getArgument('user') :
-                $originalRequest->getArgument('user');
+            $userData = $this->request->hasArgument('user')
+                ? $this->request->getArgument('user')
+                : $originalRequest->getArgument('user');
             if ($userData instanceof FrontendUser && $userData->getUid() != $userId) {
                 $user = null;
             }
@@ -65,8 +67,8 @@ class FeuserEditController extends FeuserController
             $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
         }
 
-        // user is logged
-        if ($user !== null && $user instanceof FrontendUser) {
+        // user is logged in
+        if ($user instanceof FrontendUser) {
             $this->eventDispatcher->dispatch(new EditFormEvent($user, $this->settings));
         }
 
@@ -75,15 +77,7 @@ class FeuserEditController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Preview action
-     *
-     * @param \Evoweb\SfRegister\Domain\Model\FrontendUser $user
-     *
-     * @return ResponseInterface
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
-     */
+    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function previewAction(FrontendUser $user): ResponseInterface
     {
         if ($this->request->hasArgument('temporaryImage')) {
@@ -97,18 +91,10 @@ class FeuserEditController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Save action
-     *
-     * @param FrontendUser $user
-     *
-     * @return ResponseInterface
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Evoweb\SfRegister\Validation\Validator\UserValidator", param="user")
-     */
+    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {
-        if ($this->settings['confirmEmailPostEdit'] || $this->settings['acceptEmailPostEdit']) {
+        if (($this->settings['confirmEmailPostEdit'] ?? false) || ($this->settings['acceptEmailPostEdit'] ?? false)) {
             // Remove user object from session to fetch it really from database
             /** @var Session $session */
             $session = GeneralUtility::makeInstance(Session::class);
@@ -123,7 +109,7 @@ class FeuserEditController extends FeuserController
 
             $user->setEmailNew($user->getEmail());
             $user->setEmail($userBeforeEdit->getEmail() ?: $user->getEmail());
-        } elseif ($this->settings['useEmailAddressAsUsername']) {
+        } elseif (($this->settings['useEmailAddressAsUsername'] ?? false)) {
             $user->setUsername($user->getEmail());
         }
 
@@ -136,9 +122,9 @@ class FeuserEditController extends FeuserController
 
         /** @var SessionService $session */
         $session = GeneralUtility::makeInstance(SessionService::class);
-        $session->remove('captchaWasValidPreviously');
+        $session->remove('captchaWasValid');
 
-        if ($this->settings['forwardToEditAfterSave']) {
+        if (($this->settings['forwardToEditAfterSave'] ?? false)) {
             $response = new ForwardResponse('form');
         } else {
             $this->view->assign('user', $user);
@@ -152,6 +138,7 @@ class FeuserEditController extends FeuserController
     {
         $user = $this->determineFrontendUser($user, $hash);
 
+        $redirectResponse = null;
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
@@ -163,11 +150,11 @@ class FeuserEditController extends FeuserController
             } elseif (empty($userEmailNew)) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
-                if (!$this->settings['acceptEmailPostEdit']) {
+                if (!($this->settings['acceptEmailPostEdit'] ?? false)) {
                     $user->setEmail($user->getEmailNew());
                     $user->setEmailNew('');
 
-                    if ($this->settings['useEmailAddressAsUsername']) {
+                    if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
                         $user->setUsername($user->getEmail());
                     }
                 }
@@ -181,23 +168,25 @@ class FeuserEditController extends FeuserController
                 $this->view->assign('userConfirmed', 1);
             }
 
-            if ($this->settings['autologinPostConfirmation']) {
+            $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
+            if (($this->settings['autologinPostConfirmation'] ?? false)) {
                 $this->persistAll();
-                $this->autoLogin($user, (int)$this->settings['redirectPostActivationPageId']);
+                $redirectResponse = $this->autoLogin($user, $redirectPageId);
             }
 
-            if ($this->settings['redirectPostActivationPageId']) {
-                $this->redirectToPage((int)$this->settings['redirectPostActivationPageId']);
+            if ($redirectResponse === null && $redirectPageId > 0) {
+                $redirectResponse = $this->redirectToPage($redirectPageId);
             }
         }
 
-        return new HtmlResponse($this->view->render());
+        return $redirectResponse ?: new HtmlResponse($this->view->render());
     }
 
     public function acceptAction(FrontendUser $user = null, string $hash = null): ResponseInterface
     {
         $user = $this->determineFrontendUser($user, $hash);
 
+        $redirectResponse = null;
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
@@ -211,7 +200,7 @@ class FeuserEditController extends FeuserController
                     $user->setEmailNew('');
                 }
 
-                if ($this->settings['useEmailAddressAsUsername']) {
+                if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
                     $user->setUsername($user->getEmail());
                 }
 
@@ -221,14 +210,15 @@ class FeuserEditController extends FeuserController
 
                 $this->sendEmails($user, __FUNCTION__);
 
-                if ($this->settings['redirectPostActivationPageId']) {
-                    $this->redirectToPage((int)$this->settings['redirectPostActivationPageId']);
+                $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
+                if ($redirectPageId > 0) {
+                    $redirectResponse = $this->redirectToPage($redirectPageId);
                 }
 
                 $this->view->assign('adminAccept', 1);
             }
         }
 
-        return new HtmlResponse($this->view->render());
+        return $redirectResponse ?: new HtmlResponse($this->view->render());
     }
 }

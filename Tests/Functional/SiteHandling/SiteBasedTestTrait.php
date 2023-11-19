@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\Tests\Functional\SiteHandling;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -17,6 +15,9 @@ namespace Evoweb\SfRegister\Tests\Functional\SiteHandling;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace Evoweb\SfRegister\Tests\Functional\SiteHandling;
+
+use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Configuration\SiteConfiguration;
 use TYPO3\CMS\Core\Tests\Functional\Fixtures\Frontend\PhpError;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -34,9 +35,6 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
  */
 trait SiteBasedTestTrait
 {
-    /**
-     * @param array $items
-     */
     protected static function failIfArrayIsNotEmpty(array $items): void
     {
         if (empty($items)) {
@@ -49,12 +47,6 @@ trait SiteBasedTestTrait
         );
     }
 
-    /**
-     * @param string $identifier
-     * @param array $site
-     * @param array $languages
-     * @param array $errorHandling
-     */
     protected function writeSiteConfiguration(
         string $identifier,
         array $site = [],
@@ -70,7 +62,8 @@ trait SiteBasedTestTrait
         }
         $siteConfiguration = new SiteConfiguration(
             $this->instancePath . '/typo3conf/sites/',
-            $this->getContainer()->get('cache.core')
+            GeneralUtility::makeInstance(EventDispatcherInterface::class),
+            GeneralUtility::makeInstance('cache.core')
         );
 
         try {
@@ -82,10 +75,6 @@ trait SiteBasedTestTrait
         }
     }
 
-    /**
-     * @param string $identifier
-     * @param array $overrides
-     */
     protected function mergeSiteConfiguration(
         string $identifier,
         array $overrides
@@ -103,12 +92,6 @@ trait SiteBasedTestTrait
         }
     }
 
-    /**
-     * @param int $rootPageId
-     * @param string $base
-     *
-     * @return array
-     */
     protected function buildSiteConfiguration(
         int $rootPageId,
         string $base = ''
@@ -119,12 +102,6 @@ trait SiteBasedTestTrait
         ];
     }
 
-    /**
-     * @param string $identifier
-     * @param string $base
-     *
-     * @return array
-     */
     protected function buildDefaultLanguageConfiguration(
         string $identifier,
         string $base
@@ -136,19 +113,11 @@ trait SiteBasedTestTrait
         return $configuration;
     }
 
-    /**
-     * @param string $identifier
-     * @param string $base
-     * @param array $fallbackIdentifiers
-     * @param ?string $fallbackType
-     *
-     * @return array
-     */
     protected function buildLanguageConfiguration(
         string $identifier,
         string $base,
         array $fallbackIdentifiers = [],
-        string $fallbackType = null
+        ?string $fallbackType = null
     ): array {
         $preset = $this->resolveLanguagePreset($identifier);
 
@@ -181,12 +150,6 @@ trait SiteBasedTestTrait
         return $configuration;
     }
 
-    /**
-     * @param string $handler
-     * @param array $codes
-     *
-     * @return array
-     */
     protected function buildErrorHandlingConfiguration(
         string $handler,
         array $codes
@@ -231,12 +194,7 @@ trait SiteBasedTestTrait
         return $baseConfiguration;
     }
 
-    /**
-     * @param string $identifier
-     *
-     * @return mixed
-     */
-    protected function resolveLanguagePreset(string $identifier)
+    protected function resolveLanguagePreset(string $identifier): mixed
     {
         if (!isset(static::LANGUAGE_PRESETS[$identifier])) {
             throw new \LogicException(
@@ -248,11 +206,6 @@ trait SiteBasedTestTrait
     }
 
     /**
-     * @param InternalRequest $request
-     * @param AbstractInstruction ...$instructions
-     *
-     * @return InternalRequest
-     *
      * @todo Instruction handling should be part of Testing Framework
      *       (multiple instructions per identifier, merge in interface)
      */
@@ -277,11 +230,6 @@ trait SiteBasedTestTrait
         return $request->withInstructions($modifiedInstructions);
     }
 
-    /**
-     * @param AbstractInstruction $current
-     * @param AbstractInstruction $other
-     * @return AbstractInstruction
-     */
     protected function mergeInstruction(AbstractInstruction $current, AbstractInstruction $other): AbstractInstruction
     {
         if (get_class($current) !== get_class($other)) {

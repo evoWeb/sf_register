@@ -15,7 +15,7 @@
 				id="{fieldName}"
 				disabled="disabled"
 				type="email"
-				class="form-control"
+				class="form-control {options.cssClass}"
 				data="{lpignore: 'true'}"/>
 		</f:then>
 		<f:else>
@@ -24,7 +24,7 @@
 				id="{fieldName}"
 				type="email"
 				placeholder="{options.placeholder}"
-				class="form-control"
+				class="form-control {options.cssClass}"
 				data="{lpignore: 'true'}"/>
 		</f:else>
 	</f:if>

@@ -15,37 +15,29 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\Password;
+use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
 use TYPO3\CMS\Extbase\Error\Result;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractCompositeValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator as ExtbaseConjunctionValidator;
 
 /**
  * Validator to chain many validators in a conjunction (logical and).
  */
-class ConjunctionValidator extends ExtbaseConjunctionValidator implements SettableInterface
+class ConjunctionValidator extends AbstractCompositeValidator implements SetModelInterface, SetPropertyNameInterface
 {
     /**
-     * Model to take repeated value of
-     *
-     * @var FrontendUser|Password
+     * Model to access user properties
      */
-    protected $model;
+    protected ValidatableInterface $model;
 
     protected string $propertyName = '';
 
-    /**
-     * Setter for model
-     *
-     * @param FrontendUser|Password $model
-     */
-    public function setModel($model)
+    public function setModel(ValidatableInterface $model): void
     {
         $this->model = $model;
     }
 
-    public function setPropertyName(string $propertyName)
+    public function setPropertyName(string $propertyName): void
     {
         $this->propertyName = $propertyName;
     }
@@ -53,31 +45,18 @@ class ConjunctionValidator extends ExtbaseConjunctionValidator implements Settab
     /**
      * Checks if the given value is valid according to the validators of the conjunction.
      * Every validator has to be valid, to make the whole conjunction valid.
-     *
-     * @param mixed $value The value that should be validated
-     *
-     * @return Result
      */
-    public function validate($value)
+    public function validate(mixed $value): Result
     {
-        $validators = $this->getValidators();
-        if ($validators->count() > 0) {
-            /** @var Result $result */
-            $result = null;
-            /** @var AbstractValidator $validator */
-            foreach ($validators as $validator) {
-                if (method_exists($validator, 'setModel')) {
-                    $validator->setModel($this->model);
-                }
+        $result = new Result();
 
-                if ($result === null) {
-                    $result = $validator->validate($value);
-                } else {
-                    $result->merge($validator->validate($value));
-                }
+        /** @var AbstractValidator $validator */
+        foreach ($this->getValidators() as $validator) {
+            if ($validator instanceof SetModelInterface) {
+                $validator->setModel($this->model);
             }
-        } else {
-            $result = new Result();
+
+            $result->merge($validator->validate($value));
         }
 
         return $result;

@@ -18,17 +18,17 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * A email object for validation
  */
-class Email extends AbstractEntity
+class Email extends AbstractEntity implements ValidatableInterface
 {
     protected string $email = '';
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
 
     public function getEmail(): string
     {
         return $this->email;
-    }
-
-    public function setEmail(string $email)
-    {
-        $this->email = $email;
     }
 }

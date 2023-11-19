@@ -1,0 +1,84 @@
+mod.wizards.newContentElement.wizardItems.sf_register {
+  header = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:wizard.group.sf_register
+  elements {
+    sfregister_create {
+      iconIdentifier = sf-register-extension
+      title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_create
+      description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_create_description
+      tt_content_defValues {
+        CType = list
+        list_type = sfregister_create
+      }
+    }
+
+    sfregister_edit {
+      iconIdentifier = sf-register-extension
+      title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_edit
+      description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_edit_description
+      tt_content_defValues {
+        CType = list
+        list_type = sfregister_edit
+      }
+    }
+
+    sfregister_password {
+      iconIdentifier = sf-register-extension
+      title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_password
+      description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_password_description
+      tt_content_defValues {
+        CType = list
+        list_type = sfregister_password
+      }
+    }
+
+    sfregister_invite {
+      iconIdentifier = sf-register-extension
+      title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_invite
+      description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_invite_description
+      tt_content_defValues {
+        CType = list
+        list_type = sfregister_invite
+      }
+    }
+
+    sfregister_resend {
+      iconIdentifier = sf-register-extension
+      title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_resend
+      description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_resend_description
+      tt_content_defValues {
+        CType = list
+        list_type = sfregister_resend
+      }
+    }
+
+    sfregister_delete {
+      iconIdentifier = sf-register-extension
+      title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_delete
+      description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_delete_description
+      tt_content_defValues {
+        CType = list
+        list_type = sfregister_delete
+      }
+    }
+
+    sfregister_requestlink {
+      iconIdentifier = sf-register-extension
+      title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_requestlink
+      description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_requestlink_description
+      tt_content_defValues {
+        CType = list
+        list_type = sfregister_requestlink
+      }
+    }
+  }
+  show = *
+}
+
+mod.web_layout.tt_content.preview.list {
+  sfregister_create = EXT:sf_register/Resources/Private/Templates/Preview/Create.html
+  sfregister_edit = EXT:sf_register/Resources/Private/Templates/Preview/Edit.html
+  sfregister_delete = EXT:sf_register/Resources/Private/Templates/Preview/Delete.html
+  sfregister_password = EXT:sf_register/Resources/Private/Templates/Preview/Password.html
+  sfregister_invite = EXT:sf_register/Resources/Private/Templates/Preview/Invite.html
+  sfregister_resend = EXT:sf_register/Resources/Private/Templates/Preview/Resend.html
+}

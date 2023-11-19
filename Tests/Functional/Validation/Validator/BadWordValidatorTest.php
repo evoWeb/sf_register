@@ -15,6 +15,8 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\BadWordValidator;
+use PHPUnit\Framework\Attributes\RequiresPhp;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -23,47 +25,41 @@ use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class BadWordValidatorTest extends AbstractTestBase
 {
-    /**
-     * @var BadWordValidator|AccessibleObjectInterface
-     */
-    protected $subject;
+    protected BadWordValidator|AccessibleObjectInterface|Mockobject $subject;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/pages.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/sys_template.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_groups.xml');
-        $this->importDataSet(__DIR__ . '/../../../Fixtures/fe_users.xml');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_groups.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_users.csv');
 
         $this->createEmptyFrontendUser();
-        $this->initializeTypoScriptFrontendController();
-
-        $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList'] =
-            'god, sex, password';
+        $this->request = $this->initializeTypoScriptFrontendController();
+        $controller = $this->request->getAttribute('frontend.controller', null);
 
         /** @var ConfigurationManager|MockObject $repositoryMock */
         $configurationMock = $this->createMock(ConfigurationManager::class);
 
         $this->subject = $this->getMockBuilder($this->buildAccessibleProxy(BadWordValidator::class))
             ->setConstructorArgs([$configurationMock])
-            ->setMethods(['dummy'])
+            ->onlyMethods(['validate'])
             ->getMock();
         $this->subject->_set(
             'settings',
-            $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
+            $controller->tmpl->setup['plugin.']['tx_sfregister.']['settings.']
         );
     }
 
     public function tearDown(): void
     {
         unset($this->subject);
+        parent::tearDown();
     }
 
-    /**
-     * @test
-     */
-    public function settingsContainsValidTyposcriptSettings()
+    #[Test]
+    #[RequiresPhp('9.3.0')]
+    public function settingsContainsValidTyposcriptSettings(): void
     {
         self::assertArrayHasKey(
             'badWordList',
@@ -71,14 +67,14 @@ class BadWordValidatorTest extends AbstractTestBase
         );
     }
 
-    /**
-     * @test
-     */
-    public function isValidReturnsFalseForWordOnBadwordlist()
+    #[Test]
+    #[RequiresPhp('9.3.0')]
+    public function isValidReturnsFalseForWordOnBadwordlist(): void
     {
-        $words = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
+        $controller = $this->request->getAttribute('frontend.controller');
+        $words = GeneralUtility::trimExplode(
             ',',
-            $this->typoScriptFrontendController->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList']
+            $controller->tmpl->setup['plugin.']['tx_sfregister.']['settings.']['badWordList']
         );
 
         $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageServiceFactory::class)->create('default');
@@ -86,10 +82,9 @@ class BadWordValidatorTest extends AbstractTestBase
         self::assertTrue($this->subject->validate(current($words))->hasErrors());
     }
 
-    /**
-     * @test
-     */
-    public function isValidReturnsTrueForGoodPassword()
+    #[Test]
+    #[RequiresPhp('9.3.0')]
+    public function isValidReturnsTrueForGoodPassword(): void
     {
         self::assertFalse($this->subject->validate('4dw$koL')->hasErrors());
     }

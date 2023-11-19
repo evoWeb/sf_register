@@ -13,17 +13,20 @@
 		property="dateOfBirthDay"
 		id="{fieldName}"
 		start="1"
-		end="31" />
+		end="31"
+        class="{options.dayCssClass}"/>
 	-
 	<register:form.rangeSelect
 		property="dateOfBirthMonth"
 		start="1"
-		end="12" />
+		end="12"
+        class="{options.monthCssClass}"/>
 	-
 	<register:form.rangeSelect
 		property="dateOfBirthYear"
 		start="1960"
-		end="2031" />
+		end="2031"
+        class="{options.yearCssClass}"/>
 </div>
 
 </html>

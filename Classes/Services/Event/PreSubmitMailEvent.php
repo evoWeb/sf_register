@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\Services\Event;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -15,21 +13,14 @@ namespace Evoweb\SfRegister\Services\Event;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Services\Event;
+
 use TYPO3\CMS\Core\Mail\MailMessage;
 
 final class PreSubmitMailEvent
 {
-    protected MailMessage $mail;
-
-    protected array $settings = [];
-
-    protected array $arguments = [];
-
-    public function __construct(MailMessage $mail, array $settings, array $arguments = [])
+    public function __construct(protected MailMessage $mail, protected array $settings, protected array $arguments = [])
     {
-        $this->mail = $mail;
-        $this->settings = $settings;
-        $this->arguments = $arguments;
     }
 
     public function getMail(): MailMessage

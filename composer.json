@@ -2,15 +2,10 @@
 	"name": "evoweb/sf-register",
 	"type": "typo3-cms-extension",
 	"description": "Frontend User Registration: Offers the possibility to maintain the fe_user data in frontend.",
-	"homepage": "https://github.com/evoWeb/sf_register/",
-
-	"license": "GPL-2.0-or-later",
-
-	"support": {
-		"docs": "https://docs.typo3.org/p/evoweb/sf-register/master/en-us/",
-		"issues": "https://github.com/evoWeb/sf_register/issues"
-	},
-
+	"homepage": "https://www.evoweb.de",
+	"license": [
+		"GPL-2.0-or-later"
+	],
 	"keywords": [
 		"TYPO3 CMS",
 		"User registration",
@@ -20,16 +15,55 @@
 		"Delete account",
 		"Resend optin mail"
 	],
-
+	"support": {
+		"source": "https://github.com/evoWeb/sf_register",
+		"issues": "https://github.com/evoWeb/sf_register/issues",
+		"docs": "https://docs.typo3.org/p/evoweb/sf-register/main/en-us/"
+	},
+	"config": {
+		"bin-dir": "bin",
+		"sort-packages": true,
+		"allow-plugins": {
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true
+		}
+	},
 	"require": {
-		"typo3/cms-core": "^11.5",
-		"typo3/cms-extbase": "*",
-		"typo3/cms-fluid": "*"
+		"php": "^8.1",
+		"typo3/cms-backend": "^12.4 || dev-main",
+		"typo3/cms-core": "^12.4",
+		"typo3/cms-extbase": "^12.4 || dev-main",
+		"typo3/cms-fluid": "^12.4 || dev-main",
+		"typo3/cms-frontend": "^12.4 || dev-main"
+	},
+	"require-dev": {
+		"typo3/testing-framework": "^8.0.6"
 	},
 	"suggest": {
-		"evoweb/recaptcha": "^10.0"
+		"evoweb/recaptcha": "^12.0",
+		"sjbr/static-info-tables": "dev-master"
 	},
-
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "sf_register"
+		}
+	},
+	"scripts": {
+		"prepare-release": [
+			"rm -rf .Build",
+			"rm -rf .github",
+			"rm -rf Tests",
+			"rm .gitattributes",
+			"rm .gitignore",
+			"sed -i \"s/version' => '.*'/version' => '$(echo ${GITHUB_REF} | cut -d / -f 3)'/\" ext_emconf.php\n"
+		],
+		"post-install-cmd": [
+			"ln -sf ../vendor/typo3/testing-framework/Resources/Core/Build/ Build/phpunit;"
+		],
+		"post-update-cmd": [
+			"@post-install-cmd"
+		]
+	},
 	"autoload": {
 		"psr-4": {
 			"Evoweb\\SfRegister\\": "Classes/"
@@ -40,27 +74,14 @@
 			"Evoweb\\SfRegister\\Tests\\": "Tests/"
 		}
 	},
-
-	"config": {
-		"vendor-dir": ".Build/Web/vendor"
-	},
-	"extra": {
-		"typo3/cms": {
-			"extension-key": "sf_register",
-			"cms-package-dir": "{$vendor-dir}/typo3/cms",
-			"web-dir": ".Build/Web"
+	"repositories": {
+		"sr-freecap": {
+			"url": "https://github.com/garbast/sr-freecap.git",
+			"type": "git"
+		},
+		"static_info_tables": {
+			"url": "https://github.com/garbast/static_info_tables.git",
+			"type": "git"
 		}
-	},
-
-	"scripts": {
-		"post-autoload-dump": "mkdir -p .Build/Web/typo3conf/ext/ && ln -snf ../../../.. .Build/Web/typo3conf/ext/sf_register",
-		"prepare-release": [
-			"rm -rf .Build",
-			"rm -rf .github",
-			"rm -rf Tests",
-			"rm .gitattributes",
-			"rm .gitignore",
-			"sed -i \"s/version' => '.*'/version' => '$(echo ${GITHUB_REF} | cut -d / -f 3)'/\" ext_emconf.php\n"
-		]
 	}
 }

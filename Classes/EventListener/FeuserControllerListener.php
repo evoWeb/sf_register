@@ -14,45 +14,47 @@ namespace Evoweb\SfRegister\EventListener;
  */
 
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
-use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\UserAspect;
+use TYPO3\CMS\Core\Http\RedirectResponse;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class FeuserControllerListener
 {
-    protected UriBuilder $uriBuilder;
-
-    public function __construct(UriBuilder $uriBuilder)
+    public function __construct(protected Context $context, protected UriBuilder $uriBuilder)
     {
-        $this->uriBuilder = $uriBuilder;
     }
 
-    public function onProcessInitializeActionEvent(InitializeActionEvent $event)
+    public function __invoke(InitializeActionEvent $event): void
     {
         if (!$this->userIsLoggedIn()) {
             $redirectEvent = $event->getSettings()['redirectEvent'];
 
             if ((int)$redirectEvent['page']) {
-                $this->redirectToPage((int)$redirectEvent['page']);
+                $url = $this->uriBuilder->setTargetPageUid((int)$redirectEvent['page'])->build();
+                if ($url) {
+                    $event->setResponse(new RedirectResponse($url));
+                }
             } else {
-                $event->getController()->forward($redirectEvent['action'], $redirectEvent['controller'] ?? null);
+                $response = new ForwardResponse($redirectEvent['action']);
+                $controller = $redirectEvent['controller'] ?? null;
+                if ($controller) {
+                    $response = $response->withControllerName($controller);
+                }
+                $event->setResponse($response);
             }
         }
     }
 
     public function userIsLoggedIn(): bool
     {
-        return is_array($this->getTypoScriptFrontendController()->fe_user->user);
-    }
-
-    protected function redirectToPage(int $pageId)
-    {
-        $url = $this->uriBuilder->setTargetPageUid($pageId)->build();
-        HttpUtility::redirect($url);
-    }
-
-    protected function getTypoScriptFrontendController(): ?TypoScriptFrontendController
-    {
-        return $GLOBALS['TSFE'];
+        try {
+            /** @var UserAspect $userAspect */
+            $userAspect = $this->context->getAspect('frontend.user');
+            return $userAspect->isLoggedIn();
+        } catch (\Exception) {
+        }
+        return false;
     }
 }

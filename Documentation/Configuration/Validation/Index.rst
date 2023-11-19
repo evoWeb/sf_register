@@ -101,8 +101,7 @@ Poor man´s passwords with short length:
 
 	plugin.tx_sfregister.settings.validation.create.password {
 		1 = "Evoweb.SfRegister:Required"
-		2 = "StringLength", options={"minimum": 8, "maximum": 40}
-		3 = "Evoweb.SfRegister:BadWord"
+		2 = "StringLength", options={"minimum": 4, "maximum": 8}
 	}
 
 
@@ -289,10 +288,10 @@ Special fields Validators
          :ref:`Bring in your own captcha <AddCustomCaptcha>`
 
    Options:
-         type = [srfreecap, jmrecaptcha]
+         type = [srfreecap, jmrecaptcha, recaptcha]
 
    Default:
-         srfreecap
+         recaptcha
 
 
 .. _EmptyValidator:

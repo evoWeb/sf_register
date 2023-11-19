@@ -13,39 +13,42 @@ namespace Evoweb\SfRegister\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /**
  * Interface to be implemented by every frontend user
  * model that should be used with this registration
  */
 interface FrontendUserInterface
 {
-    /**
-     * Returns the username value
-     *
-     * @return string
-     */
+    public function getUid(): ?int;
+
     public function getUsername(): string;
 
+    public function setUsername(string $username): void;
+
+    public function getPassword(): string;
+
+    public function setPassword(string $password);
+
     /**
-     * Returns the firstName value
-     *
-     * @return string
+     * @return ObjectStorage<FrontendUserGroup> An object storage containing the usergroup
      */
+    public function getUsergroup(): ObjectStorage;
+
     public function getFirstName(): string;
 
-    /**
-     * Returns the lastName value
-     *
-     * @return string
-     */
+    public function setFirstName(string $firstName): void;
+
     public function getLastName(): string;
 
-    /**
-     * Returns the email value
-     *
-     * @return string
-     */
+    public function setLastName(string $lastName): void;
+
     public function getEmail(): string;
 
+    public function setEmail(string $email): void;
+
     public function getInvitationEmail(): string;
+
+    public function setInvitationEmail(string $invitationEmail): void;
 }
