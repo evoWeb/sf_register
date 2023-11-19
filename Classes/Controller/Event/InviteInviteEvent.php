@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\Controller\Event;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -15,31 +13,18 @@ namespace Evoweb\SfRegister\Controller\Event;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Controller\Event;
+
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 
-final class InviteInviteEvent
+final class InviteInviteEvent extends AbstractEventWithUserAndSettings
 {
-    protected FrontendUser $user;
-
-    protected array $settings = [];
-
-    protected bool $doNotSendInvitation = false;
-
-    public function __construct(FrontendUser $user, array $settings, bool $doNotSendInvitation)
-    {
-        $this->user = $user;
-        $this->settings = $settings;
-        $this->doNotSendInvitation = $doNotSendInvitation;
-    }
-
-    public function getUser(): FrontendUser
-    {
-        return $this->user;
-    }
-
-    public function getSettings(): array
-    {
-        return $this->settings;
+    public function __construct(
+        protected FrontendUser $user,
+        protected array $settings = [],
+        protected bool $doNotSendInvitation = false
+    ) {
+        parent::__construct($user, $settings);
     }
 
     public function isDoNotSendInvitation(): bool

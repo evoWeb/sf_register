@@ -99,15 +99,16 @@ class UniqueValidatorTest extends UnitTestCase
 
         /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
-        $repositoryMock->expects(self::once())
+        $repositoryMock->expects(self::any())
             ->method('countByField')
             ->with($fieldName, $expected)
             ->willReturn(0);
-        $repositoryMock->expects(self::any())
+        $repositoryMock->expects(self::once())
             ->method('countByFieldGlobal')
             ->with($fieldName, $expected)
             ->willReturn(1);
 
+        /** @var UniqueValidator $subject */
         $subject = $this->getMockBuilder(UniqueValidator::class)
             ->setConstructorArgs([$repositoryMock])
             ->onlyMethods(['translateErrorMessage'])

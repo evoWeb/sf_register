@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\Command;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -15,28 +13,32 @@ namespace Evoweb\SfRegister\Command;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Command;
+
+use Doctrine\DBAL\Exception as DbalException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
+use TYPO3\CMS\Core\Resource\Exception\FileOperationErrorException;
+use TYPO3\CMS\Core\Resource\Exception\InsufficientFileAccessPermissionsException;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CleanupCommand extends Command
 {
-    protected ResourceFactory $resourceFactory;
-
-    public function __construct(ResourceFactory $resourceFactory)
+    public function __construct(protected ResourceFactory $resourceFactory)
     {
-        $this->resourceFactory = $resourceFactory;
         parent::__construct();
     }
 
     /**
-     * Configure the command by defining the name, options and arguments
+     * Configure the command by defining arguments
      */
     protected function configure()
     {
@@ -58,6 +60,7 @@ class CleanupCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
+        $result = self::FAILURE;
 
         $inactiveGroups = GeneralUtility::intExplode(',', $input->getArgument('inactiveGroups'));
         if (empty($inactiveGroups)) {
@@ -65,22 +68,30 @@ class CleanupCommand extends Command
         } else {
             $days = (int)$input->getArgument('days');
 
-            foreach ($inactiveGroups as $inactiveGroup) {
-                $users = $this->findInOutdatedTemporaryUsers($inactiveGroup, $days);
-                foreach ($users as $user) {
-                    $this->removeUser($user);
-                    $references = $this->fetchReference($user);
-                    $this->removeReference($user);
-                    $this->removeImage($references);
+            try {
+                foreach ($inactiveGroups as $inactiveGroup) {
+                    $users = $this->findInOutdatedTemporaryUsers($inactiveGroup, $days);
+                    foreach ($users as $user) {
+                        $this->removeUser($user);
+                        $references = $this->fetchReference($user);
+                        $this->removeReference($user);
+                        $this->removeImage($references);
+                    }
                 }
-            }
 
-            $io->comment('Cleaned up all outdated temporary accounts.');
+                $io->comment('Cleaned up all outdated temporary accounts.');
+                $result = self::SUCCESS;
+            } catch (\Exception $exception) {
+                $io->comment($exception->getMessage());
+            }
         }
 
-        return self::SUCCESS;
+        return $result;
     }
 
+    /**
+     * @throws DbalException
+     */
     protected function findInOutdatedTemporaryUsers(int $inactiveUserGroup, int $days): array
     {
         $table = 'fe_users';
@@ -92,11 +103,11 @@ class CleanupCommand extends Command
             ->where(
                 $queryBuilder->expr()->inSet(
                     'usergroup',
-                    $queryBuilder->createNamedParameter($inactiveUserGroup, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($inactiveUserGroup, Connection::PARAM_INT)
                 ),
                 $queryBuilder->expr()->lte(
                     'crdate',
-                    $queryBuilder->createNamedParameter(time() - (3600 * 24 * $days), \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter(time() - (3600 * 24 * $days), Connection::PARAM_INT)
                 )
             )
             ->executeQuery();
@@ -104,13 +115,19 @@ class CleanupCommand extends Command
         return $result->fetchAllAssociative();
     }
 
-    protected function removeUser(array $user)
+    protected function removeUser(array $user): void
     {
         $table = 'fe_users';
-        $queryBuilder = $this->getQueryBuilderForTable($table);
-        $queryBuilder->getConnection()->delete($table, ['uid' => $user['uid']]);
+        $this->getQueryBuilderForTable($table)
+            ->getConnection()
+            ->delete($table, [
+                'uid' => $user['uid']
+            ]);
     }
 
+    /**
+     * @throws DbalException
+     */
     protected function fetchReference(array $user): array
     {
         $table = 'sys_file_reference';
@@ -129,7 +146,7 @@ class CleanupCommand extends Command
                 ),
                 $queryBuilder->expr()->eq(
                     'uid_foreign',
-                    $queryBuilder->createNamedParameter($user['uid'], \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($user['uid'], Connection::PARAM_INT)
                 )
             )
             ->executeQuery();
@@ -137,18 +154,24 @@ class CleanupCommand extends Command
         return $result->fetchAllAssociative();
     }
 
-    protected function removeReference(array $user)
+    protected function removeReference(array $user): void
     {
         $table = 'sys_file_reference';
-        $queryBuilder = $this->getQueryBuilderForTable($table);
-        $queryBuilder->getConnection()->delete($table, [
-            'uid_foreign' => $user['uid'],
-            'tablenames' => $user['fe_users'],
-            'fieldname' => $user['image'],
-        ]);
+        $this->getQueryBuilderForTable($table)
+            ->getConnection()
+            ->delete($table, [
+                'uid_foreign' => $user['uid'],
+                'tablenames' => $user['fe_users'],
+                'fieldname' => $user['image'],
+            ]);
     }
 
-    protected function removeImage(array $references)
+    /**
+     * @throws InsufficientFileAccessPermissionsException
+     * @throws FileDoesNotExistException
+     * @throws FileOperationErrorException
+     */
+    protected function removeImage(array $references): void
     {
         foreach ($references as $reference) {
             $file = $this->resourceFactory->getFileObject($reference['uid_local']);

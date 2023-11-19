@@ -636,11 +636,11 @@
 				<target>Bruker  "%1$s" sender en invitasjon til "%2$s".</target>
 			</trans-unit>
 			<trans-unit id="email_user_invitation_message">
-				<source>Your invited email "%1$s" to register at %2$s.</source>
+				<source>You invited email "%1$s" to register at %2$s.</source>
 				<target>Du inviterte e-post "%1$s" til å registerere på  %2$s.</target>
 			</trans-unit>
 			<trans-unit id="email_invitee_invitation_message">
-				<source>Your were invited with email %1$s to register at "%2$s".</source>
+				<source>You were invited with email %1$s to register at "%2$s".</source>
 				<target>Du ble invitert med e-post %1$s  til å registrere på "%2$s".</target>
 			</trans-unit>
 			<trans-unit id="email_invitee_register_link">

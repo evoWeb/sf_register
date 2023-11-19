@@ -27,7 +27,7 @@ class CaptchaViewHelper extends AbstractFormFieldViewHelper
 {
     protected ?CaptchaAdapterFactory $captchaAdapterFactory = null;
 
-    public function injectCaptchaAdapterFactory(CaptchaAdapterFactory $captchaAdapterFactory)
+    public function injectCaptchaAdapterFactory(CaptchaAdapterFactory $captchaAdapterFactory): void
     {
         $this->captchaAdapterFactory = $captchaAdapterFactory;
     }
@@ -38,10 +38,7 @@ class CaptchaViewHelper extends AbstractFormFieldViewHelper
         $this->registerArgument('type', 'string', 'Captcha type', true);
     }
 
-    /**
-     * @return string|array
-     */
-    public function render()
+    public function render(): string|array
     {
         $type = $this->arguments['type'];
         return $this->captchaAdapterFactory->getCaptchaAdapter($type)->render();

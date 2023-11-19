@@ -270,6 +270,17 @@ class SfRegister {
             }
         }
     }
+    loadCountryZonesByCountry(countrySelectedValue) {
+      this.loading = true;
+      this.zone.disabled = true;
+      this.hideElement(this.zoneEmpty);
+      this.showElement(this.zoneLoading);
+      this.ajaxRequest = new XMLHttpRequest();
+      this.ajaxRequest.onload = this.xhrReadyOnLoad.bind(this);
+      this.ajaxRequest.open('POST', '/index.php?ajax=sf_register');
+      this.ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      this.ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+    }
     /**
      * Change value of zone selectbox
      */
@@ -279,15 +290,7 @@ class SfRegister {
             && this.loading !== true) {
             if (this.zone) {
                 const target = (event.target || event.srcElement), countrySelectedValue = target.options[target.selectedIndex].value;
-                this.loading = true;
-                this.zone.disabled = true;
-                this.hideElement(this.zoneEmpty);
-                this.showElement(this.zoneLoading);
-                this.ajaxRequest = new XMLHttpRequest();
-                this.ajaxRequest.onload = this.xhrReadyOnLoad.bind(this);
-                this.ajaxRequest.open('POST', 'index.php?ajax=sf_register');
-                this.ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-                this.ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+                this.loadCountryZonesByCountry(countrySelectedValue);
             }
         }
     }
@@ -358,7 +361,7 @@ class SfRegister {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -372,14 +375,14 @@ class SfRegister {
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
@@ -392,12 +395,12 @@ class SfRegister {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -408,7 +411,7 @@ class SfRegister {
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.

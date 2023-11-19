@@ -13,7 +13,6 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Interfaces\CaptchaInterface;
 use TYPO3\CMS\Extbase\Validation\Error;
 
 abstract class AbstractAdapter implements CaptchaInterface
@@ -31,10 +30,6 @@ abstract class AbstractAdapter implements CaptchaInterface
 
     /**
      * Returns if the result of the validation was valid or not
-     *
-     * @param string $value
-     *
-     * @return bool
      */
     abstract public function isValid(string $value): bool;
 

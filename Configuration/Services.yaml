@@ -27,6 +27,10 @@ services:
     tags:
       - name: event.listener
 
+  Evoweb\SfRegister\EventListener\BeforeRequestTokenProcessedListener:
+    tags:
+      - name: event.listener
+
   Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter:
     public: true
 
@@ -59,7 +63,7 @@ services:
       - name: extbase.type_converter
         priority: 2
         target: DateTime
-        sources: string, integer, array
+        sources: integer, string, array
 
   Evoweb\SfRegister\Property\TypeConverter\FrontendUserConverter:
     tags:

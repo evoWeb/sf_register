@@ -1,4 +1,6 @@
-{
+const path = require('path');
+
+module.exports = {
   "root": true,
   "env": {
     "browser": true,
@@ -6,7 +8,7 @@
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": true
+    "project": [path.resolve(__dirname, "./tsconfig.eslint.json")]
   },
   "plugins": [
     "@typescript-eslint",
@@ -29,10 +31,12 @@
   "rules": {
     "@typescript-eslint/indent": ["error", 2],
     "@typescript-eslint/no-inferrable-types": "off", // we want to keep explicit type casting
-    "@typescript-eslint/ban-types": "warn",
-    "@typescript-eslint/no-explicit-any": "warn",
-    "@typescript-eslint/no-this-alias": "warn",
+    "@typescript-eslint/ban-types": "error",
+    "@typescript-eslint/no-explicit-any": "off", // too many warnings/errors for now, needs be fixed step by step
+    "@typescript-eslint/no-this-alias": "error",
+    "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/member-ordering": "error",
+    "@typescript-eslint/prefer-readonly": "error",
     "@typescript-eslint/naming-convention": [
       "error",
       {
@@ -50,7 +54,7 @@
     "eol-last": "error",
     "guard-for-in": "error",
     "lit/no-duplicate-template-bindings": "error",
-    "lit/no-native-attributes": "warn",
+    "lit/no-native-attributes": "error",
     "lit/no-invalid-escape-sequences": "error",
     "lit/no-legacy-imports": "error",
     "lit/no-useless-template-literals": "error",
@@ -60,7 +64,7 @@
     "no-debugger": "error",
     "no-empty": "error",
     "no-empty-function": ["error", {
-        "allow": ["constructors"]
+      "allow": ["constructors"]
     }],
     "no-eval": "error",
     "no-fallthrough": "error",
@@ -69,6 +73,30 @@
     "no-multi-spaces": "error",
     "no-var": "error",
     "no-case-declarations": "off",
+    "no-restricted-properties": [
+      "error",
+      {
+        "object": "window",
+        "property": "jQuery",
+        "message": "Use `import jQuery from 'jquery'` instead."
+      },
+      {
+        "object": "window",
+        "property": "$",
+        "message": "Use `import $ from 'jquery'` instead."
+      }
+    ],
+    "no-restricted-globals": [
+      "error",
+      {
+        "name": "jQuery",
+        "message": "Use `import jQuery from 'jquery'` instead."
+      },
+      {
+        "name": "$",
+        "message": "Use `import $ from 'jquery'` instead."
+      }
+    ],
     "object-curly-spacing": [
       "error",
       "always"

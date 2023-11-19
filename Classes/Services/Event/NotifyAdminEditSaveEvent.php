@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\Services\Event;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -14,6 +12,8 @@ namespace Evoweb\SfRegister\Services\Event;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Services\Event;
 
 final class NotifyAdminEditSaveEvent extends AbstractEventWithUser
 {

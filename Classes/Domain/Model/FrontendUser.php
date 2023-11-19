@@ -13,100 +13,151 @@ namespace Evoweb\SfRegister\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
  * An extended frontend user with more area
  */
-class FrontendUser extends AbstractEntity implements FrontendUserInterface
+class FrontendUser extends AbstractEntity implements FrontendUserInterface, ValidatableInterface
 {
-    /**
-     * @var string
-     */
     protected string $username = '';
 
-    /**
-     * @var string
-     */
     protected string $password = '';
 
+    protected string $name = '';
+
+    protected string $firstName = '';
+
+    protected string $middleName = '';
+
+    protected string $lastName = '';
+
+    protected string $address = '';
+
+    protected string $telephone = '';
+
+    protected string $fax = '';
+
+    protected string $email = '';
+
+    protected string $title = '';
+
+    protected string $zip = '';
+
+    protected string $city = '';
+
+    protected string $country = '';
+
+    protected string $www = '';
+
+    protected string $company = '';
+
     /**
+     * If the account is disabled
+     */
+    protected bool $disable = false;
+
+    protected string $pseudonym = '';
+
+    /**
+     * Gender
+     *   1 - mr
+     *   2 - mrs
+     */
+    protected int $gender = 1;
+
+    protected int $dateOfBirthDay = 0;
+
+    protected int $dateOfBirthMonth = 0;
+
+    protected int $dateOfBirthYear = 0;
+
+    protected string $language = '';
+
+    /**
+     * Code of state/province
+     */
+    protected string $zone = '';
+
+    protected float $timezone = 0;
+
+    /**
+     * Daylight saving time
+     */
+    protected bool $daylight = false;
+
+    /**
+     * Country with static info table code
+     */
+    protected string $staticInfoCountry = '';
+
+    protected string $mobilephone = '';
+
+    /**
+     * General terms and conditions accepted
+     */
+    protected bool $gtc = false;
+
+    /**
+     * Privacy agreement accepted
+     */
+    protected bool $privacy = false;
+
+    protected int $status = 0;
+
+    /**
+     * Whether the user registered by invitation
+     */
+    protected bool $byInvitation = false;
+
+    protected string $comments = '';
+
+    /**
+     * if Dmail should be enabled
+     */
+    protected bool $moduleSysDmailNewsletter = false;
+
+    /**
+     * if emails should be sent as HTML or plain text
+     */
+    protected bool $moduleSysDmailHtml = true;
+
+    /**
+     * new email address before edit
+     */
+    protected string $emailNew = '';
+
+    /**
+     * email address of invitee
+     */
+    protected string $invitationEmail = '';
+
+    protected ?\DateTime $lastlogin = null;
+
+    protected ?\DateTime $activatedOn = null;
+
+    protected ?\DateTime $dateOfBirth = null;
+
+    #[Extbase\ORM\Transient]
+    protected string $captcha = '';
+
+    #[Extbase\ORM\Transient]
+    protected string $passwordRepeat = '';
+
+    #[Extbase\ORM\Transient]
+    protected string $emailRepeat = '';
+
+    /**
+     * Sets the usergroups. Keep in mind that the property is called "usergroup"
+     * although it can hold several usergroups.
+     *
      * @var ?ObjectStorage<FrontendUserGroup>
      */
     protected ?ObjectStorage $usergroup = null;
-
-    /**
-     * @var string
-     */
-    protected string $name = '';
-
-    /**
-     * @var string
-     */
-    protected string $firstName = '';
-
-    /**
-     * @var string
-     */
-    protected string $middleName = '';
-
-    /**
-     * @var string
-     */
-    protected string $lastName = '';
-
-    /**
-     * @var string
-     */
-    protected string $address = '';
-
-    /**
-     * @var string
-     */
-    protected string $telephone = '';
-
-    /**
-     * @var string
-     */
-    protected string $fax = '';
-
-    /**
-     * @var string
-     */
-    protected string $email = '';
-
-    /**
-     * @var string
-     */
-    protected string $title = '';
-
-    /**
-     * @var string
-     */
-    protected string $zip = '';
-
-    /**
-     * @var string
-     */
-    protected string $city = '';
-
-    /**
-     * @var string
-     */
-    protected string $country = '';
-
-    /**
-     * @var string
-     */
-    protected string $www = '';
-
-    /**
-     * @var string
-     */
-    protected string $company = '';
 
     /**
      * @var ?ObjectStorage<FileReference>
@@ -114,205 +165,10 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
     protected ?ObjectStorage $image = null;
 
     /**
-     * @var ?\DateTime
-     */
-    protected ?\DateTime $lastlogin = null;
-
-    /**
-     * If the account is disabled or not
-     *
-     * @var bool
-     */
-    protected bool $disable = false;
-
-    /**
-     * Date on which the account was activated
-     *
-     * @var ?\DateTime
-     */
-    protected ?\DateTime $activatedOn = null;
-
-    /**
-     *  virtual not stored in database
-     *
-     * @var string
-     */
-    protected string $captcha = '';
-
-    /**
-     *  virtual not stored in database
-     *
-     * @var string
-     */
-    protected string $passwordRepeat = '';
-
-    /**
-     *  virtual not stored in database
-     *
-     * @var string
-     */
-    protected string $emailRepeat = '';
-
-    /**
-     * Pseudonym
-     *
-     * @var string
-     */
-    protected string $pseudonym = '';
-
-    /**
-     * Gender 1 or 2 for mr or mrs
-     *
-     * @var int
-     */
-    protected int $gender = 1;
-
-    /**
-     * Date of birth
-     *
-     * @var ?\DateTime
-     */
-    protected ?\DateTime $dateOfBirth = null;
-
-    /**
-     * Day of date of birth
-     *
-     * @var int
-     */
-    protected int $dateOfBirthDay = 0;
-
-    /**
-     * Month of date of birth
-     *
-     * @var int
-     */
-    protected int $dateOfBirthMonth = 0;
-
-    /**
-     * Year of date of birth
-     *
-     * @var int
-     */
-    protected int $dateOfBirthYear = 0;
-
-    /**
-     * Language
-     *
-     * @var string
-     */
-    protected string $language = '';
-
-    /**
-     * Code of state/province
-     *
-     * @var string
-     */
-    protected string $zone = '';
-
-    /**
-     * Timezone
-     *
-     * @var float
-     */
-    protected float $timezone = 0;
-
-    /**
-     * Daylight saving time
-     *
-     * @var bool
-     */
-    protected bool $daylight = false;
-
-    /**
-     * Country with static info table code
-     *
-     * @var string
-     */
-    protected string $staticInfoCountry = '';
-
-    /**
-     * Number of mobilephone
-     *
-     * @var string
-     */
-    protected string $mobilephone = '';
-
-    /**
-     * General terms and conditions accepted flag
-     *
-     * @var bool
-     */
-    protected bool $gtc = false;
-
-    /**
-     * Privacy agreement accepted flag
-     *
-     * @var bool
-     */
-    protected bool $privacy = false;
-
-    /**
-     * Status
-     *
-     * @var int
-     */
-    protected int $status = 0;
-
-    /**
-     * whether the user register by invitation
-     *
-     * @var bool
-     */
-    protected bool $byInvitation = false;
-
-    /**
-     * comment of user
-     *
-     * @var string
-     */
-    protected string $comments = '';
-
-    /**
-     * if Dmail should be enabled
-     *
-     * @var bool
-     */
-    protected bool $moduleSysDmailNewsletter = false;
-
-    /**
-     * if emails should be sent as HTML or plain text
-     *
-     * @var bool
-     */
-    protected bool $moduleSysDmailHtml = true;
-
-    /**
-     * selected Dmail categories
-     *
      * @var ?ObjectStorage<Category>
      */
     protected ?ObjectStorage $moduleSysDmailCategory = null;
 
-    /**
-     * new email address before edit
-     *
-     * @var string
-     */
-    protected string $emailNew = '';
-
-    /**
-     * email address of invitee
-     *
-     * @var string
-     */
-    protected string $invitationEmail = '';
-
-    /**
-     * Constructs a new Front-End User
-     *
-     * @param string $username
-     * @param string $password
-     */
     public function __construct(string $username = '', string $password = '')
     {
         $this->username = $username;
@@ -320,436 +176,71 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
         $this->initializeObject();
     }
 
-    public function initializeObject()
+    public function initializeObject(): void
     {
-        $this->image = $this->image ?? new ObjectStorage();
         $this->usergroup = $this->usergroup ?? new ObjectStorage();
+        $this->image = $this->image ?? new ObjectStorage();
         $this->moduleSysDmailCategory = $this->moduleSysDmailCategory ?? new ObjectStorage();
     }
 
-    /**
-     * Sets the username value
-     *
-     * @param string $username
-     */
-    public function setUsername(string $username)
-    {
-        $this->username = $username;
-    }
-
-    /**
-     * Returns the username value
-     *
-     * @return string
-     */
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    /**
-     * Sets the password value
-     *
-     * @param string $password
-     */
-    public function setPassword(string $password)
-    {
-        $this->password = $password;
-    }
-
-    /**
-     * Returns the password value
-     *
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
-     * Sets the usergroups. Keep in mind that the property is called "usergroup"
-     * although it can hold several usergroups.
-     *
-     * @param ObjectStorage<FrontendUserGroup> $usergroup
-     */
-    public function setUsergroup(ObjectStorage $usergroup)
+    public function setUsergroup(ObjectStorage $usergroup): void
     {
         $this->usergroup = $usergroup;
     }
 
-    /**
-     * Adds an usergroup to the frontend user
-     *
-     * @param FrontendUserGroup $usergroup
-     */
-    public function addUsergroup(FrontendUserGroup $usergroup)
-    {
-        $this->usergroup->attach($usergroup);
-    }
-
-    /**
-     * Removes an usergroup from the frontend user
-     *
-     * @param FrontendUserGroup $usergroup
-     */
-    public function removeUsergroup(FrontendUserGroup $usergroup)
-    {
-        $this->usergroup->detach($usergroup);
-    }
-
-    /**
-     * Returns the usergroups. Keep in mind that the property is called "usergroup"
-     * although it can hold several usergroups.
-     *
-     * @return ObjectStorage<FrontendUserGroup> An object storage containing the usergroup
-     */
     public function getUsergroup(): ObjectStorage
     {
         return $this->usergroup;
     }
 
-    /**
-     * Sets the name value
-     *
-     * @param string $name
-     */
-    public function setName(string $name)
+    public function addUsergroup(FrontendUserGroup $usergroup): void
     {
-        $this->name = $name;
+        $this->usergroup->attach($usergroup);
     }
 
-    /**
-     * Returns the name value
-     *
-     * @return string
-     */
-    public function getName(): string
+    public function removeUsergroup(FrontendUserGroup $usergroup): void
     {
-        return $this->name;
+        $this->usergroup->detach($usergroup);
     }
 
-    /**
-     * Sets the firstName value
-     *
-     * @param string $firstName
-     */
-    public function setFirstName(string $firstName)
-    {
-        $this->firstName = $firstName;
-    }
-
-    /**
-     * Returns the firstName value
-     *
-     * @return string
-     */
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * Sets the middleName value
-     *
-     * @param string $middleName
-     */
-    public function setMiddleName(string $middleName)
-    {
-        $this->middleName = $middleName;
-    }
-
-    /**
-     * Returns the middleName value
-     *
-     * @return string
-     */
-    public function getMiddleName(): string
-    {
-        return $this->middleName;
-    }
-
-    /**
-     * Sets the lastName value
-     *
-     * @param string $lastName
-     */
-    public function setLastName(string $lastName)
-    {
-        $this->lastName = $lastName;
-    }
-
-    /**
-     * Returns the lastName value
-     *
-     * @return string
-     */
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * Sets the address value
-     *
-     * @param string $address
-     */
-    public function setAddress(string $address)
-    {
-        $this->address = $address;
-    }
-
-    /**
-     * Returns the address value
-     *
-     * @return string
-     */
-    public function getAddress(): string
-    {
-        return $this->address;
-    }
-
-    /**
-     * Sets the telephone value
-     *
-     * @param string $telephone
-     */
-    public function setTelephone(string $telephone)
-    {
-        $this->telephone = $telephone;
-    }
-
-    /**
-     * Returns the telephone value
-     *
-     * @return string
-     */
-    public function getTelephone(): string
-    {
-        return $this->telephone;
-    }
-
-    /**
-     * Sets the fax value
-     *
-     * @param string $fax
-     */
-    public function setFax(string $fax)
-    {
-        $this->fax = $fax;
-    }
-
-    /**
-     * Returns the fax value
-     *
-     * @return string
-     */
-    public function getFax(): string
-    {
-        return $this->fax;
-    }
-
-    /**
-     * Sets the email value
-     *
-     * @param string $email
-     */
-    public function setEmail(string $email)
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * Returns the email value
-     *
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    /**
-     * Sets the title value
-     *
-     * @param string $title
-     */
-    public function setTitle(string $title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * Returns the title value
-     *
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    /**
-     * Sets the zip value
-     *
-     * @param string $zip
-     */
-    public function setZip(string $zip)
-    {
-        $this->zip = $zip;
-    }
-
-    /**
-     * Returns the zip value
-     *
-     * @return string
-     */
-    public function getZip(): string
-    {
-        return $this->zip;
-    }
-
-    /**
-     * Sets the city value
-     *
-     * @param string $city
-     */
-    public function setCity(string $city)
-    {
-        $this->city = $city;
-    }
-
-    /**
-     * Returns the city value
-     *
-     * @return string
-     */
-    public function getCity(): string
-    {
-        return $this->city;
-    }
-
-    /**
-     * Sets the country value
-     *
-     * @param string $country
-     */
-    public function setCountry(string $country)
-    {
-        $this->country = $country;
-    }
-
-    /**
-     * Returns the country value
-     *
-     * @return string
-     */
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    /**
-     * Sets the www value
-     *
-     * @param string $www
-     */
-    public function setWww(string $www)
-    {
-        $this->www = $www;
-    }
-
-    /**
-     * Returns the www value
-     *
-     * @return string
-     */
-    public function getWww(): string
-    {
-        return $this->www;
-    }
-
-    /**
-     * Sets the company value
-     *
-     * @param string $company
-     */
-    public function setCompany(string $company)
-    {
-        $this->company = $company;
-    }
-
-    /**
-     * Returns the company value
-     *
-     * @return string
-     */
-    public function getCompany(): string
-    {
-        return $this->company;
-    }
-
-    /**
-     * Sets the image value
-     *
-     * @param ObjectStorage<FileReference> $image
-     */
-    public function setImage(ObjectStorage $image)
+    public function setImage(ObjectStorage $image): void
     {
         $this->image = $image;
     }
 
-    /**
-     * Gets the image value
-     *
-     * @return ObjectStorage<FileReference>
-     */
-    public function getImage(): ?ObjectStorage
+    public function getImage(): ObjectStorage
     {
         return $this->image;
     }
 
-    /**
-     * Sets the lastlogin value
-     *
-     * @param \DateTime $lastlogin
-     */
-    public function setLastlogin(\DateTime $lastlogin)
+    public function removeImage(): void
+    {
+        $this->image->removeAll($this->image);
+    }
+
+    public function setModuleSysDmailCategory(ObjectStorage $moduleSysDmailCategory): void
+    {
+        $this->moduleSysDmailCategory = $moduleSysDmailCategory;
+    }
+
+    public function getModuleSysDmailCategory(): ObjectStorage
+    {
+        return $this->moduleSysDmailCategory;
+    }
+
+    public function setLastlogin(\DateTime $lastlogin): void
     {
         $this->lastlogin = $lastlogin;
     }
 
-    /**
-     * Returns the lastlogin value
-     *
-     * @return ?\DateTime
-     */
     public function getLastlogin(): ?\DateTime
     {
         return $this->lastlogin;
     }
 
-    /**
-     * Initializes the date of birth if related values are set by request to argument mapping
-     */
-    public function prepareDateOfBirth()
+    public function setActivatedOn(?\DateTime $activatedOn): void
     {
-        if ($this->dateOfBirthDay > 0 && $this->dateOfBirthMonth > 0 && $this->dateOfBirthYear > 0) {
-            if ($this->dateOfBirth === null) {
-                $this->dateOfBirth = new \DateTime();
-            }
-            $this->dateOfBirth->setDate($this->dateOfBirthYear, $this->dateOfBirthMonth, $this->dateOfBirthDay);
-        }
-    }
-
-    public function setDisable(bool $disable)
-    {
-        $this->disable = $disable;
-    }
-
-    public function getDisable(): bool
-    {
-        return $this->disable;
+        $this->activatedOn = $activatedOn;
     }
 
     public function getActivatedOn(): ?\DateTime
@@ -757,67 +248,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
         return $this->activatedOn;
     }
 
-    public function setActivatedOn(?\DateTime $activatedOn)
-    {
-        $this->activatedOn = $activatedOn;
-    }
-
-    public function setCaptcha(string $captcha)
-    {
-        $this->captcha = trim($captcha);
-    }
-
-    public function getCaptcha(): string
-    {
-        return $this->captcha;
-    }
-
-    public function setPasswordRepeat(string $passwordRepeat)
-    {
-        $this->passwordRepeat = trim($passwordRepeat);
-    }
-
-    public function getPasswordRepeat(): string
-    {
-        return $this->passwordRepeat;
-    }
-
-    public function setEmailRepeat(string $emailRepeat)
-    {
-        $this->emailRepeat = trim($emailRepeat);
-    }
-
-    public function getEmailRepeat(): string
-    {
-        return $this->emailRepeat;
-    }
-
-    public function removeImage()
-    {
-        $this->image = new ObjectStorage();
-    }
-
-    public function setPseudonym(string $pseudonym)
-    {
-        $this->pseudonym = $pseudonym;
-    }
-
-    public function getPseudonym(): string
-    {
-        return $this->pseudonym;
-    }
-
-    public function setGender(int $gender)
-    {
-        $this->gender = $gender;
-    }
-
-    public function getGender(): int
-    {
-        return $this->gender;
-    }
-
-    public function setDateOfBirth(?\DateTime $dateOfBirth)
+    public function setDateOfBirth(?\DateTime $dateOfBirth): void
     {
         $this->dateOfBirth = $dateOfBirth;
     }
@@ -827,7 +258,20 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
         return $this->dateOfBirth;
     }
 
-    public function setDateOfBirthDay(int $day)
+    /**
+     * Initializes the date of birth if related values are set by request to argument mapping
+     */
+    public function prepareDateOfBirth(): void
+    {
+        if ($this->dateOfBirthDay > 0 && $this->dateOfBirthMonth > 0 && $this->dateOfBirthYear > 0) {
+            if ($this->dateOfBirth === null) {
+                $this->dateOfBirth = new \DateTime();
+            }
+            $this->dateOfBirth->setDate($this->dateOfBirthYear, $this->dateOfBirthMonth, $this->dateOfBirthDay);
+        }
+    }
+
+    public function setDateOfBirthDay(int $day): void
     {
         $this->dateOfBirthDay = $day;
         $this->prepareDateOfBirth();
@@ -844,7 +288,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
         return $result;
     }
 
-    public function setDateOfBirthMonth(int $month)
+    public function setDateOfBirthMonth(int $month): void
     {
         $this->dateOfBirthMonth = $month;
         $this->prepareDateOfBirth();
@@ -861,7 +305,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
         return $result;
     }
 
-    public function setDateOfBirthYear(int $year)
+    public function setDateOfBirthYear(int $year): void
     {
         $this->dateOfBirthYear = $year;
         $this->prepareDateOfBirth();
@@ -878,103 +322,208 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
         return $result;
     }
 
-    public function setMobilephone(string $mobilephone)
+    public function setTimezone(float $timezone): void
     {
-        $this->mobilephone = $mobilephone;
-    }
-
-    public function getMobilephone(): string
-    {
-        return $this->mobilephone;
-    }
-
-    public function setZone(string $zone)
-    {
-        $this->zone = $zone;
-    }
-
-    public function getZone(): string
-    {
-        return $this->zone;
-    }
-
-    public function setTimezone(float $timezone)
-    {
-        $this->timezone = ($timezone > 14 || $timezone < -12 ?
-            $timezone / 10 :
-            $timezone);
+        $this->timezone = ($timezone > 14 || $timezone < -12)
+            ? $timezone / 10
+            : $timezone;
     }
 
     public function getTimezone(): float
     {
-        return floor($this->timezone) != $this->timezone ?
-            $this->timezone * 10 :
-            $this->timezone;
+        return floor($this->timezone) != $this->timezone
+            ? $this->timezone * 10
+            : $this->timezone;
     }
 
-    public function setDaylight(bool $daylight)
+    public function getUsername(): string
     {
-        $this->daylight = $daylight;
+        return $this->username;
     }
 
-    public function getDaylight(): bool
+    public function setUsername(string $username): void
     {
-        return $this->daylight;
+        $this->username = $username;
     }
 
-    public function setStaticInfoCountry(string $staticInfoCountry)
+    public function getPassword(): string
     {
-        $this->staticInfoCountry = $staticInfoCountry;
+        return $this->password;
     }
 
-    public function getStaticInfoCountry(): string
+    public function setPassword(string $password): void
     {
-        return $this->staticInfoCountry;
+        $this->password = $password;
     }
 
-    public function setGtc(bool $gtc)
+    public function getName(): string
     {
-        $this->gtc = $gtc;
+        return $this->name;
     }
 
-    public function getGtc(): bool
+    public function setName(string $name): void
     {
-        return $this->gtc;
+        $this->name = $name;
     }
 
-    public function setPrivacy(bool $privacy)
+    public function getFirstName(): string
     {
-        $this->privacy = $privacy;
+        return $this->firstName;
     }
 
-    public function getPrivacy(): bool
+    public function setFirstName(string $firstName): void
     {
-        return $this->privacy;
+        $this->firstName = $firstName;
     }
 
-    public function setByInvitation(bool $byInvitation)
+    public function getMiddleName(): string
     {
-        $this->byInvitation = $byInvitation;
+        return $this->middleName;
     }
 
-    public function getByInvitation(): bool
+    public function setMiddleName(string $middleName): void
     {
-        return $this->byInvitation;
+        $this->middleName = $middleName;
     }
 
-    public function setComments(string $comments)
+    public function getLastName(): string
     {
-        $this->comments = $comments;
+        return $this->lastName;
     }
 
-    public function getComments(): string
+    public function setLastName(string $lastName): void
     {
-        return $this->comments;
+        $this->lastName = $lastName;
     }
 
-    public function setLanguage(string $language)
+    public function getAddress(): string
     {
-        $this->language = $language;
+        return $this->address;
+    }
+
+    public function setAddress(string $address): void
+    {
+        $this->address = $address;
+    }
+
+    public function getTelephone(): string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): void
+    {
+        $this->telephone = $telephone;
+    }
+
+    public function getFax(): string
+    {
+        return $this->fax;
+    }
+
+    public function setFax(string $fax): void
+    {
+        $this->fax = $fax;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    public function getZip(): string
+    {
+        return $this->zip;
+    }
+
+    public function setZip(string $zip): void
+    {
+        $this->zip = $zip;
+    }
+
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): void
+    {
+        $this->city = $city;
+    }
+
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): void
+    {
+        $this->country = $country;
+    }
+
+    public function getWww(): string
+    {
+        return $this->www;
+    }
+
+    public function setWww(string $www): void
+    {
+        $this->www = $www;
+    }
+
+    public function getCompany(): string
+    {
+        return $this->company;
+    }
+
+    public function setCompany(string $company): void
+    {
+        $this->company = $company;
+    }
+
+    public function getDisable(): bool
+    {
+        return $this->disable;
+    }
+
+    public function setDisable(bool $disable): void
+    {
+        $this->disable = $disable;
+    }
+
+    public function getPseudonym(): string
+    {
+        return $this->pseudonym;
+    }
+
+    public function setPseudonym(string $pseudonym): void
+    {
+        $this->pseudonym = $pseudonym;
+    }
+
+    public function getGender(): int
+    {
+        return $this->gender;
+    }
+
+    public function setGender(int $gender): void
+    {
+        $this->gender = $gender;
     }
 
     public function getLanguage(): string
@@ -982,39 +531,69 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
         return $this->language;
     }
 
-    public function setModuleSysDmailCategory($moduleSysDmailCategory)
+    public function setLanguage(string $language): void
     {
-        $this->moduleSysDmailCategory = $moduleSysDmailCategory;
+        $this->language = $language;
     }
 
-    public function getModuleSysDmailCategory(): ?ObjectStorage
+    public function getZone(): string
     {
-        return $this->moduleSysDmailCategory;
+        return $this->zone;
     }
 
-    public function setModuleSysDmailNewsletter(bool $moduleSysDmailNewsletter)
+    public function setZone(string $zone): void
     {
-        $this->moduleSysDmailNewsletter = $moduleSysDmailNewsletter;
+        $this->zone = $zone;
     }
 
-    public function getModuleSysDmailNewsletter(): bool
+    public function isDaylight(): bool
     {
-        return $this->moduleSysDmailNewsletter;
+        return $this->daylight;
     }
 
-    public function setModuleSysDmailHtml(bool $moduleSysDmailHtml)
+    public function setDaylight(bool $daylight): void
     {
-        $this->moduleSysDmailHtml = $moduleSysDmailHtml;
+        $this->daylight = $daylight;
     }
 
-    public function getModuleSysDmailHtml(): bool
+    public function getStaticInfoCountry(): string
     {
-        return $this->moduleSysDmailHtml;
+        return $this->staticInfoCountry;
     }
 
-    public function setStatus(int $status)
+    public function setStaticInfoCountry(string $staticInfoCountry): void
     {
-        $this->status = $status;
+        $this->staticInfoCountry = $staticInfoCountry;
+    }
+
+    public function getMobilephone(): string
+    {
+        return $this->mobilephone;
+    }
+
+    public function setMobilephone(string $mobilephone): void
+    {
+        $this->mobilephone = $mobilephone;
+    }
+
+    public function isGtc(): bool
+    {
+        return $this->gtc;
+    }
+
+    public function setGtc(bool $gtc): void
+    {
+        $this->gtc = $gtc;
+    }
+
+    public function isPrivacy(): bool
+    {
+        return $this->privacy;
+    }
+
+    public function setPrivacy(bool $privacy): void
+    {
+        $this->privacy = $privacy;
     }
 
     public function getStatus(): int
@@ -1022,9 +601,49 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
         return $this->status;
     }
 
-    public function setEmailNew(string $emailNew)
+    public function setStatus(int $status): void
     {
-        $this->emailNew = $emailNew;
+        $this->status = $status;
+    }
+
+    public function isByInvitation(): bool
+    {
+        return $this->byInvitation;
+    }
+
+    public function setByInvitation(bool $byInvitation): void
+    {
+        $this->byInvitation = $byInvitation;
+    }
+
+    public function getComments(): string
+    {
+        return $this->comments;
+    }
+
+    public function setComments(string $comments): void
+    {
+        $this->comments = $comments;
+    }
+
+    public function isModuleSysDmailNewsletter(): bool
+    {
+        return $this->moduleSysDmailNewsletter;
+    }
+
+    public function setModuleSysDmailNewsletter(bool $moduleSysDmailNewsletter): void
+    {
+        $this->moduleSysDmailNewsletter = $moduleSysDmailNewsletter;
+    }
+
+    public function isModuleSysDmailHtml(): bool
+    {
+        return $this->moduleSysDmailHtml;
+    }
+
+    public function setModuleSysDmailHtml(bool $moduleSysDmailHtml): void
+    {
+        $this->moduleSysDmailHtml = $moduleSysDmailHtml;
     }
 
     public function getEmailNew(): string
@@ -1032,13 +651,48 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface
         return $this->emailNew;
     }
 
-    public function setInvitationEmail(string $invitationEmail)
+    public function setEmailNew(string $emailNew): void
     {
-        $this->invitationEmail = $invitationEmail;
+        $this->emailNew = $emailNew;
     }
 
     public function getInvitationEmail(): string
     {
         return $this->invitationEmail;
+    }
+
+    public function setInvitationEmail(string $invitationEmail): void
+    {
+        $this->invitationEmail = $invitationEmail;
+    }
+
+    public function getCaptcha(): string
+    {
+        return $this->captcha;
+    }
+
+    public function setCaptcha(string $captcha): void
+    {
+        $this->captcha = $captcha;
+    }
+
+    public function getPasswordRepeat(): string
+    {
+        return $this->passwordRepeat;
+    }
+
+    public function setPasswordRepeat(string $passwordRepeat): void
+    {
+        $this->passwordRepeat = $passwordRepeat;
+    }
+
+    public function getEmailRepeat(): string
+    {
+        return $this->emailRepeat;
+    }
+
+    public function setEmailRepeat(string $emailRepeat): void
+    {
+        $this->emailRepeat = $emailRepeat;
     }
 }

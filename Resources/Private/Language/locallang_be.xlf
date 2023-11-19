@@ -135,6 +135,12 @@
 			<trans-unit id="fe_users.resend">
 				<source>Resend button</source>
 			</trans-unit>
+			<trans-unit id="fe_users.invite">
+				<source>Invite button</source>
+			</trans-unit>
+			<trans-unit id="fe_users.password_button">
+				<source>Password button</source>
+			</trans-unit>
 			<trans-unit id="fe_users.disabledEmail">
 				<source>Email (disabled if logged in)</source>
 			</trans-unit>
@@ -343,27 +349,6 @@
 			<trans-unit id="form_flexform.sheet_general">
 				<source>General settings</source>
 			</trans-unit>
-			<trans-unit id="form_flexform.switchableControllerAction">
-				<source>What action should be taken?</source>
-			</trans-unit>
-			<trans-unit id="form_flexform.switchableControllerAction.create">
-				<source>Create</source>
-			</trans-unit>
-			<trans-unit id="form_flexform.switchableControllerAction.edit">
-				<source>Edit</source>
-			</trans-unit>
-			<trans-unit id="form_flexform.switchableControllerAction.password">
-				<source>Password</source>
-			</trans-unit>
-			<trans-unit id="form_flexform.switchableControllerAction.invite">
-				<source>Invite</source>
-			</trans-unit>
-			<trans-unit id="form_flexform.switchableControllerAction.delete">
-				<source>Delete</source>
-			</trans-unit>
-			<trans-unit id="form_flexform.switchableControllerAction.resend">
-				<source>Resend notification mail</source>
-			</trans-unit>
 			<trans-unit id="form_flexform.settings.fields.selected">
 				<source>Selected fields</source>
 			</trans-unit>
@@ -375,6 +360,9 @@
 			</trans-unit>
 			<trans-unit id="form_flexform.settings.viewTemplateRootPath.short">
 				<source>Template root path</source>
+			</trans-unit>
+			<trans-unit id="form_flexform.settings.createPid">
+				<source>Page id of registration page</source>
 			</trans-unit>
 			<trans-unit id="pages">
 				<source>Record Storage Page</source>

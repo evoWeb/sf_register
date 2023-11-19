@@ -20,8 +20,7 @@ The recommended way to install sf_register is by using [Composer](https://getcom
 
 ### Installation from TYPO3 Extension Repository
 
-Download and install the extension with the extension manager module or directly from the
-[TER](https://extensions.typo3.org/extension/sf_register).
+An installation via TER is discouraged.
 
 ## Features
 
@@ -62,16 +61,19 @@ Suits all your needs to handle frontend users like register new users, edit data
     - required
     - captcha
     - static info tables selectboxes
-- edit frontend user
+- edit user data
+- delete user account
 - change password
-- different template file for every form, preview, save and email view, configurable to be overridden in sitepackages
+- invite user to register
+- different template file for every form, preview, save and email view,
+  configurable to be overridden in sitepackages
 - override template rootpath in plugin
 
 If all that is already in, what is missing?
 
 - complete documentation
 - ajax handling
-    - javascript validators in jquery
+    - javascript validators without jquery
 - model is extendable by other extensions
 - better extendability of frontend user model, well this needs some love in extbase
 - multistep creation and editing

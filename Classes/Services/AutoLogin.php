@@ -22,35 +22,29 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class AutoLogin extends AuthenticationService
 {
-    protected static bool $autoLoginActivated = false;
-
     /**
      * Find a user (e.g. look up the user record in database when a login is sent)
-     *
-     * @return ?array User array or null
      */
     public function getUser(): ?array
     {
         session_start();
         $hmac = $_SESSION['sf-register-user'] ?? null;
+        unset($_SESSION['sf-register-user']);
         if ($hmac === null) {
             return null;
         }
 
         /** @var Registry $registry */
         $registry = GeneralUtility::makeInstance(Registry::class);
-        $userId = $registry->get('sf-register', $hmac);
-
+        $userId = (int)$registry->get('sf-register', $hmac);
         $registry->remove('sf-register', $hmac);
-        unset($_SESSION['sf-register-user']);
 
-        $user = $this->fetchUserRecord(
-            $userId,
-            '',
-            array_merge($this->db_user, ['username_column' => 'uid', 'check_pid_clause' => ''])
-        );
+        $dbUserSetup = [...$this->db_user, 'username_column' => 'uid', 'enable_clause' => ''];
+        $user = $this->fetchUserRecord($userId, '', $dbUserSetup);
 
-        self::$autoLoginActivated = (int)$userId > 0 && !empty($user);
+        if (!empty($user)) {
+            $user['sf-register-autoload'] = true;
+        }
 
         return is_array($user) ? $user : null;
     }
@@ -58,25 +52,13 @@ class AutoLogin extends AuthenticationService
     /**
      * Authenticate a user based on a value set in session before redirect
      *
-     * @param array $user Data of user.
-     *
-     * @return int >= 200: User authenticated successfully.
-     *                     No more checking is needed by other auth services.
-     *             >= 100: User not authenticated; this service is not responsible.
-     *                     Other auth services will be asked.
-     *             > 0:    User authenticated successfully.
-     *                     Other auth services will still be asked.
-     *             <= 0:   Authentication failed, no more checking needed
-     *                     by other auth services.
+     * @return int = 200: User authenticated successfully.
+     *                    No more checking is needed by other auth services.
+     *             = 100: User not authenticated; this service is not responsible.
+     *                    Other auth services will be asked.
      */
     public function authUser(array $user): int
     {
-        $OK = 100;
-
-        if (self::$autoLoginActivated) {
-            $OK = 200;
-        }
-
-        return $OK;
+        return ($user['sf-register-autoload'] ?? false) ? 200 : 100;
     }
 }

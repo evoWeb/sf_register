@@ -65,7 +65,7 @@ class LanguageKeyViewHelper extends AbstractViewHelper
                 if ($language instanceof SiteLanguage && trim($language->getLocale()->getLanguageCode())) {
                     $languageCode = trim($language->getLocale()->getLanguageCode());
                 }
-            }  else {
+            } else {
                 $languageCode = $this->getTypoScriptFrontendController()->config['config']['language'] ?: 'default';
             }
         } elseif ($this->getBackendUserAuthentication()->uc['lang'] != '') {
@@ -76,17 +76,17 @@ class LanguageKeyViewHelper extends AbstractViewHelper
 
         if ($languageCode != '' && $type != '') {
             if ($type == 'countries') {
-                $languageCode = $this->hasTableColumn('static_countries', 'cn_short_' . $languageCode) ?
-                    $languageCode :
-                    '';
+                $languageCode = $this->hasTableColumn('static_countries', 'cn_short_' . $languageCode)
+                    ? $languageCode
+                    : '';
             } elseif ($type == 'zones') {
-                $languageCode = $this->hasTableColumn('static_country_zones', 'zn_name_' . $languageCode) ?
-                    $languageCode :
-                    '';
+                $languageCode = $this->hasTableColumn('static_country_zones', 'zn_name_' . $languageCode)
+                    ? $languageCode
+                    : '';
             } elseif ($type == 'languages') {
-                $languageCode = $this->hasTableColumn('static_languages', 'lg_name_' . $languageCode) ?
-                    $languageCode :
-                    '';
+                $languageCode = $this->hasTableColumn('static_languages', 'lg_name_' . $languageCode)
+                    ? $languageCode
+                    : '';
             }
         }
 
@@ -102,10 +102,14 @@ class LanguageKeyViewHelper extends AbstractViewHelper
 
     protected function hasTableColumn(string $tableName, string $columnName): bool
     {
-        $columns = $this
-            ->getConnection($tableName)
-            ->createSchemaManager()
-            ->listTableColumns($tableName);
+        try {
+            $columns = $this
+                ->getConnection($tableName)
+                ->createSchemaManager()
+                ->listTableColumns($tableName);
+        } catch (\Exception) {
+            $columns = [];
+        }
 
         $result = false;
         foreach ($columns as $column) {

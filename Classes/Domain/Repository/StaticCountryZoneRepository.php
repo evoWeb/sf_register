@@ -14,6 +14,7 @@ namespace Evoweb\SfRegister\Domain\Repository;
  */
 
 use Doctrine\DBAL\Result;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -34,16 +35,19 @@ class StaticCountryZoneRepository extends Repository
         $queryBuilder = $this->getQueryBuilderForTable('static_country_zones');
         $queryBuilder->select('zones.*')
             ->from('static_country_zones', 'zones')
-            ->where($queryBuilder->expr()->eq(
-                'countries.uid',
-                $queryBuilder->createNamedParameter($parent, \PDO::PARAM_INT)
-            ))
             ->innerJoin(
                 'zones',
                 'static_countries',
                 'countries',
-                'zones.zn_country_iso_2 = countries.cn_iso_2'
+                $queryBuilder->expr()->eq(
+                    'zones.zn_country_iso_2',
+                    $queryBuilder->quoteIdentifier('countries.cn_iso_2')
+                )
             )
+            ->where($queryBuilder->expr()->eq(
+                'countries.uid',
+                $queryBuilder->createNamedParameter($parent, Connection::PARAM_INT)
+            ))
             ->orderBy('zones.zn_name_local');
 
         return $queryBuilder->executeQuery();
@@ -65,8 +69,8 @@ class StaticCountryZoneRepository extends Repository
 
     protected function getQueryBuilderForTable(string $table): QueryBuilder
     {
-        /** @var ConnectionPool $pool */
-        $pool = GeneralUtility::makeInstance(ConnectionPool::class);
-        return $pool->getQueryBuilderForTable($table);
+        /** @var ConnectionPool $connectionPool */
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        return $connectionPool->getQueryBuilderForTable($table);
     }
 }

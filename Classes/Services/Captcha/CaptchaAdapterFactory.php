@@ -26,11 +26,14 @@ class CaptchaAdapterFactory
 
     public function __construct(ConfigurationManager $configurationManager)
     {
-        $this->settings = $configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'SfRegister',
-            'Form'
-        );
+        try {
+            $this->settings = $configurationManager->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+                'SfRegister',
+                'Form'
+            );
+        } catch (\Exception) {
+        }
     }
 
     public function getCaptchaAdapter(string $type): AbstractAdapter
@@ -40,15 +43,15 @@ class CaptchaAdapterFactory
         if (array_key_exists($type, $this->settings['captcha'] ?? [])) {
             $settings = is_array($this->settings['captcha'][$type] ?? null) ? $this->settings['captcha'][$type] : [];
 
-            $type = is_array($this->settings['captcha'][$type]) ?
-                $this->settings['captcha'][$type]['_typoScriptNodeValue'] :
-                $this->settings['captcha'][$type];
+            $type = is_array($this->settings['captcha'][$type])
+                ? $this->settings['captcha'][$type]['_typoScriptNodeValue']
+                : $this->settings['captcha'][$type];
         } elseif (!str_contains($type, '_')) {
             $type = 'Evoweb\\SfRegister\\Services\\Captcha\\' . ucfirst(strtolower($type)) . 'Adapter';
         }
 
         /** @var AbstractAdapter $captchaAdapter */
-        $captchaAdapter = GeneralUtility::getContainer()->get($type);
+        $captchaAdapter = GeneralUtility::makeInstance($type);
         $captchaAdapter->setSettings($settings);
 
         return $captchaAdapter;

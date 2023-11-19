@@ -30,67 +30,38 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class AjaxMiddleware implements MiddlewareInterface
 {
-    /**
-     * Status of the request returned with every response
-     *
-     * @var string
-     */
-    protected string $status = 'success';
-
-    /**
-     * Message related to the status returned with every response
-     *
-     * @var string
-     */
-    protected string $message = '';
-
-    /**
-     * Result of every action that gets returned with every response
-     *
-     * @var array
-     */
-    protected array $result = [];
-
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $requestArguments = $this->getParamFromRequest($request, 'tx_sfregister');
-
-        if ((GeneralUtility::_GET('ajax') ?? '') !== 'sf_register') {
-            $response = $handler->handle($request);
-        } else {
-            switch ($requestArguments['action']) {
-                case 'zones':
-                    $this->zonesAction($requestArguments['parent']);
-                    break;
-
-                default:
-                    $this->errorAction();
-            }
-
-            $response = new JsonResponse([
-                'status' => $this->status,
-                'message' => $this->message,
-                'data' => $this->result,
-            ]);
+        if (!$this->canHandleRequest($request)) {
+            return $handler->handle($request);
         }
 
-        return $response;
+        $requestArguments = $this->getParamFromRequest($request, 'tx_sfregister');
+        switch ($requestArguments['action']) {
+            case 'zones':
+                [$status, $message, $result] = $this->zonesAction($requestArguments['parent']);
+                break;
+
+            default:
+                [$status, $message, $result] = $this->errorAction();
+        }
+
+        return new JsonResponse([
+            'status' => $status,
+            'message' => $message,
+            'data' => $result,
+        ]);
     }
 
-    protected function errorAction()
+    protected function errorAction(): array
     {
-        $this->status = 'error';
-        $this->message = 'unknown action';
+        return ['error', 'unknown action', []];
     }
 
-    /**
-     * @param string $parent
-     */
-    protected function zonesAction(string $parent)
+    protected function zonesAction(string $parent): array
     {
         /** @var StaticCountryZoneRepository $zoneRepository */
-        $zoneRepository = GeneralUtility::getContainer()
-            ->get(StaticCountryZoneRepository::class);
+        $zoneRepository = GeneralUtility::makeInstance(StaticCountryZoneRepository::class);
 
         if (MathUtility::canBeInterpretedAsInteger($parent)) {
             $zones = $zoneRepository->findAllByParentUid((int)$parent);
@@ -98,34 +69,39 @@ class AjaxMiddleware implements MiddlewareInterface
             $zones = $zoneRepository->findAllByIso2(strtoupper(preg_replace('/[^A-Za-z]{2}/', '', $parent)));
         }
 
-        if ($zones->rowCount() == 0) {
-            $this->status = 'error';
-            $this->message = 'no zones';
-        } else {
-            $result = [];
+        $result = [];
+        try {
+            if ($zones->rowCount() == 0) {
+                $status = 'error';
+                $message = 'no zones';
+            } else {
+                $status = 'success';
+                $message = '';
 
-            $zones = $zones->fetchAllAssociative();
-            array_walk($zones, function ($zone) use (&$result) {
-                /** @var array $zone */
-                $result[] = [
-                    'value' => $zone['uid'],
-                    'label' => $zone['zn_name_local'],
-                ];
-            });
-
-            $this->result = $result;
+                $zones = $zones->fetchAllAssociative();
+                array_walk($zones, static function (array $zone) use (&$result): void {
+                    $result[] = [
+                        'value' => $zone['uid'],
+                        'label' => $zone['zn_name_local'],
+                    ];
+                });
+            }
+        } catch (\Exception $exception) {
+            $status = 'database caused an exception ' . $exception->getMessage();
+            $message = 'no zones';
         }
+
+        return [$status, $message, $result];
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @param string $name
-     *
-     * @return array
-     */
     protected function getParamFromRequest(ServerRequestInterface $request, string $name): array
     {
         $arguments = $request->getParsedBody()[$name] ?? $request->getQueryParams()[$name] ?? [];
         return is_array($arguments) ? $arguments : [];
+    }
+
+    protected function canHandleRequest(ServerRequestInterface $request): bool
+    {
+        return ($request->getQueryParams()['ajax'] ?? '') === 'sf_register';
     }
 }

@@ -14,22 +14,16 @@ namespace Evoweb\SfRegister\Validation\Validator;
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
-class BadWordValidator extends AbstractValidator implements InjectableInterface
+class BadWordValidator extends AbstractValidator
 {
-    protected ?ConfigurationManager $configurationManager = null;
-
-    /**
-     * @var array
-     */
     protected array $settings = [];
 
-    public function __construct(ConfigurationManager $configurationManager)
+    public function __construct(ConfigurationManagerInterface $configurationManager)
     {
-        $this->configurationManager = $configurationManager;
-        $this->settings = $this->configurationManager->getConfiguration(
+        $this->settings = $configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
             'SfRegister',
             'Form'
@@ -37,11 +31,9 @@ class BadWordValidator extends AbstractValidator implements InjectableInterface
     }
 
     /**
-     * If the given password is valid in kind of not on the bad list
-     *
-     * @param string $value The value
+     * If the given value is not on the bad word list
      */
-    public function isValid($value): void
+    public function isValid(mixed $value): void
     {
         $badWordItems = GeneralUtility::trimExplode(',', $this->settings['badWordList'] ?? '');
 

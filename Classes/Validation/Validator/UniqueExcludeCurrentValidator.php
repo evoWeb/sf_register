@@ -13,23 +13,17 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\Password;
+use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * A validator to check if a value is unique only if current value has changed
  */
-class UniqueExcludeCurrentValidator extends AbstractValidator implements InjectableInterface, SettableInterface
+class UniqueExcludeCurrentValidator extends AbstractValidator implements SetModelInterface, SetPropertyNameInterface
 {
-    /**
-     * @var bool
-     */
     protected $acceptsEmptyValues = false;
 
-    /**
-     * @var array
-     */
     protected $supportedOptions = [
         'global' => [
             true,
@@ -38,41 +32,29 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Injecta
         ],
     ];
 
-    protected ?FrontendUserRepository $userRepository = null;
-
     /**
-     * Model to take repeated value of
-     *
-     * @var FrontendUser|Password
+     * Model to access user properties
      */
-    protected FrontendUser|Password $model;
+    protected ValidatableInterface $model;
 
     protected string $propertyName = '';
 
-    public function __construct(FrontendUserRepository $userRepository)
+    public function __construct(protected FrontendUserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
     }
 
-    /**
-     * Setter for model
-     *
-     * @param FrontendUser|Password $model
-     */
-    public function setModel(FrontendUser|Password $model)
+    public function setModel(ValidatableInterface $model): void
     {
         $this->model = $model;
     }
 
-    public function setPropertyName(string $propertyName)
+    public function setPropertyName(string $propertyName): void
     {
         $this->propertyName = $propertyName;
     }
 
     /**
-     * If the given passwords are valid
-     *
-     * @param string $value The value
+     * If the given value is unique either global or local
      */
     public function isValid(mixed $value): void
     {
@@ -80,24 +62,28 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements Injecta
             return;
         }
 
-        if ($this->userRepository->countByField($this->propertyName, $value)) {
-            $this->addError(
-                $this->translateErrorMessage(
-                    'error_notunique_local',
-                    'SfRegister',
-                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
-                ),
-                1301599608
-            );
-        } elseif ($this->options['global'] && $this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
-            $this->addError(
-                $this->translateErrorMessage(
-                    'error_notunique_global',
-                    'SfRegister',
-                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
-                ),
-                1301599619
-            );
+        if ($this->options['global']) {
+            if ($this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
+                $this->addError(
+                    $this->translateErrorMessage(
+                        'error_notunique_global',
+                        'SfRegister',
+                        [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                    ),
+                    1301599619
+                );
+            }
+        } else {
+            if ($this->userRepository->countByField($this->propertyName, $value)) {
+                $this->addError(
+                    $this->translateErrorMessage(
+                        'error_notunique_local',
+                        'SfRegister',
+                        [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                    ),
+                    1301599608
+                );
+            }
         }
     }
 }

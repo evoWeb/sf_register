@@ -28,6 +28,8 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 
 /**
  * A frontend user create controller
@@ -37,6 +39,14 @@ class FeuserCreateController extends FeuserController
     protected string $controller = 'Create';
 
     protected array $ignoredActions = ['confirmAction', 'refuseAction', 'acceptAction', 'declineAction'];
+
+    protected function skipValidation(): bool
+    {
+        $user = $this->request->hasArgument('user') ?
+            $this->request->getArgument('user') : '';
+
+        return $this->actionMethodName == 'formAction' && is_array($user) && ($user['byInvitation'] ?? '0');
+    }
 
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
@@ -50,9 +60,6 @@ class FeuserCreateController extends FeuserController
         return $setupResponse ?? new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Preview action
-     */
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function previewAction(FrontendUser $user): ResponseInterface
     {
@@ -67,9 +74,6 @@ class FeuserCreateController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Save action
-     */
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {
@@ -90,45 +94,49 @@ class FeuserCreateController extends FeuserController
 
         $this->eventDispatcher->dispatch(new CreateSaveEvent($user, $this->settings));
 
-        // Persist user to get valid uid
-        $plainPassword = $user->getPassword();
-        // Avoid plain password being persisted
-        $user->setPassword('');
-        $this->userRepository->add($user);
-        $this->persistAll();
+        try {
+            // Persist user to get valid uid
+            $plainPassword = $user->getPassword();
+            // Avoid plain password being persisted
+            $user->setPassword('');
+            $this->userRepository->add($user);
+            $this->persistAll();
 
-        // Write back plain password
-        $user->setPassword($plainPassword);
-        $user = $this->sendEmails($user, __FUNCTION__);
+            // Write back plain password
+            $user->setPassword($plainPassword);
+            $user = $this->sendEmails($user, __FUNCTION__);
 
-        // Encrypt plain password
-        if ($user->getPassword()) {
-            $user->setPassword($this->encryptPassword($user->getPassword()));
+            // Encrypt plain password
+            if ($user->getPassword()) {
+                $user->setPassword($this->encryptPassword($user->getPassword()));
+            }
+
+            $this->userRepository->update($user);
+            $this->persistAll();
+        } catch (IllegalObjectTypeException | UnknownObjectException) {
         }
-        $this->userRepository->update($user);
-        $this->persistAll();
 
         /** @var Session $session */
         $session = GeneralUtility::makeInstance(Session::class);
-        $session->remove('captchaWasValidPreviously');
+        $session->remove('captchaWasValid');
 
         $this->view->assign('user', $user);
 
         $redirectResponse = null;
+        $redirectPageId = (int)($this->settings['redirectPostRegistrationPageId'] ?? 0);
         if (($this->settings['autologinPostRegistration'] ?? false)) {
-            $redirectResponse = $this->autoLogin($user, (int)($this->settings['redirectPostRegistrationPageId'] ?? 0));
+            $redirectResponse = $this->autoLogin($user, $redirectPageId);
         }
 
-        if ((int)($this->settings['redirectPostRegistrationPageId'] ?? 0) > 0) {
-            $redirectResponse = $this->redirectToPage((int)($this->settings['redirectPostRegistrationPageId'] ?? 0));
+        if ($redirectResponse === null && $redirectPageId > 0) {
+            $redirectResponse = $this->redirectToPage($redirectPageId);
         }
 
         return $redirectResponse ?: new HtmlResponse($this->view->render());
     }
 
     /**
-     * Confirm registration process by user
-     * Could be followed by acceptance of admin
+     * Confirm registration process by user. Can be followed by acceptance of admin
      */
     public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -160,17 +168,21 @@ class FeuserCreateController extends FeuserController
 
                 $user = $this->sendEmails($user, __FUNCTION__);
 
-                $this->userRepository->update($user);
-                $this->persistAll();
+                try {
+                    $this->userRepository->update($user);
+                    $this->persistAll();
+                } catch (IllegalObjectTypeException | UnknownObjectException) {
+                }
 
                 $this->view->assign('userConfirmed', 1);
 
+                $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
                 if (($this->settings['autologinPostConfirmation'] ?? false)) {
-                    $redirectResponse = $this->autoLogin($user, (int)($this->settings['redirectPostActivationPageId'] ?? 0));
+                    $redirectResponse = $this->autoLogin($user, $redirectPageId);
                 }
 
-                if ((int)($this->settings['redirectPostActivationPageId'] ?? 0) > 0) {
-                    $redirectResponse = $this->redirectToPage((int)($this->settings['redirectPostActivationPageId'] ?? 0));
+                if ($redirectResponse === null && $redirectPageId > 0) {
+                    $redirectResponse = $this->redirectToPage($redirectPageId);
                 }
             }
         }
@@ -180,6 +192,9 @@ class FeuserCreateController extends FeuserController
 
     /**
      * Refuse registration process by user with removing the user data
+     *
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      */
     public function refuseAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -191,6 +206,12 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('user', $user);
 
             $this->eventDispatcher->dispatch(new CreateRefuseEvent($user, $this->settings));
+
+            if ($user->getImage()->count()) {
+                $image = $user->getImage()->current();
+                $this->fileService->removeFile($image);
+                $this->removeImageFromUserAndRequest($user);
+            }
 
             $this->userRepository->remove($user);
 
@@ -231,7 +252,10 @@ class FeuserCreateController extends FeuserController
 
                 $this->eventDispatcher->dispatch(new CreateAcceptEvent($user, $this->settings));
 
-                $this->userRepository->update($user);
+                try {
+                    $this->userRepository->update($user);
+                } catch (IllegalObjectTypeException | UnknownObjectException) {
+                }
 
                 $this->sendEmails($user, __FUNCTION__);
 
@@ -244,6 +268,9 @@ class FeuserCreateController extends FeuserController
 
     /**
      * Decline registration process by admin with removing the user data
+     *
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      */
     public function declineAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -255,6 +282,12 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('user', $user);
 
             $this->eventDispatcher->dispatch(new CreateDeclineEvent($user, $this->settings));
+
+            if ($user->getImage()->count()) {
+                $image = $user->getImage()->current();
+                $this->fileService->removeFile($image);
+                $this->removeImageFromUserAndRequest($user);
+            }
 
             $this->userRepository->remove($user);
 

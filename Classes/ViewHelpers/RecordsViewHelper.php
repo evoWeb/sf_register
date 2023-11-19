@@ -15,6 +15,7 @@ namespace Evoweb\SfRegister\ViewHelpers;
 
 use Doctrine\DBAL\ArrayParameterType;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -41,10 +42,6 @@ class RecordsViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     *
      * @return array
      */
     public static function renderStatic(
@@ -63,7 +60,11 @@ class RecordsViewHelper extends AbstractViewHelper
         /** @var ConnectionPool $connectionPool */
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
         $queryBuilder = $connectionPool->getQueryBuilderForTable($table);
-        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder
+            ->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+
         try {
             return $queryBuilder
                 ->select('*')
@@ -77,9 +78,9 @@ class RecordsViewHelper extends AbstractViewHelper
                 ->orderBy('uid')
                 ->executeQuery()
                 ->fetchAllAssociative();
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             throw new \RuntimeException(
-                'Database query failed. Error was: ' . $e->getPrevious()->getMessage(),
+                'Database query failed. Error was: ' . $exception->getPrevious()->getMessage(),
                 1511950673
             );
         }

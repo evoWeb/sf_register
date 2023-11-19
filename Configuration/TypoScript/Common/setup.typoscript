@@ -1,6 +1,3 @@
-page.includeCSS.sf_register = EXT:sf_register/Resources/Public/Stylesheets/sf_register{$plugin.tx_sfregister.minified}.css
-page.includeJSFooter.sf_register = EXT:sf_register/Resources/Public/JavaScript/sf_register{$plugin.tx_sfregister.minified}.js
-
 plugin.tx_sfregister.view {
   templateRootPaths {
     0 = EXT:sf_register/Resources/Private/Templates/
@@ -20,6 +17,8 @@ plugin.tx_sfregister.view {
 
 plugin.tx_sfregister.settings {
   dateFormat = d-m-Y
+
+  minified = {$plugin.tx_sfregister.minified}
 
   createPid = {$plugin.tx_sfregister.settings.createPid}
   editPid = {$plugin.tx_sfregister.settings.editPid}

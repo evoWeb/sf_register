@@ -22,30 +22,26 @@
 	},
 	"config": {
 		"bin-dir": "bin",
-		"platform": {
-			"php": "8.1.1"
-		},
 		"sort-packages": true,
 		"allow-plugins": {
 			"typo3/class-alias-loader": true,
-			"typo3/cms-composer-installers": true,
-			"sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": true
+			"typo3/cms-composer-installers": true
 		}
 	},
 	"require": {
-        "php": "^8.1",
+		"php": "^8.1",
 		"typo3/cms-backend": "^12.4 || dev-main",
-		"typo3/cms-core": "^12.4 || dev-main",
+		"typo3/cms-core": "^12.4",
 		"typo3/cms-extbase": "^12.4 || dev-main",
 		"typo3/cms-fluid": "^12.4 || dev-main",
 		"typo3/cms-frontend": "^12.4 || dev-main"
 	},
 	"require-dev": {
-		"sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": "dev-main",
-		"typo3/testing-framework": "dev-main"
+		"typo3/testing-framework": "^8.0.6"
 	},
 	"suggest": {
-		"evoweb/recaptcha": "^11.0"
+		"evoweb/recaptcha": "^12.0",
+		"sjbr/static-info-tables": "dev-master"
 	},
 	"extra": {
 		"typo3/cms": {
@@ -81,6 +77,10 @@
 	"repositories": {
 		"sr-freecap": {
 			"url": "https://github.com/garbast/sr-freecap.git",
+			"type": "git"
+		},
+		"static_info_tables": {
+			"url": "https://github.com/garbast/static_info_tables.git",
 			"type": "git"
 		}
 	}

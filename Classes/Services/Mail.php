@@ -43,12 +43,16 @@ class Mail implements SingletonInterface
     ) {
         $this->settings = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'SfRegister',
-            'Form'
+            'SfRegister'
         );
         $this->frameworkConfiguration = $configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
+    }
+
+    public function overrideSettings(array $settings): void
+    {
+        $this->settings = $settings;
     }
 
     public function setRequest(RequestInterface $request): void
@@ -193,7 +197,7 @@ class Mail implements SingletonInterface
             ]);
 
             $body = $view->render();
-        } catch (InvalidTemplateResourceException $e) {
+        } catch (InvalidTemplateResourceException) {
             $body = '';
         }
 
@@ -220,7 +224,7 @@ class Mail implements SingletonInterface
             ]);
 
             $body = $view->render();
-        } catch (InvalidTemplateResourceException $e) {
+        } catch (InvalidTemplateResourceException) {
             $body = '';
         }
 

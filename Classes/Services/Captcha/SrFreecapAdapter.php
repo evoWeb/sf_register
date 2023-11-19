@@ -29,6 +29,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *    <f:format.html>{x.accessible}</f:format.html>
  * </f:alias>
  * </code>
+ *
  * <output>
  * <p class="bodytext">
  *    <img class="tx-srfreecap-pi2-image" id="tx_srfreecap_pi2_captcha_image_50a3f"
@@ -43,8 +44,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *            this.blur();
  *            newFreeCap(
  *                '50a3f',
- *                'Sorry, we cannot autoreload a new image. ' +
- *                    'Submit the form and a new image will be loaded.'
+ *                'Sorry, we cannot auto reload a new image. Submit the form and a new image will be loaded.'
  *            );
  *            return false;
  *        ">click here</a>.
@@ -58,8 +58,6 @@ class SrFreecapAdapter extends AbstractAdapter
 
     /**
      * Keys to be used as variables output
-     *
-     * @var array
      */
     protected array $keys = [
         'image',

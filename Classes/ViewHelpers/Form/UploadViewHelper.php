@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\ViewHelpers\Form;
-
 /*
  *  Copyright notice
  *
@@ -30,6 +28,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
+namespace Evoweb\SfRegister\ViewHelpers\Form;
+
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
@@ -47,12 +47,12 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
 
     protected ?PropertyMapper $propertyMapper = null;
 
-    public function injectHashService(HashService $hashService)
+    public function injectHashService(HashService $hashService): void
     {
         $this->hashService = $hashService;
     }
 
-    public function injectPropertyMapper(PropertyMapper $propertyMapper)
+    public function injectPropertyMapper(PropertyMapper $propertyMapper): void
     {
         $this->propertyMapper = $propertyMapper;
     }
@@ -156,15 +156,12 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
     protected function isRenderUpload(array $resources): bool
     {
         return count($resources) === 0
-            || ($this->hasArgument('alwaysShowUpload') && $this->arguments['alwaysShowUpload']);
+            || (
+                $this->hasArgument('alwaysShowUpload')
+                && $this->arguments['alwaysShowUpload']
+            );
     }
 
-    /**
-     * Return a previously uploaded resource.
-     * Return empty array if errors occurred during property mapping for this property.
-     *
-     * @return array
-     */
     protected function getUploadedResource(): array
     {
         $result = [];
@@ -177,9 +174,10 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
             } elseif ($resource instanceof ObjectStorage) {
                 $result = $resource->toArray();
             } elseif ($resource !== null) {
-                $result = [
-                    $this->propertyMapper->convert($resource, FileReference::class),
-                ];
+                try {
+                    $result = [$this->propertyMapper->convert($resource, FileReference::class)];
+                } catch (\Exception) {
+                }
             }
         }
 

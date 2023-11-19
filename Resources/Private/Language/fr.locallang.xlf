@@ -791,11 +791,11 @@
 				<target>L'utilisateur &quot;%1$s&quot; a envoyé une invitation à &quot;%2$s&quot;.</target>
 			</trans-unit>
 			<trans-unit id="email_user_invitation_message">
-				<source>Your invited email "%1$s" to register at %2$s.</source>
+				<source>You invited email "%1$s" to register at %2$s.</source>
 				<target>Vous avez invité l'e-mail "%1$s" à s'inscrire à %2$s.</target>
 			</trans-unit>
 			<trans-unit id="email_invitee_invitation_message">
-				<source>Your were invited with email %1$s to register at "%2$s".</source>
+				<source>You were invited with email %1$s to register at "%2$s".</source>
 				<target>Vous avez été invité avec l'e-mail %1$s à vous inscrire à "%2$s".</target>
 			</trans-unit>
 			<trans-unit id="email_invitee_register_link">

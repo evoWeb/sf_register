@@ -19,8 +19,13 @@ use Evoweb\SfRegister\Controller\Event\DeleteSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
+use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
+use TYPO3\CMS\Extbase\Property\Exception;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 
@@ -33,9 +38,16 @@ class FeuserDeleteController extends FeuserController
 
     protected array $ignoredActions = ['confirmAction', 'requestAction'];
 
+    /**
+     * @throws Exception
+     */
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        $userId = $this->context->getAspect('frontend.user')->get('id');
+        $userId = 0;
+        try {
+            $userId = $this->context->getAspect('frontend.user')?->get('id');
+        } catch (AspectNotFoundException | AspectPropertyNotFoundException) {
+        }
 
         $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
         if (
@@ -46,15 +58,14 @@ class FeuserDeleteController extends FeuserController
             && $this->userIsLoggedIn()
         ) {
             /** @var array $userData */
-            $userData = $this->request->hasArgument('user') ?
-                $this->request->getArgument('user') :
-                $originalRequest->getArgument('user');
+            $userData = $this->request->hasArgument('user')
+                ? $this->request->getArgument('user')
+                : $originalRequest->getArgument('user');
 
             // only reconstitute user object if given user uid equals logged-in user uid
             if ($userData['uid'] == $userId) {
                 /** @var PropertyMapper $propertyMapper */
-                $propertyMapper = GeneralUtility::getContainer()
-                    ->get(PropertyMapper::class);
+                $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
                 $user = $propertyMapper->convert($userData, FrontendUser::class);
             }
         }
@@ -74,9 +85,6 @@ class FeuserDeleteController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Save action
-     */
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {
@@ -102,6 +110,9 @@ class FeuserDeleteController extends FeuserController
 
     /**
      * Confirm delete process by user
+     *
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      */
     public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -115,6 +126,12 @@ class FeuserDeleteController extends FeuserController
             $this->eventDispatcher->dispatch(new DeleteConfirmEvent($user, $this->settings));
 
             $this->sendEmails($user, __FUNCTION__);
+
+            if ($user->getImage()->count()) {
+                $image = $user->getImage()->current();
+                $this->fileService->removeFile($image);
+                $this->removeImageFromUserAndRequest($user);
+            }
 
             $this->userRepository->remove($user);
             $this->persistAll();

@@ -1,6 +1,6 @@
 <?php
 
-defined('TYPO3') or die();
+declare(strict_types=1);
 
 use Evoweb\SfRegister\Controller\FeuserCreateController;
 use Evoweb\SfRegister\Controller\FeuserDeleteController;
@@ -17,7 +17,9 @@ use TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
-call_user_func(function () {
+defined('TYPO3') or die();
+
+(static function () {
     /**
      * Page TypoScript for mod wizards
      */
@@ -35,6 +37,8 @@ call_user_func(function () {
         'depends' => [ TcaCheckboxItems::class ],
         'before' => [ TcaSelectItems::class ],
     ];
+
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][FrontendUserInterface::class]['className'] = FrontendUser::class;
 
     ExtensionUtility::configurePlugin(
         'SfRegister',
@@ -91,8 +95,6 @@ call_user_func(function () {
         [ FeuserResendController::class => 'form, mail' ]
     );
 
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][FrontendUserInterface::class]['className'] = FrontendUser::class;
-
     ExtensionManagementUtility::addService(
         'sf_register',
         'auth',
@@ -109,4 +111,4 @@ call_user_func(function () {
             'className' => AutoLogin::class,
         ]
     );
-});
+})();

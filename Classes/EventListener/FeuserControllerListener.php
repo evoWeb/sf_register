@@ -22,10 +22,8 @@ use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
 class FeuserControllerListener
 {
-    public function __construct(
-        protected Context $context,
-        protected UriBuilder $uriBuilder
-    ) {
+    public function __construct(protected Context $context, protected UriBuilder $uriBuilder)
+    {
     }
 
     public function __invoke(InitializeActionEvent $event): void
@@ -51,8 +49,12 @@ class FeuserControllerListener
 
     public function userIsLoggedIn(): bool
     {
-        /** @var UserAspect $userAspect */
-        $userAspect = $this->context->getAspect('frontend.user');
-        return $userAspect->isLoggedIn();
+        try {
+            /** @var UserAspect $userAspect */
+            $userAspect = $this->context->getAspect('frontend.user');
+            return $userAspect->isLoggedIn();
+        } catch (\Exception) {
+        }
+        return false;
     }
 }

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\SfRegister\Tests\Functional\SiteHandling;
-
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -16,6 +14,8 @@ namespace Evoweb\SfRegister\Tests\Functional\SiteHandling;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+namespace Evoweb\SfRegister\Tests\Functional\SiteHandling;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Configuration\SiteConfiguration;

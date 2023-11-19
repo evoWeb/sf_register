@@ -1,6 +1,6 @@
 <?php
 
-namespace Evoweb\SfRegister\Services;
+declare(strict_types=1);
 
 /*
  * This file is developed by evoWeb.
@@ -13,9 +13,13 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Services;
+
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -35,9 +39,9 @@ class File implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    protected ConfigurationManager $configurationManager;
-
     protected array $settings = [];
+
+    protected ServerRequestInterface $request;
 
     protected string $namespace = '';
 
@@ -59,17 +63,17 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     protected ?Folder $imageFolder = null;
 
-    public function __construct(ConfigurationManager $configurationManager)
+    public function __construct(protected ConfigurationManager $configurationManager)
     {
-        $this->configurationManager = $configurationManager;
+        try {
+            $this->settings = $this->configurationManager->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+                'SfRegister'
+            );
+        } catch (\Exception) {
+        }
 
-        $this->settings = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'SfRegister',
-            'Form'
-        );
-
-        if (isset($this->settings['imageFolder']) && !empty($this->settings['imageFolder'])) {
+        if (($this->settings['imageFolder'] ?? '') !== '') {
             $this->setImageFolderIdentifier($this->settings['imageFolder']);
         }
 
@@ -77,6 +81,11 @@ class File implements SingletonInterface, LoggerAwareInterface
         $uploadMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('upload_max_filesize'));
         $postMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('post_max_size'));
         $this->maxFilesize = min($uploadMaxFileSize, $postMaxFileSize);
+    }
+
+    public function setRequest(ServerRequestInterface $request): void
+    {
+        $this->request = $request;
     }
 
     public function getStorage(): ?ResourceStorage
@@ -90,7 +99,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $this->storage;
     }
 
-    public function setImageFolderIdentifier(string $imageFolder)
+    public function setImageFolderIdentifier(string $imageFolder): void
     {
         $parts = GeneralUtility::trimExplode(':', $imageFolder);
         $this->storageUid = (int)$parts[0];
@@ -103,7 +112,10 @@ class File implements SingletonInterface, LoggerAwareInterface
         if (!$this->imageFolder) {
             $this->createFolderIfNotExist($this->imageFolderIdentifier);
 
-            $this->imageFolder = $this->getStorage()->getFolder($this->imageFolderIdentifier);
+            try {
+                $this->imageFolder = $this->getStorage()->getFolder($this->imageFolderIdentifier);
+            } catch (\Exception) {
+            }
         }
         return $this->imageFolder;
     }
@@ -113,7 +125,10 @@ class File implements SingletonInterface, LoggerAwareInterface
         if (!$this->tempFolder) {
             $this->createFolderIfNotExist($this->tempFolderIdentifier);
 
-            $this->tempFolder = $this->getStorage()->getFolder($this->tempFolderIdentifier);
+            try {
+                $this->tempFolder = $this->getStorage()->getFolder($this->tempFolderIdentifier);
+            } catch (\Exception) {
+            }
         }
         return $this->tempFolder;
     }
@@ -145,7 +160,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $this->errors;
     }
 
-    protected function addError(string $message, int $code)
+    protected function addError(string $message, int $code): void
     {
         $this->errors[] = GeneralUtility::makeInstance(Error::class, $message, $code);
     }
@@ -153,44 +168,44 @@ class File implements SingletonInterface, LoggerAwareInterface
     protected function getNamespace(): string
     {
         if ($this->namespace === '') {
-            $frameworkSettings = $this->configurationManager->getConfiguration(
-                ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-            );
-            $this->namespace = strtolower(
-                'tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']
-            );
+            try {
+                $frameworkSettings = $this->configurationManager->getConfiguration(
+                    ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+                );
+                $this->namespace = strtolower(
+                    'tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']
+                );
+            } catch (\Exception) {
+                $this->namespace = 'tx_sfregister_create';
+            }
         }
 
         return $this->namespace;
     }
 
-    protected function getUploadedFileInfo(): array
+    protected function getUploadedFileInfo(): ?UploadedFile
     {
-        $uploadData = $_FILES[$this->getNamespace()];
-        $fileData = [];
+        $fileData = $this->request->getUploadedFiles()['user']['image'][0] ?? null;
 
-        if (is_array($uploadData) && count($uploadData) > 0) {
-            $filename = str_replace(chr(0), '', $uploadData['name']['image']);
-            $type = $uploadData['type']['image'];
-            $tmpName = $uploadData['tmp_name']['image'];
-            $error = $uploadData['error']['image'];
-            $size = $uploadData['size']['image'];
-
+        if ($fileData instanceof UploadedFile) {
+            $filename = str_replace([chr(0), ' '], ['', '_'], $fileData->getClientFilename());
             if ($filename !== '' && GeneralUtility::validPathStr($filename)) {
                 if (($this->settings['useEncryptedFilename'] ?? false)) {
-                    $filenameParts = GeneralUtility::trimExplode('.', $filename);
-                    $extension = array_pop($filenameParts);
-                    $filename = md5($GLOBALS['EXEC_TIME'] . mt_rand() . $filename . $tmpName . '.' . $extension
-                        . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);
+                    $extension = pathinfo($filename, PATHINFO_EXTENSION);
+                    $filename = sha1(
+                        $filename . uniqid('sfregister')
+                        . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']
+                    )  . '.' . $extension;
                 }
-
-                $fileData = [
-                    'filename' => $filename,
-                    'type' => $type,
-                    'tmp_name' => $tmpName,
-                    'error' => $error,
-                    'size' => $size,
-                ];
+                if ($fileData->getClientFilename() !== $filename) {
+                    $fileData = new UploadedFile(
+                        $fileData->getStream(),
+                        $fileData->getSize(),
+                        $fileData->getError(),
+                        $filename,
+                        $fileData->getClientMediaType(),
+                    );
+                }
             }
         }
 
@@ -200,10 +215,15 @@ class File implements SingletonInterface, LoggerAwareInterface
     public function isValid(): bool
     {
         $fileData = $this->getUploadedFileInfo();
-        $filePathInfo = pathinfo($fileData['filename']);
+        if ($fileData instanceof UploadedFile) {
+            $fileExtension = pathinfo($fileData->getClientFilename(), PATHINFO_EXTENSION);
 
-        $result = $this->isAllowedFilesize((int)$fileData['size']);
-        return $this->isAllowedFileExtension($filePathInfo['extension'] ?? '') && $result;
+            $result = $this->isAllowedFilesize((int)$fileData->getSize());
+            $result = $result && $this->isAllowedFileExtension($fileExtension);
+        } else {
+            $result = true;
+        }
+        return $result;
     }
 
     protected function isAllowedFilesize(int $filesize): bool
@@ -240,17 +260,19 @@ class File implements SingletonInterface, LoggerAwareInterface
      */
     public function moveTempFileToTempFolder(): ?FileInterface
     {
+        // @todo where is this called?
         $result = null;
         $fileData = $this->getUploadedFileInfo();
 
-        if (count($fileData)) {
-            $fileExtension = pathinfo($fileData['filename'], PATHINFO_EXTENSION);
-            $filename = uniqid('sf_register') . '.' . $fileExtension;
-
+        if ($fileData instanceof UploadedFile) {
             try {
                 /** @var ResourceStorage $resourceStorage */
                 $resourceStorage = GeneralUtility::makeInstance(ResourceStorage::class);
-                $result = $resourceStorage->addFile($fileData['tmp_name'], $this->getTempFolder(), $filename);
+                $result = $resourceStorage->addFile(
+                    $fileData->getTemporaryFileName(),
+                    $this->getTempFolder(),
+                    $fileData->getClientFilename()
+                );
             } catch (\Exception $exception) {
                 $this->logger->error($exception->getMessage(), $exception->getTrace());
             }
@@ -259,14 +281,17 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $result;
     }
 
-    protected function createFolderIfNotExist(string $uploadFolder)
+    protected function createFolderIfNotExist(string $uploadFolder): void
     {
         if (!$this->getStorage()->hasFolder($uploadFolder)) {
-            $this->getStorage()->createFolder($uploadFolder);
+            try {
+                $this->getStorage()->createFolder($uploadFolder);
+            } catch (\Exception) {
+            }
         }
     }
 
-    public function moveFileFromTempFolderToUploadFolder(?FileReference $image)
+    public function moveFileFromTempFolderToUploadFolder(?FileReference $image): void
     {
         if (!empty($image)) {
             $file = $image->getOriginalResource()->getOriginalFile();

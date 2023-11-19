@@ -49,9 +49,6 @@ class FeuserInviteController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    /**
-     * Invite action
-     */
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function inviteAction(FrontendUser $user): ResponseInterface
     {
@@ -63,13 +60,14 @@ class FeuserInviteController extends FeuserController
 
         if (!$doNotSendInvitation) {
             /** @var Mail $mailService */
-            $mailService = GeneralUtility::getContainer()->get(Mail::class);
+            $mailService = GeneralUtility::makeInstance(Mail::class);
+            $mailService->overrideSettings($this->settings);
             $user = $mailService->sendInvitation($user, 'ToRegister');
         }
 
         /** @var Session $session */
         $session = GeneralUtility::makeInstance(Session::class);
-        $session->remove('captchaWasValidPreviously');
+        $session->remove('captchaWasValid');
 
         $this->view->assign('user', $user);
 

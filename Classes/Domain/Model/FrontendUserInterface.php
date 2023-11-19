@@ -21,62 +21,34 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 interface FrontendUserInterface
 {
-    /**
-     * Getter for uid.
-     *
-     * @return int|null The uid or NULL if none set yet.
-     */
     public function getUid(): ?int;
 
-    /**
-     * Returns the username value
-     *
-     * @return string
-     */
     public function getUsername(): string;
 
-    /**
-     * Returns the password value
-     *
-     * @return string
-     */
+    public function setUsername(string $username): void;
+
     public function getPassword(): string;
 
-    /**
-     * Sets the password value
-     *
-     * @param string $password
-     */
     public function setPassword(string $password);
 
     /**
-     * Returns the usergroups. Keep in mind that the property is called "usergroup"
-     * although it can hold several usergroups.
-     *
      * @return ObjectStorage<FrontendUserGroup> An object storage containing the usergroup
      */
     public function getUsergroup(): ObjectStorage;
 
-    /**
-     * Returns the firstName value
-     *
-     * @return string
-     */
     public function getFirstName(): string;
 
-    /**
-     * Returns the lastName value
-     *
-     * @return string
-     */
+    public function setFirstName(string $firstName): void;
+
     public function getLastName(): string;
 
-    /**
-     * Returns the email value
-     *
-     * @return string
-     */
+    public function setLastName(string $lastName): void;
+
     public function getEmail(): string;
 
+    public function setEmail(string $email): void;
+
     public function getInvitationEmail(): string;
+
+    public function setInvitationEmail(string $invitationEmail): void;
 }
