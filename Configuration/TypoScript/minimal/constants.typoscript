@@ -19,20 +19,20 @@ plugin.tx_sfregister.settings {
   # cat=sf_register.settings//55; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.autologinPostConfirmation
   autologinPostConfirmation = 0
 
-  # cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroupPostSave
+  # cat=sf_register.settings//15; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroupPostSave
   usergroupPostSave = 0
-  # cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroupPostConfirm
+  # cat=sf_register.settings//16; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroupPostConfirm
   usergroupPostConfirm = 0
-  # cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroupPostAccept
+  # cat=sf_register.settings//17; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroupPostAccept
   usergroupPostAccept = 0
-  # cat=sf_register.settings//10; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroup
+  # cat=sf_register.settings//18; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroup
   usergroup = 0
 
-  # cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.emailSitename
+  # cat=sf_register.settings//31; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.emailSitename
   emailSitename = dummy Site
 
-  # cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.emailName
+  # cat=sf_register.settings//32; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.emailName
   emailName = userEmail from
-  # cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.emailAddress
+  # cat=sf_register.settings//33; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.emailAddress
   emailAddress = userEmailfrom@test.local
 }
