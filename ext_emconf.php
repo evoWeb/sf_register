@@ -9,10 +9,10 @@ $EM_CONF['sf_register'] = [
     'author_company' => 'evoWeb',
     'state' => 'stable',
     'clearCacheOnLoad' => true,
-    'version' => '12.0.0',
+    'version' => '12.0.1',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.2.0-12.4.99',
+            'typo3' => '12.4.10-12.4.99',
         ],
         'suggests' => [
             'extender' => '10.0.0-',

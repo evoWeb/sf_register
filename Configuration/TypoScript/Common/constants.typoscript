@@ -16,19 +16,19 @@ plugin.tx_sfregister.view {
 
 
 plugin.tx_sfregister.settings {
-  # cat=sf_register.settings//10; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.createPid
+  # cat=sf_register.settings//11; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.createPid
   createPid = 0
 
-  # cat=sf_register.settings//10; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.editPid
+  # cat=sf_register.settings//12; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.editPid
   editPid = 0
 
-  # cat=sf_register.settings//10; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.passwordPid
+  # cat=sf_register.settings//13; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.passwordPid
   passwordPid = 0
 
-  # cat=sf_register.settings//10; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.invitePid
+  # cat=sf_register.settings//14; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.invitePid
   invitePid = 0
 
-  # cat=sf_register.settings//10; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.resendPid
+  # cat=sf_register.settings//15; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.resendPid
   resendPid = 0
 
   # cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.captchaId
