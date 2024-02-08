@@ -294,9 +294,11 @@ class File implements SingletonInterface, LoggerAwareInterface
     public function moveFileFromTempFolderToUploadFolder(?FileReference $image): void
     {
         if (!empty($image)) {
-            $file = $image->getOriginalResource()->getOriginalFile();
+            $file = $image->getOriginalResource()
+                ->getOriginalFile();
             try {
-                $file->getStorage()->moveFile($file, $this->getImageFolder());
+                $file->getStorage()
+                    ->moveFile($file, $this->getImageFolder());
             } catch (\Exception $exception) {
                 $this->logger->info(
                     'sf_register: Image ' . $file->getName() . ' could not be moved! ' . $exception->getMessage()
@@ -307,14 +309,9 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     public function removeFile(FileReference $fileReference): string
     {
-        $image = $fileReference->getOriginalResource()->getOriginalFile();
-        $folder = $image->getParentFolder();
-        $imageNameAndPath = Environment::getPublicPath() . '/'
-            . $folder->getName() . '/' . $image->getIdentifier();
-
-        if (@file_exists($imageNameAndPath)) {
-            unlink($imageNameAndPath);
-        }
+        $image = $fileReference->getOriginalResource()
+            ->getOriginalFile();
+        $image->delete();
 
         return $image->getIdentifier();
     }

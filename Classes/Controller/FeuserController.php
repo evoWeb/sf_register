@@ -37,7 +37,6 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\SecurityAspect;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
-use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Registry;
@@ -51,7 +50,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\Controller\Exception\RequiredArgumentMissingException;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
-use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
@@ -267,7 +265,7 @@ class FeuserController extends ActionController
         $this->settings = $event->getSettings();
     }
 
-    protected function initializeAction()
+    protected function initializeAction(): void
     {
         $this->setTypeConverter();
 
@@ -343,10 +341,9 @@ class FeuserController extends ActionController
     /* Fix for some problem with RequestBuilder::build https://forge.typo3.org/issues/102364  begin */
 
     /**
-     * @var PropertyMapper
      * @internal only to be used within Extbase, not part of TYPO3 Core API.
      */
-    private $propertyMapper;
+    private PropertyMapper $propertyMapper;
 
     /**
      * @internal only to be used within Extbase, not part of TYPO3 Core API.
@@ -363,7 +360,7 @@ class FeuserController extends ActionController
      *
      * @internal only to be used within Extbase, not part of TYPO3 Core API.
      */
-    protected function mapRequestArgumentsToControllerArguments()
+    protected function mapRequestArgumentsToControllerArguments(): void
     {
         /** @var Argument $argument */
         foreach ($this->arguments as $argument) {
@@ -389,10 +386,7 @@ class FeuserController extends ActionController
         }
     }
 
-    /**
-     * @param mixed $rawValue
-     */
-    private function setArgumentValue(Argument $argument, $rawValue): void
+    private function setArgumentValue(Argument $argument, mixed $rawValue): void
     {
         if ($rawValue === null) {
             $argument->setValue(null);
@@ -421,7 +415,7 @@ class FeuserController extends ActionController
         $argument->getValidationResults()->merge($this->propertyMapper->getMessages());
     }
 
-    protected function mapUploadedFilesToParameters(array|UploadedFile $files, array $parameters)
+    protected function mapUploadedFilesToParameters(array|UploadedFile $files, array $parameters): array
     {
         if (is_array($files)) {
             foreach ($files as $key => $file) {
@@ -456,7 +450,6 @@ class FeuserController extends ActionController
     }
 
     /* Fix for some problem with RequestBuilder::build https://forge.typo3.org/issues/102364 end */
-
 
     /**
      * Initialize a view object to be able to set templateRootPath from flex form
@@ -507,49 +500,11 @@ class FeuserController extends ActionController
         $this->fileService->removeFile($image);
         $this->removeImageFromUserAndRequest($user);
 
+        $this->request = $this->request->withArgument('removeImage', false);
+
         /** @var ForwardResponse $response */
         $response = $this->forwardToReferringRequest();
-        if ($response !== null) {
-            /** @var ExtbaseRequestParameters $extbaseRequestParameters */
-            $extbaseRequestParameters = $this->request->getAttribute('extbase');
-            $referringRequestArguments = $extbaseRequestParameters->getInternalArgument('__referrer') ?? null;
-            $referrerArray = json_decode(
-                $this->hashService->validateAndStripHmac($referringRequestArguments['@request']),
-                true
-            );
-            $arguments = [];
-            if (is_string($referringRequestArguments['arguments'] ?? null)) {
-                $arguments = unserialize(
-                    base64_decode($this->hashService->validateAndStripHmac($referringRequestArguments['arguments']))
-                );
-            }
-            $replacedArguments = array_replace_recursive($arguments, $referrerArray);
-            $nonExtbaseBaseArguments = [];
-            foreach ($replacedArguments as $argumentName => $argumentValue) {
-                if (!is_string($argumentName) || $argumentName === '') {
-                    throw new InvalidArgumentNameException('Invalid argument name.', 1623940985);
-                }
-                if (
-                    str_starts_with($argumentName, '__')
-                    || in_array(
-                        $argumentName,
-                        ['@extension', '@subpackage', '@controller', '@action', '@format', 'removeImage'],
-                        true
-                    )
-                ) {
-                    // Don't handle internalArguments here, not needed for forwardResponse()
-                    continue;
-                }
-                $nonExtbaseBaseArguments[$argumentName] = $argumentValue;
-            }
-
-
-            $response = $response->withArguments($nonExtbaseBaseArguments);
-        } else {
-            $response = new HtmlResponse($this->view->render());
-        }
-
-        return $response;
+        return $response->withArguments(['user' => $user]);
     }
 
     /**
