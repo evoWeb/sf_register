@@ -43,18 +43,15 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
-// @todo replace usage of forward with ForwardResponse
-use TYPO3\CMS\Extbase\Mvc\Web\ReferringRequest;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 use TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- * An frontend user controller containing common methods
+ * A frontend user controller containing common methods
  */
 class FeuserController extends ActionController
 {
@@ -310,7 +307,7 @@ class FeuserController extends ActionController
     }
 
     /**
-     * Initialize an view object to be able to set templateRootPath from flex form
+     * Initialize a view object to be able to set templateRootPath from flex form
      *
      * @param ViewInterface $view
      */
@@ -357,34 +354,13 @@ class FeuserController extends ActionController
         $image = $user->getImage()->current();
 
         $this->fileService->removeFile($image);
-        $this->removeImageFromUserAndRequest($user);
+        $user = $this->removeImageFromUserAndRequest($user);
 
         $this->request->setArgument('removeImage', false);
 
-        $referringRequest = null;
-        $referringRequestArguments = $this->request->getInternalArguments()['__referrer']['@request'] ?? null;
-        if (is_string($referringRequestArguments)) {
-            /** @var HashService $hashService */
-            $hashService = GeneralUtility::makeInstance(HashService::class);
-            $referrerArray = json_decode(
-                $hashService->validateAndStripHmac($referringRequestArguments),
-                true
-            );
-            $arguments = [];
-            $referringRequest = new ReferringRequest();
-            $referringRequest->setArguments(array_replace_recursive($arguments, $referrerArray));
-        }
-
-        if ($referringRequest !== null) {
-            $response = (new ForwardResponse($referringRequest->getControllerActionName()))
-                ->withControllerName($referringRequest->getControllerName())
-                ->withExtensionName($this->request->getControllerExtensionName())
-                ->withArguments($this->request->getArguments());
-        } else {
-            $response = new HtmlResponse($this->view->render());
-        }
-
-        return $response;
+        /** @var ForwardResponse $response */
+        $response = $this->forwardToReferringRequest();
+        return $response->withArguments(['user' => $user]);
     }
 
     protected function removeImageFromUserAndRequest(FrontendUser $user): FrontendUser
