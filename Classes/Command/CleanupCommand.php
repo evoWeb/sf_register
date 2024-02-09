@@ -40,7 +40,7 @@ class CleanupCommand extends Command
     /**
      * Configure the command by defining arguments
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->addArgument(
