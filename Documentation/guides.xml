@@ -13,6 +13,7 @@
                edit-on-github="evoWeb/sf_register"
                edit-on-github-directory="Documentation/"
                typo3-core-preferred="stable"
+               interlink-shortcode="evoweb/sf-register"
     />
     <project title="sf_register"
              release="12.0.1"
