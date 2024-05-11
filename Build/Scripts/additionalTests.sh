@@ -398,9 +398,7 @@ fi
 # Suite execution
 case ${TEST_SUITE} in
     buildDocumentation)
-        mkdir -p Documentation-GENERATED-temp
-        COMMAND="[ ${SCRIPT_VERBOSE} -eq 1 ] && set -x; /ALL/Menu/mainmenu.sh makehtml;"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} -v ${CORE_ROOT}:/PROJECT:ro -v ${CORE_ROOT}/Documentation-GENERATED-temp:/RESULT --name build-documentation-${SUFFIX} --entrypoint "" ${IMAGE_DOCUMENTATION} /bin/sh -c "${COMMAND}"
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} -v ${CORE_ROOT}:/project ghcr.io/typo3-documentation/render-guides:latest render Documentation
         SUITE_EXIT_CODE=$?
         ;;
     clean)

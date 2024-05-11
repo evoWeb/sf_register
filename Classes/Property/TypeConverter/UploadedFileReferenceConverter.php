@@ -26,6 +26,7 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File as FalFile;
@@ -40,9 +41,9 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
-use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\CMS\Extbase\Security\Exception\InvalidArgumentForHashGenerationException;
 use TYPO3\CMS\Extbase\Security\Exception\InvalidHashException;
+use TYPO3\CMS\Extbase\Security\HashScope;
 
 class UploadedFileReferenceConverter extends AbstractTypeConverter
 {
@@ -93,7 +94,8 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             if (isset($source['submittedFile']['resourcePointer'])) {
                 try {
                     $resourcePointer = $this->hashService->validateAndStripHmac(
-                        $source['submittedFile']['resourcePointer']
+                        $source['submittedFile']['resourcePointer'],
+                        HashScope::ReferringRequest->prefix()
                     );
                     if (str_starts_with($resourcePointer, 'file:')) {
                         $fileUid = (int)substr($resourcePointer, 5);
