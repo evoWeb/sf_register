@@ -20,19 +20,6 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 defined('TYPO3') or die();
 
 (static function () {
-    /**
-     * Page TypoScript for mod wizards
-     */
-    ExtensionManagementUtility::addPageTSConfig(
-        '@import \'EXT:sf_register/Configuration/TSconfig/Wizards/NewContentElement.tsconfig\''
-    );
-
-    // Needs to be added on top so others can extend regardless of load order
-    $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'] = '
-[GLOBAL]
-@import \'EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript\'
-' . $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'];
-
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['flexFormSegment'][FormFields::class] = [
         'depends' => [ TcaCheckboxItems::class ],
         'before' => [ TcaSelectItems::class ],

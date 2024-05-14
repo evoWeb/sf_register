@@ -60,7 +60,7 @@ class FeuserPasswordController extends FeuserController
     public function saveAction(Password $password): ResponseInterface
     {
         if ($this->userIsLoggedIn()) {
-            $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
+            $userId = $this->request->getAttribute('frontend.user')->user['uid'];
             /** @var FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
 

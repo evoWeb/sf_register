@@ -27,7 +27,7 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  */
 
 use TYPO3\CMS\Core\Crypto\HashService;
-use TYPO3\CMS\Core\Resource\DuplicationBehavior;
+use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Resource\FileReference as FalFileReference;
@@ -203,7 +203,10 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
         $resourcePointer = isset($uploadInfo['submittedFile']['resourcePointer'])
             && !str_contains($uploadInfo['submittedFile']['resourcePointer'], 'file:')
-            ? $this->hashService->validateAndStripHmac($uploadInfo['submittedFile']['resourcePointer'])
+            ? $this->hashService->validateAndStripHmac(
+                $uploadInfo['submittedFile']['resourcePointer'],
+                'sf-register-upload'
+            )
             : null;
 
         return $this->createFileReferenceFromFalFileObject($uploadedFile, (int)$resourcePointer);

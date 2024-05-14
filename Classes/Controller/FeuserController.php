@@ -36,9 +36,9 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\SecurityAspect;
 use TYPO3\CMS\Core\Context\UserAspect;
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
-use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Security\RequestToken;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -48,14 +48,11 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
-use TYPO3\CMS\Extbase\Mvc\Controller\Exception\RequiredArgumentMissingException;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use TYPO3\CMS\Extbase\Property\Exception\TargetNotFoundException;
-use TYPO3\CMS\Extbase\Property\PropertyMapper;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Security\Exception\InvalidArgumentForHashGenerationException;
@@ -74,6 +71,8 @@ class FeuserController extends ActionController
     protected string $controller = '';
 
     protected array $ignoredActions = [];
+
+    protected string $additionalSecret = 'sf-register-autologin';
 
     /**
      * The current view, as resolved by resolveView()
@@ -251,7 +250,7 @@ class FeuserController extends ActionController
 
     protected function initializeActionMethodArguments(): void
     {
-        if (!($this->arguments instanceof Arguments)) {
+        if (!isset($this->arguments)) {
             $this->arguments = GeneralUtility::makeInstance(Arguments::class);
         }
         parent::initializeActionMethodArguments();
@@ -337,119 +336,6 @@ class FeuserController extends ActionController
 
         return $configuration;
     }
-
-    /* Fix for some problem with RequestBuilder::build https://forge.typo3.org/issues/102364  begin */
-
-    /**
-     * @internal only to be used within Extbase, not part of TYPO3 Core API.
-     */
-    private PropertyMapper $propertyMapper;
-
-    /**
-     * @internal only to be used within Extbase, not part of TYPO3 Core API.
-     */
-    public function injectPropertyMapper(PropertyMapper $propertyMapper): void
-    {
-        $this->propertyMapper = $propertyMapper;
-    }
-
-    /**
-     * Maps arguments delivered by the request object to the local controller arguments.
-     *
-     * @throws RequiredArgumentMissingException
-     *
-     * @internal only to be used within Extbase, not part of TYPO3 Core API.
-     */
-    protected function mapRequestArgumentsToControllerArguments(): void
-    {
-        /** @var Argument $argument */
-        foreach ($this->arguments as $argument) {
-            $argumentName = $argument->getName();
-            if ($this->request->hasArgument($argumentName)) {
-                $rawValue = $this->request->getArgument($argumentName);
-                if (is_array($rawValue)) {
-                    $uploads = $this->mapUploadedFilesToParameters(
-                        $this->request->getUploadedFiles()[$argumentName] ?? [],
-                        []
-                    );
-                    $rawValue = [...$rawValue, ...$uploads];
-                }
-                $this->setArgumentValue($argument, $rawValue);
-            } elseif ($argument->isRequired()) {
-                throw new RequiredArgumentMissingException(
-                    'Required argument "' . $argumentName . '" is not set for '
-                    . $this->request->getControllerObjectName() . '->'
-                    . $this->request->getControllerActionName() . '.',
-                    1298012500
-                );
-            }
-        }
-    }
-
-    private function setArgumentValue(Argument $argument, mixed $rawValue): void
-    {
-        if ($rawValue === null) {
-            $argument->setValue(null);
-            return;
-        }
-        $dataType = $argument->getDataType();
-        if ($rawValue instanceof $dataType) {
-            $argument->setValue($rawValue);
-            return;
-        }
-        $this->propertyMapper->resetMessages();
-        try {
-            $argument->setValue(
-                $this->propertyMapper->convert(
-                    $rawValue,
-                    $dataType,
-                    $argument->getPropertyMappingConfiguration()
-                )
-            );
-        } catch (TargetNotFoundException $e) {
-            // for optional arguments no exception is thrown.
-            if ($argument->isRequired()) {
-                throw $e;
-            }
-        }
-        $argument->getValidationResults()->merge($this->propertyMapper->getMessages());
-    }
-
-    protected function mapUploadedFilesToParameters(array|UploadedFile $files, array $parameters): array
-    {
-        if (is_array($files)) {
-            foreach ($files as $key => $file) {
-                if (is_array($file)) {
-                    $parameters[$key] = $this->mapUploadedFilesToParameters($file, $parameters[$key] ?? []);
-                } else {
-                    $parameters[$key] = $this->mapUploadedFileToParameters($file);
-                }
-            }
-        } else {
-            $parameters = $this->mapUploadedFileToParameters($files);
-        }
-        return $parameters;
-    }
-
-    /**
-     * Backwards Compatibility File Mapping to Parameters
-     *
-     * @deprecated since v12, will be removed in v13. Use $request->getUploadedFiles() instead
-     */
-    protected function mapUploadedFileToParameters(UploadedFile $uploadedFile): array
-    {
-        $parameters = [];
-        $parameters['name'] = $uploadedFile->getClientFilename();
-        $parameters['type'] = $uploadedFile->getClientMediaType();
-        $parameters['error'] = $uploadedFile->getError();
-        if ($uploadedFile->getSize() > 0) {
-            $parameters['size'] = $uploadedFile->getSize();
-        }
-        $parameters['tmp_name'] = $uploadedFile->getTemporaryFileName();
-        return $parameters;
-    }
-
-    /* Fix for some problem with RequestBuilder::build https://forge.typo3.org/issues/102364 end */
 
     /**
      * Initialize a view object to be able to set templateRootPath from flex form
@@ -585,7 +471,12 @@ class FeuserController extends ActionController
 
         session_start();
 
-        $_SESSION['sf-register-user'] = GeneralUtility::hmac('auto-login::' . $user->getUid(), $GLOBALS['EXEC_TIME']);
+        /** @var HashService $hashService */
+        $hashService = GeneralUtility::makeInstance(HashService::class);
+        $_SESSION['sf-register-user'] = $hashService->hmac(
+            'auto-login::' . $user->getUid(),
+            $this->additionalSecret
+        );
 
         /** @var Registry $registry */
         $registry = GeneralUtility::makeInstance(Registry::class);
@@ -755,7 +646,12 @@ class FeuserController extends ActionController
 
         $requestArguments = $this->request->getArguments();
         if (isset($requestArguments['user']) && $hash !== null) {
-            $calculatedHash = GeneralUtility::hmac($requestArguments['action'] . '::' . $requestArguments['user']);
+            /** @var HashService $hashService */
+            $hashService = GeneralUtility::makeInstance(HashService::class);
+            $calculatedHash = $hashService->hmac(
+                $requestArguments['action'] . '::' . $requestArguments['user'],
+                $this->additionalSecret
+            );
             if ($hash === $calculatedHash) {
                 /** @var FrontendUser $frontendUser */
                 $frontendUser = $this->userRepository->findByUidIgnoringDisabledField((int)$requestArguments['user']);

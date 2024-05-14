@@ -33,12 +33,21 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_users.csv');
 
         $this->createEmptyFrontendUser();
-        $this->request = $this->initializeTypoScriptFrontendController();
+        $this->initializeTypoScriptFrontendController();
+
+        $this->initializeFrontendTypoScript([
+            'plugin.' => [
+                'tx_sfregister.' => [
+                    'settings.' => [
+                        'badWordList' => 'god, sex, password',
+                    ]
+                ]
+            ]
+        ]);
     }
 
     #[Test]
-    #[RequiresPhp('9.3.0')]
-    public function settingsContainsValidTyposcriptSettings(): void
+    public function settingsContainsValidTypoScriptSettings(): void
     {
         $typoScriptSetup = $this->request->getAttribute('frontend.typoscript')->getSetupArray();
         self::assertArrayHasKey(
@@ -48,22 +57,12 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
     }
 
     #[Test]
-    #[RequiresPhp('9.3.0')]
     public function isUserLoggedInReturnsFalseIfNotLoggedIn(): void
     {
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
 
-        /** @var FrontendUserRepository|MockObject $repositoryMock */
-        $repositoryMock = $this->createMock(FrontendUserRepository::class);
-
-        /** @var ConfigurationManager|MockObject $repositoryMock */
-        $configurationMock = $this->createMock(ConfigurationManager::class);
-
-        $subject = new EqualCurrentPasswordValidator($context, $repositoryMock, $configurationMock);
-
-        $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        self::assertFalse($method->invoke($subject));
+        self::assertFalse((bool)$context->getPropertyFromAspect('frontend.user', 'isLoggedIn'));
     }
 
     #[Test]

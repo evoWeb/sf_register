@@ -6,6 +6,15 @@
 Breaking Changes
 ================
 
+2024.05.13
+''''''''''
+
+The registration of fields for the field selection in the content elements was
+moved from ext_localconf.php to user.tsconfig. The consequence is, that
+extending/overriding fields requires to order the loading of extensions. To
+achieve this, you need to require sf_register in your composer.json and
+ext_emconf.php
+
 2023.10.x
 ''''''''''
 

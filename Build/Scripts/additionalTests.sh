@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 #
-# TYPO3 core test runner based on docker.
+# TYPO3 core test runner based on docker or podman
 #
+
+trap 'cleanUp;exit 2' SIGINT
 
 waitFor() {
     local HOST=${1}
@@ -19,14 +21,21 @@ waitFor() {
         done;
     "
     ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name wait-for-${SUFFIX} ${XDEBUG_MODE} -e XDEBUG_CONFIG="${XDEBUG_CONFIG}" ${IMAGE_ALPINE} /bin/sh -c "${TESTCOMMAND}"
+    if [[ $? -gt 0 ]]; then
+        kill -SIGINT -$$
+    fi
 }
 
 cleanUp() {
     ATTACHED_CONTAINERS=$(${CONTAINER_BIN} ps --filter network=${NETWORK} --format='{{.Names}}')
     for ATTACHED_CONTAINER in ${ATTACHED_CONTAINERS}; do
-        ${CONTAINER_BIN} rm -f ${ATTACHED_CONTAINER} >/dev/null
+        ${CONTAINER_BIN} kill ${ATTACHED_CONTAINER} >/dev/null
     done
-    ${CONTAINER_BIN} network rm ${NETWORK} >/dev/null
+    if [ ${CONTAINER_BIN} = "docker" ]; then
+        ${CONTAINER_BIN} network rm ${NETWORK} >/dev/null
+    else
+        ${CONTAINER_BIN} network rm -f ${NETWORK} >/dev/null
+    fi
 }
 
 handleDbmsOptions() {
@@ -40,8 +49,8 @@ handleDbmsOptions() {
                 echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
                 exit 1
             fi
-            [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="10.3"
-            if ! [[ ${DBMS_VERSION} =~ ^(10.3|10.4|10.5|10.6|10.7|10.8|10.9|10.10|10.11|11.0|11.1)$ ]]; then
+            [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="10.4"
+            if ! [[ ${DBMS_VERSION} =~ ^(10.4|10.5|10.6|10.7|10.8|10.9|10.10|10.11|11.0|11.1)$ ]]; then
                 echo "Invalid combination -d ${DBMS} -i ${DBMS_VERSION}" >&2
                 echo >&2
                 echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
@@ -57,7 +66,7 @@ handleDbmsOptions() {
                 exit 1
             fi
             [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="8.0"
-            if ! [[ ${DBMS_VERSION} =~ ^(8.0)$ ]]; then
+            if ! [[ ${DBMS_VERSION} =~ ^(8.0|8.1|8.2|8.3)$ ]]; then
                 echo "Invalid combination -d ${DBMS} -i ${DBMS_VERSION}" >&2
                 echo >&2
                 echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
@@ -72,7 +81,7 @@ handleDbmsOptions() {
                 exit 1
             fi
             [ -z "${DBMS_VERSION}" ] && DBMS_VERSION="10"
-            if ! [[ ${DBMS_VERSION} =~ ^(10|11|12|13|14|15)$ ]]; then
+            if ! [[ ${DBMS_VERSION} =~ ^(10|11|12|13|14|15|16)$ ]]; then
                 echo "Invalid combination -d ${DBMS} -i ${DBMS_VERSION}" >&2
                 echo >&2
                 echo "Use \".Build/Scripts/runTests.sh -h\" to display help and valid options" >&2
@@ -111,16 +120,6 @@ cleanBuildFiles() {
     echo "done"
 }
 
-cleanCacheFiles() {
-    echo -n "Clean caches ... "
-    rm -rf \
-        .cache \
-        Build/.cache \
-        Build/composer/.cache/ \
-        .php-cs-fixer.cache
-    echo "done"
-}
-
 cleanTestFiles() {
     # test related
     echo -n "Clean test related files ... "
@@ -136,11 +135,18 @@ cleanTestFiles() {
     echo "done"
 }
 
-cleanRenderedDocumentationFiles() {
-    echo -n "Clean rendered documentation files ... "
-    rm -rf \
-        typo3/sysext/*/Documentation-GENERATED-temp
-    echo "done"
+getPhpImageVersion() {
+    case ${1} in
+        8.1)
+            echo -n "2.12"
+            ;;
+        8.2)
+            echo -n "1.12"
+            ;;
+        8.3)
+            echo -n "1.13"
+            ;;
+    esac
 }
 
 loadHelp() {
@@ -155,56 +161,20 @@ Usage: $0 [options] [file]
 Options:
     -s <...>
         Specifies the test suite to run
-            - acceptance: main application acceptance tests
-            - acceptanceInstall: installation acceptance tests, only with -d mariadb|postgres|sqlite
-            - buildCss: execute scss to css builder
-            - buildJavascript: execute typescript to javascript builder
-            - cgl: test and fix all core php files
-            - cglGit: test and fix latest committed patch for CGL compliance
-            - cglHeader: test and fix file header for all core php files
-            - cglHeaderGit: test and fix latest committed patch for CGL file header compliance
-            - checkAnnotations: check php code for allowed annotations
-            - checkBom: check UTF-8 files do not contain BOM
-            - checkComposer: check composer.json files for version integrity
-            - checkExceptionCodes: test core for duplicate exception codes
-            - checkExtensionScannerRst: test all .rst files referenced by extension scanner exist
-            - checkFilePathLength: test core file paths do not exceed maximum length
-            - checkGitSubmodule: test core git has no sub modules defined
-            - checkGruntClean: Verify "grunt build" is clean. Warning: Executes git commands! Usually used in CI only.
-            - checkIsoDatabase: Verify "updateIsoDatabase.php" does not change anything.
-            - checkNamespaceIntegrity: Verify namespace integrity in class and test code files are in good shape.
-            - checkPermissions: test some core files for correct executable bits
-            - checkRst: test .rst files for integrity
-            - checkTestClassFinal: check test case classes are final
-            - checkTestMethodsPrefix: check tests methods do not start with "test"
+            - buildDocumentation: test build the documentation
             - clean: clean up build, cache and testing related files and folders
-            - cleanBuild: clean up build related files and folders
-            - cleanCache: clean up cache related files and folders
-            - cleanRenderedDocumentation: clean up rendered documentation files and folders (Documentation-GENERATED-temp)
-            - cleanTests: clean up test related files and folders
-            - composerInstall: "composer install"
-            - composerInstallMax: "composer update", with no platform.php config.
-            - composerInstallMin: "composer update --prefer-lowest", with platform.php set to PHP version x.x.0.
-            - composerTestDistribution: "composer update" in Build/composer to verify core dependencies
-            - composerValidate: "composer validate"
-            - functional: PHP functional tests
-            - functionalDeprecated: deprecated PHP functional tests
-            - lintPhp: PHP linting
-            - lintScss: SCSS linting
-            - lintTypescript: TS linting
-            - lintHtml: HTML linting
-            - listExceptionCodes: list core exception codes in JSON format
-            - phpstan: phpstan tests
-            - phpstanGenerateBaseline: regenerate phpstan baseline, handy after phpstan updates
-            - unit (default): PHP unit tests
-            - unitDeprecated: deprecated PHP unit tests
-            - unitJavascript: JavaScript unit tests
-            - unitRandom: PHP unit tests in random order, add -o <number> to use specific seed
+            - composerInstallPackage: install a package with composer
+            - lintXliff: test XLIFF language files
+
+    -b <docker|podman>
+        Container environment:
+            - podman (default)
+            - docker
 
     -p <8.1|8.2|8.3>
         Specifies the PHP minor version to be used
-            - 8.1 (default): use PHP 8.1
-            - 8.2: use PHP 8.2
+            - 8.1: use PHP 8.1
+            - 8.2 (default): use PHP 8.2
             - 8.3: use PHP 8.3
 
     -q
@@ -221,16 +191,13 @@ Options:
 
 Examples:
     # Run install a package with composer
-    ./Build/Scripts/additionalTests.sh -p 8.1 -s composerInstallPackage "typo3/cms-core:12.4"
-
-    # Linting scss files
-    ./Build/Scripts/additionalTests.sh -s lintScss
-
-    # Linting typescript files
-    ./Build/Scripts/additionalTests.sh -s lintTypescript
+    ./Build/Scripts/additionalTests.sh -p 8.2 -s composerInstallPackage "typo3/cms-core:13.0"
 
     # Test build the documentation
     ./Build/Scripts/additionalTests.sh -s buildDocumentation
+
+    # Test XLIFF language files
+    ./Build/Scripts/additionalTests.sh -s lintXliff
 EOF
 }
 
@@ -273,7 +240,7 @@ while getopts ":s:p:q:r:hv" OPT; do
             ;;
         p)
             PHP_VERSION=${OPTARG}
-            if ! [[ ${PHP_VERSION} =~ ^(7.4|8.1|8.2|8.3)$ ]]; then
+            if ! [[ ${PHP_VERSION} =~ ^(8.1|8.2|8.3)$ ]]; then
                 INVALID_OPTIONS+=("${OPTARG}")
             fi
             ;;
@@ -403,28 +370,11 @@ case ${TEST_SUITE} in
         ;;
     clean)
         cleanBuildFiles
-        cleanCacheFiles
-        cleanRenderedDocumentationFiles
         cleanTestFiles
         ;;
     composerInstallPackage)
         COMMAND="[ ${SCRIPT_VERBOSE} -eq 1 ] && set -x; composer require -W -n ${COMPOSER_PARAMETER} ${COMPOSER_PACKAGE};"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-require-package-${SUFFIX} -w ${CORE_ROOT} -e COMPOSER_CACHE_DIR=${CORE_ROOT}/Build/.cache/composer ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-        SUITE_EXIT_CODE=$?
-        ;;
-    lintPhp)
-        COMMAND="[ ${SCRIPT_VERBOSE} -eq 1 ] && set -x; php -v | grep '^PHP'; find Classes/ -name \\*.php -print0 | xargs -0 -n1 -P4 php -dxdebug.mode=off -l > /dev/null;"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lint-php-${SUFFIX} -w ${CORE_ROOT} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
-        SUITE_EXIT_CODE=$?
-        ;;
-    lintScss)
-        COMMAND="[ ${SCRIPT_VERBOSE} -eq 1 ] && set -x; cd Build; npm ci || exit 1; npm run lint:css;"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lint-css-${SUFFIX} -w ${CORE_ROOT} -e HOME=${CORE_ROOT}/.cache ${IMAGE_NODEJS} /bin/sh -c "${COMMAND}"
-        SUITE_EXIT_CODE=$?
-        ;;
-    lintTypescript)
-        COMMAND="[ ${SCRIPT_VERBOSE} -eq 1 ] && set -x; cd Build; npm ci || exit 1; npm run lint:ts;"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lint-typescript-${SUFFIX} -w ${CORE_ROOT} -e HOME=${CORE_ROOT}/.cache ${IMAGE_NODEJS} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
     lintXliff)

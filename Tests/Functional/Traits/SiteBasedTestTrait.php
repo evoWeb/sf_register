@@ -15,10 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace Evoweb\SfRegister\Tests\Functional\SiteHandling;
+namespace Evoweb\SfRegister\Tests\Functional\Traits;
 
-use Psr\EventDispatcher\EventDispatcherInterface;
+use TYPO3\CMS\Core\Cache\Frontend\NullFrontend;
 use TYPO3\CMS\Core\Configuration\SiteConfiguration;
+use TYPO3\CMS\Core\Configuration\SiteWriter;
+use TYPO3\CMS\Core\EventDispatcher\NoopEventDispatcher;
 use TYPO3\CMS\Core\Tests\Functional\Fixtures\Frontend\PhpError;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\Internal\AbstractInstruction;
@@ -49,27 +51,27 @@ trait SiteBasedTestTrait
 
     protected function writeSiteConfiguration(
         string $identifier,
-        array $site = [],
+        string $configPath,
+        array $configuration = [],
         array $languages = [],
-        array $errorHandling = []
+        array $errorHandling = [],
     ): void {
-        $configuration = $site;
         if (!empty($languages)) {
             $configuration['languages'] = $languages;
         }
         if (!empty($errorHandling)) {
             $configuration['errorHandling'] = $errorHandling;
         }
-        $siteConfiguration = new SiteConfiguration(
-            $this->instancePath . '/typo3conf/sites/',
-            GeneralUtility::makeInstance(EventDispatcherInterface::class),
-            GeneralUtility::makeInstance('cache.core')
-        );
 
+        $siteWriter = new SiteWriter(
+            $configPath,
+            new NoopEventDispatcher(),
+            new NullFrontend('test')
+        );
         try {
             // ensure no previous site configuration influences the test
-            GeneralUtility::rmdir($this->instancePath . '/typo3conf/sites/' . $identifier, true);
-            $siteConfiguration->write($identifier, $configuration);
+            GeneralUtility::rmdir($configPath . $identifier, true);
+            $siteWriter->write($identifier, $configuration);
         } catch (\Exception $exception) {
             $this->markTestSkipped($exception->getMessage());
         }

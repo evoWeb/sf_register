@@ -34,7 +34,7 @@ class FeuserInviteController extends FeuserController
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
         if (is_null($user) && $this->userIsLoggedIn()) {
-            $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
+            $userId = $this->request->getAttribute('frontend.user')->user['uid'];
             /** @var FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
         }

@@ -218,7 +218,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         if ($fileData instanceof UploadedFile) {
             $fileExtension = pathinfo($fileData->getClientFilename(), PATHINFO_EXTENSION);
 
-            $result = $this->isAllowedFilesize((int)$fileData->getSize());
+            $result = $this->isAllowedFilesize($fileData->getSize() ?? 0);
             $result = $result && $this->isAllowedFileExtension($fileExtension);
         } else {
             $result = true;

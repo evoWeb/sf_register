@@ -1,6 +1,6 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Functional;
+namespace Evoweb\SfRegister\Tests\Functional\Traits;
 
 trait SettableCallable
 {

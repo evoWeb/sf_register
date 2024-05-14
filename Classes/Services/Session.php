@@ -13,6 +13,7 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
@@ -33,8 +34,8 @@ class Session implements SingletonInterface
 
     public function __construct(protected ?FrontendUserAuthentication $frontendUser = null)
     {
-        if ($GLOBALS['TSFE']->fe_user) {
-            $this->frontendUser = $GLOBALS['TSFE']->fe_user;
+        if ($this->getRequest()->getAttribute('frontend.user')) {
+            $this->frontendUser = $this->getRequest()->getAttribute('frontend.user');
         } else {
             try {
                 $this->frontendUser->start($GLOBALS['TYPO3_REQUEST']);
@@ -102,5 +103,10 @@ class Session implements SingletonInterface
         }
 
         return $this->store();
+    }
+
+    public function getRequest(): ServerRequestInterface
+    {
+        return $GLOBALS['TYPO3_REQUEST'];
     }
 }

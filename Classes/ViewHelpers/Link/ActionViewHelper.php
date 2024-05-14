@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\ViewHelpers\Link;
 
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
@@ -38,6 +39,13 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
      * @var string
      */
     protected $tagName = 'a';
+
+    protected string $additionalSecret = 'sf-register-autologin';
+
+    public function __construct(protected HashService $hashService)
+    {
+        parent::__construct();
+    }
 
     public function initializeArguments(): void
     {
@@ -111,8 +119,9 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
             && $this->arguments['arguments'] !== null
             && isset($this->arguments['arguments']['user'])
         ) {
-            $this->arguments['arguments']['hash'] = GeneralUtility::hmac(
-                $this->arguments['action'] . '::' . $this->arguments['arguments']['user']
+            $this->arguments['arguments']['hash'] = $this->hashService->hmac(
+                $this->arguments['action'] . '::' . $this->arguments['arguments']['user'],
+                $this->additionalSecret
             );
         }
 

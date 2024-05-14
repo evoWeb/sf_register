@@ -33,7 +33,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
-use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
 
 class UploadViewHelper extends AbstractFormFieldViewHelper
@@ -142,7 +142,10 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
 
             $output .= '<input type="hidden" name="' . $this->getName()
                 . '[submittedFile][resourcePointer]" value="'
-                . htmlspecialchars($this->hashService->appendHmac((string)$resourcePointerValue))
+                . htmlspecialchars($this->hashService->appendHmac(
+                    (string)$resourcePointerValue,
+                    'sf-register-upload'
+                ))
                 . '"' . $resourcePointerIdAttribute . ' />';
 
             $this->templateVariableContainer->add('resource', $resource);
