@@ -146,14 +146,18 @@ An overview_ on how to configure and interact with events was given on the
 Developer Days in 2019. The detailed example shows how to configure them in the
 Services.yaml:
 
-**Services.yaml**::
+**YourEventListener.php**::
 
-  Evoweb\SfRegister\EventListener\FeuserControllerListener:
-    tags:
-      - name: event.listener
-        identifier: 'sfregister_feusercontroller_processinitializeaction'
-        method: 'onProcessInitializeActionEvent'
-        event: Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent
+   use Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent;
+   use TYPO3\CMS\Core\Attribute\AsEventListener;
+
+   class YourEventListener
+   {
+      #[AsEventListener('your-extension-identifier', ProcessInitializeActionEvent::class)]
+      public function __invoke(ProcessInitializeActionEvent $event): void
+      {
+      }
+   }
 
 
 The code above shows how to get an event listener is registered to an event.
