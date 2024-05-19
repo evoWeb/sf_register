@@ -1,0 +1,36 @@
+name: Build and Commit Github-Page
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: [ develop, main ]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-commit-github-page:
+    runs-on: ubuntu-latest
+    concurrency: ci-${{ github.ref }}
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Build documentation
+        run: |
+          docker run \
+            --rm --user $(id -u) \
+            -v ${PWD}:/project \
+            ghcr.io/typo3-documentation/render-guides:latest render Documentation
+          echo '<html><head><meta http-equiv="refresh" content="0; url=./Index.html" /></head></html>' > Documentation-GENERATED-temp/index.html
+          touch Documentation-GENERATED-temp/.nojekyll
+
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.6.0
+        with:
+          branch: gh-pages
+          folder: Documentation-GENERATED-temp
+          target-folder: /
+          clean: true
