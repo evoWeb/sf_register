@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <title>Templating documentation</title>
+
+    
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="phpdocumentor/guides" name="generator">
+<meta content="" name="docsearch:name">
+<meta content="" name="docsearch:package_type">
+<meta content="" name="docsearch:release">
+<meta content="" name="docsearch:version">
+<meta content="2024-05-19T17:27:37+00:00" name="docsearch:modified">
+<meta content="2024-05-19T17:27:37+00:00" name="dc.modified">
+<meta content="2024-05-19T17:27:37+00:00" property="article:modified_time">
+    <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
+<link href="../_resources/css/theme.css" rel="stylesheet">
+<link href="https://docs.typo3.org/search/" rel="search" title="Search">
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
+                        <link href="../Extendability/Index.html" rel="prev" title="Extendability"/>
+            <link href="../Tutorial/Index.html" rel="next" title="Tutorial"/>
+            <link href="../Index.html" rel="top" title="Frontend User Registration: Multipurpose configurable registration"/>
+    </head>
+<body>
+<div class="page">
+    
+<header>
+    <div class="page-topbar">
+        <div class="page-topbar-inner">
+            <typo3-universe active="documentation">
+                <div style="display: block; height: 44px; background-color: #313131;"></div>
+            </typo3-universe>
+        </div>
+    </div>
+    <div class="page-header">
+        <div class="page-header-inner">
+            <div class="row">
+                <div class="col-sm-3 col-md-4 col-lg-6">
+                    <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
+                        <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
+                    </a>
+                </div>
+                <div class="col-sm-9 col-md-8 col-lg-6">
+                    <search role="search">
+                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                            <div class="input-group mb-3 mt-sm-3">
+                                <select class="form-select search__scope" id="searchscope" name="scope">
+                                    <option value="">Search all</option>
+                                </select>
+                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                            </div>
+                        </form>
+                    </search>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>    <main class="page-main">
+        <div class="page-main-inner">
+            <div class="page-main-navigation">
+                <nav>
+                    <input class="toc-checkbox" id="toggleToc" type="checkbox">
+
+                    
+<div class="toc-header">
+    <div class="toc-title">
+        <a class="toc-title-project" href="../Index.html"></a>
+            </div>
+    <div class="toc-actions">
+        <label class="toc-toggle" for="toggleToc">
+            Menu
+        </label>
+    </div>
+</div>                    <div class="toc-collapse">
+                                                <div aria-label="main navigation" class="toc" role="navigation">
+                                <div aria-label="Main navigation" class="main_menu" role="navigation">
+        
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../Introduction/Index.html">
+        Introduction
+    </a></li>    <li class="">
+    <a href="../UsersManual/Index.html">
+        Users manual
+    </a></li>    <li class="">
+    <a href="../Administration/Index.html">
+        Administration
+    </a></li>    <li class="">
+    <a href="../Configuration/Index.html">
+        Configuration
+    </a>        <ul class="menu-level-1"><li class="">
+    <a href="../Configuration/Emails/Index.html">
+        Emails
+    </a></li><li class="">
+    <a href="../Configuration/Validation/Index.html">
+        Validation
+    </a></li></ul></li>    <li class="">
+    <a href="../Extendability/Index.html">
+        Extendability
+    </a></li>    <li class=" current active">
+    <a href="#" aria-current="page">
+        Templating
+    </a></li>    <li class="">
+    <a href="../Tutorial/Index.html">
+        Tutorial
+    </a></li>    <li class="">
+    <a href="../RegistrationActions/Index.html">
+        Registration actions
+    </a></li>    <li class="">
+    <a href="../KnownProblems/Index.html">
+        Known problems
+    </a></li>    <li class="">
+    <a href="../Changelog/Index.html">
+        ChangeLog
+    </a></li>    <li class="">
+    <a href="../Deprecations/Index.html">
+        Deprecations
+    </a></li>    <li class="">
+    <a href="../BreakingChanges/Index.html">
+        Breaking Changes
+    </a></li>    </ul>
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../Sitemap.html">
+        Sitemap
+    </a></li>    </ul>
+    </div>
+    <div aria-label="Meta navigation" class="main_menu  d-block d-lg-none" role="navigation">
+    <hr/>
+    <p class="caption">Contributors Corner</p>
+    <ul class="menu-level-1">            <li><a href="../_sources/Templating/Index.rst.txt" rel="nofollow noopener" target="_blank">
+                    View source of current document
+            </a></li>
+                    <li><a href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" rel="nofollow noopener" target="_blank">
+                    How to edit
+            </a></li>
+        </ul>
+</div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="page-main-content">
+                <div class="rst-content">                        <nav aria-label="breadcrumbs navigation" class="breadcrumb-bar" role="navigation">
+        
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="../Index.html">Frontend User Registration: Multipurpose configurable registration</a></li>
+                    <li aria-current="page"  class="breadcrumb-item  active">Templating</li>
+        </ol>
+        <div class="breadcrumb-additions">    <a class="btn btn-sm btn-light" href="../_sources/Templating/Index.rst.txt" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+        <a class="btn btn-sm btn-light" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-info-circle"></span></span>
+        <span class="btn-text">How to edit</span>
+    </a>
+    </div>    </nav>
+                    
+<article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+    <div itemprop="articleBody">
+        <!-- content start -->
+                <section class="section" id="templating-1" data-rst-anchor="templating">
+            <a id="templating"></a>
+            <h1>Templating<a class="headerlink" href="#templating-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <div class="toctree-wrapper compound">
+    <ul class="menu-level">
+    </ul>
+</div>
+            <section class="section" id="template-for-dynamic-fields">
+            <h2>Template for dynamic fields:<a class="headerlink" href="#template-for-dynamic-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Since version 8.8.0 the forms are rendered by partials. Create and Edit form fields are defined in typoscript or
+selected in the plugin and then rendered by a loop which calls the configured partial per field.</p>
+
+            
+    <p>This was made to be able to only change one field alone through modifying the partial.</p>
+
+            
+    <p>Additionaly its now possible to select the fields needed in the content instead the need to add typoscript for the one
+page where the registration should be different.</p>
+
+            
+    <p>As its not always needed to define your field selection there are some defaults configured out of the box.</p>
+
+            
+    <p><strong>Fields/setup.typoscript</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.fields.defaultSelected {
+   create { }
+   edit { }
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>Word of advise to those that upgrade an existing installation. To make use of this feature in your old templates you
+need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
+
+            
+    <p><strong>Form.html</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&lt;f:for each=&quot;{settings.fields.selected}&quot; as=&quot;selectedField&quot;&gt;
+	&lt;f:alias map=&quot;{options: &#039;{settings.fields.configuration.{selectedField}}&#039;}&quot;&gt;
+		&lt;f:render partial=&quot;Form/{options.partial}&quot;
+			arguments=&quot;{user: user, fieldName: selectedField, options: options, settings: settings}&quot;/&gt;
+	&lt;/f:alias&gt;
+&lt;/f:for&gt;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="customize-the-output">
+            <h2>Customize the output:<a class="headerlink" href="#customize-the-output" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Per default, all templates are stored in</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>typo3conf/ext/sf_register/Resources/Private/
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>Copy files you want to modify of the folder into the fileadmin.
+Don&#039;t forget to set the path to this new templates folder with.</p>
+
+            
+    <p>Since TYPO3 6.2 its possible to have so called fallback paths for
+template, partial and layout root paths. By this its not necessary to
+copy all files of given path any more.</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.view.templateRootPaths.0 = EXT:sf_register/Resources/Private/Templates/
+plugin.tx_sfregister.view.templateRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/
+
+plugin.tx_sfregister.view.partialRootPaths.0 = EXT:sf_register/Resources/Private/Partials/
+plugin.tx_sfregister.view.partialRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/Partials/
+
+plugin.tx_sfregister.view.layoutRootPaths.0 = EXT:sf_register/Resources/Private/Layouts/
+plugin.tx_sfregister.view.layoutRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/Layouts/
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>In pre and post TYPO3 6.2 version its possible to define a template rootpath in
+the registration plugin. This gets add/set to the view and used for rendering.</p>
+
+            <section class="section" id="viewhelper-for-templates">
+            <h3>Viewhelper for templates:<a class="headerlink" href="#viewhelper-for-templates" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <section class="section" id="birthdate-with-three-select-boxes">
+            <h4>Birthdate with three select boxes<a class="headerlink" href="#birthdate-with-three-select-boxes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&lt;register:form.rangeSelect start=&quot;1&quot; end=&quot;31&quot; property=&quot;dateOfBirthDay&quot;/&gt;
+-
+&lt;register:form.rangeSelect start=&quot;1&quot; end=&quot;12&quot; property=&quot;dateOfBirthMonth&quot;/&gt;
+-
+&lt;register:form.rangeSelect start=&quot;1960&quot; end=&quot;2011&quot; property=&quot;dateOfBirthYear&quot;/&gt;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            <figure>
+    <img
+    src="Images/screenshot_dateselectors.png"
+            align="left"    alt="1"        />
+
+
+            
+            </figure>
+    </section>
+            <section class="section" id="single-select-with-radio-buttons">
+            <h4>Single select with radio buttons<a class="headerlink" href="#single-select-with-radio-buttons" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&lt;f:form.radio property=&quot;gender&quot; value=&quot;1&quot;/&gt; &lt;f:translate key=&quot;gender_1&quot;/&gt;
+&lt;f:form.radio property=&quot;gender&quot; value=&quot;2&quot;/&gt; &lt;f:translate key=&quot;gender_2&quot;/&gt;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            <figure>
+    <img
+    src="Images/screenshot_genderradio.png"
+            align="left"    alt="1"        />
+
+
+            
+            </figure>
+    </section>
+            <section class="section" id="single-select-as-select-box">
+            <h4>Single select as select box<a class="headerlink" href="#single-select-as-select-box" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&lt;f:form.select property=&quot;gender&quot; options=&quot;{
+	1: &#039;{f:translate(key: \&#039;gender_1\&#039;)}&#039;,
+	2: &#039;{f:translate(key: \&#039;gender_2\&#039;)}&#039;
+}&quot;/&gt;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            <figure>
+    <img
+    src="Images/screenshot_genderselect.png"
+            align="left"    alt="1"        />
+
+
+            
+            </figure>
+    </section>
+            <section class="section" id="automatic-marking-of-requried-fields">
+            <h4>Automatic marking of requried fields<a class="headerlink" href="#automatic-marking-of-requried-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&lt;f:render partial=&quot;required&quot; arguments=&quot;{field: &#039;gender&#039;}&quot;/&gt;
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>you get the asterix (*) behind your label, if the required validator
+is active for this field.</p>
+
+    </section>
+    </section>
+    </section>
+    </section>
+        <!-- content end -->
+    </div>
+</article>
+                        
+            <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center"><li class="page-item">
+                            <a class="page-link" href="../Extendability/Index.html"
+                               title="Accesskey Alt(+Shift)+p">
+                                Previous
+                            </a>
+                        </li>
+                    <li class="page-item">
+                            <a class="page-link" href="../Tutorial/Index.html"
+                               title="Accesskey Alt(+Shift)+n">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+        </nav>
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="linkReferenceModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
+    aria-hidden="true" data-current-filename="Templating/Index">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="linkReferenceModalLabel">Reference to the headline</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success d-none" id="permalink-alert-success" role="alert"></div>
+                <div class="mb-3">
+                    <label for="permalink-uri" class="col-form-label">Permalink</label>
+                    <div class="input-group">
+                        <input class="form-control code" id="permalink-uri" readonly>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy and freely share the link</p>
+                </div>
+                <div class="mb-3">
+                    <div class="alert alert-warning alert-permalink-rst" role="alert">This link target has no permanent anchor assigned.The link below can be used, but is prone to change if the page gets moved.
+                    </div>
+                    <label for="permalink-rst" class="col-form-label">reStructuredText (reST):</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-rst" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy this link into your TYPO3 manual. </p>
+                </div>
+                <div class="mb-3">
+                    <label for="permalink-html" class="col-form-label">HTML:</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-html" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="far fa-clone"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div></div>
+
+
+<footer class="page-footer">
+    <div class="frame frame-ruler-before frame-background-dark">
+        <div class="frame-container">
+            <div class="frame-inner">
+                                <div class="footer-additional">
+                    <p class="text-center">Last rendered: May 19, 2024 17:27</p>
+                </div>
+                <div class="footer-meta">
+                    <ul class="footer-meta-navigation">
+                        <li><a href="https://typo3.org/legal-notice" rel="nofollow" target="_blank" title="Legal Notice">Legal Notice</a></li>
+                        <li><a href="https://typo3.org/privacy-policy" rel="nofollow" target="_blank" title="Privacy Policy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../_resources/js/popper.min.js"></script>
+<script src="../_resources/js/bootstrap.min.js"></script>
+<script src="../_resources/js/theme.min.js"></script>
+
+<!--
+ Locally rendered. No tracking embedded.
+-->
+</body>
+</html>

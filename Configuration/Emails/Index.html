@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <title>Emails documentation</title>
+
+    
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="phpdocumentor/guides" name="generator">
+<meta content="" name="docsearch:name">
+<meta content="" name="docsearch:package_type">
+<meta content="" name="docsearch:release">
+<meta content="" name="docsearch:version">
+<meta content="2024-05-19T17:27:37+00:00" name="docsearch:modified">
+<meta content="2024-05-19T17:27:37+00:00" name="dc.modified">
+<meta content="2024-05-19T17:27:37+00:00" property="article:modified_time">
+    <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
+<link href="../../_resources/css/theme.css" rel="stylesheet">
+<link href="https://docs.typo3.org/search/" rel="search" title="Search">
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
+                        <link href="../Index.html" rel="prev" title="Configuration"/>
+            <link href="../Validation/Index.html" rel="next" title="Validation"/>
+            <link href="../../Index.html" rel="top" title="Frontend User Registration: Multipurpose configurable registration"/>
+    </head>
+<body>
+<div class="page">
+    
+<header>
+    <div class="page-topbar">
+        <div class="page-topbar-inner">
+            <typo3-universe active="documentation">
+                <div style="display: block; height: 44px; background-color: #313131;"></div>
+            </typo3-universe>
+        </div>
+    </div>
+    <div class="page-header">
+        <div class="page-header-inner">
+            <div class="row">
+                <div class="col-sm-3 col-md-4 col-lg-6">
+                    <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
+                        <img alt="TYPO3 Logo" class="logo-image" src="../../_resources/img/typo3-logo.svg" width="484" height="130">
+                    </a>
+                </div>
+                <div class="col-sm-9 col-md-8 col-lg-6">
+                    <search role="search">
+                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                            <div class="input-group mb-3 mt-sm-3">
+                                <select class="form-select search__scope" id="searchscope" name="scope">
+                                    <option value="">Search all</option>
+                                </select>
+                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                            </div>
+                        </form>
+                    </search>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>    <main class="page-main">
+        <div class="page-main-inner">
+            <div class="page-main-navigation">
+                <nav>
+                    <input class="toc-checkbox" id="toggleToc" type="checkbox">
+
+                    
+<div class="toc-header">
+    <div class="toc-title">
+        <a class="toc-title-project" href="../../Index.html"></a>
+            </div>
+    <div class="toc-actions">
+        <label class="toc-toggle" for="toggleToc">
+            Menu
+        </label>
+    </div>
+</div>                    <div class="toc-collapse">
+                                                <div aria-label="main navigation" class="toc" role="navigation">
+                                <div aria-label="Main navigation" class="main_menu" role="navigation">
+        
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../../Introduction/Index.html">
+        Introduction
+    </a></li>    <li class="">
+    <a href="../../UsersManual/Index.html">
+        Users manual
+    </a></li>    <li class="">
+    <a href="../../Administration/Index.html">
+        Administration
+    </a></li>    <li class=" active">
+    <a href="../Index.html">
+        Configuration
+    </a>        <ul class="menu-level-1"><li class=" current active">
+    <a href="#" aria-current="page">
+        Emails
+    </a></li><li class="">
+    <a href="../Validation/Index.html">
+        Validation
+    </a></li></ul></li>    <li class="">
+    <a href="../../Extendability/Index.html">
+        Extendability
+    </a></li>    <li class="">
+    <a href="../../Templating/Index.html">
+        Templating
+    </a></li>    <li class="">
+    <a href="../../Tutorial/Index.html">
+        Tutorial
+    </a></li>    <li class="">
+    <a href="../../RegistrationActions/Index.html">
+        Registration actions
+    </a></li>    <li class="">
+    <a href="../../KnownProblems/Index.html">
+        Known problems
+    </a></li>    <li class="">
+    <a href="../../Changelog/Index.html">
+        ChangeLog
+    </a></li>    <li class="">
+    <a href="../../Deprecations/Index.html">
+        Deprecations
+    </a></li>    <li class="">
+    <a href="../../BreakingChanges/Index.html">
+        Breaking Changes
+    </a></li>    </ul>
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../../Sitemap.html">
+        Sitemap
+    </a></li>    </ul>
+    </div>
+    <div aria-label="Meta navigation" class="main_menu  d-block d-lg-none" role="navigation">
+    <hr/>
+    <p class="caption">Contributors Corner</p>
+    <ul class="menu-level-1">            <li><a href="../../_sources/Configuration/Emails/Index.rst.txt" rel="nofollow noopener" target="_blank">
+                    View source of current document
+            </a></li>
+                    <li><a href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" rel="nofollow noopener" target="_blank">
+                    How to edit
+            </a></li>
+        </ul>
+</div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="page-main-content">
+                <div class="rst-content">                        <nav aria-label="breadcrumbs navigation" class="breadcrumb-bar" role="navigation">
+        
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="../../Index.html">Frontend User Registration: Multipurpose configurable registration</a></li>
+        <li class="breadcrumb-item"><a href="../Index.html">Configuration</a></li>
+                    <li aria-current="page"  class="breadcrumb-item  active">Emails</li>
+        </ol>
+        <div class="breadcrumb-additions">    <a class="btn btn-sm btn-light" href="../../_sources/Configuration/Emails/Index.rst.txt" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+        <a class="btn btn-sm btn-light" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-info-circle"></span></span>
+        <span class="btn-text">How to edit</span>
+    </a>
+    </div>    </nav>
+                    
+<article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+    <div itemprop="articleBody">
+        <!-- content start -->
+                <section class="section" id="emails-1" data-rst-anchor="emails">
+            <a id="emails"></a>
+            <h1>Emails<a class="headerlink" href="#emails-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <div class="contents">
+        <ul class="menu-level">
+    <li class="toc-item">
+    <a href="#admin-registration-properties">Admin registration properties</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#admin-edit-properties">Admin edit properties</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#user-registration-properties">User registration properties</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#user-edit-properties">User edit properties</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#address-and-subject-properties">Address and subject properties</a>
+
+
+</li>
+    </ul>
+</div>
+            <section class="section" id="admin-registration-properties" data-rst-anchor="notifyAdminPostCreateSave">
+            <h2>Admin registration properties<a class="headerlink" href="#admin-registration-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Property</th>
+                            <th>Data types</th>
+                            <th>stdWrap</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#notifyAdminPostCreateSave">notifyAdminPostCreateSave</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostCreateConfirm">notifyAdminPostCreateConfirm</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostCreateRefuse">notifyAdminPostCreateRefuse</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostCreateAccept">notifyAdminPostCreateAccept</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostCreateDecline">notifyAdminPostCreateDecline</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#acceptEmailPostCreate">acceptEmailPostCreate</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="notifyAdminPostCreateSave"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostCreateSave</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user saved the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostCreateConfirm"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostCreateConfirm</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user confirmed the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostCreateRefuse"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostCreateRefuse</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user refused the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostCreateAccept"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostCreateAccept</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the admin accepted the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostCreateDecline"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostCreateDecline</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the admin declined the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="acceptEmailPostCreate"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>acceptEmailPostCreate</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin need to accept the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+    </section>
+            <section class="section" id="admin-edit-properties" data-rst-anchor="notifyAdminPostEditSave">
+            <h2>Admin edit properties<a class="headerlink" href="#admin-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Property</th>
+                            <th>Data types</th>
+                            <th>stdWrap</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#notifyAdminPostEditSave">notifyAdminPostEditSave</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostEditConfirm">notifyAdminPostEditConfirm</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostEditAccept">notifyAdminPostEditAccept</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#acceptEmailPostEdit">acceptEmailPostEdit</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="notifyAdminPostEditSave"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostEditSave</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user saved the changes</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostEditConfirm"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostEditConfirm</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user confirmed the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostEditAccept"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostEditAccept</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user accepted the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="acceptEmailPostEdit"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>acceptEmailPostEdit</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin need to accepted the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+    </section>
+            <section class="section" id="user-registration-properties" data-rst-anchor="notifyUserPostCreateSave">
+            <h2>User registration properties<a class="headerlink" href="#user-registration-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Property</th>
+                            <th>Data types</th>
+                            <th>stdWrap</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#notifyUserPostCreateSave">notifyUserPostCreateSave</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostCreateConfirm">notifyUserPostCreateConfirm</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostCreateRefuse">notifyUserPostCreateRefuse</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostCreateAccept">notifyUserPostCreateAccept</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostCreateDecline">notifyUserPostCreateDecline</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#confirmEmailPostCreate">confirmEmailPostCreate</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="notifyUserPostCreateSave"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostCreateSave</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user saved the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostCreateConfirm"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostCreateConfirm</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user confirmed the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostCreateRefuse"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostCreateRefuse</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user refused the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostCreateAccept"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostCreateAccept</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the admin accepted the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostCreateDecline"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostCreateDecline</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the admin declined the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="confirmEmailPostCreate"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>confirmEmailPostCreate</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user need to confirm the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+    </section>
+            <section class="section" id="user-edit-properties" data-rst-anchor="notifyUserPostEditSave">
+            <h2>User edit properties<a class="headerlink" href="#user-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Property</th>
+                            <th>Data types</th>
+                            <th>stdWrap</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#notifyUserPostEditSave">notifyUserPostEditSave</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostEditConfirm">notifyUserPostEditConfirm</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostEditAccept">notifyUserPostEditAccept</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#confirmEmailPostEdit">confirmEmailPostEdit</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="notifyUserPostEditSave"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostEditSave</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user saved the changes</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostEditConfirm"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostEditConfirm</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user confirmed the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostEditAccept"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostEditAccept</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user accepted the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="confirmEmailPostEdit"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>acceptEmailPostEdit</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user need to confirm the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+    </section>
+            <section class="section" id="address-and-subject-properties" data-rst-anchor="sitename">
+            <h2>Address and subject properties<a class="headerlink" href="#address-and-subject-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Property</th>
+                            <th>Data types</th>
+                            <th>stdWrap</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#sitename">sitename</a></td>            <td></td>            <td>no</td>            <td>dummy Site</td>    </tr>    <tr>
+            <td>userEmail.fromName_</td>            <td></td>            <td>no</td>            <td>userEmail from</td>    </tr>    <tr>
+            <td>userEmail.fromEmail_</td>            <td></td>            <td>no</td>            <td><a href="mailto:userEmailfrom@test.local">userEmailfrom@test.local</a></td>    </tr>    <tr>
+            <td>userEmail.replyName_</td>            <td></td>            <td>no</td>            <td>userEmail reply</td>    </tr>    <tr>
+            <td>userEmail.replyEmail_</td>            <td></td>            <td>no</td>            <td><a href="mailto:userEmailreply@test.local">userEmailreply@test.local</a></td>    </tr>    <tr>
+            <td>adminEmail.toName_</td>            <td></td>            <td>no</td>            <td>adminEmail to</td>    </tr>    <tr>
+            <td>adminEmail.toEmail_</td>            <td></td>            <td>no</td>            <td><a href="mailto:adminToEmail@test.local">adminToEmail@test.local</a></td>    </tr>    <tr>
+            <td>adminEmail.fromName_</td>            <td></td>            <td>no</td>            <td>adminEmail from</td>    </tr>    <tr>
+            <td>adminEmail.fromEmail_</td>            <td></td>            <td>no</td>            <td><a href="mailto:adminEmailfrom@test.local">adminEmailfrom@test.local</a></td>    </tr>    <tr>
+            <td>adminEmail.replyName_</td>            <td></td>            <td>no</td>            <td>adminEmail reply</td>    </tr>    <tr>
+            <td>adminEmail.replyEmail_</td>            <td></td>            <td>no</td>            <td><a href="mailto:adminEmailreply@test.local">adminEmailreply@test.local</a></td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="sitename"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>sitename</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Page Title for email subject</dd>
+                                <dt>Default</dt>
+        
+        <dd>dummy Site</dd>
+            </dl>
+</div>
+
+            <a id="userEmail.fromName"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>userEmail.fromName</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Name used as from for email to user</dd>
+                                <dt>Default</dt>
+        
+        <dd>userEmail from</dd>
+            </dl>
+</div>
+
+            <a id="userEmail.fromEmail"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>userEmail.fromEmail</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>EMail used as from for email to user</dd>
+                                <dt>Default</dt>
+        
+        <dd><a href="mailto:userEmailfrom@test.local">userEmailfrom@test.local</a></dd>
+            </dl>
+</div>
+
+            <a id="userEmail.replyName"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>userEmail.replyName</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Name used as reply for email to user</dd>
+                                <dt>Default</dt>
+        
+        <dd>userEmail reply</dd>
+            </dl>
+</div>
+
+            <a id="userEmail.replyEmail"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>userEmail.replyEmail</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Email used as reply for email to user</dd>
+                                <dt>Default</dt>
+        
+        <dd><a href="mailto:userEmailreply@test.local">userEmailreply@test.local</a></dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.toName"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.toName</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Name used as recipient for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd>adminEmail to</dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.toEmail"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.toEmail</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Email used as recipient for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd><a href="mailto:adminToEmail@test.local">adminToEmail@test.local</a></dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.fromName"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.fromName</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Name used as from for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd>adminEmail from</dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.fromEmail"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.fromEmail</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Email used as from for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd><a href="mailto:adminEmailfrom@test.local">adminEmailfrom@test.local</a></dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.replyName"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.replyName</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Name used as reply for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd>adminEmail reply</dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.replyEmail"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.replyEmail</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Email used as reply for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd><a href="mailto:adminEmailreply@test.local">adminEmailreply@test.local</a></dd>
+            </dl>
+</div>
+
+    </section>
+    </section>
+        <!-- content end -->
+    </div>
+</article>
+                        
+            <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center"><li class="page-item">
+                            <a class="page-link" href="../Index.html"
+                               title="Accesskey Alt(+Shift)+p">
+                                Previous
+                            </a>
+                        </li>
+                    <li class="page-item">
+                            <a class="page-link" href="../Validation/Index.html"
+                               title="Accesskey Alt(+Shift)+n">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+        </nav>
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="linkReferenceModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
+    aria-hidden="true" data-current-filename="Configuration/Emails/Index">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="linkReferenceModalLabel">Reference to the headline</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success d-none" id="permalink-alert-success" role="alert"></div>
+                <div class="mb-3">
+                    <label for="permalink-uri" class="col-form-label">Permalink</label>
+                    <div class="input-group">
+                        <input class="form-control code" id="permalink-uri" readonly>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy and freely share the link</p>
+                </div>
+                <div class="mb-3">
+                    <div class="alert alert-warning alert-permalink-rst" role="alert">This link target has no permanent anchor assigned.The link below can be used, but is prone to change if the page gets moved.
+                    </div>
+                    <label for="permalink-rst" class="col-form-label">reStructuredText (reST):</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-rst" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy this link into your TYPO3 manual. </p>
+                </div>
+                <div class="mb-3">
+                    <label for="permalink-html" class="col-form-label">HTML:</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-html" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="far fa-clone"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div></div>
+
+
+<footer class="page-footer">
+    <div class="frame frame-ruler-before frame-background-dark">
+        <div class="frame-container">
+            <div class="frame-inner">
+                                <div class="footer-additional">
+                    <p class="text-center">Last rendered: May 19, 2024 17:27</p>
+                </div>
+                <div class="footer-meta">
+                    <ul class="footer-meta-navigation">
+                        <li><a href="https://typo3.org/legal-notice" rel="nofollow" target="_blank" title="Legal Notice">Legal Notice</a></li>
+                        <li><a href="https://typo3.org/privacy-policy" rel="nofollow" target="_blank" title="Privacy Policy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../../_resources/js/popper.min.js"></script>
+<script src="../../_resources/js/bootstrap.min.js"></script>
+<script src="../../_resources/js/theme.min.js"></script>
+
+<!--
+ Locally rendered. No tracking embedded.
+-->
+</body>
+</html>

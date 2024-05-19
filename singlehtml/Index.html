@@ -1,0 +1,3495 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <title> documentation</title>
+
+    
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="phpdocumentor/guides" name="generator">
+<meta content="" name="docsearch:name">
+<meta content="" name="docsearch:package_type">
+<meta content="" name="docsearch:release">
+<meta content="" name="docsearch:version">
+<meta content="2024-05-19T17:27:37+00:00" name="docsearch:modified">
+<meta content="2024-05-19T17:27:37+00:00" name="dc.modified">
+<meta content="2024-05-19T17:27:37+00:00" property="article:modified_time">
+    <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
+<link href="../_resources/css/theme.css" rel="stylesheet">
+<link href="https://docs.typo3.org/search/" rel="search" title="Search">
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
+                </head>
+<body>
+<div class="page">
+    
+<header>
+    <div class="page-topbar">
+        <div class="page-topbar-inner">
+            <typo3-universe active="documentation">
+                <div style="display: block; height: 44px; background-color: #313131;"></div>
+            </typo3-universe>
+        </div>
+    </div>
+    <div class="page-header">
+        <div class="page-header-inner">
+            <div class="row">
+                <div class="col-sm-3 col-md-4 col-lg-6">
+                    <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
+                        <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
+                    </a>
+                </div>
+                <div class="col-sm-9 col-md-8 col-lg-6">
+                    <search role="search">
+                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                            <div class="input-group mb-3 mt-sm-3">
+                                <select class="form-select search__scope" id="searchscope" name="scope">
+                                    <option value="">Search all</option>
+                                </select>
+                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                            </div>
+                        </form>
+                    </search>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>    <main class="page-main">
+        <div class="page-main-inner">
+            <div class="page-main-navigation">
+                <nav>
+                    <input class="toc-checkbox" id="toggleToc" type="checkbox">
+
+                    
+<div class="toc-header">
+    <div class="toc-title">
+        <a class="toc-title-project" href="#"></a>
+            </div>
+    <div class="toc-actions">
+        <label class="toc-toggle" for="toggleToc">
+            Menu
+        </label>
+    </div>
+</div>                    <div class="toc-collapse">
+                                                <div aria-label="main navigation" class="toc" role="navigation">
+                                                                                </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="page-main-content">
+                <div class="rst-content">                                                                <!-- content start -->
+    <article>
+            <section class="section" id="frontend-user-registration-multipurpose-configurable-registration">
+            <h1>Frontend User Registration: Multipurpose configurable registration<a class="headerlink" href="#frontend-user-registration-multipurpose-configurable-registration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <dl class="field-list simple ">
+            <dt class="field-odd">Extension Key</dt>
+
+        <dd class="field-odd">
+            
+    <p>sf_register</p>
+        </dd>
+            <dt class="field-odd">Package name</dt>
+
+        <dd class="field-odd">
+            
+    <p>evoweb/sf-register</p>
+        </dd>
+            <dt class="field-odd">Version</dt>
+
+        <dd class="field-odd">
+            
+        </dd>
+            <dt class="field-odd">Language</dt>
+
+        <dd class="field-odd">
+            
+    <p>en</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Offers the possibility to maintain the fe_user data in frontend by the user self.</p>
+        </dd>
+            <dt class="field-odd">Copyright</dt>
+
+        <dd class="field-odd">
+            
+    <p>2010-2019</p>
+        </dd>
+            <dt class="field-odd">Author</dt>
+
+        <dd class="field-odd">
+            
+    <p>Sebastian Fischer</p>
+        </dd>
+            <dt class="field-odd">License</dt>
+
+        <dd class="field-odd">
+            
+    <p>This document is published under the
+<a href="https://www.opencontent.org/openpub/">Open Publication</a>.
+license.</p>
+        </dd>
+            <dt class="field-odd">Rendered</dt>
+
+        <dd class="field-odd">
+            
+    <p>Sun, 19 May 2024 17:27:37 +0000</p>
+        </dd>
+    </dl>
+            <hr />
+            
+    <p>The content of this document is related to TYPO3,
+a GNU/GPL CMS/Framework available from <a href="http://typo3.org">http://typo3.org</a></p>
+
+            <hr />
+            
+    <p><strong>Table of Contents</strong></p>
+
+            <div class="toctree-wrapper compound">
+    <ul class="menu-level">
+    <li class="toc-item">
+    <a href="#introduction-1">Introduction</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#users-manual">Users manual</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#administration-1">Administration</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#configuration-1">Configuration</a>
+        <ul class="menu-level-1">
+            <li class="toc-item">
+    <a href="#emails-1">Emails</a>
+
+
+</li>
+            <li class="toc-item">
+    <a href="#validation-1">Validation</a>
+
+
+</li>
+                    </ul>
+
+</li>
+    <li class="toc-item">
+    <a href="#extendability-1">Extendability</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#templating-1">Templating</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#tutorial-1">Tutorial</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#registration-actions">Registration actions</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#known-problems">Known problems</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#changelog-1">ChangeLog</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#deprecations-1">Deprecations</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#breaking-changes-1">Breaking Changes</a>
+
+
+</li>
+    </ul>
+</div>
+            
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="frontend-user-registration-multipurpose-configurable-registration">
+            <h1>Frontend User Registration: Multipurpose configurable registration<a class="headerlink" href="#frontend-user-registration-multipurpose-configurable-registration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <dl class="field-list simple ">
+            <dt class="field-odd">Extension Key</dt>
+
+        <dd class="field-odd">
+            
+    <p>sf_register</p>
+        </dd>
+            <dt class="field-odd">Package name</dt>
+
+        <dd class="field-odd">
+            
+    <p>evoweb/sf-register</p>
+        </dd>
+            <dt class="field-odd">Version</dt>
+
+        <dd class="field-odd">
+            
+        </dd>
+            <dt class="field-odd">Language</dt>
+
+        <dd class="field-odd">
+            
+    <p>en</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Offers the possibility to maintain the fe_user data in frontend by the user self.</p>
+        </dd>
+            <dt class="field-odd">Copyright</dt>
+
+        <dd class="field-odd">
+            
+    <p>2010-2019</p>
+        </dd>
+            <dt class="field-odd">Author</dt>
+
+        <dd class="field-odd">
+            
+    <p>Sebastian Fischer</p>
+        </dd>
+            <dt class="field-odd">License</dt>
+
+        <dd class="field-odd">
+            
+    <p>This document is published under the
+<a href="https://www.opencontent.org/openpub/">Open Publication</a>.
+license.</p>
+        </dd>
+            <dt class="field-odd">Rendered</dt>
+
+        <dd class="field-odd">
+            
+    <p>Sun, 19 May 2024 17:27:37 +0000</p>
+        </dd>
+    </dl>
+            <hr />
+            
+    <p>The content of this document is related to TYPO3,
+a GNU/GPL CMS/Framework available from <a href="http://typo3.org">http://typo3.org</a></p>
+
+            <hr />
+            
+    <p><strong>Table of Contents</strong></p>
+
+            <div class="toctree-wrapper compound">
+    <ul class="menu-level">
+    <li class="toc-item">
+    <a href="#introduction-1">Introduction</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#users-manual">Users manual</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#administration-1">Administration</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#configuration-1">Configuration</a>
+        <ul class="menu-level-1">
+            <li class="toc-item">
+    <a href="#emails-1">Emails</a>
+
+
+</li>
+            <li class="toc-item">
+    <a href="#validation-1">Validation</a>
+
+
+</li>
+                    </ul>
+
+</li>
+    <li class="toc-item">
+    <a href="#extendability-1">Extendability</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#templating-1">Templating</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#tutorial-1">Tutorial</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#registration-actions">Registration actions</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#known-problems">Known problems</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#changelog-1">ChangeLog</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#deprecations-1">Deprecations</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#breaking-changes-1">Breaking Changes</a>
+
+
+</li>
+    </ul>
+</div>
+            
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="introduction-1" data-rst-anchor="introduction">
+            <a id="introduction"></a>
+            <h1>Introduction<a class="headerlink" href="#introduction-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            
+    <p>This Documentation was written for version 2.0.0 of the extension.</p>
+
+            <section class="section" id="what-does-it-do">
+            <h2>What does it do?<a class="headerlink" href="#what-does-it-do" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <section class="section" id="registration-with-admin-review-and-all-notifications">
+            <h3>Registration with admin review and all notifications:<a class="headerlink" href="#registration-with-admin-review-and-all-notifications" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+    <p>When a new user fills in the registration form they will see the
+strength of their password, along with additional email address
+and password fields to ensure they are filled in correctly.</p>
+
+            
+    <p>Upon submitting the form, the user will have their data presented
+to them for review, just in case they want to change something.
+If the user submits again, the data is then stored in the database
+with a temporary usergroup. Any uploaded pictures are stored in a
+temporary folder until the user is activated.</p>
+
+            
+    <p>The user is then sent an email with a link to verify their email address.
+The website administrator also receives an email to notify them that
+a new user has registered.</p>
+
+            
+    <p>Once the user has verified their email address, the admin will be sent
+another notification, but this time containing an activation link.
+If the admin decides to accept the new user, they can click the link
+which will then update the database and set a regular usergroup for
+that user&#039;s account. One final email notification is sent to the user
+to inform them that their account is now active.</p>
+
+            
+    <p>The new user will be able to log in and see all the pages and content
+that their usergroup permits!</p>
+
+    </section>
+            <section class="section" id="features">
+            <h3>Features:<a class="headerlink" href="#features" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+
+<ul>
+    <li class="dash">Simple frontend user registration</li>
+    <li class="dash">uses extbase and fluid</li>
+    <li class="dash">admin review optional</li>
+    <li class="dash">email notification to users after each step</li>
+    <li class="dash">email notification to admin after each step</li>
+    <li class="dash">password strength indicator without javascript library</li>
+    <li class="dash">localisation support by static info tables</li>
+    <li class="dash">daylight saving support</li>
+    <li class="dash">respect AGB checkbox included</li>
+    <li class="dash">Captcha integration</li>
+    <li class="dash">email as username supported</li>
+    <li class="dash">required fields validator and some more validators out of the box</li>
+    <li class="dash">edit profile</li>
+    <li class="dash">change password</li>
+    <li class="dash">change frontend view for every form and registration step</li>
+    <li class="dash">english and german localisation included</li>
+    <li class="dash">mechanism to avoid profile images as file transfer by encrypted
+filenames and storage in temporary folders</li>
+    <li class="dash">saltedpassword encryption (if activated) or sha1- and md5 encryption
+support</li>
+    <li class="dash">configuration by TypoScript – customize to your needs</li>
+</ul>
+
+    </section>
+            <section class="section" id="screenshots">
+            <h3>Screenshots:<a class="headerlink" href="#screenshots" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <figure>
+    <img
+    src="Images/screenshot_capture.png"
+            align="left"    alt="*Illustration 1: simple register form with recaptcha*"        />
+
+
+            
+            </figure>
+            <figure>
+    <img
+    src="Images/screenshot_createform.png"
+            align="left"    alt="*Illustration 2: extensive register form with sr\_freecap*"        />
+
+
+            
+            </figure>
+    </section>
+    </section>
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="users-manual" data-rst-anchor="user-manual">
+            <a id="user-manual"></a>
+            <h1>Users manual<a class="headerlink" href="#users-manual" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <div class="contents">
+        <ul class="menu-level">
+    <li class="toc-item">
+    <a href="#changing-order-of-fields">Changing order of fields:</a>
+
+
+</li>
+    </ul>
+</div>
+            <section class="section" id="changing-order-of-fields">
+            <h2>Changing order of fields:<a class="headerlink" href="#changing-order-of-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>To change the order of fields its not necessary to edit the html template. It could be either done via TypoScript (which
+needs administrativ rights) or by the editor alone.</p>
+
+            
+    <p>For an editor its as easy as selecting the fields in the plugin and then order them in the field selection. The
+screenshot below shows the select field.</p>
+
+            <section class="section" id="screenshots">
+            <h3>Screenshots:<a class="headerlink" href="#screenshots" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <figure>
+    <img
+    src="Images/select_fields.png"
+            align="left"    alt="Illustration 1: field with which form fields are selectable and orderable"        />
+
+
+            
+            </figure>
+    </section>
+    </section>
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="administration-1" data-rst-anchor="administration">
+            <a id="administration"></a>
+            <h1>Administration<a class="headerlink" href="#administration-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            
+
+<ul>
+    <li class="dash">Install the extension with the extension manager</li>
+    <li class="dash">Install the captcha extension you want to use (sr_freecap or
+jw_recaptcha work out of the box)</li>
+    <li class="dash">install static-info-tables</li>
+    <li class="dash">include the static template</li>
+    <li class="dash">create a sysfolder to store the user data</li>
+    <li class="dash">create two fe_usergroups inside this sysfolder</li>
+    <li class="dash">BE AWARE: if you use older fe_usergroups, check the record type and set it to Tx_Extbase_Domain_Model_FrontendUserGroup, if this is missing!</li>
+    <li class="dash">Use the Constants Editor to configure the extension.</li>
+    <li class="dash">
+    <p>Create a page for register, insert the Plugin</p>
+
+
+<ul>
+    <li class="dash">Code is Create</li>
+    <li class="dash">record storage must include the sysfolder with your user data</li>
+</ul>
+</li>
+    <li class="dash">
+    <p>create a page for edit the profile, insert the Plugin</p>
+
+
+<ul>
+    <li class="dash">limit the access to the usergroup the user gets after activation</li>
+    <li class="dash">Code is Edit</li>
+    <li class="dash">record storage must include the sysfolder with your user data</li>
+</ul>
+</li>
+    <li class="dash">
+    <p>create a page for password change, include the Plugin</p>
+
+
+<ul>
+    <li class="dash">limit the access to the usergroup the user gets after activation</li>
+    <li class="dash">Code is Password</li>
+    <li class="dash">record storage must include the sysfolder with your user data</li>
+</ul>
+</li>
+</ul>
+
+            <section class="section" id="faq">
+            <h2>FAQ<a class="headerlink" href="#faq" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+
+<ul>
+    <li class="dash">Possible subsections: FAQ</li>
+</ul>
+
+    </section>
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="configuration-1" data-rst-anchor="configuration">
+            <a id="configuration"></a>
+            <h1>Configuration<a class="headerlink" href="#configuration-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <div class="toctree-wrapper compound">
+    <ul class="menu-level">
+    <li class="toc-item">
+    <a href="#emails-1">Emails</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#validation-1">Validation</a>
+
+
+</li>
+    </ul>
+</div>
+            <section class="section" id="use-another-captcha-extension">
+            <h2>use another captcha extension<a class="headerlink" href="#use-another-captcha-extension" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>You have to write a captcha adapter for this purpose. You find the
+adapters here:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>typo3conf/ext/sf_register/Classes/Services/Captcha
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>Extend class</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>\\Evoweb\\SfRegister\\Services\\Captcha\\AbstractAdapter
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>The functions</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>render()
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>and</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>isValid()
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>are required for the adapter to work.</p>
+
+    </section>
+            <section class="section" id="write-own-validators">
+            <h2>Write own validators<a class="headerlink" href="#write-own-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>You can write your own validator. Validators are stored in</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>typo3conf/ext/sf_register/Classes/Domain/Validator ,
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>extends class</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>\\TYPO3\\CMS\\Extbase\\Validation\\Validator\\AbstractValidator
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>and require the function</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>isValid().
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="reference">
+            <h2>Reference<a class="headerlink" href="#reference" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>plugin.tx_sfregister.settings:</p>
+
+            <blockquote>
+
+<ul>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>badWordList</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>string</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Comma separated list of word, that validator badWordFilter will avoid</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+            
+    <p>god, sex, password</p>
+        </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>redirectPostRegistrationPageId</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>integer</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Redirect page after registration</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+                            &nbsp;
+                    </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>redirectPostActivationPageId</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>Int</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Redirect page after activation</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+                            &nbsp;
+                    </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>useEmailAddressAsUsername</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>boolean</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Use email adress as username</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+                            &nbsp;
+                    </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>useEncryptedFilename</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>int</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Encrypt filenames</p>
+
+    <p>0 – none1 – md5</p>
+
+    <p>2 - sha1</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+            
+        </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>autologinPostRegistration</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>boolean</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Log in user after registration</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+            
+        </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>autologinPostConfirmation</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>boolean</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Log in user after activation</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+            
+        </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>usergroupPostSave</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>Int</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>FE usergroup after registration</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+                            &nbsp;
+                    </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>usergroupPostConfirm</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>Int</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>FE usergroup after activation</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+                            &nbsp;
+                    </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>usergroup</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>Int</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>FE Usergroup after activation</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+                            &nbsp;
+                    </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>filefieldname</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>String</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Fild for filenames after upload</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+            
+    <p>image</p>
+        </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>captcha.jmrecaptcha</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>String</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Adapter for Captcha-Extension jm_recaptcha</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+            
+    <p>\Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter</p>
+        </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>captcha.srfreecap</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>string</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Adapter for Captcha-Extension sr_freecap</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+            
+    <p>\Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter</p>
+        </dd>
+    </dl></li>
+</ul>
+</blockquote>
+            
+    <p>plugin.tx_sfregister.persistence:</p>
+
+            <div class="table-row">
+    
+
+<ul>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>Property:</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>Data type:</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Description:</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+            
+    <p>Default:</p>
+        </dd>
+    </dl></li>
+    <li class="dash"><dl class="field-list simple ">
+            <dt class="field-odd">Property</dt>
+
+        <dd class="field-odd">
+            
+    <p>StoragePid</p>
+        </dd>
+            <dt class="field-odd">Data type</dt>
+
+        <dd class="field-odd">
+            
+    <p>integer</p>
+        </dd>
+            <dt class="field-odd">Description</dt>
+
+        <dd class="field-odd">
+            
+    <p>Sysfolder with FE User records</p>
+        </dd>
+            <dt class="field-odd">Default</dt>
+
+        <dd class="field-odd">
+                            &nbsp;
+                    </dd>
+    </dl></li>
+</ul>
+
+</div>
+
+    </section>
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="emails-1" data-rst-anchor="emails">
+            <a id="emails"></a>
+            <h1>Emails<a class="headerlink" href="#emails-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <div class="contents">
+        <ul class="menu-level">
+    <li class="toc-item">
+    <a href="#admin-registration-properties">Admin registration properties</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#admin-edit-properties">Admin edit properties</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#user-registration-properties">User registration properties</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#user-edit-properties">User edit properties</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#address-and-subject-properties">Address and subject properties</a>
+
+
+</li>
+    </ul>
+</div>
+            <section class="section" id="admin-registration-properties" data-rst-anchor="notifyAdminPostCreateSave">
+            <h2>Admin registration properties<a class="headerlink" href="#admin-registration-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Property</th>
+                            <th>Data types</th>
+                            <th>stdWrap</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#notifyAdminPostCreateSave">notifyAdminPostCreateSave</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostCreateConfirm">notifyAdminPostCreateConfirm</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostCreateRefuse">notifyAdminPostCreateRefuse</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostCreateAccept">notifyAdminPostCreateAccept</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostCreateDecline">notifyAdminPostCreateDecline</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#acceptEmailPostCreate">acceptEmailPostCreate</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="notifyAdminPostCreateSave"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostCreateSave</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user saved the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostCreateConfirm"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostCreateConfirm</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user confirmed the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostCreateRefuse"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostCreateRefuse</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user refused the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostCreateAccept"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostCreateAccept</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the admin accepted the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostCreateDecline"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostCreateDecline</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the admin declined the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="acceptEmailPostCreate"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>acceptEmailPostCreate</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin need to accept the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+    </section>
+            <section class="section" id="admin-edit-properties" data-rst-anchor="notifyAdminPostEditSave">
+            <h2>Admin edit properties<a class="headerlink" href="#admin-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Property</th>
+                            <th>Data types</th>
+                            <th>stdWrap</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#notifyAdminPostEditSave">notifyAdminPostEditSave</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostEditConfirm">notifyAdminPostEditConfirm</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyAdminPostEditAccept">notifyAdminPostEditAccept</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#acceptEmailPostEdit">acceptEmailPostEdit</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="notifyAdminPostEditSave"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostEditSave</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user saved the changes</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostEditConfirm"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostEditConfirm</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user confirmed the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyAdminPostEditAccept"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyAdminPostEditAccept</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin should get an email after the user accepted the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="acceptEmailPostEdit"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>acceptEmailPostEdit</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the admin need to accepted the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+    </section>
+            <section class="section" id="user-registration-properties" data-rst-anchor="notifyUserPostCreateSave">
+            <h2>User registration properties<a class="headerlink" href="#user-registration-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Property</th>
+                            <th>Data types</th>
+                            <th>stdWrap</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#notifyUserPostCreateSave">notifyUserPostCreateSave</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostCreateConfirm">notifyUserPostCreateConfirm</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostCreateRefuse">notifyUserPostCreateRefuse</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostCreateAccept">notifyUserPostCreateAccept</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostCreateDecline">notifyUserPostCreateDecline</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#confirmEmailPostCreate">confirmEmailPostCreate</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="notifyUserPostCreateSave"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostCreateSave</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user saved the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostCreateConfirm"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostCreateConfirm</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user confirmed the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostCreateRefuse"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostCreateRefuse</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user refused the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostCreateAccept"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostCreateAccept</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the admin accepted the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostCreateDecline"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostCreateDecline</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the admin declined the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="confirmEmailPostCreate"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>confirmEmailPostCreate</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user need to confirm the registration</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+    </section>
+            <section class="section" id="user-edit-properties" data-rst-anchor="notifyUserPostEditSave">
+            <h2>User edit properties<a class="headerlink" href="#user-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Property</th>
+                            <th>Data types</th>
+                            <th>stdWrap</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#notifyUserPostEditSave">notifyUserPostEditSave</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostEditConfirm">notifyUserPostEditConfirm</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#notifyUserPostEditAccept">notifyUserPostEditAccept</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
+            <td><a href="#confirmEmailPostEdit">confirmEmailPostEdit</a></td>            <td></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="notifyUserPostEditSave"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostEditSave</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user saved the changes</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostEditConfirm"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostEditConfirm</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user confirmed the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="notifyUserPostEditAccept"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>notifyUserPostEditAccept</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user should get an email after the user accepted the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="confirmEmailPostEdit"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>acceptEmailPostEdit</dd>
+                                <dt>Data type</dt>
+        
+        <dd>boolean</dd>
+                                <dt>Description</dt>
+        
+        <dd>Defines wether the user need to confirm the email change</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+    </section>
+            <section class="section" id="address-and-subject-properties" data-rst-anchor="sitename">
+            <h2>Address and subject properties<a class="headerlink" href="#address-and-subject-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Property</th>
+                            <th>Data types</th>
+                            <th>stdWrap</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#sitename">sitename</a></td>            <td></td>            <td>no</td>            <td>dummy Site</td>    </tr>    <tr>
+            <td>userEmail.fromName_</td>            <td></td>            <td>no</td>            <td>userEmail from</td>    </tr>    <tr>
+            <td>userEmail.fromEmail_</td>            <td></td>            <td>no</td>            <td><a href="mailto:userEmailfrom@test.local">userEmailfrom@test.local</a></td>    </tr>    <tr>
+            <td>userEmail.replyName_</td>            <td></td>            <td>no</td>            <td>userEmail reply</td>    </tr>    <tr>
+            <td>userEmail.replyEmail_</td>            <td></td>            <td>no</td>            <td><a href="mailto:userEmailreply@test.local">userEmailreply@test.local</a></td>    </tr>    <tr>
+            <td>adminEmail.toName_</td>            <td></td>            <td>no</td>            <td>adminEmail to</td>    </tr>    <tr>
+            <td>adminEmail.toEmail_</td>            <td></td>            <td>no</td>            <td><a href="mailto:adminToEmail@test.local">adminToEmail@test.local</a></td>    </tr>    <tr>
+            <td>adminEmail.fromName_</td>            <td></td>            <td>no</td>            <td>adminEmail from</td>    </tr>    <tr>
+            <td>adminEmail.fromEmail_</td>            <td></td>            <td>no</td>            <td><a href="mailto:adminEmailfrom@test.local">adminEmailfrom@test.local</a></td>    </tr>    <tr>
+            <td>adminEmail.replyName_</td>            <td></td>            <td>no</td>            <td>adminEmail reply</td>    </tr>    <tr>
+            <td>adminEmail.replyEmail_</td>            <td></td>            <td>no</td>            <td><a href="mailto:adminEmailreply@test.local">adminEmailreply@test.local</a></td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="sitename"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>sitename</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Page Title for email subject</dd>
+                                <dt>Default</dt>
+        
+        <dd>dummy Site</dd>
+            </dl>
+</div>
+
+            <a id="userEmail.fromName"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>userEmail.fromName</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Name used as from for email to user</dd>
+                                <dt>Default</dt>
+        
+        <dd>userEmail from</dd>
+            </dl>
+</div>
+
+            <a id="userEmail.fromEmail"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>userEmail.fromEmail</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>EMail used as from for email to user</dd>
+                                <dt>Default</dt>
+        
+        <dd><a href="mailto:userEmailfrom@test.local">userEmailfrom@test.local</a></dd>
+            </dl>
+</div>
+
+            <a id="userEmail.replyName"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>userEmail.replyName</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Name used as reply for email to user</dd>
+                                <dt>Default</dt>
+        
+        <dd>userEmail reply</dd>
+            </dl>
+</div>
+
+            <a id="userEmail.replyEmail"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>userEmail.replyEmail</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Email used as reply for email to user</dd>
+                                <dt>Default</dt>
+        
+        <dd><a href="mailto:userEmailreply@test.local">userEmailreply@test.local</a></dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.toName"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.toName</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Name used as recipient for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd>adminEmail to</dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.toEmail"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.toEmail</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Email used as recipient for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd><a href="mailto:adminToEmail@test.local">adminToEmail@test.local</a></dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.fromName"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.fromName</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Name used as from for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd>adminEmail from</dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.fromEmail"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.fromEmail</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Email used as from for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd><a href="mailto:adminEmailfrom@test.local">adminEmailfrom@test.local</a></dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.replyName"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.replyName</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Name used as reply for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd>adminEmail reply</dd>
+            </dl>
+</div>
+
+            <a id="adminEmail.replyEmail"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>adminEmail.replyEmail</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Email used as reply for email to admin</dd>
+                                <dt>Default</dt>
+        
+        <dd><a href="mailto:adminEmailreply@test.local">adminEmailreply@test.local</a></dd>
+            </dl>
+</div>
+
+    </section>
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="validation-1" data-rst-anchor="validation">
+            <a id="validation"></a>
+            <h1>Validation<a class="headerlink" href="#validation-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <div class="contents">
+        <ul class="menu-level">
+    <li class="toc-item">
+    <a href="#purpose-of-validators">Purpose of Validators</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#changes-since-version-9-0-0">Changes since version 9.0.0</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#different-possibilities-of-assigning-validators">Different possibilities of assigning validators</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#separate-validators-per-process">Separate validators per process</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#special-validators">Special validators</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#prefixing-needed-for-non-extbase-validators">Prefixing needed for non extbase validators</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#available-validators">Available validators</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#special-fields-validators">Special fields Validators</a>
+
+
+</li>
+    </ul>
+</div>
+            <section class="section" id="purpose-of-validators">
+            <h2>Purpose of Validators<a class="headerlink" href="#purpose-of-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Validators are a mechanism to ensure that all information given by the user
+meet your expectation as an admin. Either if the values make sense in terms
+of format like emails oder in required information value like age verification.</p>
+
+            
+    <p>If values need to be enforce your should use the <a href="#RequiredValidator">RequiredValidator</a> because
+this validator does not only check if the value of the configured field is
+filled but it also serves as a signal for the Required Partial to render the
+corresponding flag.</p>
+
+            
+    <p>All validators are optional, could be set single or may be even assigned multiple
+times to a field. Despite the concept of extbase you are free to choose how many
+validators should take care of a value.</p>
+
+    </section>
+            <section class="section" id="changes-since-version-9-0-0">
+            <h2>Changes since version 9.0.0<a class="headerlink" href="#changes-since-version-9-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Since version 9 validators are only used for selected fields, it&#039;s not necessary
+to remove validation configuration only because certain fields should not be
+present in the form.
+Beside that the configuration changed from using &quot;EvowebSfRegisterValidationValidatorRequiredValidator&quot;
+to &quot;Evoweb.SfRegister:Required&quot;</p>
+
+            
+    <p>In general the pattern for a validation rule is</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&quot;name&quot;, options={&quot;parameter1&quot;: valueA, &quot;parameter2&quot;: valueB}
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>The name needs to be quoted followed with a comma if options are following. Then
+the options with an equal sign and json notated properties and values.</p>
+
+    </section>
+            <section class="section" id="different-possibilities-of-assigning-validators">
+            <h2>Different possibilities of assigning validators<a class="headerlink" href="#different-possibilities-of-assigning-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>In case you want to have no validation at all for a field was was configured
+by default as required you need to empty the associated validators. Look at the
+example given where the validators of the email gets removed.</p>
+
+            <section class="section" id="remove-validators">
+            <h3>Remove validators:<a class="headerlink" href="#remove-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.email &gt;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>If only one validator is needed you could assign it directly to the field like
+below.</p>
+
+    </section>
+            <section class="section" id="assign-only-one-validator">
+            <h3>Assign only one validator:<a class="headerlink" href="#assign-only-one-validator" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.passwordRepeat = &quot;Evoweb.SfRegister:Repeat&quot;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>And finaly it&#039;s possible to have multiple validators for one field like in the
+next example.</p>
+
+    </section>
+            <section class="section" id="assign-multiple-validators">
+            <h3>Assign multiple validators:<a class="headerlink" href="#assign-multiple-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+	1 = &quot;Evoweb.SfRegister:Required&quot;
+	2 = &quot;Evoweb.SfRegister:BadWord&quot;
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>Regarding validator it&#039;s possible to have values attached to the assigned one.
+This is beneficial if you want to check against conditions that are not equal
+in different cases. One point where this is shown best with is the length of
+passwords. One would like to keep it simple as possible  because the loss would
+be nearly not existing while another would prefer the passwords stronger than
+for Fort Knox.</p>
+
+    </section>
+            <section class="section" id="poor-man-s-passwords-with-short-length">
+            <h3>Poor man´s passwords with short length:<a class="headerlink" href="#poor-man-s-passwords-with-short-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+	1 = &quot;Evoweb.SfRegister:Required&quot;
+	2 = &quot;StringLength&quot;, options={&quot;minimum&quot;: 4, &quot;maximum&quot;: 8}
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="bulletproof-passwords-with-long-length">
+            <h3>Bulletproof passwords with long length:<a class="headerlink" href="#bulletproof-passwords-with-long-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+	1 = &quot;Evoweb.SfRegister:Required&quot;
+	2 = &quot;StringLength&quot;, options={&quot;minimum&quot;: 8, &quot;maximum&quot;: 40}
+	3 = &quot;Evoweb.SfRegister:BadWord&quot;
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>In total you have five possible combination of validator assignments for each
+field that you use in your form. You have none, one and multiple validators.
+And in case of a validator present you can add options too override the default
+that is set in the validator.</p>
+
+    </section>
+    </section>
+            <section class="section" id="separate-validators-per-process">
+            <h2>Separate validators per process<a class="headerlink" href="#separate-validators-per-process" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Each process has its own needs. While you want to have the username validated on
+creation, this is not needed in the edit or password change form. This could
+be achieved by separating the TypoScript settings in different conditions per
+page. But this is mostly inconvenient as you don&#039;t see what settings is met until
+the condition. Because of this the validation settings are split for any process.</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation {
+	create {
+		[...]
+	}
+	edit {
+		[...]
+	}
+	password {
+		[...]
+	}
+	invite {
+		[...]
+	}
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="special-validators">
+            <h2>Special validators<a class="headerlink" href="#special-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>The UserValidator is not meant to be used for field validation. This validator
+is a special construct to make the configuration via TypoScript possible. All
+others are free to combine. If a validator is only suited for a certain field
+it will be mentioned in the detail configuration.</p>
+
+    </section>
+            <section class="section" id="prefixing-needed-for-non-extbase-validators">
+            <h2>Prefixing needed for non extbase validators<a class="headerlink" href="#prefixing-needed-for-non-extbase-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>To use the extension validators you need to prefix them in the TypoScript with
+Evoweb.SfRegister: . For all validators without this prefix the validation assumes
+that they are extbase specific validators and use them as such.</p>
+
+            
+    <p>Secondly this makes it possible to use custom validators that do not come with
+extbase or sf_register. Just code your validator and make it available for auto
+loading (either in an extbase standard path or via ext_autoload.php). Afterwards
+you are ready to use your validator like in the following example.</p>
+
+            <section class="section" id="custom-validator-usage">
+            <h3>Custom validator usage:<a class="headerlink" href="#custom-validator-usage" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password = &quot;Evoweb.SfRegister:Required&quot;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+    </section>
+            <section class="section" id="available-validators" data-rst-anchor="BadWordValidator">
+            <h2>Available validators<a class="headerlink" href="#available-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Beside the validators that come with extbase and which are although available
+in the different processes, the registration come with a set of specific ones
+that are tailored to the special need. The following lists all validators
+which are suited for the usage on fields.</p>
+
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Validator</th>
+                            <th>Options</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#BadWordValidator">BadWordValidator</a></td>            <td>configured by plugin.tx_sfregister.settings.badWordList</td>    </tr>    <tr>
+            <td><a href="#IsTrueValidator">IsTrueValidator</a></td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#RequiredValidator">RequiredValidator</a></td>            <td>&nbsp;</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="BadWordValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>BadWordValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Checks if the field contains non of the word in the list is present</dd>
+                                <dt>Configured in</dt>
+        
+        <dd>plugin.tx_sfregister.settings.badWordList</dd>
+                                <dt>Default</dt>
+        
+        <dd>god, sex, password</dd>
+            </dl>
+</div>
+
+            <a id="IsTrueValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>IsTrueValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Checks if the field is set for example the general terms and conditions</dd>
+            </dl>
+</div>
+
+            <a id="RequiredValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>RequiredValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>This validator serves two purpose. First of check if the field contains
+a value and that it is not empty. Second the rendering uses this
+validator as condition to render required sign or not.</dd>
+            </dl>
+</div>
+
+    </section>
+            <section class="section" id="special-fields-validators" data-rst-anchor="CaptchaValidator">
+            <h2>Special fields Validators<a class="headerlink" href="#special-fields-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Validator</th>
+                            <th>Assign to field</th>
+                            <th>Options</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#CaptchaValidator">CaptchaValidator</a></td>            <td>captcha</td>            <td>type</td>            <td>srfreecap</td>    </tr>    <tr>
+            <td><a href="#EmptyValidator">EmptyValidator</a></td>            <td>auto-assigned to uid in create</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#EqualCurrentPasswordValidator">EqualCurrentPasswordValidator</a></td>            <td>oldPassword</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#EqualCurrentUserValidator">EqualCurrentUserValidator</a></td>            <td>auto-assigned to uid in edit</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#ImageUploadValidator">ImageUploadValidator</a></td>            <td>image</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#RepeatValidator">RepeatValidator</a></td>            <td>email oder password</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#UniqueValidator">UniqueValidator</a></td>            <td>any, best for email and username</td>            <td>global</td>            <td>0</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="CaptchaValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>CaptchaValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>
+    <p>Checks if the entered value matches the captcha text by using the same
+captcha adapter like the one used for the rendering. Therefor the option
+type needs to equal the configuration of the rendering.</p>
+
+    <p>Likewise the rendering of the captcha its possible to use custom
+captchas to validate. How to use create custom is described in
+<a href="#AddCustomCaptcha">Bring in your own captcha</a></p>
+</dd>
+                                <dt>Options:</dt>
+        
+        <dd>type = [srfreecap, jmrecaptcha, recaptcha]</dd>
+                                <dt>Default:</dt>
+        
+        <dd>recaptcha</dd>
+            </dl>
+</div>
+
+            <a id="EmptyValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>EmptyValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Checks if the field uid is empty to no unauthorized user manipulation
+could happen</dd>
+                                <dt>Specialty:</dt>
+        
+        <dd>This validator gets auto-assigned to the uid field in the create process</dd>
+            </dl>
+</div>
+
+            <a id="EqualCurrentPasswordValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>EqualCurrentPasswordValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>This validator is used in the password change process. It compares if the
+entered old password is equal to the current set password for the account
+the user is logged in with.</dd>
+            </dl>
+</div>
+
+            <a id="EqualCurrentUserValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>EqualCurrentUserValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>On edit process it&#039;s important that the correct user data get modified. To
+ensure that the submitted data does not temper the user id. This
+validator compares the user id send by the form with the user id of
+the logged in user to prevent and change of the id.</dd>
+                                <dt>Specialty:</dt>
+        
+        <dd>This validator gets auto-assigned to the uid field in the edit process</dd>
+            </dl>
+</div>
+
+            <a id="ImageUploadValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>ImageUploadValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>The image upload validator checks if the file uploaded has an allowed
+file extension and if the file size is in the allowed max size. Both
+checks uses system configuration.</dd>
+                                <dt>Configuration:</dt>
+        
+        <dd>file extension is configured by $GLOBALS[&#039;TCA&#039;][&#039;fe_users&#039;][&#039;columns&#039;][&#039;image&#039;][&#039;config&#039;][&#039;allowed&#039;]
+file size is configured by $GLOBALS[&#039;TCA&#039;][&#039;fe_users&#039;][&#039;columns&#039;][&#039;image&#039;][&#039;config&#039;][&#039;max_size&#039;]</dd>
+            </dl>
+</div>
+
+            <a id="UniqueValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>UniqueValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>
+    <p>Checks if the value is unique for the field in the storage folder. If
+the option &#039;global&#039; is set a second check for the value in the field is
+done system wide.</p>
+
+    <p>By this you could define that an email address is unique either in the
+local context or for the complex TYPO3 cms installation. So if you have
+multiple newsletters that could get registered its ideal to choose only
+the global = 0 check, so an user could register multiple times.</p>
+
+    <p>If the username should be only available once in the system to prevent
+collisions in authentication you would choose to set globals = 1 .</p>
+</dd>
+                                <dt>Options:</dt>
+        
+        <dd>global = [0,1]</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="RepeatValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>RepeatValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>
+    <p>To ensure that the input of a user was done without mistake by the user
+self it&#039;s a good idea to have the values entered in two fields and then
+compare their values. That is possible with this validator.</p>
+
+    <p>The fields need to be present with the pattern [fieldName] and
+[fieldName]Repeat. Where fieldName is free to choose. While Repeat is
+not configurable by now this validator is only usable for email and
+password fields.</p>
+</dd>
+            </dl>
+</div>
+
+    </section>
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="extendability-1" data-rst-anchor="extendability">
+            <a id="extendability"></a>
+            <h1>Extendability<a class="headerlink" href="#extendability-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <div class="contents">
+        <ul class="menu-level">
+    <li class="toc-item">
+    <a href="#use-your-own-flavor-of-fields">Use your own flavor of fields</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#adding-custom-properties">Adding custom properties</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#bring-in-your-own-captcha">Bring in your own captcha</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#psr-14-events">PSR-14 Events</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#how-to-implement-a-slot">How to implement a slot</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#available-events">Available events</a>
+
+
+</li>
+    </ul>
+</div>
+            <section class="section" id="use-your-own-flavor-of-fields" data-rst-anchor="CreateCustomFields">
+            <a id="CreateCustomFields"></a>
+            <h2>Use your own flavor of fields<a class="headerlink" href="#use-your-own-flavor-of-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Since version 8.8.0 its easier then ever to user your own fields. Just add your partial folder via typoscript and
+register your own field configuration. After that you need to tell the user ts config that the new type is available to
+be selected in the plugin too.</p>
+
+            
+    <p><strong>Fields.typoscript</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.view.partialRootPaths.50 = EXT:your_extension/Resources/Private/Partials/
+plugin.tx_sfregister.settings.fields.configuration {
+   your_field_key {
+      partial = YourFieldKey
+      backendLabel = LLL:EXT:your_extension/Resources/Private/Language/locallang_be.xlf:your_field_key
+   }
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p><strong>ext_localconf.php</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
+&#039;@import \&#039;EXT:sf_register/Configuration/TypoScript/Fields.typoscript\&#039;&#039;
+);
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p><strong>TypoScript Setup</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>@import &#039;EXT:sf_register/Configuration/TypoScript/Fields.typoscript&#039;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>By using the same fields file both in typoscript as well as in user ts config. No additional configuration is needed.</p>
+
+            
+    <p>In your partials there are the following information available</p>
+
+            
+
+<ul>
+    <li>{user} the user object with previous entered values</li>
+    <li>{fieldName} the name of the field in the user object</li>
+    <li>{options} every value that is inside of the field config {partial, backendLabel, etc}</li>
+    <li>{settings} the general plugin settings</li>
+</ul>
+
+    </section>
+            <section class="section" id="adding-custom-properties" data-rst-anchor="AddCustomProperties">
+            <a id="AddCustomProperties"></a>
+            <h2>Adding custom properties<a class="headerlink" href="#adding-custom-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Since late the frontend user domain model can be extended. This can be done the extension &#039;extender_&#039;
+which sole purpose is to extend extbase domain models. There is an <a href="https://github.com/evoWeb/ew_sfregister_extended">example</a> on how to use the extender.</p>
+
+            
+    <p>If you run into problems extending please be aware that the only solution supported is by the use of &#039;extender&#039;.</p>
+
+            
+    <p>In this example its noteworthy that the last array key is not required but adviced.</p>
+
+            
+    <p>The path to the file matches extension key and extbase compatible path to the domain model.</p>
+
+            
+    <p>For highlighting purpose its adviced to let the domain model extend from \Evoweb\SfRegister\Domain\Model\FrontendUser</p>
+
+            
+    <p><strong>ext_localconf.php</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;sf_register&#039;][&#039;extender&#039;][\Evoweb\SfRegister\Domain\Model\FrontendUser::class][&#039;cem_sitepackage&#039;] = &#039;EXT:cem_sitepackage/Classes/Domain/Model/FrontendUser.php&#039;;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>Beside extending the domain model with property and get-/set-method a field needs to be
+created for sql and registered in TCA.</p>
+
+            
+    <p><strong>ext_tables.sql</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>#
+# Table structure for table &#039;fe_users&#039;
+#
+CREATE TABLE fe_users (
+	extending varchar(60) DEFAULT &#039;&#039;,
+);
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p><strong>TCA/Overrides/fe_users.php</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>$temporaryColumns = array(
+	&#039;extending&#039; =&gt; array(
+		&#039;exclude&#039; =&gt; 1,
+		&#039;label&#039; =&gt; &#039;extending&#039;,
+		&#039;config&#039; =&gt; array(
+			&#039;type&#039; =&gt; &#039;input&#039;,
+			&#039;readOnly&#039; =&gt; TRUE,
+		)
+	),
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns(&#039;fe_users&#039;, $temporaryColumns, 1);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(&#039;fe_users&#039;, &#039;extending&#039;);
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="bring-in-your-own-captcha" data-rst-anchor="AddCustomCaptcha">
+            <a id="AddCustomCaptcha"></a>
+            <h2>Bring in your own captcha<a class="headerlink" href="#bring-in-your-own-captcha" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>By implementing a adapter which is extending the \Evoweb\SfRegister\Services\Captcha\AbstractAdapter you are able
+to add an own captcha. The adapter now then has to be configured to be usable by adding typoscript settings like the
+following taken from recaptcha_:</p>
+
+            
+    <p><strong>Captcha.typoscript</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings {
+   # register recaptcha as captcha possibility
+   captcha.recaptcha = Evoweb\Recaptcha\Adapter\SfRegisterAdapter
+
+   fields {
+      configuration {
+         # change captcha field type to recaptcha
+         captcha.type = Recaptcha
+      }
+   }
+
+   validation.create {
+      # tell validation to use recaptcha adapter
+      captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = recaptcha)
+   }
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="psr-14-events" data-rst-anchor="Psr14Event">
+            <a id="Psr14Event"></a>
+            <h2>PSR-14 Events<a class="headerlink" href="#psr-14-events" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>This kind of event is superseding Hooks and Signal-Slots in TYPO3 and are the
+way to go. That&#039;s why all signals are replaced with their event counterparts.</p>
+
+    </section>
+            <section class="section" id="how-to-implement-a-slot">
+            <h2>How to implement a slot<a class="headerlink" href="#how-to-implement-a-slot" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>An <a href="https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/ApiOverview/Hooks/EventDispatcher/Index.html">overview</a> on how to configure and interact with events was given on the
+Developer Days in 2019. The detailed example shows how to configure them in the
+Services.yaml:</p>
+
+            
+    <p><strong>YourEventListener.php</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>use Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
+
+class YourEventListener
+{
+   #[AsEventListener(&#039;your-extension-identifier&#039;, ProcessInitializeActionEvent::class)]
+   public function __invoke(ProcessInitializeActionEvent $event): void
+   {
+   }
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>The code above shows how to get an event listener is registered to an event.</p>
+
+    </section>
+            <section class="section" id="available-events">
+            <h2>Available events<a class="headerlink" href="#available-events" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Event</th>
+                            <th>Parameter</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\InitializeActionEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">FeuserController</code>, <code>array</code></td>    </tr>    <tr>
+            <td>FeuserCreateController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreatePreviewEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateRefuseEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateAcceptEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateDeclineEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code></td>    </tr>    <tr>
+            <td>FeuserDeleteController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\DeleteFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\DeleteSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\DeleteConfirmEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code></td>    </tr>    <tr>
+            <td>FeuserEditController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\EditFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\EditPreviewEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\EditSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\EditConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\EditAcceptEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code></td>    </tr>    <tr>
+            <td>FeuserInviteController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\InviteFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\InviteInviteEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>bool</code></td>    </tr>    <tr>
+            <td>FeuserPasswordController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\PasswordFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\PasswordSaveEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code></td>    </tr>    <tr>
+            <td>FeuserResendController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\ResendFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\ResendMailEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\Email</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\Email</code>, <code>array</code></td>    </tr>    <tr>
+            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminCreateAcceptEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminCreateConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminCreateDeclineEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminCreateRefuseEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminCreateSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminDeleteConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminDeleteSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminEditAcceptEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminEditConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminEditSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminInviteInviteEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminResendMailEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserCreateAcceptEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserCreateConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserCreateDeclineEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserCreateRefuseEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserCreateSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserDeleteConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserDeleteSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserEditAcceptEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserEditConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserEditSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserInviteInviteEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserResendMailEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\InvitationToRegisterEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\PreSubmitMailEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">TYPO3\CMS\Core\Mail\MailMessage</code>, <code>array</code>, <code>array</code></td>    </tr></tbody>    </table>
+</div>
+    </section>
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="templating-1" data-rst-anchor="templating">
+            <a id="templating"></a>
+            <h1>Templating<a class="headerlink" href="#templating-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <div class="toctree-wrapper compound">
+    <ul class="menu-level">
+    </ul>
+</div>
+            <section class="section" id="template-for-dynamic-fields">
+            <h2>Template for dynamic fields:<a class="headerlink" href="#template-for-dynamic-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Since version 8.8.0 the forms are rendered by partials. Create and Edit form fields are defined in typoscript or
+selected in the plugin and then rendered by a loop which calls the configured partial per field.</p>
+
+            
+    <p>This was made to be able to only change one field alone through modifying the partial.</p>
+
+            
+    <p>Additionaly its now possible to select the fields needed in the content instead the need to add typoscript for the one
+page where the registration should be different.</p>
+
+            
+    <p>As its not always needed to define your field selection there are some defaults configured out of the box.</p>
+
+            
+    <p><strong>Fields/setup.typoscript</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.fields.defaultSelected {
+   create { }
+   edit { }
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>Word of advise to those that upgrade an existing installation. To make use of this feature in your old templates you
+need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
+
+            
+    <p><strong>Form.html</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&lt;f:for each=&quot;{settings.fields.selected}&quot; as=&quot;selectedField&quot;&gt;
+	&lt;f:alias map=&quot;{options: &#039;{settings.fields.configuration.{selectedField}}&#039;}&quot;&gt;
+		&lt;f:render partial=&quot;Form/{options.partial}&quot;
+			arguments=&quot;{user: user, fieldName: selectedField, options: options, settings: settings}&quot;/&gt;
+	&lt;/f:alias&gt;
+&lt;/f:for&gt;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="customize-the-output">
+            <h2>Customize the output:<a class="headerlink" href="#customize-the-output" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Per default, all templates are stored in</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>typo3conf/ext/sf_register/Resources/Private/
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>Copy files you want to modify of the folder into the fileadmin.
+Don&#039;t forget to set the path to this new templates folder with.</p>
+
+            
+    <p>Since TYPO3 6.2 its possible to have so called fallback paths for
+template, partial and layout root paths. By this its not necessary to
+copy all files of given path any more.</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.view.templateRootPaths.0 = EXT:sf_register/Resources/Private/Templates/
+plugin.tx_sfregister.view.templateRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/
+
+plugin.tx_sfregister.view.partialRootPaths.0 = EXT:sf_register/Resources/Private/Partials/
+plugin.tx_sfregister.view.partialRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/Partials/
+
+plugin.tx_sfregister.view.layoutRootPaths.0 = EXT:sf_register/Resources/Private/Layouts/
+plugin.tx_sfregister.view.layoutRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/Layouts/
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>In pre and post TYPO3 6.2 version its possible to define a template rootpath in
+the registration plugin. This gets add/set to the view and used for rendering.</p>
+
+            <section class="section" id="viewhelper-for-templates">
+            <h3>Viewhelper for templates:<a class="headerlink" href="#viewhelper-for-templates" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <section class="section" id="birthdate-with-three-select-boxes">
+            <h4>Birthdate with three select boxes<a class="headerlink" href="#birthdate-with-three-select-boxes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&lt;register:form.rangeSelect start=&quot;1&quot; end=&quot;31&quot; property=&quot;dateOfBirthDay&quot;/&gt;
+-
+&lt;register:form.rangeSelect start=&quot;1&quot; end=&quot;12&quot; property=&quot;dateOfBirthMonth&quot;/&gt;
+-
+&lt;register:form.rangeSelect start=&quot;1960&quot; end=&quot;2011&quot; property=&quot;dateOfBirthYear&quot;/&gt;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            <figure>
+    <img
+    src="Images/screenshot_dateselectors.png"
+            align="left"    alt="1"        />
+
+
+            
+            </figure>
+    </section>
+            <section class="section" id="single-select-with-radio-buttons">
+            <h4>Single select with radio buttons<a class="headerlink" href="#single-select-with-radio-buttons" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&lt;f:form.radio property=&quot;gender&quot; value=&quot;1&quot;/&gt; &lt;f:translate key=&quot;gender_1&quot;/&gt;
+&lt;f:form.radio property=&quot;gender&quot; value=&quot;2&quot;/&gt; &lt;f:translate key=&quot;gender_2&quot;/&gt;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            <figure>
+    <img
+    src="Images/screenshot_genderradio.png"
+            align="left"    alt="1"        />
+
+
+            
+            </figure>
+    </section>
+            <section class="section" id="single-select-as-select-box">
+            <h4>Single select as select box<a class="headerlink" href="#single-select-as-select-box" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&lt;f:form.select property=&quot;gender&quot; options=&quot;{
+	1: &#039;{f:translate(key: \&#039;gender_1\&#039;)}&#039;,
+	2: &#039;{f:translate(key: \&#039;gender_2\&#039;)}&#039;
+}&quot;/&gt;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            <figure>
+    <img
+    src="Images/screenshot_genderselect.png"
+            align="left"    alt="1"        />
+
+
+            
+            </figure>
+    </section>
+            <section class="section" id="automatic-marking-of-requried-fields">
+            <h4>Automatic marking of requried fields<a class="headerlink" href="#automatic-marking-of-requried-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&lt;f:render partial=&quot;required&quot; arguments=&quot;{field: &#039;gender&#039;}&quot;/&gt;
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>you get the asterix (*) behind your label, if the required validator
+is active for this field.</p>
+
+    </section>
+    </section>
+    </section>
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="tutorial-1" data-rst-anchor="tutorial">
+            <a id="tutorial"></a>
+            <h1>Tutorial<a class="headerlink" href="#tutorial-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <section class="section" id="how-to-setup-different-registration-processes">
+            <h2>How to setup different registration processes?<a class="headerlink" href="#how-to-setup-different-registration-processes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>It is possible to have simple registrations like directly activated user accounts as well as complex ones like double optin
+confirmations with admin acceptance. So if its possible to have different approches how to set them up?</p>
+
+            <section class="section" id="simple-like-peanut-butter-jelly-sandwich">
+            <h3>Simple like peanut butter jelly sandwich:<a class="headerlink" href="#simple-like-peanut-butter-jelly-sandwich" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+
+<ul>
+    <li class="dash">
+    <p>In the Extension Manager</p>
+
+
+<ul>
+    <li class="dash">install the extension</li>
+    <li class="dash">in Extension Settings choose &#039;minimal&#039; in TypoScript complexity</li>
+</ul>
+</li>
+    <li class="dash">
+    <p>In modul List</p>
+
+
+<ul>
+    <li class="dash">add a storage folder and remember the storage folder id</li>
+    <li class="dash">add a usergroup with name of your choice in this storage folder</li>
+    <li class="dash">add a page named Registration</li>
+    <li class="dash">in the page page properties on tab Resources select the storage folder in field &#039;General Record Storage Page&#039;</li>
+    <li class="dash">on this page add a plugin type &#039;Registration for create, edit or delete Frontend Users&#039;</li>
+</ul>
+</li>
+    <li class="dash">
+    <p>In the plugin</p>
+
+
+<ul>
+    <li class="dash">select &#039;Create&#039; in the &#039;What action should be taken?&#039; select box</li>
+    <li class="dash">leave the Template root path empty until you know what you do</li>
+</ul>
+</li>
+    <li class="dash">
+    <p>In modul Template</p>
+
+
+<ul>
+    <li class="dash">choose &#039;Info/Modify&#039;</li>
+    <li class="dash">edit the whole template record</li>
+    <li class="dash">add the include static &#039;Feuser Register [minimal] (sf_register)&#039; and save and close the TypoScript</li>
+    <li class="dash">choose the Constant Editor</li>
+    <li class="dash">activate and set the remembered usergroup id in the field &#039;usergroup set if no activation is needed&#039;:
+(the result in constants field is plugin.tx_sfregister.settings.usergroup = 3)</li>
+</ul>
+</li>
+</ul>
+
+    </section>
+            <section class="section" id="somewhat-like-creme-brulee">
+            <h3>Somewhat like creme bruleé:<a class="headerlink" href="#somewhat-like-creme-brulee" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+    </section>
+            <section class="section" id="your-christmas-stuffed-turkey">
+            <h3>Your christmas stuffed Turkey:<a class="headerlink" href="#your-christmas-stuffed-turkey" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+    </section>
+    </section>
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="registration-actions" data-rst-anchor="registration_actions">
+            <a id="registration_actions"></a>
+            <h1>Registration actions<a class="headerlink" href="#registration-actions" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <section class="section" id="possible-actions">
+            <h2>Possible actions<a class="headerlink" href="#possible-actions" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>The following diagram displays which actions are necessary for a successful registration. Some of them are optional like
+the confirmation and activation. Some are mandatory to get a valid user to login with.</p>
+
+            <section class="section" id="screenshots">
+            <h3>Screenshots:<a class="headerlink" href="#screenshots" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <figure>
+    <img
+    src="Images/action_diagram.png"
+            align="left"    alt="*Illustration 1: Action diagram of registration steps"        />
+
+
+            
+            </figure>
+    </section>
+    </section>
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="known-problems" data-rst-anchor="known_problems">
+            <a id="known_problems"></a>
+            <h1>Known problems<a class="headerlink" href="#known-problems" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            
+
+<ul>
+    <li class="dash"><a href="https://github.com/evoweb/sf_register/issues">https://github.com/evoweb/sf\_register/issues</a></li>
+</ul>
+
+    </section>
+<section class="section" id="to-do-list">
+            <h1>To-Do list<a class="headerlink" href="#to-do-list" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            
+
+<ul>
+    <li class="dash"><a href="https://github.com/evoweb/sf_register/issues">https://github.com/evoweb/sf\_register/issues</a></li>
+</ul>
+
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="changelog-1" data-rst-anchor="changelog">
+            <a id="changelog"></a>
+            <h1>ChangeLog<a class="headerlink" href="#changelog-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            
+
+<ul>
+    <li class="dash">Changelog is in the extension files</li>
+</ul>
+
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="deprecations-1" data-rst-anchor="deprecations">
+            <a id="deprecations"></a>
+            <h1>Deprecations<a class="headerlink" href="#deprecations-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            
+
+<ul>
+    <li class="dash">Since version 8.7.0 the support of the old templates found in Resources/Private/Templates/Old/ is deprecated and will
+ceased with version 9 and higher.</li>
+</ul>
+
+    </section>
+
+        </article>
+<article>
+            <section class="section" id="breaking-changes-1" data-rst-anchor="breaking-changes">
+            <a id="breaking-changes"></a>
+            <h1>Breaking Changes<a class="headerlink" href="#breaking-changes-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <section class="section" id="2024-05-13">
+            <h2>2024.05.13<a class="headerlink" href="#2024-05-13" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>The registration of fields for the field selection in the content elements was
+moved from ext_localconf.php to user.tsconfig. The consequence is, that
+extending/overriding fields requires to order the loading of extensions. To
+achieve this, you need to require sf_register in your composer.json and
+ext_emconf.php</p>
+
+    </section>
+            <section class="section" id="2023-10-x">
+            <h2>2023.10.x<a class="headerlink" href="#2023-10-x" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>@todo CountryProvider CountrySelectViewHelper</p>
+
+    </section>
+            <section class="section" id="2022-01-01">
+            <h2>2022.01.01<a class="headerlink" href="#2022-01-01" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Interface EvowebSfRegisterInterfaceFrontendUserInterface is renamed to
+EvowebSfRegisterDomainModelFrontendUserInterface</p>
+
+    </section>
+            <section class="section" id="2021-12-31">
+            <h2>2021.12.31<a class="headerlink" href="#2021-12-31" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Validator configuration is changed. As long as your custom validator has no
+injected classes like repository or likewise, you do not need to change anything.</p>
+
+            
+    <p>If you need something in your validator, you need to use to constructor
+injection, add an implements of InjectableInterface, make the validator a public
+service via Services.yaml and need have a way to get
+the options set.
+Options can be set by your own method or by using the AbstractValidator of
+sf_register.</p>
+
+            
+    <p>So if you need a class in your validator in code this changes are needed:
+<em> Add your validator to Services.yaml:
+</em> Add <code class="code-inline" translate="no">`implements InjectableInterface`</code> to your validator
+<em> Use \Evoweb\SfRegister\Validation\Validator\AbstractValidator as validator base
+</em> Add the repository in constructor</p>
+
+            
+    <p><strong>Services.yaml</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>Evoweb\SfRegister\Validation\Validator\UniqueValidator:
+  public: true
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p><strong>Class definition</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>use Evoweb\SfRegister\Validation\Validator\AbstractValidator;
+use Evoweb\SfRegister\Validation\Validator\InjectableInterface;
+
+class UniqueValidator extends AbstractValidator implements InjectableInterface, ...
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p><strong>__construct</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>public function __construct(FrontendUserRepository $userRepository)
+{
+  $this-&gt;userRepository = $userRepository;
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="2020-04-29">
+            <h2>2020.04.29<a class="headerlink" href="#2020-04-29" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>The hole extension was refactored to make best usage of TYPO3 10 changes. Namely</p>
+
+            
+
+<ul>
+    <li>constructor DI</li>
+    <li>exchange Signal/Slot dispatcher with PSR-14 events, have a look in extendability at <a href="#Psr14Event">PSR-14 events</a></li>
+    <li>refactor to fully match the PSR-12 standard</li>
+    <li>rename TypoScript setting processInitializeActionSignal to processInitializeActionEvent</li>
+    <li>rename TypoScript setting redirectSignal.<em> to redirectEvent.</em></li>
+    <li>reorganize TypoScript setting createDefaultSelected etc to defaultSelected.create etc</li>
+    <li>reorganize TypoScript notifyUser<em> and notifyAdmin</em> setup and constants to notifyUser.<em> and notifyAdmin.</em></li>
+    <li>modify Mail service to have better controller and action assignment</li>
+    <li>replace switchableControllerActions with individual plugin per controller
+check what elements with list_type sfregister_form are present in table tt_content
+and replace them with their corresponding new plugin</li>
+    <li>change how TS names, templates, mail subject and PSR-14 event name are build based
+on controller and action name in combination with notifyAdmin and notifyUser
+<em> TS name is build notifyAdmin.{ControllerName}{ActionName} notifyAdmin.createSave
+</em> Template name is build NotifyAdmin{ControllerName}{ActionName} NotifyAdminCreateSave
+<em> Mail subject is build subjectNotifyAdmin{ControllerName}{ActionName} subjectNotifyAdminCreateSave
+</em> Event name is build NotifyAdmin{ControllerName}{ActionName}Event NotifyAdminCreateSaveEvent
+<em> PostCreateSave replaced with CreateSave
+</em> PostCreateConfirm replaced with CreateConfirm
+<em> PostCreateRefuse replaced with CreateRefuse
+</em> PostCreateAccept replaced with CreateAccept
+<em> PostCreateDecline replaced with CreateDecline
+</em> PostDeleteSave replaced with DeleteSave
+<em> PostDeleteConfirm replaced with DeleteConfirm
+</em> PostEditSave replaced with EditSave
+<em> PostEditConfirm replaced with EditConfirm
+</em> PostEditAccept replaced with EditAccept
+<em> SendInvitation replaced with InviteInvite
+</em> PostResendMail replaced with ResendMail</li>
+</ul>
+
+    </section>
+            <section class="section" id="2019-02-03">
+            <h2>2019.02.03<a class="headerlink" href="#2019-02-03" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Drop custom form styles in favor for Bootstrap 4.2 styles. Be aware, to get the styles.css
+from older releases if you depend on it. If you use the Bootstrap 4.2 form styles you are
+good to go.</p>
+
+    </section>
+            <section class="section" id="2019-02-02">
+            <h2>2019.02.02<a class="headerlink" href="#2019-02-02" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>The password strength meter got replaced with the &lt;meter&gt; element. If you still need the old
+iframe variant for old browser or for the looks, please override the file
+EXT:sf_register/Resources/Private/Partials/Form/Password.html in your sitepackage and replace</p>
+
+            <section class="section" id="before">
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+    <p>&lt;meter min=&quot;0&quot; low=&quot;20&quot; optimum=&quot;30&quot; high=&quot;40&quot; max=&quot;50&quot; id=&quot;bargraph&quot;&gt;&lt;/meter&gt;</p>
+
+    </section>
+            <section class="section" id="after">
+            <h3>After:<a class="headerlink" href="#after" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <dl>
+                        <dt>&lt;iframe id=&quot;bargraph&quot; frameborder=&quot;none&quot; scrolling=&quot;no&quot;</dt>
+        
+        <dd>src=&quot;/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg&quot;&gt;&lt;/iframe&gt;</dd>
+            </dl>
+    </section>
+    </section>
+            <section class="section" id="2019-01-17">
+            <h2>2019.01.17<a class="headerlink" href="#2019-01-17" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>The core changed away from saltedpasswords towards integrated passwordHashing in EXT:Core (see
+Deprecation: #85804 - Salted password hash class deprecations)</p>
+
+            
+    <p>By this its always possible to properly hash passwords.</p>
+
+            
+    <p>Due to this shift the support for md5 and sha1 configuration is dropped in
+EqualCurrentPasswordValidator::isValid and FeuserController::encryptPassword.</p>
+
+    </section>
+            <section class="section" id="2019-01-13">
+            <h2>2019.01.13<a class="headerlink" href="#2019-01-13" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Changes in validation were done to match the new pattern used since TYPO3 9. To ensure that the user/password model
+still validates you need to check whether you changed rules in plugin.tx_sfregister.settings.validation.<em>.</em></p>
+
+            
+    <p>Here are some examples how old rules need to be converted:</p>
+
+            <section class="section" id="before">
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+    <p>EvowebSfRegisterValidationValidatorRequiredValidator
+After:
+::
+&quot;Evoweb.SfRegister:Required&quot;</p>
+
+    </section>
+            <section class="section" id="before">
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+    <p>StringLength(minimum = 4, maximum = 80)
+After:
+::
+&quot;StringLength&quot;, options={&quot;minimum&quot;: 4, &quot;maximum&quot;: 80}</p>
+
+    </section>
+            <section class="section" id="before">
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+    <p>EvowebSfRegisterValidationValidatorUniqueValidator(global = 1)
+After:
+::
+&quot;Evoweb.SfRegister:Unique&quot;, options={&quot;global&quot;: 1}</p>
+
+            
+    <p>In general &#039;EvowebSfRegisterValidationValidator&#039; needs to be replaced with &#039;&quot;Evoweb.SfRegister:&#039; and the
+ending &#039;Validator&#039; with &#039;&quot;&#039;</p>
+
+    </section>
+    </section>
+            <section class="section" id="2015-11-15">
+            <h2>2015.11.15<a class="headerlink" href="#2015-11-15" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+
+<ul>
+    <li>Method &#039;changeUsergroup&#039; got pulled up from FeuserCreateController to FeuserController. If a controller extends
+FeuserCreateController the change in changeUsergroup needs to be copied.</li>
+    <li>Method &#039;changeUsergroup&#039; got the parameter &#039;$usergroupIdToBeRemoved&#039; removed. This is because all known usergroups
+previously set get removed now. So only the &#039;$user&#039; and &#039;$usergroupIdToAdd&#039; need to be provided. All usage of this
+method needs to be changed accordingly.</li>
+    <li>Drop mailhash, setMailhash() and getMailhash() from frontend user model as it was deprecated since 2014.</li>
+</ul>
+
+    </section>
+    </section>
+
+        </article>
+<article>
+            
+<section class="section" id="sitemap">
+            <h1>Sitemap<a class="headerlink" href="#sitemap" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+    </section>
+
+        </article>
+<!-- content end -->
+                                                        </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="linkReferenceModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
+    aria-hidden="true" data-current-filename="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="linkReferenceModalLabel">Reference to the headline</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success d-none" id="permalink-alert-success" role="alert"></div>
+                <div class="mb-3">
+                    <label for="permalink-uri" class="col-form-label">Permalink</label>
+                    <div class="input-group">
+                        <input class="form-control code" id="permalink-uri" readonly>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy and freely share the link</p>
+                </div>
+                <div class="mb-3">
+                    <div class="alert alert-warning alert-permalink-rst" role="alert">This link target has no permanent anchor assigned.The link below can be used, but is prone to change if the page gets moved.
+                    </div>
+                    <label for="permalink-rst" class="col-form-label">reStructuredText (reST):</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-rst" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy this link into your TYPO3 manual. </p>
+                </div>
+                <div class="mb-3">
+                    <label for="permalink-html" class="col-form-label">HTML:</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-html" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="far fa-clone"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div></div>
+
+
+<footer class="page-footer">
+    <div class="frame frame-ruler-before frame-background-dark">
+        <div class="frame-container">
+            <div class="frame-inner">
+                                <div class="footer-additional">
+                    <p class="text-center">Last rendered: May 19, 2024 17:27</p>
+                </div>
+                <div class="footer-meta">
+                    <ul class="footer-meta-navigation">
+                        <li><a href="https://typo3.org/legal-notice" rel="nofollow" target="_blank" title="Legal Notice">Legal Notice</a></li>
+                        <li><a href="https://typo3.org/privacy-policy" rel="nofollow" target="_blank" title="Privacy Policy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../_resources/js/popper.min.js"></script>
+<script src="../_resources/js/bootstrap.min.js"></script>
+<script src="../_resources/js/theme.min.js"></script>
+
+<!--
+ Locally rendered. No tracking embedded.
+-->
+</body>
+</html>

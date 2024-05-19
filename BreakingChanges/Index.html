@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <title>Breaking Changes documentation</title>
+
+    
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="phpdocumentor/guides" name="generator">
+<meta content="" name="docsearch:name">
+<meta content="" name="docsearch:package_type">
+<meta content="" name="docsearch:release">
+<meta content="" name="docsearch:version">
+<meta content="2024-05-19T17:27:37+00:00" name="docsearch:modified">
+<meta content="2024-05-19T17:27:37+00:00" name="dc.modified">
+<meta content="2024-05-19T17:27:37+00:00" property="article:modified_time">
+    <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
+<link href="../_resources/css/theme.css" rel="stylesheet">
+<link href="https://docs.typo3.org/search/" rel="search" title="Search">
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
+                        <link href="../Deprecations/Index.html" rel="prev" title="Deprecations"/>
+            <link href="../Sitemap.html" rel="next" title="Sitemap"/>
+            <link href="../Index.html" rel="top" title="Frontend User Registration: Multipurpose configurable registration"/>
+    </head>
+<body>
+<div class="page">
+    
+<header>
+    <div class="page-topbar">
+        <div class="page-topbar-inner">
+            <typo3-universe active="documentation">
+                <div style="display: block; height: 44px; background-color: #313131;"></div>
+            </typo3-universe>
+        </div>
+    </div>
+    <div class="page-header">
+        <div class="page-header-inner">
+            <div class="row">
+                <div class="col-sm-3 col-md-4 col-lg-6">
+                    <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
+                        <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
+                    </a>
+                </div>
+                <div class="col-sm-9 col-md-8 col-lg-6">
+                    <search role="search">
+                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                            <div class="input-group mb-3 mt-sm-3">
+                                <select class="form-select search__scope" id="searchscope" name="scope">
+                                    <option value="">Search all</option>
+                                </select>
+                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                            </div>
+                        </form>
+                    </search>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>    <main class="page-main">
+        <div class="page-main-inner">
+            <div class="page-main-navigation">
+                <nav>
+                    <input class="toc-checkbox" id="toggleToc" type="checkbox">
+
+                    
+<div class="toc-header">
+    <div class="toc-title">
+        <a class="toc-title-project" href="../Index.html"></a>
+            </div>
+    <div class="toc-actions">
+        <label class="toc-toggle" for="toggleToc">
+            Menu
+        </label>
+    </div>
+</div>                    <div class="toc-collapse">
+                                                <div aria-label="main navigation" class="toc" role="navigation">
+                                <div aria-label="Main navigation" class="main_menu" role="navigation">
+        
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../Introduction/Index.html">
+        Introduction
+    </a></li>    <li class="">
+    <a href="../UsersManual/Index.html">
+        Users manual
+    </a></li>    <li class="">
+    <a href="../Administration/Index.html">
+        Administration
+    </a></li>    <li class="">
+    <a href="../Configuration/Index.html">
+        Configuration
+    </a>        <ul class="menu-level-1"><li class="">
+    <a href="../Configuration/Emails/Index.html">
+        Emails
+    </a></li><li class="">
+    <a href="../Configuration/Validation/Index.html">
+        Validation
+    </a></li></ul></li>    <li class="">
+    <a href="../Extendability/Index.html">
+        Extendability
+    </a></li>    <li class="">
+    <a href="../Templating/Index.html">
+        Templating
+    </a></li>    <li class="">
+    <a href="../Tutorial/Index.html">
+        Tutorial
+    </a></li>    <li class="">
+    <a href="../RegistrationActions/Index.html">
+        Registration actions
+    </a></li>    <li class="">
+    <a href="../KnownProblems/Index.html">
+        Known problems
+    </a></li>    <li class="">
+    <a href="../Changelog/Index.html">
+        ChangeLog
+    </a></li>    <li class="">
+    <a href="../Deprecations/Index.html">
+        Deprecations
+    </a></li>    <li class=" current active">
+    <a href="#" aria-current="page">
+        Breaking Changes
+    </a></li>    </ul>
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../Sitemap.html">
+        Sitemap
+    </a></li>    </ul>
+    </div>
+    <div aria-label="Meta navigation" class="main_menu  d-block d-lg-none" role="navigation">
+    <hr/>
+    <p class="caption">Contributors Corner</p>
+    <ul class="menu-level-1">            <li><a href="../_sources/BreakingChanges/Index.rst.txt" rel="nofollow noopener" target="_blank">
+                    View source of current document
+            </a></li>
+                    <li><a href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" rel="nofollow noopener" target="_blank">
+                    How to edit
+            </a></li>
+        </ul>
+</div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="page-main-content">
+                <div class="rst-content">                        <nav aria-label="breadcrumbs navigation" class="breadcrumb-bar" role="navigation">
+        
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="../Index.html">Frontend User Registration: Multipurpose configurable registration</a></li>
+                    <li aria-current="page"  class="breadcrumb-item  active">Breaking Changes</li>
+        </ol>
+        <div class="breadcrumb-additions">    <a class="btn btn-sm btn-light" href="../_sources/BreakingChanges/Index.rst.txt" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+        <a class="btn btn-sm btn-light" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-info-circle"></span></span>
+        <span class="btn-text">How to edit</span>
+    </a>
+    </div>    </nav>
+                    
+<article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+    <div itemprop="articleBody">
+        <!-- content start -->
+                <section class="section" id="breaking-changes-1" data-rst-anchor="breaking-changes">
+            <a id="breaking-changes"></a>
+            <h1>Breaking Changes<a class="headerlink" href="#breaking-changes-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <section class="section" id="2024-05-13">
+            <h2>2024.05.13<a class="headerlink" href="#2024-05-13" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>The registration of fields for the field selection in the content elements was
+moved from ext_localconf.php to user.tsconfig. The consequence is, that
+extending/overriding fields requires to order the loading of extensions. To
+achieve this, you need to require sf_register in your composer.json and
+ext_emconf.php</p>
+
+    </section>
+            <section class="section" id="2023-10-x">
+            <h2>2023.10.x<a class="headerlink" href="#2023-10-x" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>@todo CountryProvider CountrySelectViewHelper</p>
+
+    </section>
+            <section class="section" id="2022-01-01">
+            <h2>2022.01.01<a class="headerlink" href="#2022-01-01" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Interface EvowebSfRegisterInterfaceFrontendUserInterface is renamed to
+EvowebSfRegisterDomainModelFrontendUserInterface</p>
+
+    </section>
+            <section class="section" id="2021-12-31">
+            <h2>2021.12.31<a class="headerlink" href="#2021-12-31" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Validator configuration is changed. As long as your custom validator has no
+injected classes like repository or likewise, you do not need to change anything.</p>
+
+            
+    <p>If you need something in your validator, you need to use to constructor
+injection, add an implements of InjectableInterface, make the validator a public
+service via Services.yaml and need have a way to get
+the options set.
+Options can be set by your own method or by using the AbstractValidator of
+sf_register.</p>
+
+            
+    <p>So if you need a class in your validator in code this changes are needed:
+<em> Add your validator to Services.yaml:
+</em> Add <code class="code-inline" translate="no">`implements InjectableInterface`</code> to your validator
+<em> Use \Evoweb\SfRegister\Validation\Validator\AbstractValidator as validator base
+</em> Add the repository in constructor</p>
+
+            
+    <p><strong>Services.yaml</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>Evoweb\SfRegister\Validation\Validator\UniqueValidator:
+  public: true
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p><strong>Class definition</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>use Evoweb\SfRegister\Validation\Validator\AbstractValidator;
+use Evoweb\SfRegister\Validation\Validator\InjectableInterface;
+
+class UniqueValidator extends AbstractValidator implements InjectableInterface, ...
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p><strong>__construct</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>public function __construct(FrontendUserRepository $userRepository)
+{
+  $this-&gt;userRepository = $userRepository;
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="2020-04-29">
+            <h2>2020.04.29<a class="headerlink" href="#2020-04-29" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>The hole extension was refactored to make best usage of TYPO3 10 changes. Namely</p>
+
+            
+
+<ul>
+    <li>constructor DI</li>
+    <li>exchange Signal/Slot dispatcher with PSR-14 events, have a look in extendability at <a href="../Extendability/Index.html#Psr14Event">PSR-14 events</a></li>
+    <li>refactor to fully match the PSR-12 standard</li>
+    <li>rename TypoScript setting processInitializeActionSignal to processInitializeActionEvent</li>
+    <li>rename TypoScript setting redirectSignal.<em> to redirectEvent.</em></li>
+    <li>reorganize TypoScript setting createDefaultSelected etc to defaultSelected.create etc</li>
+    <li>reorganize TypoScript notifyUser<em> and notifyAdmin</em> setup and constants to notifyUser.<em> and notifyAdmin.</em></li>
+    <li>modify Mail service to have better controller and action assignment</li>
+    <li>replace switchableControllerActions with individual plugin per controller
+check what elements with list_type sfregister_form are present in table tt_content
+and replace them with their corresponding new plugin</li>
+    <li>change how TS names, templates, mail subject and PSR-14 event name are build based
+on controller and action name in combination with notifyAdmin and notifyUser
+<em> TS name is build notifyAdmin.{ControllerName}{ActionName} notifyAdmin.createSave
+</em> Template name is build NotifyAdmin{ControllerName}{ActionName} NotifyAdminCreateSave
+<em> Mail subject is build subjectNotifyAdmin{ControllerName}{ActionName} subjectNotifyAdminCreateSave
+</em> Event name is build NotifyAdmin{ControllerName}{ActionName}Event NotifyAdminCreateSaveEvent
+<em> PostCreateSave replaced with CreateSave
+</em> PostCreateConfirm replaced with CreateConfirm
+<em> PostCreateRefuse replaced with CreateRefuse
+</em> PostCreateAccept replaced with CreateAccept
+<em> PostCreateDecline replaced with CreateDecline
+</em> PostDeleteSave replaced with DeleteSave
+<em> PostDeleteConfirm replaced with DeleteConfirm
+</em> PostEditSave replaced with EditSave
+<em> PostEditConfirm replaced with EditConfirm
+</em> PostEditAccept replaced with EditAccept
+<em> SendInvitation replaced with InviteInvite
+</em> PostResendMail replaced with ResendMail</li>
+</ul>
+
+    </section>
+            <section class="section" id="2019-02-03">
+            <h2>2019.02.03<a class="headerlink" href="#2019-02-03" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Drop custom form styles in favor for Bootstrap 4.2 styles. Be aware, to get the styles.css
+from older releases if you depend on it. If you use the Bootstrap 4.2 form styles you are
+good to go.</p>
+
+    </section>
+            <section class="section" id="2019-02-02">
+            <h2>2019.02.02<a class="headerlink" href="#2019-02-02" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>The password strength meter got replaced with the &lt;meter&gt; element. If you still need the old
+iframe variant for old browser or for the looks, please override the file
+EXT:sf_register/Resources/Private/Partials/Form/Password.html in your sitepackage and replace</p>
+
+            <section class="section" id="before">
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+    <p>&lt;meter min=&quot;0&quot; low=&quot;20&quot; optimum=&quot;30&quot; high=&quot;40&quot; max=&quot;50&quot; id=&quot;bargraph&quot;&gt;&lt;/meter&gt;</p>
+
+    </section>
+            <section class="section" id="after">
+            <h3>After:<a class="headerlink" href="#after" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <dl>
+                        <dt>&lt;iframe id=&quot;bargraph&quot; frameborder=&quot;none&quot; scrolling=&quot;no&quot;</dt>
+        
+        <dd>src=&quot;/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg&quot;&gt;&lt;/iframe&gt;</dd>
+            </dl>
+    </section>
+    </section>
+            <section class="section" id="2019-01-17">
+            <h2>2019.01.17<a class="headerlink" href="#2019-01-17" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>The core changed away from saltedpasswords towards integrated passwordHashing in EXT:Core (see
+Deprecation: #85804 - Salted password hash class deprecations)</p>
+
+            
+    <p>By this its always possible to properly hash passwords.</p>
+
+            
+    <p>Due to this shift the support for md5 and sha1 configuration is dropped in
+EqualCurrentPasswordValidator::isValid and FeuserController::encryptPassword.</p>
+
+    </section>
+            <section class="section" id="2019-01-13">
+            <h2>2019.01.13<a class="headerlink" href="#2019-01-13" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Changes in validation were done to match the new pattern used since TYPO3 9. To ensure that the user/password model
+still validates you need to check whether you changed rules in plugin.tx_sfregister.settings.validation.<em>.</em></p>
+
+            
+    <p>Here are some examples how old rules need to be converted:</p>
+
+            <section class="section" id="before">
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+    <p>EvowebSfRegisterValidationValidatorRequiredValidator
+After:
+::
+&quot;Evoweb.SfRegister:Required&quot;</p>
+
+    </section>
+            <section class="section" id="before">
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+    <p>StringLength(minimum = 4, maximum = 80)
+After:
+::
+&quot;StringLength&quot;, options={&quot;minimum&quot;: 4, &quot;maximum&quot;: 80}</p>
+
+    </section>
+            <section class="section" id="before">
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+    <p>EvowebSfRegisterValidationValidatorUniqueValidator(global = 1)
+After:
+::
+&quot;Evoweb.SfRegister:Unique&quot;, options={&quot;global&quot;: 1}</p>
+
+            
+    <p>In general &#039;EvowebSfRegisterValidationValidator&#039; needs to be replaced with &#039;&quot;Evoweb.SfRegister:&#039; and the
+ending &#039;Validator&#039; with &#039;&quot;&#039;</p>
+
+    </section>
+    </section>
+            <section class="section" id="2015-11-15">
+            <h2>2015.11.15<a class="headerlink" href="#2015-11-15" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+
+<ul>
+    <li>Method &#039;changeUsergroup&#039; got pulled up from FeuserCreateController to FeuserController. If a controller extends
+FeuserCreateController the change in changeUsergroup needs to be copied.</li>
+    <li>Method &#039;changeUsergroup&#039; got the parameter &#039;$usergroupIdToBeRemoved&#039; removed. This is because all known usergroups
+previously set get removed now. So only the &#039;$user&#039; and &#039;$usergroupIdToAdd&#039; need to be provided. All usage of this
+method needs to be changed accordingly.</li>
+    <li>Drop mailhash, setMailhash() and getMailhash() from frontend user model as it was deprecated since 2014.</li>
+</ul>
+
+    </section>
+    </section>
+        <!-- content end -->
+    </div>
+</article>
+                        
+            <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center"><li class="page-item">
+                            <a class="page-link" href="../Deprecations/Index.html"
+                               title="Accesskey Alt(+Shift)+p">
+                                Previous
+                            </a>
+                        </li>
+                    <li class="page-item">
+                            <a class="page-link" href="../Sitemap.html"
+                               title="Accesskey Alt(+Shift)+n">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+        </nav>
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="linkReferenceModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
+    aria-hidden="true" data-current-filename="BreakingChanges/Index">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="linkReferenceModalLabel">Reference to the headline</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success d-none" id="permalink-alert-success" role="alert"></div>
+                <div class="mb-3">
+                    <label for="permalink-uri" class="col-form-label">Permalink</label>
+                    <div class="input-group">
+                        <input class="form-control code" id="permalink-uri" readonly>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy and freely share the link</p>
+                </div>
+                <div class="mb-3">
+                    <div class="alert alert-warning alert-permalink-rst" role="alert">This link target has no permanent anchor assigned.The link below can be used, but is prone to change if the page gets moved.
+                    </div>
+                    <label for="permalink-rst" class="col-form-label">reStructuredText (reST):</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-rst" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy this link into your TYPO3 manual. </p>
+                </div>
+                <div class="mb-3">
+                    <label for="permalink-html" class="col-form-label">HTML:</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-html" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="far fa-clone"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div></div>
+
+
+<footer class="page-footer">
+    <div class="frame frame-ruler-before frame-background-dark">
+        <div class="frame-container">
+            <div class="frame-inner">
+                                <div class="footer-additional">
+                    <p class="text-center">Last rendered: May 19, 2024 17:27</p>
+                </div>
+                <div class="footer-meta">
+                    <ul class="footer-meta-navigation">
+                        <li><a href="https://typo3.org/legal-notice" rel="nofollow" target="_blank" title="Legal Notice">Legal Notice</a></li>
+                        <li><a href="https://typo3.org/privacy-policy" rel="nofollow" target="_blank" title="Privacy Policy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../_resources/js/popper.min.js"></script>
+<script src="../_resources/js/bootstrap.min.js"></script>
+<script src="../_resources/js/theme.min.js"></script>
+
+<!--
+ Locally rendered. No tracking embedded.
+-->
+</body>
+</html>

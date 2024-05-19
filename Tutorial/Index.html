@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <title>Tutorial documentation</title>
+
+    
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="phpdocumentor/guides" name="generator">
+<meta content="" name="docsearch:name">
+<meta content="" name="docsearch:package_type">
+<meta content="" name="docsearch:release">
+<meta content="" name="docsearch:version">
+<meta content="2024-05-19T17:27:37+00:00" name="docsearch:modified">
+<meta content="2024-05-19T17:27:37+00:00" name="dc.modified">
+<meta content="2024-05-19T17:27:37+00:00" property="article:modified_time">
+    <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
+<link href="../_resources/css/theme.css" rel="stylesheet">
+<link href="https://docs.typo3.org/search/" rel="search" title="Search">
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
+                        <link href="../Templating/Index.html" rel="prev" title="Templating"/>
+            <link href="../RegistrationActions/Index.html" rel="next" title="Registration actions"/>
+            <link href="../Index.html" rel="top" title="Frontend User Registration: Multipurpose configurable registration"/>
+    </head>
+<body>
+<div class="page">
+    
+<header>
+    <div class="page-topbar">
+        <div class="page-topbar-inner">
+            <typo3-universe active="documentation">
+                <div style="display: block; height: 44px; background-color: #313131;"></div>
+            </typo3-universe>
+        </div>
+    </div>
+    <div class="page-header">
+        <div class="page-header-inner">
+            <div class="row">
+                <div class="col-sm-3 col-md-4 col-lg-6">
+                    <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
+                        <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
+                    </a>
+                </div>
+                <div class="col-sm-9 col-md-8 col-lg-6">
+                    <search role="search">
+                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                            <div class="input-group mb-3 mt-sm-3">
+                                <select class="form-select search__scope" id="searchscope" name="scope">
+                                    <option value="">Search all</option>
+                                </select>
+                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                            </div>
+                        </form>
+                    </search>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>    <main class="page-main">
+        <div class="page-main-inner">
+            <div class="page-main-navigation">
+                <nav>
+                    <input class="toc-checkbox" id="toggleToc" type="checkbox">
+
+                    
+<div class="toc-header">
+    <div class="toc-title">
+        <a class="toc-title-project" href="../Index.html"></a>
+            </div>
+    <div class="toc-actions">
+        <label class="toc-toggle" for="toggleToc">
+            Menu
+        </label>
+    </div>
+</div>                    <div class="toc-collapse">
+                                                <div aria-label="main navigation" class="toc" role="navigation">
+                                <div aria-label="Main navigation" class="main_menu" role="navigation">
+        
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../Introduction/Index.html">
+        Introduction
+    </a></li>    <li class="">
+    <a href="../UsersManual/Index.html">
+        Users manual
+    </a></li>    <li class="">
+    <a href="../Administration/Index.html">
+        Administration
+    </a></li>    <li class="">
+    <a href="../Configuration/Index.html">
+        Configuration
+    </a>        <ul class="menu-level-1"><li class="">
+    <a href="../Configuration/Emails/Index.html">
+        Emails
+    </a></li><li class="">
+    <a href="../Configuration/Validation/Index.html">
+        Validation
+    </a></li></ul></li>    <li class="">
+    <a href="../Extendability/Index.html">
+        Extendability
+    </a></li>    <li class="">
+    <a href="../Templating/Index.html">
+        Templating
+    </a></li>    <li class=" current active">
+    <a href="#" aria-current="page">
+        Tutorial
+    </a></li>    <li class="">
+    <a href="../RegistrationActions/Index.html">
+        Registration actions
+    </a></li>    <li class="">
+    <a href="../KnownProblems/Index.html">
+        Known problems
+    </a></li>    <li class="">
+    <a href="../Changelog/Index.html">
+        ChangeLog
+    </a></li>    <li class="">
+    <a href="../Deprecations/Index.html">
+        Deprecations
+    </a></li>    <li class="">
+    <a href="../BreakingChanges/Index.html">
+        Breaking Changes
+    </a></li>    </ul>
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../Sitemap.html">
+        Sitemap
+    </a></li>    </ul>
+    </div>
+    <div aria-label="Meta navigation" class="main_menu  d-block d-lg-none" role="navigation">
+    <hr/>
+    <p class="caption">Contributors Corner</p>
+    <ul class="menu-level-1">            <li><a href="../_sources/Tutorial/Index.rst.txt" rel="nofollow noopener" target="_blank">
+                    View source of current document
+            </a></li>
+                    <li><a href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" rel="nofollow noopener" target="_blank">
+                    How to edit
+            </a></li>
+        </ul>
+</div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="page-main-content">
+                <div class="rst-content">                        <nav aria-label="breadcrumbs navigation" class="breadcrumb-bar" role="navigation">
+        
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="../Index.html">Frontend User Registration: Multipurpose configurable registration</a></li>
+                    <li aria-current="page"  class="breadcrumb-item  active">Tutorial</li>
+        </ol>
+        <div class="breadcrumb-additions">    <a class="btn btn-sm btn-light" href="../_sources/Tutorial/Index.rst.txt" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+        <a class="btn btn-sm btn-light" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-info-circle"></span></span>
+        <span class="btn-text">How to edit</span>
+    </a>
+    </div>    </nav>
+                    
+<article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+    <div itemprop="articleBody">
+        <!-- content start -->
+                <section class="section" id="tutorial-1" data-rst-anchor="tutorial">
+            <a id="tutorial"></a>
+            <h1>Tutorial<a class="headerlink" href="#tutorial-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <section class="section" id="how-to-setup-different-registration-processes">
+            <h2>How to setup different registration processes?<a class="headerlink" href="#how-to-setup-different-registration-processes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>It is possible to have simple registrations like directly activated user accounts as well as complex ones like double optin
+confirmations with admin acceptance. So if its possible to have different approches how to set them up?</p>
+
+            <section class="section" id="simple-like-peanut-butter-jelly-sandwich">
+            <h3>Simple like peanut butter jelly sandwich:<a class="headerlink" href="#simple-like-peanut-butter-jelly-sandwich" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            
+
+<ul>
+    <li class="dash">
+    <p>In the Extension Manager</p>
+
+
+<ul>
+    <li class="dash">install the extension</li>
+    <li class="dash">in Extension Settings choose &#039;minimal&#039; in TypoScript complexity</li>
+</ul>
+</li>
+    <li class="dash">
+    <p>In modul List</p>
+
+
+<ul>
+    <li class="dash">add a storage folder and remember the storage folder id</li>
+    <li class="dash">add a usergroup with name of your choice in this storage folder</li>
+    <li class="dash">add a page named Registration</li>
+    <li class="dash">in the page page properties on tab Resources select the storage folder in field &#039;General Record Storage Page&#039;</li>
+    <li class="dash">on this page add a plugin type &#039;Registration for create, edit or delete Frontend Users&#039;</li>
+</ul>
+</li>
+    <li class="dash">
+    <p>In the plugin</p>
+
+
+<ul>
+    <li class="dash">select &#039;Create&#039; in the &#039;What action should be taken?&#039; select box</li>
+    <li class="dash">leave the Template root path empty until you know what you do</li>
+</ul>
+</li>
+    <li class="dash">
+    <p>In modul Template</p>
+
+
+<ul>
+    <li class="dash">choose &#039;Info/Modify&#039;</li>
+    <li class="dash">edit the whole template record</li>
+    <li class="dash">add the include static &#039;Feuser Register [minimal] (sf_register)&#039; and save and close the TypoScript</li>
+    <li class="dash">choose the Constant Editor</li>
+    <li class="dash">activate and set the remembered usergroup id in the field &#039;usergroup set if no activation is needed&#039;:
+(the result in constants field is plugin.tx_sfregister.settings.usergroup = 3)</li>
+</ul>
+</li>
+</ul>
+
+    </section>
+            <section class="section" id="somewhat-like-creme-brulee">
+            <h3>Somewhat like creme bruleé:<a class="headerlink" href="#somewhat-like-creme-brulee" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+    </section>
+            <section class="section" id="your-christmas-stuffed-turkey">
+            <h3>Your christmas stuffed Turkey:<a class="headerlink" href="#your-christmas-stuffed-turkey" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+    </section>
+    </section>
+    </section>
+        <!-- content end -->
+    </div>
+</article>
+                        
+            <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center"><li class="page-item">
+                            <a class="page-link" href="../Templating/Index.html"
+                               title="Accesskey Alt(+Shift)+p">
+                                Previous
+                            </a>
+                        </li>
+                    <li class="page-item">
+                            <a class="page-link" href="../RegistrationActions/Index.html"
+                               title="Accesskey Alt(+Shift)+n">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+        </nav>
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="linkReferenceModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
+    aria-hidden="true" data-current-filename="Tutorial/Index">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="linkReferenceModalLabel">Reference to the headline</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success d-none" id="permalink-alert-success" role="alert"></div>
+                <div class="mb-3">
+                    <label for="permalink-uri" class="col-form-label">Permalink</label>
+                    <div class="input-group">
+                        <input class="form-control code" id="permalink-uri" readonly>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy and freely share the link</p>
+                </div>
+                <div class="mb-3">
+                    <div class="alert alert-warning alert-permalink-rst" role="alert">This link target has no permanent anchor assigned.The link below can be used, but is prone to change if the page gets moved.
+                    </div>
+                    <label for="permalink-rst" class="col-form-label">reStructuredText (reST):</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-rst" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy this link into your TYPO3 manual. </p>
+                </div>
+                <div class="mb-3">
+                    <label for="permalink-html" class="col-form-label">HTML:</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-html" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="far fa-clone"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div></div>
+
+
+<footer class="page-footer">
+    <div class="frame frame-ruler-before frame-background-dark">
+        <div class="frame-container">
+            <div class="frame-inner">
+                                <div class="footer-additional">
+                    <p class="text-center">Last rendered: May 19, 2024 17:27</p>
+                </div>
+                <div class="footer-meta">
+                    <ul class="footer-meta-navigation">
+                        <li><a href="https://typo3.org/legal-notice" rel="nofollow" target="_blank" title="Legal Notice">Legal Notice</a></li>
+                        <li><a href="https://typo3.org/privacy-policy" rel="nofollow" target="_blank" title="Privacy Policy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../_resources/js/popper.min.js"></script>
+<script src="../_resources/js/bootstrap.min.js"></script>
+<script src="../_resources/js/theme.min.js"></script>
+
+<!--
+ Locally rendered. No tracking embedded.
+-->
+</body>
+</html>

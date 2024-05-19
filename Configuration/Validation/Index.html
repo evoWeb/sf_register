@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <title>Validation documentation</title>
+
+    
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="phpdocumentor/guides" name="generator">
+<meta content="" name="docsearch:name">
+<meta content="" name="docsearch:package_type">
+<meta content="" name="docsearch:release">
+<meta content="" name="docsearch:version">
+<meta content="2024-05-19T17:27:37+00:00" name="docsearch:modified">
+<meta content="2024-05-19T17:27:37+00:00" name="dc.modified">
+<meta content="2024-05-19T17:27:37+00:00" property="article:modified_time">
+    <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
+<link href="../../_resources/css/theme.css" rel="stylesheet">
+<link href="https://docs.typo3.org/search/" rel="search" title="Search">
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
+                        <link href="../Emails/Index.html" rel="prev" title="Emails"/>
+            <link href="../../Extendability/Index.html" rel="next" title="Extendability"/>
+            <link href="../../Index.html" rel="top" title="Frontend User Registration: Multipurpose configurable registration"/>
+    </head>
+<body>
+<div class="page">
+    
+<header>
+    <div class="page-topbar">
+        <div class="page-topbar-inner">
+            <typo3-universe active="documentation">
+                <div style="display: block; height: 44px; background-color: #313131;"></div>
+            </typo3-universe>
+        </div>
+    </div>
+    <div class="page-header">
+        <div class="page-header-inner">
+            <div class="row">
+                <div class="col-sm-3 col-md-4 col-lg-6">
+                    <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
+                        <img alt="TYPO3 Logo" class="logo-image" src="../../_resources/img/typo3-logo.svg" width="484" height="130">
+                    </a>
+                </div>
+                <div class="col-sm-9 col-md-8 col-lg-6">
+                    <search role="search">
+                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                            <div class="input-group mb-3 mt-sm-3">
+                                <select class="form-select search__scope" id="searchscope" name="scope">
+                                    <option value="">Search all</option>
+                                </select>
+                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                            </div>
+                        </form>
+                    </search>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>    <main class="page-main">
+        <div class="page-main-inner">
+            <div class="page-main-navigation">
+                <nav>
+                    <input class="toc-checkbox" id="toggleToc" type="checkbox">
+
+                    
+<div class="toc-header">
+    <div class="toc-title">
+        <a class="toc-title-project" href="../../Index.html"></a>
+            </div>
+    <div class="toc-actions">
+        <label class="toc-toggle" for="toggleToc">
+            Menu
+        </label>
+    </div>
+</div>                    <div class="toc-collapse">
+                                                <div aria-label="main navigation" class="toc" role="navigation">
+                                <div aria-label="Main navigation" class="main_menu" role="navigation">
+        
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../../Introduction/Index.html">
+        Introduction
+    </a></li>    <li class="">
+    <a href="../../UsersManual/Index.html">
+        Users manual
+    </a></li>    <li class="">
+    <a href="../../Administration/Index.html">
+        Administration
+    </a></li>    <li class=" active">
+    <a href="../Index.html">
+        Configuration
+    </a>        <ul class="menu-level-1"><li class="">
+    <a href="../Emails/Index.html">
+        Emails
+    </a></li><li class=" current active">
+    <a href="#" aria-current="page">
+        Validation
+    </a></li></ul></li>    <li class="">
+    <a href="../../Extendability/Index.html">
+        Extendability
+    </a></li>    <li class="">
+    <a href="../../Templating/Index.html">
+        Templating
+    </a></li>    <li class="">
+    <a href="../../Tutorial/Index.html">
+        Tutorial
+    </a></li>    <li class="">
+    <a href="../../RegistrationActions/Index.html">
+        Registration actions
+    </a></li>    <li class="">
+    <a href="../../KnownProblems/Index.html">
+        Known problems
+    </a></li>    <li class="">
+    <a href="../../Changelog/Index.html">
+        ChangeLog
+    </a></li>    <li class="">
+    <a href="../../Deprecations/Index.html">
+        Deprecations
+    </a></li>    <li class="">
+    <a href="../../BreakingChanges/Index.html">
+        Breaking Changes
+    </a></li>    </ul>
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../../Sitemap.html">
+        Sitemap
+    </a></li>    </ul>
+    </div>
+    <div aria-label="Meta navigation" class="main_menu  d-block d-lg-none" role="navigation">
+    <hr/>
+    <p class="caption">Contributors Corner</p>
+    <ul class="menu-level-1">            <li><a href="../../_sources/Configuration/Validation/Index.rst.txt" rel="nofollow noopener" target="_blank">
+                    View source of current document
+            </a></li>
+                    <li><a href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" rel="nofollow noopener" target="_blank">
+                    How to edit
+            </a></li>
+        </ul>
+</div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="page-main-content">
+                <div class="rst-content">                        <nav aria-label="breadcrumbs navigation" class="breadcrumb-bar" role="navigation">
+        
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="../../Index.html">Frontend User Registration: Multipurpose configurable registration</a></li>
+        <li class="breadcrumb-item"><a href="../Index.html">Configuration</a></li>
+                    <li aria-current="page"  class="breadcrumb-item  active">Validation</li>
+        </ol>
+        <div class="breadcrumb-additions">    <a class="btn btn-sm btn-light" href="../../_sources/Configuration/Validation/Index.rst.txt" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+        <a class="btn btn-sm btn-light" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-info-circle"></span></span>
+        <span class="btn-text">How to edit</span>
+    </a>
+    </div>    </nav>
+                    
+<article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+    <div itemprop="articleBody">
+        <!-- content start -->
+                <section class="section" id="validation-1" data-rst-anchor="validation">
+            <a id="validation"></a>
+            <h1>Validation<a class="headerlink" href="#validation-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <div class="contents">
+        <ul class="menu-level">
+    <li class="toc-item">
+    <a href="#purpose-of-validators">Purpose of Validators</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#changes-since-version-9-0-0">Changes since version 9.0.0</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#different-possibilities-of-assigning-validators">Different possibilities of assigning validators</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#separate-validators-per-process">Separate validators per process</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#special-validators">Special validators</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#prefixing-needed-for-non-extbase-validators">Prefixing needed for non extbase validators</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#available-validators">Available validators</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#special-fields-validators">Special fields Validators</a>
+
+
+</li>
+    </ul>
+</div>
+            <section class="section" id="purpose-of-validators">
+            <h2>Purpose of Validators<a class="headerlink" href="#purpose-of-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Validators are a mechanism to ensure that all information given by the user
+meet your expectation as an admin. Either if the values make sense in terms
+of format like emails oder in required information value like age verification.</p>
+
+            
+    <p>If values need to be enforce your should use the <a href="#RequiredValidator">RequiredValidator</a> because
+this validator does not only check if the value of the configured field is
+filled but it also serves as a signal for the Required Partial to render the
+corresponding flag.</p>
+
+            
+    <p>All validators are optional, could be set single or may be even assigned multiple
+times to a field. Despite the concept of extbase you are free to choose how many
+validators should take care of a value.</p>
+
+    </section>
+            <section class="section" id="changes-since-version-9-0-0">
+            <h2>Changes since version 9.0.0<a class="headerlink" href="#changes-since-version-9-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Since version 9 validators are only used for selected fields, it&#039;s not necessary
+to remove validation configuration only because certain fields should not be
+present in the form.
+Beside that the configuration changed from using &quot;EvowebSfRegisterValidationValidatorRequiredValidator&quot;
+to &quot;Evoweb.SfRegister:Required&quot;</p>
+
+            
+    <p>In general the pattern for a validation rule is</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>&quot;name&quot;, options={&quot;parameter1&quot;: valueA, &quot;parameter2&quot;: valueB}
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>The name needs to be quoted followed with a comma if options are following. Then
+the options with an equal sign and json notated properties and values.</p>
+
+    </section>
+            <section class="section" id="different-possibilities-of-assigning-validators">
+            <h2>Different possibilities of assigning validators<a class="headerlink" href="#different-possibilities-of-assigning-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>In case you want to have no validation at all for a field was was configured
+by default as required you need to empty the associated validators. Look at the
+example given where the validators of the email gets removed.</p>
+
+            <section class="section" id="remove-validators">
+            <h3>Remove validators:<a class="headerlink" href="#remove-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.email &gt;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>If only one validator is needed you could assign it directly to the field like
+below.</p>
+
+    </section>
+            <section class="section" id="assign-only-one-validator">
+            <h3>Assign only one validator:<a class="headerlink" href="#assign-only-one-validator" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.passwordRepeat = &quot;Evoweb.SfRegister:Repeat&quot;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>And finaly it&#039;s possible to have multiple validators for one field like in the
+next example.</p>
+
+    </section>
+            <section class="section" id="assign-multiple-validators">
+            <h3>Assign multiple validators:<a class="headerlink" href="#assign-multiple-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+	1 = &quot;Evoweb.SfRegister:Required&quot;
+	2 = &quot;Evoweb.SfRegister:BadWord&quot;
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>Regarding validator it&#039;s possible to have values attached to the assigned one.
+This is beneficial if you want to check against conditions that are not equal
+in different cases. One point where this is shown best with is the length of
+passwords. One would like to keep it simple as possible  because the loss would
+be nearly not existing while another would prefer the passwords stronger than
+for Fort Knox.</p>
+
+    </section>
+            <section class="section" id="poor-man-s-passwords-with-short-length">
+            <h3>Poor man´s passwords with short length:<a class="headerlink" href="#poor-man-s-passwords-with-short-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+	1 = &quot;Evoweb.SfRegister:Required&quot;
+	2 = &quot;StringLength&quot;, options={&quot;minimum&quot;: 4, &quot;maximum&quot;: 8}
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="bulletproof-passwords-with-long-length">
+            <h3>Bulletproof passwords with long length:<a class="headerlink" href="#bulletproof-passwords-with-long-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+	1 = &quot;Evoweb.SfRegister:Required&quot;
+	2 = &quot;StringLength&quot;, options={&quot;minimum&quot;: 8, &quot;maximum&quot;: 40}
+	3 = &quot;Evoweb.SfRegister:BadWord&quot;
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>In total you have five possible combination of validator assignments for each
+field that you use in your form. You have none, one and multiple validators.
+And in case of a validator present you can add options too override the default
+that is set in the validator.</p>
+
+    </section>
+    </section>
+            <section class="section" id="separate-validators-per-process">
+            <h2>Separate validators per process<a class="headerlink" href="#separate-validators-per-process" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Each process has its own needs. While you want to have the username validated on
+creation, this is not needed in the edit or password change form. This could
+be achieved by separating the TypoScript settings in different conditions per
+page. But this is mostly inconvenient as you don&#039;t see what settings is met until
+the condition. Because of this the validation settings are split for any process.</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation {
+	create {
+		[...]
+	}
+	edit {
+		[...]
+	}
+	password {
+		[...]
+	}
+	invite {
+		[...]
+	}
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="special-validators">
+            <h2>Special validators<a class="headerlink" href="#special-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>The UserValidator is not meant to be used for field validation. This validator
+is a special construct to make the configuration via TypoScript possible. All
+others are free to combine. If a validator is only suited for a certain field
+it will be mentioned in the detail configuration.</p>
+
+    </section>
+            <section class="section" id="prefixing-needed-for-non-extbase-validators">
+            <h2>Prefixing needed for non extbase validators<a class="headerlink" href="#prefixing-needed-for-non-extbase-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>To use the extension validators you need to prefix them in the TypoScript with
+Evoweb.SfRegister: . For all validators without this prefix the validation assumes
+that they are extbase specific validators and use them as such.</p>
+
+            
+    <p>Secondly this makes it possible to use custom validators that do not come with
+extbase or sf_register. Just code your validator and make it available for auto
+loading (either in an extbase standard path or via ext_autoload.php). Afterwards
+you are ready to use your validator like in the following example.</p>
+
+            <section class="section" id="custom-validator-usage">
+            <h3>Custom validator usage:<a class="headerlink" href="#custom-validator-usage" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password = &quot;Evoweb.SfRegister:Required&quot;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+    </section>
+            <section class="section" id="available-validators" data-rst-anchor="BadWordValidator">
+            <h2>Available validators<a class="headerlink" href="#available-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Beside the validators that come with extbase and which are although available
+in the different processes, the registration come with a set of specific ones
+that are tailored to the special need. The following lists all validators
+which are suited for the usage on fields.</p>
+
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Validator</th>
+                            <th>Options</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#BadWordValidator">BadWordValidator</a></td>            <td>configured by plugin.tx_sfregister.settings.badWordList</td>    </tr>    <tr>
+            <td><a href="#IsTrueValidator">IsTrueValidator</a></td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#RequiredValidator">RequiredValidator</a></td>            <td>&nbsp;</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="BadWordValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>BadWordValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Checks if the field contains non of the word in the list is present</dd>
+                                <dt>Configured in</dt>
+        
+        <dd>plugin.tx_sfregister.settings.badWordList</dd>
+                                <dt>Default</dt>
+        
+        <dd>god, sex, password</dd>
+            </dl>
+</div>
+
+            <a id="IsTrueValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>IsTrueValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Checks if the field is set for example the general terms and conditions</dd>
+            </dl>
+</div>
+
+            <a id="RequiredValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>RequiredValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>This validator serves two purpose. First of check if the field contains
+a value and that it is not empty. Second the rendering uses this
+validator as condition to render required sign or not.</dd>
+            </dl>
+</div>
+
+    </section>
+            <section class="section" id="special-fields-validators" data-rst-anchor="CaptchaValidator">
+            <h2>Special fields Validators<a class="headerlink" href="#special-fields-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="ts-properties">
+    <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Validator</th>
+                            <th>Assign to field</th>
+                            <th>Options</th>
+                            <th>Default</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><a href="#CaptchaValidator">CaptchaValidator</a></td>            <td>captcha</td>            <td>type</td>            <td>srfreecap</td>    </tr>    <tr>
+            <td><a href="#EmptyValidator">EmptyValidator</a></td>            <td>auto-assigned to uid in create</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#EqualCurrentPasswordValidator">EqualCurrentPasswordValidator</a></td>            <td>oldPassword</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#EqualCurrentUserValidator">EqualCurrentUserValidator</a></td>            <td>auto-assigned to uid in edit</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#ImageUploadValidator">ImageUploadValidator</a></td>            <td>image</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#RepeatValidator">RepeatValidator</a></td>            <td>email oder password</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
+            <td><a href="#UniqueValidator">UniqueValidator</a></td>            <td>any, best for email and username</td>            <td>global</td>            <td>0</td>    </tr></tbody>    </table>
+</div>
+</div>
+
+            <a id="CaptchaValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>CaptchaValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>
+    <p>Checks if the entered value matches the captcha text by using the same
+captcha adapter like the one used for the rendering. Therefor the option
+type needs to equal the configuration of the rendering.</p>
+
+    <p>Likewise the rendering of the captcha its possible to use custom
+captchas to validate. How to use create custom is described in
+<a href="../../Extendability/Index.html#AddCustomCaptcha">Bring in your own captcha</a></p>
+</dd>
+                                <dt>Options:</dt>
+        
+        <dd>type = [srfreecap, jmrecaptcha, recaptcha]</dd>
+                                <dt>Default:</dt>
+        
+        <dd>recaptcha</dd>
+            </dl>
+</div>
+
+            <a id="EmptyValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>EmptyValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>Checks if the field uid is empty to no unauthorized user manipulation
+could happen</dd>
+                                <dt>Specialty:</dt>
+        
+        <dd>This validator gets auto-assigned to the uid field in the create process</dd>
+            </dl>
+</div>
+
+            <a id="EqualCurrentPasswordValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>EqualCurrentPasswordValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>This validator is used in the password change process. It compares if the
+entered old password is equal to the current set password for the account
+the user is logged in with.</dd>
+            </dl>
+</div>
+
+            <a id="EqualCurrentUserValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>EqualCurrentUserValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>On edit process it&#039;s important that the correct user data get modified. To
+ensure that the submitted data does not temper the user id. This
+validator compares the user id send by the form with the user id of
+the logged in user to prevent and change of the id.</dd>
+                                <dt>Specialty:</dt>
+        
+        <dd>This validator gets auto-assigned to the uid field in the edit process</dd>
+            </dl>
+</div>
+
+            <a id="ImageUploadValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>ImageUploadValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>The image upload validator checks if the file uploaded has an allowed
+file extension and if the file size is in the allowed max size. Both
+checks uses system configuration.</dd>
+                                <dt>Configuration:</dt>
+        
+        <dd>file extension is configured by $GLOBALS[&#039;TCA&#039;][&#039;fe_users&#039;][&#039;columns&#039;][&#039;image&#039;][&#039;config&#039;][&#039;allowed&#039;]
+file size is configured by $GLOBALS[&#039;TCA&#039;][&#039;fe_users&#039;][&#039;columns&#039;][&#039;image&#039;][&#039;config&#039;][&#039;max_size&#039;]</dd>
+            </dl>
+</div>
+
+            <a id="UniqueValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>UniqueValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>
+    <p>Checks if the value is unique for the field in the storage folder. If
+the option &#039;global&#039; is set a second check for the value in the field is
+done system wide.</p>
+
+    <p>By this you could define that an email address is unique either in the
+local context or for the complex TYPO3 cms installation. So if you have
+multiple newsletters that could get registered its ideal to choose only
+the global = 0 check, so an user could register multiple times.</p>
+
+    <p>If the username should be only available once in the system to prevent
+collisions in authentication you would choose to set globals = 1 .</p>
+</dd>
+                                <dt>Options:</dt>
+        
+        <dd>global = [0,1]</dd>
+                                <dt>Default</dt>
+        
+        <dd>0</dd>
+            </dl>
+</div>
+
+            <a id="RepeatValidator"></a>
+            <div class="table-row">
+    <dl>
+                        <dt>Property</dt>
+        
+        <dd>RepeatValidator</dd>
+                                <dt>Data type</dt>
+        
+        <dd>string</dd>
+                                <dt>Description</dt>
+        
+        <dd>
+    <p>To ensure that the input of a user was done without mistake by the user
+self it&#039;s a good idea to have the values entered in two fields and then
+compare their values. That is possible with this validator.</p>
+
+    <p>The fields need to be present with the pattern [fieldName] and
+[fieldName]Repeat. Where fieldName is free to choose. While Repeat is
+not configurable by now this validator is only usable for email and
+password fields.</p>
+</dd>
+            </dl>
+</div>
+
+    </section>
+    </section>
+        <!-- content end -->
+    </div>
+</article>
+                        
+            <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center"><li class="page-item">
+                            <a class="page-link" href="../Emails/Index.html"
+                               title="Accesskey Alt(+Shift)+p">
+                                Previous
+                            </a>
+                        </li>
+                    <li class="page-item">
+                            <a class="page-link" href="../../Extendability/Index.html"
+                               title="Accesskey Alt(+Shift)+n">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+        </nav>
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="linkReferenceModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
+    aria-hidden="true" data-current-filename="Configuration/Validation/Index">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="linkReferenceModalLabel">Reference to the headline</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success d-none" id="permalink-alert-success" role="alert"></div>
+                <div class="mb-3">
+                    <label for="permalink-uri" class="col-form-label">Permalink</label>
+                    <div class="input-group">
+                        <input class="form-control code" id="permalink-uri" readonly>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy and freely share the link</p>
+                </div>
+                <div class="mb-3">
+                    <div class="alert alert-warning alert-permalink-rst" role="alert">This link target has no permanent anchor assigned.The link below can be used, but is prone to change if the page gets moved.
+                    </div>
+                    <label for="permalink-rst" class="col-form-label">reStructuredText (reST):</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-rst" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy this link into your TYPO3 manual. </p>
+                </div>
+                <div class="mb-3">
+                    <label for="permalink-html" class="col-form-label">HTML:</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-html" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="far fa-clone"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div></div>
+
+
+<footer class="page-footer">
+    <div class="frame frame-ruler-before frame-background-dark">
+        <div class="frame-container">
+            <div class="frame-inner">
+                                <div class="footer-additional">
+                    <p class="text-center">Last rendered: May 19, 2024 17:27</p>
+                </div>
+                <div class="footer-meta">
+                    <ul class="footer-meta-navigation">
+                        <li><a href="https://typo3.org/legal-notice" rel="nofollow" target="_blank" title="Legal Notice">Legal Notice</a></li>
+                        <li><a href="https://typo3.org/privacy-policy" rel="nofollow" target="_blank" title="Privacy Policy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../../_resources/js/popper.min.js"></script>
+<script src="../../_resources/js/bootstrap.min.js"></script>
+<script src="../../_resources/js/theme.min.js"></script>
+
+<!--
+ Locally rendered. No tracking embedded.
+-->
+</body>
+</html>

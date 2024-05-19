@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <title>Extendability documentation</title>
+
+    
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="phpdocumentor/guides" name="generator">
+<meta content="" name="docsearch:name">
+<meta content="" name="docsearch:package_type">
+<meta content="" name="docsearch:release">
+<meta content="" name="docsearch:version">
+<meta content="2024-05-19T17:27:37+00:00" name="docsearch:modified">
+<meta content="2024-05-19T17:27:37+00:00" name="dc.modified">
+<meta content="2024-05-19T17:27:37+00:00" property="article:modified_time">
+    <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
+<link href="../_resources/css/theme.css" rel="stylesheet">
+<link href="https://docs.typo3.org/search/" rel="search" title="Search">
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
+<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
+                        <link href="../Configuration/Validation/Index.html" rel="prev" title="Validation"/>
+            <link href="../Templating/Index.html" rel="next" title="Templating"/>
+            <link href="../Index.html" rel="top" title="Frontend User Registration: Multipurpose configurable registration"/>
+    </head>
+<body>
+<div class="page">
+    
+<header>
+    <div class="page-topbar">
+        <div class="page-topbar-inner">
+            <typo3-universe active="documentation">
+                <div style="display: block; height: 44px; background-color: #313131;"></div>
+            </typo3-universe>
+        </div>
+    </div>
+    <div class="page-header">
+        <div class="page-header-inner">
+            <div class="row">
+                <div class="col-sm-3 col-md-4 col-lg-6">
+                    <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
+                        <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
+                    </a>
+                </div>
+                <div class="col-sm-9 col-md-8 col-lg-6">
+                    <search role="search">
+                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                            <div class="input-group mb-3 mt-sm-3">
+                                <select class="form-select search__scope" id="searchscope" name="scope">
+                                    <option value="">Search all</option>
+                                </select>
+                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                            </div>
+                        </form>
+                    </search>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>    <main class="page-main">
+        <div class="page-main-inner">
+            <div class="page-main-navigation">
+                <nav>
+                    <input class="toc-checkbox" id="toggleToc" type="checkbox">
+
+                    
+<div class="toc-header">
+    <div class="toc-title">
+        <a class="toc-title-project" href="../Index.html"></a>
+            </div>
+    <div class="toc-actions">
+        <label class="toc-toggle" for="toggleToc">
+            Menu
+        </label>
+    </div>
+</div>                    <div class="toc-collapse">
+                                                <div aria-label="main navigation" class="toc" role="navigation">
+                                <div aria-label="Main navigation" class="main_menu" role="navigation">
+        
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../Introduction/Index.html">
+        Introduction
+    </a></li>    <li class="">
+    <a href="../UsersManual/Index.html">
+        Users manual
+    </a></li>    <li class="">
+    <a href="../Administration/Index.html">
+        Administration
+    </a></li>    <li class="">
+    <a href="../Configuration/Index.html">
+        Configuration
+    </a>        <ul class="menu-level-1"><li class="">
+    <a href="../Configuration/Emails/Index.html">
+        Emails
+    </a></li><li class="">
+    <a href="../Configuration/Validation/Index.html">
+        Validation
+    </a></li></ul></li>    <li class=" current active">
+    <a href="#" aria-current="page">
+        Extendability
+    </a></li>    <li class="">
+    <a href="../Templating/Index.html">
+        Templating
+    </a></li>    <li class="">
+    <a href="../Tutorial/Index.html">
+        Tutorial
+    </a></li>    <li class="">
+    <a href="../RegistrationActions/Index.html">
+        Registration actions
+    </a></li>    <li class="">
+    <a href="../KnownProblems/Index.html">
+        Known problems
+    </a></li>    <li class="">
+    <a href="../Changelog/Index.html">
+        ChangeLog
+    </a></li>    <li class="">
+    <a href="../Deprecations/Index.html">
+        Deprecations
+    </a></li>    <li class="">
+    <a href="../BreakingChanges/Index.html">
+        Breaking Changes
+    </a></li>    </ul>
+    <ul class="menu-level-1">
+    <li class="">
+    <a href="../Sitemap.html">
+        Sitemap
+    </a></li>    </ul>
+    </div>
+    <div aria-label="Meta navigation" class="main_menu  d-block d-lg-none" role="navigation">
+    <hr/>
+    <p class="caption">Contributors Corner</p>
+    <ul class="menu-level-1">            <li><a href="../_sources/Extendability/Index.rst.txt" rel="nofollow noopener" target="_blank">
+                    View source of current document
+            </a></li>
+                    <li><a href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" rel="nofollow noopener" target="_blank">
+                    How to edit
+            </a></li>
+        </ul>
+</div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="page-main-content">
+                <div class="rst-content">                        <nav aria-label="breadcrumbs navigation" class="breadcrumb-bar" role="navigation">
+        
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="../Index.html">Frontend User Registration: Multipurpose configurable registration</a></li>
+                    <li aria-current="page"  class="breadcrumb-item  active">Extendability</li>
+        </ol>
+        <div class="breadcrumb-additions">    <a class="btn btn-sm btn-light" href="../_sources/Extendability/Index.rst.txt" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-code"></span></span>
+        <span class="btn-text">View source</span>
+    </a>
+        <a class="btn btn-sm btn-light" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fas fa-info-circle"></span></span>
+        <span class="btn-text">How to edit</span>
+    </a>
+    </div>    </nav>
+                    
+<article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+    <div itemprop="articleBody">
+        <!-- content start -->
+                <section class="section" id="extendability-1" data-rst-anchor="extendability">
+            <a id="extendability"></a>
+            <h1>Extendability<a class="headerlink" href="#extendability-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <div class="contents">
+        <ul class="menu-level">
+    <li class="toc-item">
+    <a href="#use-your-own-flavor-of-fields">Use your own flavor of fields</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#adding-custom-properties">Adding custom properties</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#bring-in-your-own-captcha">Bring in your own captcha</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#psr-14-events">PSR-14 Events</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#how-to-implement-a-slot">How to implement a slot</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#available-events">Available events</a>
+
+
+</li>
+    </ul>
+</div>
+            <section class="section" id="use-your-own-flavor-of-fields" data-rst-anchor="CreateCustomFields">
+            <a id="CreateCustomFields"></a>
+            <h2>Use your own flavor of fields<a class="headerlink" href="#use-your-own-flavor-of-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Since version 8.8.0 its easier then ever to user your own fields. Just add your partial folder via typoscript and
+register your own field configuration. After that you need to tell the user ts config that the new type is available to
+be selected in the plugin too.</p>
+
+            
+    <p><strong>Fields.typoscript</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.view.partialRootPaths.50 = EXT:your_extension/Resources/Private/Partials/
+plugin.tx_sfregister.settings.fields.configuration {
+   your_field_key {
+      partial = YourFieldKey
+      backendLabel = LLL:EXT:your_extension/Resources/Private/Language/locallang_be.xlf:your_field_key
+   }
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p><strong>ext_localconf.php</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
+&#039;@import \&#039;EXT:sf_register/Configuration/TypoScript/Fields.typoscript\&#039;&#039;
+);
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p><strong>TypoScript Setup</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>@import &#039;EXT:sf_register/Configuration/TypoScript/Fields.typoscript&#039;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>By using the same fields file both in typoscript as well as in user ts config. No additional configuration is needed.</p>
+
+            
+    <p>In your partials there are the following information available</p>
+
+            
+
+<ul>
+    <li>{user} the user object with previous entered values</li>
+    <li>{fieldName} the name of the field in the user object</li>
+    <li>{options} every value that is inside of the field config {partial, backendLabel, etc}</li>
+    <li>{settings} the general plugin settings</li>
+</ul>
+
+    </section>
+            <section class="section" id="adding-custom-properties" data-rst-anchor="AddCustomProperties">
+            <a id="AddCustomProperties"></a>
+            <h2>Adding custom properties<a class="headerlink" href="#adding-custom-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Since late the frontend user domain model can be extended. This can be done the extension &#039;extender_&#039;
+which sole purpose is to extend extbase domain models. There is an <a href="https://github.com/evoWeb/ew_sfregister_extended">example</a> on how to use the extender.</p>
+
+            
+    <p>If you run into problems extending please be aware that the only solution supported is by the use of &#039;extender&#039;.</p>
+
+            
+    <p>In this example its noteworthy that the last array key is not required but adviced.</p>
+
+            
+    <p>The path to the file matches extension key and extbase compatible path to the domain model.</p>
+
+            
+    <p>For highlighting purpose its adviced to let the domain model extend from \Evoweb\SfRegister\Domain\Model\FrontendUser</p>
+
+            
+    <p><strong>ext_localconf.php</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;sf_register&#039;][&#039;extender&#039;][\Evoweb\SfRegister\Domain\Model\FrontendUser::class][&#039;cem_sitepackage&#039;] = &#039;EXT:cem_sitepackage/Classes/Domain/Model/FrontendUser.php&#039;;
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>Beside extending the domain model with property and get-/set-method a field needs to be
+created for sql and registered in TCA.</p>
+
+            
+    <p><strong>ext_tables.sql</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>#
+# Table structure for table &#039;fe_users&#039;
+#
+CREATE TABLE fe_users (
+	extending varchar(60) DEFAULT &#039;&#039;,
+);
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p><strong>TCA/Overrides/fe_users.php</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>$temporaryColumns = array(
+	&#039;extending&#039; =&gt; array(
+		&#039;exclude&#039; =&gt; 1,
+		&#039;label&#039; =&gt; &#039;extending&#039;,
+		&#039;config&#039; =&gt; array(
+			&#039;type&#039; =&gt; &#039;input&#039;,
+			&#039;readOnly&#039; =&gt; TRUE,
+		)
+	),
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns(&#039;fe_users&#039;, $temporaryColumns, 1);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(&#039;fe_users&#039;, &#039;extending&#039;);
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="bring-in-your-own-captcha" data-rst-anchor="AddCustomCaptcha">
+            <a id="AddCustomCaptcha"></a>
+            <h2>Bring in your own captcha<a class="headerlink" href="#bring-in-your-own-captcha" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>By implementing a adapter which is extending the \Evoweb\SfRegister\Services\Captcha\AbstractAdapter you are able
+to add an own captcha. The adapter now then has to be configured to be usable by adding typoscript settings like the
+following taken from recaptcha_:</p>
+
+            
+    <p><strong>Captcha.typoscript</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>plugin.tx_sfregister.settings {
+   # register recaptcha as captcha possibility
+   captcha.recaptcha = Evoweb\Recaptcha\Adapter\SfRegisterAdapter
+
+   fields {
+      configuration {
+         # change captcha field type to recaptcha
+         captcha.type = Recaptcha
+      }
+   }
+
+   validation.create {
+      # tell validation to use recaptcha adapter
+      captcha = Evoweb\SfRegister\Validation\Validator\CaptchaValidator(type = recaptcha)
+   }
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+    </section>
+            <section class="section" id="psr-14-events" data-rst-anchor="Psr14Event">
+            <a id="Psr14Event"></a>
+            <h2>PSR-14 Events<a class="headerlink" href="#psr-14-events" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>This kind of event is superseding Hooks and Signal-Slots in TYPO3 and are the
+way to go. That&#039;s why all signals are replaced with their event counterparts.</p>
+
+    </section>
+            <section class="section" id="how-to-implement-a-slot">
+            <h2>How to implement a slot<a class="headerlink" href="#how-to-implement-a-slot" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>An <a href="https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/ApiOverview/Hooks/EventDispatcher/Index.html">overview</a> on how to configure and interact with events was given on the
+Developer Days in 2019. The detailed example shows how to configure them in the
+Services.yaml:</p>
+
+            
+    <p><strong>YourEventListener.php</strong>:</p>
+
+            <div class="code-block-wrapper" translate="no">
+                        
+        <pre class="code-block"><code>use Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
+
+class YourEventListener
+{
+   #[AsEventListener(&#039;your-extension-identifier&#039;, ProcessInitializeActionEvent::class)]
+   public function __invoke(ProcessInitializeActionEvent $event): void
+   {
+   }
+}
+
+</code></pre>
+        <div>
+            <button class="code-block-copy" title="Copy to clipboard">
+                <i class="fa-regular fa-copy code-block-copy-icon"></i>
+                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+            </button>
+            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+        </div>
+    </div>
+            
+    <p>The code above shows how to get an event listener is registered to an event.</p>
+
+    </section>
+            <section class="section" id="available-events">
+            <h2>Available events<a class="headerlink" href="#available-events" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <div class="table-responsive">
+    <table class="table table-bordered align-default">
+                            <thead>
+            <tr>
+                            <th>Event</th>
+                            <th>Parameter</th>
+                    </tr>
+        </thead>
+        <tbody>
+    <tr>
+            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\InitializeActionEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">FeuserController</code>, <code>array</code></td>    </tr>    <tr>
+            <td>FeuserCreateController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreatePreviewEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateRefuseEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateAcceptEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\CreateDeclineEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code></td>    </tr>    <tr>
+            <td>FeuserDeleteController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\DeleteFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\DeleteSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\DeleteConfirmEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code></td>    </tr>    <tr>
+            <td>FeuserEditController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\EditFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\EditPreviewEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\EditSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\EditConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\EditAcceptEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code></td>    </tr>    <tr>
+            <td>FeuserInviteController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\InviteFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\InviteInviteEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>bool</code></td>    </tr>    <tr>
+            <td>FeuserPasswordController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\PasswordFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\PasswordSaveEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code></td>    </tr>    <tr>
+            <td>FeuserResendController
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\ResendFormEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Controller\Event\ResendMailEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\Email</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\Email</code>, <code>array</code></td>    </tr>    <tr>
+            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminCreateAcceptEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminCreateConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminCreateDeclineEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminCreateRefuseEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminCreateSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminDeleteConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminDeleteSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminEditAcceptEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminEditConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminEditSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminInviteInviteEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyAdminResendMailEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserCreateAcceptEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserCreateConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserCreateDeclineEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserCreateRefuseEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserCreateSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserDeleteConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserDeleteSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserEditAcceptEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserEditConfirmEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserEditSaveEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserInviteInviteEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\NotifyUserResendMailEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\InvitationToRegisterEvent</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Services\Event\PreSubmitMailEvent</code></td>            <td><code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">Evoweb\SfRegister\Domain\Model\FrontendUser</code>, <code>array</code>, <code>array</code>
+<code class="code-inline" translate="no" aria-description="PHP" aria-details="Dynamic server-side scripting language.">TYPO3\CMS\Core\Mail\MailMessage</code>, <code>array</code>, <code>array</code></td>    </tr></tbody>    </table>
+</div>
+    </section>
+    </section>
+        <!-- content end -->
+    </div>
+</article>
+                        
+            <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center"><li class="page-item">
+                            <a class="page-link" href="../Configuration/Validation/Index.html"
+                               title="Accesskey Alt(+Shift)+p">
+                                Previous
+                            </a>
+                        </li>
+                    <li class="page-item">
+                            <a class="page-link" href="../Templating/Index.html"
+                               title="Accesskey Alt(+Shift)+n">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+        </nav>
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="linkReferenceModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
+    aria-hidden="true" data-current-filename="Extendability/Index">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="linkReferenceModalLabel">Reference to the headline</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success d-none" id="permalink-alert-success" role="alert"></div>
+                <div class="mb-3">
+                    <label for="permalink-uri" class="col-form-label">Permalink</label>
+                    <div class="input-group">
+                        <input class="form-control code" id="permalink-uri" readonly>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy and freely share the link</p>
+                </div>
+                <div class="mb-3">
+                    <div class="alert alert-warning alert-permalink-rst" role="alert">This link target has no permanent anchor assigned.The link below can be used, but is prone to change if the page gets moved.
+                    </div>
+                    <label for="permalink-rst" class="col-form-label">reStructuredText (reST):</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-rst" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="far fa-clone"></i></button>
+                    </div>
+                    <p>Copy this link into your TYPO3 manual. </p>
+                </div>
+                <div class="mb-3">
+                    <label for="permalink-html" class="col-form-label">HTML:</label>
+                    <div class="input-group">
+                        <textarea class="form-control code" id="permalink-html" readonly></textarea>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="far fa-clone"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div></div>
+
+
+<footer class="page-footer">
+    <div class="frame frame-ruler-before frame-background-dark">
+        <div class="frame-container">
+            <div class="frame-inner">
+                                <div class="footer-additional">
+                    <p class="text-center">Last rendered: May 19, 2024 17:27</p>
+                </div>
+                <div class="footer-meta">
+                    <ul class="footer-meta-navigation">
+                        <li><a href="https://typo3.org/legal-notice" rel="nofollow" target="_blank" title="Legal Notice">Legal Notice</a></li>
+                        <li><a href="https://typo3.org/privacy-policy" rel="nofollow" target="_blank" title="Privacy Policy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../_resources/js/popper.min.js"></script>
+<script src="../_resources/js/bootstrap.min.js"></script>
+<script src="../_resources/js/theme.min.js"></script>
+
+<!--
+ Locally rendered. No tracking embedded.
+-->
+</body>
+</html>
