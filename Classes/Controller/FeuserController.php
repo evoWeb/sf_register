@@ -218,6 +218,7 @@ class FeuserController extends ActionController
 
         /** @var ValidatorInterface $validator */
         $validator = GeneralUtility::makeInstance($validatorObjectName);
+        // @extensionScannerIgnoreLine
         $validator->setOptions($validateAnnotation->options);
 
         if ($validator instanceof SetRequestInterface) {
@@ -466,6 +467,7 @@ class FeuserController extends ActionController
 
         // if redirect is empty set it to current page
         if ($redirectPageId == 0) {
+            // @extensionScannerIgnoreLine
             $redirectPageId = $this->getTypoScriptFrontendController()->id;
         }
 

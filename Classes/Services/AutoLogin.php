@@ -40,6 +40,7 @@ class AutoLogin extends AuthenticationService
         $registry->remove('sf-register', $hmac);
 
         $dbUserSetup = [...$this->db_user, 'username_column' => 'uid', 'enable_clause' => ''];
+        // @extensionScannerIgnoreLine
         $user = $this->fetchUserRecord($userId, '', $dbUserSetup);
 
         if (!empty($user)) {

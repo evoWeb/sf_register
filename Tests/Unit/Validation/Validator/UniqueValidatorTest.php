@@ -113,6 +113,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->setConstructorArgs([$repositoryMock])
             ->onlyMethods(['translateErrorMessage'])
             ->getMock();
+        // @extensionScannerIgnoreLine
         $subject->setOptions(['global' => 1]);
         $subject->setPropertyName($fieldName);
 

@@ -121,6 +121,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
         $controller->initializePageRenderer($request);
         $controller->initializeLanguageService($request);
         $controller->set_no_cache('testing');
+        // @extensionScannerIgnoreLine
         $controller->id = $pageInformation->getId();
         $controller->page = $pageInformation->getPageRecord();
         $controller->contentPid = $pageInformation->getContentFromPid();

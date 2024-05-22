@@ -200,6 +200,7 @@ class File implements SingletonInterface, LoggerAwareInterface
                 if ($fileData->getClientFilename() !== $filename) {
                     $fileData = new UploadedFile(
                         $fileData->getStream(),
+                        // @extensionScannerIgnoreLine
                         $fileData->getSize(),
                         $fileData->getError(),
                         $filename,
@@ -218,6 +219,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         if ($fileData instanceof UploadedFile) {
             $fileExtension = pathinfo($fileData->getClientFilename(), PATHINFO_EXTENSION);
 
+            // @extensionScannerIgnoreLine
             $result = $this->isAllowedFilesize($fileData->getSize() ?? 0);
             $result = $result && $this->isAllowedFileExtension($fileExtension);
         } else {
