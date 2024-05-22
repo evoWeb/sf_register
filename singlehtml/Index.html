@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-05-19T17:27:37+00:00" name="docsearch:modified">
-<meta content="2024-05-19T17:27:37+00:00" name="dc.modified">
-<meta content="2024-05-19T17:27:37+00:00" property="article:modified_time">
+<meta content="2024-05-22T16:09:12+00:00" name="docsearch:modified">
+<meta content="2024-05-22T16:09:12+00:00" name="dc.modified">
+<meta content="2024-05-22T16:09:12+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -137,7 +137,7 @@ license.</p>
 
         <dd class="field-odd">
             
-    <p>Sun, 19 May 2024 17:27:37 +0000</p>
+    <p>Wed, 22 May 2024 16:09:12 +0000</p>
         </dd>
     </dl>
             <hr />
@@ -285,7 +285,7 @@ license.</p>
 
         <dd class="field-odd">
             
-    <p>Sun, 19 May 2024 17:27:37 +0000</p>
+    <p>Wed, 22 May 2024 16:09:12 +0000</p>
         </dd>
     </dl>
             <hr />
@@ -591,62 +591,58 @@ jw_recaptcha work out of the box)</li>
 adapters here:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>typo3conf/ext/sf_register/Classes/Services/Captcha
+            
+    <pre class="code-block"><code>typo3conf/ext/sf_register/Classes/Services/Captcha
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>Extend class</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>\\Evoweb\\SfRegister\\Services\\Captcha\\AbstractAdapter
+            
+    <pre class="code-block"><code>\\Evoweb\\SfRegister\\Services\\Captcha\\AbstractAdapter
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>The functions</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>render()
+            
+    <pre class="code-block"><code>render()
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>and</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>isValid()
+            
+    <pre class="code-block"><code>isValid()
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>are required for the adapter to work.</p>
 
@@ -657,48 +653,45 @@ adapters here:</p>
     <p>You can write your own validator. Validators are stored in</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>typo3conf/ext/sf_register/Classes/Domain/Validator ,
+            
+    <pre class="code-block"><code>typo3conf/ext/sf_register/Classes/Domain/Validator ,
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>extends class</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>\\TYPO3\\CMS\\Extbase\\Validation\\Validator\\AbstractValidator
+            
+    <pre class="code-block"><code>\\TYPO3\\CMS\\Extbase\\Validation\\Validator\\AbstractValidator
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>and require the function</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>isValid().
+            
+    <pre class="code-block"><code>isValid().
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="reference">
             <h2>Reference<a class="headerlink" href="#reference" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
@@ -1909,17 +1902,16 @@ to &quot;Evoweb.SfRegister:Required&quot;</p>
     <p>In general the pattern for a validation rule is</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&quot;name&quot;, options={&quot;parameter1&quot;: valueA, &quot;parameter2&quot;: valueB}
+            
+    <pre class="code-block"><code>&quot;name&quot;, options={&quot;parameter1&quot;: valueA, &quot;parameter2&quot;: valueB}
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>The name needs to be quoted followed with a comma if options are following. Then
 the options with an equal sign and json notated properties and values.</p>
@@ -1935,18 +1927,17 @@ example given where the validators of the email gets removed.</p>
             <section class="section" id="remove-validators">
             <h3>Remove validators:<a class="headerlink" href="#remove-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.email &gt;
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.email &gt;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>If only one validator is needed you could assign it directly to the field like
 below.</p>
@@ -1955,18 +1946,17 @@ below.</p>
             <section class="section" id="assign-only-one-validator">
             <h3>Assign only one validator:<a class="headerlink" href="#assign-only-one-validator" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.passwordRepeat = &quot;Evoweb.SfRegister:Repeat&quot;
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.passwordRepeat = &quot;Evoweb.SfRegister:Repeat&quot;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>And finaly it&#039;s possible to have multiple validators for one field like in the
 next example.</p>
@@ -1975,21 +1965,20 @@ next example.</p>
             <section class="section" id="assign-multiple-validators">
             <h3>Assign multiple validators:<a class="headerlink" href="#assign-multiple-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
 	1 = &quot;Evoweb.SfRegister:Required&quot;
 	2 = &quot;Evoweb.SfRegister:BadWord&quot;
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>Regarding validator it&#039;s possible to have values attached to the assigned one.
 This is beneficial if you want to check against conditions that are not equal
@@ -2002,41 +1991,39 @@ for Fort Knox.</p>
             <section class="section" id="poor-man-s-passwords-with-short-length">
             <h3>Poor man´s passwords with short length:<a class="headerlink" href="#poor-man-s-passwords-with-short-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
 	1 = &quot;Evoweb.SfRegister:Required&quot;
 	2 = &quot;StringLength&quot;, options={&quot;minimum&quot;: 4, &quot;maximum&quot;: 8}
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="bulletproof-passwords-with-long-length">
             <h3>Bulletproof passwords with long length:<a class="headerlink" href="#bulletproof-passwords-with-long-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
 	1 = &quot;Evoweb.SfRegister:Required&quot;
 	2 = &quot;StringLength&quot;, options={&quot;minimum&quot;: 8, &quot;maximum&quot;: 40}
 	3 = &quot;Evoweb.SfRegister:BadWord&quot;
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>In total you have five possible combination of validator assignments for each
 field that you use in your form. You have none, one and multiple validators.
@@ -2055,8 +2042,8 @@ page. But this is mostly inconvenient as you don&#039;t see what settings is met
 the condition. Because of this the validation settings are split for any process.</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation {
 	create {
 		[...]
 	}
@@ -2072,14 +2059,13 @@ the condition. Because of this the validation settings are split for any process
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="special-validators">
             <h2>Special validators<a class="headerlink" href="#special-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
@@ -2106,18 +2092,17 @@ you are ready to use your validator like in the following example.</p>
             <section class="section" id="custom-validator-usage">
             <h3>Custom validator usage:<a class="headerlink" href="#custom-validator-usage" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password = &quot;Evoweb.SfRegister:Required&quot;
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password = &quot;Evoweb.SfRegister:Required&quot;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
     </section>
             <section class="section" id="available-validators" data-rst-anchor="BadWordValidator">
@@ -2442,8 +2427,8 @@ be selected in the plugin too.</p>
     <p><strong>Fields.typoscript</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.view.partialRootPaths.50 = EXT:your_extension/Resources/Private/Partials/
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.view.partialRootPaths.50 = EXT:your_extension/Resources/Private/Partials/
 plugin.tx_sfregister.settings.fields.configuration {
    your_field_key {
       partial = YourFieldKey
@@ -2452,48 +2437,45 @@ plugin.tx_sfregister.settings.fields.configuration {
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p><strong>ext_localconf.php</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
+            
+    <pre class="code-block"><code>\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
 &#039;@import \&#039;EXT:sf_register/Configuration/TypoScript/Fields.typoscript\&#039;&#039;
 );
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p><strong>TypoScript Setup</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>@import &#039;EXT:sf_register/Configuration/TypoScript/Fields.typoscript&#039;
+            
+    <pre class="code-block"><code>@import &#039;EXT:sf_register/Configuration/TypoScript/Fields.typoscript&#039;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>By using the same fields file both in typoscript as well as in user ts config. No additional configuration is needed.</p>
 
@@ -2533,18 +2515,17 @@ which sole purpose is to extend extbase domain models. There is an <a href="http
     <p><strong>ext_localconf.php</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;sf_register&#039;][&#039;extender&#039;][\Evoweb\SfRegister\Domain\Model\FrontendUser::class][&#039;cem_sitepackage&#039;] = &#039;EXT:cem_sitepackage/Classes/Domain/Model/FrontendUser.php&#039;;
+            
+    <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;sf_register&#039;][&#039;extender&#039;][\Evoweb\SfRegister\Domain\Model\FrontendUser::class][&#039;cem_sitepackage&#039;] = &#039;EXT:cem_sitepackage/Classes/Domain/Model/FrontendUser.php&#039;;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>Beside extending the domain model with property and get-/set-method a field needs to be
 created for sql and registered in TCA.</p>
@@ -2553,8 +2534,8 @@ created for sql and registered in TCA.</p>
     <p><strong>ext_tables.sql</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>#
+            
+    <pre class="code-block"><code>#
 # Table structure for table &#039;fe_users&#039;
 #
 CREATE TABLE fe_users (
@@ -2562,20 +2543,19 @@ CREATE TABLE fe_users (
 );
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p><strong>TCA/Overrides/fe_users.php</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>$temporaryColumns = array(
+            
+    <pre class="code-block"><code>$temporaryColumns = array(
 	&#039;extending&#039; =&gt; array(
 		&#039;exclude&#039; =&gt; 1,
 		&#039;label&#039; =&gt; &#039;extending&#039;,
@@ -2590,14 +2570,13 @@ CREATE TABLE fe_users (
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(&#039;fe_users&#039;, &#039;extending&#039;);
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="bring-in-your-own-captcha" data-rst-anchor="AddCustomCaptcha">
             <a id="AddCustomCaptcha"></a>
@@ -2611,8 +2590,8 @@ following taken from recaptcha_:</p>
     <p><strong>Captcha.typoscript</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings {
    # register recaptcha as captcha possibility
    captcha.recaptcha = Evoweb\Recaptcha\Adapter\SfRegisterAdapter
 
@@ -2630,14 +2609,13 @@ following taken from recaptcha_:</p>
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="psr-14-events" data-rst-anchor="Psr14Event">
             <a id="Psr14Event"></a>
@@ -2658,8 +2636,8 @@ Services.yaml:</p>
     <p><strong>YourEventListener.php</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>use Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent;
+            
+    <pre class="code-block"><code>use Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
 
 class YourEventListener
@@ -2671,14 +2649,13 @@ class YourEventListener
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>The code above shows how to get an event listener is registered to an event.</p>
 
@@ -2822,21 +2799,20 @@ page where the registration should be different.</p>
     <p><strong>Fields/setup.typoscript</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.fields.defaultSelected {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.fields.defaultSelected {
    create { }
    edit { }
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>Word of advise to those that upgrade an existing installation. To make use of this feature in your old templates you
 need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
@@ -2845,8 +2821,8 @@ need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
     <p><strong>Form.html</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&lt;f:for each=&quot;{settings.fields.selected}&quot; as=&quot;selectedField&quot;&gt;
+            
+    <pre class="code-block"><code>&lt;f:for each=&quot;{settings.fields.selected}&quot; as=&quot;selectedField&quot;&gt;
 	&lt;f:alias map=&quot;{options: &#039;{settings.fields.configuration.{selectedField}}&#039;}&quot;&gt;
 		&lt;f:render partial=&quot;Form/{options.partial}&quot;
 			arguments=&quot;{user: user, fieldName: selectedField, options: options, settings: settings}&quot;/&gt;
@@ -2854,14 +2830,13 @@ need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
 &lt;/f:for&gt;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="customize-the-output">
             <h2>Customize the output:<a class="headerlink" href="#customize-the-output" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
@@ -2869,17 +2844,16 @@ need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
     <p>Per default, all templates are stored in</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>typo3conf/ext/sf_register/Resources/Private/
+            
+    <pre class="code-block"><code>typo3conf/ext/sf_register/Resources/Private/
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>Copy files you want to modify of the folder into the fileadmin.
 Don&#039;t forget to set the path to this new templates folder with.</p>
@@ -2890,8 +2864,8 @@ template, partial and layout root paths. By this its not necessary to
 copy all files of given path any more.</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.view.templateRootPaths.0 = EXT:sf_register/Resources/Private/Templates/
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.view.templateRootPaths.0 = EXT:sf_register/Resources/Private/Templates/
 plugin.tx_sfregister.view.templateRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/
 
 plugin.tx_sfregister.view.partialRootPaths.0 = EXT:sf_register/Resources/Private/Partials/
@@ -2901,14 +2875,13 @@ plugin.tx_sfregister.view.layoutRootPaths.0 = EXT:sf_register/Resources/Private/
 plugin.tx_sfregister.view.layoutRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/Layouts/
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>In pre and post TYPO3 6.2 version its possible to define a template rootpath in
 the registration plugin. This gets add/set to the view and used for rendering.</p>
@@ -2918,22 +2891,21 @@ the registration plugin. This gets add/set to the view and used for rendering.</
             <section class="section" id="birthdate-with-three-select-boxes">
             <h4>Birthdate with three select boxes<a class="headerlink" href="#birthdate-with-three-select-boxes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&lt;register:form.rangeSelect start=&quot;1&quot; end=&quot;31&quot; property=&quot;dateOfBirthDay&quot;/&gt;
+            
+    <pre class="code-block"><code>&lt;register:form.rangeSelect start=&quot;1&quot; end=&quot;31&quot; property=&quot;dateOfBirthDay&quot;/&gt;
 -
 &lt;register:form.rangeSelect start=&quot;1&quot; end=&quot;12&quot; property=&quot;dateOfBirthMonth&quot;/&gt;
 -
 &lt;register:form.rangeSelect start=&quot;1960&quot; end=&quot;2011&quot; property=&quot;dateOfBirthYear&quot;/&gt;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             <figure>
     <img
     src="Images/screenshot_dateselectors.png"
@@ -2946,19 +2918,18 @@ the registration plugin. This gets add/set to the view and used for rendering.</
             <section class="section" id="single-select-with-radio-buttons">
             <h4>Single select with radio buttons<a class="headerlink" href="#single-select-with-radio-buttons" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&lt;f:form.radio property=&quot;gender&quot; value=&quot;1&quot;/&gt; &lt;f:translate key=&quot;gender_1&quot;/&gt;
+            
+    <pre class="code-block"><code>&lt;f:form.radio property=&quot;gender&quot; value=&quot;1&quot;/&gt; &lt;f:translate key=&quot;gender_1&quot;/&gt;
 &lt;f:form.radio property=&quot;gender&quot; value=&quot;2&quot;/&gt; &lt;f:translate key=&quot;gender_2&quot;/&gt;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             <figure>
     <img
     src="Images/screenshot_genderradio.png"
@@ -2971,21 +2942,20 @@ the registration plugin. This gets add/set to the view and used for rendering.</
             <section class="section" id="single-select-as-select-box">
             <h4>Single select as select box<a class="headerlink" href="#single-select-as-select-box" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&lt;f:form.select property=&quot;gender&quot; options=&quot;{
+            
+    <pre class="code-block"><code>&lt;f:form.select property=&quot;gender&quot; options=&quot;{
 	1: &#039;{f:translate(key: \&#039;gender_1\&#039;)}&#039;,
 	2: &#039;{f:translate(key: \&#039;gender_2\&#039;)}&#039;
 }&quot;/&gt;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             <figure>
     <img
     src="Images/screenshot_genderselect.png"
@@ -2998,17 +2968,16 @@ the registration plugin. This gets add/set to the view and used for rendering.</
             <section class="section" id="automatic-marking-of-requried-fields">
             <h4>Automatic marking of requried fields<a class="headerlink" href="#automatic-marking-of-requried-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&lt;f:render partial=&quot;required&quot; arguments=&quot;{field: &#039;gender&#039;}&quot;/&gt;
+            
+    <pre class="code-block"><code>&lt;f:render partial=&quot;required&quot; arguments=&quot;{field: &#039;gender&#039;}&quot;/&gt;
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>you get the asterix (*) behind your label, if the required validator
 is active for this field.</p>
@@ -3216,57 +3185,54 @@ sf_register.</p>
     <p><strong>Services.yaml</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>Evoweb\SfRegister\Validation\Validator\UniqueValidator:
+            
+    <pre class="code-block"><code>Evoweb\SfRegister\Validation\Validator\UniqueValidator:
   public: true
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p><strong>Class definition</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>use Evoweb\SfRegister\Validation\Validator\AbstractValidator;
+            
+    <pre class="code-block"><code>use Evoweb\SfRegister\Validation\Validator\AbstractValidator;
 use Evoweb\SfRegister\Validation\Validator\InjectableInterface;
 
 class UniqueValidator extends AbstractValidator implements InjectableInterface, ...
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p><strong>__construct</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>public function __construct(FrontendUserRepository $userRepository)
+            
+    <pre class="code-block"><code>public function __construct(FrontendUserRepository $userRepository)
 {
   $this-&gt;userRepository = $userRepository;
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="2020-04-29">
             <h2>2020.04.29<a class="headerlink" href="#2020-04-29" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
@@ -3472,7 +3438,7 @@ method needs to be changed accordingly.</li>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: May 19, 2024 17:27</p>
+                    <p class="text-center">Last rendered: May 22, 2024 16:09</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

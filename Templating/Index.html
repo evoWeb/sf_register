@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-05-19T17:27:37+00:00" name="docsearch:modified">
-<meta content="2024-05-19T17:27:37+00:00" name="dc.modified">
-<meta content="2024-05-19T17:27:37+00:00" property="article:modified_time">
+<meta content="2024-05-22T16:09:12+00:00" name="docsearch:modified">
+<meta content="2024-05-22T16:09:12+00:00" name="dc.modified">
+<meta content="2024-05-22T16:09:12+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -191,21 +191,20 @@ page where the registration should be different.</p>
     <p><strong>Fields/setup.typoscript</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.fields.defaultSelected {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.fields.defaultSelected {
    create { }
    edit { }
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>Word of advise to those that upgrade an existing installation. To make use of this feature in your old templates you
 need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
@@ -214,8 +213,8 @@ need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
     <p><strong>Form.html</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&lt;f:for each=&quot;{settings.fields.selected}&quot; as=&quot;selectedField&quot;&gt;
+            
+    <pre class="code-block"><code>&lt;f:for each=&quot;{settings.fields.selected}&quot; as=&quot;selectedField&quot;&gt;
 	&lt;f:alias map=&quot;{options: &#039;{settings.fields.configuration.{selectedField}}&#039;}&quot;&gt;
 		&lt;f:render partial=&quot;Form/{options.partial}&quot;
 			arguments=&quot;{user: user, fieldName: selectedField, options: options, settings: settings}&quot;/&gt;
@@ -223,14 +222,13 @@ need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
 &lt;/f:for&gt;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="customize-the-output">
             <h2>Customize the output:<a class="headerlink" href="#customize-the-output" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
@@ -238,17 +236,16 @@ need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
     <p>Per default, all templates are stored in</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>typo3conf/ext/sf_register/Resources/Private/
+            
+    <pre class="code-block"><code>typo3conf/ext/sf_register/Resources/Private/
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>Copy files you want to modify of the folder into the fileadmin.
 Don&#039;t forget to set the path to this new templates folder with.</p>
@@ -259,8 +256,8 @@ template, partial and layout root paths. By this its not necessary to
 copy all files of given path any more.</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.view.templateRootPaths.0 = EXT:sf_register/Resources/Private/Templates/
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.view.templateRootPaths.0 = EXT:sf_register/Resources/Private/Templates/
 plugin.tx_sfregister.view.templateRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/
 
 plugin.tx_sfregister.view.partialRootPaths.0 = EXT:sf_register/Resources/Private/Partials/
@@ -270,14 +267,13 @@ plugin.tx_sfregister.view.layoutRootPaths.0 = EXT:sf_register/Resources/Private/
 plugin.tx_sfregister.view.layoutRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/Layouts/
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>In pre and post TYPO3 6.2 version its possible to define a template rootpath in
 the registration plugin. This gets add/set to the view and used for rendering.</p>
@@ -287,22 +283,21 @@ the registration plugin. This gets add/set to the view and used for rendering.</
             <section class="section" id="birthdate-with-three-select-boxes">
             <h4>Birthdate with three select boxes<a class="headerlink" href="#birthdate-with-three-select-boxes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&lt;register:form.rangeSelect start=&quot;1&quot; end=&quot;31&quot; property=&quot;dateOfBirthDay&quot;/&gt;
+            
+    <pre class="code-block"><code>&lt;register:form.rangeSelect start=&quot;1&quot; end=&quot;31&quot; property=&quot;dateOfBirthDay&quot;/&gt;
 -
 &lt;register:form.rangeSelect start=&quot;1&quot; end=&quot;12&quot; property=&quot;dateOfBirthMonth&quot;/&gt;
 -
 &lt;register:form.rangeSelect start=&quot;1960&quot; end=&quot;2011&quot; property=&quot;dateOfBirthYear&quot;/&gt;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             <figure>
     <img
     src="Images/screenshot_dateselectors.png"
@@ -315,19 +310,18 @@ the registration plugin. This gets add/set to the view and used for rendering.</
             <section class="section" id="single-select-with-radio-buttons">
             <h4>Single select with radio buttons<a class="headerlink" href="#single-select-with-radio-buttons" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&lt;f:form.radio property=&quot;gender&quot; value=&quot;1&quot;/&gt; &lt;f:translate key=&quot;gender_1&quot;/&gt;
+            
+    <pre class="code-block"><code>&lt;f:form.radio property=&quot;gender&quot; value=&quot;1&quot;/&gt; &lt;f:translate key=&quot;gender_1&quot;/&gt;
 &lt;f:form.radio property=&quot;gender&quot; value=&quot;2&quot;/&gt; &lt;f:translate key=&quot;gender_2&quot;/&gt;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             <figure>
     <img
     src="Images/screenshot_genderradio.png"
@@ -340,21 +334,20 @@ the registration plugin. This gets add/set to the view and used for rendering.</
             <section class="section" id="single-select-as-select-box">
             <h4>Single select as select box<a class="headerlink" href="#single-select-as-select-box" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&lt;f:form.select property=&quot;gender&quot; options=&quot;{
+            
+    <pre class="code-block"><code>&lt;f:form.select property=&quot;gender&quot; options=&quot;{
 	1: &#039;{f:translate(key: \&#039;gender_1\&#039;)}&#039;,
 	2: &#039;{f:translate(key: \&#039;gender_2\&#039;)}&#039;
 }&quot;/&gt;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             <figure>
     <img
     src="Images/screenshot_genderselect.png"
@@ -367,17 +360,16 @@ the registration plugin. This gets add/set to the view and used for rendering.</
             <section class="section" id="automatic-marking-of-requried-fields">
             <h4>Automatic marking of requried fields<a class="headerlink" href="#automatic-marking-of-requried-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&lt;f:render partial=&quot;required&quot; arguments=&quot;{field: &#039;gender&#039;}&quot;/&gt;
+            
+    <pre class="code-block"><code>&lt;f:render partial=&quot;required&quot; arguments=&quot;{field: &#039;gender&#039;}&quot;/&gt;
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>you get the asterix (*) behind your label, if the required validator
 is active for this field.</p>
@@ -459,7 +451,7 @@ is active for this field.</p>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: May 19, 2024 17:27</p>
+                    <p class="text-center">Last rendered: May 22, 2024 16:09</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

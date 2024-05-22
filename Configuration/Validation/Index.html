@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-05-19T17:27:37+00:00" name="docsearch:modified">
-<meta content="2024-05-19T17:27:37+00:00" name="dc.modified">
-<meta content="2024-05-19T17:27:37+00:00" property="article:modified_time">
+<meta content="2024-05-22T16:09:12+00:00" name="docsearch:modified">
+<meta content="2024-05-22T16:09:12+00:00" name="dc.modified">
+<meta content="2024-05-22T16:09:12+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -244,17 +244,16 @@ to &quot;Evoweb.SfRegister:Required&quot;</p>
     <p>In general the pattern for a validation rule is</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>&quot;name&quot;, options={&quot;parameter1&quot;: valueA, &quot;parameter2&quot;: valueB}
+            
+    <pre class="code-block"><code>&quot;name&quot;, options={&quot;parameter1&quot;: valueA, &quot;parameter2&quot;: valueB}
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>The name needs to be quoted followed with a comma if options are following. Then
 the options with an equal sign and json notated properties and values.</p>
@@ -270,18 +269,17 @@ example given where the validators of the email gets removed.</p>
             <section class="section" id="remove-validators">
             <h3>Remove validators:<a class="headerlink" href="#remove-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.email &gt;
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.email &gt;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>If only one validator is needed you could assign it directly to the field like
 below.</p>
@@ -290,18 +288,17 @@ below.</p>
             <section class="section" id="assign-only-one-validator">
             <h3>Assign only one validator:<a class="headerlink" href="#assign-only-one-validator" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.passwordRepeat = &quot;Evoweb.SfRegister:Repeat&quot;
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.passwordRepeat = &quot;Evoweb.SfRegister:Repeat&quot;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>And finaly it&#039;s possible to have multiple validators for one field like in the
 next example.</p>
@@ -310,21 +307,20 @@ next example.</p>
             <section class="section" id="assign-multiple-validators">
             <h3>Assign multiple validators:<a class="headerlink" href="#assign-multiple-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
 	1 = &quot;Evoweb.SfRegister:Required&quot;
 	2 = &quot;Evoweb.SfRegister:BadWord&quot;
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>Regarding validator it&#039;s possible to have values attached to the assigned one.
 This is beneficial if you want to check against conditions that are not equal
@@ -337,41 +333,39 @@ for Fort Knox.</p>
             <section class="section" id="poor-man-s-passwords-with-short-length">
             <h3>Poor man´s passwords with short length:<a class="headerlink" href="#poor-man-s-passwords-with-short-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
 	1 = &quot;Evoweb.SfRegister:Required&quot;
 	2 = &quot;StringLength&quot;, options={&quot;minimum&quot;: 4, &quot;maximum&quot;: 8}
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="bulletproof-passwords-with-long-length">
             <h3>Bulletproof passwords with long length:<a class="headerlink" href="#bulletproof-passwords-with-long-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
 	1 = &quot;Evoweb.SfRegister:Required&quot;
 	2 = &quot;StringLength&quot;, options={&quot;minimum&quot;: 8, &quot;maximum&quot;: 40}
 	3 = &quot;Evoweb.SfRegister:BadWord&quot;
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>In total you have five possible combination of validator assignments for each
 field that you use in your form. You have none, one and multiple validators.
@@ -390,8 +384,8 @@ page. But this is mostly inconvenient as you don&#039;t see what settings is met
 the condition. Because of this the validation settings are split for any process.</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation {
 	create {
 		[...]
 	}
@@ -407,14 +401,13 @@ the condition. Because of this the validation settings are split for any process
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="special-validators">
             <h2>Special validators<a class="headerlink" href="#special-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
@@ -441,18 +434,17 @@ you are ready to use your validator like in the following example.</p>
             <section class="section" id="custom-validator-usage">
             <h3>Custom validator usage:<a class="headerlink" href="#custom-validator-usage" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password = &quot;Evoweb.SfRegister:Required&quot;
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password = &quot;Evoweb.SfRegister:Required&quot;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
     </section>
             <section class="section" id="available-validators" data-rst-anchor="BadWordValidator">
@@ -798,7 +790,7 @@ password fields.</p>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: May 19, 2024 17:27</p>
+                    <p class="text-center">Last rendered: May 22, 2024 16:09</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

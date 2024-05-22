@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-05-19T17:27:37+00:00" name="docsearch:modified">
-<meta content="2024-05-19T17:27:37+00:00" name="dc.modified">
-<meta content="2024-05-19T17:27:37+00:00" property="article:modified_time">
+<meta content="2024-05-22T16:09:12+00:00" name="docsearch:modified">
+<meta content="2024-05-22T16:09:12+00:00" name="dc.modified">
+<meta content="2024-05-22T16:09:12+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -213,8 +213,8 @@ be selected in the plugin too.</p>
     <p><strong>Fields.typoscript</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.view.partialRootPaths.50 = EXT:your_extension/Resources/Private/Partials/
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.view.partialRootPaths.50 = EXT:your_extension/Resources/Private/Partials/
 plugin.tx_sfregister.settings.fields.configuration {
    your_field_key {
       partial = YourFieldKey
@@ -223,48 +223,45 @@ plugin.tx_sfregister.settings.fields.configuration {
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p><strong>ext_localconf.php</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
+            
+    <pre class="code-block"><code>\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig(
 &#039;@import \&#039;EXT:sf_register/Configuration/TypoScript/Fields.typoscript\&#039;&#039;
 );
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p><strong>TypoScript Setup</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>@import &#039;EXT:sf_register/Configuration/TypoScript/Fields.typoscript&#039;
+            
+    <pre class="code-block"><code>@import &#039;EXT:sf_register/Configuration/TypoScript/Fields.typoscript&#039;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>By using the same fields file both in typoscript as well as in user ts config. No additional configuration is needed.</p>
 
@@ -304,18 +301,17 @@ which sole purpose is to extend extbase domain models. There is an <a href="http
     <p><strong>ext_localconf.php</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;sf_register&#039;][&#039;extender&#039;][\Evoweb\SfRegister\Domain\Model\FrontendUser::class][&#039;cem_sitepackage&#039;] = &#039;EXT:cem_sitepackage/Classes/Domain/Model/FrontendUser.php&#039;;
+            
+    <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;sf_register&#039;][&#039;extender&#039;][\Evoweb\SfRegister\Domain\Model\FrontendUser::class][&#039;cem_sitepackage&#039;] = &#039;EXT:cem_sitepackage/Classes/Domain/Model/FrontendUser.php&#039;;
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>Beside extending the domain model with property and get-/set-method a field needs to be
 created for sql and registered in TCA.</p>
@@ -324,8 +320,8 @@ created for sql and registered in TCA.</p>
     <p><strong>ext_tables.sql</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>#
+            
+    <pre class="code-block"><code>#
 # Table structure for table &#039;fe_users&#039;
 #
 CREATE TABLE fe_users (
@@ -333,20 +329,19 @@ CREATE TABLE fe_users (
 );
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p><strong>TCA/Overrides/fe_users.php</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>$temporaryColumns = array(
+            
+    <pre class="code-block"><code>$temporaryColumns = array(
 	&#039;extending&#039; =&gt; array(
 		&#039;exclude&#039; =&gt; 1,
 		&#039;label&#039; =&gt; &#039;extending&#039;,
@@ -361,14 +356,13 @@ CREATE TABLE fe_users (
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(&#039;fe_users&#039;, &#039;extending&#039;);
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="bring-in-your-own-captcha" data-rst-anchor="AddCustomCaptcha">
             <a id="AddCustomCaptcha"></a>
@@ -382,8 +376,8 @@ following taken from recaptcha_:</p>
     <p><strong>Captcha.typoscript</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>plugin.tx_sfregister.settings {
+            
+    <pre class="code-block"><code>plugin.tx_sfregister.settings {
    # register recaptcha as captcha possibility
    captcha.recaptcha = Evoweb\Recaptcha\Adapter\SfRegisterAdapter
 
@@ -401,14 +395,13 @@ following taken from recaptcha_:</p>
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="psr-14-events" data-rst-anchor="Psr14Event">
             <a id="Psr14Event"></a>
@@ -429,8 +422,8 @@ Services.yaml:</p>
     <p><strong>YourEventListener.php</strong>:</p>
 
             <div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>use Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent;
+            
+    <pre class="code-block"><code>use Evoweb\SfRegister\Controller\Event\ProcessInitializeActionEvent;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
 
 class YourEventListener
@@ -442,14 +435,13 @@ class YourEventListener
 }
 
 </code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>The code above shows how to get an event listener is registered to an event.</p>
 
@@ -636,7 +628,7 @@ class YourEventListener
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: May 19, 2024 17:27</p>
+                    <p class="text-center">Last rendered: May 22, 2024 16:09</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

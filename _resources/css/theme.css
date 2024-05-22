@@ -23555,19 +23555,20 @@ code {
   position: relative;
 }
 
-.code-block-copy {
+.code-block-copy, a.code-block-edit {
   background: none;
   border: none;
   padding: 0.75rem;
+  text-decoration: none !important;
 }
-.code-block-copy .fa-copy {
+.code-block-copy .icon, a.code-block-edit .icon {
   opacity: 0.5;
   transition: opacity 0.3s;
 }
-.code-block-copy .fa-copy:hover {
+.code-block-copy .icon:hover, a.code-block-edit .icon:hover {
   opacity: 1;
 }
-.code-block-copy .fa-check::before {
+.code-block-copy .fa-check::before, a.code-block-edit .fa-check::before {
   color: #146c43;
 }
 
