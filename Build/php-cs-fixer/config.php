@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the TYPO3 CMS project.
+ * This file is copied from the TYPO3 CMS project.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -21,7 +21,8 @@ declare(strict_types=1);
  *
  * Run it using runTests.sh, see 'runTests.sh -h' for more options.
  *
- * Fix entire core:
+ * Fix entire extension:
+ * > Build/Scripts/additionalTests.sh -p 8.3 -s composerInstallPackage -q "typo3/cms-core:[dev-main,13...]"
  * > Build/Scripts/runTests.sh -s cgl
  *
  * Fix your current patch:
@@ -41,16 +42,22 @@ if (PHP_SAPI !== 'cli') {
 //  - Ensure Concatenation to have at least one whitespace around
 //  - Remove trailing whitespace at the end of blank lines.
 return (new \PhpCsFixer\Config())
+    ->setParallelConfig(\PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
     ->setFinder(
-        (new PhpCsFixer\Finder())
+        PhpCsFixer\Finder::create()
             ->ignoreVCSIgnored(true)
             ->in(realpath(__DIR__ . '/../../'))
+            ->exclude('bin')
+            ->exclude('public')
+            ->exclude('typo3temp')
+            ->exclude('vendor')
     )
     ->setRiskyAllowed(true)
     ->setRules([
         '@DoctrineAnnotation' => true,
         // @todo: Switch to @PER-CS2.0 once php-cs-fixer's todo list is done: https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues/7247
         '@PER-CS1.0' => true,
+        'array_indentation' => true,
         'array_syntax' => ['syntax' => 'short'],
         'cast_spaces' => ['space' => 'none'],
         // @todo: Can be dropped once we enable @PER-CS2.0
@@ -62,17 +69,9 @@ return (new \PhpCsFixer\Config())
         'function_declaration' => [
             'closure_fn_spacing' => 'none',
         ],
-        'function_to_constant' => [
-            'functions' => [
-                'get_called_class', 'get_class', 'get_class_this', 'php_sapi_name', 'phpversion', 'pi'
-            ]
-        ],
+        'function_to_constant' => ['functions' => ['get_called_class', 'get_class', 'get_class_this', 'php_sapi_name', 'phpversion', 'pi']],
         'type_declaration_spaces' => true,
-        'global_namespace_import' => [
-            'import_classes' => false,
-            'import_constants' => false,
-            'import_functions' => false
-        ],
+        'global_namespace_import' => ['import_classes' => false, 'import_constants' => false, 'import_functions' => false],
         'list_syntax' => ['syntax' => 'short'],
         // @todo: Can be dropped once we enable @PER-CS2.0
         'method_argument_space' => true,
