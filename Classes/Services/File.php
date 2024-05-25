@@ -18,7 +18,6 @@ namespace Evoweb\SfRegister\Services;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\Folder;
@@ -195,7 +194,7 @@ class File implements SingletonInterface, LoggerAwareInterface
                     $filename = sha1(
                         $filename . uniqid('sfregister')
                         . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']
-                    )  . '.' . $extension;
+                    ) . '.' . $extension;
                 }
                 if ($fileData->getClientFilename() !== $filename) {
                     $fileData = new UploadedFile(

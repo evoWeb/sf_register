@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Functional;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Tests\Functional;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Tests\Functional;
 
 use Evoweb\SfRegister\Tests\Functional\Traits\SiteBasedTestTrait;
 use Psr\Log\NullLogger;
@@ -39,7 +39,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
     protected string $instancePath = '';
 
     protected array $testExtensionsToLoad = [
-        'typo3conf/ext/sf_register'
+        'typo3conf/ext/sf_register',
     ];
 
     /**
@@ -49,7 +49,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
         'EN' => [
             'id' => 0,
             'title' => 'English',
-            'locale' => 'en_US.UTF8'
+            'locale' => 'en_US.UTF8',
         ],
     ];
 
@@ -71,8 +71,8 @@ abstract class AbstractTestBase extends FunctionalTestCase
                 'setup' => [
                     'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
                     'EXT:sf_register/Configuration/TypoScript/minimal/setup.typoscript',
-                    __DIR__ . '/../Fixtures/PageWithUserObjectUsingSlWithLLL.typoscript'
-                ]
+                    __DIR__ . '/../Fixtures/PageWithUserObjectUsingSlWithLLL.typoscript',
+                ],
             ]
         );
         $this->writeSiteConfiguration(
@@ -83,7 +83,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
                 $this->buildDefaultLanguageConfiguration('EN', '/en/'),
             ],
             [
-                $this->buildErrorHandlingConfiguration('Fluid', [404])
+                $this->buildErrorHandlingConfiguration('Fluid', [404]),
             ]
         );
 

@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
@@ -40,9 +40,9 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
                 'tx_sfregister.' => [
                     'settings.' => [
                         'badWordList' => 'god, sex, password',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ]);
     }
 
@@ -71,7 +71,7 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
     {
         $this->createAndLoginFrontEndUser('2', [
             'password' => 'testOld',
-            'comments' => ''
+            'comments' => '',
         ]);
         $this->initializeTypoScriptFrontendController();
 

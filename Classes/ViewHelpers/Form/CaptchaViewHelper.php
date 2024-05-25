@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\ViewHelpers\Form;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Form;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;

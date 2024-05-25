@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Validation\Validator;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Validation\Validator;
 
 use TYPO3\CMS\Extbase\Validation\Exception\InvalidValidationOptionsException;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator as BaseAbstractValidator;
@@ -29,7 +29,7 @@ abstract class AbstractValidator extends BaseAbstractValidator
         // merge with default values
         $this->options = array_merge(
             array_map(
-                static fn (array $value): mixed => $value[0],
+                static fn(array $value): mixed => $value[0],
                 $this->supportedOptions
             ),
             $options

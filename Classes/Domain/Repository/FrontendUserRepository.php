@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Domain\Repository;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Domain\Repository;
 
 use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;

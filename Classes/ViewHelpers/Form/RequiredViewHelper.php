@@ -71,10 +71,7 @@ class RequiredViewHelper extends AbstractConditionViewHelper
         return [$settings, $frameworkConfiguration];
     }
 
-    /**
-     * @return bool
-     */
-    public static function verdict(array $arguments, RenderingContextInterface $renderingContext)
+    public static function verdict(array $arguments, RenderingContextInterface $renderingContext): bool
     {
         [$settings, $frameworkConfiguration] = static::getSettings();
 

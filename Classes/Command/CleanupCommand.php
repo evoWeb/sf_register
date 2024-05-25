@@ -121,7 +121,7 @@ class CleanupCommand extends Command
         $this->getQueryBuilderForTable($table)
             ->getConnection()
             ->delete($table, [
-                'uid' => $user['uid']
+                'uid' => $user['uid'],
             ]);
     }
 

@@ -56,7 +56,7 @@ class SelectStaticCountryZonesViewHelper extends AbstractSelectViewHelper
         $this->registerArgument('parent', 'string', 'Parent of this zone');
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 

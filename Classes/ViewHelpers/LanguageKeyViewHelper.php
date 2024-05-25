@@ -1,39 +1,26 @@
 <?php
 
-namespace Evoweb\SfRegister\ViewHelpers;
-
 /*
- * Copyright notice
+ * This file is developed by evoWeb.
  *
- * (c) 2011-2019 Sebastian Fischer <typo3@evoweb.de>
- * (c) 2011-2015 Justin Kromlinger
- * All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\ViewHelpers;
 
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ApplicationType;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 
 /**
  * View helper to output the configured language
@@ -46,7 +33,7 @@ use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
  */
 class LanguageKeyViewHelper extends AbstractViewHelper
 {
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument(
             'type',

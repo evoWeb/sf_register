@@ -23,9 +23,7 @@ use TYPO3\CMS\Core\Security\RequestToken;
 
 final class BeforeRequestTokenProcessedListener
 {
-    public function __construct(protected Context $context)
-    {
-    }
+    public function __construct(protected Context $context) {}
 
     #[AsEventListener('evoweb-sf-register-beforerequesttoken', BeforeRequestTokenProcessedEvent::class)]
     public function __invoke(BeforeRequestTokenProcessedEvent $event): void

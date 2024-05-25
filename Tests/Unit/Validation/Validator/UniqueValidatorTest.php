@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,8 +11,10 @@ namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Validation\Validator\UniqueValidator;
+namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
+
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Validation\Validator\UniqueValidator;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;

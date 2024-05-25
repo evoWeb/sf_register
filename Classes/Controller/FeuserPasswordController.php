@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Controller;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Controller;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Controller;
 
 use Evoweb\SfRegister\Controller\Event\PasswordFormEvent;
 use Evoweb\SfRegister\Controller\Event\PasswordSaveEvent;

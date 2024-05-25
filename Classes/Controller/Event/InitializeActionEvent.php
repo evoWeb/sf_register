@@ -24,8 +24,7 @@ final class InitializeActionEvent
         protected readonly FeuserController $controller,
         protected readonly array $settings,
         protected ?ResponseInterface $response
-    ) {
-    }
+    ) {}
 
     public function getController(): FeuserController
     {

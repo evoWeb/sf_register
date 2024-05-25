@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Domain\Repository;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Domain\Repository;
 
 use Doctrine\DBAL\Result;
 use TYPO3\CMS\Core\Database\Connection;
@@ -27,7 +27,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class StaticCountryZoneRepository extends Repository
 {
     protected $defaultOrderings = [
-        'zn_name_local' => QueryInterface::ORDER_ASCENDING
+        'zn_name_local' => QueryInterface::ORDER_ASCENDING,
     ];
 
     public function findAllByParentUid(int $parent): Result

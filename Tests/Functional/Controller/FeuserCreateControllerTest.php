@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Functional\Controller;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Tests\Functional\Controller;
 
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
@@ -61,12 +61,12 @@ class FeuserCreateControllerTest extends AbstractTestBase
                                     2 => '"StringLength", options={"minimum": 4, "maximum": 80}',
                                     3 => '"Evoweb.SfRegister:Unique"',
                                     4 => '"Evoweb.SfRegister:Unique", options={"global": 1}',
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         /** @var Context $context */

@@ -19,9 +19,7 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 
 abstract class AbstractEventWithUserAndSettings
 {
-    public function __construct(protected FrontendUser $user, protected array $settings)
-    {
-    }
+    public function __construct(protected FrontendUser $user, protected array $settings) {}
 
     public function getUser(): FrontendUser
     {

@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Services;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Services;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Services;
 
 use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Services\Event\AbstractEventWithUser;
@@ -128,7 +128,7 @@ class Mail implements SingletonInterface
     protected function getAdminRecipient(): array
     {
         return [
-            trim($this->settings['adminEmail']['toEmail'] ?? '') => trim($this->settings['adminEmail']['toName'] ?? '')
+            trim($this->settings['adminEmail']['toEmail'] ?? '') => trim($this->settings['adminEmail']['toName'] ?? ''),
         ];
     }
 
@@ -141,7 +141,7 @@ class Mail implements SingletonInterface
         }
 
         return [
-            trim($user->getEmail()) => $name
+            trim($user->getEmail()) => $name,
         ];
     }
 
@@ -153,7 +153,7 @@ class Mail implements SingletonInterface
         string $bodyHtml,
         string $bodyPlain
     ): bool {
-        $settings =& $this->settings[$typeOfEmail];
+        $settings = & $this->settings[$typeOfEmail];
 
         /** @var MailMessage $mail */
         $mail = GeneralUtility::makeInstance(MailMessage::class);
@@ -193,7 +193,7 @@ class Mail implements SingletonInterface
         try {
             $view->assignMultiple([
                 'user' => $user,
-                'settings' => $this->settings
+                'settings' => $this->settings,
             ]);
 
             $body = $view->render();
@@ -220,7 +220,7 @@ class Mail implements SingletonInterface
         try {
             $view->assignMultiple([
                 'user' => $user,
-                'settings' => $this->settings
+                'settings' => $this->settings,
             ]);
 
             $body = $view->render();

@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Validation\Validator;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
@@ -28,7 +28,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements SetMode
         'global' => [
             true,
             'Whether to check uniqueness globally',
-            'bool'
+            'bool',
         ],
     ];
 
@@ -39,9 +39,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements SetMode
 
     protected string $propertyName = '';
 
-    public function __construct(protected FrontendUserRepository $userRepository)
-    {
-    }
+    public function __construct(protected FrontendUserRepository $userRepository) {}
 
     public function setModel(ValidatableInterface $model): void
     {

@@ -10,7 +10,7 @@ return [
         'tableName' => 'fe_groups',
         'properties' => [
             'feloginRedirectPid' => [
-                'fieldName' => 'felogin_redirectPid'
+                'fieldName' => 'felogin_redirectPid',
             ],
         ],
     ],

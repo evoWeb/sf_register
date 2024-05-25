@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Functional\Controller;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,7 +11,8 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Tests\Functional\Mock\FeuserPasswordController;
+namespace Evoweb\SfRegister\Tests\Functional\Controller;
+
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
@@ -21,6 +20,7 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use Evoweb\SfRegister\Tests\Functional\Mock\FeuserPasswordController;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
@@ -92,7 +92,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
     {
         $this->createAndLoginFrontEndUser('2', [
             'password' => 'testOld',
-            'comments' => ''
+            'comments' => '',
         ]);
 
         /** @var Context $context */
@@ -143,7 +143,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $userId = $this->createAndLoginFrontEndUser('2', [
             'username' => 'unittest',
             'password' => $expected,
-            'comments' => ''
+            'comments' => '',
         ]);
 
         /** @var Context $context */
@@ -192,7 +192,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
             ->disableOriginalConstructor()
             ->onlyMethods(['render'])
             ->getMock();
-        $view->expects($this->once())
+        $view->expects(self::once())
             ->method('render')
             ->willReturn('Password successfully updated');
         $property = $this->getPrivateProperty($subject, 'view');

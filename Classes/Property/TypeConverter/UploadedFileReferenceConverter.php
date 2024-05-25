@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Property\TypeConverter;
-
 /*
  *  Copyright notice
  *
@@ -25,6 +23,8 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
+
+namespace Evoweb\SfRegister\Property\TypeConverter;
 
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
@@ -75,8 +75,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         protected ResourceFactory $resourceFactory,
         protected HashService $hashService,
         protected PersistenceManager $persistenceManager
-    ) {
-    }
+    ) {}
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully

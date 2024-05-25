@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Validation\Validator;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Services\File;
 use Psr\Http\Message\ServerRequestInterface;
@@ -24,9 +24,7 @@ class ImageUploadValidator extends AbstractValidator implements SetRequestInterf
 {
     protected ServerRequestInterface $request;
 
-    public function __construct(protected File $fileService)
-    {
-    }
+    public function __construct(protected File $fileService) {}
 
     public function setRequest(ServerRequestInterface $request): void
     {

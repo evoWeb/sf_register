@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Controller;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,13 +11,15 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Controller;
+
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\DocParser;
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use Evoweb\SfRegister\Controller\Event\OverrideSettingsEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
+use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
@@ -94,8 +94,7 @@ class FeuserController extends ActionController
         protected File $fileService,
         protected FrontendUserRepository $userRepository,
         protected FrontendUserGroupRepository $userGroupRepository
-    ) {
-    }
+    ) {}
 
     protected function getErrorFlashMessage(): bool
     {

@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\EventListener;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,6 +11,8 @@ namespace Evoweb\SfRegister\EventListener;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\EventListener;
+
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Context\Context;
@@ -23,9 +23,7 @@ use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
 class FeuserControllerListener
 {
-    public function __construct(protected Context $context, protected UriBuilder $uriBuilder)
-    {
-    }
+    public function __construct(protected Context $context, protected UriBuilder $uriBuilder) {}
 
     #[AsEventListener('evoweb-sf-register-feusercontroller', InitializeActionEvent::class)]
     public function __invoke(InitializeActionEvent $event): void
