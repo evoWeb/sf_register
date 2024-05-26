@@ -114,6 +114,7 @@ handleDbmsOptions() {
 cleanBuildFiles() {
     echo -n "Clean builds ... "
     rm -rf \
+        .cache \
         Build/JavaScript \
         Build/node_modules \
         Documentation-GENERATED-temp
