@@ -275,6 +275,7 @@ class File implements SingletonInterface, LoggerAwareInterface
                     $fileData->getClientFilename()
                 );
             } catch (\Exception $exception) {
+                // @extensionScannerIgnoreLine
                 $this->logger->error($exception->getMessage(), $exception->getTrace());
             }
         }
