@@ -30,7 +30,6 @@ use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
 use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
 use Evoweb\SfRegister\Validation\Validator\SetPropertyNameInterface;
-use Evoweb\SfRegister\Validation\Validator\SetRequestInterface;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
@@ -39,6 +38,7 @@ use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Security\RequestToken;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -58,6 +58,7 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Security\Exception\InvalidArgumentForHashGenerationException;
 use TYPO3\CMS\Extbase\Security\Exception\InvalidHashException;
 use TYPO3\CMS\Extbase\Validation\Exception\NoSuchValidatorException;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 use TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver;
 use TYPO3\CMS\Fluid\View\TemplateView;
@@ -206,29 +207,33 @@ class FeuserController extends ActionController
         string $configuration,
         DocParser $parser,
         string $fieldName
-    ): ValidatorInterface {
+    ): ?ValidatorInterface {
         if (!str_contains($configuration, '"') && !str_contains($configuration, '(')) {
             $configuration = '"' . $configuration . '"';
         }
 
         /** @var Extbase\Validate $validateAnnotation */
         $validateAnnotation = current($parser->parse('@' . Extbase\Validate::class . '(' . $configuration . ')'));
-        $validatorObjectName = ValidatorClassNameResolver::resolve($validateAnnotation->validator);
+        try {
+            $validatorObjectName = ValidatorClassNameResolver::resolve($validateAnnotation->validator);
+            /** @var ValidatorInterface $validator */
+            $validator = GeneralUtility::makeInstance($validatorObjectName);
+            // @extensionScannerIgnoreLine
+            $validator->setOptions($validateAnnotation->options);
 
-        /** @var ValidatorInterface $validator */
-        $validator = GeneralUtility::makeInstance($validatorObjectName);
-        // @extensionScannerIgnoreLine
-        $validator->setOptions($validateAnnotation->options);
+            if ($validator instanceof AbstractValidator) {
+                $validator->setRequest($this->request);
+            }
 
-        if ($validator instanceof SetRequestInterface) {
-            $validator->setRequest($this->request);
+            if ($validator instanceof SetPropertyNameInterface) {
+                $validator->setPropertyName($fieldName);
+            }
+
+            return $validator;
+        } catch (NoSuchValidatorException $e) {
+            GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__)->debug($e->getMessage());
+            return null;
         }
-
-        if ($validator instanceof SetPropertyNameInterface) {
-            $validator->setPropertyName($fieldName);
-        }
-
-        return $validator;
     }
 
     protected function addUidValidator(UserValidator $validator): UserValidator

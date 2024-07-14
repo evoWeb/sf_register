@@ -13,6 +13,7 @@
 
 namespace Evoweb\SfRegister\Property\TypeConverter;
 
+use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter as BaseDateTimeConverter;
@@ -32,7 +33,7 @@ class DateTimeConverter extends BaseDateTimeConverter
         string $targetType,
         array $convertedChildProperties = [],
         PropertyMappingConfigurationInterface $configuration = null
-    ): ?object {
+    ): null|\DateTime|Error {
         $userData = $configuration->getConfigurationValue(self::class, self::CONFIGURATION_USER_DATA);
         if (
             is_array($userData)
