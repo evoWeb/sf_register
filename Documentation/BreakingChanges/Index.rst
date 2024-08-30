@@ -10,7 +10,7 @@ Breaking Changes
 ''''''''''
 
 Replace SelectStaticCountriesViewHelper with f:form.countrySelect to decouple
-from EXT:static_info_tables.
+from EXT:static_info_tables if you only relay on selecting countries.
 
 2024.05.13
 ''''''''''
