@@ -29,11 +29,9 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  */
 class SelectStaticCountryZonesViewHelper extends AbstractSelectViewHelper
 {
-    protected ?StaticCountryZoneRepository $countryZonesRepository = null;
-
-    public function injectCountryZonesRepository(StaticCountryZoneRepository $countryZonesRepository): void
+    public function __construct(protected StaticCountryZoneRepository $countryZonesRepository)
     {
-        $this->countryZonesRepository = $countryZonesRepository;
+        parent::__construct();
     }
 
     public function initializeArguments(): void

@@ -29,11 +29,9 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  */
 class SelectStaticLanguageViewHelper extends AbstractSelectViewHelper
 {
-    protected ?StaticLanguageRepository $languageRepository = null;
-
-    public function injectLanguageRepository(StaticLanguageRepository $languageRepository): void
+    public function __construct(protected StaticLanguageRepository $languageRepository)
     {
-        $this->languageRepository = $languageRepository;
+        parent::__construct();
     }
 
     public function initializeArguments(): void

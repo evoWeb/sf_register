@@ -28,37 +28,20 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
      */
     protected $tagName = 'input';
 
-    protected ?HashService $hashService = null;
-
-    protected ?PropertyMapper $propertyMapper = null;
-
-    public function injectHashService(HashService $hashService): void
-    {
-        $this->hashService = $hashService;
-    }
-
-    public function injectPropertyMapper(PropertyMapper $propertyMapper): void
-    {
-        $this->propertyMapper = $propertyMapper;
+    public function __construct(
+        protected HashService $hashService,
+        protected PropertyMapper $propertyMapper
+    ) {
+        parent::__construct();
     }
 
     public function initializeArguments(): void
     {
         parent::initializeArguments();
-        $this->registerTagAttribute(
-            'disabled',
-            'string',
-            'Specifies that the input element should be disabled when the page loads'
-        );
-        $this->registerTagAttribute(
+        $this->registerArgument(
             'multiple',
             'string',
             'Specifies that the file input element should allow multiple selection of files'
-        );
-        $this->registerTagAttribute(
-            'accept',
-            'string',
-            'Specifies the allowed file extensions to upload via comma-separated list, example ".png,.gif"'
         );
         $this->registerArgument(
             'errorClass',
@@ -67,8 +50,7 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
             false,
             'f3-form-error'
         );
-        $this->registerUniversalTagAttributes();
-        $this->registerTagAttribute(
+        $this->registerArgument(
             'alwaysShowUpload',
             'string',
             'Whether the upload button should be always shown.'

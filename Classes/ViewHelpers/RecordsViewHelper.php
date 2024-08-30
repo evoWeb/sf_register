@@ -49,7 +49,7 @@ class RecordsViewHelper extends AbstractViewHelper
         return self::getRecordsFromTable($table, $uids);
     }
 
-    protected static function getRecordsFromTable($table, $uids): array
+    protected static function getRecordsFromTable(string $table, array $uids): array
     {
         /** @var ConnectionPool $connectionPool */
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);

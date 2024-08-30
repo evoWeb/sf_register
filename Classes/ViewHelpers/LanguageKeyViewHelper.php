@@ -62,11 +62,7 @@ class LanguageKeyViewHelper extends AbstractViewHelper
         $type = $this->getConfiguredType();
 
         if ($languageCode != '' && $type != '') {
-            if ($type == 'countries') {
-                $languageCode = $this->hasTableColumn('static_countries', 'cn_short_' . $languageCode)
-                    ? $languageCode
-                    : '';
-            } elseif ($type == 'zones') {
+            if ($type == 'zones') {
                 $languageCode = $this->hasTableColumn('static_country_zones', 'zn_name_' . $languageCode)
                     ? $languageCode
                     : '';
