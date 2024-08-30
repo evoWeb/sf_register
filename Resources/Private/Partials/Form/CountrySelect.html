@@ -1,23 +1,23 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
-	data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<f:variable name="languageKey"><register:languageKey type="countries"/></f:variable>
 <div class="col-md-6 mb-3 {fieldName}">
-	<label for="sfrCountry">
-		<f:translate id="{fieldName}" />
-		<f:render partial="Required" arguments="{field: fieldName}" />
-	</label>
-	<f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
+    <label for="sfrCountry">
+        <f:translate id="{fieldName}" />
+        <f:render partial="Required" arguments="{field: fieldName}" />
+    </label>
+    <f:render partial="FieldError" arguments="{for: 'user', field: fieldName}" />
 
-	<register:form.selectStaticCountries
-		property="{fieldName}"
-		id="sfrCountry"
+    <f:form.countrySelect
+        property="{fieldName}"
+        id="sfrCountry"
+        optionLabelField="localizedNameLabel"
+        alternativeLanguage="en"
+        sortByOptionLabel="true"
         prependOptionLabel="{f:translate(id: 'please_select')}"
-		value="{f:if(condition: '{user.{fieldName}}', then: '{user.{fieldName}}', else: options.defaultValue)}"
-		allowedCountries="{options.allowedCountries}"
-		optionLabelField="cnShort{languageKey}"
-		class="form-control {options.cssClass}" />
+        prependOptionValue=""
+        value="{f:if(condition: '{user.{fieldName}}', then: '{user.{fieldName}}', else: options.defaultValue)}"
+        onlyCountries="{options.allowedCountries}"
+        class="form-control {options.cssClass}" />
 </div>
 
 </html>
