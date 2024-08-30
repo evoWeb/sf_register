@@ -27,6 +27,8 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
  */
 class FeuserResendController extends FeuserController
 {
+    public const PLUGIN_ACTIONS = 'form, mail';
+
     protected string $controller = 'Resend';
 
     public function formAction(Email $email = null): ResponseInterface

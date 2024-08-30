@@ -16,13 +16,6 @@ services:
             - Evoweb\SfRegister\Services\Setup\UsernameCheck
     public: true
 
-  Evoweb\SfRegister\Command\CleanupCommand:
-    tags:
-      - name: 'console.command'
-        command: 'sfregister:cleanup'
-        description: 'Cleanup user that did not finish the double opt in, and remove orphan images'
-        schedulable: false
-
   Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter:
     public: true
 

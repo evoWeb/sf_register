@@ -36,6 +36,8 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
  */
 class FeuserCreateController extends FeuserController
 {
+    public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage';
+
     protected string $controller = 'Create';
 
     protected array $ignoredActions = ['confirmAction', 'refuseAction', 'acceptAction', 'declineAction'];

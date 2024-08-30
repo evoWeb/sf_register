@@ -29,6 +29,8 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
  */
 class FeuserInviteController extends FeuserController
 {
+    public const PLUGIN_ACTIONS = 'form, invite';
+
     protected string $controller = 'Invite';
 
     public function formAction(FrontendUser $user = null): ResponseInterface

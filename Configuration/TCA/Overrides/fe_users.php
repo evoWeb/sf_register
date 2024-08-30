@@ -64,7 +64,7 @@ defined('TYPO3') or die();
             'config' => [
                 'type' => 'input',
                 'size' => 20,
-                'max' => 40,
+                'max' => 45,
                 'eval' => 'trim',
                 'default' => '',
             ],
@@ -117,6 +117,7 @@ defined('TYPO3') or die();
             'config' => [
                 'type' => 'input',
                 'size' => 20,
+                'max' => 20,
             ],
         ],
         'gtc' => [
@@ -168,13 +169,14 @@ defined('TYPO3') or die();
             'config' => [
                 'type' => 'input',
                 'size' => 20,
-                'max' => 20,
+                'max' => 254,
                 'eval' => 'trim',
             ],
         ],
         'invitation_email' => [
             'config' => [
-                'type' => 'passthrough',
+                'type' => 'input',
+                'max' => 254,
             ],
         ],
         'module_sys_dmail_newsletter' => [
@@ -189,6 +191,13 @@ defined('TYPO3') or die();
             'label' => $languageFile . 'fe_users.module_sys_dmail_html',
             'config' => [
                 'type' => 'check',
+            ],
+        ],
+        'module_sys_dmail_category' => [
+            'exclude' => true,
+            'label' => $languageFile . 'fe_users.module_sys_dmail_category',
+            'config' => [
+                'type' => 'category',
             ],
         ],
         'image' => [
@@ -231,26 +240,22 @@ defined('TYPO3') or die();
             activated_on, gtc, privacy, by_invitation, comments, module_sys_dmail_newsletter, module_sys_dmail_html'
     );
 
-    if (ExtensionManagementUtility::isLoaded('static_info_tables')) {
-        $tempColumns = [
-            'static_info_country' => [
-                'exclude' => 0,
-                'label' => $languageFile . 'fe_users.static_info_country',
-                'config' => [
-                    'type' => 'input',
-                    'size' => '5',
-                    'max' => '3',
-                    'eval' => '',
-                    'default' => '',
-                ],
+    $tempColumns = [
+        'static_info_country' => [
+            'exclude' => 0,
+            'label' => $languageFile . 'fe_users.static_info_country',
+            'config' => [
+                'type' => 'input',
+                'size' => '5',
+                'max' => 3,
             ],
-        ];
-        ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
-        ExtensionManagementUtility::addToAllTCAtypes(
-            'fe_users',
-            'static_info_country',
-            '',
-            'after:zone'
-        );
-    }
+        ],
+    ];
+    ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
+    ExtensionManagementUtility::addToAllTCAtypes(
+        'fe_users',
+        'static_info_country',
+        '',
+        'after:zone'
+    );
 })();

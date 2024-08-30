@@ -34,6 +34,9 @@ use TYPO3\CMS\Extbase\Property\PropertyMapper;
  */
 class FeuserDeleteController extends FeuserController
 {
+    public const DELETE_PLUGIN_ACTIONS = 'form, save, confirm';
+    public const REQUEST_PLUGIN_ACTIONS = 'request, sendLink';
+
     protected string $controller = 'Delete';
 
     protected array $ignoredActions = ['confirmAction', 'requestAction'];

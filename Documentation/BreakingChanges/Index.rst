@@ -6,6 +6,12 @@
 Breaking Changes
 ================
 
+2024.08.26
+''''''''''
+
+Replace SelectStaticCountriesViewHelper with f:form.countrySelect to decouple
+from EXT:static_info_tables.
+
 2024.05.13
 ''''''''''
 

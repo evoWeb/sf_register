@@ -32,6 +32,8 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
  */
 class FeuserPasswordController extends FeuserController
 {
+    public const PLUGIN_ACTIONS = 'form, save';
+
     protected string $controller = 'Password';
 
     public function __construct(

@@ -2,11 +2,17 @@
 
 declare(strict_types=1);
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
+use Evoweb\SfRegister\Domain\Model\StaticCountry;
+use Evoweb\SfRegister\Domain\Model\StaticCountryZone;
+use Evoweb\SfRegister\Domain\Model\StaticLanguage;
+
 return [
-    \Evoweb\SfRegister\Domain\Model\FrontendUser::class => [
+    FrontendUser::class => [
         'tableName' => 'fe_users',
     ],
-    \Evoweb\SfRegister\Domain\Model\FrontendUserGroup::class => [
+    FrontendUserGroup::class => [
         'tableName' => 'fe_groups',
         'properties' => [
             'feloginRedirectPid' => [
@@ -14,13 +20,13 @@ return [
             ],
         ],
     ],
-    \Evoweb\SfRegister\Domain\Model\StaticCountry::class => [
+    StaticCountry::class => [
         'tableName' => 'static_countries',
     ],
-    \Evoweb\SfRegister\Domain\Model\StaticCountryZone::class => [
+    StaticCountryZone::class => [
         'tableName' => 'static_country_zones',
     ],
-    \Evoweb\SfRegister\Domain\Model\StaticLanguage::class => [
+    StaticLanguage::class => [
         'tableName' => 'static_languages',
     ],
 ];
