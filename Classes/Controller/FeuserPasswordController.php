@@ -17,9 +17,9 @@ use Evoweb\SfRegister\Controller\Event\PasswordFormEvent;
 use Evoweb\SfRegister\Controller\Event\PasswordSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
-use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\FrontenUserGroup;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
@@ -41,10 +41,9 @@ class FeuserPasswordController extends FeuserController
         protected Context $context,
         protected File $fileService,
         protected FrontendUserRepository $userRepository,
-        protected FrontendUserGroupRepository $userGroupRepository,
         protected Session $session
     ) {
-        parent::__construct($modifyValidator, $context, $fileService, $userRepository, $userGroupRepository);
+        parent::__construct($modifyValidator, $context, $fileService, $userRepository);
     }
 
     public function formAction(Password $password = null): ResponseInterface

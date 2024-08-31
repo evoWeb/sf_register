@@ -18,11 +18,11 @@ use Evoweb\SfRegister\Controller\Event\OverrideSettingsEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
 use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
-use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\FrontenUserGroup;
 use Evoweb\SfRegister\Services\Mail;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Psr\Http\Message\ResponseInterface;
@@ -81,7 +81,6 @@ class FeuserController extends ActionController
         protected Context $context,
         protected File $fileService,
         protected FrontendUserRepository $userRepository,
-        protected FrontendUserGroupRepository $userGroupRepository,
     ) {}
 
     protected function getErrorFlashMessage(): bool
@@ -415,88 +414,6 @@ class FeuserController extends ActionController
         return !empty($notifySettings[$type]);
     }
 
-    /**
-     * Determines whether a user is in a given user group.
-     */
-    protected function isUserInUserGroup(FrontendUser $user, int $userGroupUid): bool
-    {
-        $in = false;
-        /** @var FrontendUserGroup $userGroup */
-        foreach ($user->getUsergroup() as $userGroup) {
-            $in = $in || $userGroup->getUid() == $userGroupUid;
-        }
-        return $in;
-    }
-
-    /**
-     * Determines whether a user is in given user groups.
-     */
-    protected function isUserInUserGroups(FrontendUser $user, array $userGroupUids): bool
-    {
-        $return = false;
-
-        foreach ($userGroupUids as $userGroupUid) {
-            if ($this->isUserInUserGroup($user, $userGroupUid)) {
-                $return = true;
-            }
-        }
-
-        return $return;
-    }
-
-    protected function getConfiguredUserGroups(int $currentUserGroup): array
-    {
-        $userGroups = $this->getUserGroupIds();
-        $currentIndex = array_search($currentUserGroup, array_values($userGroups));
-
-        $reducedUserGroups = [];
-        if ($currentIndex !== false && $currentIndex < count($userGroups)) {
-            $reducedUserGroups = array_slice($userGroups, $currentIndex);
-        }
-
-        return $reducedUserGroups;
-    }
-
-    protected function getUserGroupIds(): array
-    {
-        $settingsUserGroupKeys = $this->getUserGroupIdSettingKeys();
-
-        $userGroups = [];
-        foreach ($settingsUserGroupKeys as $settingsUserGroupKey) {
-            $userGroup = (int)($this->settings[$settingsUserGroupKey] ?? 0);
-            if ($userGroup) {
-                $userGroups[$settingsUserGroupKey] = $userGroup;
-            }
-        }
-
-        return $userGroups;
-    }
-
-    protected function changeUsergroup(FrontendUser $user, int $userGroupIdToAdd): FrontendUser
-    {
-        $this->removePreviousUserGroups($user);
-
-        if ($userGroupIdToAdd) {
-            /** @var FrontendUserGroup $userGroupToAdd */
-            $userGroupToAdd = $this->userGroupRepository->findByUid($userGroupIdToAdd);
-            $user->addUsergroup($userGroupToAdd);
-        }
-
-        return $user;
-    }
-
-    protected function removePreviousUserGroups(FrontendUser $user): void
-    {
-        $userGroupIds = $this->getUserGroupIds();
-        $assignedUserGroups = $user->getUsergroup();
-        foreach ($assignedUserGroups as $singleUserGroup) {
-            if (in_array($singleUserGroup->getUid(), $userGroupIds)) {
-                $assignedUserGroups->detach($singleUserGroup);
-            }
-        }
-        $user->setUsergroup($assignedUserGroups);
-    }
-
     protected function moveTemporaryImage(FrontendUser $user): void
     {
         if ($user->getImage()->count()) {
@@ -540,46 +457,6 @@ class FeuserController extends ActionController
         }
 
         return $frontendUser;
-    }
-
-    /**
-     * Return the keys of the TypoScript configuration in the order which is relevant for the configured
-     * registration workflow
-     */
-    protected function getUserGroupIdSettingKeys(): array
-    {
-        $defaultOrder = [
-            'usergroup',
-            'usergroupPostSave',
-            'usergroupPostConfirm',
-            'usergroupPostAccept',
-        ];
-
-        // Admin    [plugin.tx_sfregister.settings.acceptEmailPostCreate]
-        $confirmEmailPostCreate = (bool)($this->settings['confirmEmailPostCreate'] ?? false);
-        // User     [plugin.tx_sfregister.settings.confirmEmailPostAccept]
-        $acceptEmailPostCreate = (bool)($this->settings['acceptEmailPostCreate'] ?? false);
-        // Admin    [plugin.tx_sfregister.settings.acceptEmailPostConfirm]
-        $confirmEmailPostAccept = (bool)($this->settings['confirmEmailPostAccept'] ?? false);
-        // User     [plugin.tx_sfregister.settings.confirmEmailPostCreate]
-        $acceptEmailPostConfirm = (bool)($this->settings['acceptEmailPostConfirm'] ?? false);
-
-        // First User:confirm then Admin:accept
-        if ($confirmEmailPostCreate && $acceptEmailPostConfirm) {
-            return $defaultOrder;
-        }
-
-        // First Admin:accept then User:confirm
-        if ($acceptEmailPostCreate && $confirmEmailPostAccept) {
-            return [
-                'usergroup',
-                'usergroupPostSave',
-                'usergroupPostAccept',
-                'usergroupPostConfirm',
-            ];
-        }
-
-        return $defaultOrder;
     }
 
     protected function getTypoScriptFrontendController(): ?TypoScriptFrontendController

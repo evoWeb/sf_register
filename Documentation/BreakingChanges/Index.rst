@@ -15,6 +15,8 @@ Breaking Changes
 
 - Replace $controller->controller with $controller->getControllerName()
 
+- Move change usergroup to FrontendUserGroup service
+
 2024.08.26
 ''''''''''
 

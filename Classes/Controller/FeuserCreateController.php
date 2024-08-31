@@ -21,10 +21,15 @@ use Evoweb\SfRegister\Controller\Event\CreatePreviewEvent;
 use Evoweb\SfRegister\Controller\Event\CreateRefuseEvent;
 use Evoweb\SfRegister\Controller\Event\CreateSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\FrontenUserGroup;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Services\Setup\CheckFactory;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -39,6 +44,16 @@ class FeuserCreateController extends FeuserController
     public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage';
 
     protected array $ignoredActions = ['confirmAction', 'refuseAction', 'acceptAction', 'declineAction'];
+
+    public function __construct(
+        protected ModifyValidator $modifyValidator,
+        protected Context $context,
+        protected File $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected FrontenUserGroup $frontenUserGroupService,
+    ) {
+        parent::__construct($modifyValidator, $context, $fileService, $userRepository);
+    }
 
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
@@ -74,9 +89,17 @@ class FeuserCreateController extends FeuserController
             || ($this->settings['acceptEmailPostCreate'] ?? false)
         ) {
             $user->setDisable(true);
-            $user = $this->changeUsergroup($user, (int)($this->settings['usergroupPostSave'] ?? 0));
+            $user = $this->frontenUserGroupService->changeUsergroup(
+                $this->settings,
+                $user,
+                (int)($this->settings['usergroupPostSave'] ?? 0)
+            );
         } else {
-            $user = $this->changeUsergroup($user, (int)($this->settings['usergroup'] ?? 0));
+            $user = $this->frontenUserGroupService->changeUsergroup(
+                $this->settings,
+                $user,
+                (int)($this->settings['usergroup'] ?? 0)
+            );
             $this->moveTemporaryImage($user);
         }
 
@@ -141,14 +164,21 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('user', $user);
 
             if (
-                $user->getActivatedOn() || $this->isUserInUserGroups(
+                $user->getActivatedOn() || $this->frontenUserGroupService->isUserInUserGroups(
                     $user,
-                    $this->getConfiguredUserGroups((int)($this->settings['usergroupPostConfirm'] ?? 0))
+                    $this->frontenUserGroupService->getConfiguredUserGroups(
+                        $this->settings,
+                        (int)($this->settings['usergroupPostConfirm'] ?? 0)
+                    )
                 )
             ) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
-                $user = $this->changeUsergroup($user, (int)($this->settings['usergroupPostConfirm'] ?? 0));
+                $user = $this->frontenUserGroupService->changeUsergroup(
+                    $this->settings,
+                    $user,
+                    (int)($this->settings['usergroupPostConfirm'] ?? 0)
+                );
                 $this->moveTemporaryImage($user);
                 $user->setActivatedOn(new \DateTime('now'));
 
@@ -228,14 +258,21 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('user', $user);
 
             if (
-                !$user->getDisable() || $this->isUserInUserGroups(
+                !$user->getDisable() || $this->frontenUserGroupService->isUserInUserGroups(
                     $user,
-                    $this->getConfiguredUserGroups((int)($this->settings['usergroupPostAccept'] ?? 0))
+                    $this->frontenUserGroupService->getConfiguredUserGroups(
+                        $this->settings,
+                        (int)($this->settings['usergroupPostAccept'] ?? 0)
+                    )
                 )
             ) {
                 $this->view->assign('userAlreadyAccepted', 1);
             } else {
-                $user = $this->changeUsergroup($user, (int)($this->settings['usergroupPostAccept'] ?? 0));
+                $user = $this->frontenUserGroupService->changeUsergroup(
+                    $this->settings,
+                    $user,
+                    (int)($this->settings['usergroupPostAccept'] ?? 0)
+                );
                 $user->setDisable(false);
 
                 if (!($this->settings['confirmEmailPostAccept'] ?? false)) {
