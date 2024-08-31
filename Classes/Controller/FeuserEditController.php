@@ -19,10 +19,13 @@ use Evoweb\SfRegister\Controller\Event\EditFormEvent;
 use Evoweb\SfRegister\Controller\Event\EditPreviewEvent;
 use Evoweb\SfRegister\Controller\Event\EditSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -38,19 +41,25 @@ class FeuserEditController extends FeuserController
 
     protected array $ignoredActions = ['confirmAction', 'acceptAction'];
 
+    public function __construct(
+        protected ModifyValidator $modifyValidator,
+        protected File $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected FrontendUserService $frontendUserService,
+    ) {
+        parent::__construct($modifyValidator, $fileService, $userRepository);
+    }
+
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        /** @var UserAspect $userAspect */
-        $userAspect = $this->context->getAspect('frontend.user');
-        $userId = $userAspect->get('id');
-
+        $userId = $this->frontendUserService->getLoggedInUserId();
         $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
         if (
             (
                 $this->request->hasArgument('user')
                 || ($originalRequest !== null && $originalRequest->hasArgument('user'))
             )
-            && $this->userIsLoggedIn()
+            && $this->frontendUserService->userIsLoggedIn()
         ) {
             /** @var FrontendUser $userData */
             $userData = $this->request->hasArgument('user')
@@ -139,7 +148,7 @@ class FeuserEditController extends FeuserController
 
     public function confirmAction(FrontendUser $user = null, string $hash = null): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         $redirectResponse = null;
         if (!($user instanceof FrontendUser)) {
@@ -174,11 +183,11 @@ class FeuserEditController extends FeuserController
             $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
             if (($this->settings['autologinPostConfirmation'] ?? false)) {
                 $this->persistAll();
-                $this->autoLogin($user, $redirectPageId);
+                $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
             }
 
             if ($redirectResponse === null && $redirectPageId > 0) {
-                $redirectResponse = $this->redirectToPage($redirectPageId);
+                $redirectResponse = $this->frontendUserService->redirectToPage($this->request, $redirectPageId);
             }
         }
 
@@ -187,7 +196,7 @@ class FeuserEditController extends FeuserController
 
     public function acceptAction(FrontendUser $user = null, string $hash = null): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         $redirectResponse = null;
         if (!($user instanceof FrontendUser)) {
@@ -215,7 +224,7 @@ class FeuserEditController extends FeuserController
 
                 $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
                 if ($redirectPageId > 0) {
-                    $redirectResponse = $this->redirectToPage($redirectPageId);
+                    $redirectResponse = $this->frontendUserService->redirectToPage($this->request, $redirectPageId);
                 }
 
                 $this->view->assign('adminAccept', 1);

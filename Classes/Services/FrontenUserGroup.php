@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Services;
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
+use Evoweb\SfRegister\Domain\Model\FrontendUserGroup as FrontendUserGroupModel;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 
 class FrontenUserGroup
@@ -47,7 +47,7 @@ class FrontenUserGroup
     protected function isUserInUserGroup(FrontendUser $user, int $userGroupUid): bool
     {
         $in = false;
-        /** @var FrontendUserGroup $userGroup */
+        /** @var FrontendUserGroupModel $userGroup */
         foreach ($user->getUsergroup() as $userGroup) {
             $in = $in || $userGroup->getUid() == $userGroupUid;
         }
@@ -59,7 +59,7 @@ class FrontenUserGroup
         $this->removePreviousUserGroups($settings, $user);
 
         if ($userGroupIdToAdd) {
-            /** @var FrontendUserGroup $userGroupToAdd */
+            /** @var FrontendUserGroupModel $userGroupToAdd */
             $userGroupToAdd = $this->userGroupRepository->findByUid($userGroupIdToAdd);
             $user->addUsergroup($userGroupToAdd);
         }

@@ -17,9 +17,12 @@ use Evoweb\SfRegister\Controller\Event\ResendFormEvent;
 use Evoweb\SfRegister\Controller\Event\ResendMailEvent;
 use Evoweb\SfRegister\Domain\Model\Email;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 
@@ -30,16 +33,20 @@ class FeuserResendController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, mail';
 
+    public function __construct(
+        protected ModifyValidator $modifyValidator,
+        protected File $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected FrontendUserService $frontendUserService,
+    ) {
+        parent::__construct($modifyValidator, $fileService, $userRepository);
+    }
+
     public function formAction(Email $email = null): ResponseInterface
     {
         if ($email === null) {
             try {
-                /** @var UserAspect $userAspect */
-                $userAspect = $this->context->getAspect('frontend.user');
-                $userId = $userAspect->get('id');
-
-                /** @var FrontendUser $user */
-                $user = $this->userRepository->findByUid($userId);
+                $user = $this->frontendUserService->getLoggedInUser();
 
                 $email = new Email();
                 $email->setEmail($user->getEmail());

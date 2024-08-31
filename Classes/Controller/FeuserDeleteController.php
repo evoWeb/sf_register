@@ -17,11 +17,12 @@ use Evoweb\SfRegister\Controller\Event\DeleteConfirmEvent;
 use Evoweb\SfRegister\Controller\Event\DeleteFormEvent;
 use Evoweb\SfRegister\Controller\Event\DeleteSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
-use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
-use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -40,26 +41,28 @@ class FeuserDeleteController extends FeuserController
 
     protected array $ignoredActions = ['confirmAction', 'requestAction'];
 
+    public function __construct(
+        protected ModifyValidator $modifyValidator,
+        protected File $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected FrontendUserService $frontendUserService,
+    ) {
+        parent::__construct($modifyValidator, $fileService, $userRepository);
+    }
+
     /**
      * @throws Exception
      */
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        $userId = 0;
-        try {
-            /** @var UserAspect $userAspect */
-            $userAspect = $this->context->getAspect('frontend.user');
-            $userId = $userAspect->get('id');
-        } catch (AspectNotFoundException | AspectPropertyNotFoundException) {
-        }
-
+        $userId = $this->frontendUserService->getLoggedInUserId();
         $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
         if (
             (
                 $this->request->hasArgument('user')
                 || ($originalRequest !== null && $originalRequest->hasArgument('user'))
             )
-            && $this->userIsLoggedIn()
+            && $this->frontendUserService->userIsLoggedIn()
         ) {
             /** @var array $userData */
             $userData = $this->request->hasArgument('user')
@@ -120,7 +123,7 @@ class FeuserDeleteController extends FeuserController
      */
     public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userAlreadyDeleted', 1);

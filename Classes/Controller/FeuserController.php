@@ -16,24 +16,15 @@ namespace Evoweb\SfRegister\Controller;
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use Evoweb\SfRegister\Controller\Event\OverrideSettingsEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
 use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use Evoweb\SfRegister\Services\File;
-use Evoweb\SfRegister\Services\FrontenUserGroup;
 use Evoweb\SfRegister\Services\Mail;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Context\SecurityAspect;
-use TYPO3\CMS\Core\Context\UserAspect;
-use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
-use TYPO3\CMS\Core\Http\PropagateResponseException;
-use TYPO3\CMS\Core\Registry;
-use TYPO3\CMS\Core\Security\RequestToken;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -47,7 +38,6 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use TYPO3\CMS\Fluid\View\TemplateView;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
@@ -59,16 +49,6 @@ class FeuserController extends ActionController
 
     protected array $ignoredActions = [];
 
-    protected string $additionalSecret = 'sf-register-autologin';
-
-    /**
-     * The current view, as resolved by resolveView()
-     *
-     * @var TemplateView
-     * @api
-     */
-    protected $view;
-
     /**
      * The current request.
      */
@@ -78,7 +58,6 @@ class FeuserController extends ActionController
 
     public function __construct(
         protected ModifyValidator $modifyValidator,
-        protected Context $context,
         protected File $fileService,
         protected FrontendUserRepository $userRepository,
     ) {}
@@ -317,68 +296,6 @@ class FeuserController extends ActionController
         $persistenceManager->persistAll();
     }
 
-    protected function redirectToPage(int $pageId): ResponseInterface
-    {
-        $this->uriBuilder->reset();
-
-        $uri = $this->uriBuilder
-            ->setTargetPageUid($pageId)
-            ->setLinkAccessRestrictedPages(true)
-            ->build();
-        $uri = $this->addBaseUriIfNecessary($uri);
-
-        return $this->redirectToUri($uri);
-    }
-
-    protected function autoLogin(FrontendUserInterface $user, int $redirectPageId): void
-    {
-        // get given redirect page id
-        $userGroups = $user->getUsergroup();
-        /** @var FrontendUserGroup $userGroup */
-        foreach ($userGroups as $userGroup) {
-            if ($userGroup->getFeloginRedirectPid()) {
-                $redirectPageId = $userGroup->getFeloginRedirectPid();
-                break;
-            }
-        }
-
-        // if redirect is empty set it to current page
-        if ($redirectPageId == 0) {
-            // @extensionScannerIgnoreLine
-            $redirectPageId = $this->getTypoScriptFrontendController()->id;
-        }
-
-        session_start();
-
-        /** @var HashService $hashService */
-        $hashService = GeneralUtility::makeInstance(HashService::class);
-        $_SESSION['sf-register-user'] = $hashService->hmac(
-            'auto-login::' . $user->getUid(),
-            $this->additionalSecret,
-        );
-
-        /** @var Registry $registry */
-        $registry = GeneralUtility::makeInstance(Registry::class);
-        $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
-
-        if ($redirectPageId > 0) {
-            $nonce = SecurityAspect::provideIn($this->context)->provideNonce();
-
-            $parameter = [
-                'logintype' => 'login',
-                RequestToken::PARAM_NAME => RequestToken::create('core/user-auth/fe')->toHashSignedJwt($nonce),
-            ];
-
-            $response = $this->redirectToPage($redirectPageId);
-            $response = $response
-                ->withHeader(
-                    'location',
-                    $response->getHeaderLine('location') . '?' . http_build_query($parameter),
-                );
-            throw new PropagateResponseException($response);
-        }
-    }
-
     protected function sendEmails(FrontendUser $user, string $action): FrontendUserInterface
     {
         $controllerName = $this->getControllerName();
@@ -421,42 +338,6 @@ class FeuserController extends ActionController
             $image = $user->getImage()->current();
             $this->fileService->moveFileFromTempFolderToUploadFolder($image);
         }
-    }
-
-    protected function userIsLoggedIn(): bool
-    {
-        $result = false;
-        try {
-            /** @var UserAspect $userAspect */
-            $userAspect = $this->context->getAspect('frontend.user');
-            $result = $userAspect->isLoggedIn();
-        } catch (\Exception) {
-        }
-        return $result;
-    }
-
-    /**
-     * Determines the frontend user, either if it's already submitted, or by looking up the mail hash code.
-     */
-    protected function determineFrontendUser(?FrontendUser $user, ?string $hash): ?FrontendUser
-    {
-        $frontendUser = $user;
-
-        $requestArguments = $this->request->getArguments();
-        if (isset($requestArguments['user']) && $hash !== null) {
-            /** @var HashService $hashService */
-            $hashService = GeneralUtility::makeInstance(HashService::class);
-            $calculatedHash = $hashService->hmac(
-                $requestArguments['action'] . '::' . $requestArguments['user'],
-                $this->additionalSecret,
-            );
-            if ($hash === $calculatedHash) {
-                /** @var FrontendUser $frontendUser */
-                $frontendUser = $this->userRepository->findByUidIgnoringDisabledField((int)$requestArguments['user']);
-            }
-        }
-
-        return $frontendUser;
     }
 
     protected function getTypoScriptFrontendController(): ?TypoScriptFrontendController

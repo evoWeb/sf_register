@@ -17,6 +17,14 @@ Breaking Changes
 
 - Move change usergroup to FrontendUserGroup service
 
+- Without injecting FrontenUserGroup into other controller, changing
+  usergroup is only supported in FeuserCreateController.
+
+- Move getLoggedInUserId, getLoggedInUser, determineFrontendUser, userIsLoggedIn,
+  autoLogin and redirectToPage to FrontendUser service
+
+- Remove access on context in controller and move it to FrontendUser service
+
 2024.08.26
 ''''''''''
 

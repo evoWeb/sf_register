@@ -23,13 +23,13 @@ use Evoweb\SfRegister\Controller\Event\CreateSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
-use Evoweb\SfRegister\Services\FrontenUserGroup;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\FrontenUserGroup as FrontenUserGroupService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Services\Setup\CheckFactory;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -47,12 +47,12 @@ class FeuserCreateController extends FeuserController
 
     public function __construct(
         protected ModifyValidator $modifyValidator,
-        protected Context $context,
         protected File $fileService,
         protected FrontendUserRepository $userRepository,
-        protected FrontenUserGroup $frontenUserGroupService,
+        protected FrontendUserService $frontendUserService,
+        protected FrontenUserGroupService $frontenUserGroupService,
     ) {
-        parent::__construct($modifyValidator, $context, $fileService, $userRepository);
+        parent::__construct($modifyValidator, $fileService, $userRepository);
     }
 
     public function formAction(FrontendUser $user = null): ResponseInterface
@@ -140,11 +140,11 @@ class FeuserCreateController extends FeuserController
         $redirectResponse = null;
         $redirectPageId = (int)($this->settings['redirectPostRegistrationPageId'] ?? 0);
         if (($this->settings['autologinPostRegistration'] ?? false)) {
-            $this->autoLogin($user, $redirectPageId);
+            $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
         }
 
         if ($redirectResponse === null && $redirectPageId > 0) {
-            $redirectResponse = $this->redirectToPage($redirectPageId);
+            $redirectResponse = $this->frontendUserService->redirectToPage($this->request, $redirectPageId);
         }
 
         return $redirectResponse ?: new HtmlResponse($this->view->render());
@@ -155,7 +155,7 @@ class FeuserCreateController extends FeuserController
      */
     public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         $redirectResponse = null;
         if (!($user instanceof FrontendUser)) {
@@ -200,11 +200,11 @@ class FeuserCreateController extends FeuserController
 
                 $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
                 if (($this->settings['autologinPostConfirmation'] ?? false)) {
-                    $this->autoLogin($user, $redirectPageId);
+                    $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
                 }
 
                 if ($redirectResponse === null && $redirectPageId > 0) {
-                    $redirectResponse = $this->redirectToPage($redirectPageId);
+                    $redirectResponse = $this->frontendUserService->redirectToPage($this->request, $redirectPageId);
                 }
             }
         }
@@ -220,7 +220,7 @@ class FeuserCreateController extends FeuserController
      */
     public function refuseAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
@@ -250,7 +250,7 @@ class FeuserCreateController extends FeuserController
      */
     public function acceptAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
@@ -303,7 +303,7 @@ class FeuserCreateController extends FeuserController
      */
     public function declineAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);

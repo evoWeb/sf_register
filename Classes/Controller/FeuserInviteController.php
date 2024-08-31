@@ -16,14 +16,17 @@ namespace Evoweb\SfRegister\Controller;
 use Evoweb\SfRegister\Controller\Event\InviteFormEvent;
 use Evoweb\SfRegister\Controller\Event\InviteInviteEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Services\Mail;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
-use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /**
  * An frontend user invite controller
@@ -32,15 +35,19 @@ class FeuserInviteController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, invite';
 
+    public function __construct(
+        protected ModifyValidator $modifyValidator,
+        protected File $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected FrontendUserService $frontendUserService,
+    ) {
+        parent::__construct($modifyValidator, $fileService, $userRepository);
+    }
+
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        if (is_null($user) && $this->userIsLoggedIn()) {
-            /** @var FrontendUserAuthentication $frontendUser */
-            $frontendUser = $this->request->getAttribute('frontend.user');
-            $userId = $frontendUser->user['uid'];
-
-            /** @var FrontendUser $user */
-            $user = $this->userRepository->findByUid($userId);
+        if ($user === null && $this->frontendUserService->userIsLoggedIn()) {
+            $user = $this->frontendUserService->getLoggedInUser();
         }
 
         // user is logged
