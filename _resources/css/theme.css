@@ -24735,6 +24735,9 @@ article *:hover > a.headerlink:after, article *:hover > a.permalink:after, artic
   padding: 0 !important;
 }
 
+.table td {
+  word-break: break-word;
+}
 .table th :last-child,
 .table td :last-child {
   margin-bottom: 0;
@@ -24790,6 +24793,11 @@ article .guilabel {
 }
 article a.composer-link {
   text-decoration: underline dotted;
+}
+
+figure.uml-diagram {
+  max-width: 100%;
+  overflow: scroll;
 }
 
 /**
@@ -25094,6 +25102,8 @@ dl.confval {
   padding-bottom: 0.3rem;
   border: solid 3px #f2f2f2;
   border-top-color: #b3b3b3;
+  word-wrap: anywhere;
+  white-space: normal;
 }
 dl.confval > dt {
   display: block;
@@ -25105,6 +25115,8 @@ dl.confval > dt {
 }
 dl.confval > dt code {
   color: #000;
+  word-wrap: anywhere;
+  white-space: normal;
 }
 dl.confval > dd {
   margin-right: 1rem;

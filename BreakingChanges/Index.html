@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-08-24T19:53:43+00:00" name="docsearch:modified">
-<meta content="2024-08-24T19:53:43+00:00" name="dc.modified">
-<meta content="2024-08-24T19:53:43+00:00" property="article:modified_time">
+<meta content="2024-08-31T18:32:13+00:00" name="docsearch:modified">
+<meta content="2024-08-31T18:32:13+00:00" name="dc.modified">
+<meta content="2024-08-31T18:32:13+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -167,6 +167,26 @@
                 <section class="section" id="breaking-changes-1" data-rst-anchor="breaking-changes">
             <a id="breaking-changes"></a>
             <h1>Breaking Changes<a class="headerlink" href="#breaking-changes-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <section class="section" id="2024-08-31">
+            <h2>2024.08.31<a class="headerlink" href="#2024-08-31" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+
+<ul>
+    <li class="dash">Extract the modification of the validators to ModifyValidator service. It&#039;s
+still configured the same (via TypoScript) but is handled via service outside
+of the controller.</li>
+    <li class="dash">Replace $controller-&gt;controller with $controller-&gt;getControllerName()</li>
+    <li class="dash">Move change usergroup to FrontendUserGroup service</li>
+</ul>
+
+    </section>
+            <section class="section" id="2024-08-26">
+            <h2>2024.08.26<a class="headerlink" href="#2024-08-26" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            
+    <p>Replace SelectStaticCountriesViewHelper with f:form.countrySelect to decouple
+from EXT:static_info_tables if you only relay on selecting countries.</p>
+
+    </section>
             <section class="section" id="2024-05-13">
             <h2>2024.05.13<a class="headerlink" href="#2024-05-13" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
             
@@ -175,12 +195,6 @@ moved from ext_localconf.php to user.tsconfig. The consequence is, that
 extending/overriding fields requires to order the loading of extensions. To
 achieve this, you need to require sf_register in your composer.json and
 ext_emconf.php</p>
-
-    </section>
-            <section class="section" id="2023-10-x">
-            <h2>2023.10.x<a class="headerlink" href="#2023-10-x" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
-            
-    <p>@todo CountryProvider CountrySelectViewHelper</p>
 
     </section>
             <section class="section" id="2022-01-01">
@@ -207,7 +221,7 @@ sf_register.</p>
             
     <p>So if you need a class in your validator in code this changes are needed:
 <em> Add your validator to Services.yaml:
-</em> Add <code class="code-inline" translate="no">`implements InjectableInterface`</code> to your validator
+</em> Add <code>`implements InjectableInterface`</code> to your validator
 <em> Use \Evoweb\SfRegister\Validation\Validator\AbstractValidator as validator base
 </em> Add the repository in constructor</p>
 
@@ -497,7 +511,7 @@ method needs to be changed accordingly.</li>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: Aug 24, 2024 19:53</p>
+                    <p class="text-center">Last rendered: Aug 31, 2024 18:32</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">
