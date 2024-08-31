@@ -6,6 +6,15 @@
 Breaking Changes
 ================
 
+2024.08.31
+''''''''''
+
+- Extract the modification of the validators to ModifyValidator service. It's
+  still configured the same (via TypoScript) but is handled via service outside
+  of the controller.
+
+- Replace $controller->controller with $controller->getControllerName()
+
 2024.08.26
 ''''''''''
 
@@ -20,11 +29,6 @@ moved from ext_localconf.php to user.tsconfig. The consequence is, that
 extending/overriding fields requires to order the loading of extensions. To
 achieve this, you need to require sf_register in your composer.json and
 ext_emconf.php
-
-2023.10.x
-''''''''''
-
-@todo CountryProvider CountrySelectViewHelper
 
 2022.01.01
 ''''''''''

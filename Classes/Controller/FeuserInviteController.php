@@ -32,8 +32,6 @@ class FeuserInviteController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, invite';
 
-    protected string $controller = 'Invite';
-
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
         if (is_null($user) && $this->userIsLoggedIn()) {

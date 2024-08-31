@@ -89,7 +89,7 @@ class CleanupCommand extends Command
 
                 $io->comment('Cleaned up all outdated temporary accounts.');
                 $result = self::SUCCESS;
-            } catch (\Exception $exception) {
+            } catch (\Exception | DbalException $exception) {
                 $io->comment($exception->getMessage());
             }
         }

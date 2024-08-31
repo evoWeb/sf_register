@@ -38,17 +38,7 @@ class FeuserCreateController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage';
 
-    protected string $controller = 'Create';
-
     protected array $ignoredActions = ['confirmAction', 'refuseAction', 'acceptAction', 'declineAction'];
-
-    protected function skipValidation(): bool
-    {
-        $user = $this->request->hasArgument('user') ?
-            $this->request->getArgument('user') : '';
-
-        return $this->actionMethodName === 'formAction' && is_array($user) && ($user['byInvitation'] ?? '0');
-    }
 
     public function formAction(FrontendUser $user = null): ResponseInterface
     {

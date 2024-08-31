@@ -13,8 +13,6 @@
 
 namespace Evoweb\SfRegister\Controller;
 
-use Doctrine\Common\Annotations\AnnotationException;
-use Doctrine\Common\Annotations\DocParser;
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use Evoweb\SfRegister\Controller\Event\OverrideSettingsEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
@@ -26,12 +24,7 @@ use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use Evoweb\SfRegister\Services\File;
 use Evoweb\SfRegister\Services\Mail;
-use Evoweb\SfRegister\Services\ValidationConfiguration;
-use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
-use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
-use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
-use Evoweb\SfRegister\Validation\Validator\SetPropertyNameInterface;
-use Evoweb\SfRegister\Validation\Validator\UserValidator;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\SecurityAspect;
@@ -39,7 +32,6 @@ use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
-use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Security\RequestToken;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -47,7 +39,6 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
@@ -56,10 +47,6 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use TYPO3\CMS\Extbase\Validation\Exception\NoSuchValidatorException;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-use TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver;
 use TYPO3\CMS\Fluid\View\TemplateView;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
@@ -90,10 +77,11 @@ class FeuserController extends ActionController
     protected ?ResponseInterface $initializeResponse = null;
 
     public function __construct(
+        protected ModifyValidator $modifyValidator,
         protected Context $context,
         protected File $fileService,
         protected FrontendUserRepository $userRepository,
-        protected FrontendUserGroupRepository $userGroupRepository
+        protected FrontendUserGroupRepository $userGroupRepository,
     ) {}
 
     protected function getErrorFlashMessage(): bool
@@ -104,6 +92,28 @@ class FeuserController extends ActionController
 
     protected function initializeActionMethodValidators(): void
     {
+        $this->modifySettingsBeforeActionMethodValidators();
+
+        if ($this->modifyValidator->shouldValidationBeModified(
+            $this,
+            $this->settings,
+            $this->request,
+            $this->actionMethodName,
+            $this->ignoredActions,
+        )) {
+            $this->arguments = $this->modifyValidator->modifyArgumentValidators(
+                $this,
+                $this->settings,
+                $this->request,
+                $this->arguments,
+            );
+        } else {
+            parent::initializeActionMethodValidators();
+        }
+    }
+
+    protected function modifySettingsBeforeActionMethodValidators(): void
+    {
         $this->settings['hasOriginalRequest'] = $this->request->getAttribute('extbase')->getOriginalRequest() !== null;
 
         if (!is_array($this->settings['fields']['selected'] ?? [])) {
@@ -112,145 +122,6 @@ class FeuserController extends ActionController
         if (!is_array($this->settings['fields']['selected'])) {
             $this->settings['fields']['selected'] = [];
         }
-
-        if ($this->actionIsIgnored() || $this->skipValidation()) {
-            parent::initializeActionMethodValidators();
-        } else {
-            foreach ($this->arguments as $argumentName => $argument) {
-                if (!in_array($argumentName, ['user', 'password', 'email'])) {
-                    continue;
-                }
-                $this->modifyValidatorsBasedOnSettings(
-                    $argument,
-                    $this->settings['validation'][strtolower($this->controller)] ?? []
-                );
-            }
-        }
-    }
-
-    protected function actionIsIgnored(): bool
-    {
-        if (is_array($this->settings['ignoredActions'][$this->controller] ?? '')) {
-            $this->ignoredActions = array_merge(
-                $this->settings['ignoredActions'][$this->controller],
-                $this->ignoredActions
-            );
-        }
-        return in_array($this->actionMethodName, $this->ignoredActions);
-    }
-
-    protected function skipValidation(): bool
-    {
-        return false;
-    }
-
-    protected function modifyValidatorsBasedOnSettings(Argument $argument, array $configuredValidators): void
-    {
-        $parser = new DocParser();
-
-        /** @var UserValidator $validator */
-        $validator = GeneralUtility::makeInstance(UserValidator::class);
-        foreach ($configuredValidators as $fieldName => $configuredValidator) {
-            if (!in_array($fieldName, $this->settings['fields']['selected'] ?? [])) {
-                continue;
-            }
-
-            if (is_array($configuredValidator) && count($configuredValidator) === 1) {
-                $configuredValidator = reset($configuredValidator);
-            }
-
-            if (!is_array($configuredValidator)) {
-                try {
-                    $validatorInstance = $this->getValidatorByConfiguration(
-                        $configuredValidator,
-                        $parser,
-                        $fieldName
-                    );
-                } catch (\Exception) {
-                    continue;
-                }
-            } else {
-                /** @var ConjunctionValidator $validatorInstance */
-                $validatorInstance = $this->validatorResolver->createValidator(
-                    ConjunctionValidator::class
-                );
-                foreach ($configuredValidator as $individualConfiguredValidator) {
-                    try {
-                        $individualValidatorInstance = $this->getValidatorByConfiguration(
-                            $individualConfiguredValidator,
-                            $parser,
-                            $fieldName
-                        );
-                    } catch (\Exception) {
-                        continue;
-                    }
-
-                    $validatorInstance->addValidator($individualValidatorInstance);
-                }
-            }
-
-            $validator->addPropertyValidator($fieldName, $validatorInstance);
-        }
-
-        $this->addUidValidator($validator);
-
-        $argument->setValidator($validator);
-    }
-
-    /**
-     * @throws \ReflectionException
-     * @throws AnnotationException
-     */
-    protected function getValidatorByConfiguration(
-        string $configuration,
-        DocParser $parser,
-        string $fieldName
-    ): ?ValidatorInterface {
-        if (!str_contains($configuration, '"') && !str_contains($configuration, '(')) {
-            $configuration = '"' . $configuration . '"';
-        }
-
-        /** @var Extbase\Validate $validateAnnotation */
-        $validateAnnotation = current($parser->parse('@' . Extbase\Validate::class . '(' . $configuration . ')'));
-        try {
-            $validatorObjectName = ValidatorClassNameResolver::resolve($validateAnnotation->validator);
-            /** @var ValidatorInterface $validator */
-            $validator = GeneralUtility::makeInstance($validatorObjectName);
-            // @extensionScannerIgnoreLine
-            $validator->setOptions($validateAnnotation->options);
-
-            if ($validator instanceof AbstractValidator) {
-                $validator->setRequest($this->request);
-            }
-
-            if ($validator instanceof SetPropertyNameInterface) {
-                $validator->setPropertyName($fieldName);
-            }
-
-            return $validator;
-        } catch (NoSuchValidatorException $e) {
-            /** @var LogManager $logManager */
-            $logManager = GeneralUtility::makeInstance(LogManager::class);
-            $logManager->getLogger(__CLASS__)->debug($e->getMessage());
-            return null;
-        }
-    }
-
-    protected function addUidValidator(UserValidator $validator): UserValidator
-    {
-        if (in_array($this->controller, ['Edit', 'Delete'])) {
-            $validatorName = EqualCurrentUserValidator::class;
-        } else {
-            $validatorName = EmptyValidator::class;
-        }
-
-        try {
-            $validatorInstance = GeneralUtility::makeInstance($validatorName);
-            $validator->addPropertyValidator('uid', $validatorInstance);
-        } catch (\Exception) {
-        }
-
-        return $validator;
     }
 
     protected function initializeActionMethodArguments(): void
@@ -262,11 +133,16 @@ class FeuserController extends ActionController
 
         $event = new OverrideSettingsEvent(
             $this->settings,
-            $this->controller,
-            $this->request->getAttribute('currentContentObject')
+            $this->getControllerName(),
+            $this->request->getAttribute('currentContentObject'),
         );
-        $this->eventDispatcher->dispatch($event);
-        $this->settings = $event->getSettings();
+        $this->settings = $this->eventDispatcher->dispatch($event)->getSettings();
+    }
+
+    public function getControllerName(): string
+    {
+        preg_match('/Feuser(?<controller>.*)Controller/', get_class($this), $matches);
+        return $matches['controller'] ?? '';
     }
 
     protected function initializeAction(): void
@@ -301,7 +177,7 @@ class FeuserController extends ActionController
 
     protected function getPropertyMappingConfiguration(
         ?PropertyMappingConfiguration $configuration,
-        $userData = []
+        $userData = [],
     ): PropertyMappingConfiguration {
         if (is_null($configuration)) {
             $configuration = GeneralUtility::makeInstance(PropertyMappingConfiguration::class);
@@ -314,7 +190,7 @@ class FeuserController extends ActionController
         $configuration->setTypeConverterOption(
             PersistentObjectConverter::class,
             (string)PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
-            true
+            true,
         );
 
         $folder = $this->fileService->getTempFolder();
@@ -328,7 +204,7 @@ class FeuserController extends ActionController
         $configuration->forProperty('image.0')
             ->setTypeConverterOptions(
                 UploadedFileReferenceConverter::class,
-                $uploadConfiguration
+                $uploadConfiguration,
             );
 
         $configuration->forProperty('dateOfBirth')
@@ -336,7 +212,7 @@ class FeuserController extends ActionController
                 DateTimeConverter::class,
                 [
                     DateTimeConverter::CONFIGURATION_USER_DATA => $userData,
-                ]
+                ],
             );
 
         return $configuration;
@@ -479,7 +355,7 @@ class FeuserController extends ActionController
         $hashService = GeneralUtility::makeInstance(HashService::class);
         $_SESSION['sf-register-user'] = $hashService->hmac(
             'auto-login::' . $user->getUid(),
-            $this->additionalSecret
+            $this->additionalSecret,
         );
 
         /** @var Registry $registry */
@@ -498,7 +374,7 @@ class FeuserController extends ActionController
             $response = $response
                 ->withHeader(
                     'location',
-                    $response->getHeaderLine('location') . '?' . http_build_query($parameter)
+                    $response->getHeaderLine('location') . '?' . http_build_query($parameter),
                 );
             throw new PropagateResponseException($response);
         }
@@ -506,19 +382,20 @@ class FeuserController extends ActionController
 
     protected function sendEmails(FrontendUser $user, string $action): FrontendUserInterface
     {
+        $controllerName = $this->getControllerName();
         $action = ucfirst(str_replace('Action', '', $action));
-        $type = $this->controller . $action;
+        $type = $controllerName . $action;
 
         /** @var Mail $mailService */
         $mailService = GeneralUtility::makeInstance(Mail::class);
         $mailService->setRequest($this->request);
 
         if ($this->isNotifyAdmin($type)) {
-            $user = $mailService->sendNotifyAdmin($user, $this->controller, $action);
+            $user = $mailService->sendNotifyAdmin($user, $controllerName, $action);
         }
 
         if ($this->isNotifyUser($type)) {
-            $user = $mailService->sendNotifyUser($user, $this->controller, $action);
+            $user = $mailService->sendNotifyUser($user, $controllerName, $action);
         }
 
         return $user;
@@ -654,7 +531,7 @@ class FeuserController extends ActionController
             $hashService = GeneralUtility::makeInstance(HashService::class);
             $calculatedHash = $hashService->hmac(
                 $requestArguments['action'] . '::' . $requestArguments['user'],
-                $this->additionalSecret
+                $this->additionalSecret,
             );
             if ($hash === $calculatedHash) {
                 /** @var FrontendUser $frontendUser */

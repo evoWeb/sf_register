@@ -30,8 +30,6 @@ class FeuserResendController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, mail';
 
-    protected string $controller = 'Resend';
-
     public function formAction(Email $email = null): ResponseInterface
     {
         if ($email === null) {

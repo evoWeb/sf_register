@@ -21,6 +21,7 @@ use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
+use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -37,8 +38,6 @@ class FeuserDeleteController extends FeuserController
     public const DELETE_PLUGIN_ACTIONS = 'form, save, confirm';
     public const REQUEST_PLUGIN_ACTIONS = 'request, sendLink';
 
-    protected string $controller = 'Delete';
-
     protected array $ignoredActions = ['confirmAction', 'requestAction'];
 
     /**
@@ -48,7 +47,9 @@ class FeuserDeleteController extends FeuserController
     {
         $userId = 0;
         try {
-            $userId = $this->context->getAspect('frontend.user')?->get('id');
+            /** @var UserAspect $userAspect */
+            $userAspect = $this->context->getAspect('frontend.user');
+            $userId = $userAspect->get('id');
         } catch (AspectNotFoundException | AspectPropertyNotFoundException) {
         }
 

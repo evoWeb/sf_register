@@ -20,6 +20,7 @@ use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
@@ -35,16 +36,15 @@ class FeuserPasswordController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, save';
 
-    protected string $controller = 'Password';
-
     public function __construct(
+        protected ModifyValidator $modifyValidator,
         protected Context $context,
         protected File $fileService,
         protected FrontendUserRepository $userRepository,
         protected FrontendUserGroupRepository $userGroupRepository,
         protected Session $session
     ) {
-        parent::__construct($context, $fileService, $userRepository, $userGroupRepository);
+        parent::__construct($modifyValidator, $context, $fileService, $userRepository, $userGroupRepository);
     }
 
     public function formAction(Password $password = null): ResponseInterface

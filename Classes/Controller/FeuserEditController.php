@@ -36,8 +36,6 @@ class FeuserEditController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, accept, removeImage';
 
-    protected string $controller = 'Edit';
-
     protected array $ignoredActions = ['confirmAction', 'acceptAction'];
 
     public function formAction(FrontendUser $user = null): ResponseInterface
