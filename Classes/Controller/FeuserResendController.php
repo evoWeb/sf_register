@@ -19,6 +19,7 @@ use Evoweb\SfRegister\Domain\Model\Email;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 
@@ -35,9 +36,13 @@ class FeuserResendController extends FeuserController
     {
         if ($email === null) {
             try {
-                $userId = $this->context->getAspect('frontend.user')->get('id');
+                /** @var UserAspect $userAspect */
+                $userAspect = $this->context->getAspect('frontend.user');
+                $userId = $userAspect->get('id');
+
                 /** @var FrontendUser $user */
                 $user = $this->userRepository->findByUid($userId);
+
                 $email = new Email();
                 $email->setEmail($user->getEmail());
             } catch (\Exception) {
@@ -45,9 +50,7 @@ class FeuserResendController extends FeuserController
         }
 
         $email = $this->eventDispatcher->dispatch(new ResendFormEvent($email, $this->settings))->getEmail();
-        if ($email) {
-            $this->view->assign('email', $email);
-        }
+        $this->view->assign('email', $email);
 
         return new HtmlResponse($this->view->render());
     }

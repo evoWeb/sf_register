@@ -26,6 +26,7 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /**
  * A frontend user password controller
@@ -51,7 +52,7 @@ class FeuserPasswordController extends FeuserController
         if ($password === null) {
             $password = new Password();
         }
-        $this->eventDispatcher->dispatch(new PasswordFormEvent($password, $this->settings));
+        $password = $this->eventDispatcher->dispatch(new PasswordFormEvent($password, $this->settings))->getPassword();
 
         $this->view->assign('password', $password);
 
@@ -62,11 +63,13 @@ class FeuserPasswordController extends FeuserController
     public function saveAction(Password $password): ResponseInterface
     {
         if ($this->userIsLoggedIn()) {
-            $userId = $this->request->getAttribute('frontend.user')->user['uid'];
+            /** @var FrontendUserAuthentication $frontendUser */
+            $frontendUser = $this->request->getAttribute('frontend.user');
+            $userId = $frontendUser->user['uid'];
+
             /** @var FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
-
-            $this->eventDispatcher->dispatch(new PasswordSaveEvent($user, $this->settings));
+            $user = $this->eventDispatcher->dispatch(new PasswordSaveEvent($user, $this->settings))->getUser();
 
             $user->setPassword($this->encryptPassword($password->getPassword()));
 

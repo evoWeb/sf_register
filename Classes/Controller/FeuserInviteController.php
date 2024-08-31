@@ -23,6 +23,7 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /**
  * An frontend user invite controller
@@ -36,17 +37,20 @@ class FeuserInviteController extends FeuserController
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
         if (is_null($user) && $this->userIsLoggedIn()) {
-            $userId = $this->request->getAttribute('frontend.user')->user['uid'];
+            /** @var FrontendUserAuthentication $frontendUser */
+            $frontendUser = $this->request->getAttribute('frontend.user');
+            $userId = $frontendUser->user['uid'];
+
             /** @var FrontendUser $user */
             $user = $this->userRepository->findByUid($userId);
         }
 
         // user is logged
         if ($user instanceof FrontendUser) {
-            $this->eventDispatcher->dispatch(new InviteFormEvent($user, $this->settings));
-        }
+            $user = $this->eventDispatcher->dispatch(new InviteFormEvent($user, $this->settings))->getUser();
 
-        $this->view->assign('user', $user);
+            $this->view->assign('user', $user);
+        }
 
         return new HtmlResponse($this->view->render());
     }
@@ -54,9 +58,8 @@ class FeuserInviteController extends FeuserController
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function inviteAction(FrontendUser $user): ResponseInterface
     {
-        $event = new InviteInviteEvent($user, $this->settings, false);
-        $this->eventDispatcher->dispatch($event);
-        $doNotSendInvitation = $event->isDoNotSendInvitation();
+        $doNotSendInvitation = $this->eventDispatcher->dispatch(new InviteInviteEvent($user, $this->settings, false))
+            ->isDoNotSendInvitation();
 
         $user = $this->sendEmails($user, __FUNCTION__);
 

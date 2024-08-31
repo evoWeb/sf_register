@@ -22,6 +22,7 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -41,7 +42,9 @@ class FeuserEditController extends FeuserController
 
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        $userId = $this->context->getAspect('frontend.user')->get('id');
+        /** @var UserAspect $userAspect */
+        $userAspect = $this->context->getAspect('frontend.user');
+        $userId = $userAspect->get('id');
 
         $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
         if (
@@ -71,7 +74,7 @@ class FeuserEditController extends FeuserController
 
         // user is logged in
         if ($user instanceof FrontendUser) {
-            $this->eventDispatcher->dispatch(new EditFormEvent($user, $this->settings));
+            $user = $this->eventDispatcher->dispatch(new EditFormEvent($user, $this->settings))->getUser();
         }
 
         $this->view->assign('user', $user);
@@ -86,7 +89,7 @@ class FeuserEditController extends FeuserController
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
 
-        $this->eventDispatcher->dispatch(new EditPreviewEvent($user, $this->settings));
+        $user = $this->eventDispatcher->dispatch(new EditPreviewEvent($user, $this->settings))->getUser();
 
         $this->view->assign('user', $user);
 
@@ -173,7 +176,7 @@ class FeuserEditController extends FeuserController
             $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
             if (($this->settings['autologinPostConfirmation'] ?? false)) {
                 $this->persistAll();
-                $redirectResponse = $this->autoLogin($user, $redirectPageId);
+                $this->autoLogin($user, $redirectPageId);
             }
 
             if ($redirectResponse === null && $redirectPageId > 0) {

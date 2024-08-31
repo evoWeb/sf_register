@@ -26,6 +26,7 @@ use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use Evoweb\SfRegister\Services\File;
 use Evoweb\SfRegister\Services\Mail;
+use Evoweb\SfRegister\Services\ValidationConfiguration;
 use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
 use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
@@ -55,8 +56,6 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use TYPO3\CMS\Extbase\Security\Exception\InvalidArgumentForHashGenerationException;
-use TYPO3\CMS\Extbase\Security\Exception\InvalidHashException;
 use TYPO3\CMS\Extbase\Validation\Exception\NoSuchValidatorException;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
@@ -200,7 +199,6 @@ class FeuserController extends ActionController
 
     /**
      * @throws \ReflectionException
-     * @throws NoSuchValidatorException
      * @throws AnnotationException
      */
     protected function getValidatorByConfiguration(
@@ -231,7 +229,9 @@ class FeuserController extends ActionController
 
             return $validator;
         } catch (NoSuchValidatorException $e) {
-            GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__)->debug($e->getMessage());
+            /** @var LogManager $logManager */
+            $logManager = GeneralUtility::makeInstance(LogManager::class);
+            $logManager->getLogger(__CLASS__)->debug($e->getMessage());
             return null;
         }
     }
@@ -377,9 +377,7 @@ class FeuserController extends ActionController
      * Remove an image and forward to the action where it was called
      *
      * @throws IllegalObjectTypeException
-     * @throws InvalidArgumentForHashGenerationException
      * @throws InvalidArgumentNameException
-     * @throws InvalidHashException
      * @throws UnknownObjectException
      */
     #[Extbase\IgnoreValidation(['value' => 'user'])]

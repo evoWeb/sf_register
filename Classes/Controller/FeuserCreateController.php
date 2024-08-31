@@ -47,7 +47,7 @@ class FeuserCreateController extends FeuserController
         $user = $this->request->hasArgument('user') ?
             $this->request->getArgument('user') : '';
 
-        return $this->actionMethodName == 'formAction' && is_array($user) && ($user['byInvitation'] ?? '0');
+        return $this->actionMethodName === 'formAction' && is_array($user) && ($user['byInvitation'] ?? '0');
     }
 
     public function formAction(FrontendUser $user = null): ResponseInterface
@@ -127,7 +127,7 @@ class FeuserCreateController extends FeuserController
         $redirectResponse = null;
         $redirectPageId = (int)($this->settings['redirectPostRegistrationPageId'] ?? 0);
         if (($this->settings['autologinPostRegistration'] ?? false)) {
-            $redirectResponse = $this->autoLogin($user, $redirectPageId);
+            $this->autoLogin($user, $redirectPageId);
         }
 
         if ($redirectResponse === null && $redirectPageId > 0) {
@@ -180,7 +180,7 @@ class FeuserCreateController extends FeuserController
 
                 $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
                 if (($this->settings['autologinPostConfirmation'] ?? false)) {
-                    $redirectResponse = $this->autoLogin($user, $redirectPageId);
+                    $this->autoLogin($user, $redirectPageId);
                 }
 
                 if ($redirectResponse === null && $redirectPageId > 0) {
