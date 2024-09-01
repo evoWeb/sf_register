@@ -20,8 +20,9 @@ use Evoweb\SfRegister\Controller\Event\EditPreviewEvent;
 use Evoweb\SfRegister\Controller\Event\EditSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
@@ -43,8 +44,9 @@ class FeuserEditController extends FeuserController
 
     public function __construct(
         protected ModifyValidator $modifyValidator,
-        protected File $fileService,
+        protected FileService $fileService,
         protected FrontendUserRepository $userRepository,
+        protected MailService $mailService,
         protected FrontendUserService $frontendUserService,
     ) {
         parent::__construct($modifyValidator, $fileService, $userRepository);
@@ -70,9 +72,9 @@ class FeuserEditController extends FeuserController
             }
         }
 
-        if ($user == null) {
+        if ($user === null) {
             /** @var FrontendUser $user */
-            $user = $this->userRepository->findByUid($userId);
+            $user = $this->userRepository->findByIdentifier($userId);
         }
 
         if ($originalRequest !== null && $originalRequest->hasArgument('temporaryImage')) {
@@ -97,7 +99,6 @@ class FeuserEditController extends FeuserController
         }
 
         $user = $this->eventDispatcher->dispatch(new EditPreviewEvent($user, $this->settings))->getUser();
-
         $this->view->assign('user', $user);
 
         return new HtmlResponse($this->view->render());
@@ -106,14 +107,17 @@ class FeuserEditController extends FeuserController
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {
-        if (($this->settings['confirmEmailPostEdit'] ?? false) || ($this->settings['acceptEmailPostEdit'] ?? false)) {
+        if (
+            ($this->settings['confirmEmailPostEdit'] ?? false)
+            || ($this->settings['acceptEmailPostEdit'] ?? false)
+        ) {
             // Remove user object from session to fetch it really from database
             /** @var Session $session */
             $session = GeneralUtility::makeInstance(Session::class);
             $session->unregisterObject($user);
 
             /** @var FrontendUser $userBeforeEdit */
-            $userBeforeEdit = $this->userRepository->findByUid($user->getUid());
+            $userBeforeEdit = $this->userRepository->findByIdentifier($user->getUid());
 
             // Now remove the fresh fetched and add the updated one to make it known again
             $session->unregisterObject($userBeforeEdit);
@@ -121,13 +125,22 @@ class FeuserEditController extends FeuserController
 
             $user->setEmailNew($user->getEmail());
             $user->setEmail($userBeforeEdit->getEmail() ?: $user->getEmail());
-        } elseif (($this->settings['useEmailAddressAsUsername'] ?? false)) {
+        } else {
+            $this->fileService->moveTemporaryImage($user);
+        }
+
+        if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
             $user->setUsername($user->getEmail());
         }
 
-        $this->eventDispatcher->dispatch(new EditSaveEvent($user, $this->settings));
-
-        $user = $this->sendEmails($user, __FUNCTION__);
+        $user = $this->eventDispatcher->dispatch(new EditSaveEvent($user, $this->settings))->getUser();
+        $user = $this->mailService->sendEmails(
+            $this->request,
+            $this->settings,
+            $user,
+            $this->getControllerName(),
+            __FUNCTION__
+        );
 
         $this->userRepository->update($user);
         $this->persistAll();
@@ -162,6 +175,8 @@ class FeuserEditController extends FeuserController
             } elseif (empty($userEmailNew)) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
+                $this->fileService->moveTemporaryImage($user);
+
                 if (!($this->settings['acceptEmailPostEdit'] ?? false)) {
                     $user->setEmail($user->getEmailNew());
                     $user->setEmailNew('');
@@ -171,11 +186,16 @@ class FeuserEditController extends FeuserController
                     }
                 }
 
-                $this->eventDispatcher->dispatch(new EditConfirmEvent($user, $this->settings));
-
+                $user = $this->eventDispatcher->dispatch(new EditConfirmEvent($user, $this->settings))->getUser();
                 $this->userRepository->update($user);
 
-                $this->sendEmails($user, __FUNCTION__);
+                $this->mailService->sendEmails(
+                    $this->request,
+                    $this->settings,
+                    $user,
+                    $this->getControllerName(),
+                    __FUNCTION__
+                );
 
                 $this->view->assign('userConfirmed', 1);
             }
@@ -216,11 +236,16 @@ class FeuserEditController extends FeuserController
                     $user->setUsername($user->getEmail());
                 }
 
-                $this->eventDispatcher->dispatch(new EditAcceptEvent($user, $this->settings));
-
+                $user = $this->eventDispatcher->dispatch(new EditAcceptEvent($user, $this->settings))->getUser();
                 $this->userRepository->update($user);
 
-                $this->sendEmails($user, __FUNCTION__);
+                $this->mailService->sendEmails(
+                    $this->request,
+                    $this->settings,
+                    $user,
+                    $this->getControllerName(),
+                    __FUNCTION__
+                );
 
                 $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
                 if ($redirectPageId > 0) {

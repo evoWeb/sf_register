@@ -17,10 +17,9 @@ use Evoweb\SfRegister\Controller\Event\PasswordFormEvent;
 use Evoweb\SfRegister\Controller\Event\PasswordSaveEvent;
 use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Services\ModifyValidator;
-use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
@@ -35,10 +34,9 @@ class FeuserPasswordController extends FeuserController
 
     public function __construct(
         protected ModifyValidator $modifyValidator,
-        protected File $fileService,
+        protected FileService $fileService,
         protected FrontendUserRepository $userRepository,
         protected FrontendUserService $frontendUserService,
-        protected Session $session
     ) {
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
@@ -48,8 +46,8 @@ class FeuserPasswordController extends FeuserController
         if ($password === null) {
             $password = new Password();
         }
-        $password = $this->eventDispatcher->dispatch(new PasswordFormEvent($password, $this->settings))->getPassword();
 
+        $password = $this->eventDispatcher->dispatch(new PasswordFormEvent($password, $this->settings))->getPassword();
         $this->view->assign('password', $password);
 
         return new HtmlResponse($this->view->render());

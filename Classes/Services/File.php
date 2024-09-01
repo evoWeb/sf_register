@@ -15,11 +15,11 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Services;
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Http\UploadedFile;
-use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Resource\ResourceStorage;
@@ -80,6 +80,15 @@ class File implements SingletonInterface, LoggerAwareInterface
         $uploadMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('upload_max_filesize'));
         $postMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('post_max_size'));
         $this->maxFilesize = min($uploadMaxFileSize, $postMaxFileSize);
+    }
+
+    public function moveTemporaryImage(FrontendUser $user): void
+    {
+        if ($user->getImage()->count()) {
+            /** @var FileReference $image */
+            $image = $user->getImage()->current();
+            $this->moveFileFromTempFolderToUploadFolder($image);
+        }
     }
 
     public function setRequest(ServerRequestInterface $request): void
@@ -254,35 +263,6 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $result;
     }
 
-    /**
-     * Move a temporary uploaded file to the upload folder
-     *
-     * @return ?FileInterface
-     */
-    public function moveTempFileToTempFolder(): ?FileInterface
-    {
-        // @todo where is this called?
-        $result = null;
-        $fileData = $this->getUploadedFileInfo();
-
-        if ($fileData instanceof UploadedFile) {
-            try {
-                /** @var ResourceStorage $resourceStorage */
-                $resourceStorage = GeneralUtility::makeInstance(ResourceStorage::class);
-                $result = $resourceStorage->addFile(
-                    $fileData->getTemporaryFileName(),
-                    $this->getTempFolder(),
-                    $fileData->getClientFilename()
-                );
-            } catch (\Exception $exception) {
-                // @extensionScannerIgnoreLine
-                $this->logger->error($exception->getMessage(), $exception->getTrace());
-            }
-        }
-
-        return $result;
-    }
-
     protected function createFolderIfNotExist(string $uploadFolder): void
     {
         if (!$this->getStorage()->hasFolder($uploadFolder)) {
@@ -316,18 +296,6 @@ class File implements SingletonInterface, LoggerAwareInterface
         $image->delete();
 
         return $image->getIdentifier();
-    }
-
-    protected function getFilepath(string $filename): string
-    {
-        $filenameParts = GeneralUtility::trimExplode('/', $filename, true);
-
-        $result = implode('/', array_slice($filenameParts, 0, -1));
-        if (!in_array($result, [$this->tempFolderIdentifier, $this->imageFolderIdentifier])) {
-            $result = '';
-        }
-
-        return $result;
     }
 
     protected function getFilename(string $filename): string

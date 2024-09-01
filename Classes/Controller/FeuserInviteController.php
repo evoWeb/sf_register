@@ -17,9 +17,9 @@ use Evoweb\SfRegister\Controller\Event\InviteFormEvent;
 use Evoweb\SfRegister\Controller\Event\InviteInviteEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
-use Evoweb\SfRegister\Services\Mail;
+use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
@@ -37,8 +37,9 @@ class FeuserInviteController extends FeuserController
 
     public function __construct(
         protected ModifyValidator $modifyValidator,
-        protected File $fileService,
+        protected FileService $fileService,
         protected FrontendUserRepository $userRepository,
+        protected MailService $mailService,
         protected FrontendUserService $frontendUserService,
     ) {
         parent::__construct($modifyValidator, $fileService, $userRepository);
@@ -46,16 +47,16 @@ class FeuserInviteController extends FeuserController
 
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        if ($user === null && $this->frontendUserService->userIsLoggedIn()) {
-            $user = $this->frontendUserService->getLoggedInUser();
+        if ($user === null) {
+            if ($this->frontendUserService->userIsLoggedIn()) {
+                $user = $this->frontendUserService->getLoggedInUser();
+            } else {
+                $user = GeneralUtility::makeInstance(FrontendUser::class);
+            }
         }
 
-        // user is logged
-        if ($user instanceof FrontendUser) {
-            $user = $this->eventDispatcher->dispatch(new InviteFormEvent($user, $this->settings))->getUser();
-
-            $this->view->assign('user', $user);
-        }
+        $user = $this->eventDispatcher->dispatch(new InviteFormEvent($user, $this->settings))->getUser();
+        $this->view->assign('user', $user);
 
         return new HtmlResponse($this->view->render());
     }
@@ -63,16 +64,26 @@ class FeuserInviteController extends FeuserController
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function inviteAction(FrontendUser $user): ResponseInterface
     {
-        $doNotSendInvitation = $this->eventDispatcher->dispatch(new InviteInviteEvent($user, $this->settings, false))
-            ->isDoNotSendInvitation();
+        $doNotSendInvitation = $this->eventDispatcher->dispatch(
+            new InviteInviteEvent($user, $this->settings, false)
+        )->isDoNotSendInvitation();
 
-        $user = $this->sendEmails($user, __FUNCTION__);
+        $user = $this->mailService->sendEmails(
+            $this->request,
+            $this->settings,
+            $user,
+            $this->getControllerName(),
+            __FUNCTION__
+        );
 
         if (!$doNotSendInvitation) {
-            /** @var Mail $mailService */
-            $mailService = GeneralUtility::makeInstance(Mail::class);
-            $mailService->overrideSettings($this->settings);
-            $user = $mailService->sendInvitation($user, 'ToRegister');
+            $user = $this->mailService->sendInvitation(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                'ToRegister'
+            );
         }
 
         /** @var Session $session */

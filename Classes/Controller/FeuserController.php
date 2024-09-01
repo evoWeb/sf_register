@@ -16,12 +16,10 @@ namespace Evoweb\SfRegister\Controller;
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
 use Evoweb\SfRegister\Controller\Event\OverrideSettingsEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
-use Evoweb\SfRegister\Services\File;
-use Evoweb\SfRegister\Services\Mail;
+use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
@@ -38,7 +36,7 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Fluid\View\TemplateView;
 
 /**
  * A frontend user controller containing common methods
@@ -50,6 +48,11 @@ class FeuserController extends ActionController
     protected array $ignoredActions = [];
 
     /**
+     * @var TemplateView
+     */
+    protected $view;
+
+    /**
      * The current request.
      */
     protected RequestInterface $request;
@@ -58,7 +61,7 @@ class FeuserController extends ActionController
 
     public function __construct(
         protected ModifyValidator $modifyValidator,
-        protected File $fileService,
+        protected FileService $fileService,
         protected FrontendUserRepository $userRepository,
     ) {}
 
@@ -119,7 +122,7 @@ class FeuserController extends ActionController
 
     public function getControllerName(): string
     {
-        preg_match('/Feuser(?<controller>.*)Controller/', get_class($this), $matches);
+        preg_match('/Feuser(?<controller>.*)Controller/', __CLASS__, $matches);
         return $matches['controller'] ?? '';
     }
 
@@ -171,18 +174,16 @@ class FeuserController extends ActionController
             true,
         );
 
-        $folder = $this->fileService->getTempFolder();
-        $uploadConfiguration = [
-            UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
-                $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
-            UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
-                $folder->getStorage()->getUid() . ':' . $folder->getIdentifier(),
-        ];
-
+        $temporaryFolder = $this->fileService->getTempFolder();
         $configuration->forProperty('image.0')
             ->setTypeConverterOptions(
                 UploadedFileReferenceConverter::class,
-                $uploadConfiguration,
+                [
+                    UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
+                        $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
+                    UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
+                        $temporaryFolder->getStorage()->getUid() . ':' . $temporaryFolder->getIdentifier(),
+                ],
             );
 
         $configuration->forProperty('dateOfBirth')
@@ -238,10 +239,15 @@ class FeuserController extends ActionController
     protected function removeImageAction(FrontendUser $user): ResponseInterface
     {
         /** @var FileReference $image */
-        $image = $user->getImage()->current();
+        $images = $user->getImage();
 
-        $this->fileService->removeFile($image);
-        $this->removeImageFromUserAndRequest($user);
+        array_walk(
+            $images,
+            function ($image) use ($user) {
+                $this->fileService->removeFile($image);
+                $this->removeImageFromUserAndRequest($user);
+            }
+        );
 
         $this->request = $this->request->withArgument('removeImage', false);
 
@@ -258,7 +264,7 @@ class FeuserController extends ActionController
     {
         if ($user->getUid() !== null) {
             /** @var FrontendUser $localUser */
-            $localUser = $this->userRepository->findByUid($user->getUid());
+            $localUser = $this->userRepository->findByIdentifier($user->getUid());
             $localUser->removeImage();
             $this->userRepository->update($localUser);
 
@@ -294,54 +300,5 @@ class FeuserController extends ActionController
         /** @var PersistenceManager $persistenceManager */
         $persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $persistenceManager->persistAll();
-    }
-
-    protected function sendEmails(FrontendUser $user, string $action): FrontendUserInterface
-    {
-        $controllerName = $this->getControllerName();
-        $action = ucfirst(str_replace('Action', '', $action));
-        $type = $controllerName . $action;
-
-        /** @var Mail $mailService */
-        $mailService = GeneralUtility::makeInstance(Mail::class);
-        $mailService->setRequest($this->request);
-
-        if ($this->isNotifyAdmin($type)) {
-            $user = $mailService->sendNotifyAdmin($user, $controllerName, $action);
-        }
-
-        if ($this->isNotifyUser($type)) {
-            $user = $mailService->sendNotifyUser($user, $controllerName, $action);
-        }
-
-        return $user;
-    }
-
-    protected function isNotifyAdmin(string $type): bool
-    {
-        $type = lcfirst($type);
-        $notifySettings = $this->settings['notifyAdmin'] ?? [];
-        return !empty($notifySettings[$type]);
-    }
-
-    protected function isNotifyUser(string $type): bool
-    {
-        $type = lcfirst($type);
-        $notifySettings = $this->settings['notifyUser'] ?? [];
-        return !empty($notifySettings[$type]);
-    }
-
-    protected function moveTemporaryImage(FrontendUser $user): void
-    {
-        if ($user->getImage()->count()) {
-            /** @var FileReference $image */
-            $image = $user->getImage()->current();
-            $this->fileService->moveFileFromTempFolderToUploadFolder($image);
-        }
-    }
-
-    protected function getTypoScriptFrontendController(): ?TypoScriptFrontendController
-    {
-        return $this->request->getAttribute('frontend.controller');
     }
 }

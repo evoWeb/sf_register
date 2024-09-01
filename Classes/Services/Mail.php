@@ -31,36 +31,55 @@ use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
  */
 class Mail implements SingletonInterface
 {
-    protected array $settings = [];
-
     protected array $frameworkConfiguration = [];
-
-    protected RequestInterface $request;
 
     public function __construct(
         protected EventDispatcherInterface $eventDispatcher,
         protected ConfigurationManagerInterface $configurationManager
     ) {
-        $this->settings = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'SfRegister'
-        );
         $this->frameworkConfiguration = $configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
     }
 
-    public function overrideSettings(array $settings): void
-    {
-        $this->settings = $settings;
+    public function sendEmails(
+        RequestInterface $request,
+        array $settings,
+        FrontendUserInterface $user,
+        string $controllerName,
+        string $action
+    ): FrontendUserInterface {
+        $action = ucfirst(str_replace('Action', '', $action));
+        $type = $controllerName . $action;
+
+        if ($this->isNotifyAdmin($settings, $type)) {
+            $user = $this->sendNotifyAdmin($request, $settings, $user, $controllerName, $action);
+        }
+
+        if ($this->isNotifyUser($settings, $type)) {
+            $user = $this->sendNotifyUser($request, $settings, $user, $controllerName, $action);
+        }
+
+        return $user;
     }
 
-    public function setRequest(RequestInterface $request): void
+    public function isNotifyAdmin(array $settings, string $type): bool
     {
-        $this->request = $request;
+        $type = lcfirst($type);
+        $notifySettings = $settings['notifyAdmin'] ?? [];
+        return !empty($notifySettings[$type]);
+    }
+
+    public function isNotifyUser(array $settings, string $type): bool
+    {
+        $type = lcfirst($type);
+        $notifySettings = $settings['notifyUser'] ?? [];
+        return !empty($notifySettings[$type]);
     }
 
     public function sendNotifyAdmin(
+        RequestInterface $request,
+        array $settings,
         FrontendUserInterface $user,
         string $controller,
         string $action
@@ -69,18 +88,21 @@ class Mail implements SingletonInterface
         $controller = 'Feuser' . $controller;
 
         $this->sendEmail(
+            $settings,
             $user,
-            $this->getAdminRecipient(),
+            $this->getAdminRecipient($settings),
             'adminEmail',
-            $this->getSubject($method, $user),
-            $this->renderHtmlBody($controller, 'form', $method, $user),
-            $this->renderTextBody($controller, 'form', $method, $user)
+            $this->getSubject($settings, $method, $user),
+            $this->renderHtmlBody($request, $settings, $controller, 'form', $method, $user),
+            $this->renderTextBody($request, $settings, $controller, 'form', $method, $user)
         );
 
-        return $this->dispatchUserEvent($method, $user);
+        return $this->dispatchUserEvent($settings, $method, $user);
     }
 
     public function sendNotifyUser(
+        RequestInterface $request,
+        array $settings,
         FrontendUserInterface $user,
         string $controller,
         string $action
@@ -89,46 +111,53 @@ class Mail implements SingletonInterface
         $controller = 'Feuser' . $controller;
 
         $this->sendEmail(
+            $settings,
             $user,
             $this->getUserRecipient($user),
             'userEmail',
-            $this->getSubject($method, $user),
-            $this->renderHtmlBody($controller, 'form', $method, $user),
-            $this->renderTextBody($controller, 'form', $method, $user)
+            $this->getSubject($settings, $method, $user),
+            $this->renderHtmlBody($request, $settings, $controller, 'form', $method, $user),
+            $this->renderTextBody($request, $settings, $controller, 'form', $method, $user)
         );
 
-        return $this->dispatchUserEvent($method, $user);
+        return $this->dispatchUserEvent($settings, $method, $user);
     }
 
-    public function sendInvitation(FrontendUserInterface $user, string $type): FrontendUserInterface
-    {
-        $method = 'Invitation' . $type;
+    public function sendInvitation(
+        RequestInterface $request,
+        array $settings,
+        FrontendUserInterface $user,
+        string $controller,
+        string $action
+    ): FrontendUserInterface {
+        $method = $controller . $action;
 
         $this->sendEmail(
+            $settings,
             $user,
             [$user->getInvitationEmail() => ''],
             'userEmail',
-            $this->getSubject($method, $user),
-            $this->renderHtmlBody('FeuserCreate', 'form', $method, $user),
-            $this->renderTextBody('FeuserCreate', 'form', $method, $user)
+            $this->getSubject($settings, $method, $user),
+            $this->renderHtmlBody($request, $settings, 'FeuserCreate', 'form', $method, $user),
+            $this->renderTextBody($request, $settings, 'FeuserCreate', 'form', $method, $user)
         );
 
-        return $this->dispatchUserEvent($method, $user);
+        return $this->dispatchUserEvent($settings, $method, $user);
     }
 
-    protected function getSubject(string $method, FrontendUserInterface $user): string
+    protected function getSubject(array $settings, string $method, FrontendUserInterface $user): string
     {
         return (string)LocalizationUtility::translate(
             'subject' . $method,
             'SfRegister',
-            [$this->settings['sitename'] ?? '', $user->getUsername()]
+            [$settings['sitename'] ?? '', $user->getUsername()]
         );
     }
 
-    protected function getAdminRecipient(): array
+    protected function getAdminRecipient(array $settings): array
     {
         return [
-            trim($this->settings['adminEmail']['toEmail'] ?? '') => trim($this->settings['adminEmail']['toName'] ?? ''),
+            trim($settings['adminEmail']['toEmail'] ?? '') => trim($settings['adminEmail']['toName'] ?? ''),
         ];
     }
 
@@ -146,6 +175,7 @@ class Mail implements SingletonInterface
     }
 
     protected function sendEmail(
+        array $settings,
         FrontendUserInterface $user,
         array $recipient,
         string $typeOfEmail,
@@ -153,7 +183,7 @@ class Mail implements SingletonInterface
         string $bodyHtml,
         string $bodyPlain
     ): bool {
-        $settings = & $this->settings[$typeOfEmail];
+        $settings = & $settings[$typeOfEmail];
 
         /** @var MailMessage $mail */
         $mail = GeneralUtility::makeInstance(MailMessage::class);
@@ -172,18 +202,20 @@ class Mail implements SingletonInterface
             $mail->text($bodyPlain);
         }
 
-        $mail = $this->dispatchMailEvent($mail, $user);
+        $mail = $this->dispatchMailEvent($settings, $mail, $user);
 
         return $mail->send();
     }
 
     protected function renderHtmlBody(
+        RequestInterface $request,
+        array $settings,
         string $controller,
         string $action,
         string $method,
         FrontendUserInterface $user
     ): string {
-        $view = $this->getView($controller, $action);
+        $view = $this->getView($request, $controller, $action);
         $view->setFormat('html');
 
         $context = $view->getRenderingContext();
@@ -193,7 +225,7 @@ class Mail implements SingletonInterface
         try {
             $view->assignMultiple([
                 'user' => $user,
-                'settings' => $this->settings,
+                'settings' => $settings,
             ]);
 
             $body = $view->render();
@@ -205,12 +237,14 @@ class Mail implements SingletonInterface
     }
 
     protected function renderTextBody(
+        RequestInterface $request,
+        array $settings,
         string $controller,
         string $action,
         string $method,
         FrontendUserInterface $user
     ): string {
-        $view = $this->getView($controller, $action);
+        $view = $this->getView($request, $controller, $action);
         $view->setFormat('txt');
 
         $context = $view->getRenderingContext();
@@ -220,7 +254,7 @@ class Mail implements SingletonInterface
         try {
             $view->assignMultiple([
                 'user' => $user,
-                'settings' => $this->settings,
+                'settings' => $settings,
             ]);
 
             $body = $view->render();
@@ -231,15 +265,18 @@ class Mail implements SingletonInterface
         return $body;
     }
 
-    protected function getView(string $controller, string $action): StandaloneView
-    {
+    protected function getView(
+        RequestInterface $request,
+        string $controller,
+        string $action
+    ): StandaloneView {
         /** @var StandaloneView $view */
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setLayoutRootPaths($this->frameworkConfiguration['view']['layoutRootPaths']);
         $view->setPartialRootPaths($this->frameworkConfiguration['view']['partialRootPaths']);
         $view->setTemplateRootPaths($this->frameworkConfiguration['view']['templateRootPaths']);
 
-        $request = $this->request->withControllerExtensionName($this->frameworkConfiguration['extensionName']);
+        $request = $request->withControllerExtensionName($this->frameworkConfiguration['extensionName']);
         $request = $request->withPluginName($this->frameworkConfiguration['pluginName']);
         $request = $request->withControllerName($controller);
         $request = $request->withControllerActionName($action);
@@ -248,19 +285,23 @@ class Mail implements SingletonInterface
         return $view;
     }
 
-    protected function dispatchMailEvent(MailMessage $mail, FrontendUserInterface $user): MailMessage
-    {
-        $eventObject = new PreSubmitMailEvent($mail, $this->settings, ['user' => $user]);
-        $this->eventDispatcher->dispatch($eventObject);
-        return $eventObject->getMail();
+    protected function dispatchMailEvent(
+        array $settings,
+        MailMessage $mail,
+        FrontendUserInterface $user
+    ): MailMessage {
+        $eventObject = new PreSubmitMailEvent($mail, $settings, ['user' => $user]);
+        return $this->eventDispatcher->dispatch($eventObject)->getMail();
     }
 
-    protected function dispatchUserEvent(string $method, FrontendUserInterface $user): FrontendUserInterface
-    {
+    protected function dispatchUserEvent(
+        array $settings,
+        string $method,
+        FrontendUserInterface $user
+    ): FrontendUserInterface {
         $event = 'Evoweb\\SfRegister\\Services\\Event\\' . $method . 'Event';
         /** @var AbstractEventWithUser $eventObject */
-        $eventObject = new $event($user, $this->settings);
-        $this->eventDispatcher->dispatch($eventObject);
-        return $eventObject->getUser();
+        $eventObject = new $event($user, $settings);
+        return $this->eventDispatcher->dispatch($eventObject)->getUser();
     }
 }

@@ -22,9 +22,10 @@ use Evoweb\SfRegister\Controller\Event\CreateRefuseEvent;
 use Evoweb\SfRegister\Controller\Event\CreateSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Services\FrontenUserGroup as FrontenUserGroupService;
+use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Services\Setup\CheckFactory;
@@ -47,8 +48,9 @@ class FeuserCreateController extends FeuserController
 
     public function __construct(
         protected ModifyValidator $modifyValidator,
-        protected File $fileService,
+        protected FileService $fileService,
         protected FrontendUserRepository $userRepository,
+        protected MailService $mailService,
         protected FrontendUserService $frontendUserService,
         protected FrontenUserGroupService $frontenUserGroupService,
     ) {
@@ -60,7 +62,7 @@ class FeuserCreateController extends FeuserController
         $setupResponse = $this->setupCheck();
 
         if ($user) {
-            $this->eventDispatcher->dispatch(new CreateFormEvent($user, $this->settings));
+            $user = $this->eventDispatcher->dispatch(new CreateFormEvent($user, $this->settings))->getUser();
             $this->view->assign('user', $user);
         }
 
@@ -74,8 +76,7 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
 
-        $this->eventDispatcher->dispatch(new CreatePreviewEvent($user, $this->settings));
-
+        $user = $this->eventDispatcher->dispatch(new CreatePreviewEvent($user, $this->settings))->getUser();
         $this->view->assign('user', $user);
 
         return new HtmlResponse($this->view->render());
@@ -100,14 +101,14 @@ class FeuserCreateController extends FeuserController
                 $user,
                 (int)($this->settings['usergroup'] ?? 0)
             );
-            $this->moveTemporaryImage($user);
+            $this->fileService->moveTemporaryImage($user);
         }
 
         if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
             $user->setUsername($user->getEmail());
         }
 
-        $this->eventDispatcher->dispatch(new CreateSaveEvent($user, $this->settings));
+        $user = $this->eventDispatcher->dispatch(new CreateSaveEvent($user, $this->settings))->getUser();
 
         try {
             // Persist user to get valid uid
@@ -119,7 +120,13 @@ class FeuserCreateController extends FeuserController
 
             // Write back plain password
             $user->setPassword($plainPassword);
-            $user = $this->sendEmails($user, __FUNCTION__);
+            $user = $this->mailService->sendEmails(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                __FUNCTION__
+            );
 
             // Encrypt plain password
             if ($user->getPassword()) {
@@ -179,16 +186,21 @@ class FeuserCreateController extends FeuserController
                     $user,
                     (int)($this->settings['usergroupPostConfirm'] ?? 0)
                 );
-                $this->moveTemporaryImage($user);
+                $this->fileService->moveTemporaryImage($user);
                 $user->setActivatedOn(new \DateTime('now'));
 
                 if (!($this->settings['acceptEmailPostConfirm'] ?? false)) {
                     $user->setDisable(false);
                 }
 
-                $this->eventDispatcher->dispatch(new CreateConfirmEvent($user, $this->settings));
-
-                $user = $this->sendEmails($user, __FUNCTION__);
+                $user = $this->eventDispatcher->dispatch(new CreateConfirmEvent($user, $this->settings))->getUser();
+                $user = $this->mailService->sendEmails(
+                    $this->request,
+                    $this->settings,
+                    $user,
+                    $this->getControllerName(),
+                    __FUNCTION__
+                );
 
                 try {
                     $this->userRepository->update($user);
@@ -225,9 +237,8 @@ class FeuserCreateController extends FeuserController
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
+            $user = $this->eventDispatcher->dispatch(new CreateRefuseEvent($user, $this->settings))->getUser();
             $this->view->assign('user', $user);
-
-            $this->eventDispatcher->dispatch(new CreateRefuseEvent($user, $this->settings));
 
             if ($user->getImage()->count()) {
                 $image = $user->getImage()->current();
@@ -237,7 +248,13 @@ class FeuserCreateController extends FeuserController
 
             $this->userRepository->remove($user);
 
-            $this->sendEmails($user, __FUNCTION__);
+            $this->mailService->sendEmails(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                __FUNCTION__
+            );
 
             $this->view->assign('userRefused', 1);
         }
@@ -279,14 +296,20 @@ class FeuserCreateController extends FeuserController
                     $user->setActivatedOn(new \DateTime('now'));
                 }
 
-                $this->eventDispatcher->dispatch(new CreateAcceptEvent($user, $this->settings));
+                $user = $this->eventDispatcher->dispatch(new CreateAcceptEvent($user, $this->settings))->getUser();
 
                 try {
                     $this->userRepository->update($user);
                 } catch (IllegalObjectTypeException | UnknownObjectException) {
                 }
 
-                $this->sendEmails($user, __FUNCTION__);
+                $this->mailService->sendEmails(
+                    $this->request,
+                    $this->settings,
+                    $user,
+                    $this->getControllerName(),
+                    __FUNCTION__
+                );
 
                 $this->view->assign('userAccepted', 1);
             }
@@ -308,9 +331,8 @@ class FeuserCreateController extends FeuserController
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
+            $user = $this->eventDispatcher->dispatch(new CreateDeclineEvent($user, $this->settings))->getUser();
             $this->view->assign('user', $user);
-
-            $this->eventDispatcher->dispatch(new CreateDeclineEvent($user, $this->settings));
 
             if ($user->getImage()->count()) {
                 $image = $user->getImage()->current();
@@ -320,7 +342,13 @@ class FeuserCreateController extends FeuserController
 
             $this->userRepository->remove($user);
 
-            $this->sendEmails($user, __FUNCTION__);
+            $this->mailService->sendEmails(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                __FUNCTION__
+            );
 
             $this->view->assign('userDeclined', 1);
         }
