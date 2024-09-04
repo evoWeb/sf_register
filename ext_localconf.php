@@ -80,8 +80,9 @@ ExtensionManagementUtility::addService(
     'auth',
     AutoLogin::class,
     [
-        'title' => 'Auto login for users of sf_register',
-        'description' => 'Authenticates user with given session value',
+        'title' => 'Auto login after registration with sf_register',
+        'description' => 'After a user registers with the help of sf_register this service authenticates the user with
+            a given session value',
         'subtype' => 'getUserFE,authUserFE',
         'available' => true,
         'priority' => 75,

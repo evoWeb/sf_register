@@ -21,7 +21,7 @@ use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
-use Evoweb\SfRegister\Services\Session;
+use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
@@ -64,10 +64,7 @@ class FeuserInviteController extends FeuserController
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function inviteAction(FrontendUser $user): ResponseInterface
     {
-        $doNotSendInvitation = $this->eventDispatcher->dispatch(
-            new InviteInviteEvent($user, $this->settings, false)
-        )->isDoNotSendInvitation();
-
+        /** @var FrontendUser $user */
         $user = $this->mailService->sendEmails(
             $this->request,
             $this->settings,
@@ -76,6 +73,8 @@ class FeuserInviteController extends FeuserController
             __FUNCTION__
         );
 
+        $event = new InviteInviteEvent($user, $this->settings, false);
+        $doNotSendInvitation = $this->eventDispatcher->dispatch($event)->isDoNotSendInvitation();
         if (!$doNotSendInvitation) {
             $user = $this->mailService->sendInvitation(
                 $this->request,
@@ -86,8 +85,8 @@ class FeuserInviteController extends FeuserController
             );
         }
 
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class);
+        /** @var SessionService $session */
+        $session = GeneralUtility::makeInstance(SessionService::class);
         $session->remove('captchaWasValid');
 
         $this->view->assign('user', $user);

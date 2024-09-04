@@ -15,6 +15,7 @@ namespace Evoweb\SfRegister\Services;
 
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /**
@@ -34,12 +35,15 @@ class Session implements SingletonInterface
 
     public function __construct(protected ?FrontendUserAuthentication $frontendUser = null)
     {
-        if ($this->getRequest()->getAttribute('frontend.user')) {
-            $this->frontendUser = $this->getRequest()->getAttribute('frontend.user');
-        } else {
-            try {
-                $this->frontendUser->start($GLOBALS['TYPO3_REQUEST']);
-            } catch (\Exception) {
+        if ($frontendUser === null) {
+            if ($this->getRequest()->getAttribute('frontend.user')) {
+                $this->frontendUser = $this->getRequest()->getAttribute('frontend.user');
+            } else {
+                try {
+                    $this->frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
+                    $this->frontendUser->start($GLOBALS['TYPO3_REQUEST']);
+                } catch (\Exception) {
+                }
             }
         }
         $this->fetch();

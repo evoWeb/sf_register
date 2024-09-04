@@ -192,6 +192,36 @@ class FrontendUser
         return GeneralUtility::locationHeaderUrl($uri);
     }
 
+    public function getLoggedInRequestUser(RequestInterface $request): ?FrontendUserInterface
+    {
+        $user = null;
+        $userId = $this->getLoggedInUserId();
+        $originalRequest = $request->getAttribute('extbase')->getOriginalRequest();
+        if (
+            (
+                $request->hasArgument('user')
+                || ($originalRequest !== null && $originalRequest->hasArgument('user'))
+            )
+            && $this->userIsLoggedIn()
+        ) {
+            /** @var FrontendUserModel $userData */
+            $userData = $request->hasArgument('user')
+                ? $request->getArgument('user')
+                : $originalRequest->getArgument('user');
+            if ($userData instanceof FrontendUserModel && $userData->getUid() == $userId) {
+                $user = $userData;
+            }
+        }
+
+        if ($user === null) {
+            $userId = $this->getLoggedInUserId();
+            /** @var FrontendUserModel $user */
+            $user = $this->userRepository->findByIdentifier($userId);
+        }
+
+        return $user;
+    }
+
     protected function getTypoScriptFrontendController(RequestInterface $request): ?TypoScriptFrontendController
     {
         return $request->getAttribute('frontend.controller');

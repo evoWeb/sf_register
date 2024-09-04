@@ -25,12 +25,9 @@ use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
-use TYPO3\CMS\Extbase\Property\Exception;
-use TYPO3\CMS\Extbase\Property\PropertyMapper;
 
 /**
  * A frontend user create controller
@@ -52,39 +49,12 @@ class FeuserDeleteController extends FeuserController
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
 
-    /**
-     * @throws Exception
-     */
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        $userId = $this->frontendUserService->getLoggedInUserId();
-        $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
-        if (
-            (
-                $this->request->hasArgument('user')
-                || ($originalRequest !== null && $originalRequest->hasArgument('user'))
-            )
-            && $this->frontendUserService->userIsLoggedIn()
-        ) {
-            /** @var array $userData */
-            $userData = $this->request->hasArgument('user')
-                ? $this->request->getArgument('user')
-                : $originalRequest->getArgument('user');
-
-            // only reconstitute user object if given user uid equals logged-in user uid
-            if ($userData['uid'] === $userId) {
-                /** @var PropertyMapper $propertyMapper */
-                $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
-                $user = $propertyMapper->convert($userData, FrontendUser::class);
-            }
-        }
-
         if ($user === null) {
-            /** @var FrontendUser $user */
-            $user = $this->userRepository->findByIdentifier($userId);
+            $user = $this->frontendUserService->getLoggedInRequestUser($this->request);
         }
 
-        // user is logged
         if ($user instanceof FrontendUser) {
             $user = $this->eventDispatcher->dispatch(new DeleteFormEvent($user, $this->settings))->getUser();
         }

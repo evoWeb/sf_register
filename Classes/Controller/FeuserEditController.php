@@ -54,39 +54,20 @@ class FeuserEditController extends FeuserController
 
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        $userId = $this->frontendUserService->getLoggedInUserId();
-        $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
-        if (
-            (
-                $this->request->hasArgument('user')
-                || ($originalRequest !== null && $originalRequest->hasArgument('user'))
-            )
-            && $this->frontendUserService->userIsLoggedIn()
-        ) {
-            /** @var FrontendUser $userData */
-            $userData = $this->request->hasArgument('user')
-                ? $this->request->getArgument('user')
-                : $originalRequest->getArgument('user');
-            if ($userData instanceof FrontendUser && $userData->getUid() != $userId) {
-                $user = null;
-            }
-        }
-
         if ($user === null) {
-            /** @var FrontendUser $user */
-            $user = $this->userRepository->findByIdentifier($userId);
+            $user = $this->frontendUserService->getLoggedInRequestUser($this->request);
         }
 
-        if ($originalRequest !== null && $originalRequest->hasArgument('temporaryImage')) {
-            $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
-        }
-
-        // user is logged in
         if ($user instanceof FrontendUser) {
             $user = $this->eventDispatcher->dispatch(new EditFormEvent($user, $this->settings))->getUser();
         }
 
         $this->view->assign('user', $user);
+
+        $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
+        if ($originalRequest !== null && $originalRequest->hasArgument('temporaryImage')) {
+            $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
+        }
 
         return new HtmlResponse($this->view->render());
     }
@@ -129,7 +110,7 @@ class FeuserEditController extends FeuserController
             $this->fileService->moveTemporaryImage($user);
         }
 
-        if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
+        if ($this->settings['useEmailAddressAsUsername'] ?? false) {
             $user->setUsername($user->getEmail());
         }
 
@@ -149,7 +130,7 @@ class FeuserEditController extends FeuserController
         $session = GeneralUtility::makeInstance(SessionService::class);
         $session->remove('captchaWasValid');
 
-        if (($this->settings['forwardToEditAfterSave'] ?? false)) {
+        if ($this->settings['forwardToEditAfterSave'] ?? false) {
             $response = new ForwardResponse('form');
         } else {
             $this->view->assign('user', $user);
@@ -181,7 +162,7 @@ class FeuserEditController extends FeuserController
                     $user->setEmail($user->getEmailNew());
                     $user->setEmailNew('');
 
-                    if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
+                    if ($this->settings['useEmailAddressAsUsername'] ?? false) {
                         $user->setUsername($user->getEmail());
                     }
                 }
@@ -201,7 +182,7 @@ class FeuserEditController extends FeuserController
             }
 
             $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
-            if (($this->settings['autologinPostConfirmation'] ?? false)) {
+            if ($this->settings['autologinPostConfirmation'] ?? false) {
                 $this->persistAll();
                 $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
             }
@@ -232,7 +213,7 @@ class FeuserEditController extends FeuserController
                     $user->setEmailNew('');
                 }
 
-                if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
+                if ($this->settings['useEmailAddressAsUsername'] ?? false) {
                     $user->setUsername($user->getEmail());
                 }
 

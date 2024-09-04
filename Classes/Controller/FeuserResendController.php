@@ -22,9 +22,11 @@ use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
+use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
@@ -76,6 +78,10 @@ class FeuserResendController extends FeuserController
                 __FUNCTION__
             );
         }
+
+        /** @var SessionService $session */
+        $session = GeneralUtility::makeInstance(SessionService::class);
+        $session->remove('captchaWasValid');
 
         return new HtmlResponse($this->view->render());
     }

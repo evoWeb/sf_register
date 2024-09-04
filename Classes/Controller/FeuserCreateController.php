@@ -27,7 +27,7 @@ use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Services\FrontenUserGroup as FrontenUserGroupService;
 use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
-use Evoweb\SfRegister\Services\Session;
+use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Services\Setup\CheckFactory;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
@@ -104,7 +104,7 @@ class FeuserCreateController extends FeuserController
             $this->fileService->moveTemporaryImage($user);
         }
 
-        if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
+        if ($this->settings['useEmailAddressAsUsername'] ?? false) {
             $user->setUsername($user->getEmail());
         }
 
@@ -138,15 +138,15 @@ class FeuserCreateController extends FeuserController
         } catch (IllegalObjectTypeException | UnknownObjectException) {
         }
 
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class);
+        /** @var SessionService $session */
+        $session = GeneralUtility::makeInstance(SessionService::class);
         $session->remove('captchaWasValid');
 
         $this->view->assign('user', $user);
 
         $redirectResponse = null;
         $redirectPageId = (int)($this->settings['redirectPostRegistrationPageId'] ?? 0);
-        if (($this->settings['autologinPostRegistration'] ?? false)) {
+        if ($this->settings['autologinPostRegistration'] ?? false) {
             $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
         }
 
@@ -211,7 +211,7 @@ class FeuserCreateController extends FeuserController
                 $this->view->assign('userConfirmed', 1);
 
                 $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
-                if (($this->settings['autologinPostConfirmation'] ?? false)) {
+                if ($this->settings['autologinPostConfirmation'] ?? false) {
                     $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
                 }
 
@@ -362,7 +362,7 @@ class FeuserCreateController extends FeuserController
 
         $setupChecks = GeneralUtility::makeInstance(CheckFactory::class)->getCheckInstances();
         foreach ($setupChecks as $setupCheck) {
-            if (($result = $setupCheck->check($this->settings))) {
+            if ($result = $setupCheck->check($this->settings)) {
                 break;
             }
         }

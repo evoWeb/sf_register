@@ -43,6 +43,10 @@ class FeuserPasswordController extends FeuserController
 
     public function formAction(Password $password = null): ResponseInterface
     {
+        if (!$this->frontendUserService->userIsLoggedIn()) {
+            $this->view->assign('notLoggedIn', true);
+        }
+
         if ($password === null) {
             $password = new Password();
         }
