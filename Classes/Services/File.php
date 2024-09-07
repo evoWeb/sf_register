@@ -84,10 +84,8 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     public function moveTemporaryImage(FrontendUser $user): void
     {
-        if ($user->getImage()->count()) {
-            /** @var FileReference $image */
-            $image = $user->getImage()->current();
-            $this->moveFileFromTempFolderToUploadFolder($image);
+        if ($user->getImage()) {
+            $this->moveFileFromTempFolderToUploadFolder($user->getImage());
         }
     }
 

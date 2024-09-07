@@ -117,9 +117,8 @@ class FeuserDeleteController extends FeuserController
                 __FUNCTION__
             );
 
-            if ($user->getImage()->count()) {
-                $image = $user->getImage()->current();
-                $this->fileService->removeFile($image);
+            if ($user->getImage()) {
+                $this->fileService->removeFile($user->getImage());
                 $this->removeImageFromUserAndRequest($user);
             }
 

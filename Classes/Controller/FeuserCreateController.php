@@ -240,9 +240,8 @@ class FeuserCreateController extends FeuserController
             $user = $this->eventDispatcher->dispatch(new CreateRefuseEvent($user, $this->settings))->getUser();
             $this->view->assign('user', $user);
 
-            if ($user->getImage()->count()) {
-                $image = $user->getImage()->current();
-                $this->fileService->removeFile($image);
+            if ($user->getImage()) {
+                $this->fileService->removeFile($user->getImage());
                 $this->removeImageFromUserAndRequest($user);
             }
 
@@ -334,9 +333,8 @@ class FeuserCreateController extends FeuserController
             $user = $this->eventDispatcher->dispatch(new CreateDeclineEvent($user, $this->settings))->getUser();
             $this->view->assign('user', $user);
 
-            if ($user->getImage()->count()) {
-                $image = $user->getImage()->current();
-                $this->fileService->removeFile($image);
+            if ($user->getImage()) {
+                $this->fileService->removeFile($user->getImage());
                 $this->removeImageFromUserAndRequest($user);
             }
 

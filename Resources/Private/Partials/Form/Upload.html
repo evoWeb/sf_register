@@ -1,25 +1,25 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
-	data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <f:asset.css identifier="sfregister_css" href="EXT:sf_register/Resources/Public/Stylesheets/sf_register{settings.minified}.css"/>
 <f:asset.script identifier="sfregister_js" src="EXT:sf_register/Resources/Public/JavaScript/sf_register{settings.minified}.js"/>
-
+<f:debug>{_all}</f:debug>
 <div class="col-md-6 mb-3 {fieldName}">
-	<label for="{fieldName}">
-		<f:translate id="{fieldName}" />
-		<f:render partial="Required" arguments="{field: '{fieldName}'}" />
-	</label>
-	<f:render partial="FieldError" arguments="{for: 'user', field: '{fieldName}'}" />
+    <label for="{fieldName}">
+        <f:translate id="{fieldName}" />
+        <f:render partial="Required" arguments="{field: '{fieldName}'}" />
+    </label>
+    <f:render partial="FieldError" arguments="{for: 'user', field: '{fieldName}'}" />
 
-	<register:form.upload property="{fieldName}.0" class="form-control-file {options.cssClass}" id="uploadButton">
-		<f:if condition="{resource}">
-			<f:image image="{resource}" alt="" width="50"/>
-			<f:form.hidden name="removeImage" id="removeImage" value="0"/>
-			<f:form.button type="button" id="removeImageButton" class="btn btn-danger">{f:translate(id:'submit_removeImage')}</f:form.button>
-		</f:if>
-	</register:form.upload>
-	<div id="uploadFile"></div>
+    <f:if condition="{user.{fieldName}}">
+        <f:then>
+            <f:form.uploadDeleteCheckbox property="{fieldName}" fileReference="{user.{fieldName}}" />
+        </f:then>
+        <f:else>
+            <f:form.upload property="{fieldName}"/>
+        </f:else>
+    </f:if>
+
+    <div id="uploadFile"></div>
 </div>
 
 </html>

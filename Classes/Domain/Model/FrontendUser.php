@@ -18,6 +18,7 @@ use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
 
 /**
  * An extended frontend user with more area
@@ -159,10 +160,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
      */
     protected ?ObjectStorage $usergroup = null;
 
-    /**
-     * @var ?ObjectStorage<FileReference>
-     */
-    protected ?ObjectStorage $image = null;
+    protected ?FileReference $image = null;
 
     /**
      * @var ?ObjectStorage<Category>
@@ -179,7 +177,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
     public function initializeObject(): void
     {
         $this->usergroup = $this->usergroup ?? new ObjectStorage();
-        $this->image = $this->image ?? new ObjectStorage();
+        // $this->image = $this->image ?? new ObjectStorage();
         $this->moduleSysDmailCategory = $this->moduleSysDmailCategory ?? new ObjectStorage();
     }
 
@@ -203,19 +201,19 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
         $this->usergroup->detach($usergroup);
     }
 
-    public function setImage(ObjectStorage $image): void
+    public function setImage(?FileReference $image): void
     {
         $this->image = $image;
     }
 
-    public function getImage(): ObjectStorage
+    public function getImage(): ?FileReference
     {
         return $this->image;
     }
 
     public function removeImage(): void
     {
-        $this->image->removeAll($this->image);
+        $this->image = null;
     }
 
     public function setModuleSysDmailCategory(ObjectStorage $moduleSysDmailCategory): void

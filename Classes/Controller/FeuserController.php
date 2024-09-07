@@ -18,7 +18,6 @@ use Evoweb\SfRegister\Controller\Event\OverrideSettingsEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
-use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Psr\Http\Message\ResponseInterface;
@@ -37,6 +36,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Fluid\View\TemplateView;
+use TYPO3\CMS\Extbase\Mvc\Controller\FileUploadConfiguration;
 
 /**
  * A frontend user controller containing common methods
@@ -129,6 +129,7 @@ class FeuserController extends ActionController
     protected function initializeAction(): void
     {
         $this->setTypeConverter();
+        $this->addFileUploadConfiguration();
 
         if ($this->settings['processInitializeActionEvent'] ?? false) {
             $event = new InitializeActionEvent($this, $this->settings, null);
@@ -174,18 +175,6 @@ class FeuserController extends ActionController
             true,
         );
 
-        $temporaryFolder = $this->fileService->getTempFolder();
-        $configuration->forProperty('image.0')
-            ->setTypeConverterOptions(
-                UploadedFileReferenceConverter::class,
-                [
-                    UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
-                        $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
-                    UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
-                        $temporaryFolder->getStorage()->getUid() . ':' . $temporaryFolder->getIdentifier(),
-                ],
-            );
-
         $configuration->forProperty('dateOfBirth')
             ->setTypeConverterOptions(
                 DateTimeConverter::class,
@@ -195,6 +184,38 @@ class FeuserController extends ActionController
             );
 
         return $configuration;
+    }
+
+    protected function addFileUploadConfiguration(): void
+    {
+        if ($this->arguments->hasArgument('user') && $this->request->hasArgument('user')) {
+            $fileUploadConfiguration = GeneralUtility::makeInstance(FileUploadConfiguration::class, 'image');
+            $fileUploadConfiguration->initializeWithConfiguration([
+                'uploadFolder' => $this->fileService->getTempFolder()->getCombinedIdentifier(),
+                'addRandomSuffix' => true,
+                'validation' => [
+                    'maxFiles' => 1,
+                    'allowedMimeTypes' => [
+                        'image/jpeg'
+                    ],
+                    'fileSize' => [
+                        'maximum' => '4M',
+                    ],
+                    'imageDimensions' => [
+                        'maxWidth' => 1920,
+                        'maxHeight' => 1280,
+                    ]
+                ]
+            ]);
+
+            $argument = $this->arguments->getArgument('user');
+            $argument
+                ->getFileHandlingServiceConfiguration()
+                ->addFileUploadConfiguration($fileUploadConfiguration);
+            $argument
+                ->getPropertyMappingConfiguration()
+                ->skipProperties('image');
+        }
     }
 
     /**
