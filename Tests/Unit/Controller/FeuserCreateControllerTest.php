@@ -21,6 +21,6 @@ class FeuserCreateControllerTest extends UnitTestCase
     #[Test]
     public function initializeAction(): void
     {
-        self::markTestIncomplete('not implemented by now');
+        $this->markTestIncomplete('not implemented by now');
     }
 }

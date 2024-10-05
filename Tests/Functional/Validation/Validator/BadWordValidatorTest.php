@@ -61,7 +61,7 @@ class BadWordValidatorTest extends AbstractTestBase
     {
         $property = $this->getPrivateProperty($this->subject, 'settings');
 
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'badWordList',
             $property->getValue($this->subject)
         );
@@ -79,12 +79,12 @@ class BadWordValidatorTest extends AbstractTestBase
 
         $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageServiceFactory::class)->create('default');
 
-        self::assertTrue($this->subject->validate(current($words))->hasErrors());
+        $this->assertTrue($this->subject->validate(current($words))->hasErrors());
     }
 
     #[Test]
     public function isValidReturnsTrueForGoodPassword(): void
     {
-        self::assertFalse($this->subject->validate('4dw$koL')->hasErrors());
+        $this->assertFalse($this->subject->validate('4dw$koL')->hasErrors());
     }
 }

@@ -104,6 +104,11 @@ runFunctionalTests () {
 
     ./runTests.sh \
         -p ${PHP_VERSION} \
+        -s unit Tests/Unit || exit 1 ; \
+        EXIT_CODE_UNIT=$?
+
+    ./runTests.sh \
+        -p ${PHP_VERSION} \
         -d sqlite \
         -s functional ${TEST_PATH} || exit 1 ; \
         EXIT_CODE_FUNCTIONAL=$?
@@ -120,6 +125,7 @@ runFunctionalTests () {
         [[ ${EXIT_CODE_CORE} -eq 0 ]] && \
         [[ ${EXIT_CODE_FRAMEWORK} -eq 0 ]] && \
         [[ ${EXIT_CODE_VALIDATE} -eq 0 ]] && \
+        [[ ${EXIT_CODE_UNIT} -eq 0 ]] && \
         [[ ${EXIT_CODE_FUNCTIONAL} -eq 0 ]]
     then
         echo -e "${GREEN}SUCCESS${NC}" >&2

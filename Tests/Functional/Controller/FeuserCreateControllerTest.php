@@ -13,15 +13,17 @@
 
 namespace Evoweb\SfRegister\Tests\Functional\Controller;
 
-use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Evoweb\SfRegister\Services\File;
+use Evoweb\SfRegister\Services\File as FileService;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\FrontenUserGroup as FrontenUserGroupService;
+use Evoweb\SfRegister\Services\Mail as MailService;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
@@ -69,31 +71,36 @@ class FeuserCreateControllerTest extends AbstractTestBase
             ],
         ]);
 
-        /** @var Context $context */
-        $context = GeneralUtility::makeInstance(Context::class);
+        /** @var ValidatorResolver $validationResolver */
+        $validationResolver = GeneralUtility::makeInstance(ValidatorResolver::class);
+        $modifyValidator = new ModifyValidator($validationResolver);
 
-        /** @var File $file */
-        $file = GeneralUtility::makeInstance(File::class);
+        /** @var FileService $fileService */
+        $fileService = $this->createMock(FileService::class);
 
         /** @var FrontendUserRepository $userRepository */
         $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
 
-        /** @var FrontendUserGroupRepository $userGroupRepository */
-        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
+        /** @var MailService $mailService */
+        $mailService = $this->createMock(MailService::class);
+        /** @var FrontendUserService $frontendUserService */
+        $frontendUserService = $this->createMock(FrontendUserService::class);
+        /** @var FrontenUserGroupService $frontenUserGroupService */
+        $frontenUserGroupService = $this->createMock(FrontenUserGroupService::class);
 
         $subject = new FeuserCreateController(
-            $context,
-            $file,
+            $modifyValidator,
+            $fileService,
             $userRepository,
-            $userGroupRepository
+            $mailService,
+            $frontendUserService,
+            $frontenUserGroupService
         );
 
         /** @var ReflectionService $reflectionService */
         $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
         $subject->injectReflectionService($reflectionService);
 
-        /** @var ValidatorResolver $validationResolver */
-        $validationResolver = GeneralUtility::makeInstance(ValidatorResolver::class);
         $subject->injectValidatorResolver($validationResolver);
 
         /** @var EventDispatcherInterface $eventDispatcher */
@@ -137,6 +144,6 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $arguments = $subject->get('arguments');
         $validator = $arguments->getArgument('user')->getValidator();
 
-        self::assertInstanceOf(UserValidator::class, $validator);
+        $this->assertInstanceOf(UserValidator::class, $validator);
     }
 }

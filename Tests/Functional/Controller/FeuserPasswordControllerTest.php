@@ -15,10 +15,10 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
-use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Evoweb\SfRegister\Services\File;
-use Evoweb\SfRegister\Services\Session;
+use Evoweb\SfRegister\Services\File as FileService;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Tests\Functional\Mock\FeuserPasswordController;
 use PHPUnit\Framework\Attributes\Test;
@@ -49,20 +49,6 @@ class FeuserPasswordControllerTest extends AbstractTestBase
     #[Test]
     public function userIsLoggedInReturnsFalseIfNotLoggedIn(): void
     {
-        $this->createEmptyFrontendUser();
-
-        /** @var Context $context */
-        $context = GeneralUtility::makeInstance(Context::class);
-
-        /** @var File $file */
-        $file = GeneralUtility::makeInstance(File::class);
-
-        /** @var FrontendUserRepository $userRepository */
-        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
-
-        /** @var FrontendUserGroupRepository $userGroupRepository */
-        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
-
         $serverRequestFactory = new ServerRequestFactory();
         $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
 
@@ -72,117 +58,78 @@ class FeuserPasswordControllerTest extends AbstractTestBase
 
         $GLOBALS['TYPO3_REQUEST'] = $this->request;
 
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class, $frontendUser);
+        /** @var Context $context */
+        $context = GeneralUtility::makeInstance(Context::class);
+        /** @var FrontendUserRepository $frontendUserRepository */
+        $frontendUserRepository = $this->createMock(FrontendUserRepository::class);
 
-        $subject = new FeuserPasswordController(
-            $context,
-            $file,
-            $userRepository,
-            $userGroupRepository,
-            $session
-        );
+        $subject = new FrontendUserService($context, $frontendUserRepository);
 
-        $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        self::assertFalse($method->invoke($subject));
+        $this->assertFalse($subject->userIsLoggedIn());
     }
 
     #[Test]
     public function userIsLoggedInReturnsTrueIfLoggedIn(): void
     {
-        $this->createAndLoginFrontEndUser('2', [
-            'password' => 'testOld',
-            'comments' => '',
-        ]);
+        $this->loginFrontEndUser(1);
 
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
+        /** @var FrontendUserRepository $frontendUserRepository */
+        $frontendUserRepository = $this->createMock(FrontendUserRepository::class);
 
-        /** @var File $file */
-        $file = GeneralUtility::makeInstance(File::class);
+        $subject = new FrontendUserService($context, $frontendUserRepository);
 
-        /** @var FrontendUserRepository $userRepository */
-        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
-
-        /** @var FrontendUserGroupRepository $userGroupRepository */
-        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
-
-        $serverRequestFactory = new ServerRequestFactory();
-        $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
-
-        $frontendUser = new FrontendUserAuthentication();
-        $frontendUser->setLogger(new NullLogger());
-        $frontendUser->start($serverRequest);
-
-        $GLOBALS['TYPO3_REQUEST'] = $this->request;
-
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class, $frontendUser);
-
-        $subject = new FeuserPasswordController(
-            $context,
-            $file,
-            $userRepository,
-            $userGroupRepository,
-            $session
-        );
-
-        $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        self::assertTrue($method->invoke($subject));
+        $this->assertTrue($subject->userIsLoggedIn());
     }
 
     #[Test]
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository(): void
     {
         if (!defined('PASSWORD_ARGON2I')) {
-            self::markTestSkipped('Due to missing Argon2 in travisci.');
+            $this->markTestSkipped('Due to missing Argon2 in travisci.');
         }
 
+        $userId = 1;
+        $this->loginFrontEndUser($userId);
+
+        /** @var ModifyValidator $modifyValidator */
+        $modifyValidator = $this->createMock(ModifyValidator::class);
+        /** @var FileService $fileService */
+        $fileService = $this->createMock(FileService::class);
+
         $expected = 'myPassword';
-
-        $userId = $this->createAndLoginFrontEndUser('2', [
-            'username' => 'unittest',
-            'password' => $expected,
-            'comments' => '',
-        ]);
-
-        /** @var Context $context */
-        $context = GeneralUtility::makeInstance(Context::class);
-
-        /** @var File $file */
-        $file = GeneralUtility::makeInstance(File::class);
-
-        /** @var FrontendUserGroupRepository $userGroupRepository */
-        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
-
-        $GLOBALS['TYPO3_REQUEST'] = $this->request;
-
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class, $this->frontendUser);
-
         // we need to clone to create the object, else the isClone parameter is not set and both object wont match
         $userMock = clone new FrontendUser();
         $userMock->setPassword($expected);
 
-        /** @var FrontendUserRepository|MockObject $userRepositoryMock */
-        $userRepositoryMock = $this->getMockBuilder(FrontendUserRepository::class)
+        /** @var FrontendUserRepository|MockObject $frontendUserRepository */
+        $frontendUserRepository = $this->getMockBuilder(FrontendUserRepository::class)
             ->onlyMethods(['findByUid', 'update'])
             ->disableOriginalConstructor()
             ->getMock();
-        $userRepositoryMock->expects(self::once())
+        $frontendUserRepository->expects($this->once())
             ->method('findByUid')
-            ->with(self::equalTo($userId))
+            ->with($this->equalTo($userId))
             ->willReturn($userMock);
-        $userRepositoryMock->expects(self::once())
+        $frontendUserRepository->expects($this->once())
             ->method('update')
-            ->with(self::equalTo($userMock));
+            ->with($this->equalTo($userMock));
+
+        $context = GeneralUtility::makeInstance(Context::class);
+
+        $frontendUserService = new FrontendUserService(
+            $context,
+            $frontendUserRepository
+        );
+
+        $GLOBALS['TYPO3_REQUEST'] = $this->request;
 
         $subject = new FeuserPasswordController(
-            $context,
-            $file,
-            $userRepositoryMock,
-            $userGroupRepository,
-            $session
+            $modifyValidator,
+            $fileService,
+            $frontendUserRepository,
+            $frontendUserService
         );
 
         $property = $this->getPrivateProperty($subject, 'settings');
@@ -192,9 +139,10 @@ class FeuserPasswordControllerTest extends AbstractTestBase
             ->disableOriginalConstructor()
             ->onlyMethods(['render'])
             ->getMock();
-        $view->expects(self::once())
+        $view->expects($this->once())
             ->method('render')
             ->willReturn('Password successfully updated');
+
         $property = $this->getPrivateProperty($subject, 'view');
         $property->setValue($subject, $view);
 

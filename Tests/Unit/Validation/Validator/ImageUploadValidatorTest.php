@@ -21,6 +21,6 @@ class ImageUploadValidatorTest extends UnitTestCase
     #[Test]
     public function isValid()
     {
-        self::markTestIncomplete('not implemented by now');
+        $this->markTestIncomplete('not implemented by now');
     }
 }

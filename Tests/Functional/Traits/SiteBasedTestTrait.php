@@ -15,14 +15,12 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Tests\Functional\Traits;
 
-use TYPO3\CMS\Core\Cache\Frontend\NullFrontend;
 use TYPO3\CMS\Core\Configuration\SiteConfiguration;
 use TYPO3\CMS\Core\Configuration\SiteWriter;
-use TYPO3\CMS\Core\EventDispatcher\NoopEventDispatcher;
 use TYPO3\CMS\Core\Tests\Functional\Fixtures\Frontend\PhpError;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\Internal\AbstractInstruction;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\Internal\ArrayValueInstruction;
+use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\Internal\InstructionInterface;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\Internal\TypoScriptInstruction;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
@@ -49,26 +47,21 @@ trait SiteBasedTestTrait
 
     protected function writeSiteConfiguration(
         string $identifier,
-        string $configPath,
-        array $configuration = [],
+        array $site = [],
         array $languages = [],
-        array $errorHandling = [],
+        array $errorHandling = []
     ): void {
+        $configuration = $site;
         if (!empty($languages)) {
             $configuration['languages'] = $languages;
         }
         if (!empty($errorHandling)) {
             $configuration['errorHandling'] = $errorHandling;
         }
-
-        $siteWriter = new SiteWriter(
-            $configPath,
-            new NoopEventDispatcher(),
-            new NullFrontend('test')
-        );
+        $siteWriter = $this->get(SiteWriter::class);
         try {
             // ensure no previous site configuration influences the test
-            GeneralUtility::rmdir($configPath . $identifier, true);
+            GeneralUtility::rmdir($this->instancePath . '/typo3conf/sites/' . $identifier, true);
             $siteWriter->write($identifier, $configuration);
         } catch (\Exception $exception) {
             $this->markTestSkipped($exception->getMessage());
@@ -79,14 +72,12 @@ trait SiteBasedTestTrait
         string $identifier,
         array $overrides
     ): void {
-        $siteConfiguration = new SiteConfiguration(
-            $this->instancePath . '/typo3conf/sites/',
-            $this->getContainer()->get('cache.core')
-        );
+        $siteConfiguration = $this->get(SiteConfiguration::class);
+        $siteWriter = $this->get(SiteWriter::class);
         $configuration = $siteConfiguration->load($identifier);
         $configuration = array_merge($configuration, $overrides);
         try {
-            $siteConfiguration->write($identifier, $configuration);
+            $siteWriter->write($identifier, $configuration);
         } catch (\Exception $exception) {
             $this->markTestSkipped($exception->getMessage());
         }
@@ -107,7 +98,6 @@ trait SiteBasedTestTrait
         string $base
     ): array {
         $configuration = $this->buildLanguageConfiguration($identifier, $base);
-        $configuration['typo3Language'] = 'default';
         $configuration['flag'] = 'global';
         unset($configuration['fallbackType'], $configuration['fallbacks']);
         return $configuration;
@@ -125,12 +115,9 @@ trait SiteBasedTestTrait
             'languageId' => $preset['id'],
             'title' => $preset['title'],
             'navigationTitle' => $preset['title'],
+            'websiteTitle' => $preset['websiteTitle'] ?? '',
             'base' => $base,
             'locale' => $preset['locale'],
-            'iso-639-1' => $preset['iso'] ?? '',
-            'hreflang' => $preset['hrefLang'] ?? '',
-            'direction' => $preset['direction'] ?? '',
-            'typo3Language' => $preset['iso'] ?? '',
             'flag' => $preset['iso'] ?? '',
             'fallbackType' => $fallbackType ?? (empty($fallbackIdentifiers) ? 'strict' : 'fallback'),
         ];
@@ -187,14 +174,19 @@ trait SiteBasedTestTrait
 
         $baseConfiguration['errorHandler'] = $handler;
 
-        foreach ($codes as $code) {
-            $baseConfiguration['errorCode'] = $code;
-        }
-
-        return $baseConfiguration;
+        return array_map(
+            static function (int $code) use ($baseConfiguration) {
+                $baseConfiguration['errorCode'] = $code;
+                return $baseConfiguration;
+            },
+            $codes
+        );
     }
 
-    protected function resolveLanguagePreset(string $identifier): mixed
+    /**
+     * @return mixed
+     */
+    protected function resolveLanguagePreset(string $identifier)
     {
         if (!isset(static::LANGUAGE_PRESETS[$identifier])) {
             throw new \LogicException(
@@ -206,13 +198,10 @@ trait SiteBasedTestTrait
     }
 
     /**
-     * @todo Instruction handling should be part of Testing Framework
-     *       (multiple instructions per identifier, merge in interface)
+     * @todo Instruction handling should be part of Testing Framework (multiple instructions per identifier, merge in interface)
      */
-    protected function applyInstructions(
-        InternalRequest $request,
-        AbstractInstruction ...$instructions
-    ): InternalRequest {
+    protected function applyInstructions(InternalRequest $request, InstructionInterface ...$instructions): InternalRequest
+    {
         $modifiedInstructions = [];
 
         foreach ($instructions as $instruction) {
@@ -230,14 +219,14 @@ trait SiteBasedTestTrait
         return $request->withInstructions($modifiedInstructions);
     }
 
-    protected function mergeInstruction(AbstractInstruction $current, AbstractInstruction $other): AbstractInstruction
+    protected function mergeInstruction(InstructionInterface $current, InstructionInterface $other): InstructionInterface
     {
         if (get_class($current) !== get_class($other)) {
             throw new \LogicException('Cannot merge different instruction types', 1565863174);
         }
 
         if ($current instanceof TypoScriptInstruction) {
-            /** @var $other TypoScriptInstruction */
+            /** @var TypoScriptInstruction $other */
             $typoScript = array_replace_recursive(
                 $current->getTypoScript() ?? [],
                 $other->getTypoScript() ?? []
@@ -256,7 +245,7 @@ trait SiteBasedTestTrait
         }
 
         if ($current instanceof ArrayValueInstruction) {
-            /** @var $other ArrayValueInstruction */
+            /** @var ArrayValueInstruction $other */
             $array = array_merge_recursive($current->getArray(), $other->getArray());
             return $current->withArray($array);
         }

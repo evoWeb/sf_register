@@ -18,8 +18,6 @@ use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
-use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Routing\PageArguments;
@@ -76,14 +74,10 @@ abstract class AbstractTestBase extends FunctionalTestCase
             ]
         );
         $this->writeSiteConfiguration(
-            'website-local',
-            $this->instancePath . '/typo3conf/sites/',
+            'website-example',
             $this->buildSiteConfiguration(1, 'https://example.com/'),
             [
                 $this->buildDefaultLanguageConfiguration('EN', '/en/'),
-            ],
-            [
-                $this->buildErrorHandlingConfiguration('Fluid', [404]),
             ]
         );
 
@@ -143,49 +137,6 @@ abstract class AbstractTestBase extends FunctionalTestCase
         );
         $frontendTypoScript->setSetupArray($setup);
         $this->request = $this->request->withAttribute('frontend.typoscript', $frontendTypoScript);
-    }
-
-    public function createAndLoginFrontEndUser(string $frontEndUserGroups = '', array $recordData = []): int
-    {
-        $frontEndUserUid = $this->createFrontEndUser($frontEndUserGroups, $recordData);
-        $this->loginFrontEndUser($frontEndUserUid);
-        return $frontEndUserUid;
-    }
-
-    public function createFrontEndUser(string $frontEndUserGroups = '', array $recordData = []): int
-    {
-        $frontEndUserGroupsWithoutSpaces = str_replace(' ', '', $frontEndUserGroups);
-        if (!preg_match('/^(?:[1-9]+[0-9]*,?)+$/', $frontEndUserGroupsWithoutSpaces)) {
-            throw new \InvalidArgumentException(
-                $frontEndUserGroups . ' must contain a comma-separated list of UIDs. Each UID must be > 0.',
-                1334439059
-            );
-        }
-        if (isset($recordData['uid'])) {
-            throw new \InvalidArgumentException('The column "uid" must not be set in $recordData.', 1334439065);
-        }
-        if (isset($recordData['usergroup'])) {
-            throw new \InvalidArgumentException('The column "usergroup" must not be set in $recordData.', 1334439071);
-        }
-        $completeRecordData = $recordData;
-        $completeRecordData['usergroup'] = $frontEndUserGroupsWithoutSpaces;
-
-        return (int)$this->createRecord('fe_users', $completeRecordData);
-    }
-
-    public function createRecord(string $tableName, array $insertArray): string
-    {
-        /** @var Connection $connection */
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getConnectionForTable($tableName);
-        $types = [];
-        $table = $connection->createSchemaManager()->introspectTable($tableName);
-        foreach ($insertArray as $columnName => $columnValue) {
-            $types[] = $table->getColumn($columnName)->getType()->getBindingType();
-        }
-
-        $connection->insert('fe_users', $insertArray, $types);
-        return $connection->lastInsertId();
     }
 
     public function loginFrontEndUser(int $frontEndUserUid): void
