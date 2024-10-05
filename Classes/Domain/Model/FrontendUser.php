@@ -18,7 +18,6 @@ use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
 
 /**
  * An extended frontend user with more area
@@ -177,7 +176,6 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
     public function initializeObject(): void
     {
         $this->usergroup = $this->usergroup ?? new ObjectStorage();
-        // $this->image = $this->image ?? new ObjectStorage();
         $this->moduleSysDmailCategory = $this->moduleSysDmailCategory ?? new ObjectStorage();
     }
 
