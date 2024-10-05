@@ -1,3 +1,3 @@
 "fe_users"
-,"uid","pid","username","password","usergroup"
-,1,2,"loginuser","$pbkdf2-sha256$25000$5UlrT3Wy1AJLwh.k5DjJbw$dU6H2Y8KA/ss.ZgEJ5B2SJKyE4/b7xUsiv2j2mHXOWI",2
+,"uid","pid","deleted","disable","username","password","usergroup"
+,1,0,0,0,"testuser","$argon2i$v=19$m=65536,t=16,p=1$cWRQNnpWZFJZTUM0MVRwbg$uv3ArBoLKo76rq/iaAq3PYa5/JUhRxNfCbneeSz+fz8",2

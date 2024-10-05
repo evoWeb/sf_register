@@ -21,6 +21,6 @@ class MailTest extends UnitTestCase
     #[Test]
     public function sendEmail()
     {
-        self::markTestIncomplete('not implemented by now');
+        $this->markTestIncomplete('not implemented by now');
     }
 }

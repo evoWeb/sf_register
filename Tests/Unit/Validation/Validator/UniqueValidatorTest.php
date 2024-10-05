@@ -29,7 +29,7 @@ class UniqueValidatorTest extends UnitTestCase
 
         /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
-        $repositoryMock->expects(self::once())
+        $repositoryMock->expects($this->once())
             ->method('countByField')
             ->with($fieldName, $expected)
             ->willReturn(0);
@@ -40,7 +40,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->getMock();
         $subject->setPropertyName($fieldName);
 
-        self::assertFalse($subject->validate($expected)->hasErrors());
+        $this->assertFalse($subject->validate($expected)->hasErrors());
     }
 
     #[Test]
@@ -51,7 +51,7 @@ class UniqueValidatorTest extends UnitTestCase
 
         /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
-        $repositoryMock->expects(self::once())
+        $repositoryMock->expects($this->once())
             ->method('countByField')
             ->with($fieldName, $expected)
             ->willReturn(1);
@@ -62,7 +62,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->getMock();
         $subject->setPropertyName($fieldName);
 
-        self::assertTrue($subject->validate($expected)->hasErrors());
+        $this->assertTrue($subject->validate($expected)->hasErrors());
     }
 
     #[Test]
@@ -73,11 +73,11 @@ class UniqueValidatorTest extends UnitTestCase
 
         /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
-        $repositoryMock->expects(self::once())
+        $repositoryMock->expects($this->once())
             ->method('countByField')
             ->with($fieldName, $expected)
             ->willReturn(0);
-        $repositoryMock->expects(self::any())
+        $repositoryMock->expects($this->any())
             ->method('countByFieldGlobal')
             ->with($fieldName, $expected)
             ->willReturn(0);
@@ -88,7 +88,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->getMock();
         $subject->setPropertyName($fieldName);
 
-        self::assertFalse($subject->validate($expected)->hasErrors());
+        $this->assertFalse($subject->validate($expected)->hasErrors());
     }
 
     #[Test]
@@ -99,11 +99,11 @@ class UniqueValidatorTest extends UnitTestCase
 
         /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
-        $repositoryMock->expects(self::any())
+        $repositoryMock->expects($this->any())
             ->method('countByField')
             ->with($fieldName, $expected)
             ->willReturn(0);
-        $repositoryMock->expects(self::once())
+        $repositoryMock->expects($this->once())
             ->method('countByFieldGlobal')
             ->with($fieldName, $expected)
             ->willReturn(1);
@@ -118,6 +118,6 @@ class UniqueValidatorTest extends UnitTestCase
         $subject->setPropertyName($fieldName);
 
         $current = $subject->validate($expected);
-        self::assertTrue($current->hasErrors());
+        $this->assertTrue($current->hasErrors());
     }
 }

@@ -36,7 +36,7 @@ class PasswordTest extends UnitTestCase
     #[Test]
     public function passwordOnInitializeIsEmptyString(): void
     {
-        self::assertEquals('', $this->subject->getPassword());
+        $this->assertEquals('', $this->subject->getPassword());
     }
 
     #[Test]
@@ -46,13 +46,13 @@ class PasswordTest extends UnitTestCase
 
         $this->subject->setPassword($expected);
 
-        self::assertSame($expected, $this->subject->getPassword());
+        $this->assertSame($expected, $this->subject->getPassword());
     }
 
     #[Test]
     public function passwordRepeatOnInitializeIsEmptyString(): void
     {
-        self::assertEquals('', $this->subject->getPasswordRepeat());
+        $this->assertEquals('', $this->subject->getPasswordRepeat());
     }
 
     #[Test]
@@ -62,13 +62,13 @@ class PasswordTest extends UnitTestCase
 
         $this->subject->setPasswordRepeat($expected);
 
-        self::assertSame($expected, $this->subject->getPasswordRepeat());
+        $this->assertSame($expected, $this->subject->getPasswordRepeat());
     }
 
     #[Test]
     public function oldPasswordOnInitializeIsEmptyString(): void
     {
-        self::assertEquals('', $this->subject->getOldPassword());
+        $this->assertEquals('', $this->subject->getOldPassword());
     }
 
     #[Test]
@@ -78,6 +78,6 @@ class PasswordTest extends UnitTestCase
 
         $this->subject->setOldPassword($expected);
 
-        self::assertSame($expected, $this->subject->getOldPassword());
+        $this->assertSame($expected, $this->subject->getOldPassword());
     }
 }

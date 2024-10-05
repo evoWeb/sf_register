@@ -16,6 +16,7 @@ namespace Evoweb\SfRegister\Tests\Unit\Domain\Model;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
@@ -32,7 +33,7 @@ class FrontendUserTest extends UnitTestCase
     #[Test]
     public function disableDefaultToFalseOnInitialize(): void
     {
-        self::assertFalse($this->subject->getDisable());
+        $this->assertFalse($this->subject->getDisable());
     }
 
     public static function notEmptyDataProvider(): array
@@ -50,30 +51,23 @@ class FrontendUserTest extends UnitTestCase
     {
         $this->subject->setDisable($input);
 
-        self::assertTrue($this->subject->getDisable());
-    }
-
-    #[Test]
-    public function imageContainsEmptyObjectStorageOnInitialize(): void
-    {
-        self::assertInstanceOf(ObjectStorage::class, $this->subject->getImage());
-        self::assertEquals(0, $this->subject->getImage()->count());
+        $this->assertTrue($this->subject->getDisable());
     }
 
     #[Test]
     public function imageReturnsStringSetBySetImage(): void
     {
-        $expected = new ObjectStorage();
+        $expected = new FileReference();
 
         $this->subject->setImage($expected);
 
-        self::assertSame($expected, $this->subject->getImage());
+        $this->assertSame($expected, $this->subject->getImage());
     }
 
     #[Test]
     public function imageAsImageListAddFilenameToImage(): void
     {
-        self::markTestSkipped('needs to be changed to ObjectStorage');
+        $this->markTestSkipped('needs to be changed to ObjectStorage');
         $expected1 = 'foo.gif';
         $expected2 = 'bar.jpg';
 
@@ -81,13 +75,13 @@ class FrontendUserTest extends UnitTestCase
         $this->subject->addImage($expected1);
         $this->subject->addImage($expected2);
 
-        self::assertSame(implode(',', [$expected1, $expected2]), $this->subject->getImage());
+        $this->assertSame(implode(',', [$expected1, $expected2]), $this->subject->getImage());
     }
 
     #[Test]
     public function imageAsImageListRemoveFilenameFromImage(): void
     {
-        self::markTestSkipped('needs to be changed to ObjectStorage');
+        $this->markTestSkipped('needs to be changed to ObjectStorage');
         $expected1 = 'foo.gif';
         $expected2 = 'bar.jpg';
 
@@ -95,13 +89,13 @@ class FrontendUserTest extends UnitTestCase
         $this->subject->setImage(implode(',', [$expected1, $expected2]));
         $this->subject->removeImage();
 
-        self::assertSame($expected2, $this->subject->getImage());
+        $this->assertSame($expected2, $this->subject->getImage());
     }
 
     #[Test]
     public function gtcDefaultToFalseOnInitialize(): void
     {
-        self::assertFalse($this->subject->getDisable());
+        $this->assertFalse($this->subject->getDisable());
     }
 
     #[Test]
@@ -110,13 +104,13 @@ class FrontendUserTest extends UnitTestCase
     {
         $this->subject->setDisable($input);
 
-        self::assertTrue($this->subject->getDisable());
+        $this->assertTrue($this->subject->getDisable());
     }
 
     #[Test]
     public function mobilephoneOnInitializeIsEmpty(): void
     {
-        self::assertEquals('', $this->subject->getMobilephone());
+        $this->assertEquals('', $this->subject->getMobilephone());
     }
 
     #[Test]
@@ -126,6 +120,6 @@ class FrontendUserTest extends UnitTestCase
 
         $this->subject->setMobilephone($expected);
 
-        self::assertSame($expected, $this->subject->getMobilephone());
+        $this->assertSame($expected, $this->subject->getMobilephone());
     }
 }

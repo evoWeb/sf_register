@@ -21,6 +21,6 @@ class ValidatorResolverTest extends UnitTestCase
     #[Test]
     public function getParsedValidatorAnnotation()
     {
-        self::markTestIncomplete('not implemented by now');
+        $this->markTestIncomplete('not implemented by now');
     }
 }

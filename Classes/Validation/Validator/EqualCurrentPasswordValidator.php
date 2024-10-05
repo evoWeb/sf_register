@@ -13,13 +13,9 @@
 
 namespace Evoweb\SfRegister\Validation\Validator;
 
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Context\UserAspect;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
@@ -29,18 +25,8 @@ class EqualCurrentPasswordValidator extends AbstractValidator
 {
     protected $acceptsEmptyValues = false;
 
-    protected array $settings = [];
-
-    public function __construct(
-        protected Context $context,
-        protected FrontendUserRepository $userRepository,
-        ConfigurationManagerInterface $configurationManager
-    ) {
-        $this->settings = $configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'SfRegister',
-            'Form'
-        );
+    public function __construct(protected FrontendUserService $frontendUserService)
+    {
     }
 
     /**
@@ -49,10 +35,7 @@ class EqualCurrentPasswordValidator extends AbstractValidator
     public function isValid(mixed $value): void
     {
         try {
-            /** @var UserAspect $userAspect */
-            $userAspect = $this->context->getAspect('frontend.user');
-
-            if (!$userAspect->isLoggedIn()) {
+            if (!$this->frontendUserService->userIsLoggedIn()) {
                 $this->addError(
                     $this->translateErrorMessage('error_changepassword_notloggedin', 'SfRegister'),
                     1301599489
@@ -60,13 +43,12 @@ class EqualCurrentPasswordValidator extends AbstractValidator
                 return;
             }
 
-            /** @var FrontendUser $user */
-            $user = $this->userRepository->findByUid($userAspect->get('id'));
+            $user = $this->frontendUserService->getLoggedInUser();
             /** @var PasswordHashFactory $passwordHashFactory */
             $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
 
             $passwordHash = $passwordHashFactory->get($user->getPassword(), 'FE');
-            if (!$passwordHash->checkPassword($value, $user->getPassword())) {
+            if (!$passwordHash->checkPassword((string)$value, $user->getPassword())) {
                 $this->addError(
                     $this->translateErrorMessage('error_changepassword_notequal', 'SfRegister'),
                     1301599507

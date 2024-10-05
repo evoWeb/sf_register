@@ -39,7 +39,7 @@ class IsTrueValidatorTest extends UnitTestCase
     #[Test]
     public function isValidReturnsTrueIfTrueWasUsed()
     {
-        self::assertFalse($this->subject->validate(true)->hasErrors());
+        $this->assertFalse($this->subject->validate(true)->hasErrors());
     }
 
     public static function nonTrueValues(): array
@@ -55,6 +55,6 @@ class IsTrueValidatorTest extends UnitTestCase
     #[DataProvider('nonTrueValues')]
     public function isValidReturnsFalseIfNonTrueWasUsed(mixed $input): void
     {
-        self::assertTrue($this->subject->validate($input)->hasErrors());
+        $this->assertTrue($this->subject->validate($input)->hasErrors());
     }
 }

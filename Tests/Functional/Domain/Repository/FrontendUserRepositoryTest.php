@@ -17,35 +17,61 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use PHPUnit\Framework\Attributes\Test;
+use Psr\Container\ContainerInterface;
+use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
+use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\Backend;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapFactory;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\QueryFactory;
+use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 
 class FrontendUserRepositoryTest extends AbstractTestBase
 {
-    protected FrontendUserRepository $subject;
-
     public function setUp(): void
     {
         parent::setUp();
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/pages.csv');
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_groups.csv');
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_users.csv');
-
-        $this->subject = GeneralUtility::makeInstance(FrontendUserRepository::class);
-    }
-
-    public function tearDown(): void
-    {
-        unset($this->subject);
-        parent::tearDown();
     }
 
     #[Test]
     public function findByUid(): void
     {
-        /** @var FrontendUser $user */
-        $user = $this->subject->findByUid(1);
+        $serverRequestFactory = new ServerRequestFactory();
+        $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
+        $serverRequest = $serverRequest->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_BE);
 
-        self::assertInstanceOf(FrontendUser::class, $user);
-        self::assertEquals('loginuser', $user->getUsername());
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        $configurationManager->setRequest($serverRequest);
+        $dataMapFactory = GeneralUtility::makeInstance(DataMapFactory::class);
+        $container = GeneralUtility::makeInstance(ContainerInterface::class);
+
+        $queryFactory = new QueryFactory(
+            $configurationManager,
+            $dataMapFactory,
+            $container
+        );
+        $backend = GeneralUtility::makeInstance(Backend::class);
+        $persistenceSession = GeneralUtility::makeInstance(Session::class);
+
+        $persistenceManager = new PersistenceManager(
+            $queryFactory,
+            $backend,
+            $persistenceSession
+        );
+
+        /** @var FrontendUserRepository $subject */
+        $subject = GeneralUtility::makeInstance(FrontendUserRepository::class);
+        $subject->injectPersistenceManager($persistenceManager);
+
+        /** @var FrontendUser $user */
+        $user = $subject->findByUid(1);
+
+        $this->assertInstanceOf(FrontendUser::class, $user);
+        $this->assertEquals('testuser', $user->getUsername());
     }
 }

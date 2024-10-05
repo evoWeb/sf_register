@@ -122,7 +122,7 @@ class FeuserController extends ActionController
 
     public function getControllerName(): string
     {
-        preg_match('/Feuser(?<controller>.*)Controller/', __CLASS__, $matches);
+        preg_match('/Feuser(?<controller>.*)Controller/', static::class, $matches);
         return $matches['controller'] ?? '';
     }
 

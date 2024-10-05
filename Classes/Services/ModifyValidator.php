@@ -49,8 +49,10 @@ class ModifyValidator
         array $ignoredActions,
     ): bool {
         $controllerName = $controller->getControllerName();
-        return !$this->actionIsIgnored($controllerName, $settings, $actionMethodName, $ignoredActions)
-            && $this->skipValidation($controllerName, $request, $actionMethodName);
+        return !(
+            $this->actionIsIgnored($controllerName, $settings, $actionMethodName, $ignoredActions)
+            || $this->skipValidation($controllerName, $request, $actionMethodName)
+        );
     }
 
     protected function actionIsIgnored(
