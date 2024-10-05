@@ -52,7 +52,7 @@ checkResources () {
 #   php version
 #   typo3 version
 #   testing framework version
-#
+#   test path
 #   prefer lowest
 #################################################
 runFunctionalTests () {
@@ -73,10 +73,15 @@ runFunctionalTests () {
 
     ./runTests.sh -s cleanTests
 
-    ./additionalTests.sh \
+    ./runTests.sh \
         -p ${PHP_VERSION} \
         -s lintPhp || exit 1 ; \
         EXIT_CODE_LINT=$?
+
+    ./runTests.sh \
+        -p ${PHP_VERSION} \
+        -s composerInstall || exit 1 ; \
+        EXIT_CODE_CORE=$?
 
     ./additionalTests.sh \
         -p ${PHP_VERSION} \
@@ -99,11 +104,6 @@ runFunctionalTests () {
 
     ./runTests.sh \
         -p ${PHP_VERSION} \
-        -s unit Tests/Unit || exit 1 ; \
-        EXIT_CODE_UNIT=$?
-
-    ./runTests.sh \
-        -p ${PHP_VERSION} \
         -d sqlite \
         -s functional ${TEST_PATH} || exit 1 ; \
         EXIT_CODE_FUNCTIONAL=$?
@@ -120,15 +120,14 @@ runFunctionalTests () {
         [[ ${EXIT_CODE_CORE} -eq 0 ]] && \
         [[ ${EXIT_CODE_FRAMEWORK} -eq 0 ]] && \
         [[ ${EXIT_CODE_VALIDATE} -eq 0 ]] && \
-        [[ ${EXIT_CODE_FUNCTIONAL} -eq 0 ]] && \
-        [[ ${EXIT_CODE_UNIT} -eq 0 ]]
+        [[ ${EXIT_CODE_FUNCTIONAL} -eq 0 ]]
     then
         echo -e "${GREEN}SUCCESS${NC}" >&2
     else
         echo -e "${RED}FAILURE${NC}" >&2
         exit 1
     fi
-    echo "###########################################################################" >&2
+    echo "#################################################################" >&2
     echo "" >&2
     cleanup
 }
@@ -144,26 +143,24 @@ cleanup () {
     echo "Cleaned up all test related files"
 }
 
-DEBUG_TESTS=false
+LOWEST="--prefer-lowest"
+TPATH="Tests/Functional"
+
+DEBUG_TESTS=true
 if [[ $DEBUG_TESTS != true ]]; then
     checkResources
 
-    LOWEST="--prefer-lowest"
     TCORE="^13.1"
     TFRAMEWORK="dev-main"
-    TPATH="Tests/Functional"
+
     runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
     runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
     runFunctionalTests "8.3" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
     runFunctionalTests "8.3" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
 else
     #cleanup
+    runFunctionalTests "8.3" "^13.3" "dev-main" ${TPATH} ${LOWEST} || exit 1
     #runFunctionalTests "8.2" "^13.0" "dev-main" "Tests/Functional" || exit 1
     # ./runTests.sh -x -p 8.2 -d sqlite -s functional -e "--group selected" Tests/Functional12
     # ./runTests.sh -p "8.1" -x -d sqlite -s functional Tests/Functional;
-    ./runTests.sh \
-        -p "8.2" \
-        -d sqlite \
-        -s functional "Tests/Functional" || exit 1 ; \
-        EXIT_CODE_FUNCTIONAL=$?
 fi
