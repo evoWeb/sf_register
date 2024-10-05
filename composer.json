@@ -21,8 +21,8 @@
 		"docs": "https://docs.typo3.org/p/evoweb/sf-register/main/en-us/"
 	},
 	"config": {
+		"vendor-dir": "Build/vendor",
 		"bin-dir": "bin",
-		"sort-packages": true,
 		"allow-plugins": {
 			"typo3/class-alias-loader": true,
 			"typo3/cms-composer-installers": true
@@ -46,7 +46,7 @@
 		"symfony/console": "^7.1"
 	},
 	"require-dev": {
-		"friendsofphp/php-cs-fixer": "^3.57.1",
+		"friendsofphp/php-cs-fixer": "^3.64.0",
 		"phpunit/phpunit": "^11.0.3",
 		"typo3/testing-framework": "dev-main"
 	},
@@ -58,7 +58,9 @@
 	},
 	"extra": {
 		"typo3/cms": {
-			"extension-key": "sf_register"
+			"extension-key": "sf_register",
+			"app-dir": "Build",
+			"web-dir": "Build/Web"
 		}
 	},
 	"scripts": {
@@ -71,10 +73,13 @@
 			"sed -i \"s/version' => '.*'/version' => '$(echo ${GITHUB_REF} | cut -d / -f 3)'/\" ext_emconf.php\n"
 		],
 		"post-install-cmd": [
-			"ln -sf ../vendor/typo3/testing-framework/Resources/Core/Build/ Build/phpunit;"
+			"ln -sf vendor/typo3/testing-framework/Resources/Core/Build/ Build/phpunit;"
 		],
 		"post-update-cmd": [
 			"@post-install-cmd"
+		],
+		"post-autoload-dump": [
+			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
 		]
 	},
 	"autoload": {
