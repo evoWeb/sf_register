@@ -23,9 +23,6 @@
 			]
 		},
 		"outDir": "../Resources/Public/JavaScript",
-		"types": [
-			"Evoweb"
-		],
 		"typeRoots": [
 			"node_modules/@types",
 			"types"

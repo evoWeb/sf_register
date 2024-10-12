@@ -54,7 +54,7 @@
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"suggest": {
-		"evoweb/recaptcha": "^13.0",
+		"evoweb/recaptcha": "^14.0",
 		"sjbr/static-info-tables": "dev-master"
 	},
 	"extra": {
