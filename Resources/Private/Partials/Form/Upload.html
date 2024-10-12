@@ -1,8 +1,8 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<f:asset.css identifier="sfregister_css" href="EXT:sf_register/Resources/Public/Stylesheets/sf_register{settings.minified}.css"/>
-<f:asset.script identifier="sfregister_js" src="EXT:sf_register/Resources/Public/JavaScript/sf_register{settings.minified}.js"/>
-<f:debug>{_all}</f:debug>
+<f:asset.css identifier="sfregister_css" href="EXT:sf_register/Resources/Public/Stylesheets/sf_register{f:if(condition: settings.minified, then: '.min')}.css"/>
+<f:asset.script identifier="sfregister_js" src="EXT:sf_register/Resources/Public/JavaScript/sf_register{f:if(condition: settings.minified, then: '.min')}.js"/>
+
 <div class="col-md-6 mb-3 {fieldName}">
     <label for="{fieldName}">
         <f:translate id="{fieldName}" />
@@ -12,7 +12,6 @@
 
     <f:if condition="{user.{fieldName}}">
         <f:then>
-            <f:form.uploadDeleteCheckbox property="{fieldName}" fileReference="{user.{fieldName}}" />
         </f:then>
         <f:else>
             <f:form.upload property="{fieldName}"/>

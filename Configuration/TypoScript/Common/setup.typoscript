@@ -127,6 +127,25 @@ plugin.tx_sfregister.settings {
 
   imageFolder = 1:frontendusers
 
+  # @see TYPO3\CMS\Extbase\Mvc\Controller\FileUploadConfiguration::initializeWithConfiguration
+  fileUploadConfiguration {
+    addRandomSuffix = true
+    validation {
+      maxFiles = 1
+      allowedMimeTypes {
+        1 = image/jpeg
+        2 = image/png
+      }
+      fileSize {
+        maximum = 4M
+      }
+      imageDimensions {
+        maxWidth = 1920
+        maxHeight = 1280
+      }
+    }
+  }
+
   captcha {
     # Needs EXT:sr_freecap to be installed
     srfreecap = Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter

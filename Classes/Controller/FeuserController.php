@@ -22,6 +22,7 @@ use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -189,24 +190,15 @@ class FeuserController extends ActionController
     protected function addFileUploadConfiguration(): void
     {
         if ($this->arguments->hasArgument('user') && $this->request->hasArgument('user')) {
-            $fileUploadConfiguration = GeneralUtility::makeInstance(FileUploadConfiguration::class, 'image');
-            $fileUploadConfiguration->initializeWithConfiguration([
-                'uploadFolder' => $this->fileService->getTempFolder()->getCombinedIdentifier(),
-                'addRandomSuffix' => true,
-                'validation' => [
-                    'maxFiles' => 1,
-                    'allowedMimeTypes' => [
-                        'image/jpeg'
-                    ],
-                    'fileSize' => [
-                        'maximum' => '4M',
-                    ],
-                    'imageDimensions' => [
-                        'maxWidth' => 1920,
-                        'maxHeight' => 1280,
-                    ]
+            $configuration = $this->settings['fileUploadConfiguration'] ?? [];
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $configuration,
+                [
+                    'uploadFolder' => $this->fileService->getTempFolder()->getCombinedIdentifier()
                 ]
-            ]);
+            );
+            $fileUploadConfiguration = GeneralUtility::makeInstance(FileUploadConfiguration::class, 'image');
+            $fileUploadConfiguration->initializeWithConfiguration($configuration);
 
             $argument = $this->arguments->getArgument('user');
             $argument
