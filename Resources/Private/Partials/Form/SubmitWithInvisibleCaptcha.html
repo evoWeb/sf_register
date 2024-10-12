@@ -1,29 +1,40 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:recaptcha="http://typo3.org/ns/Evoweb/Recaptcha/ViewHelpers"
-	data-namespace-typo3-fluid="true">
+    xmlns:recaptcha="http://typo3.org/ns/Evoweb/Recaptcha/ViewHelpers"
+    data-namespace-typo3-fluid="true">
 
 <div class="col-md-6 offset-md-6 text-md-right mb-3 {fieldName}">
-	<f:render partial="FieldError" arguments="{for: 'user', field: 'captcha'}" />
-	<f:form.hidden property="captcha" id="captcha" value="" />
+    <f:render partial="FieldError" arguments="{for: 'user', field: 'captcha'}" />
+    <f:form.hidden property="captcha" id="captcha" value="" />
 
-	<recaptcha:form.recaptcha>
-		<f:if condition="{showCaptcha}">
-			<f:then>
-				<f:form.submit
-					value="{f:translate(id: 'submit_create')}"
-					class="btn btn-primary g-recaptcha {options.cssClass}"
-					data="{sitekey: settings.recaptcha.public_key, callback: 'sfRegister_submitForm'}" />
-			</f:then>
-			<f:else>
-				<f:form.submit
-					value="{f:translate(id: 'submit_create')}"
-					class="btn btn-primary {options.cssClass}" />
-				<div class="recaptcha-development-mode">
-					Development mode active. Do not expect the captcha to appear
-				</div>
-			</f:else>
-		</f:if>
-	</recaptcha:form.recaptcha>
+    <recaptcha:form.recaptcha>
+        <f:if condition="{showCaptcha}">
+            <f:then>
+                <f:asset.script identifier="recaptcha_form" src="EXT:recaptcha/Resources/Public/JavaScript/Frontend/form.js"/>
+                <f:asset.script identifier="recaptcha" async="true" src="{configuration.api_server}{f:if(condition: configuration.lang, then: '?hl={configuration.lang}')}"/>
+                <f:variable name="publicKey"><f:if condition="{configuration.invisible_public_key}">
+                    <f:then>{configuration.invisible_public_key}</f:then>
+                    <f:else>{configuration.public_key}</f:else>
+                </f:if></f:variable>
+                <input type="hidden" name="recaptcha-invisible" value="1"/>
+                <f:form.submit
+                    value="{f:translate(id: 'submit_create')}"
+                    class="btn btn-primary g-recaptcha {options.cssClass}"
+                    data="{
+                        callback: 'onRecaptchaSubmit',
+                        sitekey: publicKey,
+                        invisible-recaptcha-form-submit: ''
+                    }" />
+            </f:then>
+            <f:else>
+                <f:form.submit
+                    value="{f:translate(id: 'submit_create')}"
+                    class="btn btn-primary {options.cssClass}" />
+                <div class="recaptcha-development-mode">
+                    Development mode active. Do not expect the captcha to appear
+                </div>
+            </f:else>
+        </f:if>
+    </recaptcha:form.recaptcha>
 </div>
 
 </html>
