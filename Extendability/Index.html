@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-08-31T18:32:13+00:00" name="docsearch:modified">
-<meta content="2024-08-31T18:32:13+00:00" name="dc.modified">
-<meta content="2024-08-31T18:32:13+00:00" property="article:modified_time">
+<meta content="2024-10-13T13:35:48+00:00" name="docsearch:modified">
+<meta content="2024-10-13T13:35:48+00:00" name="dc.modified">
+<meta content="2024-10-13T13:35:48+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -37,24 +37,27 @@
     <div class="page-header">
         <div class="page-header-inner">
             <div class="row">
-                <div class="col-sm-3 col-md-4 col-lg-6">
+                <div class="col-md-2 col-lg-4">
                     <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
                         <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
                     </a>
                 </div>
-                <div class="col-sm-9 col-md-8 col-lg-6">
-                    <search role="search">
-                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
-			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
-                            <div class="input-group mb-3 mt-sm-3">
-                                <select class="form-select search__scope" id="searchscope" name="scope">
-                                    <option value="">Search all</option>
-                                </select>
-                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
-                            </div>
-                        </form>
-                    </search>
+                <div class="col-md-10 col-lg-8">
+                    <div class="menu-search-wrapper">
+                        <all-documentations-menu data-override-url="https://render-guides.ddev.site/menu-proxy.php"></all-documentations-menu>
+                                                <search role="search">
+                            <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+                                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                                <div class="input-group mb-3 mt-sm-3">
+                                    <select class="form-select search__scope" id="searchscope" name="scope">
+                                        <option value="">Search all</option>
+                                    </select>
+                                    <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                    <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                                </div>
+                            </form>
+                        </search>
+                    </div>
                 </div>
             </div>
         </div>
@@ -166,7 +169,7 @@
         <!-- content start -->
                 <section class="section" id="extendability-1" data-rst-anchor="extendability">
             <a id="extendability"></a>
-            <h1>Extendability<a class="headerlink" href="#extendability-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <h1>Extendability<a class="headerlink" href="#extendability-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
             <div class="contents-wrapper">
         <ul class="menu-level">
     <li class="toc-item">
@@ -203,7 +206,7 @@
 </div>
             <section class="section" id="use-your-own-flavor-of-fields" data-rst-anchor="CreateCustomFields">
             <a id="CreateCustomFields"></a>
-            <h2>Use your own flavor of fields<a class="headerlink" href="#use-your-own-flavor-of-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Use your own flavor of fields<a class="headerlink" href="#use-your-own-flavor-of-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Since version 8.8.0 its easier then ever to user your own fields. Just add your partial folder via typoscript and
 register your own field configuration. After that you need to tell the user ts config that the new type is available to
@@ -223,7 +226,7 @@ plugin.tx_sfregister.settings.fields.configuration {
 }
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -240,7 +243,7 @@ plugin.tx_sfregister.settings.fields.configuration {
 );
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -255,7 +258,7 @@ plugin.tx_sfregister.settings.fields.configuration {
     <pre class="code-block"><code>@import &#039;EXT:sf_register/Configuration/TypoScript/Fields.typoscript&#039;
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -280,7 +283,7 @@ plugin.tx_sfregister.settings.fields.configuration {
     </section>
             <section class="section" id="adding-custom-properties" data-rst-anchor="AddCustomProperties">
             <a id="AddCustomProperties"></a>
-            <h2>Adding custom properties<a class="headerlink" href="#adding-custom-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Adding custom properties<a class="headerlink" href="#adding-custom-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Since late the frontend user domain model can be extended. This can be done the extension &#039;extender_&#039;
 which sole purpose is to extend extbase domain models. There is an <a href="https://github.com/evoWeb/ew_sfregister_extended">example</a> on how to use the extender.</p>
@@ -305,7 +308,7 @@ which sole purpose is to extend extbase domain models. There is an <a href="http
     <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;sf_register&#039;][&#039;extender&#039;][\Evoweb\SfRegister\Domain\Model\FrontendUser::class][&#039;cem_sitepackage&#039;] = &#039;EXT:cem_sitepackage/Classes/Domain/Model/FrontendUser.php&#039;;
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -329,7 +332,7 @@ CREATE TABLE fe_users (
 );
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -356,7 +359,7 @@ CREATE TABLE fe_users (
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(&#039;fe_users&#039;, &#039;extending&#039;);
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -366,7 +369,7 @@ CREATE TABLE fe_users (
     </section>
             <section class="section" id="bring-in-your-own-captcha" data-rst-anchor="AddCustomCaptcha">
             <a id="AddCustomCaptcha"></a>
-            <h2>Bring in your own captcha<a class="headerlink" href="#bring-in-your-own-captcha" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Bring in your own captcha<a class="headerlink" href="#bring-in-your-own-captcha" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>By implementing a adapter which is extending the \Evoweb\SfRegister\Services\Captcha\AbstractAdapter you are able
 to add an own captcha. The adapter now then has to be configured to be usable by adding typoscript settings like the
@@ -395,7 +398,7 @@ following taken from recaptcha_:</p>
 }
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -405,14 +408,14 @@ following taken from recaptcha_:</p>
     </section>
             <section class="section" id="psr-14-events" data-rst-anchor="Psr14Event">
             <a id="Psr14Event"></a>
-            <h2>PSR-14 Events<a class="headerlink" href="#psr-14-events" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>PSR-14 Events<a class="headerlink" href="#psr-14-events" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>This kind of event is superseding Hooks and Signal-Slots in TYPO3 and are the
 way to go. That&#039;s why all signals are replaced with their event counterparts.</p>
 
     </section>
             <section class="section" id="how-to-implement-a-slot">
-            <h2>How to implement a slot<a class="headerlink" href="#how-to-implement-a-slot" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>How to implement a slot<a class="headerlink" href="#how-to-implement-a-slot" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>An <a href="https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/ApiOverview/Hooks/EventDispatcher/Index.html">overview</a> on how to configure and interact with events was given on the
 Developer Days in 2019. The detailed example shows how to configure them in the
@@ -435,7 +438,7 @@ class YourEventListener
 }
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -447,7 +450,7 @@ class YourEventListener
 
     </section>
             <section class="section" id="available-events">
-            <h2>Available events<a class="headerlink" href="#available-events" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Available events<a class="headerlink" href="#available-events" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             <div class="table-responsive">
     <table class="table table-bordered align-default">
                             <thead>
@@ -1125,7 +1128,7 @@ class YourEventListener
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: Aug 31, 2024 18:32</p>
+                    <p class="text-center">Last rendered: Oct 13, 2024 13:35</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

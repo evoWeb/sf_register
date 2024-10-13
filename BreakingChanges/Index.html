@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-08-31T18:32:13+00:00" name="docsearch:modified">
-<meta content="2024-08-31T18:32:13+00:00" name="dc.modified">
-<meta content="2024-08-31T18:32:13+00:00" property="article:modified_time">
+<meta content="2024-10-13T13:35:48+00:00" name="docsearch:modified">
+<meta content="2024-10-13T13:35:48+00:00" name="dc.modified">
+<meta content="2024-10-13T13:35:48+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -37,24 +37,27 @@
     <div class="page-header">
         <div class="page-header-inner">
             <div class="row">
-                <div class="col-sm-3 col-md-4 col-lg-6">
+                <div class="col-md-2 col-lg-4">
                     <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
                         <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
                     </a>
                 </div>
-                <div class="col-sm-9 col-md-8 col-lg-6">
-                    <search role="search">
-                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
-			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
-                            <div class="input-group mb-3 mt-sm-3">
-                                <select class="form-select search__scope" id="searchscope" name="scope">
-                                    <option value="">Search all</option>
-                                </select>
-                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
-                            </div>
-                        </form>
-                    </search>
+                <div class="col-md-10 col-lg-8">
+                    <div class="menu-search-wrapper">
+                        <all-documentations-menu data-override-url="https://render-guides.ddev.site/menu-proxy.php"></all-documentations-menu>
+                                                <search role="search">
+                            <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+                                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                                <div class="input-group mb-3 mt-sm-3">
+                                    <select class="form-select search__scope" id="searchscope" name="scope">
+                                        <option value="">Search all</option>
+                                    </select>
+                                    <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                    <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                                </div>
+                            </form>
+                        </search>
+                    </div>
                 </div>
             </div>
         </div>
@@ -166,9 +169,9 @@
         <!-- content start -->
                 <section class="section" id="breaking-changes-1" data-rst-anchor="breaking-changes">
             <a id="breaking-changes"></a>
-            <h1>Breaking Changes<a class="headerlink" href="#breaking-changes-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <h1>Breaking Changes<a class="headerlink" href="#breaking-changes-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
             <section class="section" id="2024-08-31">
-            <h2>2024.08.31<a class="headerlink" href="#2024-08-31" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>2024.08.31<a class="headerlink" href="#2024-08-31" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
 
 <ul>
@@ -177,18 +180,23 @@ still configured the same (via TypoScript) but is handled via service outside
 of the controller.</li>
     <li class="dash">Replace $controller-&gt;controller with $controller-&gt;getControllerName()</li>
     <li class="dash">Move change usergroup to FrontendUserGroup service</li>
+    <li class="dash">Without injecting FrontenUserGroup into other controller, changing
+usergroup is only supported in FeuserCreateController.</li>
+    <li class="dash">Move getLoggedInUserId, getLoggedInUser, determineFrontendUser, userIsLoggedIn,
+autoLogin and redirectToPage to FrontendUser service</li>
+    <li class="dash">Remove access on context in controller and move it to FrontendUser service</li>
 </ul>
 
     </section>
             <section class="section" id="2024-08-26">
-            <h2>2024.08.26<a class="headerlink" href="#2024-08-26" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>2024.08.26<a class="headerlink" href="#2024-08-26" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Replace SelectStaticCountriesViewHelper with f:form.countrySelect to decouple
 from EXT:static_info_tables if you only relay on selecting countries.</p>
 
     </section>
             <section class="section" id="2024-05-13">
-            <h2>2024.05.13<a class="headerlink" href="#2024-05-13" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>2024.05.13<a class="headerlink" href="#2024-05-13" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>The registration of fields for the field selection in the content elements was
 moved from ext_localconf.php to user.tsconfig. The consequence is, that
@@ -198,14 +206,14 @@ ext_emconf.php</p>
 
     </section>
             <section class="section" id="2022-01-01">
-            <h2>2022.01.01<a class="headerlink" href="#2022-01-01" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>2022.01.01<a class="headerlink" href="#2022-01-01" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Interface EvowebSfRegisterInterfaceFrontendUserInterface is renamed to
 EvowebSfRegisterDomainModelFrontendUserInterface</p>
 
     </section>
             <section class="section" id="2021-12-31">
-            <h2>2021.12.31<a class="headerlink" href="#2021-12-31" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>2021.12.31<a class="headerlink" href="#2021-12-31" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Validator configuration is changed. As long as your custom validator has no
 injected classes like repository or likewise, you do not need to change anything.</p>
@@ -234,7 +242,7 @@ sf_register.</p>
   public: true
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -252,7 +260,7 @@ use Evoweb\SfRegister\Validation\Validator\InjectableInterface;
 class UniqueValidator extends AbstractValidator implements InjectableInterface, ...
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -270,7 +278,7 @@ class UniqueValidator extends AbstractValidator implements InjectableInterface, 
 }
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -279,7 +287,7 @@ class UniqueValidator extends AbstractValidator implements InjectableInterface, 
 </div>
     </section>
             <section class="section" id="2020-04-29">
-            <h2>2020.04.29<a class="headerlink" href="#2020-04-29" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>2020.04.29<a class="headerlink" href="#2020-04-29" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>The hole extension was refactored to make best usage of TYPO3 10 changes. Namely</p>
 
@@ -319,7 +327,7 @@ on controller and action name in combination with notifyAdmin and notifyUser
 
     </section>
             <section class="section" id="2019-02-03">
-            <h2>2019.02.03<a class="headerlink" href="#2019-02-03" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>2019.02.03<a class="headerlink" href="#2019-02-03" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Drop custom form styles in favor for Bootstrap 4.2 styles. Be aware, to get the styles.css
 from older releases if you depend on it. If you use the Bootstrap 4.2 form styles you are
@@ -327,20 +335,20 @@ good to go.</p>
 
     </section>
             <section class="section" id="2019-02-02">
-            <h2>2019.02.02<a class="headerlink" href="#2019-02-02" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>2019.02.02<a class="headerlink" href="#2019-02-02" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>The password strength meter got replaced with the &lt;meter&gt; element. If you still need the old
 iframe variant for old browser or for the looks, please override the file
 EXT:sf_register/Resources/Private/Partials/Form/Password.html in your sitepackage and replace</p>
 
             <section class="section" id="before">
-            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>&lt;meter min=&quot;0&quot; low=&quot;20&quot; optimum=&quot;30&quot; high=&quot;40&quot; max=&quot;50&quot; id=&quot;bargraph&quot;&gt;&lt;/meter&gt;</p>
 
     </section>
             <section class="section" id="after">
-            <h3>After:<a class="headerlink" href="#after" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>After:<a class="headerlink" href="#after" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             <dl>
                         <dt>&lt;iframe id=&quot;bargraph&quot; frameborder=&quot;none&quot; scrolling=&quot;no&quot;</dt>
         
@@ -349,7 +357,7 @@ EXT:sf_register/Resources/Private/Partials/Form/Password.html in your sitepackag
     </section>
     </section>
             <section class="section" id="2019-01-17">
-            <h2>2019.01.17<a class="headerlink" href="#2019-01-17" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>2019.01.17<a class="headerlink" href="#2019-01-17" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>The core changed away from saltedpasswords towards integrated passwordHashing in EXT:Core (see
 Deprecation: #85804 - Salted password hash class deprecations)</p>
@@ -363,7 +371,7 @@ EqualCurrentPasswordValidator::isValid and FeuserController::encryptPassword.</p
 
     </section>
             <section class="section" id="2019-01-13">
-            <h2>2019.01.13<a class="headerlink" href="#2019-01-13" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>2019.01.13<a class="headerlink" href="#2019-01-13" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Changes in validation were done to match the new pattern used since TYPO3 9. To ensure that the user/password model
 still validates you need to check whether you changed rules in plugin.tx_sfregister.settings.validation.<em>.</em></p>
@@ -372,7 +380,7 @@ still validates you need to check whether you changed rules in plugin.tx_sfregis
     <p>Here are some examples how old rules need to be converted:</p>
 
             <section class="section" id="before">
-            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>EvowebSfRegisterValidationValidatorRequiredValidator
 After:
@@ -381,7 +389,7 @@ After:
 
     </section>
             <section class="section" id="before">
-            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>StringLength(minimum = 4, maximum = 80)
 After:
@@ -390,7 +398,7 @@ After:
 
     </section>
             <section class="section" id="before">
-            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>EvowebSfRegisterValidationValidatorUniqueValidator(global = 1)
 After:
@@ -404,7 +412,7 @@ ending &#039;Validator&#039; with &#039;&quot;&#039;</p>
     </section>
     </section>
             <section class="section" id="2015-11-15">
-            <h2>2015.11.15<a class="headerlink" href="#2015-11-15" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>2015.11.15<a class="headerlink" href="#2015-11-15" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
 
 <ul>
@@ -511,7 +519,7 @@ method needs to be changed accordingly.</li>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: Aug 31, 2024 18:32</p>
+                    <p class="text-center">Last rendered: Oct 13, 2024 13:35</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

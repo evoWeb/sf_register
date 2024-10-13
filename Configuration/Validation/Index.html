@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-08-31T18:32:13+00:00" name="docsearch:modified">
-<meta content="2024-08-31T18:32:13+00:00" name="dc.modified">
-<meta content="2024-08-31T18:32:13+00:00" property="article:modified_time">
+<meta content="2024-10-13T13:35:48+00:00" name="docsearch:modified">
+<meta content="2024-10-13T13:35:48+00:00" name="dc.modified">
+<meta content="2024-10-13T13:35:48+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -37,24 +37,27 @@
     <div class="page-header">
         <div class="page-header-inner">
             <div class="row">
-                <div class="col-sm-3 col-md-4 col-lg-6">
+                <div class="col-md-2 col-lg-4">
                     <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
                         <img alt="TYPO3 Logo" class="logo-image" src="../../_resources/img/typo3-logo.svg" width="484" height="130">
                     </a>
                 </div>
-                <div class="col-sm-9 col-md-8 col-lg-6">
-                    <search role="search">
-                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
-			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
-                            <div class="input-group mb-3 mt-sm-3">
-                                <select class="form-select search__scope" id="searchscope" name="scope">
-                                    <option value="">Search all</option>
-                                </select>
-                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
-                            </div>
-                        </form>
-                    </search>
+                <div class="col-md-10 col-lg-8">
+                    <div class="menu-search-wrapper">
+                        <all-documentations-menu data-override-url="https://render-guides.ddev.site/menu-proxy.php"></all-documentations-menu>
+                                                <search role="search">
+                            <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+                                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                                <div class="input-group mb-3 mt-sm-3">
+                                    <select class="form-select search__scope" id="searchscope" name="scope">
+                                        <option value="">Search all</option>
+                                    </select>
+                                    <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                    <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                                </div>
+                            </form>
+                        </search>
+                    </div>
                 </div>
             </div>
         </div>
@@ -167,7 +170,7 @@
         <!-- content start -->
                 <section class="section" id="validation-1" data-rst-anchor="validation">
             <a id="validation"></a>
-            <h1>Validation<a class="headerlink" href="#validation-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <h1>Validation<a class="headerlink" href="#validation-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
             <div class="contents-wrapper">
         <ul class="menu-level">
     <li class="toc-item">
@@ -213,7 +216,7 @@
     </ul>
 </div>
             <section class="section" id="purpose-of-validators">
-            <h2>Purpose of Validators<a class="headerlink" href="#purpose-of-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Purpose of Validators<a class="headerlink" href="#purpose-of-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Validators are a mechanism to ensure that all information given by the user
 meet your expectation as an admin. Either if the values make sense in terms
@@ -232,7 +235,7 @@ validators should take care of a value.</p>
 
     </section>
             <section class="section" id="changes-since-version-9-0-0">
-            <h2>Changes since version 9.0.0<a class="headerlink" href="#changes-since-version-9-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Changes since version 9.0.0<a class="headerlink" href="#changes-since-version-9-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Since version 9 validators are only used for selected fields, it&#039;s not necessary
 to remove validation configuration only because certain fields should not be
@@ -247,7 +250,7 @@ to &quot;Evoweb.SfRegister:Required&quot;</p>
             
     <pre class="code-block"><code>&quot;name&quot;, options={&quot;parameter1&quot;: valueA, &quot;parameter2&quot;: valueB}
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -260,20 +263,20 @@ the options with an equal sign and json notated properties and values.</p>
 
     </section>
             <section class="section" id="different-possibilities-of-assigning-validators">
-            <h2>Different possibilities of assigning validators<a class="headerlink" href="#different-possibilities-of-assigning-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Different possibilities of assigning validators<a class="headerlink" href="#different-possibilities-of-assigning-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>In case you want to have no validation at all for a field was was configured
 by default as required you need to empty the associated validators. Look at the
 example given where the validators of the email gets removed.</p>
 
             <section class="section" id="remove-validators">
-            <h3>Remove validators:<a class="headerlink" href="#remove-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Remove validators:<a class="headerlink" href="#remove-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             <div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.email &gt;
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -286,13 +289,13 @@ below.</p>
 
     </section>
             <section class="section" id="assign-only-one-validator">
-            <h3>Assign only one validator:<a class="headerlink" href="#assign-only-one-validator" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Assign only one validator:<a class="headerlink" href="#assign-only-one-validator" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             <div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.passwordRepeat = &quot;Evoweb.SfRegister:Repeat&quot;
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -305,7 +308,7 @@ next example.</p>
 
     </section>
             <section class="section" id="assign-multiple-validators">
-            <h3>Assign multiple validators:<a class="headerlink" href="#assign-multiple-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Assign multiple validators:<a class="headerlink" href="#assign-multiple-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             <div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
@@ -314,7 +317,7 @@ next example.</p>
 }
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -331,7 +334,7 @@ for Fort Knox.</p>
 
     </section>
             <section class="section" id="poor-man-s-passwords-with-short-length">
-            <h3>Poor man´s passwords with short length:<a class="headerlink" href="#poor-man-s-passwords-with-short-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Poor man´s passwords with short length:<a class="headerlink" href="#poor-man-s-passwords-with-short-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             <div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
@@ -340,7 +343,7 @@ for Fort Knox.</p>
 }
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -349,7 +352,7 @@ for Fort Knox.</p>
 </div>
     </section>
             <section class="section" id="bulletproof-passwords-with-long-length">
-            <h3>Bulletproof passwords with long length:<a class="headerlink" href="#bulletproof-passwords-with-long-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Bulletproof passwords with long length:<a class="headerlink" href="#bulletproof-passwords-with-long-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             <div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
@@ -359,7 +362,7 @@ for Fort Knox.</p>
 }
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -375,7 +378,7 @@ that is set in the validator.</p>
     </section>
     </section>
             <section class="section" id="separate-validators-per-process">
-            <h2>Separate validators per process<a class="headerlink" href="#separate-validators-per-process" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Separate validators per process<a class="headerlink" href="#separate-validators-per-process" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Each process has its own needs. While you want to have the username validated on
 creation, this is not needed in the edit or password change form. This could
@@ -401,7 +404,7 @@ the condition. Because of this the validation settings are split for any process
 }
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -410,7 +413,7 @@ the condition. Because of this the validation settings are split for any process
 </div>
     </section>
             <section class="section" id="special-validators">
-            <h2>Special validators<a class="headerlink" href="#special-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Special validators<a class="headerlink" href="#special-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>The UserValidator is not meant to be used for field validation. This validator
 is a special construct to make the configuration via TypoScript possible. All
@@ -419,7 +422,7 @@ it will be mentioned in the detail configuration.</p>
 
     </section>
             <section class="section" id="prefixing-needed-for-non-extbase-validators">
-            <h2>Prefixing needed for non extbase validators<a class="headerlink" href="#prefixing-needed-for-non-extbase-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Prefixing needed for non extbase validators<a class="headerlink" href="#prefixing-needed-for-non-extbase-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>To use the extension validators you need to prefix them in the TypoScript with
 Evoweb.SfRegister: . For all validators without this prefix the validation assumes
@@ -432,13 +435,13 @@ loading (either in an extbase standard path or via ext_autoload.php). Afterwards
 you are ready to use your validator like in the following example.</p>
 
             <section class="section" id="custom-validator-usage">
-            <h3>Custom validator usage:<a class="headerlink" href="#custom-validator-usage" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Custom validator usage:<a class="headerlink" href="#custom-validator-usage" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             <div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password = &quot;Evoweb.SfRegister:Required&quot;
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -448,7 +451,7 @@ you are ready to use your validator like in the following example.</p>
     </section>
     </section>
             <section class="section" id="available-validators" data-rst-anchor="BadWordValidator">
-            <h2>Available validators<a class="headerlink" href="#available-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Available validators<a class="headerlink" href="#available-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Beside the validators that come with extbase and which are although available
 in the different processes, the registration come with a set of specific ones
@@ -527,7 +530,7 @@ validator as condition to render required sign or not.</dd>
 
     </section>
             <section class="section" id="special-fields-validators" data-rst-anchor="CaptchaValidator">
-            <h2>Special fields Validators<a class="headerlink" href="#special-fields-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Special fields Validators<a class="headerlink" href="#special-fields-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             <div class="ts-properties">
     <div class="table-responsive">
     <table class="table table-bordered align-default">
@@ -810,7 +813,7 @@ password fields.</p>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: Aug 31, 2024 18:32</p>
+                    <p class="text-center">Last rendered: Oct 13, 2024 13:35</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

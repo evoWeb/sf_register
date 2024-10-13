@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-08-31T18:32:13+00:00" name="docsearch:modified">
-<meta content="2024-08-31T18:32:13+00:00" name="dc.modified">
-<meta content="2024-08-31T18:32:13+00:00" property="article:modified_time">
+<meta content="2024-10-13T13:35:48+00:00" name="docsearch:modified">
+<meta content="2024-10-13T13:35:48+00:00" name="dc.modified">
+<meta content="2024-10-13T13:35:48+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -37,24 +37,27 @@
     <div class="page-header">
         <div class="page-header-inner">
             <div class="row">
-                <div class="col-sm-3 col-md-4 col-lg-6">
+                <div class="col-md-2 col-lg-4">
                     <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
                         <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
                     </a>
                 </div>
-                <div class="col-sm-9 col-md-8 col-lg-6">
-                    <search role="search">
-                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
-			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
-                            <div class="input-group mb-3 mt-sm-3">
-                                <select class="form-select search__scope" id="searchscope" name="scope">
-                                    <option value="">Search all</option>
-                                </select>
-                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
-                            </div>
-                        </form>
-                    </search>
+                <div class="col-md-10 col-lg-8">
+                    <div class="menu-search-wrapper">
+                        <all-documentations-menu data-override-url="https://render-guides.ddev.site/menu-proxy.php"></all-documentations-menu>
+                                                <search role="search">
+                            <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+                                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                                <div class="input-group mb-3 mt-sm-3">
+                                    <select class="form-select search__scope" id="searchscope" name="scope">
+                                        <option value="">Search all</option>
+                                    </select>
+                                    <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                    <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                                </div>
+                            </form>
+                        </search>
+                    </div>
                 </div>
             </div>
         </div>
@@ -166,13 +169,13 @@
         <!-- content start -->
                 <section class="section" id="templating-1" data-rst-anchor="templating">
             <a id="templating"></a>
-            <h1>Templating<a class="headerlink" href="#templating-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <h1>Templating<a class="headerlink" href="#templating-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
             <div class="toctree-wrapper compound">
         <ul class="menu-level">
     </ul>
 </div>
             <section class="section" id="template-for-dynamic-fields">
-            <h2>Template for dynamic fields:<a class="headerlink" href="#template-for-dynamic-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Template for dynamic fields:<a class="headerlink" href="#template-for-dynamic-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Since version 8.8.0 the forms are rendered by partials. Create and Edit form fields are defined in typoscript or
 selected in the plugin and then rendered by a loop which calls the configured partial per field.</p>
@@ -198,7 +201,7 @@ page where the registration should be different.</p>
 }
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -222,7 +225,7 @@ need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
 &lt;/f:for&gt;
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -231,7 +234,7 @@ need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
 </div>
     </section>
             <section class="section" id="customize-the-output">
-            <h2>Customize the output:<a class="headerlink" href="#customize-the-output" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Customize the output:<a class="headerlink" href="#customize-the-output" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Per default, all templates are stored in</p>
 
@@ -239,7 +242,7 @@ need to replace all &lt;div&gt; tags between the form tags with the loop.</p>
             
     <pre class="code-block"><code>typo3conf/ext/sf_register/Resources/Private/
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -267,7 +270,7 @@ plugin.tx_sfregister.view.layoutRootPaths.0 = EXT:sf_register/Resources/Private/
 plugin.tx_sfregister.view.layoutRootPaths.1 = EXT:example/Resources/Private/Templates/sf_register/Layouts/
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -279,9 +282,9 @@ plugin.tx_sfregister.view.layoutRootPaths.1 = EXT:example/Resources/Private/Temp
 the registration plugin. This gets add/set to the view and used for rendering.</p>
 
             <section class="section" id="viewhelper-for-templates">
-            <h3>Viewhelper for templates:<a class="headerlink" href="#viewhelper-for-templates" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Viewhelper for templates:<a class="headerlink" href="#viewhelper-for-templates" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             <section class="section" id="birthdate-with-three-select-boxes">
-            <h4>Birthdate with three select boxes<a class="headerlink" href="#birthdate-with-three-select-boxes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <h4>Birthdate with three select boxes<a class="headerlink" href="#birthdate-with-three-select-boxes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h4>
             <div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code>&lt;register:form.rangeSelect start=&quot;1&quot; end=&quot;31&quot; property=&quot;dateOfBirthDay&quot;/&gt;
@@ -291,7 +294,7 @@ the registration plugin. This gets add/set to the view and used for rendering.</
 &lt;register:form.rangeSelect start=&quot;1960&quot; end=&quot;2011&quot; property=&quot;dateOfBirthYear&quot;/&gt;
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -308,14 +311,14 @@ the registration plugin. This gets add/set to the view and used for rendering.</
             </figure>
     </section>
             <section class="section" id="single-select-with-radio-buttons">
-            <h4>Single select with radio buttons<a class="headerlink" href="#single-select-with-radio-buttons" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <h4>Single select with radio buttons<a class="headerlink" href="#single-select-with-radio-buttons" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h4>
             <div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code>&lt;f:form.radio property=&quot;gender&quot; value=&quot;1&quot;/&gt; &lt;f:translate key=&quot;gender_1&quot;/&gt;
 &lt;f:form.radio property=&quot;gender&quot; value=&quot;2&quot;/&gt; &lt;f:translate key=&quot;gender_2&quot;/&gt;
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -332,7 +335,7 @@ the registration plugin. This gets add/set to the view and used for rendering.</
             </figure>
     </section>
             <section class="section" id="single-select-as-select-box">
-            <h4>Single select as select box<a class="headerlink" href="#single-select-as-select-box" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <h4>Single select as select box<a class="headerlink" href="#single-select-as-select-box" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h4>
             <div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code>&lt;f:form.select property=&quot;gender&quot; options=&quot;{
@@ -341,7 +344,7 @@ the registration plugin. This gets add/set to the view and used for rendering.</
 }&quot;/&gt;
 
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -358,12 +361,12 @@ the registration plugin. This gets add/set to the view and used for rendering.</
             </figure>
     </section>
             <section class="section" id="automatic-marking-of-requried-fields">
-            <h4>Automatic marking of requried fields<a class="headerlink" href="#automatic-marking-of-requried-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h4>
+            <h4>Automatic marking of requried fields<a class="headerlink" href="#automatic-marking-of-requried-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h4>
             <div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code>&lt;f:render partial=&quot;required&quot; arguments=&quot;{field: &#039;gender&#039;}&quot;/&gt;
 </code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -471,7 +474,7 @@ is active for this field.</p>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: Aug 31, 2024 18:32</p>
+                    <p class="text-center">Last rendered: Oct 13, 2024 13:35</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">
