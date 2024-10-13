@@ -23,6 +23,7 @@ use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -110,6 +111,26 @@ class FeuserController extends ActionController
         if (!isset($this->arguments)) {
             $this->arguments = GeneralUtility::makeInstance(Arguments::class);
         }
+
+        // Convert image if type is UploadedFile to array
+        if ($this->request->hasArgument('user')) {
+            $user = $this->request->getArgument('user');
+            if (is_array($user) && is_array($user['image'] ?? false) && !empty($user['image'])) {
+                array_walk($user['image'], function (&$image) {
+                    if ($image instanceof UploadedFile) {
+                        $image = [
+                            'name' => $image->getClientFilename(),
+                            'tmp_name' => $image->getTemporaryFileName(),
+                            'size' => $image->getSize(),
+                            'error' => $image->getError(),
+                            'type' => $image->getClientMediaType(),
+                        ];
+                    }
+                });
+                $this->request = $this->request->withArgument('user', $user);
+            }
+        }
+
         parent::initializeActionMethodArguments();
 
         $event = new OverrideSettingsEvent(
@@ -174,16 +195,15 @@ class FeuserController extends ActionController
             true,
         );
 
-        $temporaryFolder = $this->fileService->getTempFolder();
         $configuration->forProperty('image.0')
             ->setTypeConverterOptions(
                 UploadedFileReferenceConverter::class,
                 [
-                    UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS =>
+                    UploadedFileReferenceConverter::CONFIGURATION_FILE_VALIDATORS =>
                         $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
                     UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
-                        $temporaryFolder->getStorage()->getUid() . ':' . $temporaryFolder->getIdentifier(),
-                ],
+                        $this->fileService->getTempFolder()->getCombinedIdentifier(),
+                ]
             );
 
         $configuration->forProperty('dateOfBirth')
