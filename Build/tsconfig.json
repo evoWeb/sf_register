@@ -17,15 +17,8 @@
 		"noImplicitReturns": true,
 		"pretty": true,
 		"baseUrl": "Sources/TypeScript",
-		"paths": {
-			"@evoweb/store-finder/form-engine/*": [
-				"form-engine/*"
-			]
-		},
-		"outDir": "../Resources/Public/JavaScript",
 		"typeRoots": [
-			"node_modules/@types",
-			"types"
+			"node_modules/@types"
 		]
 	}
 }

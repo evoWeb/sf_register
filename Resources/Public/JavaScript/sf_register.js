@@ -1,17 +1,3 @@
-/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./Sources/TypeScript/PasswordStrengthCalculator.ts":
-/*!**********************************************************!*\
-  !*** ./Sources/TypeScript/PasswordStrengthCalculator.ts ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ PasswordStrengthCalculator)
-/* harmony export */ });
 class PasswordStrengthCalculator {
     /**
      * password length:
@@ -25,19 +11,19 @@ class PasswordStrengthCalculator {
         let score, log;
         switch (true) {
             case length > 0 && length < 5:
-                log = '3 points for length (' + length + ')';
+                log = `3 points for length (${length})`;
                 score = 3;
                 break;
             case length > 4 && length < 8:
-                log = '6 points for length (' + length + ')';
+                log = `6 points for length (${length})`;
                 score = 6;
                 break;
             case length > 7 && length < 16:
-                log = '12 points for length (' + length + ')';
+                log = `12 points for length (${length})`;
                 score = 12;
                 break;
             default:
-                log = '18 points for length (' + length + ')';
+                log = `18 points for length (${length})`;
                 score = 18;
                 break;
         }
@@ -109,11 +95,11 @@ class PasswordStrengthCalculator {
     }
     /**
      * combinations:
-     * level 0 (1 points): mixed case letters
-     * level 0 (1 points): letters and numbers
-     * level 1 (2 points): mixed case letters and numbers
-     * level 3 (4 points): letters, numbers and special characters
-     * level 4 (6 points): mixed case letters, numbers and special characters
+     *   level 0 (1 points): mixed case letters
+     *   level 0 (1 points): letters and numbers
+     *   level 1 (2 points): mixed case letters and numbers
+     *   level 3 (4 points): letters, numbers and special characters
+     *   level 4 (6 points): mixed case letters, numbers and special characters
      */
     verdictCombos(letter, number, special) {
         let score = 0, log = '';
@@ -175,55 +161,61 @@ class PasswordStrengthCalculator {
             combosVerdict.log,
             score + ' points final score'
         ].join('\n');
-        return { score: score, verdict: this.finalVerdict(score), log: log };
+        return { score: score, log: log, verdict: this.finalVerdict(score) };
     }
 }
-
-
-/***/ }),
-
-/***/ "./Sources/TypeScript/SfRegister.ts":
-/*!******************************************!*\
-  !*** ./Sources/TypeScript/SfRegister.ts ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ SfRegister)
-/* harmony export */ });
-/* harmony import */ var _PasswordStrengthCalculator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PasswordStrengthCalculator */ "./Sources/TypeScript/PasswordStrengthCalculator.ts");
 
 const document = window.document;
 class SfRegister {
     constructor() {
         this.loading = false;
+        this.ajaxEndpoint = '/index.php?ajax=sf_register';
         this.ajaxRequest = null;
-        this.barGraph = null;
         this.passwordStrengthCalculator = null;
+        this.form = null;
+        this.barGraph = null;
         this.zone = null;
         this.zoneEmpty = null;
         this.zoneLoading = null;
-        // Attach content loaded element with callback to document
-        document.addEventListener('DOMContentLoaded', this.contentLoaded.bind(this));
+        this.fileInformation = null;
+        this.removeImage = null;
+        if (document.readyState === 'loading') {
+            // Attach content loaded element with callback to document
+            document.addEventListener('DOMContentLoaded', () => this.initialize());
+        }
+        else {
+            this.initialize();
+        }
     }
     /**
      * Callback after content was loaded
      */
-    contentLoaded() {
+    initialize() {
+        this.initializeElements();
+        this.initializePasswordStrengthCalculator();
+        this.initializeEvents();
+    }
+    initializeElements() {
+        this.form = document.getElementById('sfrForm');
         this.zone = document.getElementById('sfrZone');
         this.zoneEmpty = document.getElementById('sfrZone_empty');
         this.zoneLoading = document.getElementById('sfrZone_loading');
         this.barGraph = document.getElementById('bargraph');
-        if (this.barGraph) {
+        this.fileInformation = document.getElementById('uploadFile');
+        this.removeImage = document.getElementById('removeImage');
+    }
+    initializePasswordStrengthCalculator() {
+        if (this.barGraph !== null) {
             this.barGraph.classList.add('show');
-            this.passwordStrengthCalculator = new _PasswordStrengthCalculator__WEBPACK_IMPORTED_MODULE_0__["default"]();
-            this.attachToElementById('sfrpassword', 'keyup', this.callTestPassword.bind(this));
+            this.passwordStrengthCalculator = new PasswordStrengthCalculator();
         }
-        this.attachToElementById('sfrCountry', 'change', this.countryChanged.bind(this));
-        this.attachToElementById('sfrCountry', 'keyup', this.countryChanged.bind(this));
-        this.attachToElementById('uploadButton', 'change', this.uploadFile.bind(this));
-        this.attachToElementById('removeImageButton', 'click', this.removeFile.bind(this));
+    }
+    initializeEvents() {
+        this.attachToElementById('sfrCountry', 'change', (event) => this.countryChanged(event));
+        this.attachToElementById('sfrCountry', 'keyup', (event) => this.countryChanged(event));
+        this.attachToElementById('uploadButton', 'change', (event) => this.uploadFile(event));
+        this.attachToElementById('removeImageButton', 'click', () => this.removeFile());
+        this.attachToElementById('sfrPassword', 'keyup', (event) => this.checkPasswordOnChange(event));
     }
     /**
      * Add class d-block remove class d-none
@@ -241,7 +233,9 @@ class SfRegister {
     }
     attachToElementById(id, eventName, callback) {
         const element = document.getElementById(id);
-        this.attachToElement(element, eventName, callback);
+        if (element !== null) {
+            this.attachToElement(element, eventName, callback);
+        }
     }
     attachToElement(element, eventName, callback) {
         if (element) {
@@ -252,44 +246,32 @@ class SfRegister {
      * Gets password meter element and sets the value with
      * the result of the calculate password strength function
      */
-    callTestPassword(event) {
+    checkPasswordOnChange(event) {
         const element = event.target, meterResult = this.passwordStrengthCalculator.calculate(element.value);
-        if (this.barGraph.tagName.toLowerCase() === 'meter') {
-            this.barGraph.value = meterResult.score;
-        }
-        else {
-            const barGraph = this.barGraph, percentScore = Math.min((Math.floor(meterResult.score / 3.4)), 10), blinds = (barGraph.contentDocument || barGraph.contentWindow.document).getElementsByClassName('blind');
-            for (let index = 0; index < blinds.length; index++) {
-                const blind = blinds[index];
-                if (index < percentScore) {
-                    this.hideElement(blind);
-                }
-                else {
-                    this.showElement(blind);
-                }
-            }
-        }
+        this.barGraph.value = meterResult.score;
     }
     loadCountryZonesByCountry(countrySelectedValue) {
-        this.loading = true;
-        this.zone.disabled = true;
-        this.hideElement(this.zoneEmpty);
-        this.showElement(this.zoneLoading);
-        this.ajaxRequest = new XMLHttpRequest();
-        this.ajaxRequest.onload = this.xhrReadyOnLoad.bind(this);
-        this.ajaxRequest.open('POST', '/index.php?ajax=sf_register');
-        this.ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        this.ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+        if (this.zone !== null) {
+            this.loading = true;
+            this.zone.disabled = true;
+            this.hideElement(this.zoneEmpty);
+            this.showElement(this.zoneLoading);
+            this.ajaxRequest = new XMLHttpRequest();
+            this.ajaxRequest.onload = (event) => this.xhrReadyOnLoad(event);
+            this.ajaxRequest.open('POST', this.ajaxEndpoint);
+            this.ajaxRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            this.ajaxRequest.send('tx_sfregister[action]=zones&tx_sfregister[parent]=' + countrySelectedValue);
+        }
     }
     /**
-     * Change value of zone selectbox
+     * Change value of zone select box
      */
     countryChanged(event) {
-        if ((event.type === 'change'
-            || (event.type === 'keyup' && (event.keyCode === 40 || event.keyCode === 38)))
-            && this.loading !== true) {
+        if (this.loading !== true
+            && ((event instanceof KeyboardEvent && (event.key === 'ArrowDown' || event.key === 'ArrowUp'))
+                || event.type === 'change')) {
             if (this.zone) {
-                const target = (event.target || event.srcElement), countrySelectedValue = target.options[target.selectedIndex].value;
+                const target = event.target, countrySelectedValue = target.options[target.selectedIndex].value;
                 this.loadCountryZonesByCountry(countrySelectedValue);
             }
         }
@@ -327,105 +309,22 @@ class SfRegister {
     /**
      * Adds a preview information about file to upload in a label
      */
-    uploadFile() {
-        const information = document.getElementById('uploadFile');
-        if (information) {
-            information.value = this.value;
+    uploadFile(event) {
+        const upload = event.target;
+        if (this.fileInformation !== null) {
+            this.fileInformation.value = upload.value;
         }
     }
     /**
      * Handle remove image button clicked
      */
     removeFile() {
-        const remove = document.getElementById('removeImage');
-        if (remove) {
-            remove.value = '1';
-        }
-        this.submitForm();
-    }
-    /**
-     * Selects the form and triggers submit
-     */
-    submitForm() {
-        const form = document.getElementById('sfrForm');
-        if (form) {
-            form.submit();
+        if (this.removeImage !== null) {
+            this.removeImage.value = '1';
+            this.form.submit();
         }
     }
 }
 
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/*!*******************************************!*\
-  !*** ./Sources/TypeScript/sf_register.ts ***!
-  \*******************************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SfRegister__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SfRegister */ "./Sources/TypeScript/SfRegister.ts");
-
-const sfRegister = new _SfRegister__WEBPACK_IMPORTED_MODULE_0__["default"]();
-
-})();
-
-/******/ })()
-;
+new SfRegister();
 //# sourceMappingURL=sf_register.js.map

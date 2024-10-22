@@ -6,30 +6,34 @@
 Breaking Changes
 ================
 
+2024.10.18
+''''''''''
+
+* Rename password meter with ID sfrpassword to sfrPassword
+* Fallback for password element <meter> is not supported anymore.
+
+
 2024.08.31
 ''''''''''
 
-- Extract the modification of the validators to ModifyValidator service. It's
+* Extract the modification of the validators to ModifyValidator service. It's
   still configured the same (via TypoScript) but is handled via service outside
   of the controller.
-
-- Replace $controller->controller with $controller->getControllerName()
-
-- Move change usergroup to FrontendUserGroup service
-
-- Without injecting FrontenUserGroup into other controller, changing
+* Replace $controller->controller with $controller->getControllerName()
+* Move change usergroup to FrontendUserGroup service
+* Without injecting FrontenUserGroup into other controller, changing
   usergroup is only supported in FeuserCreateController.
-
-- Move getLoggedInUserId, getLoggedInUser, determineFrontendUser, userIsLoggedIn,
+* Move getLoggedInUserId, getLoggedInUser, determineFrontendUser, userIsLoggedIn,
   autoLogin and redirectToPage to FrontendUser service
+* Remove access on context in controller and move it to FrontendUser service
 
-- Remove access on context in controller and move it to FrontendUser service
 
 2024.08.26
 ''''''''''
 
 Replace SelectStaticCountriesViewHelper with f:form.countrySelect to decouple
 from EXT:static_info_tables if you only relay on selecting countries.
+
 
 2024.05.13
 ''''''''''
@@ -40,11 +44,13 @@ extending/overriding fields requires to order the loading of extensions. To
 achieve this, you need to require sf_register in your composer.json and
 ext_emconf.php
 
+
 2022.01.01
 ''''''''''
 
 Interface Evoweb\SfRegister\Interface\FrontendUserInterface is renamed to
 Evoweb\SfRegister\Domain\Model\FrontendUserInterface
+
 
 2021.12.31
 ''''''''''
@@ -122,13 +128,13 @@ The hole extension was refactored to make best usage of TYPO3 10 changes. Namely
   * SendInvitation replaced with InviteInvite
   * PostResendMail replaced with ResendMail
 
+
 2019.02.03
 ''''''''''
 
 Drop custom form styles in favor for Bootstrap 4.2 styles. Be aware, to get the styles.css
 from older releases if you depend on it. If you use the Bootstrap 4.2 form styles you are
 good to go.
-
 
 
 2019.02.02
@@ -148,7 +154,6 @@ After:
       src="/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg"></iframe>
 
 
-
 2019.01.17
 ''''''''''
 
@@ -159,7 +164,6 @@ By this its always possible to properly hash passwords.
 
 Due to this shift the support for md5 and sha1 configuration is dropped in
 EqualCurrentPasswordValidator::isValid and FeuserController::encryptPassword.
-
 
 
 2019.01.13
@@ -193,7 +197,6 @@ After:
 
 In general 'Evoweb\SfRegister\Validation\Validator\' needs to be replaced with '"Evoweb.SfRegister:' and the
 ending 'Validator' with '"'
-
 
 
 2015.11.15

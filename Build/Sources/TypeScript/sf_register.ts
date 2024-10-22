@@ -1,3 +1,3 @@
-import SfRegister from './SfRegister';
+import SfRegister from './Classes/SfRegister';
 
-const sfRegister = new SfRegister();
+new SfRegister();

@@ -19,22 +19,22 @@ export default class PasswordStrengthCalculator {
 
     switch (true) {
       case length > 0 && length < 5:
-        log = '3 points for length (' + length + ')';
+        log = `3 points for length (${length})`;
         score = 3;
         break;
 
       case length > 4 && length < 8:
-        log = '6 points for length (' + length + ')';
+        log = `6 points for length (${length})`;
         score = 6;
         break;
 
       case length > 7 && length < 16:
-        log = '12 points for length (' + length + ')';
+        log = `12 points for length (${length})`;
         score = 12;
         break;
 
       default:
-        log = '18 points for length (' + length + ')';
+        log = `18 points for length (${length})`;
         score = 18;
         break;
     }
@@ -117,11 +117,11 @@ export default class PasswordStrengthCalculator {
 
   /**
    * combinations:
-   * level 0 (1 points): mixed case letters
-   * level 0 (1 points): letters and numbers
-   * level 1 (2 points): mixed case letters and numbers
-   * level 3 (4 points): letters, numbers and special characters
-   * level 4 (6 points): mixed case letters, numbers and special characters
+   *   level 0 (1 points): mixed case letters
+   *   level 0 (1 points): letters and numbers
+   *   level 1 (2 points): mixed case letters and numbers
+   *   level 3 (4 points): letters, numbers and special characters
+   *   level 4 (6 points): mixed case letters, numbers and special characters
    */
   verdictCombos(letter: number, number: number, special: number): Verdict {
     let score = 0,
@@ -190,6 +190,6 @@ export default class PasswordStrengthCalculator {
         score + ' points final score'
       ].join('\n');
 
-    return { score: score, verdict: this.finalVerdict(score), log: log };
+    return { score: score, log: log, verdict: this.finalVerdict(score) };
   }
 }
