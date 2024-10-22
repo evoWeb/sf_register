@@ -152,7 +152,7 @@ cleanup () {
 LOWEST="--prefer-lowest"
 TPATH="Tests/Functional"
 
-DEBUG_TESTS=true
+DEBUG_TESTS=false
 if [[ $DEBUG_TESTS != true ]]; then
     checkResources
 

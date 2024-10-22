@@ -13,4 +13,6 @@
 
 namespace Evoweb\SfRegister\Domain\Model;
 
-interface ValidatableInterface {}
+interface ValidatableInterface {
+    public function _isDirty(?string $propertyName = null): bool;
+}

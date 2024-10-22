@@ -17,7 +17,6 @@ namespace Evoweb\SfRegister\Services;
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser as FrontendUserModel;
 use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
-use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
@@ -62,7 +61,9 @@ class FrontendUser
     public function getLoggedInUser(): ?FrontendUserModel
     {
         $userId = $this->getLoggedInUserId();
-        return $userId ? $this->userRepository->findByUid($userId) : null;
+        /** @var ?FrontendUserModel $user */
+        $user = $userId ? $this->userRepository->findByUid($userId) : null;
+        return $user;
     }
 
     /**
@@ -72,7 +73,7 @@ class FrontendUser
         RequestInterface $request,
         ?FrontendUserModel $user,
         ?string $hash
-    ): ?FrontendUser {
+    ): ?FrontendUserModel {
         $frontendUser = $user;
 
         $requestArguments = $request->getArguments();
@@ -84,7 +85,7 @@ class FrontendUser
                 self::ADDITIONAL_SECRET,
             );
             if ($hash === $calculatedHash) {
-                /** @var FrontendUser $frontendUser */
+                /** @var FrontendUserModel $frontendUser */
                 $frontendUser = $this->userRepository->findByUidIgnoringDisabledField((int)$requestArguments['user']);
             }
         }
@@ -106,7 +107,7 @@ class FrontendUser
 
     public function autoLogin(
         RequestInterface $request,
-        FrontendUserInterface $user,
+        FrontendUserModel $user,
         int $redirectPageId
     ): void {
         // get given redirect page id
@@ -192,7 +193,7 @@ class FrontendUser
         return GeneralUtility::locationHeaderUrl($uri);
     }
 
-    public function getLoggedInRequestUser(RequestInterface $request): ?FrontendUserInterface
+    public function getLoggedInRequestUser(RequestInterface $request): ?FrontendUserModel
     {
         $user = null;
         $userId = $this->getLoggedInUserId();

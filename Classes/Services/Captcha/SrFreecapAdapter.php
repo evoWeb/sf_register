@@ -69,6 +69,7 @@ class SrFreecapAdapter extends AbstractAdapter
     public function __construct(protected Session $session)
     {
         if (ExtensionManagementUtility::isLoaded('sr_freecap')) {
+            // @phpstan-ignore-next-line
             $this->captchaService = GeneralUtility::makeInstance(PiBaseApi::class);
         }
     }

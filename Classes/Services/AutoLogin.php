@@ -36,7 +36,7 @@ class AutoLogin extends AuthenticationService
 
         /** @var Registry $registry */
         $registry = GeneralUtility::makeInstance(Registry::class);
-        $userId = (int)$registry->get('sf-register', $hmac);
+        $userId = (string)$registry->get('sf-register', $hmac);
         $registry->remove('sf-register', $hmac);
 
         $dbUserSetup = [...$this->db_user, 'username_column' => 'uid', 'enable_clause' => ''];

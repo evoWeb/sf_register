@@ -258,7 +258,6 @@ class FeuserController extends ActionController
     #[Extbase\IgnoreValidation(['value' => 'user'])]
     protected function removeImageAction(FrontendUser $user): ResponseInterface
     {
-        /** @var FileReference $image */
         $images = $user->getImage();
 
         array_walk(

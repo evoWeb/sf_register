@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
-use Evoweb\SfRegister\Domain\Model\StaticCountryZone;
+use Doctrine\DBAL\Exception;
 use Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -65,21 +65,23 @@ class SelectStaticCountryZonesViewHelper extends AbstractSelectViewHelper
             return;
         }
 
-        $options = $this->countryZonesRepository->findAllByIso2($this->arguments['parent']);
         try {
-            $options = $options->fetchAllAssociative();
+            $options = $this->countryZonesRepository->findAllByIso2($this->arguments['parent'])->fetchAllAssociative();
 
             if ($this->arguments['disabled']) {
                 $value = (array)$this->getSelectedValue();
 
-                /** @var StaticCountryZone $option */
-                $options = array_filter($options, function ($option) use ($value) {
-                    return in_array($option['uid'], $value);
-                });
+                $options = array_filter(
+                    $options,
+                    function ($option) use ($value) {
+                        /** @var array $option */
+                        return in_array($option['uid'], $value);
+                    }
+                );
             }
 
             $this->arguments['options'] = $options;
-        } catch (\Exception) {
+        } catch (\Exception|Exception) {
         }
     }
 }

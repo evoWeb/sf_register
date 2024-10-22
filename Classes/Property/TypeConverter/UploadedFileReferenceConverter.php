@@ -164,16 +164,16 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
         $uploadFolderId = $configuration->getConfigurationValue(
             self::class,
-            self::CONFIGURATION_UPLOAD_FOLDER
+            (string)self::CONFIGURATION_UPLOAD_FOLDER
         ) ?: $this->defaultUploadFolder;
         $conflictMode = $configuration->getConfigurationValue(
             self::class,
-            self::CONFIGURATION_UPLOAD_CONFLICT_MODE
+            (string)self::CONFIGURATION_UPLOAD_CONFLICT_MODE
         ) ?: DuplicationBehavior::RENAME;
 
         $validators = $configuration->getConfigurationValue(
             self::class,
-            self::CONFIGURATION_FILE_VALIDATORS
+            (string)self::CONFIGURATION_FILE_VALIDATORS
         );
         if ($validators !== null) {
             $fileExtension = PathUtility::pathinfo($uploadInfo['name'], PATHINFO_EXTENSION);
@@ -256,9 +256,9 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     {
         try {
             return $this->resourceFactory->getFolderObjectFromCombinedIdentifier($uploadFolderIdentifier);
-        } catch (FolderDoesNotExistException $exception) {
+        } catch (FolderDoesNotExistException) {
             [$storageId, $storagePath] = explode(':', $uploadFolderIdentifier, 2);
-            $storage = $this->resourceFactory->getStorageObject($storageId);
+            $storage = $this->resourceFactory->getStorageObject((int)$storageId);
             $folderNames = GeneralUtility::trimExplode('/', $storagePath, true);
             $uploadFolder = $this->provideTargetFolder($storage->getRootLevelFolder(), ...$folderNames);
             $this->provideFolderInitialization($uploadFolder);

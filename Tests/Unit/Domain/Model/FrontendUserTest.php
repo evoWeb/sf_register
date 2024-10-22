@@ -57,11 +57,11 @@ class FrontendUserTest extends UnitTestCase
     #[Test]
     public function imageReturnsStringSetBySetImage(): void
     {
-        $expected = new FileReference();
+        $expected = new ObjectStorage();
 
         $this->subject->setImage($expected);
 
-        $this->assertSame($expected, $this->subject->getImage());
+        self::assertSame($expected, $this->subject->getImage());
     }
 
     #[Test]

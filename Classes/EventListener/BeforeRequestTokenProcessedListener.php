@@ -28,7 +28,7 @@ final class BeforeRequestTokenProcessedListener
     #[AsEventListener('evoweb-sf-register-beforerequesttoken', BeforeRequestTokenProcessedEvent::class)]
     public function __invoke(BeforeRequestTokenProcessedEvent $event): void
     {
-        $queryParams = ($event->getRequest()?->getQueryParams() ?? []);
+        $queryParams = $event->getRequest()->getQueryParams();
         $loginType = ($queryParams['logintype'] ?? '');
         $tokenValue = ($queryParams[RequestToken::PARAM_NAME] ?? '');
 

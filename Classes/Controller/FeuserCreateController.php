@@ -165,7 +165,7 @@ class FeuserCreateController extends FeuserController
         $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         $redirectResponse = null;
-        if (!($user instanceof FrontendUser)) {
+        if ($user === null) {
             $this->view->assign('userNotFound', 1);
         } else {
             $this->view->assign('user', $user);
@@ -194,6 +194,7 @@ class FeuserCreateController extends FeuserController
                 }
 
                 $user = $this->eventDispatcher->dispatch(new CreateConfirmEvent($user, $this->settings))->getUser();
+                /** @var FrontendUser $user */
                 $user = $this->mailService->sendEmails(
                     $this->request,
                     $this->settings,
