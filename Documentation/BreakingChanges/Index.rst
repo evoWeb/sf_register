@@ -6,6 +6,13 @@
 Breaking Changes
 ================
 
+2024.10.22
+''''''''''
+
+Since TYPO3 13.x list_type is deprecated. A upgrade task is provided to, convert
+the plugins from list_type to CType rendering.
+
+
 2024.10.18
 ''''''''''
 

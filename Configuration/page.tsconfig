@@ -74,7 +74,7 @@ mod.wizards.newContentElement.wizardItems.sf_register {
   show = *
 }
 
-mod.web_layout.tt_content.preview.list {
+mod.web_layout.tt_content.preview {
   sfregister_create = EXT:sf_register/Resources/Private/Templates/Preview/Create.html
   sfregister_edit = EXT:sf_register/Resources/Private/Templates/Preview/Edit.html
   sfregister_delete = EXT:sf_register/Resources/Private/Templates/Preview/Delete.html

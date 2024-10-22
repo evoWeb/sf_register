@@ -31,48 +31,55 @@ ExtensionUtility::configurePlugin(
     'Create',
     [ FeuserCreateController::class => FeuserCreateController::PLUGIN_ACTIONS ],
     [ FeuserCreateController::class => FeuserCreateController::PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 ExtensionUtility::configurePlugin(
     'SfRegister',
     'Edit',
     [ FeuserEditController::class => FeuserEditController::PLUGIN_ACTIONS ],
-    [ FeuserEditController::class => FeuserEditController::PLUGIN_ACTIONS ]
+    [ FeuserEditController::class => FeuserEditController::PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 ExtensionUtility::configurePlugin(
     'SfRegister',
     'Delete',
     [ FeuserDeleteController::class => FeuserDeleteController::DELETE_PLUGIN_ACTIONS ],
-    [ FeuserDeleteController::class => FeuserDeleteController::DELETE_PLUGIN_ACTIONS ]
+    [ FeuserDeleteController::class => FeuserDeleteController::DELETE_PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 ExtensionUtility::configurePlugin(
     'SfRegister',
     'RequestLink',
     [ FeuserDeleteController::class => FeuserDeleteController::REQUEST_PLUGIN_ACTIONS ],
-    [ FeuserDeleteController::class => FeuserDeleteController::REQUEST_PLUGIN_ACTIONS ]
+    [ FeuserDeleteController::class => FeuserDeleteController::REQUEST_PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 ExtensionUtility::configurePlugin(
     'SfRegister',
     'Password',
     [ FeuserPasswordController::class => FeuserPasswordController::PLUGIN_ACTIONS ],
-    [ FeuserPasswordController::class => FeuserPasswordController::PLUGIN_ACTIONS ]
+    [ FeuserPasswordController::class => FeuserPasswordController::PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 ExtensionUtility::configurePlugin(
     'SfRegister',
     'Invite',
     [ FeuserInviteController::class => FeuserInviteController::PLUGIN_ACTIONS ],
-    [ FeuserInviteController::class => FeuserInviteController::PLUGIN_ACTIONS ]
+    [ FeuserInviteController::class => FeuserInviteController::PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 ExtensionUtility::configurePlugin(
     'SfRegister',
     'Resend',
     [ FeuserResendController::class => FeuserResendController::PLUGIN_ACTIONS ],
-    [ FeuserResendController::class => FeuserResendController::PLUGIN_ACTIONS ]
+    [ FeuserResendController::class => FeuserResendController::PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 ExtensionManagementUtility::addService(
