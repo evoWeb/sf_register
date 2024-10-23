@@ -1,4 +1,6 @@
-.. include:: Includes.txt
+.. include:: /Includes.rst.txt
+
+..  _start:
 
 ==================================================================
 Frontend User Registration: Multipurpose configurable registration
@@ -16,12 +18,6 @@ Frontend User Registration: Multipurpose configurable registration
 :Language:
     en
 
-:Description:
-    Offers the possibility to maintain the fe_user data in frontend by the user self.
-
-:Copyright:
-    2010-2019
-
 :Author:
     Sebastian Fischer
 
@@ -33,14 +29,20 @@ Frontend User Registration: Multipurpose configurable registration
 :Rendered:
     |today|
 
+:Copyright:
+    2010-2024
+
 ----
+
+Offers the possibility to register and maintain the fe_user data in frontend
+by the user self.
 
 The content of this document is related to TYPO3,
 a GNU/GPL CMS/Framework available from http://typo3.org
 
 ----
 
-**Table of Contents**
+**Table of Contents:**
 
 .. toctree::
    :maxdepth: 2
@@ -56,7 +58,6 @@ a GNU/GPL CMS/Framework available from http://typo3.org
    RegistrationActions/Index
    KnownProblems/Index
    Changelog/Index
-   Deprecations/Index
    BreakingChanges/Index
 
 .. Meta Menu

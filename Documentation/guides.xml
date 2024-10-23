@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <guides xmlns="https://www.phpdoc.org/guides" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="https://www.phpdoc.org/guides ../vendor/phpdocumentor/guides-cli/resources/schema/guides.xsd"
-        links-are-relative="true"
-        max-menu-depth="2"
->
+        links-are-relative="true">
     <extension class="\T3Docs\Typo3DocsTheme\DependencyInjection\Typo3DocsThemeExtension"
                project-home="https://github.com/evoWeb/sf_register"
                project-contact="sf-register@fischer.im"
                project-repository="https://github.com/evoWeb/sf_register"
                project-issues="https://github.com/evoWeb/sf_register/issues"
                edit-on-github-branch="develop"
-               edit-on-github="evoWeb/sf_register"
-               edit-on-github-directory="Documentation/"
-               typo3-core-preferred="stable"
+               edit-on-github="Documentation"
+               typo3-core-preferred="main"
                interlink-shortcode="evoweb/sf-register"
+               confval-default="TypoScript"
     />
-    <project title="sf_register"
-             release="12.0.1"
-             version="12.0.1"
+    <project title="Frontend User Registration: Multipurpose configurable registration"
+             release="13.0.0"
+             version="13.0.0"
              copyright="since 2010 by evoWeb"
     />
 </guides>

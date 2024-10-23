@@ -1,655 +1,317 @@
-.. include:: ../Includes.txt
+..  include:: /Includes.rst.txt
+..  index:: Configuration; Emails
+..  _configuration-emails:
 
-
-.. _emails:
-
+======
 Emails
 ======
 
-.. contents::
+..  contents::
    :local:
-   :depth: 1
 
+..  _configuration-emails-notify-admin-create-properties:
 
-Admin registration properties
------------------------------
+Notify admin create properties
+==============================
 
-.. container:: ts-properties
+..  confval-menu::
+    :name: admin-create
+    :display: table
+    :type:
+    :Default:
 
-  ===================================================== ===================================================================== ======= ==================
-  Property                                              Data types                                                            stdWrap Default
-  ===================================================== ===================================================================== ======= ==================
-  notifyAdminPostCreateSave_                            :ref:`data-type-boolean`                                              no        0
-  notifyAdminPostCreateConfirm_                         :ref:`data-type-boolean`                                              no        0
-  notifyAdminPostCreateRefuse_                          :ref:`data-type-boolean`                                              no        0
-  notifyAdminPostCreateAccept_                          :ref:`data-type-boolean`                                              no        0
-  notifyAdminPostCreateDecline_                         :ref:`data-type-boolean`                                              no        0
-  acceptEmailPostCreate_                                :ref:`data-type-boolean`                                              no        0
-  ===================================================== ===================================================================== ======= ==================
+    ..  _notifyAdminPostCreateSave:
 
+    ..  confval:: notifyAdminPostCreateSave
+        :type: boolean
+        :Default: 0
 
-.. _notifyAdminPostCreateSave:
-.. ### BEGIN~OF~TABLE ###
+        Defines wether the admin should get an email after the user saved the registration
 
-.. container:: table-row
+    .. _notifyAdminPostCreateConfirm:
 
-   Property
-         notifyAdminPostCreateSave
+    ..  confval:: notifyAdminPostCreateConfirm
+        :type: boolean
+        :Default: 0
 
-   Data type
-         boolean
+        Defines wether the admin should get an email after the user confirmed the registration
 
-   Description
-         Defines wether the admin should get an email after the user saved the registration
+    .. _notifyAdminPostCreateRefuse:
 
-   Default
-         0
+    ..  confval:: notifyAdminPostCreateRefuse
+        :type: boolean
+        :Default: 0
 
+        Defines wether the admin should get an email after the user refused the registration
 
-.. _notifyAdminPostCreateConfirm:
-.. ### BEGIN~OF~TABLE ###
+    .. _notifyAdminPostCreateAccept:
 
-.. container:: table-row
+    ..  confval:: notifyAdminPostCreateAccept
+        :type: boolean
+        :Default: 0
 
-   Property
-         notifyAdminPostCreateConfirm
+        Defines wether the admin should get an email after the admin accepted the registration
 
-   Data type
-         boolean
+    .. _notifyAdminPostCreateDecline:
 
-   Description
-         Defines wether the admin should get an email after the user confirmed the registration
+    ..  confval:: notifyAdminPostCreateDecline
+        :type: boolean
+        :Default: 0
 
-   Default
-         0
+        Defines wether the admin should get an email after the admin declined the registration
 
+    .. _acceptEmailPostCreate:
 
-.. _notifyAdminPostCreateRefuse:
-.. ### BEGIN~OF~TABLE ###
+    ..  confval:: acceptEmailPostCreate
+        :type: boolean
+        :Default: 0
 
-.. container:: table-row
+        Defines wether the admin need to accept the registration
 
-   Property
-         notifyAdminPostCreateRefuse
 
-   Data type
-         boolean
+..  _configuration-emails-notify-admin-edit-properties:
 
-   Description
-         Defines wether the admin should get an email after the user refused the registration
+Notify admin edit properties
+============================
 
-   Default
-         0
+..  confval-menu::
+    :name: admin-edit
+    :display: table
+    :type:
+    :Default:
 
+    .. _notifyAdminPostEditSave:
 
-.. _notifyAdminPostCreateAccept:
-.. ### BEGIN~OF~TABLE ###
+    ..  confval:: notifyAdminPostEditSave
+        :type: boolean
+        :Default: 0
 
-.. container:: table-row
+        Defines wether the admin should get an email after the user saved the changes
 
-   Property
-         notifyAdminPostCreateAccept
+    .. _notifyAdminPostEditConfirm:
 
-   Data type
-         boolean
+    ..  confval:: notifyAdminPostEditConfirm
+        :type: boolean
+        :Default: 0
 
-   Description
-         Defines wether the admin should get an email after the admin accepted the registration
+        Defines wether the admin should get an email after the user confirmed the email change
 
-   Default
-         0
+    .. _notifyAdminPostEditAccept:
 
+    ..  confval:: notifyAdminPostEditAccept
+        :type: boolean
+        :Default: 0
 
-.. _notifyAdminPostCreateDecline:
-.. ### BEGIN~OF~TABLE ###
+        Defines wether the admin should get an email after the user accepted the email change
 
-.. container:: table-row
+    .. _acceptEmailPostEdit:
 
-   Property
-         notifyAdminPostCreateDecline
+    ..  confval:: acceptEmailPostEdit
+        :type: boolean
+        :Default: 0
 
-   Data type
-         boolean
+        Defines wether the admin need to accepted the email change
 
-   Description
-         Defines wether the admin should get an email after the admin declined the registration
 
-   Default
-         0
+..  _configuration-emails-notify-user-create-properties:
 
+Notify user create properties
+==============================
 
-.. _acceptEmailPostCreate:
-.. ### BEGIN~OF~TABLE ###
+..  confval-menu::
+    :name: user-create
+    :display: table
+    :type:
+    :Default:
 
-.. container:: table-row
+    .. _notifyUserPostCreateSave:
 
-   Property
-         acceptEmailPostCreate
+    ..  confval:: notifyUserPostCreateSave
+        :type: boolean
+        :Default: 0
 
-   Data type
-         boolean
+        Defines wether the user should get an email after the user saved the registration
 
-   Description
-         Defines wether the admin need to accept the registration
+    .. _notifyUserPostCreateConfirm:
 
-   Default
-         0
+    ..  confval:: notifyUserPostCreateConfirm
+        :type: boolean
+        :Default: 0
 
+        Defines wether the user should get an email after the user confirmed the registration
 
-Admin edit properties
----------------------
+    .. _notifyUserPostCreateRefuse:
 
-.. container:: ts-properties
+    ..  confval:: notifyUserPostCreateRefuse
+        :type: boolean
+        :Default: 0
 
-  ===================================================== ===================================================================== ======= ==================
-  Property                                              Data types                                                            stdWrap Default
-  ===================================================== ===================================================================== ======= ==================
-  notifyAdminPostEditSave_                              :ref:`data-type-boolean`                                              no        0
-  notifyAdminPostEditConfirm_                           :ref:`data-type-boolean`                                              no        0
-  notifyAdminPostEditAccept_                            :ref:`data-type-boolean`                                              no        0
-  acceptEmailPostEdit_                                  :ref:`data-type-boolean`                                              no        0
-  ===================================================== ===================================================================== ======= ==================
+        Defines wether the user should get an email after the user refused the registration
 
+    .. _notifyUserPostCreateAccept:
 
-.. _notifyAdminPostEditSave:
-.. ### BEGIN~OF~TABLE ###
+    ..  confval:: notifyUserPostCreateAccept
+        :type: boolean
+        :Default: 0
 
-.. container:: table-row
+        Defines wether the user should get an email after the admin accepted the registration
 
-   Property
-         notifyAdminPostEditSave
+    .. _notifyUserPostCreateDecline:
 
-   Data type
-         boolean
+    ..  confval:: notifyUserPostCreateDecline
+        :type: boolean
+        :Default: 0
 
-   Description
-         Defines wether the admin should get an email after the user saved the changes
+        Defines wether the user should get an email after the admin declined the registration
 
-   Default
-         0
+    .. _confirmEmailPostCreate:
 
+    ..  confval:: confirmEmailPostCreate
+        :type: boolean
+        :Default: 0
 
-.. _notifyAdminPostEditConfirm:
-.. ### BEGIN~OF~TABLE ###
+        Defines wether the user need to confirm the registration
 
-.. container:: table-row
 
-   Property
-         notifyAdminPostEditConfirm
+..  _configuration-emails-notify-user-edit-properties:
 
-   Data type
-         boolean
+Notify user edit properties
+===========================
 
-   Description
-         Defines wether the admin should get an email after the user confirmed the email change
+..  confval-menu::
+    :name: user-edit
+    :display: table
+    :type:
+    :Default:
 
-   Default
-         0
+    .. _notifyUserPostEditSave:
 
+    ..  confval:: notifyUserPostEditSave
+        :type: boolean
+        :Default: 0
 
-.. _notifyAdminPostEditAccept:
-.. ### BEGIN~OF~TABLE ###
+        Defines wether the user should get an email after the user saved the changes
 
-.. container:: table-row
+    .. _notifyUserPostEditConfirm:
 
-   Property
-         notifyAdminPostEditAccept
+    ..  confval:: notifyUserPostEditConfirm
+        :type: boolean
+        :Default: 0
 
-   Data type
-         boolean
+        Defines wether the user should get an email after the user confirmed the email change
 
-   Description
-         Defines wether the admin should get an email after the user accepted the email change
+    .. _notifyUserPostEditAccept:
 
-   Default
-         0
+    ..  confval:: notifyUserPostEditAccept
+        :type: boolean
+        :Default: 0
 
+        Defines wether the user should get an email after the user accepted the email change
 
-.. _acceptEmailPostEdit:
-.. ### BEGIN~OF~TABLE ###
+    .. _confirmEmailPostEdit:
 
-.. container:: table-row
+    ..  confval:: confirmEmailPostEdit
+        :type: boolean
+        :Default: 0
 
-   Property
-         acceptEmailPostEdit
+        Defines wether the user need to confirm the email change
 
-   Data type
-         boolean
 
-   Description
-         Defines wether the admin need to accepted the email change
-
-   Default
-         0
-
-
-User registration properties
-----------------------------
-
-.. container:: ts-properties
-
-  ===================================================== ===================================================================== ======= ==================
-  Property                                              Data types                                                            stdWrap Default
-  ===================================================== ===================================================================== ======= ==================
-  notifyUserPostCreateSave_                             :ref:`data-type-boolean`                                              no        0
-  notifyUserPostCreateConfirm_                          :ref:`data-type-boolean`                                              no        0
-  notifyUserPostCreateRefuse_                           :ref:`data-type-boolean`                                              no        0
-  notifyUserPostCreateAccept_                           :ref:`data-type-boolean`                                              no        0
-  notifyUserPostCreateDecline_                          :ref:`data-type-boolean`                                              no        0
-  confirmEmailPostCreate_                               :ref:`data-type-boolean`                                              no        0
-  ===================================================== ===================================================================== ======= ==================
-
-
-.. _notifyUserPostCreateSave:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         notifyUserPostCreateSave
-
-   Data type
-         boolean
-
-   Description
-         Defines wether the user should get an email after the user saved the registration
-
-   Default
-         0
-
-
-.. _notifyUserPostCreateConfirm:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         notifyUserPostCreateConfirm
-
-   Data type
-         boolean
-
-   Description
-         Defines wether the user should get an email after the user confirmed the registration
-
-   Default
-         0
-
-
-.. _notifyUserPostCreateRefuse:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         notifyUserPostCreateRefuse
-
-   Data type
-         boolean
-
-   Description
-         Defines wether the user should get an email after the user refused the registration
-
-   Default
-         0
-
-
-.. _notifyUserPostCreateAccept:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         notifyUserPostCreateAccept
-
-   Data type
-         boolean
-
-   Description
-         Defines wether the user should get an email after the admin accepted the registration
-
-   Default
-         0
-
-
-.. _notifyUserPostCreateDecline:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         notifyUserPostCreateDecline
-
-   Data type
-         boolean
-
-   Description
-         Defines wether the user should get an email after the admin declined the registration
-
-   Default
-         0
-
-
-.. _confirmEmailPostCreate:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         confirmEmailPostCreate
-
-   Data type
-         boolean
-
-   Description
-         Defines wether the user need to confirm the registration
-
-   Default
-         0
-
-
-User edit properties
---------------------
-
-.. container:: ts-properties
-
-  ===================================================== ===================================================================== ======= ==================
-  Property                                              Data types                                                            stdWrap Default
-  ===================================================== ===================================================================== ======= ==================
-  notifyUserPostEditSave_                               :ref:`data-type-boolean`                                              no        0
-  notifyUserPostEditConfirm_                            :ref:`data-type-boolean`                                              no        0
-  notifyUserPostEditAccept_                             :ref:`data-type-boolean`                                              no        0
-  confirmEmailPostEdit_                                 :ref:`data-type-boolean`                                              no        0
-  ===================================================== ===================================================================== ======= ==================
-
-
-.. _notifyUserPostEditSave:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         notifyUserPostEditSave
-
-   Data type
-         boolean
-
-   Description
-         Defines wether the user should get an email after the user saved the changes
-
-   Default
-         0
-
-
-.. _notifyUserPostEditConfirm:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         notifyUserPostEditConfirm
-
-   Data type
-         boolean
-
-   Description
-         Defines wether the user should get an email after the user confirmed the email change
-
-   Default
-         0
-
-
-.. _notifyUserPostEditAccept:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         notifyUserPostEditAccept
-
-   Data type
-         boolean
-
-   Description
-         Defines wether the user should get an email after the user accepted the email change
-
-   Default
-         0
-
-
-.. _confirmEmailPostEdit:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         acceptEmailPostEdit
-
-   Data type
-         boolean
-
-   Description
-         Defines wether the user need to confirm the email change
-
-   Default
-         0
-
+..  _configuration-emails-address-and-subject-properties:
 
 Address and subject properties
-------------------------------
+==============================
 
-.. container:: ts-properties
+..  confval-menu::
+    :name: address-and-subject
+    :display: table
+    :type:
+    :Default:
 
-  ===================================================== ===================================================================== ======= ==================
-  Property                                              Data types                                                            stdWrap Default
-  ===================================================== ===================================================================== ======= ==================
-  sitename_                                             :ref:`data-type-string`                                               no      dummy Site
-  userEmail.fromName_                                   :ref:`data-type-string`                                               no      userEmail from
-  userEmail.fromEmail_                                  :ref:`data-type-string`                                               no      userEmailfrom@test.local
-  userEmail.replyName_                                  :ref:`data-type-string`                                               no      userEmail reply
-  userEmail.replyEmail_                                 :ref:`data-type-string`                                               no      userEmailreply@test.local
-  adminEmail.toName_                                    :ref:`data-type-string`                                               no      adminEmail to
-  adminEmail.toEmail_                                   :ref:`data-type-string`                                               no      adminToEmail@test.local
-  adminEmail.fromName_                                  :ref:`data-type-string`                                               no      adminEmail from
-  adminEmail.fromEmail_                                 :ref:`data-type-string`                                               no      adminEmailfrom@test.local
-  adminEmail.replyName_                                 :ref:`data-type-string`                                               no      adminEmail reply
-  adminEmail.replyEmail_                                :ref:`data-type-string`                                               no      adminEmailreply@test.local
-  ===================================================== ===================================================================== ======= ==================
+    .. _sitename:
 
+    ..  confval:: sitename
+        :type: string
+        :Default: dummy Site
 
-.. _sitename:
-.. ### BEGIN~OF~TABLE ###
+        Page Title for email subject
 
-.. container:: table-row
+    .. _userEmail.fromName:
 
-   Property
-         sitename
+    ..  confval:: userEmail.fromName
+        :type: string
+        :Default: userEmail from
 
-   Data type
-         string
+        Name used as from for email to user
 
-   Description
-         Page Title for email subject
+    .. _userEmail.fromEmail:
 
-   Default
-         dummy Site
+    ..  confval:: userEmail.fromEmail
+        :type: string
+        :Default: userEmailfrom@test.local
 
+        Email used as from for email to user
 
-.. _userEmail.fromName:
-.. ### BEGIN~OF~TABLE ###
+    .. _userEmail.replyName:
 
-.. container:: table-row
+    ..  confval:: userEmail.replyName
+        :type: string
+        :Default: userEmail reply
 
-   Property
-         userEmail.fromName
+        Name used as reply for email to user
 
-   Data type
-         string
+    .. _userEmail.replyEmail:
 
-   Description
-         Name used as from for email to user
+    ..  confval:: userEmail.replyEmail
+        :type: string
+        :Default: userEmailreply@test.local
 
-   Default
-         userEmail from
+        Email used as reply for email to user
 
+    .. _adminEmail.toName:
 
-.. _userEmail.fromEmail:
-.. ### BEGIN~OF~TABLE ###
+    ..  confval:: adminEmail.toName
+        :type: string
+        :Default: adminEmail to
 
-.. container:: table-row
+        Name used as recipient for email to admin
 
-   Property
-         userEmail.fromEmail
+    .. _adminEmail.toEmail:
 
-   Data type
-         string
+    ..  confval:: adminEmail.toEmail
+        :type: string
+        :Default: adminToEmail@test.local
 
-   Description
-         EMail used as from for email to user
+        Email used as recipient for email to admin
 
-   Default
-         userEmailfrom@test.local
+    .. _adminEmail.fromName:
 
+    ..  confval:: adminEmail.fromName
+        :type: string
+        :Default: adminEmail from
 
-.. _userEmail.replyName:
-.. ### BEGIN~OF~TABLE ###
+        Name used as from for email to admin
 
-.. container:: table-row
+    .. _adminEmail.fromEmail:
 
-   Property
-         userEmail.replyName
+    ..  confval:: adminEmail.fromEmail
+        :type: string
+        :Default: adminEmailfrom@test.local
 
-   Data type
-         string
+        Email used as from for email to admin
 
-   Description
-         Name used as reply for email to user
+    .. _adminEmail.replyName:
 
-   Default
-         userEmail reply
+    ..  confval:: adminEmail.replyName
+        :type: string
+        :Default: adminEmail reply
 
+        Name used as reply for email to admin
 
-.. _userEmail.replyEmail:
-.. ### BEGIN~OF~TABLE ###
+    .. _adminEmail.replyEmail:
 
-.. container:: table-row
+    ..  confval:: adminEmail.replyEmail
+        :type: string
+        :Default: adminEmailreply@test.local
 
-   Property
-         userEmail.replyEmail
-
-   Data type
-         string
-
-   Description
-         Email used as reply for email to user
-
-   Default
-         userEmailreply@test.local
-
-
-.. _adminEmail.toName:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         adminEmail.toName
-
-   Data type
-         string
-
-   Description
-         Name used as recipient for email to admin
-
-   Default
-         adminEmail to
-
-
-.. _adminEmail.toEmail:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         adminEmail.toEmail
-
-   Data type
-         string
-
-   Description
-         Email used as recipient for email to admin
-
-   Default
-         adminToEmail@test.local
-
-
-.. _adminEmail.fromName:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         adminEmail.fromName
-
-   Data type
-         string
-
-   Description
-         Name used as from for email to admin
-
-   Default
-         adminEmail from
-
-
-.. _adminEmail.fromEmail:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         adminEmail.fromEmail
-
-   Data type
-         string
-
-   Description
-         Email used as from for email to admin
-
-   Default
-         adminEmailfrom@test.local
-
-
-.. _adminEmail.replyName:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         adminEmail.replyName
-
-   Data type
-         string
-
-   Description
-         Name used as reply for email to admin
-
-   Default
-         adminEmail reply
-
-
-.. _adminEmail.replyEmail:
-.. ### BEGIN~OF~TABLE ###
-
-.. container:: table-row
-
-   Property
-         adminEmail.replyEmail
-
-   Data type
-         string
-
-   Description
-         Email used as reply for email to admin
-
-   Default
-         adminEmailreply@test.local
+        Email used as reply for email to admin
