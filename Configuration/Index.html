@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-10-13T13:35:48+00:00" name="docsearch:modified">
-<meta content="2024-10-13T13:35:48+00:00" name="dc.modified">
-<meta content="2024-10-13T13:35:48+00:00" property="article:modified_time">
+<meta content="2024-10-23T14:19:51+00:00" name="docsearch:modified">
+<meta content="2024-10-23T14:19:51+00:00" name="dc.modified">
+<meta content="2024-10-23T14:19:51+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -81,8 +81,7 @@
 </div>                    <div class="toc-collapse">
                                                 <div aria-label="main navigation" class="toc" role="navigation">
                                 <div aria-label="Main navigation" class="main_menu" role="navigation">
-        
-    <ul class="menu-level-1">
+            <ul class="menu-level-1">
     <li class="">
     <a href="../Introduction/Index.html">
         Introduction
@@ -120,13 +119,9 @@
     <a href="../Changelog/Index.html">
         ChangeLog
     </a></li>    <li class="">
-    <a href="../Deprecations/Index.html">
-        Deprecations
-    </a></li>    <li class="">
     <a href="../BreakingChanges/Index.html">
         Breaking Changes
-    </a></li>    </ul>
-    <ul class="menu-level-1">
+    </a></li>    </ul>    <ul class="menu-level-1">
     <li class="">
     <a href="../Sitemap.html">
         Sitemap
@@ -167,537 +162,747 @@
 <article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
     <div itemprop="articleBody">
         <!-- content start -->
-                <section class="section" id="configuration-1" data-rst-anchor="configuration">
+                
+<section class="section" id="configuration-1" data-rst-anchor="configuration">
             <a id="configuration"></a>
             <h1>Configuration<a class="headerlink" href="#configuration-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+            <section class="section" id="more-complex-configuration">
+            <h2>More complex configuration<a class="headerlink" href="#more-complex-configuration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             <div class="toctree-wrapper compound">
         <ul class="menu-level">
     <li class="toc-item">
-    <a href="Emails/Index.html#emails-1">Emails</a>
+    <a href="Emails/Index.html#emails">Emails</a>
 
 
 </li>
     <li class="toc-item">
-    <a href="Validation/Index.html#validation-1">Validation</a>
+    <a href="Validation/Index.html#validation">Validation</a>
 
 
 </li>
     </ul>
 </div>
-            <section class="section" id="use-another-captcha-extension">
-            <h2>use another captcha extension<a class="headerlink" href="#use-another-captcha-extension" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+    </section>
+            <section class="section" id="table-of-content">
+            <h2>Table of content<a class="headerlink" href="#table-of-content" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <div class="contents-wrapper">
+        <ul class="menu-level">
+    <li class="toc-item">
+    <a href="#integrate-other-captcha-extension">Integrate other captcha extension</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#write-own-validators">Write own validators</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#settings">Settings</a>
+
+
+</li>
+    <li class="toc-item">
+    <a href="#persistence">Persistence</a>
+
+
+</li>
+    </ul>
+</div>
+            <section class="section" id="integrate-other-captcha-extension">
+            <h3>Integrate other captcha extension<a class="headerlink" href="#integrate-other-captcha-extension" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>You have to write a captcha adapter for this purpose. You find the
-adapters here:</p>
-
-            <div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code>typo3conf/ext/sf_register/Classes/Services/Captcha
-</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-            
-    <p>Extend class</p>
-
-            <div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code>\\Evoweb\\SfRegister\\Services\\Captcha\\AbstractAdapter
-</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-            
-    <p>The functions</p>
-
-            <div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code>render()
-</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-            
-    <p>and</p>
-
-            <div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code>isValid()
-</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-            
-    <p>are required for the adapter to work.</p>
+adapters here in <code class="code-inline" translate="no">vendor/<wbr>evoweb/<wbr>sf-<wbr>register/<wbr>Classes/<wbr>Services/<wbr>Captcha</code>.
+Your class should extend <code class="code-inline code-inline-long"
+          translate="no"
+          aria-description="PHP class or interface"
+          aria-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Services\Captcha\AbstractAdapter in the internet."
+          data-bs-html="true">\Evoweb\<wbr>Sf<wbr>Register\<wbr>Services\<wbr>Captcha\<wbr>Abstract<wbr>Adapter</code>.
+The functions <code class="code-inline" translate="no">render<wbr>()</code> and <code class="code-inline" translate="no">is<wbr>Valid<wbr>()</code> are required for the adapter to work.</p>
 
     </section>
             <section class="section" id="write-own-validators">
-            <h2>Write own validators<a class="headerlink" href="#write-own-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h3>Write own validators<a class="headerlink" href="#write-own-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
-    <p>You can write your own validator. Validators are stored in</p>
+    <p>You can write your own validator. Validators are stored in
+<code class="code-inline" translate="no">vendor/<wbr>evoweb/<wbr>sf-<wbr>register/<wbr>Classes/<wbr>Domain/<wbr>Validator</code> extends class
+<code class="code-inline code-inline-long"
+          translate="no"
+          aria-description="PHP class"
+          aria-details="<code>abstract class AbstractValidator</code><br><em>Abstract validator. Mother af most validators.</em>"
+          data-bs-html="true"><a href="https://api.typo3.org/13.4/classes/TYPO3-CMS-Extbase-Validation-Validator-AbstractValidator.html" target="_blank">\TYPO3\<wbr>CMS\<wbr>Extbase\<wbr>Validation\<wbr>Validator\<wbr>Abstract<wbr>Validator <span class="text-secondary"><i class="fa-regular fa-circle-question"></i></span></a></code>
+and require the function <code class="code-inline" translate="no">is<wbr>Valid<wbr>()</code>.</p>
 
-            <div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code>typo3conf/ext/sf_register/Classes/Domain/Validator ,
-</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-            
-    <p>extends class</p>
-
-            <div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code>\\TYPO3\\CMS\\Extbase\\Validation\\Validator\\AbstractValidator
-</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-            
-    <p>and require the function</p>
-
-            <div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code>isValid().
-
-</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
     </section>
-            <section class="section" id="reference">
-            <h2>Reference<a class="headerlink" href="#reference" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <section class="section" id="settings">
+            <h3>Settings<a class="headerlink" href="#settings" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
-    <p>plugin.tx_sfregister.settings:</p>
+    <p>plugin.tx_sfregister.settings.*</p>
 
-            <blockquote>
-
-<ul>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
             
-    <p>badWordList</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
 
-        <dd class="field-odd">
-            
-    <p>string</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
 
-        <dd class="field-odd">
+
+
+<div class="table-responsive confval-table" id="confval-menu-settings-reference">
+    <table class="table table-hover caption-top">        <thead>
+        <tr>
+            <th scope="col">Name</th>
             
+                                    <th scope="col">Type</th>
+                            
+                                    <th scope="col">Default</th>
+                                    </tr>
+        </thead>
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-badwordlist">bad<wbr>Word<wbr>List</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    god, sex, password
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-redirectpostregistrationpageid">redirect<wbr>Post<wbr>Registration<wbr>Page<wbr>Id</a></div></td>
+                    <td>
+                            integer
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-redirectpostactivationpageid">redirect<wbr>Post<wbr>Activation<wbr>Page<wbr>Id</a></div></td>
+                    <td>
+                            integer
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-useemailaddressasusername">use<wbr>Email<wbr>Address<wbr>As<wbr>Username</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-useencryptedfilename">use<wbr>Encrypted<wbr>Filename</a></div></td>
+                    <td>
+                            integer
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                            
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-autologinpostregistration">autologin<wbr>Post<wbr>Registration</a></div></td>
+                    <td>
+                            integer
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-autologinpostconfirmation">autologin<wbr>Post<wbr>Confirmation</a></div></td>
+                    <td>
+                            integer
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-usergrouppostsave">usergroup<wbr>Post<wbr>Save</a></div></td>
+                    <td>
+                            integer
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-usergrouppostconfirm">usergroup<wbr>Post<wbr>Confirm</a></div></td>
+                    <td>
+                            integer
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-usergroup">usergroup</a></div></td>
+                    <td>
+                            integer
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-captcha-jmrecaptcha">captcha.<wbr>jmrecaptcha</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-captcha-srfreecap">captcha.<wbr>srfreecap</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+            </table>
+</div>
+            <a id="badWordValidator"></a>
+                <section data-search-title="badWordList"
+         data-search-id="confval-badwordlist"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">badWordList</h3>
+    <dl class="confval">
+        <dt id="confval-badwordlist"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">bad<wbr>Word<wbr>List</span></code>
+                                    <a class="headerlink" href="#confval-badwordlist"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-badwordlist"
+                       data-rstCode=":confval:`badWordList &lt;somemanual:badwordlist&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">god, sex, password
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
     <p>Comma separated list of word, that validator badWordFilter will avoid</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
 
-        <dd class="field-odd">
-            
-    <p>god, sex, password</p>
+            </div>
         </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>redirectPostRegistrationPageId</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>integer</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
+    </dl>
+</section>
+                <a id="redirectPostRegistrationPageId"></a>
+                <section data-search-title="redirectPostRegistrationPageId"
+         data-search-id="confval-redirectpostregistrationpageid"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">redirectPostRegistrationPageId</h3>
+    <dl class="confval">
+        <dt id="confval-redirectpostregistrationpageid"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">redirect<wbr>Post<wbr>Registration<wbr>Page<wbr>Id</span></code>
+                                    <a class="headerlink" href="#confval-redirectpostregistrationpageid"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-redirectpostregistrationpageid"
+                       data-rstCode=":confval:`redirectPostRegistrationPageId &lt;somemanual:redirectpostregistrationpageid&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">integer
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
     <p>Redirect page after registration</p>
+
+            </div>
         </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-                            &nbsp;
-                    </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>redirectPostActivationPageId</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>Int</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
+    </dl>
+</section>
+                <a id="redirectPostActivationPageId"></a>
+                <section data-search-title="redirectPostActivationPageId"
+         data-search-id="confval-redirectpostactivationpageid"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">redirectPostActivationPageId</h3>
+    <dl class="confval">
+        <dt id="confval-redirectpostactivationpageid"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">redirect<wbr>Post<wbr>Activation<wbr>Page<wbr>Id</span></code>
+                                    <a class="headerlink" href="#confval-redirectpostactivationpageid"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-redirectpostactivationpageid"
+                       data-rstCode=":confval:`redirectPostActivationPageId &lt;somemanual:redirectpostactivationpageid&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">integer
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
     <p>Redirect page after activation</p>
+
+            </div>
         </dd>
-            <dt class="field-odd">Default</dt>
+    </dl>
+</section>
+                <a id="useEmailAddressAsUsername"></a>
+                <section data-search-title="useEmailAddressAsUsername"
+         data-search-id="confval-useemailaddressasusername"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">useEmailAddressAsUsername</h3>
+    <dl class="confval">
+        <dt id="confval-useemailaddressasusername"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">use<wbr>Email<wbr>Address<wbr>As<wbr>Username</span></code>
+                                    <a class="headerlink" href="#confval-useemailaddressasusername"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-useemailaddressasusername"
+                       data-rstCode=":confval:`useEmailAddressAsUsername &lt;somemanual:useemailaddressasusername&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>Use email address as username</p>
 
-        <dd class="field-odd">
-                            &nbsp;
-                    </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>useEmailAddressAsUsername</p>
+            </div>
         </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>boolean</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
-    <p>Use email adress as username</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-                            &nbsp;
-                    </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>useEncryptedFilename</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>int</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
+    </dl>
+</section>
+                <a id="useEncryptedFilename"></a>
+                <section data-search-title="useEncryptedFilename"
+         data-search-id="confval-useencryptedfilename"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">useEncryptedFilename</h3>
+    <dl class="confval">
+        <dt id="confval-useencryptedfilename"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">use<wbr>Encrypted<wbr>Filename</span></code>
+                                    <a class="headerlink" href="#confval-useencryptedfilename"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-useencryptedfilename"
+                       data-rstCode=":confval:`useEncryptedFilename &lt;somemanual:useencryptedfilename&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">integer
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
     <p>Encrypt filenames</p>
 
-    <p>0 – none1 – md5</p>
-
-    <p>2 - sha1</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-            
-        </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>autologinPostRegistration</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>boolean</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
-    <p>Log in user after registration</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-            
-        </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>autologinPostConfirmation</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>boolean</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
-    <p>Log in user after activation</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-            
-        </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>usergroupPostSave</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>Int</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
-    <p>FE usergroup after registration</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-                            &nbsp;
-                    </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>usergroupPostConfirm</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>Int</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
-    <p>FE usergroup after activation</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-                            &nbsp;
-                    </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>usergroup</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>Int</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
-    <p>FE Usergroup after activation</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-                            &nbsp;
-                    </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>filefieldname</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>String</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
-    <p>Fild for filenames after upload</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-            
-    <p>image</p>
-        </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>captcha.jmrecaptcha</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>String</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
-    <p>Adapter for Captcha-Extension jm_recaptcha</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-            
-    <p>\Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter</p>
-        </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>captcha.srfreecap</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>string</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
-    <p>Adapter for Captcha-Extension sr_freecap</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-            
-    <p>\Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter</p>
-        </dd>
-    </dl></li>
-</ul>
-</blockquote>
-            
-    <p>plugin.tx_sfregister.persistence:</p>
-
-            <div class="table-row">
-    
 
 <ul>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>Property:</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>Data type:</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
-    <p>Description:</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-            
-    <p>Default:</p>
-        </dd>
-    </dl></li>
-    <li class="dash"><dl class="field-list simple ">
-            <dt class="field-odd">Property</dt>
-
-        <dd class="field-odd">
-            
-    <p>StoragePid</p>
-        </dd>
-            <dt class="field-odd">Data type</dt>
-
-        <dd class="field-odd">
-            
-    <p>integer</p>
-        </dd>
-            <dt class="field-odd">Description</dt>
-
-        <dd class="field-odd">
-            
-    <p>Sysfolder with FE User records</p>
-        </dd>
-            <dt class="field-odd">Default</dt>
-
-        <dd class="field-odd">
-                            &nbsp;
-                    </dd>
-    </dl></li>
+    <li class="dash">0 none</li>
+    <li class="dash">1 md5</li>
+    <li class="dash">2 sha1</li>
 </ul>
 
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="autologinPostRegistration"></a>
+                <section data-search-title="autologinPostRegistration"
+         data-search-id="confval-autologinpostregistration"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">autologinPostRegistration</h3>
+    <dl class="confval">
+        <dt id="confval-autologinpostregistration"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">autologin<wbr>Post<wbr>Registration</span></code>
+                                    <a class="headerlink" href="#confval-autologinpostregistration"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-autologinpostregistration"
+                       data-rstCode=":confval:`autologinPostRegistration &lt;somemanual:autologinpostregistration&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">integer
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>Log in user after registration</p>
 
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="autologinPostConfirmation"></a>
+                <section data-search-title="autologinPostConfirmation"
+         data-search-id="confval-autologinpostconfirmation"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">autologinPostConfirmation</h3>
+    <dl class="confval">
+        <dt id="confval-autologinpostconfirmation"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">autologin<wbr>Post<wbr>Confirmation</span></code>
+                                    <a class="headerlink" href="#confval-autologinpostconfirmation"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-autologinpostconfirmation"
+                       data-rstCode=":confval:`autologinPostConfirmation &lt;somemanual:autologinpostconfirmation&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">integer
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>Log in user after activation</p>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="usergroupPostSave"></a>
+                <section data-search-title="usergroupPostSave"
+         data-search-id="confval-usergrouppostsave"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">usergroupPostSave</h3>
+    <dl class="confval">
+        <dt id="confval-usergrouppostsave"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">usergroup<wbr>Post<wbr>Save</span></code>
+                                    <a class="headerlink" href="#confval-usergrouppostsave"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-usergrouppostsave"
+                       data-rstCode=":confval:`usergroupPostSave &lt;somemanual:usergrouppostsave&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">integer
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>Frontend usergroup after registration</p>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="usergroupPostConfirm"></a>
+                <section data-search-title="usergroupPostConfirm"
+         data-search-id="confval-usergrouppostconfirm"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">usergroupPostConfirm</h3>
+    <dl class="confval">
+        <dt id="confval-usergrouppostconfirm"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">usergroup<wbr>Post<wbr>Confirm</span></code>
+                                    <a class="headerlink" href="#confval-usergrouppostconfirm"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-usergrouppostconfirm"
+                       data-rstCode=":confval:`usergroupPostConfirm &lt;somemanual:usergrouppostconfirm&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">integer
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>Frontend usergroup after activation</p>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="usergroup"></a>
+                <section data-search-title="usergroup"
+         data-search-id="confval-usergroup"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">usergroup</h3>
+    <dl class="confval">
+        <dt id="confval-usergroup"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">usergroup</span></code>
+                                    <a class="headerlink" href="#confval-usergroup"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-usergroup"
+                       data-rstCode=":confval:`usergroup &lt;somemanual:usergroup&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">integer
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>Frontend usergroup after activation</p>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="captcha-jmrecaptcha"></a>
+                <section data-search-title="captcha.jmrecaptcha"
+         data-search-id="confval-captcha-jmrecaptcha"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">captcha.jmrecaptcha</h3>
+    <dl class="confval">
+        <dt id="confval-captcha-jmrecaptcha"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">captcha.<wbr>jmrecaptcha</span></code>
+                                    <a class="headerlink" href="#confval-captcha-jmrecaptcha"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-captcha-jmrecaptcha"
+                       data-rstCode=":confval:`captcha.jmrecaptcha &lt;somemanual:captcha-jmrecaptcha&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                            <dt class="field-odd">Default</dt>
+                        <dd class="field-odd">\Evoweb\SfRegister\Services\Captcha\JmRecaptchaAdapter
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>Adapter for Captcha-Extension jm_recaptcha</p>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="captcha-srfreecap"></a>
+                <section data-search-title="captcha.srfreecap"
+         data-search-id="confval-captcha-srfreecap"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">captcha.srfreecap</h3>
+    <dl class="confval">
+        <dt id="confval-captcha-srfreecap"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">captcha.<wbr>srfreecap</span></code>
+                                    <a class="headerlink" href="#confval-captcha-srfreecap"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-captcha-srfreecap"
+                       data-rstCode=":confval:`captcha.srfreecap &lt;somemanual:captcha-srfreecap&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                            <dt class="field-odd">Default</dt>
+                        <dd class="field-odd">\Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>Adapter for Captcha-Extension sr_freecap</p>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+    
+    </section>
+            <section class="section" id="persistence">
+            <h3>Persistence<a class="headerlink" href="#persistence" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+            
+    <p>plugin.tx_sfregister.persistence.*</p>
+
+            
+
+
+
+
+<div class="table-responsive confval-table" id="confval-menu-persistence-reference">
+    <table class="table table-hover caption-top">        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            
+                                    <th scope="col">Type</th>
+                            
+                                    <th scope="col">Default</th>
+                                    </tr>
+        </thead>
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-storagepid">storage<wbr>Pid</a></div></td>
+                    <td>
+                            integer
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+            </table>
+</div>
+            <a id="storagePid"></a>
+                <section data-search-title="storagePid"
+         data-search-id="confval-storagepid"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">storagePid</h3>
+    <dl class="confval">
+        <dt id="confval-storagepid"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">storage<wbr>Pid</span></code>
+                                    <a class="headerlink" href="#confval-storagepid"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-storagepid"
+                       data-rstCode=":confval:`storagePid &lt;somemanual:storagepid&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">integer
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>Sysfolder with Frontend User records</p>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+    
+    </section>
     </section>
     </section>
         <!-- content end -->
@@ -793,7 +998,7 @@ adapters here:</p>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: Oct 13, 2024 13:35</p>
+                    <p class="text-center">Last rendered: Oct 23, 2024 14:19</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

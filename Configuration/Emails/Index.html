@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-10-13T13:35:48+00:00" name="docsearch:modified">
-<meta content="2024-10-13T13:35:48+00:00" name="dc.modified">
-<meta content="2024-10-13T13:35:48+00:00" property="article:modified_time">
+<meta content="2024-10-23T14:19:51+00:00" name="docsearch:modified">
+<meta content="2024-10-23T14:19:51+00:00" name="dc.modified">
+<meta content="2024-10-23T14:19:51+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -81,8 +81,7 @@
 </div>                    <div class="toc-collapse">
                                                 <div aria-label="main navigation" class="toc" role="navigation">
                                 <div aria-label="Main navigation" class="main_menu" role="navigation">
-        
-    <ul class="menu-level-1">
+            <ul class="menu-level-1">
     <li class="">
     <a href="../../Introduction/Index.html">
         Introduction
@@ -120,13 +119,9 @@
     <a href="../../Changelog/Index.html">
         ChangeLog
     </a></li>    <li class="">
-    <a href="../../Deprecations/Index.html">
-        Deprecations
-    </a></li>    <li class="">
     <a href="../../BreakingChanges/Index.html">
         Breaking Changes
-    </a></li>    </ul>
-    <ul class="menu-level-1">
+    </a></li>    </ul>    <ul class="menu-level-1">
     <li class="">
     <a href="../../Sitemap.html">
         Sitemap
@@ -168,28 +163,29 @@
 <article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
     <div itemprop="articleBody">
         <!-- content start -->
-                <section class="section" id="emails-1" data-rst-anchor="emails">
-            <a id="emails"></a>
-            <h1>Emails<a class="headerlink" href="#emails-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+                
+<section class="section" id="emails" data-rst-anchor="configuration-emails">
+            <a id="configuration-emails"></a>
+            <h1>Emails<a class="headerlink" href="#emails" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
             <div class="contents-wrapper">
         <ul class="menu-level">
     <li class="toc-item">
-    <a href="#admin-registration-properties">Admin registration properties</a>
+    <a href="#notify-admin-create-properties">Notify admin create properties</a>
 
 
 </li>
     <li class="toc-item">
-    <a href="#admin-edit-properties">Admin edit properties</a>
+    <a href="#notify-admin-edit-properties">Notify admin edit properties</a>
 
 
 </li>
     <li class="toc-item">
-    <a href="#user-registration-properties">User registration properties</a>
+    <a href="#notify-user-create-properties">Notify user create properties</a>
 
 
 </li>
     <li class="toc-item">
-    <a href="#user-edit-properties">User edit properties</a>
+    <a href="#notify-user-edit-properties">Notify user edit properties</a>
 
 
 </li>
@@ -200,689 +196,1665 @@
 </li>
     </ul>
 </div>
-            <section class="section" id="admin-registration-properties" data-rst-anchor="notifyAdminPostCreateSave">
-            <h2>Admin registration properties<a class="headerlink" href="#admin-registration-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
-            <div class="ts-properties">
-    <div class="table-responsive">
-    <table class="table table-bordered align-default">
-                            <thead>
-            <tr>
-                            <th>Property</th>
-                            <th>Data types</th>
-                            <th>stdWrap</th>
-                            <th>Default</th>
-                    </tr>
-        </thead>
-        <tbody>
-    <tr>
-            <td><a href="#notifyAdminPostCreateSave">notifyAdminPostCreateSave</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyAdminPostCreateConfirm">notifyAdminPostCreateConfirm</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyAdminPostCreateRefuse">notifyAdminPostCreateRefuse</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyAdminPostCreateAccept">notifyAdminPostCreateAccept</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyAdminPostCreateDecline">notifyAdminPostCreateDecline</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#acceptEmailPostCreate">acceptEmailPostCreate</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
-</div>
-</div>
+            <section class="section" id="notify-admin-create-properties" data-rst-anchor="configuration-emails-notify-admin-create-properties">
+            <a id="configuration-emails-notify-admin-create-properties"></a>
+            <h2>Notify admin create properties<a class="headerlink" href="#notify-admin-create-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            
 
+
+
+
+<div class="table-responsive confval-table" id="confval-menu-admin-create">
+    <table class="table table-hover caption-top">        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            
+                                    <th scope="col">Type</th>
+                            
+                                    <th scope="col">Default</th>
+                                    </tr>
+        </thead>
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyadminpostcreatesave">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Save</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyadminpostcreateconfirm">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Confirm</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyadminpostcreaterefuse">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Refuse</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyadminpostcreateaccept">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Accept</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyadminpostcreatedecline">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Decline</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-acceptemailpostcreate">accept<wbr>Email<wbr>Post<wbr>Create</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+            </table>
+</div>
             <a id="notifyAdminPostCreateSave"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyAdminPostCreateSave</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the admin should get an email after the user saved the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+                <section data-search-title="notifyAdminPostCreateSave"
+         data-search-id="confval-notifyadminpostcreatesave"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyAdminPostCreateSave</h3>
+    <dl class="confval">
+        <dt id="confval-notifyadminpostcreatesave"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Save</span></code>
+                                    <a class="headerlink" href="#confval-notifyadminpostcreatesave"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyadminpostcreatesave"
+                       data-rstCode=":confval:`notifyAdminPostCreateSave &lt;somemanual:notifyadminpostcreatesave&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the admin should get an email after the user saved the registration</p>
 
-            <a id="notifyAdminPostCreateConfirm"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyAdminPostCreateConfirm</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the admin should get an email after the user confirmed the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyAdminPostCreateConfirm"></a>
+                <section data-search-title="notifyAdminPostCreateConfirm"
+         data-search-id="confval-notifyadminpostcreateconfirm"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyAdminPostCreateConfirm</h3>
+    <dl class="confval">
+        <dt id="confval-notifyadminpostcreateconfirm"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Confirm</span></code>
+                                    <a class="headerlink" href="#confval-notifyadminpostcreateconfirm"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyadminpostcreateconfirm"
+                       data-rstCode=":confval:`notifyAdminPostCreateConfirm &lt;somemanual:notifyadminpostcreateconfirm&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the admin should get an email after the user confirmed the registration</p>
 
-            <a id="notifyAdminPostCreateRefuse"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyAdminPostCreateRefuse</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the admin should get an email after the user refused the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyAdminPostCreateRefuse"></a>
+                <section data-search-title="notifyAdminPostCreateRefuse"
+         data-search-id="confval-notifyadminpostcreaterefuse"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyAdminPostCreateRefuse</h3>
+    <dl class="confval">
+        <dt id="confval-notifyadminpostcreaterefuse"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Refuse</span></code>
+                                    <a class="headerlink" href="#confval-notifyadminpostcreaterefuse"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyadminpostcreaterefuse"
+                       data-rstCode=":confval:`notifyAdminPostCreateRefuse &lt;somemanual:notifyadminpostcreaterefuse&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the admin should get an email after the user refused the registration</p>
 
-            <a id="notifyAdminPostCreateAccept"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyAdminPostCreateAccept</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the admin should get an email after the admin accepted the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyAdminPostCreateAccept"></a>
+                <section data-search-title="notifyAdminPostCreateAccept"
+         data-search-id="confval-notifyadminpostcreateaccept"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyAdminPostCreateAccept</h3>
+    <dl class="confval">
+        <dt id="confval-notifyadminpostcreateaccept"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Accept</span></code>
+                                    <a class="headerlink" href="#confval-notifyadminpostcreateaccept"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyadminpostcreateaccept"
+                       data-rstCode=":confval:`notifyAdminPostCreateAccept &lt;somemanual:notifyadminpostcreateaccept&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the admin should get an email after the admin accepted the registration</p>
 
-            <a id="notifyAdminPostCreateDecline"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyAdminPostCreateDecline</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the admin should get an email after the admin declined the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyAdminPostCreateDecline"></a>
+                <section data-search-title="notifyAdminPostCreateDecline"
+         data-search-id="confval-notifyadminpostcreatedecline"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyAdminPostCreateDecline</h3>
+    <dl class="confval">
+        <dt id="confval-notifyadminpostcreatedecline"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Decline</span></code>
+                                    <a class="headerlink" href="#confval-notifyadminpostcreatedecline"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyadminpostcreatedecline"
+                       data-rstCode=":confval:`notifyAdminPostCreateDecline &lt;somemanual:notifyadminpostcreatedecline&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the admin should get an email after the admin declined the registration</p>
 
-            <a id="acceptEmailPostCreate"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>acceptEmailPostCreate</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the admin need to accept the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="acceptEmailPostCreate"></a>
+                <section data-search-title="acceptEmailPostCreate"
+         data-search-id="confval-acceptemailpostcreate"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">acceptEmailPostCreate</h3>
+    <dl class="confval">
+        <dt id="confval-acceptemailpostcreate"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">accept<wbr>Email<wbr>Post<wbr>Create</span></code>
+                                    <a class="headerlink" href="#confval-acceptemailpostcreate"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-acceptemailpostcreate"
+                       data-rstCode=":confval:`acceptEmailPostCreate &lt;somemanual:acceptemailpostcreate&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the admin need to accept the registration</p>
 
+            </div>
+        </dd>
+    </dl>
+</section>
+    
     </section>
-            <section class="section" id="admin-edit-properties" data-rst-anchor="notifyAdminPostEditSave">
-            <h2>Admin edit properties<a class="headerlink" href="#admin-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
-            <div class="ts-properties">
-    <div class="table-responsive">
-    <table class="table table-bordered align-default">
-                            <thead>
-            <tr>
-                            <th>Property</th>
-                            <th>Data types</th>
-                            <th>stdWrap</th>
-                            <th>Default</th>
-                    </tr>
-        </thead>
-        <tbody>
-    <tr>
-            <td><a href="#notifyAdminPostEditSave">notifyAdminPostEditSave</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyAdminPostEditConfirm">notifyAdminPostEditConfirm</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyAdminPostEditAccept">notifyAdminPostEditAccept</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#acceptEmailPostEdit">acceptEmailPostEdit</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
-</div>
-</div>
+            <section class="section" id="notify-admin-edit-properties" data-rst-anchor="configuration-emails-notify-admin-edit-properties">
+            <a id="configuration-emails-notify-admin-edit-properties"></a>
+            <h2>Notify admin edit properties<a class="headerlink" href="#notify-admin-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            
 
+
+
+
+<div class="table-responsive confval-table" id="confval-menu-admin-edit">
+    <table class="table table-hover caption-top">        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            
+                                    <th scope="col">Type</th>
+                            
+                                    <th scope="col">Default</th>
+                                    </tr>
+        </thead>
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyadminposteditsave">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Save</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyadminposteditconfirm">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Confirm</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyadminposteditaccept">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Accept</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-acceptemailpostedit">accept<wbr>Email<wbr>Post<wbr>Edit</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+            </table>
+</div>
             <a id="notifyAdminPostEditSave"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyAdminPostEditSave</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the admin should get an email after the user saved the changes</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+                <section data-search-title="notifyAdminPostEditSave"
+         data-search-id="confval-notifyadminposteditsave"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyAdminPostEditSave</h3>
+    <dl class="confval">
+        <dt id="confval-notifyadminposteditsave"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Save</span></code>
+                                    <a class="headerlink" href="#confval-notifyadminposteditsave"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyadminposteditsave"
+                       data-rstCode=":confval:`notifyAdminPostEditSave &lt;somemanual:notifyadminposteditsave&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the admin should get an email after the user saved the changes</p>
 
-            <a id="notifyAdminPostEditConfirm"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyAdminPostEditConfirm</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the admin should get an email after the user confirmed the email change</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyAdminPostEditConfirm"></a>
+                <section data-search-title="notifyAdminPostEditConfirm"
+         data-search-id="confval-notifyadminposteditconfirm"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyAdminPostEditConfirm</h3>
+    <dl class="confval">
+        <dt id="confval-notifyadminposteditconfirm"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Confirm</span></code>
+                                    <a class="headerlink" href="#confval-notifyadminposteditconfirm"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyadminposteditconfirm"
+                       data-rstCode=":confval:`notifyAdminPostEditConfirm &lt;somemanual:notifyadminposteditconfirm&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the admin should get an email after the user confirmed the email change</p>
 
-            <a id="notifyAdminPostEditAccept"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyAdminPostEditAccept</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the admin should get an email after the user accepted the email change</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyAdminPostEditAccept"></a>
+                <section data-search-title="notifyAdminPostEditAccept"
+         data-search-id="confval-notifyadminposteditaccept"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyAdminPostEditAccept</h3>
+    <dl class="confval">
+        <dt id="confval-notifyadminposteditaccept"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Accept</span></code>
+                                    <a class="headerlink" href="#confval-notifyadminposteditaccept"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyadminposteditaccept"
+                       data-rstCode=":confval:`notifyAdminPostEditAccept &lt;somemanual:notifyadminposteditaccept&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the admin should get an email after the user accepted the email change</p>
 
-            <a id="acceptEmailPostEdit"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>acceptEmailPostEdit</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the admin need to accepted the email change</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="acceptEmailPostEdit"></a>
+                <section data-search-title="acceptEmailPostEdit"
+         data-search-id="confval-acceptemailpostedit"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">acceptEmailPostEdit</h3>
+    <dl class="confval">
+        <dt id="confval-acceptemailpostedit"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">accept<wbr>Email<wbr>Post<wbr>Edit</span></code>
+                                    <a class="headerlink" href="#confval-acceptemailpostedit"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-acceptemailpostedit"
+                       data-rstCode=":confval:`acceptEmailPostEdit &lt;somemanual:acceptemailpostedit&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the admin need to accepted the email change</p>
 
+            </div>
+        </dd>
+    </dl>
+</section>
+    
     </section>
-            <section class="section" id="user-registration-properties" data-rst-anchor="notifyUserPostCreateSave">
-            <h2>User registration properties<a class="headerlink" href="#user-registration-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
-            <div class="ts-properties">
-    <div class="table-responsive">
-    <table class="table table-bordered align-default">
-                            <thead>
-            <tr>
-                            <th>Property</th>
-                            <th>Data types</th>
-                            <th>stdWrap</th>
-                            <th>Default</th>
-                    </tr>
-        </thead>
-        <tbody>
-    <tr>
-            <td><a href="#notifyUserPostCreateSave">notifyUserPostCreateSave</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyUserPostCreateConfirm">notifyUserPostCreateConfirm</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyUserPostCreateRefuse">notifyUserPostCreateRefuse</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyUserPostCreateAccept">notifyUserPostCreateAccept</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyUserPostCreateDecline">notifyUserPostCreateDecline</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#confirmEmailPostCreate">confirmEmailPostCreate</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
-</div>
-</div>
+            <section class="section" id="notify-user-create-properties" data-rst-anchor="configuration-emails-notify-user-create-properties">
+            <a id="configuration-emails-notify-user-create-properties"></a>
+            <h2>Notify user create properties<a class="headerlink" href="#notify-user-create-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            
 
+
+
+
+<div class="table-responsive confval-table" id="confval-menu-user-create">
+    <table class="table table-hover caption-top">        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            
+                                    <th scope="col">Type</th>
+                            
+                                    <th scope="col">Default</th>
+                                    </tr>
+        </thead>
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyuserpostcreatesave">notify<wbr>User<wbr>Post<wbr>Create<wbr>Save</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyuserpostcreateconfirm">notify<wbr>User<wbr>Post<wbr>Create<wbr>Confirm</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyuserpostcreaterefuse">notify<wbr>User<wbr>Post<wbr>Create<wbr>Refuse</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyuserpostcreateaccept">notify<wbr>User<wbr>Post<wbr>Create<wbr>Accept</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyuserpostcreatedecline">notify<wbr>User<wbr>Post<wbr>Create<wbr>Decline</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-confirmemailpostcreate">confirm<wbr>Email<wbr>Post<wbr>Create</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+            </table>
+</div>
             <a id="notifyUserPostCreateSave"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyUserPostCreateSave</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the user should get an email after the user saved the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+                <section data-search-title="notifyUserPostCreateSave"
+         data-search-id="confval-notifyuserpostcreatesave"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyUserPostCreateSave</h3>
+    <dl class="confval">
+        <dt id="confval-notifyuserpostcreatesave"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>User<wbr>Post<wbr>Create<wbr>Save</span></code>
+                                    <a class="headerlink" href="#confval-notifyuserpostcreatesave"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyuserpostcreatesave"
+                       data-rstCode=":confval:`notifyUserPostCreateSave &lt;somemanual:notifyuserpostcreatesave&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the user should get an email after the user saved the registration</p>
 
-            <a id="notifyUserPostCreateConfirm"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyUserPostCreateConfirm</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the user should get an email after the user confirmed the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyUserPostCreateConfirm"></a>
+                <section data-search-title="notifyUserPostCreateConfirm"
+         data-search-id="confval-notifyuserpostcreateconfirm"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyUserPostCreateConfirm</h3>
+    <dl class="confval">
+        <dt id="confval-notifyuserpostcreateconfirm"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>User<wbr>Post<wbr>Create<wbr>Confirm</span></code>
+                                    <a class="headerlink" href="#confval-notifyuserpostcreateconfirm"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyuserpostcreateconfirm"
+                       data-rstCode=":confval:`notifyUserPostCreateConfirm &lt;somemanual:notifyuserpostcreateconfirm&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the user should get an email after the user confirmed the registration</p>
 
-            <a id="notifyUserPostCreateRefuse"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyUserPostCreateRefuse</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the user should get an email after the user refused the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyUserPostCreateRefuse"></a>
+                <section data-search-title="notifyUserPostCreateRefuse"
+         data-search-id="confval-notifyuserpostcreaterefuse"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyUserPostCreateRefuse</h3>
+    <dl class="confval">
+        <dt id="confval-notifyuserpostcreaterefuse"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>User<wbr>Post<wbr>Create<wbr>Refuse</span></code>
+                                    <a class="headerlink" href="#confval-notifyuserpostcreaterefuse"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyuserpostcreaterefuse"
+                       data-rstCode=":confval:`notifyUserPostCreateRefuse &lt;somemanual:notifyuserpostcreaterefuse&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the user should get an email after the user refused the registration</p>
 
-            <a id="notifyUserPostCreateAccept"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyUserPostCreateAccept</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the user should get an email after the admin accepted the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyUserPostCreateAccept"></a>
+                <section data-search-title="notifyUserPostCreateAccept"
+         data-search-id="confval-notifyuserpostcreateaccept"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyUserPostCreateAccept</h3>
+    <dl class="confval">
+        <dt id="confval-notifyuserpostcreateaccept"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>User<wbr>Post<wbr>Create<wbr>Accept</span></code>
+                                    <a class="headerlink" href="#confval-notifyuserpostcreateaccept"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyuserpostcreateaccept"
+                       data-rstCode=":confval:`notifyUserPostCreateAccept &lt;somemanual:notifyuserpostcreateaccept&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the user should get an email after the admin accepted the registration</p>
 
-            <a id="notifyUserPostCreateDecline"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyUserPostCreateDecline</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the user should get an email after the admin declined the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyUserPostCreateDecline"></a>
+                <section data-search-title="notifyUserPostCreateDecline"
+         data-search-id="confval-notifyuserpostcreatedecline"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyUserPostCreateDecline</h3>
+    <dl class="confval">
+        <dt id="confval-notifyuserpostcreatedecline"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>User<wbr>Post<wbr>Create<wbr>Decline</span></code>
+                                    <a class="headerlink" href="#confval-notifyuserpostcreatedecline"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyuserpostcreatedecline"
+                       data-rstCode=":confval:`notifyUserPostCreateDecline &lt;somemanual:notifyuserpostcreatedecline&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the user should get an email after the admin declined the registration</p>
 
-            <a id="confirmEmailPostCreate"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>confirmEmailPostCreate</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the user need to confirm the registration</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="confirmEmailPostCreate"></a>
+                <section data-search-title="confirmEmailPostCreate"
+         data-search-id="confval-confirmemailpostcreate"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">confirmEmailPostCreate</h3>
+    <dl class="confval">
+        <dt id="confval-confirmemailpostcreate"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">confirm<wbr>Email<wbr>Post<wbr>Create</span></code>
+                                    <a class="headerlink" href="#confval-confirmemailpostcreate"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-confirmemailpostcreate"
+                       data-rstCode=":confval:`confirmEmailPostCreate &lt;somemanual:confirmemailpostcreate&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the user need to confirm the registration</p>
 
+            </div>
+        </dd>
+    </dl>
+</section>
+    
     </section>
-            <section class="section" id="user-edit-properties" data-rst-anchor="notifyUserPostEditSave">
-            <h2>User edit properties<a class="headerlink" href="#user-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
-            <div class="ts-properties">
-    <div class="table-responsive">
-    <table class="table table-bordered align-default">
-                            <thead>
-            <tr>
-                            <th>Property</th>
-                            <th>Data types</th>
-                            <th>stdWrap</th>
-                            <th>Default</th>
-                    </tr>
-        </thead>
-        <tbody>
-    <tr>
-            <td><a href="#notifyUserPostEditSave">notifyUserPostEditSave</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyUserPostEditConfirm">notifyUserPostEditConfirm</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#notifyUserPostEditAccept">notifyUserPostEditAccept</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr>    <tr>
-            <td><a href="#confirmEmailPostEdit">confirmEmailPostEdit</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-boolean</span></td>            <td>no</td>            <td>0</td>    </tr></tbody>    </table>
-</div>
-</div>
+            <section class="section" id="notify-user-edit-properties" data-rst-anchor="configuration-emails-notify-user-edit-properties">
+            <a id="configuration-emails-notify-user-edit-properties"></a>
+            <h2>Notify user edit properties<a class="headerlink" href="#notify-user-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            
 
+
+
+
+<div class="table-responsive confval-table" id="confval-menu-user-edit">
+    <table class="table table-hover caption-top">        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            
+                                    <th scope="col">Type</th>
+                            
+                                    <th scope="col">Default</th>
+                                    </tr>
+        </thead>
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyuserposteditsave">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Save</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyuserposteditconfirm">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Confirm</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-notifyuserposteditaccept">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Accept</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-confirmemailpostedit">confirm<wbr>Email<wbr>Post<wbr>Edit</a></div></td>
+                    <td>
+                            boolean
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                
+            </table>
+</div>
             <a id="notifyUserPostEditSave"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyUserPostEditSave</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the user should get an email after the user saved the changes</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+                <section data-search-title="notifyUserPostEditSave"
+         data-search-id="confval-notifyuserposteditsave"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyUserPostEditSave</h3>
+    <dl class="confval">
+        <dt id="confval-notifyuserposteditsave"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Save</span></code>
+                                    <a class="headerlink" href="#confval-notifyuserposteditsave"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyuserposteditsave"
+                       data-rstCode=":confval:`notifyUserPostEditSave &lt;somemanual:notifyuserposteditsave&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the user should get an email after the user saved the changes</p>
 
-            <a id="notifyUserPostEditConfirm"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyUserPostEditConfirm</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the user should get an email after the user confirmed the email change</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyUserPostEditConfirm"></a>
+                <section data-search-title="notifyUserPostEditConfirm"
+         data-search-id="confval-notifyuserposteditconfirm"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyUserPostEditConfirm</h3>
+    <dl class="confval">
+        <dt id="confval-notifyuserposteditconfirm"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Confirm</span></code>
+                                    <a class="headerlink" href="#confval-notifyuserposteditconfirm"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyuserposteditconfirm"
+                       data-rstCode=":confval:`notifyUserPostEditConfirm &lt;somemanual:notifyuserposteditconfirm&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the user should get an email after the user confirmed the email change</p>
 
-            <a id="notifyUserPostEditAccept"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>notifyUserPostEditAccept</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the user should get an email after the user accepted the email change</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="notifyUserPostEditAccept"></a>
+                <section data-search-title="notifyUserPostEditAccept"
+         data-search-id="confval-notifyuserposteditaccept"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">notifyUserPostEditAccept</h3>
+    <dl class="confval">
+        <dt id="confval-notifyuserposteditaccept"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Accept</span></code>
+                                    <a class="headerlink" href="#confval-notifyuserposteditaccept"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-notifyuserposteditaccept"
+                       data-rstCode=":confval:`notifyUserPostEditAccept &lt;somemanual:notifyuserposteditaccept&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the user should get an email after the user accepted the email change</p>
 
-            <a id="confirmEmailPostEdit"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>acceptEmailPostEdit</dd>
-                                <dt>Data type</dt>
-        
-        <dd>boolean</dd>
-                                <dt>Description</dt>
-        
-        <dd>Defines wether the user need to confirm the email change</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="confirmEmailPostEdit"></a>
+                <section data-search-title="confirmEmailPostEdit"
+         data-search-id="confval-confirmemailpostedit"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">confirmEmailPostEdit</h3>
+    <dl class="confval">
+        <dt id="confval-confirmemailpostedit"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">confirm<wbr>Email<wbr>Post<wbr>Edit</span></code>
+                                    <a class="headerlink" href="#confval-confirmemailpostedit"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-confirmemailpostedit"
+                       data-rstCode=":confval:`confirmEmailPostEdit &lt;somemanual:confirmemailpostedit&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">boolean
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Defines wether the user need to confirm the email change</p>
 
+            </div>
+        </dd>
+    </dl>
+</section>
+    
     </section>
-            <section class="section" id="address-and-subject-properties" data-rst-anchor="sitename">
+            <section class="section" id="address-and-subject-properties" data-rst-anchor="configuration-emails-address-and-subject-properties">
+            <a id="configuration-emails-address-and-subject-properties"></a>
             <h2>Address and subject properties<a class="headerlink" href="#address-and-subject-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
-            <div class="ts-properties">
-    <div class="table-responsive">
-    <table class="table table-bordered align-default">
-                            <thead>
-            <tr>
-                            <th>Property</th>
-                            <th>Data types</th>
-                            <th>stdWrap</th>
-                            <th>Default</th>
-                    </tr>
+            
+
+
+
+
+<div class="table-responsive confval-table" id="confval-menu-address-and-subject">
+    <table class="table table-hover caption-top">        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            
+                                    <th scope="col">Type</th>
+                            
+                                    <th scope="col">Default</th>
+                                    </tr>
         </thead>
-        <tbody>
-    <tr>
-            <td><a href="#sitename">sitename</a></td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-string</span></td>            <td>no</td>            <td>dummy Site</td>    </tr>    <tr>
-            <td>userEmail.fromName_</td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-string</span></td>            <td>no</td>            <td>userEmail from</td>    </tr>    <tr>
-            <td>userEmail.fromEmail_</td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-string</span></td>            <td>no</td>            <td><a href="mailto:userEmailfrom@test.local">userEmailfrom@test.local</a></td>    </tr>    <tr>
-            <td>userEmail.replyName_</td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-string</span></td>            <td>no</td>            <td>userEmail reply</td>    </tr>    <tr>
-            <td>userEmail.replyEmail_</td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-string</span></td>            <td>no</td>            <td><a href="mailto:userEmailreply@test.local">userEmailreply@test.local</a></td>    </tr>    <tr>
-            <td>adminEmail.toName_</td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-string</span></td>            <td>no</td>            <td>adminEmail to</td>    </tr>    <tr>
-            <td>adminEmail.toEmail_</td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-string</span></td>            <td>no</td>            <td><a href="mailto:adminToEmail@test.local">adminToEmail@test.local</a></td>    </tr>    <tr>
-            <td>adminEmail.fromName_</td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-string</span></td>            <td>no</td>            <td>adminEmail from</td>    </tr>    <tr>
-            <td>adminEmail.fromEmail_</td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-string</span></td>            <td>no</td>            <td><a href="mailto:adminEmailfrom@test.local">adminEmailfrom@test.local</a></td>    </tr>    <tr>
-            <td>adminEmail.replyName_</td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-string</span></td>            <td>no</td>            <td>adminEmail reply</td>    </tr>    <tr>
-            <td>adminEmail.replyEmail_</td>            <td><span class="invalid-link" title="This link cannot be resolved anymore">data-type-string</span></td>            <td>no</td>            <td><a href="mailto:adminEmailreply@test.local">adminEmailreply@test.local</a></td>    </tr></tbody>    </table>
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-sitename">sitename</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    dummy Site
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-useremail-fromname">user<wbr>Email.<wbr>from<wbr>Name</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    userEmail from
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-useremail-fromemail">user<wbr>Email.<wbr>from<wbr>Email</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    <a href="mailto:userEmailfrom@test.local">userEmailfrom@test.local</a>
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-useremail-replyname">user<wbr>Email.<wbr>reply<wbr>Name</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    userEmail reply
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-useremail-replyemail">user<wbr>Email.<wbr>reply<wbr>Email</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    <a href="mailto:userEmailreply@test.local">userEmailreply@test.local</a>
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-adminemail-toname">admin<wbr>Email.<wbr>to<wbr>Name</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    adminEmail to
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-adminemail-toemail">admin<wbr>Email.<wbr>to<wbr>Email</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    <a href="mailto:adminToEmail@test.local">adminToEmail@test.local</a>
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-adminemail-fromname">admin<wbr>Email.<wbr>from<wbr>Name</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    adminEmail from
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-adminemail-fromemail">admin<wbr>Email.<wbr>from<wbr>Email</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    <a href="mailto:adminEmailfrom@test.local">adminEmailfrom@test.local</a>
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-adminemail-replyname">admin<wbr>Email.<wbr>reply<wbr>Name</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    adminEmail reply
+                                </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-adminemail-replyemail">admin<wbr>Email.<wbr>reply<wbr>Email</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    <a href="mailto:adminEmailreply@test.local">adminEmailreply@test.local</a>
+                                </td>
+            </tr>
+                
+            </table>
 </div>
-</div>
-
             <a id="sitename"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>sitename</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Page Title for email subject</dd>
-                                <dt>Default</dt>
-        
-        <dd>dummy Site</dd>
-            </dl>
-</div>
+                <section data-search-title="sitename"
+         data-search-id="confval-sitename"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">sitename</h3>
+    <dl class="confval">
+        <dt id="confval-sitename"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">sitename</span></code>
+                                    <a class="headerlink" href="#confval-sitename"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-sitename"
+                       data-rstCode=":confval:`sitename &lt;somemanual:sitename&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">dummy Site
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Page Title for email subject</p>
 
-            <a id="userEmail.fromName"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>userEmail.fromName</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Name used as from for email to user</dd>
-                                <dt>Default</dt>
-        
-        <dd>userEmail from</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="userEmail.fromName"></a>
+                <section data-search-title="userEmail.fromName"
+         data-search-id="confval-useremail-fromname"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">userEmail.fromName</h3>
+    <dl class="confval">
+        <dt id="confval-useremail-fromname"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">user<wbr>Email.<wbr>from<wbr>Name</span></code>
+                                    <a class="headerlink" href="#confval-useremail-fromname"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-useremail-fromname"
+                       data-rstCode=":confval:`userEmail.fromName &lt;somemanual:useremail-fromname&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">userEmail from
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Name used as from for email to user</p>
 
-            <a id="userEmail.fromEmail"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>userEmail.fromEmail</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>EMail used as from for email to user</dd>
-                                <dt>Default</dt>
-        
-        <dd><a href="mailto:userEmailfrom@test.local">userEmailfrom@test.local</a></dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="userEmail.fromEmail"></a>
+                <section data-search-title="userEmail.fromEmail"
+         data-search-id="confval-useremail-fromemail"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">userEmail.fromEmail</h3>
+    <dl class="confval">
+        <dt id="confval-useremail-fromemail"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">user<wbr>Email.<wbr>from<wbr>Email</span></code>
+                                    <a class="headerlink" href="#confval-useremail-fromemail"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-useremail-fromemail"
+                       data-rstCode=":confval:`userEmail.fromEmail &lt;somemanual:useremail-fromemail&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even"><a href="mailto:userEmailfrom@test.local">userEmailfrom@test.local</a>
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Email used as from for email to user</p>
 
-            <a id="userEmail.replyName"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>userEmail.replyName</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Name used as reply for email to user</dd>
-                                <dt>Default</dt>
-        
-        <dd>userEmail reply</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="userEmail.replyName"></a>
+                <section data-search-title="userEmail.replyName"
+         data-search-id="confval-useremail-replyname"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">userEmail.replyName</h3>
+    <dl class="confval">
+        <dt id="confval-useremail-replyname"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">user<wbr>Email.<wbr>reply<wbr>Name</span></code>
+                                    <a class="headerlink" href="#confval-useremail-replyname"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-useremail-replyname"
+                       data-rstCode=":confval:`userEmail.replyName &lt;somemanual:useremail-replyname&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">userEmail reply
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Name used as reply for email to user</p>
 
-            <a id="userEmail.replyEmail"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>userEmail.replyEmail</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Email used as reply for email to user</dd>
-                                <dt>Default</dt>
-        
-        <dd><a href="mailto:userEmailreply@test.local">userEmailreply@test.local</a></dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="userEmail.replyEmail"></a>
+                <section data-search-title="userEmail.replyEmail"
+         data-search-id="confval-useremail-replyemail"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">userEmail.replyEmail</h3>
+    <dl class="confval">
+        <dt id="confval-useremail-replyemail"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">user<wbr>Email.<wbr>reply<wbr>Email</span></code>
+                                    <a class="headerlink" href="#confval-useremail-replyemail"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-useremail-replyemail"
+                       data-rstCode=":confval:`userEmail.replyEmail &lt;somemanual:useremail-replyemail&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even"><a href="mailto:userEmailreply@test.local">userEmailreply@test.local</a>
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Email used as reply for email to user</p>
 
-            <a id="adminEmail.toName"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>adminEmail.toName</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Name used as recipient for email to admin</dd>
-                                <dt>Default</dt>
-        
-        <dd>adminEmail to</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="adminEmail.toName"></a>
+                <section data-search-title="adminEmail.toName"
+         data-search-id="confval-adminemail-toname"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">adminEmail.toName</h3>
+    <dl class="confval">
+        <dt id="confval-adminemail-toname"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">admin<wbr>Email.<wbr>to<wbr>Name</span></code>
+                                    <a class="headerlink" href="#confval-adminemail-toname"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-adminemail-toname"
+                       data-rstCode=":confval:`adminEmail.toName &lt;somemanual:adminemail-toname&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">adminEmail to
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Name used as recipient for email to admin</p>
 
-            <a id="adminEmail.toEmail"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>adminEmail.toEmail</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Email used as recipient for email to admin</dd>
-                                <dt>Default</dt>
-        
-        <dd><a href="mailto:adminToEmail@test.local">adminToEmail@test.local</a></dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="adminEmail.toEmail"></a>
+                <section data-search-title="adminEmail.toEmail"
+         data-search-id="confval-adminemail-toemail"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">adminEmail.toEmail</h3>
+    <dl class="confval">
+        <dt id="confval-adminemail-toemail"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">admin<wbr>Email.<wbr>to<wbr>Email</span></code>
+                                    <a class="headerlink" href="#confval-adminemail-toemail"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-adminemail-toemail"
+                       data-rstCode=":confval:`adminEmail.toEmail &lt;somemanual:adminemail-toemail&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even"><a href="mailto:adminToEmail@test.local">adminToEmail@test.local</a>
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Email used as recipient for email to admin</p>
 
-            <a id="adminEmail.fromName"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>adminEmail.fromName</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Name used as from for email to admin</dd>
-                                <dt>Default</dt>
-        
-        <dd>adminEmail from</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="adminEmail.fromName"></a>
+                <section data-search-title="adminEmail.fromName"
+         data-search-id="confval-adminemail-fromname"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">adminEmail.fromName</h3>
+    <dl class="confval">
+        <dt id="confval-adminemail-fromname"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">admin<wbr>Email.<wbr>from<wbr>Name</span></code>
+                                    <a class="headerlink" href="#confval-adminemail-fromname"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-adminemail-fromname"
+                       data-rstCode=":confval:`adminEmail.fromName &lt;somemanual:adminemail-fromname&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">adminEmail from
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Name used as from for email to admin</p>
 
-            <a id="adminEmail.fromEmail"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>adminEmail.fromEmail</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Email used as from for email to admin</dd>
-                                <dt>Default</dt>
-        
-        <dd><a href="mailto:adminEmailfrom@test.local">adminEmailfrom@test.local</a></dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="adminEmail.fromEmail"></a>
+                <section data-search-title="adminEmail.fromEmail"
+         data-search-id="confval-adminemail-fromemail"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">adminEmail.fromEmail</h3>
+    <dl class="confval">
+        <dt id="confval-adminemail-fromemail"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">admin<wbr>Email.<wbr>from<wbr>Email</span></code>
+                                    <a class="headerlink" href="#confval-adminemail-fromemail"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-adminemail-fromemail"
+                       data-rstCode=":confval:`adminEmail.fromEmail &lt;somemanual:adminemail-fromemail&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even"><a href="mailto:adminEmailfrom@test.local">adminEmailfrom@test.local</a>
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Email used as from for email to admin</p>
 
-            <a id="adminEmail.replyName"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>adminEmail.replyName</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Name used as reply for email to admin</dd>
-                                <dt>Default</dt>
-        
-        <dd>adminEmail reply</dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="adminEmail.replyName"></a>
+                <section data-search-title="adminEmail.replyName"
+         data-search-id="confval-adminemail-replyname"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">adminEmail.replyName</h3>
+    <dl class="confval">
+        <dt id="confval-adminemail-replyname"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">admin<wbr>Email.<wbr>reply<wbr>Name</span></code>
+                                    <a class="headerlink" href="#confval-adminemail-replyname"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-adminemail-replyname"
+                       data-rstCode=":confval:`adminEmail.replyName &lt;somemanual:adminemail-replyname&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">adminEmail reply
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Name used as reply for email to admin</p>
 
-            <a id="adminEmail.replyEmail"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>adminEmail.replyEmail</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Email used as reply for email to admin</dd>
-                                <dt>Default</dt>
-        
-        <dd><a href="mailto:adminEmailreply@test.local">adminEmailreply@test.local</a></dd>
-            </dl>
-</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="adminEmail.replyEmail"></a>
+                <section data-search-title="adminEmail.replyEmail"
+         data-search-id="confval-adminemail-replyemail"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">adminEmail.replyEmail</h3>
+    <dl class="confval">
+        <dt id="confval-adminemail-replyemail"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">admin<wbr>Email.<wbr>reply<wbr>Email</span></code>
+                                    <a class="headerlink" href="#confval-adminemail-replyemail"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-adminemail-replyemail"
+                       data-rstCode=":confval:`adminEmail.replyEmail &lt;somemanual:adminemail-replyemail&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even"><a href="mailto:adminEmailreply@test.local">adminEmailreply@test.local</a>
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Email used as reply for email to admin</p>
 
+            </div>
+        </dd>
+    </dl>
+</section>
+    
     </section>
     </section>
         <!-- content end -->
@@ -978,7 +1950,7 @@
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: Oct 13, 2024 13:35</p>
+                    <p class="text-center">Last rendered: Oct 23, 2024 14:19</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

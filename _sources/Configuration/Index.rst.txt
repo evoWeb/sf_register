@@ -1,283 +1,160 @@
-.. include:: ../Includes.txt
-
-
+.. include:: /Includes.rst.txt
+..  index:: Configuration
 .. _configuration:
 
+=============
 Configuration
 =============
 
+More complex configuration
+--------------------------
 
 .. toctree::
-   :maxdepth: 5
    :titlesonly:
    :glob:
 
    Emails/Index
    Validation/Index
 
-use another captcha extension
------------------------------
+Table of content
+----------------
+
+.. contents::
+   :local:
+
+Integrate other captcha extension
+=================================
 
 You have to write a captcha adapter for this purpose. You find the
-adapters here:
-
-::
-
-   typo3conf/ext/sf_register/Classes/Services/Captcha
-
-Extend class
-
-::
-
-   \\Evoweb\\SfRegister\\Services\\Captcha\\AbstractAdapter
-
-The functions
-
-::
-
-   render()
-
-and
-
-::
-
-   isValid()
-
-are required for the adapter to work.
-
+adapters here in `vendor/evoweb/sf-register/Classes/Services/Captcha`.
+Your class should extend :php:`\Evoweb\SfRegister\Services\Captcha\AbstractAdapter`.
+The functions `render()` and `isValid()` are required for the adapter to work.
 
 Write own validators
---------------------
+====================
 
 You can write your own validator. Validators are stored in
+`vendor/evoweb/sf-register/Classes/Domain/Validator` extends class
+:php:`\TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator`
+and require the function `isValid()`.
 
-::
+Settings
+========
 
-   typo3conf/ext/sf_register/Classes/Domain/Validator ,
+plugin.tx_sfregister.settings.*
 
-extends class
+..  confval-menu::
+    :name: settings-reference
+    :display: table
+    :type:
+    :Default:
 
-::
+    ..  _badWordValidator:
 
-   \\TYPO3\\CMS\\Extbase\\Validation\\Validator\\AbstractValidator
+    ..  confval:: badWordList
+        :type: string
+        :Default: god, sex, password
 
-and require the function
+        Comma separated list of word, that validator badWordFilter will avoid
 
-::
+    ..  _redirectPostRegistrationPageId:
 
-   isValid().
+    ..  confval:: redirectPostRegistrationPageId
+        :type: integer
 
+        Redirect page after registration
 
-Reference
----------
+    ..  _redirectPostActivationPageId:
 
-plugin.tx\_sfregister.settings:
+    ..  confval:: redirectPostActivationPageId
+        :type: integer
 
- - :Property:
-         badWordList
+        Redirect page after activation
 
-   :Data type:
-         string
+    ..  _useEmailAddressAsUsername:
 
-   :Description:
-         Comma separated list of word, that validator badWordFilter will avoid
+    ..  confval:: useEmailAddressAsUsername
+        :type: boolean
 
-   :Default:
-         god, sex, password
+        Use email address as username
 
+    ..  _useEncryptedFilename:
 
+    ..  confval:: useEncryptedFilename
+        :type: integer
+        :Default: 0
 
- - :Property:
-         redirectPostRegistrationPageId
+        Encrypt filenames
 
-   :Data type:
-         integer
+        - 0 none
+        - 1 md5
+        - 2 sha1
 
-   :Description:
-         Redirect page after registration
+    ..  _autologinPostRegistration:
 
-   :Default:
+    ..  confval:: autologinPostRegistration
+        :type: integer
 
+        Log in user after registration
 
+    ..  _autologinPostConfirmation:
 
- - :Property:
-         redirectPostActivationPageId
+    ..  confval:: autologinPostConfirmation
+        :type: integer
 
-   :Data type:
-         Int
+        Log in user after activation
 
-   :Description:
-         Redirect page after activation
+    ..  _usergroupPostSave:
 
-   :Default:
+    ..  confval:: usergroupPostSave
+        :type: integer
 
+        Frontend usergroup after registration
 
+    ..  _usergroupPostConfirm:
 
- - :Property:
-         useEmailAddressAsUsername
+    ..  confval:: usergroupPostConfirm
+        :type: integer
 
-   :Data type:
-         boolean
+        Frontend usergroup after activation
 
-   :Description:
-         Use email adress as username
+    ..  _usergroup:
 
-   :Default:
+    ..  confval:: usergroup
+        :type: integer
 
+        Frontend usergroup after activation
 
+    ..  _captcha-jmrecaptcha:
 
- - :Property:
-         useEncryptedFilename
+    ..  confval:: captcha.jmrecaptcha
+        :type: string
+        :default: \\Evoweb\\SfRegister\\Services\\Captcha\\JmRecaptchaAdapter
 
-   :Data type:
-         int
+        Adapter for Captcha-Extension jm_recaptcha
 
-   :Description:
-         Encrypt filenames
+    ..  _captcha-srfreecap:
 
-         0 – none1 – md5
+    ..  confval:: captcha.srfreecap
+        :type: string
+        :default: \\Evoweb\\SfRegister\\Services\\Captcha\\SrFreecapAdapter
 
-         2 - sha1
+        Adapter for Captcha-Extension sr_freecap
 
-   :Default:
-         0
+Persistence
+===========
 
+plugin.tx_sfregister.persistence.*
 
+..  confval-menu::
+    :name: persistence-reference
+    :display: table
+    :type:
+    :Default:
 
- - :Property:
-         autologinPostRegistration
+    ..  _storagePid:
 
-   :Data type:
-         boolean
+    ..  confval:: storagePid
+        :type: integer
 
-   :Description:
-         Log in user after registration
-
-   :Default:
-         0
-
-
-
- - :Property:
-         autologinPostConfirmation
-
-   :Data type:
-         boolean
-
-   :Description:
-         Log in user after activation
-
-   :Default:
-         0
-
-
-
- - :Property:
-         usergroupPostSave
-
-   :Data type:
-         Int
-
-   :Description:
-         FE usergroup after registration
-
-   :Default:
-
-
-
- - :Property:
-         usergroupPostConfirm
-
-   :Data type:
-         Int
-
-   :Description:
-         FE usergroup after activation
-
-   :Default:
-
-
-
- - :Property:
-         usergroup
-
-   :Data type:
-         Int
-
-   :Description:
-         FE Usergroup after activation
-
-   :Default:
-
-
-
- - :Property:
-         filefieldname
-
-   :Data type:
-         String
-
-   :Description:
-         Fild for filenames after upload
-
-   :Default:
-         image
-
-
-
- - :Property:
-         captcha.jmrecaptcha
-
-   :Data type:
-         String
-
-   :Description:
-         Adapter for Captcha-Extension jm\_recaptcha
-
-   :Default:
-         \\Evoweb\\SfRegister\\Services\\Captcha\\JmRecaptchaAdapter
-
-
-
- - :Property:
-         captcha.srfreecap
-
-   :Data type:
-         string
-
-   :Description:
-         Adapter for Captcha-Extension sr\_freecap
-
-   :Default:
-         \\Evoweb\\SfRegister\\Services\\Captcha\\SrFreecapAdapter
-
-
-
-plugin.tx\_sfregister.persistence:
-
-.. container:: table-row
-
- - :Property:
-         Property:
-
-   :Data type:
-         Data type:
-
-   :Description:
-         Description:
-
-   :Default:
-         Default:
-
-
-
- - :Property:
-         StoragePid
-
-   :Data type:
-         integer
-
-   :Description:
-         Sysfolder with FE User records
-
-   :Default:
+        Sysfolder with Frontend User records

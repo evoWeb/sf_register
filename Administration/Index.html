@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-10-13T13:35:48+00:00" name="docsearch:modified">
-<meta content="2024-10-13T13:35:48+00:00" name="dc.modified">
-<meta content="2024-10-13T13:35:48+00:00" property="article:modified_time">
+<meta content="2024-10-23T14:19:51+00:00" name="docsearch:modified">
+<meta content="2024-10-23T14:19:51+00:00" name="dc.modified">
+<meta content="2024-10-23T14:19:51+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -81,8 +81,7 @@
 </div>                    <div class="toc-collapse">
                                                 <div aria-label="main navigation" class="toc" role="navigation">
                                 <div aria-label="Main navigation" class="main_menu" role="navigation">
-        
-    <ul class="menu-level-1">
+            <ul class="menu-level-1">
     <li class="">
     <a href="../Introduction/Index.html">
         Introduction
@@ -120,13 +119,9 @@
     <a href="../Changelog/Index.html">
         ChangeLog
     </a></li>    <li class="">
-    <a href="../Deprecations/Index.html">
-        Deprecations
-    </a></li>    <li class="">
     <a href="../BreakingChanges/Index.html">
         Breaking Changes
-    </a></li>    </ul>
-    <ul class="menu-level-1">
+    </a></li>    </ul>    <ul class="menu-level-1">
     <li class="">
     <a href="../Sitemap.html">
         Sitemap
@@ -167,61 +162,92 @@
 <article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
     <div itemprop="articleBody">
         <!-- content start -->
-                <section class="section" id="administration-1" data-rst-anchor="administration">
+                
+<section class="section" id="administration-1" data-rst-anchor="administration">
             <a id="administration"></a>
             <h1>Administration<a class="headerlink" href="#administration-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
             
 
 <ul>
-    <li class="dash">Install the extension with the extension manager</li>
-    <li class="dash">Install the captcha extension you want to use (sr_freecap or
-jw_recaptcha work out of the box)</li>
-    <li class="dash">install static-info-tables</li>
-    <li class="dash">include the static template</li>
+    <li class="dash">
+    <p>install the extension with composer</p>
+    <div class="code-block-caption">
+        <span class="caption-text">shell</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs bash">composer req evoweb/sf-register</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div></li>
+    <li class="dash">
+    <p>install a compatible captcha extension of your choice</p>
+    <div class="code-block-caption">
+        <span class="caption-text">shell</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs bash">composer req evoweb/recaptcha
+// or
+composer req sjbr/sr-freecap</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div></li>
+    <li class="dash">
+    <p>install static-info-tables</p>
+    <div class="code-block-caption">
+        <span class="caption-text">shell</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs bash">composer req sjbr/static-info-tables</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div></li>
+    <li class="dash">include the static template, since TYPO3 13 its possible to use one of the two
+available SiteSets instead.</li>
     <li class="dash">create a sysfolder to store the user data</li>
     <li class="dash">create two fe_usergroups inside this sysfolder</li>
-    <li class="dash">BE AWARE: if you use older fe_usergroups, check the record type and set it to Tx_Extbase_Domain_Model_FrontendUserGroup, if this is missing!</li>
-    <li class="dash">Use the Constants Editor to configure the extension.</li>
+    <li class="dash">use the Constants Editor to configure the extension. If you use a SiteSet
+instead of TypoScript static template, you need to use &#039;Site Management &gt;
+Settings&#039; instead</li>
     <li class="dash">
-    <p>Create a page for register, insert the Plugin</p>
+    <p>create a page for register, insert a &quot;Registration: Create user&quot; content element</p>
 
 
 <ul>
-    <li class="dash">Code is Create</li>
     <li class="dash">record storage must include the sysfolder with your user data</li>
 </ul>
 </li>
     <li class="dash">
-    <p>create a page for edit the profile, insert the Plugin</p>
+    <p>create a page to edit the profile, insert a &quot;Registration: Edit user&quot; content element</p>
 
 
 <ul>
     <li class="dash">limit the access to the usergroup the user gets after activation</li>
-    <li class="dash">Code is Edit</li>
     <li class="dash">record storage must include the sysfolder with your user data</li>
 </ul>
 </li>
     <li class="dash">
-    <p>create a page for password change, include the Plugin</p>
+    <p>create a page to change the password, insert a &quot;Registration: Change password&quot; content element</p>
 
 
 <ul>
     <li class="dash">limit the access to the usergroup the user gets after activation</li>
-    <li class="dash">Code is Password</li>
     <li class="dash">record storage must include the sysfolder with your user data</li>
 </ul>
 </li>
 </ul>
 
-            <section class="section" id="faq">
-            <h2>FAQ<a class="headerlink" href="#faq" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
-            
-
-<ul>
-    <li class="dash">Possible subsections: FAQ</li>
-</ul>
-
-    </section>
     </section>
         <!-- content end -->
     </div>
@@ -316,7 +342,7 @@ jw_recaptcha work out of the box)</li>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: Oct 13, 2024 13:35</p>
+                    <p class="text-center">Last rendered: Oct 23, 2024 14:19</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

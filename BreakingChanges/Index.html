@@ -11,15 +11,15 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-10-13T13:35:48+00:00" name="docsearch:modified">
-<meta content="2024-10-13T13:35:48+00:00" name="dc.modified">
-<meta content="2024-10-13T13:35:48+00:00" property="article:modified_time">
+<meta content="2024-10-23T14:19:51+00:00" name="docsearch:modified">
+<meta content="2024-10-23T14:19:51+00:00" name="dc.modified">
+<meta content="2024-10-23T14:19:51+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
 <script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
 <script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
-                        <link href="../Deprecations/Index.html" rel="prev" title="Deprecations"/>
+                        <link href="../Changelog/Index.html" rel="prev" title="ChangeLog"/>
             <link href="../Sitemap.html" rel="next" title="Sitemap"/>
             <link href="../Index.html" rel="top" title="Frontend User Registration: Multipurpose configurable registration"/>
     </head>
@@ -81,8 +81,7 @@
 </div>                    <div class="toc-collapse">
                                                 <div aria-label="main navigation" class="toc" role="navigation">
                                 <div aria-label="Main navigation" class="main_menu" role="navigation">
-        
-    <ul class="menu-level-1">
+            <ul class="menu-level-1">
     <li class="">
     <a href="../Introduction/Index.html">
         Introduction
@@ -119,14 +118,10 @@
     </a></li>    <li class="">
     <a href="../Changelog/Index.html">
         ChangeLog
-    </a></li>    <li class="">
-    <a href="../Deprecations/Index.html">
-        Deprecations
     </a></li>    <li class=" current active">
     <a href="#" aria-current="page">
         Breaking Changes
-    </a></li>    </ul>
-    <ul class="menu-level-1">
+    </a></li>    </ul>    <ul class="menu-level-1">
     <li class="">
     <a href="../Sitemap.html">
         Sitemap
@@ -167,24 +162,42 @@
 <article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
     <div itemprop="articleBody">
         <!-- content start -->
-                <section class="section" id="breaking-changes-1" data-rst-anchor="breaking-changes">
+                
+<section class="section" id="breaking-changes-1" data-rst-anchor="breaking-changes">
             <a id="breaking-changes"></a>
             <h1>Breaking Changes<a class="headerlink" href="#breaking-changes-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+            <section class="section" id="2024-10-22">
+            <h2>2024.10.22<a class="headerlink" href="#2024-10-22" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            
+    <p>Since TYPO3 13.x list_type is deprecated. A upgrade task is provided to convert
+the plugins from list_type to CType rendering.</p>
+
+    </section>
+            <section class="section" id="2024-10-18">
+            <h2>2024.10.18<a class="headerlink" href="#2024-10-18" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            
+
+<ul>
+    <li>Rename password meter with ID sfrpassword to sfrPassword</li>
+    <li>Fallback for password element &lt;meter&gt; is not supported anymore.</li>
+</ul>
+
+    </section>
             <section class="section" id="2024-08-31">
             <h2>2024.08.31<a class="headerlink" href="#2024-08-31" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
 
 <ul>
-    <li class="dash">Extract the modification of the validators to ModifyValidator service. It&#039;s
+    <li>Extract the modification of the validators to ModifyValidator service. It&#039;s
 still configured the same (via TypoScript) but is handled via service outside
 of the controller.</li>
-    <li class="dash">Replace $controller-&gt;controller with $controller-&gt;getControllerName()</li>
-    <li class="dash">Move change usergroup to FrontendUserGroup service</li>
-    <li class="dash">Without injecting FrontenUserGroup into other controller, changing
+    <li>Replace $controller-&gt;controller with $controller-&gt;getControllerName()</li>
+    <li>Move change usergroup to FrontendUserGroup service</li>
+    <li>Without injecting FrontenUserGroup into other controller, changing
 usergroup is only supported in FeuserCreateController.</li>
-    <li class="dash">Move getLoggedInUserId, getLoggedInUser, determineFrontendUser, userIsLoggedIn,
+    <li>Move getLoggedInUserId, getLoggedInUser, determineFrontendUser, userIsLoggedIn,
 autoLogin and redirectToPage to FrontendUser service</li>
-    <li class="dash">Remove access on context in controller and move it to FrontendUser service</li>
+    <li>Remove access on context in controller and move it to FrontendUser service</li>
 </ul>
 
     </section>
@@ -229,19 +242,16 @@ sf_register.</p>
             
     <p>So if you need a class in your validator in code this changes are needed:
 <em> Add your validator to Services.yaml:
-</em> Add <code>`implements InjectableInterface`</code> to your validator
-<em> Use \Evoweb\SfRegister\Validation\Validator\AbstractValidator as validator base
+</em> Add <code class="code-inline" translate="no">implements Injectable<wbr>Interface</code> to your validator
+<em> Use `\Evoweb\SfRegister\Validation\Validator\AbstractValidator` as validator base
 </em> Add the repository in constructor</p>
 
+                <div class="code-block-caption">
+        <span class="caption-text">Services.yaml</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <p><strong>Services.yaml</strong>:</p>
-
-            <div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code>Evoweb\SfRegister\Validation\Validator\UniqueValidator:
-  public: true
-
-</code></pre>
+    <pre class="code-block"><code class="hljs yaml"><span class="hljs-string">Evoweb\SfRegister\Validation\Validator\UniqueValidator:</span>
+  <span class="hljs-attr">public:</span> <span class="hljs-literal">true</span></code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -249,17 +259,14 @@ sf_register.</p>
         <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
 </div>
+                <div class="code-block-caption">
+        <span class="caption-text">Class definition</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <p><strong>Class definition</strong>:</p>
+    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">use</span> <span class="hljs-title">Evoweb</span>\<span class="hljs-title">SfRegister</span>\<span class="hljs-title">Validation</span>\<span class="hljs-title">Validator</span>\<span class="hljs-title">AbstractValidator</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Evoweb</span>\<span class="hljs-title">SfRegister</span>\<span class="hljs-title">Validation</span>\<span class="hljs-title">Validator</span>\<span class="hljs-title">InjectableInterface</span>;
 
-            <div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code>use Evoweb\SfRegister\Validation\Validator\AbstractValidator;
-use Evoweb\SfRegister\Validation\Validator\InjectableInterface;
-
-class UniqueValidator extends AbstractValidator implements InjectableInterface, ...
-
-</code></pre>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UniqueValidator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractValidator</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">InjectableInterface</span>, ...</span></code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -267,17 +274,14 @@ class UniqueValidator extends AbstractValidator implements InjectableInterface, 
         <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
 </div>
+                <div class="code-block-caption">
+        <span class="caption-text">__construct</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <p><strong>__construct</strong>:</p>
-
-            <div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code>public function __construct(FrontendUserRepository $userRepository)
-{
-  $this-&gt;userRepository = $userRepository;
-}
-
-</code></pre>
+    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(FrontendUserRepository $userRepository)</span>
+</span>{
+   <span class="hljs-keyword">$this</span>-&gt;userRepository = $userRepository;
+}</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -341,20 +345,31 @@ good to go.</p>
 iframe variant for old browser or for the looks, please override the file
 EXT:sf_register/Resources/Private/Partials/Form/Password.html in your sitepackage and replace</p>
 
-            <section class="section" id="before">
-            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+                <div class="code-block-caption">
+        <span class="caption-text">Before</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <p>&lt;meter min=&quot;0&quot; low=&quot;20&quot; optimum=&quot;30&quot; high=&quot;40&quot; max=&quot;50&quot; id=&quot;bargraph&quot;&gt;&lt;/meter&gt;</p>
-
-    </section>
-            <section class="section" id="after">
-            <h3>After:<a class="headerlink" href="#after" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
-            <dl>
-                        <dt>&lt;iframe id=&quot;bargraph&quot; frameborder=&quot;none&quot; scrolling=&quot;no&quot;</dt>
-        
-        <dd>src=&quot;/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg&quot;&gt;&lt;/iframe&gt;</dd>
-            </dl>
-    </section>
+    <pre class="code-block"><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">iframe</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"bargraph"</span> <span class="hljs-attr">frameborder</span>=<span class="hljs-string">"none"</span> <span class="hljs-attr">scrolling</span>=<span class="hljs-string">"no"</span>
+    <span class="hljs-attr">src</span>=<span class="hljs-string">"/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span></code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div>
+                <div class="code-block-caption">
+        <span class="caption-text">After</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">meter</span> <span class="hljs-attr">min</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">low</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">optimum</span>=<span class="hljs-string">"30"</span> <span class="hljs-attr">high</span>=<span class="hljs-string">"40"</span> <span class="hljs-attr">max</span>=<span class="hljs-string">"50"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"bargraph"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">meter</span>&gt;</span></code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div>
     </section>
             <section class="section" id="2019-01-17">
             <h2>2019.01.17<a class="headerlink" href="#2019-01-17" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
@@ -379,47 +394,101 @@ still validates you need to check whether you changed rules in plugin.tx_sfregis
             
     <p>Here are some examples how old rules need to be converted:</p>
 
-            <section class="section" id="before">
-            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
-    <p>EvowebSfRegisterValidationValidatorRequiredValidator
-After:
-::
-&quot;Evoweb.SfRegister:Required&quot;</p>
+    <p>Required validator:</p>
 
-    </section>
-            <section class="section" id="before">
-            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+                <div class="code-block-caption">
+        <span class="caption-text">Before</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <p>StringLength(minimum = 4, maximum = 80)
-After:
-::
-&quot;StringLength&quot;, options={&quot;minimum&quot;: 4, &quot;maximum&quot;: 80}</p>
-
-    </section>
-            <section class="section" id="before">
-            <h3>Before:<a class="headerlink" href="#before" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+    <pre class="code-block"><code class="hljs typoscript">Evoweb\SfRegister\Validation\Validator\RequiredValidator</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div>
+                <div class="code-block-caption">
+        <span class="caption-text">After</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <p>EvowebSfRegisterValidationValidatorUniqueValidator(global = 1)
-After:
-::
-&quot;Evoweb.SfRegister:Unique&quot;, options={&quot;global&quot;: 1}</p>
-
+    <pre class="code-block"><code class="hljs typoscript">"Evoweb.SfRegister:Required"</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div>
             
-    <p>In general &#039;EvowebSfRegisterValidationValidator&#039; needs to be replaced with &#039;&quot;Evoweb.SfRegister:&#039; and the
-ending &#039;Validator&#039; with &#039;&quot;&#039;</p>
+    <p>String length validator:</p>
 
-    </section>
+                <div class="code-block-caption">
+        <span class="caption-text">Before</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs typoscript">StringLength(minimum = 4, maximum = 80)</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div>
+                <div class="code-block-caption">
+        <span class="caption-text">After</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs typoscript">"StringLength", options={"minimum": 4, "maximum": 80}</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div>
+            
+    <p>Uniqueness validator:</p>
+
+                <div class="code-block-caption">
+        <span class="caption-text">Before</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs typoscript">Evoweb\SfRegister\Validation\Validator\UniqueValidator(global = 1)</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div>
+                <div class="code-block-caption">
+        <span class="caption-text">After</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs typoscript">"Evoweb.SfRegister:Unique", options={"global": 1}</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div>
+            
+    <p>In general <code class="code-inline" translate="no">Evoweb\<wbr>Sf<wbr>Register\<wbr>Validation\<wbr>Validator</code> needs to be replaced with <code class="code-inline" translate="no">&quot;Evoweb.<wbr>Sf<wbr>Register:</code> and the
+ending <code class="code-inline" translate="no">Validator</code> with &#039;&quot;&#039;</p>
+
     </section>
             <section class="section" id="2015-11-15">
             <h2>2015.11.15<a class="headerlink" href="#2015-11-15" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
 
 <ul>
-    <li>Method &#039;changeUsergroup&#039; got pulled up from FeuserCreateController to FeuserController. If a controller extends
+    <li>Method <code class="code-inline" translate="no">change<wbr>Usergroup</code> got pulled up from FeuserCreateController to FeuserController. If a controller extends
 FeuserCreateController the change in changeUsergroup needs to be copied.</li>
-    <li>Method &#039;changeUsergroup&#039; got the parameter &#039;$usergroupIdToBeRemoved&#039; removed. This is because all known usergroups
-previously set get removed now. So only the &#039;$user&#039; and &#039;$usergroupIdToAdd&#039; need to be provided. All usage of this
+    <li>Method <code class="code-inline" translate="no">change<wbr>Usergroup</code> got the parameter <code class="code-inline" translate="no">$usergroup<wbr>Id<wbr>To<wbr>Be<wbr>Removed</code> removed. This is because all known usergroups
+previously set get removed now. So only the <code class="code-inline" translate="no">$user</code> and <code class="code-inline" translate="no">$usergroup<wbr>Id<wbr>To<wbr>Add</code> need to be provided. All usage of this
 method needs to be changed accordingly.</li>
     <li>Drop mailhash, setMailhash() and getMailhash() from frontend user model as it was deprecated since 2014.</li>
 </ul>
@@ -432,7 +501,7 @@ method needs to be changed accordingly.</li>
                         
             <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center"><li class="page-item">
-                            <a class="page-link" href="../Deprecations/Index.html"
+                            <a class="page-link" href="../Changelog/Index.html"
                                title="Accesskey Alt(+Shift)+p">
                                 Previous
                             </a>
@@ -519,7 +588,7 @@ method needs to be changed accordingly.</li>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: Oct 13, 2024 13:35</p>
+                    <p class="text-center">Last rendered: Oct 23, 2024 14:19</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

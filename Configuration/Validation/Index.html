@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-10-13T13:35:48+00:00" name="docsearch:modified">
-<meta content="2024-10-13T13:35:48+00:00" name="dc.modified">
-<meta content="2024-10-13T13:35:48+00:00" property="article:modified_time">
+<meta content="2024-10-23T14:19:51+00:00" name="docsearch:modified">
+<meta content="2024-10-23T14:19:51+00:00" name="dc.modified">
+<meta content="2024-10-23T14:19:51+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -81,8 +81,7 @@
 </div>                    <div class="toc-collapse">
                                                 <div aria-label="main navigation" class="toc" role="navigation">
                                 <div aria-label="Main navigation" class="main_menu" role="navigation">
-        
-    <ul class="menu-level-1">
+            <ul class="menu-level-1">
     <li class="">
     <a href="../../Introduction/Index.html">
         Introduction
@@ -120,13 +119,9 @@
     <a href="../../Changelog/Index.html">
         ChangeLog
     </a></li>    <li class="">
-    <a href="../../Deprecations/Index.html">
-        Deprecations
-    </a></li>    <li class="">
     <a href="../../BreakingChanges/Index.html">
         Breaking Changes
-    </a></li>    </ul>
-    <ul class="menu-level-1">
+    </a></li>    </ul>    <ul class="menu-level-1">
     <li class="">
     <a href="../../Sitemap.html">
         Sitemap
@@ -168,9 +163,10 @@
 <article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
     <div itemprop="articleBody">
         <!-- content start -->
-                <section class="section" id="validation-1" data-rst-anchor="validation">
-            <a id="validation"></a>
-            <h1>Validation<a class="headerlink" href="#validation-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+                
+<section class="section" id="validation" data-rst-anchor="configuration-validation">
+            <a id="configuration-validation"></a>
+            <h1>Validation<a class="headerlink" href="#validation" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
             <div class="contents-wrapper">
         <ul class="menu-level">
     <li class="toc-item">
@@ -186,7 +182,33 @@
     <li class="toc-item">
     <a href="#different-possibilities-of-assigning-validators">Different possibilities of assigning validators</a>
 
+        <ul class="section-level-1">
+            <li class="toc-item">
+    <a href="#remove-validators">Remove validators</a>
 
+
+</li>
+            <li class="toc-item">
+    <a href="#assign-only-one-validator">Assign only one validator</a>
+
+
+</li>
+            <li class="toc-item">
+    <a href="#assign-multiple-validators">Assign multiple validators</a>
+
+
+</li>
+            <li class="toc-item">
+    <a href="#poor-man-s-passwords-with-short-length">Poor man´s passwords with short length</a>
+
+
+</li>
+            <li class="toc-item">
+    <a href="#bulletproof-passwords-with-long-length">Bulletproof passwords with long length</a>
+
+
+</li>
+                    </ul>
 </li>
     <li class="toc-item">
     <a href="#separate-validators-per-process">Separate validators per process</a>
@@ -201,7 +223,13 @@
     <li class="toc-item">
     <a href="#prefixing-needed-for-non-extbase-validators">Prefixing needed for non extbase validators</a>
 
+        <ul class="section-level-1">
+            <li class="toc-item">
+    <a href="#custom-validator-usage">Custom validator usage</a>
 
+
+</li>
+                    </ul>
 </li>
     <li class="toc-item">
     <a href="#available-validators">Available validators</a>
@@ -215,7 +243,8 @@
 </li>
     </ul>
 </div>
-            <section class="section" id="purpose-of-validators">
+            <section class="section" id="purpose-of-validators" data-rst-anchor="configuration-validation-purpose">
+            <a id="configuration-validation-purpose"></a>
             <h2>Purpose of Validators<a class="headerlink" href="#purpose-of-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Validators are a mechanism to ensure that all information given by the user
@@ -248,8 +277,7 @@ to &quot;Evoweb.SfRegister:Required&quot;</p>
 
             <div class="code-block-wrapper" translate="no">
             
-    <pre class="code-block"><code>&quot;name&quot;, options={&quot;parameter1&quot;: valueA, &quot;parameter2&quot;: valueB}
-</code></pre>
+    <pre class="code-block"><code class="hljs typoscript">"name", options={"parameter1": valueA, "parameter2": valueB}</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -270,12 +298,12 @@ by default as required you need to empty the associated validators. Look at the
 example given where the validators of the email gets removed.</p>
 
             <section class="section" id="remove-validators">
-            <h3>Remove validators:<a class="headerlink" href="#remove-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
-            <div class="code-block-wrapper" translate="no">
+            <h3>Remove validators<a class="headerlink" href="#remove-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+                <div class="code-block-caption">
+        <span class="caption-text">EXT:site_package/Configuration/TypoScript/setup.typoscript</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.email &gt;
-
-</code></pre>
+    <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.email &gt;</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -283,18 +311,18 @@ example given where the validators of the email gets removed.</p>
         <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
 </div>
+    </section>
+            <section class="section" id="assign-only-one-validator">
+            <h3>Assign only one validator<a class="headerlink" href="#assign-only-one-validator" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>If only one validator is needed you could assign it directly to the field like
 below.</p>
 
-    </section>
-            <section class="section" id="assign-only-one-validator">
-            <h3>Assign only one validator:<a class="headerlink" href="#assign-only-one-validator" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
-            <div class="code-block-wrapper" translate="no">
+                <div class="code-block-caption">
+        <span class="caption-text">EXT:site_package/Configuration/TypoScript/setup.typoscript</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.passwordRepeat = &quot;Evoweb.SfRegister:Repeat&quot;
-
-</code></pre>
+    <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.passwordRepeat = "Evoweb.SfRegister:Repeat"</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -302,21 +330,21 @@ below.</p>
         <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
 </div>
-            
-    <p>And finaly it&#039;s possible to have multiple validators for one field like in the
-next example.</p>
-
     </section>
             <section class="section" id="assign-multiple-validators">
-            <h3>Assign multiple validators:<a class="headerlink" href="#assign-multiple-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
-            <div class="code-block-wrapper" translate="no">
+            <h3>Assign multiple validators<a class="headerlink" href="#assign-multiple-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
-    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
-	1 = &quot;Evoweb.SfRegister:Required&quot;
-	2 = &quot;Evoweb.SfRegister:BadWord&quot;
-}
+    <p>And finally it&#039;s possible to have multiple validators for one field like in the
+next example.</p>
 
-</code></pre>
+                <div class="code-block-caption">
+        <span class="caption-text">EXT:site_package/Configuration/TypoScript/setup.typoscript</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.password {
+    <span class="hljs-title">1</span> = "Evoweb.SfRegister:Required"
+    <span class="hljs-title">2</span> = "Evoweb.SfRegister:BadWord"
+}</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -334,15 +362,15 @@ for Fort Knox.</p>
 
     </section>
             <section class="section" id="poor-man-s-passwords-with-short-length">
-            <h3>Poor man´s passwords with short length:<a class="headerlink" href="#poor-man-s-passwords-with-short-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
-            <div class="code-block-wrapper" translate="no">
+            <h3>Poor man´s passwords with short length<a class="headerlink" href="#poor-man-s-passwords-with-short-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+                <div class="code-block-caption">
+        <span class="caption-text">EXT:site_package/Configuration/TypoScript/setup.typoscript</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
-	1 = &quot;Evoweb.SfRegister:Required&quot;
-	2 = &quot;StringLength&quot;, options={&quot;minimum&quot;: 4, &quot;maximum&quot;: 8}
-}
-
-</code></pre>
+    <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.password {
+    <span class="hljs-title">1</span> = "Evoweb.SfRegister:Required"
+    <span class="hljs-title">2</span> = "StringLength", options={"minimum": 4, "maximum": 8}
+}</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -352,16 +380,16 @@ for Fort Knox.</p>
 </div>
     </section>
             <section class="section" id="bulletproof-passwords-with-long-length">
-            <h3>Bulletproof passwords with long length:<a class="headerlink" href="#bulletproof-passwords-with-long-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
-            <div class="code-block-wrapper" translate="no">
+            <h3>Bulletproof passwords with long length<a class="headerlink" href="#bulletproof-passwords-with-long-length" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+                <div class="code-block-caption">
+        <span class="caption-text">EXT:site_package/Configuration/TypoScript/setup.typoscript</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password {
-	1 = &quot;Evoweb.SfRegister:Required&quot;
-	2 = &quot;StringLength&quot;, options={&quot;minimum&quot;: 8, &quot;maximum&quot;: 40}
-	3 = &quot;Evoweb.SfRegister:BadWord&quot;
-}
-
-</code></pre>
+    <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.password {
+    <span class="hljs-title">1</span> = "Evoweb.SfRegister:Required"
+    <span class="hljs-title">2</span> = "StringLength", options={"minimum": 8, "maximum": 40}
+    <span class="hljs-title">3</span> = "Evoweb.SfRegister:BadWord"
+}</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -386,24 +414,24 @@ be achieved by separating the TypoScript settings in different conditions per
 page. But this is mostly inconvenient as you don&#039;t see what settings is met until
 the condition. Because of this the validation settings are split for any process.</p>
 
-            <div class="code-block-wrapper" translate="no">
+                <div class="code-block-caption">
+        <span class="caption-text">EXT:site_package/Configuration/TypoScript/setup.typoscript</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation {
-	create {
-		[...]
-	}
-	edit {
-		[...]
-	}
-	password {
-		[...]
-	}
-	invite {
-		[...]
-	}
-}
-
-</code></pre>
+    <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation {
+    create {
+        <span class="hljs-meta">[...]</span>
+    }
+    edit {
+        <span class="hljs-meta">[...]</span>
+    }
+    password {
+        <span class="hljs-meta">[...]</span>
+    }
+    invite {
+        <span class="hljs-meta">[...]</span>
+    }
+}</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -435,12 +463,12 @@ loading (either in an extbase standard path or via ext_autoload.php). Afterwards
 you are ready to use your validator like in the following example.</p>
 
             <section class="section" id="custom-validator-usage">
-            <h3>Custom validator usage:<a class="headerlink" href="#custom-validator-usage" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
-            <div class="code-block-wrapper" translate="no">
+            <h3>Custom validator usage<a class="headerlink" href="#custom-validator-usage" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+                <div class="code-block-caption">
+        <span class="caption-text">EXT:site_package/Configuration/TypoScript/setup.typoscript</span>
+    </div><div class="code-block-wrapper" translate="no">
             
-    <pre class="code-block"><code>plugin.tx_sfregister.settings.validation.create.password = &quot;Evoweb.SfRegister:Required&quot;
-
-</code></pre>
+    <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.password = "Evoweb.SfRegister:Required"</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -450,7 +478,7 @@ you are ready to use your validator like in the following example.</p>
 </div>
     </section>
     </section>
-            <section class="section" id="available-validators" data-rst-anchor="BadWordValidator">
+            <section class="section" id="available-validators">
             <h2>Available validators<a class="headerlink" href="#available-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>Beside the validators that come with extbase and which are although available
@@ -458,114 +486,292 @@ in the different processes, the registration come with a set of specific ones
 that are tailored to the special need. The following lists all validators
 which are suited for the usage on fields.</p>
 
-            <div class="ts-properties">
-    <div class="table-responsive">
-    <table class="table table-bordered align-default">
-                            <thead>
-            <tr>
-                            <th>Validator</th>
-                            <th>Options</th>
-                    </tr>
+            
+
+
+
+
+<div class="table-responsive confval-table" id="confval-menu-available-validators">
+    <table class="table table-hover caption-top">        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            
+                                    <th scope="col">Type</th>
+                            
+                                    <th scope="col">Default</th>
+                                    </tr>
         </thead>
-        <tbody>
-    <tr>
-            <td><a href="#BadWordValidator">BadWordValidator</a></td>            <td>configured by plugin.tx_sfregister.settings.badWordList</td>    </tr>    <tr>
-            <td><a href="#IsTrueValidator">IsTrueValidator</a></td>            <td>&nbsp;</td>    </tr>    <tr>
-            <td><a href="#RequiredValidator">RequiredValidator</a></td>            <td>&nbsp;</td>    </tr></tbody>    </table>
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-badwordvalidator">Bad<wbr>Word<wbr>Validator</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    god, sex, password
+                                </td>
+            </tr>
+                            
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-istruevalidator">Is<wbr>True<wbr>Validator</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-requiredvalidator">Required<wbr>Validator</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+            </table>
 </div>
-</div>
-
-            <a id="BadWordValidator"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>BadWordValidator</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Checks if the field contains non of the word in the list is present</dd>
-                                <dt>Configured in</dt>
-        
-        <dd>plugin.tx_sfregister.settings.badWordList</dd>
-                                <dt>Default</dt>
-        
-        <dd>god, sex, password</dd>
-            </dl>
-</div>
-
-            <a id="IsTrueValidator"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>IsTrueValidator</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Checks if the field is set for example the general terms and conditions</dd>
-            </dl>
-</div>
-
-            <a id="RequiredValidator"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>RequiredValidator</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>This validator serves two purpose. First of check if the field contains
-a value and that it is not empty. Second the rendering uses this
-validator as condition to render required sign or not.</dd>
-            </dl>
-</div>
-
-    </section>
-            <section class="section" id="special-fields-validators" data-rst-anchor="CaptchaValidator">
-            <h2>Special fields Validators<a class="headerlink" href="#special-fields-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
-            <div class="ts-properties">
-    <div class="table-responsive">
-    <table class="table table-bordered align-default">
-                            <thead>
-            <tr>
-                            <th>Validator</th>
-                            <th>Assign to field</th>
-                            <th>Options</th>
-                            <th>Default</th>
-                    </tr>
-        </thead>
-        <tbody>
-    <tr>
-            <td><a href="#CaptchaValidator">CaptchaValidator</a></td>            <td>captcha</td>            <td>type</td>            <td>srfreecap</td>    </tr>    <tr>
-            <td><a href="#EmptyValidator">EmptyValidator</a></td>            <td>auto-assigned to uid in create</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
-            <td><a href="#EqualCurrentPasswordValidator">EqualCurrentPasswordValidator</a></td>            <td>oldPassword</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
-            <td><a href="#EqualCurrentUserValidator">EqualCurrentUserValidator</a></td>            <td>auto-assigned to uid in edit</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
-            <td><a href="#ImageUploadValidator">ImageUploadValidator</a></td>            <td>image</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
-            <td><a href="#RepeatValidator">RepeatValidator</a></td>            <td>email oder password</td>            <td>&nbsp;</td>            <td>&nbsp;</td>    </tr>    <tr>
-            <td><a href="#UniqueValidator">UniqueValidator</a></td>            <td>any, best for email and username</td>            <td>global</td>            <td>0</td>    </tr></tbody>    </table>
-</div>
-</div>
-
-            <a id="CaptchaValidator"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>CaptchaValidator</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
+            <a id="validation-badWordValidator"></a>
+                <section data-search-title="BadWordValidator"
+         data-search-id="confval-badwordvalidator"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">BadWordValidator</h3>
+    <dl class="confval">
+        <dt id="confval-badwordvalidator"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">Bad<wbr>Word<wbr>Validator</span></code>
+                                    <a class="headerlink" href="#confval-badwordvalidator"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-badwordvalidator"
+                       data-rstCode=":confval:`BadWordValidator &lt;somemanual:badwordvalidator&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
         <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">god, sex, password
+                            </dd>
+                                                    <dt class="field-even">Configured in</dt>
+                            <dd class="field-even">plugin.tx_sfregister.settings.badWordList
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
+    <p>Checks if the field contains non of the word in the list is present.</p>
+
+    <p>Words to check against are configured in badWordList</p>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="IsTrueValidator"></a>
+                <section data-search-title="IsTrueValidator"
+         data-search-id="confval-istruevalidator"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">IsTrueValidator</h3>
+    <dl class="confval">
+        <dt id="confval-istruevalidator"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">Is<wbr>True<wbr>Validator</span></code>
+                                    <a class="headerlink" href="#confval-istruevalidator"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-istruevalidator"
+                       data-rstCode=":confval:`IsTrueValidator &lt;somemanual:istruevalidator&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>Checks if the field is set for example the general terms and conditions</p>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="RequiredValidator"></a>
+                <section data-search-title="RequiredValidator"
+         data-search-id="confval-requiredvalidator"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">RequiredValidator</h3>
+    <dl class="confval">
+        <dt id="confval-requiredvalidator"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">Required<wbr>Validator</span></code>
+                                    <a class="headerlink" href="#confval-requiredvalidator"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-requiredvalidator"
+                       data-rstCode=":confval:`RequiredValidator &lt;somemanual:requiredvalidator&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>This validator serves two purpose. First of check if the field contains
+a value and that it is not empty. Second the rendering uses this
+validator as condition to render required sign or not.</p>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+    
+    </section>
+            <section class="section" id="special-fields-validators">
+            <h2>Special fields Validators<a class="headerlink" href="#special-fields-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            
+
+
+
+
+<div class="table-responsive confval-table" id="confval-menu-special-fields-validators">
+    <table class="table table-hover caption-top">        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            
+                                    <th scope="col">Type</th>
+                            
+                                    <th scope="col">Default</th>
+                                    </tr>
+        </thead>
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-captchavalidator">Captcha<wbr>Validator</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    recaptcha
+                                </td>
+            </tr>
+                                                                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-emptyvalidator">Empty<wbr>Validator</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                            
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-equalcurrentpasswordvalidator">Equal<wbr>Current<wbr>Password<wbr>Validator</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-equalcurrentuservalidator">Equal<wbr>Current<wbr>User<wbr>Validator</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                            
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-imageuploadvalidator">Image<wbr>Upload<wbr>Validator</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                            
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-uniquevalidator">Unique<wbr>Validator</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                                    0
+                                </td>
+            </tr>
+                                                                            
+                        <tr>
+        <td><div class="confval-label ps-0"><a href="#confval-repeatvalidator">Repeat<wbr>Validator</a></div></td>
+                    <td>
+                            string
+                        </td>
+                    <td>
+                        </td>
+            </tr>
+                            
+            </table>
+</div>
+            <a id="CaptchaValidator"></a>
+                <section data-search-title="CaptchaValidator"
+         data-search-id="confval-captchavalidator"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">CaptchaValidator</h3>
+    <dl class="confval">
+        <dt id="confval-captchavalidator"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">Captcha<wbr>Validator</span></code>
+                                    <a class="headerlink" href="#confval-captchavalidator"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-captchavalidator"
+                       data-rstCode=":confval:`CaptchaValidator &lt;somemanual:captchavalidator&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">recaptcha
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
     <p>Checks if the entered value matches the captcha text by using the same
 captcha adapter like the one used for the rendering. Therefor the option
 type needs to equal the configuration of the rendering.</p>
@@ -573,106 +779,232 @@ type needs to equal the configuration of the rendering.</p>
     <p>Likewise the rendering of the captcha its possible to use custom
 captchas to validate. How to use create custom is described in
 <a href="../../Extendability/Index.html#AddCustomCaptcha">Bring in your own captcha</a></p>
-</dd>
-                                <dt>Options:</dt>
-        
-        <dd>type = [srfreecap, jmrecaptcha, recaptcha]</dd>
-                                <dt>Default:</dt>
-        
-        <dd>recaptcha</dd>
-            </dl>
-</div>
 
-            <a id="EmptyValidator"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>EmptyValidator</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>Checks if the field uid is empty to no unauthorized user manipulation
-could happen</dd>
-                                <dt>Specialty:</dt>
-        
-        <dd>This validator gets auto-assigned to the uid field in the create process</dd>
-            </dl>
-</div>
+    <p>Possible options are:</p>
 
-            <a id="EqualCurrentPasswordValidator"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>EqualCurrentPasswordValidator</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>This validator is used in the password change process. It compares if the
+    <p><strong>types</strong></p>
+
+
+<ul>
+    <li class="dash">srfreecap</li>
+    <li class="dash">jmrecaptcha</li>
+    <li class="dash">recaptcha</li>
+</ul>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="EmptyValidator"></a>
+                <section data-search-title="EmptyValidator"
+         data-search-id="confval-emptyvalidator"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">EmptyValidator</h3>
+    <dl class="confval">
+        <dt id="confval-emptyvalidator"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">Empty<wbr>Validator</span></code>
+                                    <a class="headerlink" href="#confval-emptyvalidator"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-emptyvalidator"
+                       data-rstCode=":confval:`EmptyValidator &lt;somemanual:emptyvalidator&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>Checks if the field uid is empty to no unauthorized user manipulation
+could happen.</p>
+
+    <p><strong>Specialty:</strong>
+This validator gets auto-assigned to the uid field in the create process</p>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="EqualCurrentPasswordValidator"></a>
+                <section data-search-title="EqualCurrentPasswordValidator"
+         data-search-id="confval-equalcurrentpasswordvalidator"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">EqualCurrentPasswordValidator</h3>
+    <dl class="confval">
+        <dt id="confval-equalcurrentpasswordvalidator"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">Equal<wbr>Current<wbr>Password<wbr>Validator</span></code>
+                                    <a class="headerlink" href="#confval-equalcurrentpasswordvalidator"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-equalcurrentpasswordvalidator"
+                       data-rstCode=":confval:`EqualCurrentPasswordValidator &lt;somemanual:equalcurrentpasswordvalidator&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>This validator is used in the password change process. It compares if the
 entered old password is equal to the current set password for the account
-the user is logged in with.</dd>
-            </dl>
-</div>
+the user is logged in with.</p>
 
-            <a id="EqualCurrentUserValidator"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>EqualCurrentUserValidator</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>On edit process it&#039;s important that the correct user data get modified. To
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="EqualCurrentUserValidator"></a>
+                <section data-search-title="EqualCurrentUserValidator"
+         data-search-id="confval-equalcurrentuservalidator"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">EqualCurrentUserValidator</h3>
+    <dl class="confval">
+        <dt id="confval-equalcurrentuservalidator"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">Equal<wbr>Current<wbr>User<wbr>Validator</span></code>
+                                    <a class="headerlink" href="#confval-equalcurrentuservalidator"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-equalcurrentuservalidator"
+                       data-rstCode=":confval:`EqualCurrentUserValidator &lt;somemanual:equalcurrentuservalidator&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>On edit process it&#039;s important that the correct user data get modified. To
 ensure that the submitted data does not temper the user id. This
 validator compares the user id send by the form with the user id of
-the logged in user to prevent and change of the id.</dd>
-                                <dt>Specialty:</dt>
-        
-        <dd>This validator gets auto-assigned to the uid field in the edit process</dd>
-            </dl>
-</div>
+the logged in user to prevent and change of the id.</p>
 
-            <a id="ImageUploadValidator"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>ImageUploadValidator</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
-        <dd>The image upload validator checks if the file uploaded has an allowed
-file extension and if the file size is in the allowed max size. Both
-checks uses system configuration.</dd>
-                                <dt>Configuration:</dt>
-        
-        <dd>file extension is configured by $GLOBALS[&#039;TCA&#039;][&#039;fe_users&#039;][&#039;columns&#039;][&#039;image&#039;][&#039;config&#039;][&#039;allowed&#039;]
-file size is configured by $GLOBALS[&#039;TCA&#039;][&#039;fe_users&#039;][&#039;columns&#039;][&#039;image&#039;][&#039;config&#039;][&#039;max_size&#039;]</dd>
-            </dl>
-</div>
+    <p><strong>Specialty:</strong>
+This validator gets auto-assigned to the uid field in the edit process</p>
 
-            <a id="UniqueValidator"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>UniqueValidator</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="ImageUploadValidator"></a>
+                <section data-search-title="ImageUploadValidator"
+         data-search-id="confval-imageuploadvalidator"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">ImageUploadValidator</h3>
+    <dl class="confval">
+        <dt id="confval-imageuploadvalidator"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">Image<wbr>Upload<wbr>Validator</span></code>
+                                    <a class="headerlink" href="#confval-imageuploadvalidator"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-imageuploadvalidator"
+                       data-rstCode=":confval:`ImageUploadValidator &lt;somemanual:imageuploadvalidator&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
         <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
+    <p>The image upload validator checks if the file uploaded has an allowed
+file extension and if the file size is in the allowed max size. Both
+checks uses system configuration.</p>
+    <div class="code-block-caption">
+        <span class="caption-text">config/system/additional.php</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs php"><span class="hljs-comment">// file extension in</span>
+$GLOBALS[<span class="hljs-string">'TCA'</span>][<span class="hljs-string">'fe_users'</span>][<span class="hljs-string">'columns'</span>][<span class="hljs-string">'image'</span>][<span class="hljs-string">'config'</span>][<span class="hljs-string">'allowed'</span>]
+<span class="hljs-comment">// file size in</span>
+$GLOBALS[<span class="hljs-string">'TCA'</span>][<span class="hljs-string">'fe_users'</span>][<span class="hljs-string">'columns'</span>][<span class="hljs-string">'image'</span>][<span class="hljs-string">'config'</span>][<span class="hljs-string">'max_size'</span>]</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div>
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="UniqueValidator"></a>
+                <section data-search-title="UniqueValidator"
+         data-search-id="confval-uniquevalidator"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">UniqueValidator</h3>
+    <dl class="confval">
+        <dt id="confval-uniquevalidator"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">Unique<wbr>Validator</span></code>
+                                    <a class="headerlink" href="#confval-uniquevalidator"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-uniquevalidator"
+                       data-rstCode=":confval:`UniqueValidator &lt;somemanual:uniquevalidator&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
+        <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                                                <dt class="field-even">Default</dt>
+                            <dd class="field-even">0
+                            </dd>
+                        </dl>
+                        <div class="confval-description">
+                
     <p>Checks if the value is unique for the field in the storage folder. If
 the option &#039;global&#039; is set a second check for the value in the field is
 done system wide.</p>
@@ -684,40 +1016,66 @@ the global = 0 check, so an user could register multiple times.</p>
 
     <p>If the username should be only available once in the system to prevent
 collisions in authentication you would choose to set globals = 1 .</p>
-</dd>
-                                <dt>Options:</dt>
-        
-        <dd>global = [0,1]</dd>
-                                <dt>Default</dt>
-        
-        <dd>0</dd>
-            </dl>
-</div>
 
-            <a id="RepeatValidator"></a>
-            <div class="table-row">
-    <dl>
-                        <dt>Property</dt>
-        
-        <dd>RepeatValidator</dd>
-                                <dt>Data type</dt>
-        
-        <dd>string</dd>
-                                <dt>Description</dt>
-        
+    <p>Possible options are:</p>
+
+    <p><strong>global</strong></p>
+
+
+<ul>
+    <li class="dash">0 unique only in storage folder</li>
+    <li class="dash">1 unique in the hole installation</li>
+</ul>
+
+            </div>
+        </dd>
+    </dl>
+</section>
+                <a id="RepeatValidator"></a>
+                <section data-search-title="RepeatValidator"
+         data-search-id="confval-repeatvalidator"
+         data-search-facet="Option"
+         class="confval-section"
+>
+    <h3 class="sr-only">RepeatValidator</h3>
+    <dl class="confval">
+        <dt id="confval-repeatvalidator"            class="d-flex justify-content-between">
+            <div class="confval-header">
+                <code class="sig-name descname"><span
+                        class="pre">Repeat<wbr>Validator</span></code>
+                                    <a class="headerlink" href="#confval-repeatvalidator"
+                       data-bs-toggle="modal"
+                       data-bs-target="#linkReferenceModal"
+                       data-id="confval-repeatvalidator"
+                       data-rstCode=":confval:`RepeatValidator &lt;somemanual:repeatvalidator&gt;`"
+                       title="Reference this configuration value"><i
+                            class="fa-solid fa-paragraph"></i></a>
+                </div>
+            <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
+        </dt>
         <dd>
+                            <dl class="field-list simple">
+                                            <dt class="field-even">Type</dt>
+                        <dd class="field-even">string
+                        </dd>
+                    </dl>
+                        <div class="confval-description">
+                
     <p>To ensure that the input of a user was done without mistake by the user
 self it&#039;s a good idea to have the values entered in two fields and then
 compare their values. That is possible with this validator.</p>
 
-    <p>The fields need to be present with the pattern [fieldName] and
-[fieldName]Repeat. Where fieldName is free to choose. While Repeat is
+    <p>The fields need to be present with the pattern <code class="code-inline" translate="no">[field<wbr>Name]</code> and
+<code class="code-inline" translate="no">[field<wbr>Name]Repeat</code>. Where fieldName is free to choose. While Repeat is
 not configurable by now this validator is only usable for email and
 password fields.</p>
-</dd>
-            </dl>
-</div>
 
+            </div>
+        </dd>
+    </dl>
+</section>
+    
     </section>
     </section>
         <!-- content end -->
@@ -813,7 +1171,7 @@ password fields.</p>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: Oct 13, 2024 13:35</p>
+                    <p class="text-center">Last rendered: Oct 23, 2024 14:19</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">
