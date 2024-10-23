@@ -6,6 +6,23 @@
 Breaking Changes
 ================
 
+2024.10.24
+==========
+
+Replace TypoScript condition and `plugin.tx_sfregister.settings.minified` value
+with :php:`Evoweb\SfRegister\ViewHelpers\ApplicationContextViewHelper`.
+
+Environments are matched with Expression Languages and allow values like:
+
+* Development
+* Testing
+* Production
+* Production/*
+* Production/Staging
+
+By this one TypoScript condition less gets used, which improves cacheability of
+pages.
+
 2024.10.23
 ==========
 

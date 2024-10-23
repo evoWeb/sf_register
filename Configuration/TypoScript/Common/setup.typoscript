@@ -18,8 +18,6 @@ plugin.tx_sfregister.view {
 plugin.tx_sfregister.settings {
   dateFormat = d-m-Y
 
-  minified = {$plugin.tx_sfregister.minified}
-
   createPid = {$plugin.tx_sfregister.settings.createPid}
   editPid = {$plugin.tx_sfregister.settings.editPid}
   passwordPid = {$plugin.tx_sfregister.settings.passwordPid}

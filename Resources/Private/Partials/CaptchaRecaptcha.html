@@ -2,7 +2,8 @@
       xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:asset.css identifier="sfregister_css" href="EXT:sf_register/Resources/Public/Stylesheets/sf_register{settings.minified}.css"/>
+<f:variable name="minified" value="{register:applicationContext(environment: 'Development', then: '.min')}"/>
+<f:asset.css identifier="sfregister_css" href="EXT:sf_register/Resources/Public/Stylesheets/sf_register{minified}.css"/>
 
 <div><register:form.captcha type="recaptcha" /></div>
 
