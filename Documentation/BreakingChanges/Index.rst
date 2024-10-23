@@ -6,6 +6,16 @@
 Breaking Changes
 ================
 
+2024.10.23
+==========
+
+The new content element wizards are now not auto registered. If you use one of
+the two provided SiteSets, the wizards are available in the related tree.
+
+If you use a page tree without a SiteSet, the wizards can be included in the
+the root page with the page field "Page TSconfig" by selecting the "[Frontend
+user registration] New content element wizards".
+
 2024.10.22
 ==========
 
