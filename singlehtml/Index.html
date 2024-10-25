@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-10-23T14:19:51+00:00" name="docsearch:modified">
-<meta content="2024-10-23T14:19:51+00:00" name="dc.modified">
-<meta content="2024-10-23T14:19:51+00:00" property="article:modified_time">
+<meta content="2024-10-25T17:54:26+00:00" name="docsearch:modified">
+<meta content="2024-10-25T17:54:26+00:00" name="dc.modified">
+<meta content="2024-10-25T17:54:26+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -130,7 +130,7 @@ license.</p>
 
         <dd class="field-odd">
             
-    <p>Wed, 23 Oct 2024 14:19:51 +0000</p>
+    <p>Fri, 25 Oct 2024 17:54:26 +0000</p>
         </dd>
             <dt class="field-odd">Copyright</dt>
 
@@ -273,7 +273,7 @@ license.</p>
 
         <dd class="field-odd">
             
-    <p>Wed, 23 Oct 2024 14:19:51 +0000</p>
+    <p>Fri, 25 Oct 2024 17:54:26 +0000</p>
         </dd>
             <dt class="field-odd">Copyright</dt>
 
@@ -6885,6 +6885,47 @@ the confirmation and activation. Some are mandatory to get a valid user to login
 <section class="section" id="breaking-changes-1" data-rst-anchor="breaking-changes">
             <a id="breaking-changes"></a>
             <h1>Breaking Changes<a class="headerlink" href="#breaking-changes-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+            <section class="section" id="2024-10-24">
+            <h2>2024.10.24<a class="headerlink" href="#2024-10-24" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            
+    <p>Replace TypoScript condition and <code class="code-inline" translate="no">plugin.<wbr>tx_<wbr>sfregister.<wbr>settings.<wbr>minified</code> value
+with <code class="code-inline code-inline-long"
+          translate="no"
+          aria-description="PHP class or interface"
+          aria-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\ViewHelpers\ApplicationContextViewHelper in the internet."
+          data-bs-html="true">\Evoweb\<wbr>Sf<wbr>Register\<wbr>View<wbr>Helpers\<wbr>Application<wbr>Context<wbr>View<wbr>Helper</code>.</p>
+
+            
+    <p>Environments are matched with Expression Languages and allow values like:</p>
+
+            
+
+<ul>
+    <li>Development</li>
+    <li>Testing</li>
+    <li>Production</li>
+    <li>Production/*</li>
+    <li>Production/Staging</li>
+</ul>
+
+            
+    <p>By this one TypoScript condition less gets used, which improves cacheability of
+pages.</p>
+
+    </section>
+            <section class="section" id="2024-10-23">
+            <h2>2024.10.23<a class="headerlink" href="#2024-10-23" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            
+    <p>The new content element wizards are now not auto registered. If you use one of
+the two provided SiteSets, the wizards are available in the related tree.</p>
+
+            
+    <p>If you use a page tree without a SiteSet, the wizards can be included in the
+the root page with the page field &quot;Page TSconfig&quot; by selecting the &quot;[Frontend
+user registration] New content element wizards&quot;.</p>
+
+    </section>
             <section class="section" id="2024-10-22">
             <h2>2024.10.22<a class="headerlink" href="#2024-10-22" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
@@ -7298,7 +7339,7 @@ method needs to be changed accordingly.</li>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: Oct 23, 2024 14:19</p>
+                    <p class="text-center">Last rendered: Oct 25, 2024 17:54</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">
