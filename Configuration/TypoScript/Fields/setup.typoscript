@@ -226,7 +226,7 @@ plugin.tx_sfregister.settings.fields.configuration {
 
   captcha {
     partial = Captcha
-    type = {$plugin.tx_sfregister.settings.captchaId}
+    type = {$plugin.tx_sfregister.settings.captchaId ?? $evoweb.sf-register.settings.captchaId}
   }
 
   invitationEmail {

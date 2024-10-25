@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+	<file source-language="en" datatype="plaintext" original="EXT:sf_register/Configuration/Sets/Maximum/labels.xlf" date="2024-10-23T16:00:00Z" product-name="sf_register">
+		<header/>
+		<body>
+			<trans-unit id="label" resname="label">
+				<source>Frontend User Registration</source>
+			</trans-unit>
+
+			<trans-unit id="categories.sf-register" resname="categories.sf-register">
+				<source>Frontend User Registration</source>
+			</trans-unit>
+			<trans-unit id="categories.sf-register.common" resname="categories.sf-register.common">
+				<source>Common</source>
+			</trans-unit>
+			<trans-unit id="categories.sf-register.maximal" resname="categories.sf-register.maximal">
+				<source>Maximal</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.view.templateRootPath" resname="settings.evoweb.sf-register.view.templateRootPath">
+				<source>Path to template root (FE)</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.view.partialRootPath" resname="settings.evoweb.sf-register.view.partialRootPath">
+				<source>Path to template partials (FE)</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.view.layoutRootPath" resname="settings.evoweb.sf-register.view.layoutRootPath">
+				<source>Path to template layouts (FE)</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.createPid" resname="settings.evoweb.sf-register.settings.createPid">
+				<source>Page ID with create form</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.editPid" resname="settings.evoweb.sf-register.settings.editPid">
+				<source>Page ID with edit form</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.passwordPid" resname="settings.evoweb.sf-register.settings.passwordPid">
+				<source>Page ID with password form</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.invitePid" resname="settings.evoweb.sf-register.settings.invitePid">
+				<source>Page ID with invite form</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.resendPid" resname="settings.evoweb.sf-register.settings.resendPid">
+				<source>Page ID with resend form</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.captchaId" resname="settings.evoweb.sf-register.settings.captchaId">
+				<source>Short name for the desired captcha extension: recaptcha, jmrecaptcha, srfreecap</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.redirectPostRegistrationPageId" resname="settings.evoweb.sf-register.settings.redirectPostRegistrationPageId">
+				<source>Page ID to redirect to after the user is saved (not after confirmation)</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.useEmailAddressAsUsername" resname="settings.evoweb.sf-register.settings.useEmailAddressAsUsername">
+				<source>Whether the email address should be used as username</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.useEncryptedFilename" resname="settings.evoweb.sf-register.settings.useEncryptedFilename">
+				<source>Use encrypted filename: to deny direct access on uploaded files</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.autologinPostRegistration" resname="settings.evoweb.sf-register.settings.autologinPostRegistration">
+				<source>Whether the user should get logged in after registration</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.createSave" resname="settings.evoweb.sf-register.settings.notifyAdmin.createSave">
+				<source>The admin should get an email after saving on creation</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.createConfirm" resname="settings.evoweb.sf-register.settings.notifyAdmin.createConfirm">
+				<source>The admin should get an email after confirm on creation</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.createRefuse" resname="settings.evoweb.sf-register.settings.notifyAdmin.createRefuse">
+				<source>The admin should get an email after refuse on creation</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.createAccept" resname="settings.evoweb.sf-register.settings.notifyAdmin.createAccept">
+				<source>The admin should get an email after accept on creation</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.createDecline" resname="settings.evoweb.sf-register.settings.notifyAdmin.createDecline">
+				<source>The admin should get an email after decline on creation</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.deleteSave" resname="settings.evoweb.sf-register.settings.notifyAdmin.deleteSave">
+				<source>The admin should get an email after a delete request got sent</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.deleteConfirm" resname="settings.evoweb.sf-register.settings.notifyAdmin.deleteConfirm">
+				<source>The admin should get an email after a delete request was confirmed</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.deleteSendLink" resname="settings.evoweb.sf-register.settings.notifyAdmin.deleteSendLink">
+				<source>The admin should get an email with a delete link</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.editSave" resname="settings.evoweb.sf-register.settings.notifyAdmin.editSave">
+				<source>The admin should get an email after saving on edit</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.editConfirm" resname="settings.evoweb.sf-register.settings.notifyAdmin.editConfirm">
+				<source>The admin should get an email after confirm on edit</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.editAccept" resname="settings.evoweb.sf-register.settings.notifyAdmin.editAccept">
+				<source>The admin should get an email after accept on edit</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.inviteInvite" resname="settings.evoweb.sf-register.settings.notifyAdmin.inviteInvite">
+				<source>The admin should get an email after an invitation got sent</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.resendMail" resname="settings.evoweb.sf-register.settings.notifyAdmin.resendMail">
+				<source>The admin should get an email with the activation key for an awaiting registration</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.createSave" resname="settings.evoweb.sf-register.settings.notifyUser.createSave">
+				<source>The user should get an email after saving on creation</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.createConfirm" resname="settings.evoweb.sf-register.settings.notifyUser.createConfirm">
+				<source>The user should get an email after confirm on creation</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.createRefuse" resname="settings.evoweb.sf-register.settings.notifyUser.createRefuse">
+				<source>The user should get an email after refuse on creation</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.createAccept" resname="settings.evoweb.sf-register.settings.notifyUser.createAccept">
+				<source>The user should get an email after accept on creation</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.createDecline" resname="settings.evoweb.sf-register.settings.notifyUser.createDecline">
+				<source>The user should get an email after decline on creation</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.deleteSave" resname="settings.evoweb.sf-register.settings.notifyUser.deleteSave">
+				<source>The user should get an email after a delete request got sent</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.deleteConfirm" resname="settings.evoweb.sf-register.settings.notifyUser.deleteConfirm">
+				<source>The user should get an email after a delete request was confirmed</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.deleteSendLink" resname="settings.evoweb.sf-register.settings.notifyUser.deleteSendLink">
+				<source>The user should get an email with a delete link</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.editSave" resname="settings.evoweb.sf-register.settings.notifyUser.editSave">
+				<source>The user should get an email after saving on edit</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.editConfirm" resname="settings.evoweb.sf-register.settings.notifyUser.editConfirm">
+				<source>The user should get an email after confirm on edit</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.editAccept" resname="settings.evoweb.sf-register.settings.notifyUser.editAccept">
+				<source>The user should get an email after accept on edit</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.inviteInvite" resname="settings.evoweb.sf-register.settings.notifyUser.inviteInvite">
+				<source>The user should get an email after an invitation got sent</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.resendMail" resname="settings.evoweb.sf-register.settings.notifyUser.resendMail">
+				<source>The user should get an email with the activation key for an awaiting registration</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.userEmail.fromName" resname="settings.evoweb.sf-register.settings.userEmail.fromName">
+				<source>From name used in email to user</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.userEmail.fromEmail" resname="settings.evoweb.sf-register.settings.userEmail.fromEmail">
+				<source>From email used in email to user</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.userEmail.replyName" resname="settings.evoweb.sf-register.settings.userEmail.replyName">
+				<source>Reply name used in email to user</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.userEmail.replyEmail" resname="settings.evoweb.sf-register.settings.userEmail.replyEmail">
+				<source>Reply email used in email to user</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.adminEmail.toName" resname="settings.evoweb.sf-register.settings.adminEmail.toName">
+				<source>To name used in email to admin</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.adminEmail.toEmail" resname="settings.evoweb.sf-register.settings.adminEmail.toEmail">
+				<source>To email used in email to admin</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.adminEmail.fromName" resname="settings.evoweb.sf-register.settings.adminEmail.fromName">
+				<source>From name used in email to admin</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.adminEmail.fromEmail" resname="settings.evoweb.sf-register.settings.adminEmail.fromEmail">
+				<source>From email used in email to admin</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.adminEmail.replyName" resname="settings.evoweb.sf-register.settings.adminEmail.replyName">
+				<source>Reply name used in email to admin</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.adminEmail.replyEmail" resname="settings.evoweb.sf-register.settings.adminEmail.replyEmail">
+				<source>Reply email used in email to admin</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.redirect.page" resname="settings.evoweb.sf-register.settings.redirect.page">
+				<source>Page to redirect to if create form is a different page then the edit form</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.persistence.storagePid" resname="settings.evoweb.sf-register.persistence.storagePid">
+				<source>Sysfolder that contains the usergroups and users if not set zero or a selected value in the plugin will be used for storing the user</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

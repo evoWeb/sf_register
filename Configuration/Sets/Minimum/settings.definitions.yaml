@@ -1,0 +1,77 @@
+categories:
+  sf-register: ~
+  sf-register.minimal:
+    parent: sf-register
+
+settings:
+  evoweb.sf-register.settings.badWordList:
+    default: 'god, sex, password'
+    type: string
+    category: sf-register.minimal
+
+  evoweb.sf-register.settings.confirmEmailPostCreate:
+    default: true
+    type: bool
+    category: sf-register.minimal
+
+  evoweb.sf-register.settings.acceptEmailPostCreate:
+    default: false
+    type: bool
+    category: sf-register.minimal
+  evoweb.sf-register.settings.confirmEmailPostAccept:
+    default: false
+    type: bool
+    category: sf-register.minimal
+  evoweb.sf-register.settings.acceptEmailPostConfirm:
+    default: false
+    type: bool
+    category: sf-register.minimal
+  evoweb.sf-register.settings.confirmEmailPostEdit:
+    default: false
+    type: bool
+    category: sf-register.minimal
+  evoweb.sf-register.settings.acceptEmailPostEdit:
+    default: false
+    type: bool
+    category: sf-register.minimal
+
+  evoweb.sf-register.settings.redirectPostActivationPageId:
+    default: 0
+    type: int
+    category: sf-register.minimal
+
+  evoweb.sf-register.settings.autologinPostConfirmation:
+    default: false
+    type: bool
+    category: sf-register.minimal
+
+  evoweb.sf-register.settings.usergroupPostSave:
+    default: 0
+    type: int
+    category: sf-register.minimal
+  evoweb.sf-register.settings.usergroupPostConfirm:
+    default: 0
+    type: int
+    category: sf-register.minimal
+  evoweb.sf-register.settings.usergroupPostAccept:
+    default: 0
+    type: int
+    category: sf-register.minimal
+  evoweb.sf-register.settings.usergroup:
+    default: 0
+    type: int
+    category: sf-register.minimal
+
+  evoweb.sf-register.settings.emailSitename:
+    default: 'dummy Site'
+    type: string
+    category: sf-register.minimal
+
+  evoweb.sf-register.settings.emailName:
+    default: 'userEmail from'
+    type: string
+    category: sf-register.minimal
+  evoweb.sf-register.settings.emailAddress:
+    default: 'userEmailfrom@test.local'
+    type: string
+    category: sf-register.minimal

@@ -4,101 +4,101 @@
 
 plugin.tx_sfregister.settings {
   # uid of the page to redirect to after saving
-  redirectPostRegistrationPageId = {$plugin.tx_sfregister.settings.redirectPostRegistrationPageId}
+  redirectPostRegistrationPageId = {$plugin.tx_sfregister.settings.redirectPostRegistrationPageId ?? $evoweb.sf-register.settings.redirectPostRegistrationPageId}
   # uid of the page to redirect to after confirmation
-  redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId}
+  redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId ?? $evoweb.sf-register.settings.redirectPostActivationPageId}
 
   # wether the email address entered should be used as username
-  useEmailAddressAsUsername = {$plugin.tx_sfregister.settings.useEmailAddressAsUsername}
+  useEmailAddressAsUsername = {$plugin.tx_sfregister.settings.useEmailAddressAsUsername ?? $evoweb.sf-register.settings.useEmailAddressAsUsername}
 
   # boolean use encrypted filename to deny direct access on uploaded files
-  useEncryptedFilename = {$plugin.tx_sfregister.settings.useEncryptedFilename}
+  useEncryptedFilename = {$plugin.tx_sfregister.settings.useEncryptedFilename ?? $evoweb.sf-register.settings.useEncryptedFilename}
 
   # boolean if user or admin need to activate or notified
   notifyAdmin {
-    createSave = {$plugin.tx_sfregister.settings.notifyAdmin.createSave}
-    createConfirm = {$plugin.tx_sfregister.settings.notifyAdmin.createConfirm}
-    createRefuse = {$plugin.tx_sfregister.settings.notifyAdmin.createRefuse}
-    createAccept = {$plugin.tx_sfregister.settings.notifyAdmin.createAccept}
-    createDecline = {$plugin.tx_sfregister.settings.notifyAdmin.createDecline}
+    createSave = {$plugin.tx_sfregister.settings.notifyAdmin.createSave ?? $evoweb.sf-register.settings.notifyAdmin.createSave}
+    createConfirm = {$plugin.tx_sfregister.settings.notifyAdmin.createConfirm ?? $evoweb.sf-register.settings.notifyAdmin.createConfirm}
+    createRefuse = {$plugin.tx_sfregister.settings.notifyAdmin.createRefuse ?? $evoweb.sf-register.settings.notifyAdmin.createRefuse}
+    createAccept = {$plugin.tx_sfregister.settings.notifyAdmin.createAccept ?? $evoweb.sf-register.settings.notifyAdmin.createAccept}
+    createDecline = {$plugin.tx_sfregister.settings.notifyAdmin.createDecline ?? $evoweb.sf-register.settings.notifyAdmin.createDecline}
 
-    deleteSave = {$plugin.tx_sfregister.settings.notifyAdmin.deleteSave}
-    deleteConfirm = {$plugin.tx_sfregister.settings.notifyAdmin.deleteConfirm}
-    deleteSendLink = {$plugin.tx_sfregister.settings.notifyAdmin.deleteSendLink}
+    deleteSave = {$plugin.tx_sfregister.settings.notifyAdmin.deleteSave ?? $evoweb.sf-register.settings.notifyAdmin.deleteSave}
+    deleteConfirm = {$plugin.tx_sfregister.settings.notifyAdmin.deleteConfirm ?? $evoweb.sf-register.settings.notifyAdmin.deleteConfirm}
+    deleteSendLink = {$plugin.tx_sfregister.settings.notifyAdmin.deleteSendLink ?? $evoweb.sf-register.settings.notifyAdmin.deleteSendLink}
 
-    editSave = {$plugin.tx_sfregister.settings.notifyAdmin.editSave}
-    editConfirm = {$plugin.tx_sfregister.settings.notifyAdmin.editConfirm}
-    editAccept = {$plugin.tx_sfregister.settings.notifyAdmin.editAccept}
+    editSave = {$plugin.tx_sfregister.settings.notifyAdmin.editSave ?? $evoweb.sf-register.settings.notifyAdmin.editSave}
+    editConfirm = {$plugin.tx_sfregister.settings.notifyAdmin.editConfirm ?? $evoweb.sf-register.settings.notifyAdmin.editConfirm}
+    editAccept = {$plugin.tx_sfregister.settings.notifyAdmin.editAccept ?? $evoweb.sf-register.settings.notifyAdmin.editAccept}
 
-    inviteInvite = {$plugin.tx_sfregister.settings.notifyAdmin.inviteInvite}
+    inviteInvite = {$plugin.tx_sfregister.settings.notifyAdmin.inviteInvite ?? $evoweb.sf-register.settings.notifyAdmin.inviteInvite}
 
-    resendMail = {$plugin.tx_sfregister.settings.notifyAdmin.resendMail}
+    resendMail = {$plugin.tx_sfregister.settings.notifyAdmin.resendMail ?? $evoweb.sf-register.settings.notifyAdmin.resendMail}
   }
 
   notifyUser {
-    createSave = {$plugin.tx_sfregister.settings.notifyUser.createSave}
-    createConfirm = {$plugin.tx_sfregister.settings.notifyUser.createConfirm}
-    createRefuse = {$plugin.tx_sfregister.settings.notifyUser.createRefuse}
-    createAccept = {$plugin.tx_sfregister.settings.notifyUser.createAccept}
-    createDecline = {$plugin.tx_sfregister.settings.notifyUser.createDecline}
+    createSave = {$plugin.tx_sfregister.settings.notifyUser.createSave ?? $evoweb.sf-register.settings.notifyUser.createSave}
+    createConfirm = {$plugin.tx_sfregister.settings.notifyUser.createConfirm ?? $evoweb.sf-register.settings.notifyUser.createConfirm}
+    createRefuse = {$plugin.tx_sfregister.settings.notifyUser.createRefuse ?? $evoweb.sf-register.settings.notifyUser.createRefuse}
+    createAccept = {$plugin.tx_sfregister.settings.notifyUser.createAccept ?? $evoweb.sf-register.settings.notifyUser.createAccept}
+    createDecline = {$plugin.tx_sfregister.settings.notifyUser.createDecline ?? $evoweb.sf-register.settings.notifyUser.createDecline}
 
-    deleteSave = {$plugin.tx_sfregister.settings.notifyUser.deleteSave}
-    deleteConfirm = {$plugin.tx_sfregister.settings.notifyUser.deleteConfirm}
-    deleteSendLink = {$plugin.tx_sfregister.settings.notifyUser.deleteSendLink}
+    deleteSave = {$plugin.tx_sfregister.settings.notifyUser.deleteSave ?? $evoweb.sf-register.settings.notifyUser.deleteSave}
+    deleteConfirm = {$plugin.tx_sfregister.settings.notifyUser.deleteConfirm ?? $evoweb.sf-register.settings.notifyUser.deleteConfirm}
+    deleteSendLink = {$plugin.tx_sfregister.settings.notifyUser.deleteSendLink ?? $evoweb.sf-register.settings.notifyUser.deleteSendLink}
 
-    editSave = {$plugin.tx_sfregister.settings.notifyUser.editSave}
-    editConfirm = {$plugin.tx_sfregister.settings.notifyUser.editConfirm}
-    editAccept = {$plugin.tx_sfregister.settings.notifyUser.editAccept}
+    editSave = {$plugin.tx_sfregister.settings.notifyUser.editSave ?? $evoweb.sf-register.settings.notifyUser.editSave}
+    editConfirm = {$plugin.tx_sfregister.settings.notifyUser.editConfirm ?? $evoweb.sf-register.settings.notifyUser.editConfirm}
+    editAccept = {$plugin.tx_sfregister.settings.notifyUser.editAccept ?? $evoweb.sf-register.settings.notifyUser.editAccept}
 
-    inviteInvite = {$plugin.tx_sfregister.settings.notifyUser.inviteInvite}
+    inviteInvite = {$plugin.tx_sfregister.settings.notifyUser.inviteInvite ?? $evoweb.sf-register.settings.notifyUser.inviteInvite}
 
-    resendMail = {$plugin.tx_sfregister.settings.notifyUser.resendMail}
+    resendMail = {$plugin.tx_sfregister.settings.notifyUser.resendMail ?? $evoweb.sf-register.settings.notifyUser.resendMail}
   }
 
-  confirmEmailPostCreate = {$plugin.tx_sfregister.settings.confirmEmailPostCreate}
-  acceptEmailPostCreate = {$plugin.tx_sfregister.settings.acceptEmailPostCreate}
+  confirmEmailPostCreate = {$plugin.tx_sfregister.settings.confirmEmailPostCreate ?? $evoweb.sf-register.settings.confirmEmailPostCreate}
+  acceptEmailPostCreate = {$plugin.tx_sfregister.settings.acceptEmailPostCreate ?? $evoweb.sf-register.settings.acceptEmailPostCreate}
 
-  confirmEmailPostAccept = {$plugin.tx_sfregister.settings.confirmEmailPostAccept}
-  acceptEmailPostConfirm = {$plugin.tx_sfregister.settings.acceptEmailPostConfirm}
+  confirmEmailPostAccept = {$plugin.tx_sfregister.settings.confirmEmailPostAccept ?? $evoweb.sf-register.settings.confirmEmailPostAccept}
+  acceptEmailPostConfirm = {$plugin.tx_sfregister.settings.acceptEmailPostConfirm ?? $evoweb.sf-register.settings.acceptEmailPostConfirm}
 
-  confirmEmailPostEdit = {$plugin.tx_sfregister.settings.confirmEmailPostEdit}
-  acceptEmailPostEdit = {$plugin.tx_sfregister.settings.acceptEmailPostEdit}
+  confirmEmailPostEdit = {$plugin.tx_sfregister.settings.confirmEmailPostEdit ?? $evoweb.sf-register.settings.confirmEmailPostEdit}
+  acceptEmailPostEdit = {$plugin.tx_sfregister.settings.acceptEmailPostEdit ?? $evoweb.sf-register.settings.acceptEmailPostEdit}
 
   # boolean if user should get logged in after registration
-  autologinPostRegistration = {$plugin.tx_sfregister.settings.autologinPostRegistration}
+  autologinPostRegistration = {$plugin.tx_sfregister.settings.autologinPostRegistration ?? $evoweb.sf-register.settings.autologinPostRegistration}
 
   # boolean if user should get logged in after activation
-  autologinPostConfirmation = {$plugin.tx_sfregister.settings.autologinPostConfirmation}
+  autologinPostConfirmation = {$plugin.tx_sfregister.settings.autologinPostConfirmation ?? $evoweb.sf-register.settings.autologinPostConfirmation}
 
 
   userEmail {
-    fromName = {$plugin.tx_sfregister.settings.userEmail.fromName}
-    fromEmail = {$plugin.tx_sfregister.settings.userEmail.fromEmail}
+    fromName = {$plugin.tx_sfregister.settings.userEmail.fromName ?? $evoweb.sf-register.settings.userEmail.fromName}
+    fromEmail = {$plugin.tx_sfregister.settings.userEmail.fromEmail ?? $evoweb.sf-register.settings.userEmail.fromEmail}
 
-    replyName = {$plugin.tx_sfregister.settings.userEmail.replyName}
-    replyEmail = {$plugin.tx_sfregister.settings.userEmail.replyEmail}
+    replyName = {$plugin.tx_sfregister.settings.userEmail.replyName ?? $evoweb.sf-register.settings.userEmail.replyName}
+    replyEmail = {$plugin.tx_sfregister.settings.userEmail.replyEmail ?? $evoweb.sf-register.settings.userEmail.replyEmail}
   }
 
   adminEmail {
-    toName = {$plugin.tx_sfregister.settings.adminEmail.toName}
-    toEmail = {$plugin.tx_sfregister.settings.adminEmail.toEmail}
+    toName = {$plugin.tx_sfregister.settings.adminEmail.toName ?? $evoweb.sf-register.settings.adminEmail.toName}
+    toEmail = {$plugin.tx_sfregister.settings.adminEmail.toEmail ?? $evoweb.sf-register.settings.adminEmail.toEmail}
 
-    fromName = {$plugin.tx_sfregister.settings.adminEmail.fromName}
-    fromEmail = {$plugin.tx_sfregister.settings.adminEmail.fromEmail}
+    fromName = {$plugin.tx_sfregister.settings.adminEmail.fromName ?? $evoweb.sf-register.settings.adminEmail.fromName}
+    fromEmail = {$plugin.tx_sfregister.settings.adminEmail.fromEmail ?? $evoweb.sf-register.settings.adminEmail.fromEmail}
 
-    replyName = {$plugin.tx_sfregister.settings.adminEmail.replyName}
-    replyEmail = {$plugin.tx_sfregister.settings.adminEmail.replyEmail}
+    replyName = {$plugin.tx_sfregister.settings.adminEmail.replyName ?? $evoweb.sf-register.settings.adminEmail.replyName}
+    replyEmail = {$plugin.tx_sfregister.settings.adminEmail.replyEmail ?? $evoweb.sf-register.settings.adminEmail.replyEmail}
   }
 
   redirectEvent {
     controller = FeuserCreate
     action = form
-    page = {$plugin.tx_sfregister.settings.redirect.page}
+    page = {$plugin.tx_sfregister.settings.redirect.page ?? $evoweb.sf-register.settings.redirect.page}
   }
 }
 
 plugin.tx_sfregister.persistence {
-  storagePid = {$plugin.tx_sfregister.persistence.storagePid}
+  storagePid = {$plugin.tx_sfregister.persistence.storagePid ?? $evoweb.sf-register.persistence.storagePid}
 }
 
 module.tx_sfregister < plugin.tx_sfregister

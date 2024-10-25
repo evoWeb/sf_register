@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+	<file source-language="en" datatype="plaintext" original="EXT:sf_register/Configuration/Sets/Minimum/labels.xlf" date="2024-10-23T16:00:00Z" product-name="sf_register">
+		<header/>
+		<body>
+			<trans-unit id="label" resname="label">
+				<source>Frontend User Registration</source>
+			</trans-unit>
+
+			<trans-unit id="categories.sf-register" resname="categories.sf-register">
+				<source>Frontend User Registration</source>
+			</trans-unit>
+			<trans-unit id="categories.sf-register.minimal" resname="categories.sf-register.minimal">
+				<source>Minimal</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.badWordList" resname="settings.evoweb.sf-register.settings.badWordList">
+				<source>Comma separated list of words used in bad word validator</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.confirmEmailPostCreate" resname="settings.evoweb.sf-register.settings.confirmEmailPostCreate">
+				<source>Send email to confirm post create</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.acceptEmailPostCreate" resname="settings.evoweb.sf-register.settings.acceptEmailPostCreate">
+				<source>Send email to accept after create</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.confirmEmailPostAccept" resname="settings.evoweb.sf-register.settings.confirmEmailPostAccept">
+				<source>Send email to confirm after accept</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.acceptEmailPostConfirm" resname="settings.evoweb.sf-register.settings.acceptEmailPostConfirm">
+				<source>Send email to accept after confirm</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.confirmEmailPostEdit" resname="settings.evoweb.sf-register.settings.confirmEmailPostEdit">
+				<source>Send email to confirm after edit</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.acceptEmailPostEdit" resname="settings.evoweb.sf-register.settings.acceptEmailPostEdit">
+				<source>Send email to accept after edit</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.redirectPostActivationPageId" resname="settings.evoweb.sf-register.settings.redirectPostActivationPageId">
+				<source>Uid of the page to redirect to0, after the registration is confirmed (not after saving)</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.autologinPostConfirmation" resname="settings.evoweb.sf-register.settings.autologinPostConfirmation">
+				<source>Whether the user should get logged in after registration or confirmation</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.usergroupPostSave" resname="settings.evoweb.sf-register.settings.usergroupPostSave">
+				<source>Usergroup ID before confirming the registration</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.usergroupPostConfirm" resname="settings.evoweb.sf-register.settings.usergroupPostConfirm">
+				<source>Usergroup ID after confirming the registration</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.usergroupPostAccept" resname="settings.evoweb.sf-register.settings.usergroupPostAccept">
+				<source>Usergroup ID after accepting the registration</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.usergroup" resname="settings.evoweb.sf-register.settings.usergroup">
+				<source>Default usergroup if no confirmation or acceptance is necessary</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.emailSitename" resname="settings.evoweb.sf-register.settings.emailSitename">
+				<source>Site name used in email subject and body text</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.emailName" resname="settings.evoweb.sf-register.settings.emailName">
+				<source>Email from name(also used as toName in admin emails)</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.emailAddress" resname="settings.evoweb.sf-register.settings.emailAddress">
+				<source>Email from address (also used as toAddress in admin emails)</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
