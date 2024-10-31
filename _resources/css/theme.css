@@ -11310,9 +11310,9 @@ hr {
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   margin-top: 0;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.3em;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.4;
   color: var(--bs-heading-color);
 }
 
@@ -23404,10 +23404,13 @@ article a:not([class*=btn]):hover {
   color: var(--frame-link-hover-color);
   text-decoration-thickness: 2px;
 }
+article li {
+  margin-top: 0.5rem;
+}
 article li::marker {
   color: #ff8700;
 }
-article ol li::marker {
+article ol > li::marker {
   color: rgb(89.25, 89.25, 89.25);
 }
 
@@ -24552,9 +24555,6 @@ article *:hover > a.headerlink:after, article *:hover > a.permalink:after, artic
 
 .rst-content {
   /**
-   * Lists
-   */
-  /**
    * Images and objects
    */
   /**
@@ -24566,12 +24566,6 @@ article *:hover > a.headerlink:after, article *:hover > a.permalink:after, artic
   /**
    * Index page "genindex.html"
    */
-}
-.rst-content .toctree-wrapper ul li,
-.rst-content .toctree-wrapper ol li,
-.rst-content ul.simple li,
-.rst-content ol.simple li {
-  margin-top: 0.5rem;
 }
 @media (min-width: 992px) {
   .rst-content .compact-list > ul.simple li,
@@ -25239,7 +25233,7 @@ ul[class*=horizbuttons-][class*=-note-] > li:hover, ul[class*=horizbuttons-][cla
   content: "\f071";
 }
 
-dl.confval {
+.property-card, .rst-content dl.php, dl.confval {
   background-color: #ffffff;
   border-radius: 0.375rem;
   margin-bottom: 1.5rem;
@@ -25249,7 +25243,7 @@ dl.confval {
   word-wrap: anywhere;
   white-space: normal;
 }
-dl.confval > dt {
+.property-card > dt, .rst-content dl.php > dt, dl.confval > dt {
   display: block;
   background-color: rgb(242.25, 242.25, 242.25);
   color: #000;
@@ -25257,12 +25251,12 @@ dl.confval > dt {
   padding: 0.25em 0.5em;
   margin-bottom: 0.75em;
 }
-dl.confval > dt code {
+.property-card > dt code, .rst-content dl.php > dt code, dl.confval > dt code {
   color: #000;
   word-wrap: anywhere;
   white-space: normal;
 }
-dl.confval > dd {
+.property-card > dd, .rst-content dl.php > dd, dl.confval > dd {
   margin-right: 1rem;
 }
 
@@ -25296,51 +25290,6 @@ dl.field-list > dt:after {
     margin: 0;
   }
 }
-.rst-content dl.php {
-  border-radius: 0.375rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.3rem;
-}
-.rst-content dl.php .descname {
-  background-color: transparent;
-  border: none;
-  color: hsl(350, 100%, 40%);
-  font-size: 100%;
-  padding: 0;
-}
-.rst-content dl.php .optional {
-  padding: 0 0.25em;
-}
-.rst-content dl.php code {
-  padding: 0 0.25em;
-}
-.rst-content dl.php .pre {
-  font-family: "Source Code Pro", monospace;
-}
-.rst-content dl.php .headerlink,
-.rst-content dl.php .optional {
-  color: #212529;
-}
-.rst-content dl.php .viewcode-link {
-  padding-left: 1em;
-}
-.rst-content dl.php > dt {
-  background-color: rgb(243.846473029, 250.2365145228, 252.153526971);
-  border-radius: 0.375rem;
-  border-top: solid 3px #319fc0;
-  color: black;
-  display: inline-block;
-  font-size: 1rem;
-  margin-bottom: calc(1rem / 2);
-  padding: 0.25em 0.5em;
-  position: relative;
-}
-.rst-content dl.php dl.php > dt {
-  background-color: rgb(247.35, 247.35, 247.35);
-  border-top: 2px solid rgb(170.85, 170.85, 170.85);
-  color: #000;
-}
-
 .sidebar {
   margin: 0;
   margin-bottom: 1rem;
