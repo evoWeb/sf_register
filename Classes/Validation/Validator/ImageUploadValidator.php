@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Validation\Validator;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,25 +11,17 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Validation\Validator;
+
 use Evoweb\SfRegister\Services\File;
-use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Validator to check if the uploaded image could be handled
  */
-class ImageUploadValidator extends AbstractValidator implements SetRequestInterface
+class ImageUploadValidator extends AbstractValidator
 {
-    protected ServerRequestInterface $request;
-
-    public function __construct(protected File $fileService)
-    {
-    }
-
-    public function setRequest(ServerRequestInterface $request): void
-    {
-        $this->request = $request;
-    }
+    public function __construct(protected File $fileService) {}
 
     /**
      * If the given value is a valid image

@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,7 +11,10 @@ namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
+
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator;
 use PHPUnit\Framework\Attributes\RequiresPhp;
@@ -33,61 +34,54 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_users.csv');
 
         $this->createEmptyFrontendUser();
-        $this->request = $this->initializeTypoScriptFrontendController();
+        $this->initializeTypoScriptFrontendController();
+
+        $this->initializeFrontendTypoScript([
+            'plugin.' => [
+                'tx_sfregister.' => [
+                    'settings.' => [
+                        'badWordList' => 'god, sex, password',
+                    ],
+                ],
+            ],
+        ]);
     }
 
     #[Test]
-    #[RequiresPhp('9.3.0')]
-    public function settingsContainsValidTyposcriptSettings(): void
+    public function settingsContainsValidTypoScriptSettings(): void
     {
         $typoScriptSetup = $this->request->getAttribute('frontend.typoscript')->getSetupArray();
-        self::assertArrayHasKey(
+        $this->assertArrayHasKey(
             'badWordList',
             $typoScriptSetup['plugin.']['tx_sfregister.']['settings.']
         );
     }
 
     #[Test]
-    #[RequiresPhp('9.3.0')]
     public function isUserLoggedInReturnsFalseIfNotLoggedIn(): void
     {
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
 
-        /** @var FrontendUserRepository|MockObject $repositoryMock */
-        $repositoryMock = $this->createMock(FrontendUserRepository::class);
-
-        /** @var ConfigurationManager|MockObject $repositoryMock */
-        $configurationMock = $this->createMock(ConfigurationManager::class);
-
-        $subject = new EqualCurrentPasswordValidator($context, $repositoryMock, $configurationMock);
-
-        $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        self::assertFalse($method->invoke($subject));
+        $this->assertFalse((bool)$context->getPropertyFromAspect('frontend.user', 'isLoggedIn'));
     }
 
     #[Test]
     #[RequiresPhp('9.3.0')]
     public function isUserLoggedInReturnsTrueIfLoggedIn(): void
     {
-        $this->createAndLoginFrontEndUser('2', [
-            'password' => 'testOld',
-            'comments' => ''
-        ]);
-        $this->initializeTypoScriptFrontendController();
+        $this->loginFrontEndUser(1);
 
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
+        /** @var FrontendUserRepository $frontendUserRepository */
+        $frontendUserRepository = $this->createMock(FrontendUserRepository::class);
 
-        /** @var FrontendUserRepository|MockObject $repositoryMock */
-        $repositoryMock = $this->createMock(FrontendUserRepository::class);
+        $frontendUserService = new FrontendUserService($context, $frontendUserRepository);
 
-        /** @var ConfigurationManager|MockObject $repositoryMock */
-        $configurationMock = $this->createMock(ConfigurationManager::class);
-
-        $subject = new EqualCurrentPasswordValidator($context, $repositoryMock, $configurationMock);
+        $subject = new EqualCurrentPasswordValidator($frontendUserService);
 
         $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        self::assertTrue($method->invoke($subject));
+        $this->assertTrue($method->invoke($subject));
     }
 }

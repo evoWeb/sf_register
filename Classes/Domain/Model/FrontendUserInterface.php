@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Domain\Model;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,16 +11,17 @@ namespace Evoweb\SfRegister\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Domain\Model;
+
+use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Interface to be implemented by every frontend user
  * model that should be used with this registration
  */
-interface FrontendUserInterface
+interface FrontendUserInterface extends DomainObjectInterface
 {
-    public function getUid(): ?int;
-
     public function getUsername(): string;
 
     public function setUsername(string $username): void;

@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Unit\Validation;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,6 +11,8 @@ namespace Evoweb\SfRegister\Tests\Unit\Validation;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Tests\Unit\Validation;
+
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
@@ -21,6 +21,6 @@ class ValidatorResolverTest extends UnitTestCase
     #[Test]
     public function getParsedValidatorAnnotation()
     {
-        self::markTestIncomplete('not implemented by now');
+        $this->markTestIncomplete('not implemented by now');
     }
 }

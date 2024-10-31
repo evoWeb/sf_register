@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Property\TypeConverter;
-
 /*
  *  Copyright notice
  *
@@ -27,6 +25,8 @@ namespace Evoweb\SfRegister\Property\TypeConverter;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
+
+namespace Evoweb\SfRegister\Property\TypeConverter;
 
 use TYPO3\CMS\Extbase\Property\TypeConverter\ObjectStorageConverter as ExtbaseObjectStorageConverter;
 

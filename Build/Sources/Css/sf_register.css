@@ -1,0 +1,98 @@
+.tx_evoweb_sfregister {
+    --meter-border-radius: 0 0 10px 10px;
+    --meter-background-color: #efefef;
+    --meter-optimum-background-color: #3c5c00;
+    --meter-suboptimum-background-color: #f5d000;
+    --meter-even-less-background-color: #d14900;
+
+    meter#bargraph {
+        -webkit-appearance: none;
+        display: none;
+        background: var(--meter-background-color);
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: var(--meter-border-radius);
+        width: 100%;
+        height: 11px;
+
+        .show {
+            display: block;
+        }
+
+        /* WebKit */
+        ::-webkit-meter-inner-element {
+            background: var(--meter-background-color);
+            border: none;
+            border-radius: var(--meter-border-radius);
+        }
+
+        ::-webkit-meter-bar {
+            background: var(--meter-background-color);
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: var(--meter-border-radius);
+        }
+
+        ::-webkit-meter-optimum-value,
+        ::-webkit-meter-suboptimum-value,
+        ::-webkit-meter-even-less-good-value {
+            border-radius: var(--meter-border-radius);
+        }
+
+        ::-webkit-meter-optimum-value {
+            background: var(--meter-optimum-background-color);
+        }
+
+        ::-webkit-meter-suboptimum-value {
+            background: var(--meter-suboptimum-background-color);
+        }
+
+        ::-webkit-meter-even-less-good-value {
+            background: var(--meter-even-less-background-color);
+        }
+
+        /* Firefox */
+        ::-moz-meter-inner-element {
+            background: var(--meter-background-color);
+            border: none;
+            border-radius: var(--meter-border-radius);
+        }
+
+        ::-moz-meter-bar {
+            background: var(--meter-background-color);
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: var(--meter-border-radius);
+        }
+
+        :-moz-meter-optimum::-moz-meter-bar,
+        :-moz-meter-sub-optimum::-moz-meter-bar,
+        :-moz-meter-sub-sub-optimum::-moz-meter-bar {
+            border-radius: var(--meter-border-radius);
+        }
+
+        :-moz-meter-optimum::-moz-meter-bar {
+            background: var(--meter-optimum-background-color);
+        }
+
+        :-moz-meter-sub-optimum::-moz-meter-bar {
+            background: var(--meter-suboptimum-background-color);
+        }
+
+        :-moz-meter-sub-sub-optimum::-moz-meter-bar {
+            background: var(--meter-even-less-background-color);
+        }
+    }
+
+    #sfrZone_loading {
+        position: relative;
+        top: -35px;
+        left: -13px;
+        margin-left: 50%;
+    }
+
+    .grecaptcha-badge {
+        margin-right: -10000px;
+    }
+}

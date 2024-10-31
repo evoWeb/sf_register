@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Command;
 
 use Doctrine\DBAL\Exception as DbalException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,17 +31,24 @@ use TYPO3\CMS\Core\Resource\Exception\InsufficientFileAccessPermissionsException
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+#[AsCommand(
+    'sfregister:cleanup',
+    'Cleanup user that did not finish the double opt in, and remove orphan images',
+    hidden: true
+)]
 class CleanupCommand extends Command
 {
-    public function __construct(protected ResourceFactory $resourceFactory)
-    {
+    public function __construct(
+        protected ResourceFactory $resourceFactory,
+        protected ConnectionPool $connectionPool,
+    ) {
         parent::__construct();
     }
 
     /**
      * Configure the command by defining arguments
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->addArgument(
@@ -81,7 +89,7 @@ class CleanupCommand extends Command
 
                 $io->comment('Cleaned up all outdated temporary accounts.');
                 $result = self::SUCCESS;
-            } catch (\Exception $exception) {
+            } catch (\Exception | DbalException $exception) {
                 $io->comment($exception->getMessage());
             }
         }
@@ -121,7 +129,7 @@ class CleanupCommand extends Command
         $this->getQueryBuilderForTable($table)
             ->getConnection()
             ->delete($table, [
-                'uid' => $user['uid']
+                'uid' => $user['uid'],
             ]);
     }
 
@@ -181,8 +189,6 @@ class CleanupCommand extends Command
 
     protected function getQueryBuilderForTable(string $table): QueryBuilder
     {
-        /** @var ConnectionPool $pool */
-        $pool = GeneralUtility::makeInstance(ConnectionPool::class);
-        return $pool->getQueryBuilderForTable($table);
+        return $this->connectionPool->getQueryBuilderForTable($table);
     }
 }

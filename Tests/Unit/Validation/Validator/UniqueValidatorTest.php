@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,8 +11,10 @@ namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Validation\Validator\UniqueValidator;
+namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
+
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Validation\Validator\UniqueValidator;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -29,7 +29,7 @@ class UniqueValidatorTest extends UnitTestCase
 
         /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
-        $repositoryMock->expects(self::once())
+        $repositoryMock->expects($this->once())
             ->method('countByField')
             ->with($fieldName, $expected)
             ->willReturn(0);
@@ -40,7 +40,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->getMock();
         $subject->setPropertyName($fieldName);
 
-        self::assertFalse($subject->validate($expected)->hasErrors());
+        $this->assertFalse($subject->validate($expected)->hasErrors());
     }
 
     #[Test]
@@ -51,7 +51,7 @@ class UniqueValidatorTest extends UnitTestCase
 
         /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
-        $repositoryMock->expects(self::once())
+        $repositoryMock->expects($this->once())
             ->method('countByField')
             ->with($fieldName, $expected)
             ->willReturn(1);
@@ -62,7 +62,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->getMock();
         $subject->setPropertyName($fieldName);
 
-        self::assertTrue($subject->validate($expected)->hasErrors());
+        $this->assertTrue($subject->validate($expected)->hasErrors());
     }
 
     #[Test]
@@ -73,11 +73,11 @@ class UniqueValidatorTest extends UnitTestCase
 
         /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
-        $repositoryMock->expects(self::once())
+        $repositoryMock->expects($this->once())
             ->method('countByField')
             ->with($fieldName, $expected)
             ->willReturn(0);
-        $repositoryMock->expects(self::any())
+        $repositoryMock->expects($this->any())
             ->method('countByFieldGlobal')
             ->with($fieldName, $expected)
             ->willReturn(0);
@@ -88,7 +88,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->getMock();
         $subject->setPropertyName($fieldName);
 
-        self::assertFalse($subject->validate($expected)->hasErrors());
+        $this->assertFalse($subject->validate($expected)->hasErrors());
     }
 
     #[Test]
@@ -99,11 +99,11 @@ class UniqueValidatorTest extends UnitTestCase
 
         /** @var FrontendUserRepository|MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
-        $repositoryMock->expects(self::any())
+        $repositoryMock->expects($this->any())
             ->method('countByField')
             ->with($fieldName, $expected)
             ->willReturn(0);
-        $repositoryMock->expects(self::once())
+        $repositoryMock->expects($this->once())
             ->method('countByFieldGlobal')
             ->with($fieldName, $expected)
             ->willReturn(1);
@@ -113,10 +113,11 @@ class UniqueValidatorTest extends UnitTestCase
             ->setConstructorArgs([$repositoryMock])
             ->onlyMethods(['translateErrorMessage'])
             ->getMock();
+        // @extensionScannerIgnoreLine
         $subject->setOptions(['global' => 1]);
         $subject->setPropertyName($fieldName);
 
         $current = $subject->validate($expected);
-        self::assertTrue($current->hasErrors());
+        $this->assertTrue($current->hasErrors());
     }
 }

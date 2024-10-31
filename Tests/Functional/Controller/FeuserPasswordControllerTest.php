@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Functional\Controller;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,15 +11,16 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\SfRegister\Controller\FeuserPasswordController;
+namespace Evoweb\SfRegister\Tests\Functional\Controller;
+
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
-use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Evoweb\SfRegister\Services\File;
-use Evoweb\SfRegister\Services\Session;
+use Evoweb\SfRegister\Services\File as FileService;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
-use PHPUnit\Framework\Attributes\RequiresPhp;
+use Evoweb\SfRegister\Tests\Functional\Mock\FeuserPasswordController;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
@@ -29,38 +28,27 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
+use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class FeuserPasswordControllerTest extends AbstractTestBase
 {
     public function setUp(): void
     {
         parent::setUp();
-        $this->importCSVDataSet(__DIR__ . '/../Fixtures/pages.csv');
-        $this->importCSVDataSet(__DIR__ . '/../Fixtures/fe_groups.csv');
-        $this->importCSVDataSet(__DIR__ . '/../Fixtures/fe_users.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_groups.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_users.csv');
+
+        $this->initializeTypoScriptFrontendController();
     }
 
     #[Test]
-    #[RequiresPhp('9.3.0')]
     public function userIsLoggedInReturnsFalseIfNotLoggedIn(): void
     {
-        $this->createEmptyFrontendUser();
-        $this->request = $this->initializeTypoScriptFrontendController();
-
-        /** @var Context $context */
-        $context = GeneralUtility::makeInstance(Context::class);
-
-        /** @var File $file */
-        $file = GeneralUtility::makeInstance(File::class);
-
-        /** @var FrontendUserRepository $userRepository */
-        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
-
-        /** @var FrontendUserGroupRepository $userGroupRepository */
-        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
-
         $serverRequestFactory = new ServerRequestFactory();
         $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
 
@@ -68,118 +56,80 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $frontendUser->setLogger(new NullLogger());
         $frontendUser->start($serverRequest);
 
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class, $frontendUser);
+        $GLOBALS['TYPO3_REQUEST'] = $this->request;
 
-        $subject = new FeuserPasswordController(
-            $context,
-            $file,
-            $userRepository,
-            $userGroupRepository,
-            $session
-        );
+        /** @var Context $context */
+        $context = GeneralUtility::makeInstance(Context::class);
+        /** @var FrontendUserRepository $frontendUserRepository */
+        $frontendUserRepository = $this->createMock(FrontendUserRepository::class);
 
-        $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        self::assertFalse($method->invoke($subject));
+        $subject = new FrontendUserService($context, $frontendUserRepository);
+
+        $this->assertFalse($subject->userIsLoggedIn());
     }
 
     #[Test]
-    #[RequiresPhp('9.3.0')]
     public function userIsLoggedInReturnsTrueIfLoggedIn(): void
     {
-        $this->createAndLoginFrontEndUser('2', [
-            'password' => 'testOld',
-            'comments' => ''
-        ]);
-        $this->request = $this->initializeTypoScriptFrontendController();
+        $this->loginFrontEndUser(1);
 
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
+        /** @var FrontendUserRepository $frontendUserRepository */
+        $frontendUserRepository = $this->createMock(FrontendUserRepository::class);
 
-        /** @var File $file */
-        $file = GeneralUtility::makeInstance(File::class);
+        $subject = new FrontendUserService($context, $frontendUserRepository);
 
-        /** @var FrontendUserRepository $userRepository */
-        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
-
-        /** @var FrontendUserGroupRepository $userGroupRepository */
-        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
-
-        $serverRequestFactory = new ServerRequestFactory();
-        $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
-
-        $frontendUser = new FrontendUserAuthentication();
-        $frontendUser->setLogger(new NullLogger());
-        $frontendUser->start($serverRequest);
-
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class, $frontendUser);
-
-        $subject = new FeuserPasswordController(
-            $context,
-            $file,
-            $userRepository,
-            $userGroupRepository,
-            $session
-        );
-
-        $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        self::assertTrue($method->invoke($subject));
+        $this->assertTrue($subject->userIsLoggedIn());
     }
 
     #[Test]
-    #[RequiresPhp('9.3.0')]
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository(): void
     {
         if (!defined('PASSWORD_ARGON2I')) {
-            self::markTestSkipped('Due to missing Argon2 in travisci.');
+            $this->markTestSkipped('Due to missing Argon2 in travisci.');
         }
 
+        $userId = 1;
+        $this->loginFrontEndUser($userId);
+
+        /** @var ModifyValidator $modifyValidator */
+        $modifyValidator = $this->createMock(ModifyValidator::class);
+        /** @var FileService $fileService */
+        $fileService = $this->createMock(FileService::class);
+
         $expected = 'myPassword';
-
-        $userId = $this->createAndLoginFrontEndUser('2', [
-            'username' => 'unittest',
-            'password' => $expected,
-            'comments' => ''
-        ]);
-        $this->request = $this->initializeTypoScriptFrontendController();
-        $GLOBALS['TSFE'] = $this->typoScriptFrontendController;
-
-        /** @var Context $context */
-        $context = GeneralUtility::makeInstance(Context::class);
-
-        /** @var File $file */
-        $file = GeneralUtility::makeInstance(File::class);
-
-        /** @var FrontendUserGroupRepository $userGroupRepository */
-        $userGroupRepository = GeneralUtility::makeInstance(FrontendUserGroupRepository::class);
-
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class, $this->frontendUser);
-
         // we need to clone to create the object, else the isClone parameter is not set and both object wont match
         $userMock = clone new FrontendUser();
         $userMock->setPassword($expected);
 
-        /** @var FrontendUserRepository|MockObject $userRepositoryMock */
-        $userRepositoryMock = $this->getMockBuilder(FrontendUserRepository::class)
+        /** @var FrontendUserRepository|MockObject $frontendUserRepository */
+        $frontendUserRepository = $this->getMockBuilder(FrontendUserRepository::class)
             ->onlyMethods(['findByUid', 'update'])
             ->disableOriginalConstructor()
             ->getMock();
-        $userRepositoryMock->expects(self::once())
+        $frontendUserRepository->expects($this->once())
             ->method('findByUid')
-            ->with(self::equalTo($userId))
+            ->with($this->equalTo($userId))
             ->willReturn($userMock);
-        $userRepositoryMock->expects(self::once())
+        $frontendUserRepository->expects($this->once())
             ->method('update')
-            ->with(self::equalTo($userMock));
+            ->with($this->equalTo($userMock));
+
+        $context = GeneralUtility::makeInstance(Context::class);
+
+        $frontendUserService = new FrontendUserService(
+            $context,
+            $frontendUserRepository
+        );
+
+        $GLOBALS['TYPO3_REQUEST'] = $this->request;
 
         $subject = new FeuserPasswordController(
-            $context,
-            $file,
-            $userRepositoryMock,
-            $userGroupRepository,
-            $session
+            $modifyValidator,
+            $fileService,
+            $frontendUserRepository,
+            $frontendUserService
         );
 
         $property = $this->getPrivateProperty($subject, 'settings');
@@ -189,12 +139,22 @@ class FeuserPasswordControllerTest extends AbstractTestBase
             ->disableOriginalConstructor()
             ->onlyMethods(['render'])
             ->getMock();
+        $view->expects($this->once())
+            ->method('render')
+            ->willReturn('Password successfully updated');
+
         $property = $this->getPrivateProperty($subject, 'view');
         $property->setValue($subject, $view);
 
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = GeneralUtility::makeInstance(EventDispatcher::class);
         $subject->injectEventDispatcher($eventDispatcher);
+
+        $this->request = $this->request->withAttribute('extbase', new ExtbaseRequestParameters());
+
+        $request = new Request($this->request);
+        $request = $request->withAttribute('currentContentObject', new ContentObjectRenderer());
+        $subject->set('request', $request);
 
         /** @var Password $passwordMock */
         $passwordMock = GeneralUtility::makeInstance(Password::class);

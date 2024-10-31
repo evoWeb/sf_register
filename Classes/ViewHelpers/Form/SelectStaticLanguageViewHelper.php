@@ -29,11 +29,9 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  */
 class SelectStaticLanguageViewHelper extends AbstractSelectViewHelper
 {
-    protected ?StaticLanguageRepository $languageRepository = null;
-
-    public function injectLanguageRepository(StaticLanguageRepository $languageRepository): void
+    public function __construct(protected StaticLanguageRepository $languageRepository)
     {
-        $this->languageRepository = $languageRepository;
+        parent::__construct();
     }
 
     public function initializeArguments(): void
@@ -62,7 +60,7 @@ class SelectStaticLanguageViewHelper extends AbstractSelectViewHelper
         );
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -80,10 +78,13 @@ class SelectStaticLanguageViewHelper extends AbstractSelectViewHelper
         if ($this->arguments['disabled']) {
             $value = (array)$this->getSelectedValue();
 
-            /** @var StaticLanguage $option */
-            $options = array_filter($options, function ($option) use ($value) {
-                return in_array($option->getLgIso2(), $value);
-            });
+            $options = array_filter(
+                $options,
+                function ($option) use ($value) {
+                    /** @var StaticLanguage $option */
+                    return in_array($option->getLgIso2(), $value);
+                }
+            );
         }
 
         $this->arguments['options'] = $options;

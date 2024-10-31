@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Controller;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,6 +11,8 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Controller;
+
 use Evoweb\SfRegister\Controller\Event\CreateAcceptEvent;
 use Evoweb\SfRegister\Controller\Event\CreateConfirmEvent;
 use Evoweb\SfRegister\Controller\Event\CreateDeclineEvent;
@@ -21,7 +21,13 @@ use Evoweb\SfRegister\Controller\Event\CreatePreviewEvent;
 use Evoweb\SfRegister\Controller\Event\CreateRefuseEvent;
 use Evoweb\SfRegister\Controller\Event\CreateSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Services\Session;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File as FileService;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\FrontenUserGroup as FrontenUserGroupService;
+use Evoweb\SfRegister\Services\Mail as MailService;
+use Evoweb\SfRegister\Services\ModifyValidator;
+use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Services\Setup\CheckFactory;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
@@ -36,16 +42,19 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
  */
 class FeuserCreateController extends FeuserController
 {
-    protected string $controller = 'Create';
+    public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage';
 
     protected array $ignoredActions = ['confirmAction', 'refuseAction', 'acceptAction', 'declineAction'];
 
-    protected function skipValidation(): bool
-    {
-        $user = $this->request->hasArgument('user') ?
-            $this->request->getArgument('user') : '';
-
-        return $this->actionMethodName == 'formAction' && is_array($user) && ($user['byInvitation'] ?? '0');
+    public function __construct(
+        protected ModifyValidator $modifyValidator,
+        protected FileService $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected MailService $mailService,
+        protected FrontendUserService $frontendUserService,
+        protected FrontenUserGroupService $frontenUserGroupService,
+    ) {
+        parent::__construct($modifyValidator, $fileService, $userRepository);
     }
 
     public function formAction(FrontendUser $user = null): ResponseInterface
@@ -53,7 +62,7 @@ class FeuserCreateController extends FeuserController
         $setupResponse = $this->setupCheck();
 
         if ($user) {
-            $this->eventDispatcher->dispatch(new CreateFormEvent($user, $this->settings));
+            $user = $this->eventDispatcher->dispatch(new CreateFormEvent($user, $this->settings))->getUser();
             $this->view->assign('user', $user);
         }
 
@@ -67,8 +76,7 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
 
-        $this->eventDispatcher->dispatch(new CreatePreviewEvent($user, $this->settings));
-
+        $user = $this->eventDispatcher->dispatch(new CreatePreviewEvent($user, $this->settings))->getUser();
         $this->view->assign('user', $user);
 
         return new HtmlResponse($this->view->render());
@@ -82,17 +90,25 @@ class FeuserCreateController extends FeuserController
             || ($this->settings['acceptEmailPostCreate'] ?? false)
         ) {
             $user->setDisable(true);
-            $user = $this->changeUsergroup($user, (int)($this->settings['usergroupPostSave'] ?? 0));
+            $user = $this->frontenUserGroupService->changeUsergroup(
+                $this->settings,
+                $user,
+                (int)($this->settings['usergroupPostSave'] ?? 0)
+            );
         } else {
-            $user = $this->changeUsergroup($user, (int)($this->settings['usergroup'] ?? 0));
-            $this->moveTemporaryImage($user);
+            $user = $this->frontenUserGroupService->changeUsergroup(
+                $this->settings,
+                $user,
+                (int)($this->settings['usergroup'] ?? 0)
+            );
+            $this->fileService->moveTemporaryImage($user);
         }
 
-        if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
+        if ($this->settings['useEmailAddressAsUsername'] ?? false) {
             $user->setUsername($user->getEmail());
         }
 
-        $this->eventDispatcher->dispatch(new CreateSaveEvent($user, $this->settings));
+        $user = $this->eventDispatcher->dispatch(new CreateSaveEvent($user, $this->settings))->getUser();
 
         try {
             // Persist user to get valid uid
@@ -104,7 +120,13 @@ class FeuserCreateController extends FeuserController
 
             // Write back plain password
             $user->setPassword($plainPassword);
-            $user = $this->sendEmails($user, __FUNCTION__);
+            $user = $this->mailService->sendEmails(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                __FUNCTION__
+            );
 
             // Encrypt plain password
             if ($user->getPassword()) {
@@ -116,20 +138,20 @@ class FeuserCreateController extends FeuserController
         } catch (IllegalObjectTypeException | UnknownObjectException) {
         }
 
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class);
+        /** @var SessionService $session */
+        $session = GeneralUtility::makeInstance(SessionService::class);
         $session->remove('captchaWasValid');
 
         $this->view->assign('user', $user);
 
         $redirectResponse = null;
         $redirectPageId = (int)($this->settings['redirectPostRegistrationPageId'] ?? 0);
-        if (($this->settings['autologinPostRegistration'] ?? false)) {
-            $redirectResponse = $this->autoLogin($user, $redirectPageId);
+        if ($this->settings['autologinPostRegistration'] ?? false) {
+            $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
         }
 
         if ($redirectResponse === null && $redirectPageId > 0) {
-            $redirectResponse = $this->redirectToPage($redirectPageId);
+            $redirectResponse = $this->frontendUserService->redirectToPage($this->request, $redirectPageId);
         }
 
         return $redirectResponse ?: new HtmlResponse($this->view->render());
@@ -140,33 +162,46 @@ class FeuserCreateController extends FeuserController
      */
     public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         $redirectResponse = null;
-        if (!($user instanceof FrontendUser)) {
+        if ($user === null) {
             $this->view->assign('userNotFound', 1);
         } else {
             $this->view->assign('user', $user);
 
             if (
-                $user->getActivatedOn() || $this->isUserInUserGroups(
+                $user->getActivatedOn() || $this->frontenUserGroupService->isUserInUserGroups(
                     $user,
-                    $this->getConfiguredUserGroups((int)($this->settings['usergroupPostConfirm'] ?? 0))
+                    $this->frontenUserGroupService->getConfiguredUserGroups(
+                        $this->settings,
+                        (int)($this->settings['usergroupPostConfirm'] ?? 0)
+                    )
                 )
             ) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
-                $user = $this->changeUsergroup($user, (int)($this->settings['usergroupPostConfirm'] ?? 0));
-                $this->moveTemporaryImage($user);
+                $user = $this->frontenUserGroupService->changeUsergroup(
+                    $this->settings,
+                    $user,
+                    (int)($this->settings['usergroupPostConfirm'] ?? 0)
+                );
+                $this->fileService->moveTemporaryImage($user);
                 $user->setActivatedOn(new \DateTime('now'));
 
                 if (!($this->settings['acceptEmailPostConfirm'] ?? false)) {
                     $user->setDisable(false);
                 }
 
-                $this->eventDispatcher->dispatch(new CreateConfirmEvent($user, $this->settings));
-
-                $user = $this->sendEmails($user, __FUNCTION__);
+                $user = $this->eventDispatcher->dispatch(new CreateConfirmEvent($user, $this->settings))->getUser();
+                /** @var FrontendUser $user */
+                $user = $this->mailService->sendEmails(
+                    $this->request,
+                    $this->settings,
+                    $user,
+                    $this->getControllerName(),
+                    __FUNCTION__
+                );
 
                 try {
                     $this->userRepository->update($user);
@@ -177,12 +212,12 @@ class FeuserCreateController extends FeuserController
                 $this->view->assign('userConfirmed', 1);
 
                 $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
-                if (($this->settings['autologinPostConfirmation'] ?? false)) {
-                    $redirectResponse = $this->autoLogin($user, $redirectPageId);
+                if ($this->settings['autologinPostConfirmation'] ?? false) {
+                    $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
                 }
 
                 if ($redirectResponse === null && $redirectPageId > 0) {
-                    $redirectResponse = $this->redirectToPage($redirectPageId);
+                    $redirectResponse = $this->frontendUserService->redirectToPage($this->request, $redirectPageId);
                 }
             }
         }
@@ -198,14 +233,13 @@ class FeuserCreateController extends FeuserController
      */
     public function refuseAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
+            $user = $this->eventDispatcher->dispatch(new CreateRefuseEvent($user, $this->settings))->getUser();
             $this->view->assign('user', $user);
-
-            $this->eventDispatcher->dispatch(new CreateRefuseEvent($user, $this->settings));
 
             if ($user->getImage()->count()) {
                 $image = $user->getImage()->current();
@@ -215,7 +249,13 @@ class FeuserCreateController extends FeuserController
 
             $this->userRepository->remove($user);
 
-            $this->sendEmails($user, __FUNCTION__);
+            $this->mailService->sendEmails(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                __FUNCTION__
+            );
 
             $this->view->assign('userRefused', 1);
         }
@@ -228,7 +268,7 @@ class FeuserCreateController extends FeuserController
      */
     public function acceptAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
@@ -236,28 +276,41 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('user', $user);
 
             if (
-                !$user->getDisable() || $this->isUserInUserGroups(
+                !$user->getDisable() || $this->frontenUserGroupService->isUserInUserGroups(
                     $user,
-                    $this->getConfiguredUserGroups((int)($this->settings['usergroupPostAccept'] ?? 0))
+                    $this->frontenUserGroupService->getConfiguredUserGroups(
+                        $this->settings,
+                        (int)($this->settings['usergroupPostAccept'] ?? 0)
+                    )
                 )
             ) {
                 $this->view->assign('userAlreadyAccepted', 1);
             } else {
-                $user = $this->changeUsergroup($user, (int)($this->settings['usergroupPostAccept'] ?? 0));
+                $user = $this->frontenUserGroupService->changeUsergroup(
+                    $this->settings,
+                    $user,
+                    (int)($this->settings['usergroupPostAccept'] ?? 0)
+                );
                 $user->setDisable(false);
 
                 if (!($this->settings['confirmEmailPostAccept'] ?? false)) {
                     $user->setActivatedOn(new \DateTime('now'));
                 }
 
-                $this->eventDispatcher->dispatch(new CreateAcceptEvent($user, $this->settings));
+                $user = $this->eventDispatcher->dispatch(new CreateAcceptEvent($user, $this->settings))->getUser();
 
                 try {
                     $this->userRepository->update($user);
                 } catch (IllegalObjectTypeException | UnknownObjectException) {
                 }
 
-                $this->sendEmails($user, __FUNCTION__);
+                $this->mailService->sendEmails(
+                    $this->request,
+                    $this->settings,
+                    $user,
+                    $this->getControllerName(),
+                    __FUNCTION__
+                );
 
                 $this->view->assign('userAccepted', 1);
             }
@@ -274,14 +327,13 @@ class FeuserCreateController extends FeuserController
      */
     public function declineAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
+            $user = $this->eventDispatcher->dispatch(new CreateDeclineEvent($user, $this->settings))->getUser();
             $this->view->assign('user', $user);
-
-            $this->eventDispatcher->dispatch(new CreateDeclineEvent($user, $this->settings));
 
             if ($user->getImage()->count()) {
                 $image = $user->getImage()->current();
@@ -291,7 +343,13 @@ class FeuserCreateController extends FeuserController
 
             $this->userRepository->remove($user);
 
-            $this->sendEmails($user, __FUNCTION__);
+            $this->mailService->sendEmails(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                __FUNCTION__
+            );
 
             $this->view->assign('userDeclined', 1);
         }
@@ -305,7 +363,7 @@ class FeuserCreateController extends FeuserController
 
         $setupChecks = GeneralUtility::makeInstance(CheckFactory::class)->getCheckInstances();
         foreach ($setupChecks as $setupCheck) {
-            if (($result = $setupCheck->check($this->settings))) {
+            if ($result = $setupCheck->check($this->settings)) {
                 break;
             }
         }

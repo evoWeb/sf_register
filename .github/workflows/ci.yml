@@ -11,10 +11,10 @@ jobs:
 
   resources:
     name: Resources tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Lint SCSS
         run: Build/Scripts/additionalTests.sh -s lintScss
@@ -32,6 +32,7 @@ jobs:
         run: |
           Build/Scripts/runTests.sh -s clean
           Build/Scripts/additionalTests.sh -s clean
+          git checkout composer.json
 
   testsuite:
     name: All php tests
@@ -39,35 +40,41 @@ jobs:
     strategy:
       matrix:
         packages:
-          - php: '8.1'
-            core: '^12.4'
-            framework: '^8.0.6'
+          - php: '8.2'
+            core: '^13.1'
+            framework: 'dev-main'
             prefer: ''
             testpath: 'Tests/Functional'
-          - php: '8.1'
-            core: '^12.4'
-            framework: '^8.0.6'
+          - php: '8.2'
+            core: '^13.1'
+            framework: 'dev-main'
             prefer: '--prefer-lowest'
             testpath: 'Tests/Functional'
-          - php: '8.2'
-            core: '^12.4'
-            framework: '^8.0.6'
+          - php: '8.3'
+            core: '^13.1'
+            framework: 'dev-main'
             prefer: ''
             testpath: 'Tests/Functional'
-          - php: '8.2'
-            core: '^12.4'
-            framework: '^8.0.6'
+          - php: '8.3'
+            core: '^13.1'
+            framework: 'dev-main'
             prefer: '--prefer-lowest'
             testpath: 'Tests/Functional'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Lint php
         run: |
           Build/Scripts/additionalTests.sh \
             -p ${{ matrix.packages.php }} \
             -s lintPhp
+
+      - name: Composer install
+        run: |
+          Build/Scripts/runTests.sh \
+            -p ${{ matrix.packages.php }} \
+            -s composerInstall
 
       - name: Composer install core
         run: |
@@ -108,17 +115,18 @@ jobs:
         run: |
           Build/Scripts/runTests.sh -s clean
           Build/Scripts/additionalTests.sh -s clean
+          git checkout composer.json
 
   TERUpload:
     needs: [ resources, testsuite ]
     if: startsWith(github.ref, 'refs/tags/')
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     name: TYPO3 TER release
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Publish to TER
         uses: tomasnorre/typo3-upload-ter@v2

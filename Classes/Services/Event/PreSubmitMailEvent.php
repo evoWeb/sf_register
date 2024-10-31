@@ -19,9 +19,11 @@ use TYPO3\CMS\Core\Mail\MailMessage;
 
 final class PreSubmitMailEvent
 {
-    public function __construct(protected MailMessage $mail, protected array $settings, protected array $arguments = [])
-    {
-    }
+    public function __construct(
+        protected MailMessage $mail,
+        protected array $settings,
+        protected array $arguments = []
+    ) {}
 
     public function getMail(): MailMessage
     {

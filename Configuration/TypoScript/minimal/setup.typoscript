@@ -6,13 +6,13 @@ plugin.tx_sfregister.settings {
   # uid of the page to redirect to after saving
   redirectPostRegistrationPageId =
   # uid of the page to redirect to after confirmation
-  redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId}
+  redirectPostActivationPageId = {$plugin.tx_sfregister.settings.redirectPostActivationPageId ?? $evoweb.sf-register.settings.redirectPostActivationPageId}
 
   # whether the email address entered should be used as username
   useEmailAddressAsUsername = 1
 
   # boolean use encrypted filename to deny direct access on uploaded files
-  useEncryptedFilename = md5
+  useEncryptedFilename = 1
 
   # boolean if user or admin need to activate or notified
   notifyAdmin {
@@ -53,36 +53,36 @@ plugin.tx_sfregister.settings {
     resendMail = 1
   }
 
-  confirmEmailPostCreate = {$plugin.tx_sfregister.settings.confirmEmailPostCreate}
-  acceptEmailPostCreate = {$plugin.tx_sfregister.settings.acceptEmailPostCreate}
+  confirmEmailPostCreate = {$plugin.tx_sfregister.settings.confirmEmailPostCreate ?? $evoweb.sf-register.settings.confirmEmailPostCreate}
+  acceptEmailPostCreate = {$plugin.tx_sfregister.settings.acceptEmailPostCreate ?? $evoweb.sf-register.settings.acceptEmailPostCreate}
 
-  confirmEmailPostAccept = {$plugin.tx_sfregister.settings.confirmEmailPostAccept}
-  acceptEmailPostConfirm = {$plugin.tx_sfregister.settings.acceptEmailPostConfirm}
+  confirmEmailPostAccept = {$plugin.tx_sfregister.settings.confirmEmailPostAccept ?? $evoweb.sf-register.settings.confirmEmailPostAccept}
+  acceptEmailPostConfirm = {$plugin.tx_sfregister.settings.acceptEmailPostConfirm ?? $evoweb.sf-register.settings.acceptEmailPostConfirm}
 
-  confirmEmailPostEdit = {$plugin.tx_sfregister.settings.confirmEmailPostEdit}
-  acceptEmailPostEdit = {$plugin.tx_sfregister.settings.acceptEmailPostEdit}
+  confirmEmailPostEdit = {$plugin.tx_sfregister.settings.confirmEmailPostEdit ?? $evoweb.sf-register.settings.confirmEmailPostEdit}
+  acceptEmailPostEdit = {$plugin.tx_sfregister.settings.acceptEmailPostEdit ?? $evoweb.sf-register.settings.acceptEmailPostEdit}
 
   # boolean if user should get logged in after registration
   autologinPostRegistration =
 
   # boolean if user should get logged in after activation
-  autologinPostConfirmation = {$plugin.tx_sfregister.settings.autologinPostConfirmation}
+  autologinPostConfirmation = {$plugin.tx_sfregister.settings.autologinPostConfirmation ?? $evoweb.sf-register.settings.autologinPostConfirmation}
 
 
   userEmail {
-    fromName = {$plugin.tx_sfregister.settings.emailName}
-    fromEmail = {$plugin.tx_sfregister.settings.emailAddress}
+    fromName = {$plugin.tx_sfregister.settings.emailName ?? $evoweb.sf-register.settings.emailName}
+    fromEmail = {$plugin.tx_sfregister.settings.emailAddress ?? $evoweb.sf-register.settings.emailAddress}
 
     replyName =
     replyEmail =
   }
 
   adminEmail {
-    toName = {$plugin.tx_sfregister.settings.emailName}
-    toEmail = {$plugin.tx_sfregister.settings.emailAddress}
+    toName = {$plugin.tx_sfregister.settings.emailName ?? $evoweb.sf-register.settings.emailName}
+    toEmail = {$plugin.tx_sfregister.settings.emailAddress ?? $evoweb.sf-register.settings.emailAddress}
 
-    fromName = {$plugin.tx_sfregister.settings.emailName}
-    fromEmail = {$plugin.tx_sfregister.settings.emailAddress}
+    fromName = {$plugin.tx_sfregister.settings.emailName ?? $evoweb.sf-register.settings.emailName}
+    fromEmail = {$plugin.tx_sfregister.settings.emailAddress ?? $evoweb.sf-register.settings.emailAddress}
 
     replyName =
     replyEmail =

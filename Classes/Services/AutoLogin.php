@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Services;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Services;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Services;
 
 use TYPO3\CMS\Core\Authentication\AuthenticationService;
 use TYPO3\CMS\Core\Registry;
@@ -36,10 +36,11 @@ class AutoLogin extends AuthenticationService
 
         /** @var Registry $registry */
         $registry = GeneralUtility::makeInstance(Registry::class);
-        $userId = (int)$registry->get('sf-register', $hmac);
+        $userId = (string)$registry->get('sf-register', $hmac);
         $registry->remove('sf-register', $hmac);
 
         $dbUserSetup = [...$this->db_user, 'username_column' => 'uid', 'enable_clause' => ''];
+        // @extensionScannerIgnoreLine
         $user = $this->fetchUserRecord($userId, '', $dbUserSetup);
 
         if (!empty($user)) {

@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Controller;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,11 +11,17 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Controller;
+
 use Evoweb\SfRegister\Controller\Event\InviteFormEvent;
 use Evoweb\SfRegister\Controller\Event\InviteInviteEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Evoweb\SfRegister\Services\Mail;
-use Evoweb\SfRegister\Services\Session;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File as FileService;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\Mail as MailService;
+use Evoweb\SfRegister\Services\ModifyValidator;
+use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
@@ -29,21 +33,29 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
  */
 class FeuserInviteController extends FeuserController
 {
-    protected string $controller = 'Invite';
+    public const PLUGIN_ACTIONS = 'form, invite';
+
+    public function __construct(
+        protected ModifyValidator $modifyValidator,
+        protected FileService $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected MailService $mailService,
+        protected FrontendUserService $frontendUserService,
+    ) {
+        parent::__construct($modifyValidator, $fileService, $userRepository);
+    }
 
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        if (is_null($user) && $this->userIsLoggedIn()) {
-            $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
-            /** @var FrontendUser $user */
-            $user = $this->userRepository->findByUid($userId);
+        if ($user === null) {
+            if ($this->frontendUserService->userIsLoggedIn()) {
+                $user = $this->frontendUserService->getLoggedInUser();
+            } else {
+                $user = GeneralUtility::makeInstance(FrontendUser::class);
+            }
         }
 
-        // user is logged
-        if ($user instanceof FrontendUser) {
-            $this->eventDispatcher->dispatch(new InviteFormEvent($user, $this->settings));
-        }
-
+        $user = $this->eventDispatcher->dispatch(new InviteFormEvent($user, $this->settings))->getUser();
         $this->view->assign('user', $user);
 
         return new HtmlResponse($this->view->render());
@@ -52,21 +64,29 @@ class FeuserInviteController extends FeuserController
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function inviteAction(FrontendUser $user): ResponseInterface
     {
+        /** @var FrontendUser $user */
+        $user = $this->mailService->sendEmails(
+            $this->request,
+            $this->settings,
+            $user,
+            $this->getControllerName(),
+            __FUNCTION__
+        );
+
         $event = new InviteInviteEvent($user, $this->settings, false);
-        $this->eventDispatcher->dispatch($event);
-        $doNotSendInvitation = $event->isDoNotSendInvitation();
-
-        $user = $this->sendEmails($user, __FUNCTION__);
-
+        $doNotSendInvitation = $this->eventDispatcher->dispatch($event)->isDoNotSendInvitation();
         if (!$doNotSendInvitation) {
-            /** @var Mail $mailService */
-            $mailService = GeneralUtility::makeInstance(Mail::class);
-            $mailService->overrideSettings($this->settings);
-            $user = $mailService->sendInvitation($user, 'ToRegister');
+            $user = $this->mailService->sendInvitation(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                'ToRegister'
+            );
         }
 
-        /** @var Session $session */
-        $session = GeneralUtility::makeInstance(Session::class);
+        /** @var SessionService $session */
+        $session = GeneralUtility::makeInstance(SessionService::class);
         $session->remove('captchaWasValid');
 
         $this->view->assign('user', $user);

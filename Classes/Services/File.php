@@ -15,12 +15,11 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Services;
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Http\UploadedFile;
-use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Resource\ResourceStorage;
@@ -81,6 +80,15 @@ class File implements SingletonInterface, LoggerAwareInterface
         $uploadMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('upload_max_filesize'));
         $postMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('post_max_size'));
         $this->maxFilesize = min($uploadMaxFileSize, $postMaxFileSize);
+    }
+
+    public function moveTemporaryImage(FrontendUser $user): void
+    {
+        if ($user->getImage()->count()) {
+            /** @var FileReference $image */
+            $image = $user->getImage()->current();
+            $this->moveFileFromTempFolderToUploadFolder($image);
+        }
     }
 
     public function setRequest(ServerRequestInterface $request): void
@@ -195,11 +203,12 @@ class File implements SingletonInterface, LoggerAwareInterface
                     $filename = sha1(
                         $filename . uniqid('sfregister')
                         . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']
-                    )  . '.' . $extension;
+                    ) . '.' . $extension;
                 }
                 if ($fileData->getClientFilename() !== $filename) {
                     $fileData = new UploadedFile(
                         $fileData->getStream(),
+                        // @extensionScannerIgnoreLine
                         $fileData->getSize(),
                         $fileData->getError(),
                         $filename,
@@ -218,7 +227,8 @@ class File implements SingletonInterface, LoggerAwareInterface
         if ($fileData instanceof UploadedFile) {
             $fileExtension = pathinfo($fileData->getClientFilename(), PATHINFO_EXTENSION);
 
-            $result = $this->isAllowedFilesize((int)$fileData->getSize());
+            // @extensionScannerIgnoreLine
+            $result = $this->isAllowedFilesize($fileData->getSize() ?? 0);
             $result = $result && $this->isAllowedFileExtension($fileExtension);
         } else {
             $result = true;
@@ -253,34 +263,6 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $result;
     }
 
-    /**
-     * Move a temporary uploaded file to the upload folder
-     *
-     * @return ?FileInterface
-     */
-    public function moveTempFileToTempFolder(): ?FileInterface
-    {
-        // @todo where is this called?
-        $result = null;
-        $fileData = $this->getUploadedFileInfo();
-
-        if ($fileData instanceof UploadedFile) {
-            try {
-                /** @var ResourceStorage $resourceStorage */
-                $resourceStorage = GeneralUtility::makeInstance(ResourceStorage::class);
-                $result = $resourceStorage->addFile(
-                    $fileData->getTemporaryFileName(),
-                    $this->getTempFolder(),
-                    $fileData->getClientFilename()
-                );
-            } catch (\Exception $exception) {
-                $this->logger->error($exception->getMessage(), $exception->getTrace());
-            }
-        }
-
-        return $result;
-    }
-
     protected function createFolderIfNotExist(string $uploadFolder): void
     {
         if (!$this->getStorage()->hasFolder($uploadFolder)) {
@@ -294,9 +276,11 @@ class File implements SingletonInterface, LoggerAwareInterface
     public function moveFileFromTempFolderToUploadFolder(?FileReference $image): void
     {
         if (!empty($image)) {
-            $file = $image->getOriginalResource()->getOriginalFile();
+            $file = $image->getOriginalResource()
+                ->getOriginalFile();
             try {
-                $file->getStorage()->moveFile($file, $this->getImageFolder());
+                $file->getStorage()
+                    ->moveFile($file, $this->getImageFolder());
             } catch (\Exception $exception) {
                 $this->logger->info(
                     'sf_register: Image ' . $file->getName() . ' could not be moved! ' . $exception->getMessage()
@@ -307,28 +291,11 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     public function removeFile(FileReference $fileReference): string
     {
-        $image = $fileReference->getOriginalResource()->getOriginalFile();
-        $folder = $image->getParentFolder();
-        $imageNameAndPath = Environment::getPublicPath() . '/'
-            . $folder->getName() . '/' . $image->getIdentifier();
-
-        if (@file_exists($imageNameAndPath)) {
-            unlink($imageNameAndPath);
-        }
+        $image = $fileReference->getOriginalResource()
+            ->getOriginalFile();
+        $image->delete();
 
         return $image->getIdentifier();
-    }
-
-    protected function getFilepath(string $filename): string
-    {
-        $filenameParts = GeneralUtility::trimExplode('/', $filename, true);
-
-        $result = implode('/', array_slice($filenameParts, 0, -1));
-        if (!in_array($result, [$this->tempFolderIdentifier, $this->imageFolderIdentifier])) {
-            $result = '';
-        }
-
-        return $result;
     }
 
     protected function getFilename(string $filename): string

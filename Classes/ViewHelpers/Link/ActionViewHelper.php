@@ -15,13 +15,15 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\ViewHelpers\Link;
 
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Mvc\RequestInterface as ExtbaseRequestInterface;
-use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder as ExtbaseUriBuilder;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
+use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Typolink\LinkFactory;
@@ -39,22 +41,16 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
      */
     protected $tagName = 'a';
 
+    protected string $additionalSecret = 'sf-register-autologin';
+
+    public function __construct(protected HashService $hashService)
+    {
+        parent::__construct();
+    }
+
     public function initializeArguments(): void
     {
         parent::initializeArguments();
-        $this->registerUniversalTagAttributes();
-        $this->registerTagAttribute('name', 'string', 'Specifies the name of an anchor');
-        $this->registerTagAttribute(
-            'rel',
-            'string',
-            'Specifies the relationship between the current document and the linked document'
-        );
-        $this->registerTagAttribute(
-            'rev',
-            'string',
-            'Specifies the relationship between the linked document and the current document'
-        );
-        $this->registerTagAttribute('target', 'string', 'Specifies where to open the linked document');
         $this->registerArgument('action', 'string', 'Target action');
         $this->registerArgument('controller', 'string', 'Target controller. If NULL current controllerName is used');
         $this->registerArgument(
@@ -108,18 +104,19 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
     {
         if (
             $this->arguments['action'] !== null
-            && $this->arguments['arguments'] !== null
+            && is_array($this->arguments['arguments'])
             && isset($this->arguments['arguments']['user'])
         ) {
-            $this->arguments['arguments']['hash'] = GeneralUtility::hmac(
-                $this->arguments['action'] . '::' . $this->arguments['arguments']['user']
+            $this->arguments['arguments']['hash'] = $this->hashService->hmac(
+                $this->arguments['action'] . '::' . $this->arguments['arguments']['user'],
+                FrontendUserService::ADDITIONAL_SECRET
             );
         }
 
         /** @var RenderingContext $renderingContext */
         $renderingContext = $this->renderingContext;
         $request = $renderingContext->getRequest();
-        if ($request instanceof ExtbaseRequestInterface) {
+        if ($request instanceof RequestInterface) {
             return $this->renderWithExtbaseContext($request);
         }
         if ($request instanceof ServerRequestInterface && ApplicationType::fromRequest($request)->isFrontend()) {
@@ -235,7 +232,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         }
     }
 
-    protected function renderWithExtbaseContext(ExtbaseRequestInterface $request): string
+    protected function renderWithExtbaseContext(RequestInterface $request): string
     {
         $action = $this->arguments['action'];
         $controller = $this->arguments['controller'];
@@ -254,8 +251,8 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         $argumentsToBeExcludedFromQueryString = (array)$this->arguments['argumentsToBeExcludedFromQueryString'];
         $parameters = $this->arguments['arguments'];
 
-        /** @var ExtbaseUriBuilder $uriBuilder */
-        $uriBuilder = GeneralUtility::makeInstance(ExtbaseUriBuilder::class);
+        /** @var UriBuilder $uriBuilder */
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
         $uriBuilder
             ->reset()
             ->setRequest($request)

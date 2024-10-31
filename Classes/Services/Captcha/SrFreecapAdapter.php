@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Services\Captcha;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Services\Captcha;
 
 use Evoweb\SfRegister\Services\Session;
 use SJBR\SrFreecap\PiBaseApi;
@@ -69,6 +69,7 @@ class SrFreecapAdapter extends AbstractAdapter
     public function __construct(protected Session $session)
     {
         if (ExtensionManagementUtility::isLoaded('sr_freecap')) {
+            // @phpstan-ignore-next-line
             $this->captchaService = GeneralUtility::makeInstance(PiBaseApi::class);
         }
     }

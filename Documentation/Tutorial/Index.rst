@@ -1,21 +1,21 @@
-.. include:: ../Includes.txt
+..  include:: /Includes.rst.txt
+..  index:: Tutorial
+..  _tutorial:
 
-
-.. _tutorial:
-
+========
 Tutorial
 ========
 
 
 How to setup different registration processes?
-----------------------------------------------
+==============================================
 
-It is possible to have simple registrations like directly activated user accounts as well as complex ones like double optin
-confirmations with admin acceptance. So if its possible to have different approches how to set them up?
+It is possible to have simple registrations like directly activated user
+accounts as well as complex ones like double optin confirmations with admin
+acceptance. So if its possible to have different approaches how to set them up?
 
-
-Simple like peanut butter jelly sandwich:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Simple like peanut butter jelly sandwich
+----------------------------------------
 - In the Extension Manager
 
   - install the extension
@@ -53,9 +53,12 @@ Simple like peanut butter jelly sandwich:
   - activate and set the remembered usergroup id in the field 'usergroup set if no activation is needed':
     (the result in constants field is plugin.tx_sfregister.settings.usergroup = 3)
 
-Somewhat like creme bruleé:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Somewhat like creme bruleé
+--------------------------
 
+Help is needed here, to describe each step.
 
-Your christmas stuffed Turkey:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Your christmas stuffed Turkey
+-----------------------------
+
+Help is needed here, to describe each step.

@@ -3,38 +3,25 @@
 declare(strict_types=1);
 
 /*
- *  Copyright notice
+ * This file is developed by evoWeb.
  *
- *  (c) 2014 Helmut Hummel <helmut.hummel@typo3.org>
- *  All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *  A copy is found in the text file GPL.txt and important notices to the license
- *  from the author is found in LICENSE.txt distributed with these scripts.
- *
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  */
 
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
+use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
-use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
+use TYPO3\CMS\Form\Security\HashScope;
 
 class UploadViewHelper extends AbstractFormFieldViewHelper
 {
@@ -43,37 +30,20 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
      */
     protected $tagName = 'input';
 
-    protected ?HashService $hashService = null;
-
-    protected ?PropertyMapper $propertyMapper = null;
-
-    public function injectHashService(HashService $hashService): void
-    {
-        $this->hashService = $hashService;
-    }
-
-    public function injectPropertyMapper(PropertyMapper $propertyMapper): void
-    {
-        $this->propertyMapper = $propertyMapper;
+    public function __construct(
+        protected HashService $hashService,
+        protected PropertyMapper $propertyMapper
+    ) {
+        parent::__construct();
     }
 
     public function initializeArguments(): void
     {
         parent::initializeArguments();
-        $this->registerTagAttribute(
-            'disabled',
-            'string',
-            'Specifies that the input element should be disabled when the page loads'
-        );
-        $this->registerTagAttribute(
+        $this->registerArgument(
             'multiple',
             'string',
             'Specifies that the file input element should allow multiple selection of files'
-        );
-        $this->registerTagAttribute(
-            'accept',
-            'string',
-            'Specifies the allowed file extensions to upload via comma-separated list, example ".png,.gif"'
         );
         $this->registerArgument(
             'errorClass',
@@ -82,8 +52,7 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
             false,
             'f3-form-error'
         );
-        $this->registerUniversalTagAttributes();
-        $this->registerTagAttribute(
+        $this->registerArgument(
             'alwaysShowUpload',
             'string',
             'Whether the upload button should be always shown.'
@@ -140,9 +109,11 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
 
             $this->registerFieldNameForFormTokenGeneration($this->getName() . '[submittedFile][resourcePointer]');
 
-            $output .= '<input type="hidden" name="' . $this->getName()
-                . '[submittedFile][resourcePointer]" value="'
-                . htmlspecialchars($this->hashService->appendHmac((string)$resourcePointerValue))
+            $output .= '<input type="hidden" name="' . htmlspecialchars($this->getName()) . '[submittedFile][resourcePointer]" value="'
+                . htmlspecialchars($this->hashService->appendHmac(
+                    (string)$resourcePointerValue,
+                    UploadedFileReferenceConverter::RESOURCE_POINTER_PREFIX
+                ))
                 . '"' . $resourcePointerIdAttribute . ' />';
 
             $this->templateVariableContainer->add('resource', $resource);

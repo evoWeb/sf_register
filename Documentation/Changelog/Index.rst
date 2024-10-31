@@ -1,8 +1,8 @@
-.. include:: ../Includes.txt
+.. include:: /Includes.rst.txt
+..  index:: ChangeLog
+..  _changelog:
 
-
-.. _changelog:
-
+=========
 ChangeLog
 =========
 

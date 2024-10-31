@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Services\Setup;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,13 +11,13 @@ namespace Evoweb\SfRegister\Services\Setup;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Services\Setup;
+
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CheckFactory
 {
-    public function __construct(protected array $configuration)
-    {
-    }
+    public function __construct(protected array $configuration) {}
 
     public function getCheckInstances(): array
     {

@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Validation\Validator;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,6 +11,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Validation\Validator;
+
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
@@ -23,9 +23,7 @@ class EqualCurrentUserValidator extends AbstractValidator
 {
     protected $acceptsEmptyValues = false;
 
-    public function __construct(protected Context $context)
-    {
-    }
+    public function __construct(protected Context $context) {}
 
     /**
      * If the given value is not equal to logged-in user id

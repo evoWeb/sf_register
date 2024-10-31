@@ -1,24 +1,87 @@
-.. include:: ../Includes.txt
+.. include:: /Includes.rst.txt
+..  index:: Breaking Changes
+..  _breaking-changes:
 
-
-.. _breaking-changes:
-
+================
 Breaking Changes
 ================
 
-2023.10.x
-''''''''''
+2024.10.24
+==========
 
-@todo CountryProvider CountrySelectViewHelper
+Replace TypoScript condition and `plugin.tx_sfregister.settings.minified` value
+with :php:`Evoweb\SfRegister\ViewHelpers\ApplicationContextViewHelper`.
+
+Environments are matched with Expression Languages and allow values like:
+
+* Development
+* Testing
+* Production
+* Production/*
+* Production/Staging
+
+By this one TypoScript condition less gets used, which improves cacheability of
+pages.
+
+2024.10.23
+==========
+
+The new content element wizards are now not auto registered. If you use one of
+the two provided SiteSets, the wizards are available in the related tree.
+
+If you use a page tree without a SiteSet, the wizards can be included in the
+the root page with the page field "Page TSconfig" by selecting the "[Frontend
+user registration] New content element wizards".
+
+2024.10.22
+==========
+
+Since TYPO3 13.x list_type is deprecated. A upgrade task is provided to convert
+the plugins from list_type to CType rendering.
+
+2024.10.18
+==========
+
+* Rename password meter with ID sfrpassword to sfrPassword
+* Fallback for password element <meter> is not supported anymore.
+
+2024.08.31
+==========
+
+* Extract the modification of the validators to ModifyValidator service. It's
+  still configured the same (via TypoScript) but is handled via service outside
+  of the controller.
+* Replace $controller->controller with $controller->getControllerName()
+* Move change usergroup to FrontendUserGroup service
+* Without injecting FrontenUserGroup into other controller, changing
+  usergroup is only supported in FeuserCreateController.
+* Move getLoggedInUserId, getLoggedInUser, determineFrontendUser, userIsLoggedIn,
+  autoLogin and redirectToPage to FrontendUser service
+* Remove access on context in controller and move it to FrontendUser service
+
+2024.08.26
+==========
+
+Replace SelectStaticCountriesViewHelper with f:form.countrySelect to decouple
+from EXT:static_info_tables if you only relay on selecting countries.
+
+2024.05.13
+==========
+
+The registration of fields for the field selection in the content elements was
+moved from ext_localconf.php to user.tsconfig. The consequence is, that
+extending/overriding fields requires to order the loading of extensions. To
+achieve this, you need to require sf_register in your composer.json and
+ext_emconf.php
 
 2022.01.01
-''''''''''
+==========
 
 Interface Evoweb\SfRegister\Interface\FrontendUserInterface is renamed to
 Evoweb\SfRegister\Domain\Model\FrontendUserInterface
 
 2021.12.31
-''''''''''
+==========
 
 Validator configuration is changed. As long as your custom validator has no
 injected classes like repository or likewise, you do not need to change anything.
@@ -32,34 +95,35 @@ sf_register.
 
 So if you need a class in your validator in code this changes are needed:
 * Add your validator to Services.yaml:
-* Add ```implements InjectableInterface``` to your validator
-* Use \Evoweb\SfRegister\Validation\Validator\AbstractValidator as validator base
+* Add `implements InjectableInterface` to your validator
+* Use `\Evoweb\SfRegister\Validation\Validator\AbstractValidator` as validator base
 * Add the repository in constructor
 
-**Services.yaml**::
+..  code-block:: yaml
+    :caption: Services.yaml
 
-   Evoweb\SfRegister\Validation\Validator\UniqueValidator:
-     public: true
+    Evoweb\SfRegister\Validation\Validator\UniqueValidator:
+      public: true
 
+..  code-block:: php
+    :caption: Class definition
 
-**Class definition**::
+    use Evoweb\SfRegister\Validation\Validator\AbstractValidator;
+    use Evoweb\SfRegister\Validation\Validator\InjectableInterface;
 
-  use Evoweb\SfRegister\Validation\Validator\AbstractValidator;
-  use Evoweb\SfRegister\Validation\Validator\InjectableInterface;
+    class UniqueValidator extends AbstractValidator implements InjectableInterface, ...
 
-  class UniqueValidator extends AbstractValidator implements InjectableInterface, ...
+..  code-block:: php
+    :caption: __construct
 
-
-**__construct**::
-
-   public function __construct(FrontendUserRepository $userRepository)
-   {
-     $this->userRepository = $userRepository;
-   }
+    public function __construct(FrontendUserRepository $userRepository)
+    {
+       $this->userRepository = $userRepository;
+    }
 
 
 2020.04.29
-''''''''''
+==========
 
 The hole extension was refactored to make best usage of TYPO3 10 changes. Namely
 
@@ -94,34 +158,32 @@ The hole extension was refactored to make best usage of TYPO3 10 changes. Namely
   * PostResendMail replaced with ResendMail
 
 2019.02.03
-''''''''''
+==========
 
 Drop custom form styles in favor for Bootstrap 4.2 styles. Be aware, to get the styles.css
 from older releases if you depend on it. If you use the Bootstrap 4.2 form styles you are
 good to go.
 
-
-
 2019.02.02
-''''''''''
+==========
 
 The password strength meter got replaced with the <meter> element. If you still need the old
 iframe variant for old browser or for the looks, please override the file
 EXT:sf_register/Resources/Private/Partials/Form/Password.html in your sitepackage and replace
 
-Before:
-::
-   <meter min="0" low="20" optimum="30" high="40" max="50" id="bargraph"></meter>
+..  code-block:: html
+    :caption: Before
 
-After:
-::
-   <iframe id="bargraph" frameborder="none" scrolling="no"
-      src="/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg"></iframe>
+    <iframe id="bargraph" frameborder="none" scrolling="no"
+        src="/typo3conf/ext/sf_register/Resources/Public/Images/progressbar.svg"></iframe>
 
+..  code-block:: html
+    :caption: After
 
+    <meter min="0" low="20" optimum="30" high="40" max="50" id="bargraph"></meter>
 
 2019.01.17
-''''''''''
+==========
 
 The core changed away from saltedpasswords towards integrated passwordHashing in EXT:Core (see
 Deprecation: #85804 - Salted password hash class deprecations)
@@ -131,49 +193,60 @@ By this its always possible to properly hash passwords.
 Due to this shift the support for md5 and sha1 configuration is dropped in
 EqualCurrentPasswordValidator::isValid and FeuserController::encryptPassword.
 
-
-
 2019.01.13
-''''''''''
+==========
 
 Changes in validation were done to match the new pattern used since TYPO3 9. To ensure that the user/password model
 still validates you need to check whether you changed rules in plugin.tx_sfregister.settings.validation.*.*
 
 Here are some examples how old rules need to be converted:
 
-Before:
-::
-   Evoweb\SfRegister\Validation\Validator\RequiredValidator
-After:
-::
-   "Evoweb.SfRegister:Required"
+Required validator:
 
-Before:
-::
-   StringLength(minimum = 4, maximum = 80)
-After:
-::
-   "StringLength", options={"minimum": 4, "maximum": 80}
+..  code-block:: typoscript
+    :caption: Before
 
-Before:
-::
-   Evoweb\SfRegister\Validation\Validator\UniqueValidator(global = 1)
-After:
-::
-   "Evoweb.SfRegister:Unique", options={"global": 1}
+    Evoweb\SfRegister\Validation\Validator\RequiredValidator
 
-In general 'Evoweb\SfRegister\Validation\Validator\' needs to be replaced with '"Evoweb.SfRegister:' and the
-ending 'Validator' with '"'
+..  code-block:: typoscript
+    :caption: After
 
+    "Evoweb.SfRegister:Required"
 
+String length validator:
+
+..  code-block:: typoscript
+    :caption: Before
+
+    StringLength(minimum = 4, maximum = 80)
+
+..  code-block:: typoscript
+    :caption: After
+
+    "StringLength", options={"minimum": 4, "maximum": 80}
+
+Uniqueness validator:
+
+..  code-block:: typoscript
+    :caption: Before
+
+    Evoweb\SfRegister\Validation\Validator\UniqueValidator(global = 1)
+
+..  code-block:: typoscript
+    :caption: After
+
+    "Evoweb.SfRegister:Unique", options={"global": 1}
+
+In general `Evoweb\SfRegister\Validation\Validator` needs to be replaced with `"Evoweb.SfRegister:` and the
+ending `Validator` with '"'
 
 2015.11.15
-''''''''''
+==========
 
-* Method 'changeUsergroup' got pulled up from FeuserCreateController to FeuserController. If a controller extends
+* Method `changeUsergroup` got pulled up from FeuserCreateController to FeuserController. If a controller extends
   FeuserCreateController the change in changeUsergroup needs to be copied.
-* Method 'changeUsergroup' got the parameter '$usergroupIdToBeRemoved' removed. This is because all known usergroups
-  previously set get removed now. So only the '$user' and '$usergroupIdToAdd' need to be provided. All usage of this
+* Method `changeUsergroup` got the parameter `$usergroupIdToBeRemoved` removed. This is because all known usergroups
+  previously set get removed now. So only the `$user` and `$usergroupIdToAdd` need to be provided. All usage of this
   method needs to be changed accordingly.
 
 * Drop mailhash, setMailhash() and getMailhash() from frontend user model as it was deprecated since 2014.

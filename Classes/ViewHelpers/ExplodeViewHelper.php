@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\ViewHelpers;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\ViewHelpers;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
@@ -27,21 +27,18 @@ class ExplodeViewHelper extends AbstractViewHelper
      */
     protected $escapeOutput = false;
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('string', 'string', 'String to be exploded', false, '');
         $this->registerArgument('delimiter', 'string', 'Character to explode by', false, ',');
     }
 
-    /**
-     * @return array
-     */
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ) {
+    ): array {
         $string = $arguments['string'] !== '' ? $arguments['string'] : $renderChildrenClosure();
         $delimiter = $arguments['delimiter'];
 

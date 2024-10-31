@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Controller;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,66 +11,63 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Controller;
+
 use Evoweb\SfRegister\Controller\Event\EditAcceptEvent;
 use Evoweb\SfRegister\Controller\Event\EditConfirmEvent;
 use Evoweb\SfRegister\Controller\Event\EditFormEvent;
 use Evoweb\SfRegister\Controller\Event\EditPreviewEvent;
 use Evoweb\SfRegister\Controller\Event\EditSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File as FileService;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\Mail as MailService;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
  * A frontend user edit controller
  */
 class FeuserEditController extends FeuserController
 {
-    protected string $controller = 'Edit';
+    public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, accept, removeImage';
 
     protected array $ignoredActions = ['confirmAction', 'acceptAction'];
 
+    public function __construct(
+        protected ModifyValidator $modifyValidator,
+        protected FileService $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected MailService $mailService,
+        protected FrontendUserService $frontendUserService,
+    ) {
+        parent::__construct($modifyValidator, $fileService, $userRepository);
+    }
+
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        $userId = $this->context->getAspect('frontend.user')->get('id');
-
-        $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
-        if (
-            (
-                $this->request->hasArgument('user')
-                || ($originalRequest !== null && $originalRequest->hasArgument('user'))
-            )
-            && $this->userIsLoggedIn()
-        ) {
-            /** @var FrontendUser $userData */
-            $userData = $this->request->hasArgument('user')
-                ? $this->request->getArgument('user')
-                : $originalRequest->getArgument('user');
-            if ($userData instanceof FrontendUser && $userData->getUid() != $userId) {
-                $user = null;
-            }
+        if ($user === null) {
+            $user = $this->frontendUserService->getLoggedInRequestUser($this->request);
         }
 
-        if ($user == null) {
-            /** @var FrontendUser $user */
-            $user = $this->userRepository->findByUid($userId);
-        }
-
-        if ($originalRequest !== null && $originalRequest->hasArgument('temporaryImage')) {
-            $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
-        }
-
-        // user is logged in
         if ($user instanceof FrontendUser) {
-            $this->eventDispatcher->dispatch(new EditFormEvent($user, $this->settings));
+            $user = $this->eventDispatcher->dispatch(new EditFormEvent($user, $this->settings))->getUser();
         }
 
         $this->view->assign('user', $user);
+
+        $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
+        if ($originalRequest !== null && $originalRequest->hasArgument('temporaryImage')) {
+            $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
+        }
 
         return new HtmlResponse($this->view->render());
     }
@@ -84,8 +79,7 @@ class FeuserEditController extends FeuserController
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
 
-        $this->eventDispatcher->dispatch(new EditPreviewEvent($user, $this->settings));
-
+        $user = $this->eventDispatcher->dispatch(new EditPreviewEvent($user, $this->settings))->getUser();
         $this->view->assign('user', $user);
 
         return new HtmlResponse($this->view->render());
@@ -94,14 +88,17 @@ class FeuserEditController extends FeuserController
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {
-        if (($this->settings['confirmEmailPostEdit'] ?? false) || ($this->settings['acceptEmailPostEdit'] ?? false)) {
+        if (
+            ($this->settings['confirmEmailPostEdit'] ?? false)
+            || ($this->settings['acceptEmailPostEdit'] ?? false)
+        ) {
             // Remove user object from session to fetch it really from database
             /** @var Session $session */
             $session = GeneralUtility::makeInstance(Session::class);
             $session->unregisterObject($user);
 
             /** @var FrontendUser $userBeforeEdit */
-            $userBeforeEdit = $this->userRepository->findByUid($user->getUid());
+            $userBeforeEdit = $this->userRepository->findByIdentifier($user->getUid());
 
             // Now remove the fresh fetched and add the updated one to make it known again
             $session->unregisterObject($userBeforeEdit);
@@ -109,13 +106,22 @@ class FeuserEditController extends FeuserController
 
             $user->setEmailNew($user->getEmail());
             $user->setEmail($userBeforeEdit->getEmail() ?: $user->getEmail());
-        } elseif (($this->settings['useEmailAddressAsUsername'] ?? false)) {
+        } else {
+            $this->fileService->moveTemporaryImage($user);
+        }
+
+        if ($this->settings['useEmailAddressAsUsername'] ?? false) {
             $user->setUsername($user->getEmail());
         }
 
-        $this->eventDispatcher->dispatch(new EditSaveEvent($user, $this->settings));
-
-        $user = $this->sendEmails($user, __FUNCTION__);
+        $user = $this->eventDispatcher->dispatch(new EditSaveEvent($user, $this->settings))->getUser();
+        $user = $this->mailService->sendEmails(
+            $this->request,
+            $this->settings,
+            $user,
+            $this->getControllerName(),
+            __FUNCTION__
+        );
 
         $this->userRepository->update($user);
         $this->persistAll();
@@ -124,7 +130,7 @@ class FeuserEditController extends FeuserController
         $session = GeneralUtility::makeInstance(SessionService::class);
         $session->remove('captchaWasValid');
 
-        if (($this->settings['forwardToEditAfterSave'] ?? false)) {
+        if ($this->settings['forwardToEditAfterSave'] ?? false) {
             $response = new ForwardResponse('form');
         } else {
             $this->view->assign('user', $user);
@@ -136,7 +142,7 @@ class FeuserEditController extends FeuserController
 
     public function confirmAction(FrontendUser $user = null, string $hash = null): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         $redirectResponse = null;
         if (!($user instanceof FrontendUser)) {
@@ -150,32 +156,39 @@ class FeuserEditController extends FeuserController
             } elseif (empty($userEmailNew)) {
                 $this->view->assign('userAlreadyConfirmed', 1);
             } else {
+                $this->fileService->moveTemporaryImage($user);
+
                 if (!($this->settings['acceptEmailPostEdit'] ?? false)) {
                     $user->setEmail($user->getEmailNew());
                     $user->setEmailNew('');
 
-                    if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
+                    if ($this->settings['useEmailAddressAsUsername'] ?? false) {
                         $user->setUsername($user->getEmail());
                     }
                 }
 
-                $this->eventDispatcher->dispatch(new EditConfirmEvent($user, $this->settings));
-
+                $user = $this->eventDispatcher->dispatch(new EditConfirmEvent($user, $this->settings))->getUser();
                 $this->userRepository->update($user);
 
-                $this->sendEmails($user, __FUNCTION__);
+                $this->mailService->sendEmails(
+                    $this->request,
+                    $this->settings,
+                    $user,
+                    $this->getControllerName(),
+                    __FUNCTION__
+                );
 
                 $this->view->assign('userConfirmed', 1);
             }
 
             $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
-            if (($this->settings['autologinPostConfirmation'] ?? false)) {
+            if ($this->settings['autologinPostConfirmation'] ?? false) {
                 $this->persistAll();
-                $redirectResponse = $this->autoLogin($user, $redirectPageId);
+                $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
             }
 
             if ($redirectResponse === null && $redirectPageId > 0) {
-                $redirectResponse = $this->redirectToPage($redirectPageId);
+                $redirectResponse = $this->frontendUserService->redirectToPage($this->request, $redirectPageId);
             }
         }
 
@@ -184,7 +197,7 @@ class FeuserEditController extends FeuserController
 
     public function acceptAction(FrontendUser $user = null, string $hash = null): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         $redirectResponse = null;
         if (!($user instanceof FrontendUser)) {
@@ -200,19 +213,24 @@ class FeuserEditController extends FeuserController
                     $user->setEmailNew('');
                 }
 
-                if (($this->settings['useEmailAddressAsUsername'] ?? false)) {
+                if ($this->settings['useEmailAddressAsUsername'] ?? false) {
                     $user->setUsername($user->getEmail());
                 }
 
-                $this->eventDispatcher->dispatch(new EditAcceptEvent($user, $this->settings));
-
+                $user = $this->eventDispatcher->dispatch(new EditAcceptEvent($user, $this->settings))->getUser();
                 $this->userRepository->update($user);
 
-                $this->sendEmails($user, __FUNCTION__);
+                $this->mailService->sendEmails(
+                    $this->request,
+                    $this->settings,
+                    $user,
+                    $this->getControllerName(),
+                    __FUNCTION__
+                );
 
                 $redirectPageId = (int)($this->settings['redirectPostActivationPageId'] ?? 0);
                 if ($redirectPageId > 0) {
-                    $redirectResponse = $this->redirectToPage($redirectPageId);
+                    $redirectResponse = $this->frontendUserService->redirectToPage($this->request, $redirectPageId);
                 }
 
                 $this->view->assign('adminAccept', 1);

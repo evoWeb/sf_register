@@ -1,6 +1,6 @@
 <?php
 
-namespace Evoweb\SfRegister\Services;
+declare(strict_types=1);
 
 /*
  * This file is developed by evoWeb.
@@ -13,6 +13,13 @@ namespace Evoweb\SfRegister\Services;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Services;
+
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\NormalizedParams;
+use TYPO3\CMS\Core\Http\SetCookieService;
+use TYPO3\CMS\Core\Session\UserSession;
+use TYPO3\CMS\Core\Session\UserSessionManager;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
@@ -24,6 +31,8 @@ class Session implements SingletonInterface
     /**
      * String to identify session values
      */
+    protected string $sessionName = 'evoweb-sfregister-session';
+
     protected string $sessionKey = 'sf_register';
 
     /**
@@ -31,23 +40,24 @@ class Session implements SingletonInterface
      */
     protected ?array $values = null;
 
-    public function __construct(protected ?FrontendUserAuthentication $frontendUser = null)
+    protected UserSessionManager $userSessionManager;
+
+    protected UserSession $session;
+
+    public function initializeUserSessionManager(?UserSessionManager $userSessionManager = null): void
     {
-        if ($GLOBALS['TSFE']->fe_user) {
-            $this->frontendUser = $GLOBALS['TSFE']->fe_user;
-        } else {
-            try {
-                $this->frontendUser->start($GLOBALS['TYPO3_REQUEST']);
-            } catch (\Exception) {
-            }
-        }
+        $this->userSessionManager = $userSessionManager ?? UserSessionManager::create('FE');
+        $this->session = $this->userSessionManager->createFromRequestOrAnonymous(
+            $this->getRequest(),
+            $this->sessionName,
+        );
         $this->fetch();
     }
 
     public function fetch(): self
     {
         if ($this->values === null) {
-            $sessionValue = $this->frontendUser->getKey('ses', $this->sessionKey);
+            $sessionValue = $this->session->get($this->sessionKey);
             if (!empty($sessionValue)) {
                 $this->values = unserialize($sessionValue);
             }
@@ -61,8 +71,11 @@ class Session implements SingletonInterface
 
     public function store(): self
     {
-        $this->frontendUser->setKey('ses', $this->sessionKey, serialize($this->values));
-
+        $this->session->set($this->sessionKey, serialize($this->values));
+        $this->userSessionManager->updateSession($this->session);
+        $setCookieService = SetCookieService::create($this->sessionName, 'FE');
+        $normalizedParams = NormalizedParams::createFromRequest($this->getRequest());
+        $setCookieService->setSessionCookie($this->session, $normalizedParams);
         return $this;
     }
 
@@ -102,5 +115,10 @@ class Session implements SingletonInterface
         }
 
         return $this->store();
+    }
+
+    public function getRequest(): ServerRequestInterface
+    {
+        return $GLOBALS['TYPO3_REQUEST'];
     }
 }

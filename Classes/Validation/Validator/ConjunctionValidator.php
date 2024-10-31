@@ -1,9 +1,7 @@
 <?php
 
-namespace Evoweb\SfRegister\Validation\Validator;
-
 /*
- * This file is part of the TYPO3 CMS project.
+ * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -11,9 +9,9 @@ namespace Evoweb\SfRegister\Validation\Validator;
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
  */
+
+namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
 use TYPO3\CMS\Extbase\Error\Result;

@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Controller;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,13 +11,22 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Controller;
+
 use Evoweb\SfRegister\Controller\Event\ResendFormEvent;
 use Evoweb\SfRegister\Controller\Event\ResendMailEvent;
 use Evoweb\SfRegister\Domain\Model\Email;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File as FileService;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\Mail as MailService;
+use Evoweb\SfRegister\Services\ModifyValidator;
+use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
@@ -27,25 +34,31 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
  */
 class FeuserResendController extends FeuserController
 {
-    protected string $controller = 'Resend';
+    public const PLUGIN_ACTIONS = 'form, mail';
+
+    public function __construct(
+        protected ModifyValidator $modifyValidator,
+        protected FileService $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected MailService $mailService,
+        protected FrontendUserService $frontendUserService,
+    ) {
+        parent::__construct($modifyValidator, $fileService, $userRepository);
+    }
 
     public function formAction(Email $email = null): ResponseInterface
     {
         if ($email === null) {
+            $email = new Email();
             try {
-                $userId = $this->context->getAspect('frontend.user')->get('id');
-                /** @var FrontendUser $user */
-                $user = $this->userRepository->findByUid($userId);
-                $email = new Email();
+                $user = $this->frontendUserService->getLoggedInUser();
                 $email->setEmail($user->getEmail());
             } catch (\Exception) {
             }
         }
 
         $email = $this->eventDispatcher->dispatch(new ResendFormEvent($email, $this->settings))->getEmail();
-        if ($email) {
-            $this->view->assign('email', $email);
-        }
+        $this->view->assign('email', $email);
 
         return new HtmlResponse($this->view->render());
     }
@@ -54,13 +67,21 @@ class FeuserResendController extends FeuserController
     public function mailAction(Email $email): ResponseInterface
     {
         $email = $this->eventDispatcher->dispatch(new ResendMailEvent($email, $this->settings))->getEmail();
-
-        /** @var FrontendUser $user */
         $user = $this->userRepository->findByEmail($email->getEmail());
 
         if ($user instanceof FrontendUser) {
-            $this->sendEmails($user, __FUNCTION__);
+            $this->mailService->sendEmails(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                __FUNCTION__
+            );
         }
+
+        /** @var SessionService $session */
+        $session = GeneralUtility::makeInstance(SessionService::class);
+        $session->remove('captchaWasValid');
 
         return new HtmlResponse($this->view->render());
     }

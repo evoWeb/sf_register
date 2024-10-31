@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Controller;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,17 +11,17 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Controller;
+
 use Evoweb\SfRegister\Controller\Event\PasswordFormEvent;
 use Evoweb\SfRegister\Controller\Event\PasswordSaveEvent;
-use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
-use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Evoweb\SfRegister\Services\File;
-use Evoweb\SfRegister\Services\Session;
+use Evoweb\SfRegister\Services\File as FileService;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 
@@ -32,25 +30,28 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
  */
 class FeuserPasswordController extends FeuserController
 {
-    protected string $controller = 'Password';
+    public const PLUGIN_ACTIONS = 'form, save';
 
     public function __construct(
-        protected Context $context,
-        protected File $fileService,
+        protected ModifyValidator $modifyValidator,
+        protected FileService $fileService,
         protected FrontendUserRepository $userRepository,
-        protected FrontendUserGroupRepository $userGroupRepository,
-        protected Session $session
+        protected FrontendUserService $frontendUserService,
     ) {
-        parent::__construct($context, $fileService, $userRepository, $userGroupRepository);
+        parent::__construct($modifyValidator, $fileService, $userRepository);
     }
 
     public function formAction(Password $password = null): ResponseInterface
     {
+        if (!$this->frontendUserService->userIsLoggedIn()) {
+            $this->view->assign('notLoggedIn', true);
+        }
+
         if ($password === null) {
             $password = new Password();
         }
-        $this->eventDispatcher->dispatch(new PasswordFormEvent($password, $this->settings));
 
+        $password = $this->eventDispatcher->dispatch(new PasswordFormEvent($password, $this->settings))->getPassword();
         $this->view->assign('password', $password);
 
         return new HtmlResponse($this->view->render());
@@ -59,12 +60,9 @@ class FeuserPasswordController extends FeuserController
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'password'])]
     public function saveAction(Password $password): ResponseInterface
     {
-        if ($this->userIsLoggedIn()) {
-            $userId = $this->getTypoScriptFrontendController()->fe_user->user['uid'];
-            /** @var FrontendUser $user */
-            $user = $this->userRepository->findByUid($userId);
-
-            $this->eventDispatcher->dispatch(new PasswordSaveEvent($user, $this->settings));
+        if ($this->frontendUserService->userIsLoggedIn()) {
+            $user = $this->frontendUserService->getLoggedInUser();
+            $user = $this->eventDispatcher->dispatch(new PasswordSaveEvent($user, $this->settings))->getUser();
 
             $user->setPassword($this->encryptPassword($password->getPassword()));
 

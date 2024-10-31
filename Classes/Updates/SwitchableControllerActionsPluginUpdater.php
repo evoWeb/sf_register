@@ -3,7 +3,11 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the Extension "sf_register" for TYPO3 CMS.
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -35,33 +39,33 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
             'switchableControllerActions' => 'FeuserCreate->form;FeuserCreate->preview;FeuserCreate->proxy;'
                 . 'FeuserCreate->save;FeuserCreate->confirm;FeuserCreate->accept;FeuserCreate->decline;'
                 . 'FeuserCreate->refuse;FeuserCreate->removeImage',
-            'targetListType' => 'sfregister_create'
+            'targetListType' => 'sfregister_create',
         ],
         [
             'sourceListType' => 'sfregister_form',
             'switchableControllerActions' => 'FeuserEdit->form;FeuserEdit->preview;FeuserEdit->proxy;'
                 . 'FeuserEdit->save;FeuserEdit->confirm;FeuserEdit->accept;FeuserEdit->removeImage',
-            'targetListType' => 'sfregister_edit'
+            'targetListType' => 'sfregister_edit',
         ],
         [
             'sourceListType' => 'sfregister_form',
             'switchableControllerActions' => 'FeuserPassword->form;FeuserPassword->save',
-            'targetListType' => 'sfregister_password'
+            'targetListType' => 'sfregister_password',
         ],
         [
             'sourceListType' => 'sfregister_form',
             'switchableControllerActions' => 'FeuserInvite->form;FeuserInvite->invite',
-            'targetListType' => 'sfregister_invite'
+            'targetListType' => 'sfregister_invite',
         ],
         [
             'sourceListType' => 'sfregister_form',
             'switchableControllerActions' => 'FeuserDelete->form;FeuserDelete->save;FeuserDelete->confirm',
-            'targetListType' => 'sfregister_delete'
+            'targetListType' => 'sfregister_delete',
         ],
         [
             'sourceListType' => 'sfregister_form',
             'switchableControllerActions' => 'FeuserResend->form;FeuserResend->mail',
-            'targetListType' => 'sfregister_resend'
+            'targetListType' => 'sfregister_resend',
         ],
     ];
 
@@ -94,7 +98,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
     public function getPrerequisites(): array
     {
         return [
-            DatabaseUpdatedPrerequisite::class
+            DatabaseUpdatedPrerequisite::class,
         ];
     }
 
@@ -247,9 +251,9 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
                 'field' => 'value',
                 'field:el' => 'el',
                 'el:_IS_NUM' => 'section',
-                'section' => 'itemType'
+                'section' => 'itemType',
             ],
-            'disableTypeAttrib' => 2
+            'disableTypeAttrib' => 2,
         ];
 
         return '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>'

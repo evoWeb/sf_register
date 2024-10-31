@@ -40,7 +40,7 @@ class TranslatedSelectViewHelper extends AbstractSelectViewHelper
             'string',
             'If specified, will call the appropriate getter on each object to determine the label.'
         );
-        $this->registerTagAttribute('extensionName', 'string', 'Extension from which labels should be taken');
+        $this->registerArgument('extensionName', 'string', 'Extension from which labels should be taken');
     }
 
     protected function renderOptionTags(array $options): string

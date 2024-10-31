@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Domain\Repository;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,11 +11,11 @@ namespace Evoweb\SfRegister\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Domain\Repository;
+
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * A Frontend User Group Repository
  */
-class FrontendUserGroupRepository extends Repository
-{
-}
+class FrontendUserGroupRepository extends Repository {}

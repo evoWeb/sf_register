@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Form\FormDataProvider;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Form\FormDataProvider;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Form\FormDataProvider;
 
 use TYPO3\CMS\Backend\Form\FormDataProvider\AbstractItemProvider;
 use TYPO3\CMS\Backend\Form\FormDataProviderInterface;

@@ -18,7 +18,7 @@ defined('TYPO3') or die();
                 'readOnly' => true,
                 'format' => 'datetime',
                 'eval' => 'int',
-            ]
+            ],
         ],
         'pseudonym' => [
             'label' => $languageFile . 'fe_users.pseudonym',
@@ -27,7 +27,7 @@ defined('TYPO3') or die();
                 'size' => 20,
                 'max' => 50,
                 'eval' => 'trim',
-            ]
+            ],
         ],
         'gender' => [
             'label' => $languageFile . 'fe_users.gender',
@@ -35,9 +35,9 @@ defined('TYPO3') or die();
                 'type' => 'radio',
                 'items' => [
                     ['label' => $languageFile . 'fe_users.gender.I.1', 'value' => 1],
-                    ['label' => $languageFile . 'fe_users.gender.I.2', 'value' => 2]
+                    ['label' => $languageFile . 'fe_users.gender.I.2', 'value' => 2],
                 ],
-            ]
+            ],
         ],
         'date_of_birth' => [
             'label' => $languageFile . 'fe_users.date_of_birth',
@@ -46,8 +46,8 @@ defined('TYPO3') or die();
                 'size' => 10,
                 'format' => 'date',
                 'eval' => 'int',
-                'default' => 0
-            ]
+                'default' => 0,
+            ],
         ],
         'language' => [
             'label' => $languageFile . 'fe_users.language',
@@ -56,18 +56,18 @@ defined('TYPO3') or die();
                 'size' => 4,
                 'max' => 2,
                 'eval' => '',
-                'default' => ''
-            ]
+                'default' => '',
+            ],
         ],
         'zone' => [
             'label' => $languageFile . 'fe_users.zone',
             'config' => [
                 'type' => 'input',
                 'size' => 20,
-                'max' => 40,
+                'max' => 45,
                 'eval' => 'trim',
-                'default' => ''
-            ]
+                'default' => '',
+            ],
         ],
         'timezone' => [
             'label' => $languageFile . 'fe_users.timezone',
@@ -104,34 +104,35 @@ defined('TYPO3') or die();
                     ['label' => $languageFile . 'fe_users.timezone.I.14', 'value' => 14],
                 ],
                 'default' => 0,
-            ]
+            ],
         ],
         'daylight' => [
             'label' => $languageFile . 'fe_users.daylight',
             'config' => [
-                'type' => 'check'
-            ]
+                'type' => 'check',
+            ],
         ],
         'mobilephone' => [
             'label' => $languageFile . 'fe_users.mobilephone',
             'config' => [
                 'type' => 'input',
                 'size' => 20,
-            ]
+                'max' => 20,
+            ],
         ],
         'gtc' => [
             'exclude' => true,
             'label' => $languageFile . 'fe_users.gtc',
             'config' => [
-                'type' => 'check'
-            ]
+                'type' => 'check',
+            ],
         ],
         'privacy' => [
             'exclude' => true,
             'label' => $languageFile . 'fe_users.privacy',
             'config' => [
-                'type' => 'check'
-            ]
+                'type' => 'check',
+            ],
         ],
         'status' => [
             'label' => $languageFile . 'fe_users.status',
@@ -145,14 +146,14 @@ defined('TYPO3') or die();
                     ['label' => $languageFile . 'fe_users.status.I.3', 'value' => 3],
                     ['label' => $languageFile . 'fe_users.status.I.4', 'value' => 4],
                 ],
-            ]
+            ],
         ],
         'by_invitation' => [
             'label' => $languageFile . 'fe_users.by_invitation',
             'config' => [
                 'type' => 'check',
-                'default' => 0
-            ]
+                'default' => 0,
+            ],
         ],
         'comments' => [
             'label' => $languageFile . 'fe_users.comments',
@@ -161,35 +162,43 @@ defined('TYPO3') or die();
                 'rows' => 5,
                 'cols' => 48,
                 'default' => '',
-            ]
+            ],
         ],
         'email_new' => [
             'label' => $languageFile . 'fe_users.email_new',
             'config' => [
                 'type' => 'input',
                 'size' => 20,
-                'max' => 20,
+                'max' => 254,
                 'eval' => 'trim',
-            ]
+            ],
         ],
         'invitation_email' => [
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'input',
+                'max' => 254,
+            ],
         ],
         'module_sys_dmail_newsletter' => [
             'exclude' => true,
             'label' => $languageFile . 'fe_users.module_sys_dmail_newsletter',
             'config' => [
-                'type' => 'check'
-            ]
+                'type' => 'check',
+            ],
         ],
         'module_sys_dmail_html' => [
             'exclude' => true,
             'label' => $languageFile . 'fe_users.module_sys_dmail_html',
             'config' => [
-                'type' => 'check'
-            ]
+                'type' => 'check',
+            ],
+        ],
+        'module_sys_dmail_category' => [
+            'exclude' => true,
+            'label' => $languageFile . 'fe_users.module_sys_dmail_category',
+            'config' => [
+                'type' => 'category',
+            ],
         ],
         'image' => [
             'exclude' => true,
@@ -198,8 +207,8 @@ defined('TYPO3') or die();
                 'type' => 'file',
                 'allowed' => 'common-image-types',
                 'maxitems' => 1,
-                'minitems' => 0
-            ]
+                'minitems' => 0,
+            ],
         ],
     ];
 
@@ -231,26 +240,22 @@ defined('TYPO3') or die();
             activated_on, gtc, privacy, by_invitation, comments, module_sys_dmail_newsletter, module_sys_dmail_html'
     );
 
-    if (ExtensionManagementUtility::isLoaded('static_info_tables')) {
-        $tempColumns = [
-            'static_info_country' => [
-                'exclude' => 0,
-                'label' => $languageFile . 'fe_users.static_info_country',
-                'config' => [
-                    'type' => 'input',
-                    'size' => '5',
-                    'max' => '3',
-                    'eval' => '',
-                    'default' => ''
-                ]
+    $tempColumns = [
+        'static_info_country' => [
+            'exclude' => 0,
+            'label' => $languageFile . 'fe_users.static_info_country',
+            'config' => [
+                'type' => 'input',
+                'size' => '5',
+                'max' => 3,
             ],
-        ];
-        ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
-        ExtensionManagementUtility::addToAllTCAtypes(
-            'fe_users',
-            'static_info_country',
-            '',
-            'after:zone'
-        );
-    }
+        ],
+    ];
+    ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
+    ExtensionManagementUtility::addToAllTCAtypes(
+        'fe_users',
+        'static_info_country',
+        '',
+        'after:zone'
+    );
 })();

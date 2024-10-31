@@ -1,33 +1,31 @@
 plugin.tx_sfregister.view {
   templateRootPaths {
     0 = EXT:sf_register/Resources/Private/Templates/
-    1 = {$plugin.tx_sfregister.view.templateRootPath}
+    1 = {$plugin.tx_sfregister.view.templateRootPath ?? $evoweb.sf-register.view.templateRootPath}
   }
 
   partialRootPaths {
     0 = EXT:sf_register/Resources/Private/Partials/
-    1 = {$plugin.tx_sfregister.view.partialRootPath}
+    1 = {$plugin.tx_sfregister.view.partialRootPath ?? $evoweb.sf-register.view.partialRootPath}
   }
 
   layoutRootPaths {
     0 = EXT:sf_register/Resources/Private/Layouts/
-    1 = {$plugin.tx_sfregister.view.layoutRootPath}
+    1 = {$plugin.tx_sfregister.view.layoutRootPath ?? $evoweb.sf-register.view.layoutRootPath}
   }
 }
 
 plugin.tx_sfregister.settings {
   dateFormat = d-m-Y
 
-  minified = {$plugin.tx_sfregister.minified}
-
-  createPid = {$plugin.tx_sfregister.settings.createPid}
-  editPid = {$plugin.tx_sfregister.settings.editPid}
-  passwordPid = {$plugin.tx_sfregister.settings.passwordPid}
-  invitePid = {$plugin.tx_sfregister.settings.invitePid}
-  resendPid = {$plugin.tx_sfregister.settings.resendPid}
+  createPid = {$plugin.tx_sfregister.settings.createPid ?? $evoweb.sf-register.settings.createPid}
+  editPid = {$plugin.tx_sfregister.settings.editPid ?? $evoweb.sf-register.settings.editPid}
+  passwordPid = {$plugin.tx_sfregister.settings.passwordPid ?? $evoweb.sf-register.settings.passwordPid}
+  invitePid = {$plugin.tx_sfregister.settings.invitePid ?? $evoweb.sf-register.settings.invitePid}
+  resendPid = {$plugin.tx_sfregister.settings.resendPid ?? $evoweb.sf-register.settings.resendPid}
 
   # comma separated list of words used in bad word validator
-  badWordList = {$plugin.tx_sfregister.settings.badWordList}
+  badWordList = {$plugin.tx_sfregister.settings.badWordList ?? $evoweb.sf-register.settings.badWordList}
 
   validation.create {
     username {
@@ -59,7 +57,7 @@ plugin.tx_sfregister.settings {
       2 = "Evoweb.SfRegister:IsTrue"
     }
     image = "Evoweb.SfRegister:ImageUpload"
-    captcha = "Evoweb.SfRegister:Captcha", options={"type": "{$plugin.tx_sfregister.settings.captchaId}"}
+    captcha = "Evoweb.SfRegister:Captcha", options={"type": "{$plugin.tx_sfregister.settings.captchaId ?? $evoweb.sf-register.settings.captchaId}"}
   }
 
   validation.edit {
@@ -97,7 +95,7 @@ plugin.tx_sfregister.settings {
       1 = "Evoweb.SfRegister:Required"
       2 = "EmailAddress"
     }
-    captcha = "Evoweb.SfRegister:Captcha", options={"type": "{$plugin.tx_sfregister.settings.captchaId}"}
+    captcha = "Evoweb.SfRegister:Captcha", options={"type": "{$plugin.tx_sfregister.settings.captchaId ?? $evoweb.sf-register.settings.captchaId}"}
   }
 
   validation.delete {
@@ -115,15 +113,15 @@ plugin.tx_sfregister.settings {
   }
 
   # integer usergroup set if no activation is needed
-  usergroup = {$plugin.tx_sfregister.settings.usergroup}
+  usergroup = {$plugin.tx_sfregister.settings.usergroup ?? $evoweb.sf-register.settings.usergroup}
 
   # integer usergroups set if confirmation is needed
-  usergroupPostSave = {$plugin.tx_sfregister.settings.usergroupPostSave}
-  usergroupPostConfirm = {$plugin.tx_sfregister.settings.usergroupPostConfirm}
-  usergroupPostAccept = {$plugin.tx_sfregister.settings.usergroupPostAccept}
+  usergroupPostSave = {$plugin.tx_sfregister.settings.usergroupPostSave ?? $evoweb.sf-register.settings.usergroupPostSave}
+  usergroupPostConfirm = {$plugin.tx_sfregister.settings.usergroupPostConfirm ?? $evoweb.sf-register.settings.usergroupPostConfirm}
+  usergroupPostAccept = {$plugin.tx_sfregister.settings.usergroupPostAccept ?? $evoweb.sf-register.settings.usergroupPostAccept}
 
   # string name of the site used in subject
-  sitename = {$plugin.tx_sfregister.settings.emailSitename}
+  sitename = {$plugin.tx_sfregister.settings.emailSitename ?? $evoweb.sf-register.settings.emailSitename}
 
   imageFolder = 1:frontendusers
 

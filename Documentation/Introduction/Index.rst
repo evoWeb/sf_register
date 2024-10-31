@@ -1,20 +1,21 @@
-.. include:: ../Includes.txt
+.. include:: /Includes.rst.txt
+..  index:: Introduction
+..  _introduction:
 
-
-.. _introduction:
-
+============
 Introduction
 ============
 
-This Documentation was written for version 2.0.0 of the extension.
+This Documentation was written for version 13.0.0 of the extension.
 
+.. contents::
+   :local:
 
 What does it do?
-----------------
+================
 
-
-Registration with admin review and all notifications:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Registration with admin review and all notifications
+----------------------------------------------------
 
 When a new user fills in the registration form they will see the
 strength of their password, along with additional email address
@@ -40,8 +41,8 @@ to inform them that their account is now active.
 The new user will be able to log in and see all the pages and content
 that their usergroup permits!
 
-Features:
-~~~~~~~~~~~~~~
+Features
+--------
 
 - Simple frontend user registration
 
@@ -83,15 +84,12 @@ Features:
 
 - configuration by TypoScript – customize to your needs
 
-
-Screenshots:
-~~~~~~~~~~~~
-
+Screenshots
+-----------
 
 .. figure:: Images/screenshot_capture.png
    :alt: *Illustration 1: simple register form with recaptcha*
    :align: left
-
 
 .. figure:: Images/screenshot_createform.png
    :alt: *Illustration 2: extensive register form with sr\_freecap*

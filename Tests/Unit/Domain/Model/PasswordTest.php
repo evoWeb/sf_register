@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Unit\Domain\Model;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Tests\Unit\Domain\Model;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Tests\Unit\Domain\Model;
 
 use Evoweb\SfRegister\Domain\Model\Password;
 use PHPUnit\Framework\Attributes\Test;
@@ -36,7 +36,7 @@ class PasswordTest extends UnitTestCase
     #[Test]
     public function passwordOnInitializeIsEmptyString(): void
     {
-        self::assertEquals('', $this->subject->getPassword());
+        $this->assertEquals('', $this->subject->getPassword());
     }
 
     #[Test]
@@ -46,13 +46,13 @@ class PasswordTest extends UnitTestCase
 
         $this->subject->setPassword($expected);
 
-        self::assertSame($expected, $this->subject->getPassword());
+        $this->assertSame($expected, $this->subject->getPassword());
     }
 
     #[Test]
     public function passwordRepeatOnInitializeIsEmptyString(): void
     {
-        self::assertEquals('', $this->subject->getPasswordRepeat());
+        $this->assertEquals('', $this->subject->getPasswordRepeat());
     }
 
     #[Test]
@@ -62,13 +62,13 @@ class PasswordTest extends UnitTestCase
 
         $this->subject->setPasswordRepeat($expected);
 
-        self::assertSame($expected, $this->subject->getPasswordRepeat());
+        $this->assertSame($expected, $this->subject->getPasswordRepeat());
     }
 
     #[Test]
     public function oldPasswordOnInitializeIsEmptyString(): void
     {
-        self::assertEquals('', $this->subject->getOldPassword());
+        $this->assertEquals('', $this->subject->getOldPassword());
     }
 
     #[Test]
@@ -78,6 +78,6 @@ class PasswordTest extends UnitTestCase
 
         $this->subject->setOldPassword($expected);
 
-        self::assertSame($expected, $this->subject->getOldPassword());
+        $this->assertSame($expected, $this->subject->getOldPassword());
     }
 }

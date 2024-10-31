@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Services\Captcha;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Services\Captcha;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Services\Captcha;
 
 /**
  * Interface to be implemented by every captcha adapter that should get used with this registration

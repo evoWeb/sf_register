@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Validation\Validator;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Validation\Validator;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
@@ -24,13 +24,11 @@ class CaptchaValidator extends AbstractValidator
         'type' => [
             'srfreecap',
             'Captcha adapter to be used',
-            'string'
+            'string',
         ],
     ];
 
-    public function __construct(protected CaptchaAdapterFactory $captchaAdapterFactory)
-    {
-    }
+    public function __construct(protected CaptchaAdapterFactory $captchaAdapterFactory) {}
 
     /**
      * If the given captcha is valid

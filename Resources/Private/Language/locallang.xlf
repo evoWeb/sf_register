@@ -417,6 +417,19 @@
 				<source>Field %1$s is not globally unique</source>
 			</trans-unit>
 
+			<trans-unit id="upload.error.150530345" resname="upload.error.150530345">
+				<source>Maximum file size exceeded.</source>
+			</trans-unit>
+			<trans-unit id="upload.error.150530346" resname="upload.error.150530346">
+				<source>Upload failed. The file was only partially uploaded, please try again.</source>
+			</trans-unit>
+			<trans-unit id="upload.error.150530347" resname="upload.error.150530347">
+				<source>No file was uploaded.</source>
+			</trans-unit>
+			<trans-unit id="upload.error.150530348" resname="upload.error.150530348">
+				<source>An error occurred while uploading. Please try again or contact the administrator if the problem remains.</source>
+			</trans-unit>
+
 			<trans-unit id="subjectNotifyAdminCreateSave">
 				<source>User %2$s registered on site %1$s</source>
 			</trans-unit>

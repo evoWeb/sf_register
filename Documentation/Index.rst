@@ -1,54 +1,52 @@
-.. include:: Includes.txt
+.. include:: /Includes.rst.txt
 
-
-.. _start:
+..  _start:
 
 ==================================================================
 Frontend User Registration: Multipurpose configurable registration
 ==================================================================
 
 :Extension Key:
-      sf_register
+    sf_register
+
+:Package name:
+    evoweb/sf-register
 
 :Version:
-      |release|
+    |release|
 
 :Language:
-      en
-
-:Description:
-      Offers the possibility to maintain the fe_user data in frontend by the user self.
-
-:Keywords:
-      forEditors, forAdmins, forBeginners, forIntermediates
-
-:Copyright:
-      2010-2019
+    en
 
 :Author:
-      Sebastian Fischer
+    Sebastian Fischer
 
 :License:
-      Open Content License available from http://www.opencontent.org/opl.shtml
+    This document is published under the
+    `Open Publication <https://www.opencontent.org/openpub/>`__.
+    license.
 
 :Rendered:
-      |today|
+    |today|
+
+:Copyright:
+    2010-2024
+
+----
+
+Offers the possibility to register and maintain the fe_user data in frontend
+by the user self.
 
 The content of this document is related to TYPO3,
 a GNU/GPL CMS/Framework available from http://typo3.org
 
-.. only:: html
+----
 
-   .. tip::
-
-      :ref:`Sitemap`
-
-**Table of Contents**
+**Table of Contents:**
 
 .. toctree::
-   :maxdepth: 5
+   :maxdepth: 2
    :titlesonly:
-   :glob:
 
    Introduction/Index
    UsersManual/Index
@@ -60,5 +58,11 @@ a GNU/GPL CMS/Framework available from http://typo3.org
    RegistrationActions/Index
    KnownProblems/Index
    Changelog/Index
-   Deprecations/Index
    BreakingChanges/Index
+
+.. Meta Menu
+
+.. toctree::
+   :hidden:
+
+   Sitemap

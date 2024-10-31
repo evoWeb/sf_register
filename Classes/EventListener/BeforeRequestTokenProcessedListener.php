@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\EventListener;
 
+use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Authentication\Event\BeforeRequestTokenProcessedEvent;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\SecurityAspect;
@@ -22,13 +23,12 @@ use TYPO3\CMS\Core\Security\RequestToken;
 
 final class BeforeRequestTokenProcessedListener
 {
-    public function __construct(protected Context $context)
-    {
-    }
+    public function __construct(protected Context $context) {}
 
+    #[AsEventListener('evoweb-sf-register-beforerequesttoken', BeforeRequestTokenProcessedEvent::class)]
     public function __invoke(BeforeRequestTokenProcessedEvent $event): void
     {
-        $queryParams = ($event->getRequest()?->getQueryParams() ?? []);
+        $queryParams = $event->getRequest()->getQueryParams();
         $loginType = ($queryParams['logintype'] ?? '');
         $tokenValue = ($queryParams[RequestToken::PARAM_NAME] ?? '');
 

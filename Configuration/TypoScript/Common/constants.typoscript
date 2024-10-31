@@ -1,8 +1,3 @@
-plugin.tx_sfregister.minified =
-[applicationContext == 'Production']
-  plugin.tx_sfregister.minified = .min
-[end]
-
 plugin.tx_sfregister.view {
   # cat=sf_register.settings/file; type=string; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:templateRootPath
   templateRootPath = EXT:sf_register/Resources/Private/Templates/

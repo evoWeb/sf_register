@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Controller;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -13,71 +11,52 @@ namespace Evoweb\SfRegister\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\SfRegister\Controller;
+
 use Evoweb\SfRegister\Controller\Event\DeleteConfirmEvent;
 use Evoweb\SfRegister\Controller\Event\DeleteFormEvent;
 use Evoweb\SfRegister\Controller\Event\DeleteSaveEvent;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Evoweb\SfRegister\Services\File as FileService;
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Evoweb\SfRegister\Services\Mail as MailService;
+use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
-use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
-use TYPO3\CMS\Extbase\Property\Exception;
-use TYPO3\CMS\Extbase\Property\PropertyMapper;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
  * A frontend user create controller
  */
 class FeuserDeleteController extends FeuserController
 {
-    protected string $controller = 'Delete';
+    public const DELETE_PLUGIN_ACTIONS = 'form, save, confirm';
+    public const REQUEST_PLUGIN_ACTIONS = 'request, sendLink';
 
     protected array $ignoredActions = ['confirmAction', 'requestAction'];
 
-    /**
-     * @throws Exception
-     */
+    public function __construct(
+        protected ModifyValidator $modifyValidator,
+        protected FileService $fileService,
+        protected FrontendUserRepository $userRepository,
+        protected MailService $mailService,
+        protected FrontendUserService $frontendUserService,
+    ) {
+        parent::__construct($modifyValidator, $fileService, $userRepository);
+    }
+
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
-        $userId = 0;
-        try {
-            $userId = $this->context->getAspect('frontend.user')?->get('id');
-        } catch (AspectNotFoundException | AspectPropertyNotFoundException) {
+        if ($user === null) {
+            $user = $this->frontendUserService->getLoggedInRequestUser($this->request);
         }
 
-        $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
-        if (
-            (
-                $this->request->hasArgument('user')
-                || ($originalRequest !== null && $originalRequest->hasArgument('user'))
-            )
-            && $this->userIsLoggedIn()
-        ) {
-            /** @var array $userData */
-            $userData = $this->request->hasArgument('user')
-                ? $this->request->getArgument('user')
-                : $originalRequest->getArgument('user');
-
-            // only reconstitute user object if given user uid equals logged-in user uid
-            if ($userData['uid'] == $userId) {
-                /** @var PropertyMapper $propertyMapper */
-                $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
-                $user = $propertyMapper->convert($userData, FrontendUser::class);
-            }
-        }
-
-        if ($user == null) {
-            /** @var FrontendUser $user */
-            $user = $this->userRepository->findByUid($userId);
-        }
-
-        // user is logged
         if ($user instanceof FrontendUser) {
-            $this->eventDispatcher->dispatch(new DeleteFormEvent($user, $this->settings));
+            $user = $this->eventDispatcher->dispatch(new DeleteFormEvent($user, $this->settings))->getUser();
         }
 
         $this->view->assign('user', $user);
@@ -88,7 +67,7 @@ class FeuserDeleteController extends FeuserController
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
     public function saveAction(FrontendUser $user): ResponseInterface
     {
-        $this->eventDispatcher->dispatch(new DeleteSaveEvent($user, $this->settings));
+        $user = $this->eventDispatcher->dispatch(new DeleteSaveEvent($user, $this->settings))->getUser();
 
         if (!$user->getUsername()) {
             $user->setUsername($user->getEmail());
@@ -98,7 +77,13 @@ class FeuserDeleteController extends FeuserController
         }
 
         if ($user instanceof FrontendUser && $user->getUid()) {
-            $user = $this->sendEmails($user, __FUNCTION__);
+            $user = $this->mailService->sendEmails(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                __FUNCTION__
+            );
         } else {
             $this->view->assign('userNotFound', true);
         }
@@ -116,16 +101,21 @@ class FeuserDeleteController extends FeuserController
      */
     public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
-        $user = $this->determineFrontendUser($user, $hash);
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userAlreadyDeleted', 1);
         } else {
+            $user = $this->eventDispatcher->dispatch(new DeleteConfirmEvent($user, $this->settings))->getUser();
             $this->view->assign('user', $user);
 
-            $this->eventDispatcher->dispatch(new DeleteConfirmEvent($user, $this->settings));
-
-            $this->sendEmails($user, __FUNCTION__);
+            $this->mailService->sendEmails(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                __FUNCTION__
+            );
 
             if ($user->getImage()->count()) {
                 $image = $user->getImage()->current();
@@ -161,7 +151,13 @@ class FeuserDeleteController extends FeuserController
             $this->view->assign('user', $user);
             $this->view->assign('requestUser', $requestUser);
 
-            $this->sendEmails($user, __FUNCTION__);
+            $this->mailService->sendEmails(
+                $this->request,
+                $this->settings,
+                $user,
+                $this->getControllerName(),
+                __FUNCTION__
+            );
         }
 
         return new HtmlResponse($this->view->render());

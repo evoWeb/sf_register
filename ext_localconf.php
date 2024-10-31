@@ -19,96 +19,83 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 defined('TYPO3') or die();
 
-(static function () {
-    /**
-     * Page TypoScript for mod wizards
-     */
-    ExtensionManagementUtility::addPageTSConfig(
-        '@import \'EXT:sf_register/Configuration/TSconfig/Wizards/NewContentElement.tsconfig\''
-    );
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['flexFormSegment'][ FormFields::class ] = [
+    'depends' => [ TcaCheckboxItems::class ],
+    'before' => [ TcaSelectItems::class ],
+];
 
-    // Needs to be added on top so others can extend regardless of load order
-    $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'] = '
-[GLOBAL]
-@import \'EXT:sf_register/Configuration/TypoScript/Fields/setup.typoscript\'
-' . $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultUserTSconfig'];
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][ FrontendUserInterface::class ]['className'] = FrontendUser::class;
 
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['flexFormSegment'][FormFields::class] = [
-        'depends' => [ TcaCheckboxItems::class ],
-        'before' => [ TcaSelectItems::class ],
-    ];
+ExtensionUtility::configurePlugin(
+    'SfRegister',
+    'Create',
+    [ FeuserCreateController::class => FeuserCreateController::PLUGIN_ACTIONS ],
+    [ FeuserCreateController::class => FeuserCreateController::PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+);
 
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][FrontendUserInterface::class]['className'] = FrontendUser::class;
+ExtensionUtility::configurePlugin(
+    'SfRegister',
+    'Edit',
+    [ FeuserEditController::class => FeuserEditController::PLUGIN_ACTIONS ],
+    [ FeuserEditController::class => FeuserEditController::PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+);
 
-    ExtensionUtility::configurePlugin(
-        'SfRegister',
-        'Create',
-        [
-            FeuserCreateController::class =>
-                'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage',
-        ],
-        [
-            FeuserCreateController::class =>
-                'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage',
-        ]
-    );
+ExtensionUtility::configurePlugin(
+    'SfRegister',
+    'Delete',
+    [ FeuserDeleteController::class => FeuserDeleteController::DELETE_PLUGIN_ACTIONS ],
+    [ FeuserDeleteController::class => FeuserDeleteController::DELETE_PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+);
 
-    ExtensionUtility::configurePlugin(
-        'SfRegister',
-        'Edit',
-        [ FeuserEditController::class => 'form, preview, proxy, save, confirm, accept, removeImage' ],
-        [ FeuserEditController::class => 'form, preview, proxy, save, confirm, accept, removeImage' ]
-    );
+ExtensionUtility::configurePlugin(
+    'SfRegister',
+    'RequestLink',
+    [ FeuserDeleteController::class => FeuserDeleteController::REQUEST_PLUGIN_ACTIONS ],
+    [ FeuserDeleteController::class => FeuserDeleteController::REQUEST_PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+);
 
-    ExtensionUtility::configurePlugin(
-        'SfRegister',
-        'Delete',
-        [ FeuserDeleteController::class => 'form, save, confirm' ],
-        [ FeuserDeleteController::class => 'form, save, confirm' ]
-    );
+ExtensionUtility::configurePlugin(
+    'SfRegister',
+    'Password',
+    [ FeuserPasswordController::class => FeuserPasswordController::PLUGIN_ACTIONS ],
+    [ FeuserPasswordController::class => FeuserPasswordController::PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+);
 
-    ExtensionUtility::configurePlugin(
-        'SfRegister',
-        'RequestLink',
-        [ FeuserDeleteController::class => 'request, sendLink' ],
-        [ FeuserDeleteController::class => 'request, sendLink' ]
-    );
+ExtensionUtility::configurePlugin(
+    'SfRegister',
+    'Invite',
+    [ FeuserInviteController::class => FeuserInviteController::PLUGIN_ACTIONS ],
+    [ FeuserInviteController::class => FeuserInviteController::PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+);
 
-    ExtensionUtility::configurePlugin(
-        'SfRegister',
-        'Password',
-        [ FeuserPasswordController::class => 'form, save' ],
-        [ FeuserPasswordController::class => 'form, save' ]
-    );
+ExtensionUtility::configurePlugin(
+    'SfRegister',
+    'Resend',
+    [ FeuserResendController::class => FeuserResendController::PLUGIN_ACTIONS ],
+    [ FeuserResendController::class => FeuserResendController::PLUGIN_ACTIONS ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+);
 
-    ExtensionUtility::configurePlugin(
-        'SfRegister',
-        'Invite',
-        [ FeuserInviteController::class => 'form, invite' ],
-        [ FeuserInviteController::class => 'form, invite' ]
-    );
-
-    ExtensionUtility::configurePlugin(
-        'SfRegister',
-        'Resend',
-        [ FeuserResendController::class => 'form, mail' ],
-        [ FeuserResendController::class => 'form, mail' ]
-    );
-
-    ExtensionManagementUtility::addService(
-        'sf_register',
-        'auth',
-        AutoLogin::class,
-        [
-            'title' => 'Auto login for users of sf_register',
-            'description' => 'Authenticates user with given session value',
-            'subtype' => 'getUserFE,authUserFE',
-            'available' => true,
-            'priority' => 75,
-            'quality' => 75,
-            'os' => '',
-            'exec' => '',
-            'className' => AutoLogin::class,
-        ]
-    );
-})();
+ExtensionManagementUtility::addService(
+    'sf_register',
+    'auth',
+    AutoLogin::class,
+    [
+        'title' => 'Auto login after registration with sf_register',
+        'description' => 'After a user registers with the help of sf_register this service authenticates the user with
+            a given session value',
+        'subtype' => 'getUserFE,authUserFE',
+        'available' => true,
+        'priority' => 75,
+        'quality' => 75,
+        'os' => '',
+        'exec' => '',
+        'className' => AutoLogin::class,
+    ]
+);

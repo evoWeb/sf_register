@@ -31,13 +31,6 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
     public function initializeArguments(): void
     {
         parent::initializeArguments();
-        $this->registerUniversalTagAttributes();
-        $this->registerTagAttribute('size', 'string', 'Size of input field');
-        $this->registerTagAttribute(
-            'disabled',
-            'string',
-            'Specifies that the input element should be disabled when the page loads'
-        );
         $this->registerArgument(
             'options',
             'array',
@@ -98,6 +91,7 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
             $name .= '[]';
         }
         $this->tag->addAttribute('name', $name);
+        // @extensionScannerIgnoreLine
         $options = $this->getOptions();
 
         $viewHelperVariableContainer = $this->renderingContext->getViewHelperVariableContainer();

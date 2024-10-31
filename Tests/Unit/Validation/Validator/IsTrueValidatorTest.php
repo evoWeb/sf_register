@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\Tests\Unit\Validation\Validator;
 
 use Evoweb\SfRegister\Validation\Validator\IsTrueValidator;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -39,7 +39,7 @@ class IsTrueValidatorTest extends UnitTestCase
     #[Test]
     public function isValidReturnsTrueIfTrueWasUsed()
     {
-        self::assertFalse($this->subject->validate(true)->hasErrors());
+        $this->assertFalse($this->subject->validate(true)->hasErrors());
     }
 
     public static function nonTrueValues(): array
@@ -55,6 +55,6 @@ class IsTrueValidatorTest extends UnitTestCase
     #[DataProvider('nonTrueValues')]
     public function isValidReturnsFalseIfNonTrueWasUsed(mixed $input): void
     {
-        self::assertTrue($this->subject->validate($input)->hasErrors());
+        $this->assertTrue($this->subject->validate($input)->hasErrors());
     }
 }

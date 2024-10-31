@@ -1,7 +1,5 @@
 <?php
 
-namespace Evoweb\SfRegister\ViewHelpers;
-
 /*
  * This file is developed by evoWeb.
  *
@@ -12,6 +10,8 @@ namespace Evoweb\SfRegister\ViewHelpers;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\SfRegister\ViewHelpers;
 
 use Doctrine\DBAL\ArrayParameterType;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -32,30 +32,24 @@ class RecordsViewHelper extends AbstractViewHelper
      */
     protected $escapeOutput = false;
 
-    /**
-     * Initializes the arguments
-     */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('table', 'string', 'the table for the record icon', true);
         $this->registerArgument('uids', 'string', 'list of uids', true);
     }
 
-    /**
-     * @return array
-     */
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ) {
+    ): array {
         $table = $arguments['table'];
         $uids = is_array($arguments['uids']) ? $arguments['uids'] : GeneralUtility::intExplode(',', $arguments['uids']);
 
         return self::getRecordsFromTable($table, $uids);
     }
 
-    protected static function getRecordsFromTable($table, $uids): array
+    protected static function getRecordsFromTable(string $table, array $uids): array
     {
         /** @var ConnectionPool $connectionPool */
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);

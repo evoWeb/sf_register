@@ -7,10 +7,10 @@
 				<source>comma separated list of words used in bad word validator</source>
 			</trans-unit>
 			<trans-unit id="maximal.redirectPostRegistrationPageId">
-				<source>Uid of the page to redirect to after the user is saved (not after confirmation)</source>
+				<source>Page ID to redirect to after the user is saved (not after confirmation)</source>
 			</trans-unit>
 			<trans-unit id="maximal.redirectPostActivationPageId">
-				<source>Uid of the page to redirect to after the creation is confirmed (not after saving)</source>
+				<source>Page ID to redirect to after the creation is confirmed (not after saving)</source>
 			</trans-unit>
 			<trans-unit id="maximal.useEmailAddressAsUsername">
 				<source>Whether the email address should be used as username</source>
@@ -29,83 +29,83 @@
 			</trans-unit>
 
 			<trans-unit id="maximal.notifyAdminCreateSave">
-				<source>the admin should get an email after saving on creation</source>
+				<source>The admin should get an email after saving on creation</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminCreateConfirm">
-				<source>the admin should get an email after confirm on creation</source>
+				<source>The admin should get an email after confirm on creation</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminCreateRefuse">
-				<source>the admin should get an email after refuse on creation</source>
+				<source>The admin should get an email after refuse on creation</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminCreateAccept">
-				<source>the admin should get an email after accept on creation</source>
+				<source>The admin should get an email after accept on creation</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminCreateDecline">
-				<source>the admin should get an email after decline on creation</source>
+				<source>The admin should get an email after decline on creation</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminDeleteSave">
-				<source>the admin should get an email after a delete request got sent</source>
+				<source>The admin should get an email after a delete request got sent</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminDeleteConfirm">
-				<source>the admin should get an email after a delete request was confirmed</source>
+				<source>The admin should get an email after a delete request was confirmed</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminDeleteSendLink">
-				<source>the admin should get an email with a delete link</source>
+				<source>The admin should get an email with a delete link</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminEditSave">
-				<source>the admin should get an email after saving on edit</source>
+				<source>The admin should get an email after saving on edit</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminEditConfirm">
-				<source>the admin should get an email after confirm on edit</source>
+				<source>The admin should get an email after confirm on edit</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminEditAccept">
-				<source>the admin should get an email after accept on edit</source>
+				<source>The admin should get an email after accept on edit</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminInviteInvite">
-				<source>the admin should get an email after an invitation got sent</source>
+				<source>The admin should get an email after an invitation got sent</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyAdminResendMail">
-				<source>the admin should get an email with the activation key for an awaiting registration</source>
+				<source>The admin should get an email with the activation key for an awaiting registration</source>
 			</trans-unit>
 
 			<trans-unit id="maximal.notifyUserCreateSave">
-				<source>the user should get an email after saving on creation</source>
+				<source>The user should get an email after saving on creation</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserCreateConfirm">
-				<source>the user should get an email after confirm on creation</source>
+				<source>The user should get an email after confirm on creation</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserCreateRefuse">
-				<source>the user should get an email after refuse on creation</source>
+				<source>The user should get an email after refuse on creation</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserCreateAccept">
-				<source>the user should get an email after accept on creation</source>
+				<source>The user should get an email after accept on creation</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserCreateDecline">
-				<source>the user should get an email after decline on creation</source>
+				<source>The user should get an email after decline on creation</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserDeleteSave">
-				<source>the user should get an email after a delete request got sent</source>
+				<source>The user should get an email after a delete request got sent</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserDeleteConfirm">
-				<source>the user should get an email after a delete request was confirmed</source>
+				<source>The user should get an email after a delete request was confirmed</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserDeleteSendLink">
-				<source>the user should get an email with a delete link</source>
+				<source>The user should get an email with a delete link</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserEditSave">
-				<source>the user should get an email after saving on edit</source>
+				<source>The user should get an email after saving on edit</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserEditConfirm">
-				<source>the user should get an email after confirm on edit</source>
+				<source>The user should get an email after confirm on edit</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserEditAccept">
-				<source>the user should get an email after accept on edit</source>
+				<source>The user should get an email after accept on edit</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserInviteInvite">
-				<source>the user should get an email after an invitation got sent</source>
+				<source>The user should get an email after an invitation got sent</source>
 			</trans-unit>
 			<trans-unit id="maximal.notifyUserResendMail">
-				<source>the user should get an email with the activation key for an awaiting registration</source>
+				<source>The user should get an email with the activation key for an awaiting registration</source>
 			</trans-unit>
 
 			<trans-unit id="maximal.confirmEmailPostEdit">
@@ -155,28 +155,28 @@
 				<source>From email used in email to user</source>
 			</trans-unit>
 			<trans-unit id="maximal.userEmail.replyName">
-				<source>reply name used in email to user</source>
+				<source>Reply name used in email to user</source>
 			</trans-unit>
 			<trans-unit id="maximal.userEmail.replyEmail">
-				<source>reply email used in email to user</source>
+				<source>Reply email used in email to user</source>
 			</trans-unit>
 			<trans-unit id="maximal.adminEmail.toName">
-				<source>to name used in email to admin</source>
+				<source>To name used in email to admin</source>
 			</trans-unit>
 			<trans-unit id="maximal.adminEmail.toEmail">
-				<source>to email used in email to admin</source>
+				<source>To email used in email to admin</source>
 			</trans-unit>
 			<trans-unit id="maximal.adminEmail.fromName">
-				<source>from name used in email to admin</source>
+				<source>From name used in email to admin</source>
 			</trans-unit>
 			<trans-unit id="maximal.adminEmail.fromEmail">
-				<source>from email used in email to admin</source>
+				<source>From email used in email to admin</source>
 			</trans-unit>
 			<trans-unit id="maximal.adminEmail.replyName">
-				<source>reply name used in email to admin</source>
+				<source>Reply name used in email to admin</source>
 			</trans-unit>
 			<trans-unit id="maximal.adminEmail.replyEmail">
-				<source>reply email used in email to admin</source>
+				<source>Reply email used in email to admin</source>
 			</trans-unit>
 			<trans-unit id="maximal.storagePid">
 				<source>Sysfolder that contains the usergroups and users if not set zero or a selected value in the plugin will be used for storing the user</source>
@@ -190,19 +190,19 @@
 				<source>Comma separated list of words used in bad word validator</source>
 			</trans-unit>
 			<trans-unit id="minimal.redirectPostActivationPageId">
-				<source>Uid of the page to redirect to after the creation is confirmed (not after saving)</source>
+				<source>Uid of the page to redirect to0, after the registration is confirmed (not after saving)</source>
 			</trans-unit>
 			<trans-unit id="minimal.autologinPostRegistration">
-				<source>Whether the user should get logged in after registration</source>
+				<source>Whether the user should get logged in after registration or confirmation</source>
 			</trans-unit>
 			<trans-unit id="minimal.autologinPostConfirmation">
 				<source>Whether the user should get logged in after activation</source>
 			</trans-unit>
 			<trans-unit id="minimal.usergroupPostSave">
-				<source>Usergroup set if an account waits for activation</source>
+				<source>Usergroup ID before confirming the registration</source>
 			</trans-unit>
 			<trans-unit id="minimal.usergroup">
-				<source>Usergroup set if no activation is needed</source>
+				<source>Default usergroup if no confirmation or acceptance is necessary</source>
 			</trans-unit>
 			<trans-unit id="minimal.emailSitename">
 				<source>Name of the site used in email subject</source>
