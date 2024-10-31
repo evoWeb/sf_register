@@ -6,8 +6,7 @@ mod.wizards.newContentElement.wizardItems.sf_register {
       title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_create
       description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_create_description
       tt_content_defValues {
-        CType = list
-        list_type = sfregister_create
+        CType = sfregister_create
       }
     }
 
@@ -16,8 +15,7 @@ mod.wizards.newContentElement.wizardItems.sf_register {
       title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_edit
       description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_edit_description
       tt_content_defValues {
-        CType = list
-        list_type = sfregister_edit
+        CType = sfregister_edit
       }
     }
 
@@ -26,8 +24,7 @@ mod.wizards.newContentElement.wizardItems.sf_register {
       title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_password
       description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_password_description
       tt_content_defValues {
-        CType = list
-        list_type = sfregister_password
+        CType = sfregister_password
       }
     }
 
@@ -36,8 +33,7 @@ mod.wizards.newContentElement.wizardItems.sf_register {
       title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_invite
       description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_invite_description
       tt_content_defValues {
-        CType = list
-        list_type = sfregister_invite
+        CType = sfregister_invite
       }
     }
 
@@ -46,8 +42,7 @@ mod.wizards.newContentElement.wizardItems.sf_register {
       title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_resend
       description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_resend_description
       tt_content_defValues {
-        CType = list
-        list_type = sfregister_resend
+        CType = sfregister_resend
       }
     }
 
@@ -56,8 +51,7 @@ mod.wizards.newContentElement.wizardItems.sf_register {
       title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_delete
       description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_delete_description
       tt_content_defValues {
-        CType = list
-        list_type = sfregister_delete
+        CType = sfregister_delete
       }
     }
 
@@ -66,8 +60,7 @@ mod.wizards.newContentElement.wizardItems.sf_register {
       title = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_requestlink
       description = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:tt_content.list_type_requestlink_description
       tt_content_defValues {
-        CType = list
-        list_type = sfregister_requestlink
+        CType = sfregister_requestlink
       }
     }
   }
