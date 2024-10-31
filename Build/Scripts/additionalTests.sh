@@ -497,7 +497,6 @@ stashComposerFiles() {
     cp composer.json composer.json.orig
 }
 
-
 restoreComposerFiles() {
     rm composer.json
     mv composer.json.orig composer.json

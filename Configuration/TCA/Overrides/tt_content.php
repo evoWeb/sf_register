@@ -38,7 +38,7 @@ defined('TYPO3') or die();
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
             rowDescription,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended
-    ';;
+    ';
 
     ExtensionUtility::registerPlugin(
         'sf_register',
@@ -61,8 +61,9 @@ defined('TYPO3') or die();
     $GLOBALS['TCA']['tt_content']['types']['sfregister_edit']['showitem'] = $showItems;
 
     ExtensionManagementUtility::addPiFlexFormValue(
-        'sfregister_edit',
-        'FILE:EXT:sf_register/Configuration/FlexForms/edit.xml'
+        '*',
+        'FILE:EXT:sf_register/Configuration/FlexForms/edit.xml',
+        'sfregister_edit'
     );
 
     ExtensionUtility::registerPlugin(
@@ -81,8 +82,9 @@ defined('TYPO3') or die();
     $GLOBALS['TCA']['tt_content']['types']['sfregister_requestlink']['showitem'] = $showItems;
 
     ExtensionManagementUtility::addPiFlexFormValue(
-        'sfregister_delete',
-        'FILE:EXT:sf_register/Configuration/FlexForms/delete.xml'
+        '*',
+        'FILE:EXT:sf_register/Configuration/FlexForms/delete.xml',
+        'sfregister_delete'
     );
 
     ExtensionUtility::registerPlugin(
@@ -93,8 +95,9 @@ defined('TYPO3') or die();
     $GLOBALS['TCA']['tt_content']['types']['sfregister_password']['showitem'] = $showItems;
 
     ExtensionManagementUtility::addPiFlexFormValue(
-        'sfregister_password',
-        'FILE:EXT:sf_register/Configuration/FlexForms/password.xml'
+        '*',
+        'FILE:EXT:sf_register/Configuration/FlexForms/password.xml',
+        'sfregister_password'
     );
 
     ExtensionUtility::registerPlugin(
@@ -105,8 +108,9 @@ defined('TYPO3') or die();
     $GLOBALS['TCA']['tt_content']['types']['sfregister_invite']['showitem'] = $showItems;
 
     ExtensionManagementUtility::addPiFlexFormValue(
-        'sfregister_invite',
-        'FILE:EXT:sf_register/Configuration/FlexForms/invite.xml'
+        '*',
+        'FILE:EXT:sf_register/Configuration/FlexForms/invite.xml',
+        'sfregister_invite'
     );
 
     ExtensionUtility::registerPlugin(
@@ -117,7 +121,8 @@ defined('TYPO3') or die();
     $GLOBALS['TCA']['tt_content']['types']['sfregister_resend']['showitem'] = $showItems;
 
     ExtensionManagementUtility::addPiFlexFormValue(
-        'sfregister_resend',
-        'FILE:EXT:sf_register/Configuration/FlexForms/resend.xml'
+        '*',
+        'FILE:EXT:sf_register/Configuration/FlexForms/resend.xml',
+        'sfregister_resend'
     );
 })();

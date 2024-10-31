@@ -9,7 +9,7 @@ export default {
     sourcemap: true,
     sourcemapFile: '../Resources/Public/JavaScript/sf_register' + (compress ? '.min' : '') + '.js.map',
   },
-  plugins: compress ? [] : [
+  plugins: !compress ? [] : [
     terser({
       sourceMap: true,
     })
