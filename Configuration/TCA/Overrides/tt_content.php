@@ -71,21 +71,21 @@ defined('TYPO3') or die();
         'Delete',
         $languageFile . 'tt_content.list_type_delete'
     );
-    $GLOBALS['TCA']['tt_content']['types']['sfregister_delete']['showitem'] =
-        str_replace('pi_flexform,', '', $showItems);
-
-    ExtensionUtility::registerPlugin(
-        'sf_register',
-        'RequestLink',
-        $languageFile . 'tt_content.list_type_requestlink'
-    );
-    $GLOBALS['TCA']['tt_content']['types']['sfregister_requestlink']['showitem'] = $showItems;
+    $GLOBALS['TCA']['tt_content']['types']['sfregister_delete']['showitem'] = $showItems;
 
     ExtensionManagementUtility::addPiFlexFormValue(
         '*',
         'FILE:EXT:sf_register/Configuration/FlexForms/delete.xml',
         'sfregister_delete'
     );
+
+    ExtensionUtility::registerPlugin(
+        'sf_register',
+        'RequestLink',
+        $languageFile . 'tt_content.list_type_requestlink'
+    );
+    $GLOBALS['TCA']['tt_content']['types']['sfregister_requestlink']['showitem'] =
+        str_replace('pi_flexform,', '', $showItems);
 
     ExtensionUtility::registerPlugin(
         'sf_register',
