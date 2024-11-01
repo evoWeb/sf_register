@@ -23,7 +23,7 @@ jobs:
           docker run \
             --rm --user $(id -u) \
             -v ${PWD}:/project \
-            ghcr.io/typo3-documentation/render-guides:latest render Documentation
+            ghcr.io/typo3-documentation/render-guides:latest --config=Documentation
           echo '<html><head><meta http-equiv="refresh" content="0; url=./Index.html" /></head></html>' > Documentation-GENERATED-temp/index.html
           touch Documentation-GENERATED-temp/.nojekyll
 
