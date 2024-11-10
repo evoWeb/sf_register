@@ -32,7 +32,6 @@ use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
-use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File as File;
 use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
 use TYPO3\CMS\Core\Resource\Folder;
@@ -254,9 +253,11 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      */
     protected function provideUploadFolder(string $uploadFolderIdentifier): Folder
     {
+        $this->resourceFactory->getFolderObjectFromCombinedIdentifier($uploadFolderIdentifier);
+
         try {
             return $this->resourceFactory->getFolderObjectFromCombinedIdentifier($uploadFolderIdentifier);
-        } catch (FolderDoesNotExistException) {
+        } catch (\Exception) {
             [$storageId, $storagePath] = explode(':', $uploadFolderIdentifier, 2);
             $storage = $this->resourceFactory->getStorageObject((int)$storageId);
             $folderNames = GeneralUtility::trimExplode('/', $storagePath, true);

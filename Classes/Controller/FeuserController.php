@@ -26,7 +26,6 @@ use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
@@ -37,7 +36,7 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use TYPO3\CMS\Fluid\View\TemplateView;
+use TYPO3\CMS\Fluid\View\FluidViewAdapter;
 
 /**
  * A frontend user controller containing common methods
@@ -49,7 +48,7 @@ class FeuserController extends ActionController
     protected array $ignoredActions = [];
 
     /**
-     * @var TemplateView
+     * @var FluidViewAdapter
      */
     protected $view;
 
@@ -225,8 +224,10 @@ class FeuserController extends ActionController
         if (($this->settings['templateRootPath'] ?? '') !== '') {
             $templateRootPath = GeneralUtility::getFileAbsFileName($this->settings['templateRootPath']);
             if (GeneralUtility::isAllowedAbsPath($templateRootPath)) {
-                $templateRootPaths = $this->view->getTemplateRootPaths();
-                $this->view->setTemplateRootPaths(array_merge($templateRootPaths, [$templateRootPath]));
+                $templatePaths = $this->view->getRenderingContext()->getTemplatePaths();
+                $templatePaths->setTemplateRootPaths(
+                    array_merge($templatePaths->getTemplateRootPaths(), [$templateRootPath])
+                );
             }
         }
     }

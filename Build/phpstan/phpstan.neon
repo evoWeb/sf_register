@@ -4,7 +4,7 @@ includes:
 
 parameters:
   # Use local .cache dir instead of /tmp
-  tmpDir: ../Web/.cache/phpstan
+  tmpDir: ../.cache/phpstan
 
   level: 5
 
