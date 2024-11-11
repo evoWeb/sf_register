@@ -96,7 +96,6 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
     {
         $output = '';
 
-        /** @var FileReference $resource */
         foreach ($resources as $resource) {
             $resourcePointerIdAttribute = '';
             if ($this->hasArgument('id')) {

@@ -19,12 +19,11 @@ use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Http\ApplicationType;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface as ExtbaseRequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Typolink\LinkFactory;
 use TYPO3\CMS\Frontend\Typolink\UnableToLinkException;
@@ -41,10 +40,12 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
      */
     protected $tagName = 'a';
 
-    protected string $additionalSecret = 'sf-register-autologin';
-
-    public function __construct(protected HashService $hashService)
-    {
+    public function __construct(
+        protected HashService $hashService,
+        protected ContentObjectRenderer $contentObjectRenderer,
+        protected LinkFactory $linkFactory,
+        protected UriBuilder $uriBuilder,
+    ) {
         parent::__construct();
     }
 
@@ -113,17 +114,18 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
             );
         }
 
-        /** @var RenderingContext $renderingContext */
-        $renderingContext = $this->renderingContext;
-        $request = $renderingContext->getRequest();
-        if ($request instanceof RequestInterface) {
+        $request = null;
+        if ($this->renderingContext->hasAttribute(ServerRequestInterface::class)) {
+            $request = $this->renderingContext->getAttribute(ServerRequestInterface::class);
+        }
+        if ($request instanceof ExtbaseRequestInterface) {
             return $this->renderWithExtbaseContext($request);
         }
         if ($request instanceof ServerRequestInterface && ApplicationType::fromRequest($request)->isFrontend()) {
             return $this->renderFrontendLinkWithCoreContext($request);
         }
         throw new \RuntimeException(
-            'The rendering context of ViewHelper f:link.action is missing a valid request object.',
+            'The rendering context of ViewHelper sf:link.action is missing a valid request object.',
             1690365240
         );
     }
@@ -136,7 +138,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         $pageType = (int)($this->arguments['pageType'] ?? 0);
         $noCache = (bool)($this->arguments['noCache'] ?? false);
         /** @var string|null $language */
-        $language = $this->arguments['language'] ?? null;
+        $language = isset($this->arguments['language']) ? (string)$this->arguments['language'] : null;
         /** @var string|null $section */
         $section = $this->arguments['section'] ?? null;
         $linkAccessRestrictedPages = (bool)($this->arguments['linkAccessRestrictedPages'] ?? false);
@@ -166,7 +168,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         );
         if (!$allExtbaseArgumentsAreSet) {
             throw new \RuntimeException(
-                'ViewHelper f:link.action needs either all extbase arguments set'
+                'ViewHelper sf:link.action needs either all extbase arguments set'
                 . ' ("extensionName", "pluginName", "controller", "action")'
                 . ' or needs a request implementing extbase RequestInterface.',
                 1690370264
@@ -218,11 +220,12 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         }
 
         try {
-            $cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-            $cObj->setRequest($request);
-            /** @var LinkFactory $linkFactory */
-            $linkFactory = GeneralUtility::makeInstance(LinkFactory::class);
-            $linkResult = $linkFactory->create((string)$this->renderChildren(), $typolinkConfiguration, $cObj);
+            $this->contentObjectRenderer->setRequest($request);
+            $linkResult = $this->linkFactory->create(
+                (string)$this->renderChildren(),
+                $typolinkConfiguration,
+                $this->contentObjectRenderer
+            );
             $this->tag->addAttributes($linkResult->getAttributes());
             $this->tag->setContent($this->renderChildren());
             $this->tag->forceClosingTag(true);
@@ -241,7 +244,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         $pageUid = (int)$this->arguments['pageUid'] ?: null;
         $pageType = (int)($this->arguments['pageType'] ?? 0);
         $noCache = (bool)($this->arguments['noCache'] ?? false);
-        $language = $this->arguments['language'] ?? null;
+        $language = isset($this->arguments['language']) ? (string)$this->arguments['language'] : null;
         $section = (string)$this->arguments['section'];
         $format = (string)$this->arguments['format'];
         $linkAccessRestrictedPages = (bool)($this->arguments['linkAccessRestrictedPages'] ?? false);
@@ -251,9 +254,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         $argumentsToBeExcludedFromQueryString = (array)$this->arguments['argumentsToBeExcludedFromQueryString'];
         $parameters = $this->arguments['arguments'];
 
-        /** @var UriBuilder $uriBuilder */
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $uriBuilder
+        $this->uriBuilder
             ->reset()
             ->setRequest($request)
             ->setTargetPageType($pageType)
@@ -269,9 +270,9 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         ;
 
         if (MathUtility::canBeInterpretedAsInteger($pageUid)) {
-            $uriBuilder->setTargetPageUid((int)$pageUid);
+            $this->uriBuilder->setTargetPageUid((int)$pageUid);
         }
-        $uri = $uriBuilder->uriFor($action, $parameters, $controller, $extensionName, $pluginName);
+        $uri = $this->uriBuilder->uriFor($action, $parameters, $controller, $extensionName, $pluginName);
         if ($uri === '') {
             return $this->renderChildren();
         }

@@ -18,8 +18,6 @@ use Evoweb\SfRegister\Domain\Model\StaticCountryZone;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
@@ -29,9 +27,10 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class StaticCountryZoneRepository extends Repository
 {
-    protected $defaultOrderings = [
-        'zn_name_local' => QueryInterface::ORDER_ASCENDING,
-    ];
+    public function __construct(protected ConnectionPool $connectionPool)
+    {
+        parent::__construct();
+    }
 
     public function findAllByParentUid(int $parent): Result
     {
@@ -44,12 +43,12 @@ class StaticCountryZoneRepository extends Repository
                 'countries',
                 $queryBuilder->expr()->eq(
                     'zones.zn_country_iso_2',
-                    $queryBuilder->quoteIdentifier('countries.cn_iso_2')
-                )
+                    $queryBuilder->quoteIdentifier('countries.cn_iso_2'),
+                ),
             )
             ->where($queryBuilder->expr()->eq(
                 'countries.uid',
-                $queryBuilder->createNamedParameter($parent, Connection::PARAM_INT)
+                $queryBuilder->createNamedParameter($parent, Connection::PARAM_INT),
             ))
             ->orderBy('zones.zn_name_local');
 
@@ -63,7 +62,7 @@ class StaticCountryZoneRepository extends Repository
             ->from('static_country_zones')
             ->where($queryBuilder->expr()->eq(
                 'zn_country_iso_2',
-                $queryBuilder->createNamedParameter($iso2)
+                $queryBuilder->createNamedParameter($iso2),
             ))
             ->orderBy('zn_name_local');
 
@@ -72,8 +71,6 @@ class StaticCountryZoneRepository extends Repository
 
     protected function getQueryBuilderForTable(string $table): QueryBuilder
     {
-        /** @var ConnectionPool $connectionPool */
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-        return $connectionPool->getQueryBuilderForTable($table);
+        return $this->connectionPool->getQueryBuilderForTable($table);
     }
 }

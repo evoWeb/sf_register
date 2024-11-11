@@ -30,18 +30,21 @@ use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Security\RequestToken;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Frontend\Page\PageInformation;
 
 class FrontendUser
 {
+    public const SESSION_KEY = 'sf-register-user';
     public const ADDITIONAL_SECRET = 'sf-register-autologin';
 
     public function __construct(
         protected Context $context,
         protected FrontendUserRepository $userRepository,
+        protected HashService $hashService,
+        protected UriBuilder $uriBuilder,
+        protected Registry $registry,
     ) {
     }
 
@@ -72,15 +75,13 @@ class FrontendUser
     public function determineFrontendUser(
         RequestInterface $request,
         ?FrontendUserModel $user,
-        ?string $hash
+        ?string $hash,
     ): ?FrontendUserModel {
         $frontendUser = $user;
 
         $requestArguments = $request->getArguments();
         if (isset($requestArguments['user']) && $hash !== null) {
-            /** @var HashService $hashService */
-            $hashService = GeneralUtility::makeInstance(HashService::class);
-            $calculatedHash = $hashService->hmac(
+            $calculatedHash = $this->hashService->hmac(
                 $requestArguments['action'] . '::' . $requestArguments['user'],
                 self::ADDITIONAL_SECRET,
             );
@@ -108,7 +109,7 @@ class FrontendUser
     public function autoLogin(
         RequestInterface $request,
         FrontendUserModel $user,
-        int $redirectPageId
+        int $redirectPageId,
     ): void {
         // get given redirect page id
         $userGroups = $user->getUsergroup();
@@ -122,22 +123,19 @@ class FrontendUser
 
         // if redirect is empty set it to current page
         if ($redirectPageId == 0) {
-            // @extensionScannerIgnoreLine
-            $redirectPageId = $this->getTypoScriptFrontendController($request)->id;
+            /** @var PageInformation $pageInformation */
+            $pageInformation = $request->getAttribute('frontend.page.information');
+            $redirectPageId = $pageInformation->getId();
         }
 
         session_start();
 
-        /** @var HashService $hashService */
-        $hashService = GeneralUtility::makeInstance(HashService::class);
-        $_SESSION['sf-register-user'] = $hashService->hmac(
+        $_SESSION[self::SESSION_KEY] = $this->hashService->hmac(
             'auto-login::' . $user->getUid(),
             self::ADDITIONAL_SECRET,
         );
 
-        /** @var Registry $registry */
-        $registry = GeneralUtility::makeInstance(Registry::class);
-        $registry->set('sf-register', $_SESSION['sf-register-user'], $user->getUid());
+        $this->registry->set('sf-register', $_SESSION[self::SESSION_KEY], $user->getUid());
 
         if ($redirectPageId > 0) {
             $nonce = SecurityAspect::provideIn($this->context)->provideNonce();
@@ -159,17 +157,16 @@ class FrontendUser
 
     public function redirectToPage(RequestInterface $request, int $pageId): ResponseInterface
     {
-        /** @var UriBuilder $uriBuilder */
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $uriBuilder->setRequest($request);
-        $uriBuilder->reset();
+        $this->uriBuilder->reset();
+        $this->uriBuilder->setRequest($request);
 
-        $uri = $uriBuilder
+        $uri = $this->uriBuilder
             ->setTargetPageUid($pageId)
             ->setLinkAccessRestrictedPages(true)
+            ->setCreateAbsoluteUri(true)
             ->build();
 
-        return $this->redirectToUri($uri);
+        return $this->getRedirectResponseForUri($uri);
     }
 
     /**
@@ -177,20 +174,9 @@ class FrontendUser
      *
      * @param string|UriInterface $uri A string representation of a URI
      */
-    protected function redirectToUri(string|UriInterface $uri): ResponseInterface
+    protected function getRedirectResponseForUri(string|UriInterface $uri): ResponseInterface
     {
-        $uri = $this->addBaseUriIfNecessary((string)$uri);
         return new RedirectResponse($uri, 303);
-    }
-
-    /**
-     * Adds the base uri if not already in place.
-     *
-     * @internal
-     */
-    protected function addBaseUriIfNecessary(string $uri): string
-    {
-        return GeneralUtility::locationHeaderUrl($uri);
     }
 
     public function getLoggedInRequestUser(RequestInterface $request): ?FrontendUserModel
@@ -221,10 +207,5 @@ class FrontendUser
         }
 
         return $user;
-    }
-
-    protected function getTypoScriptFrontendController(RequestInterface $request): ?TypoScriptFrontendController
-    {
-        return $request->getAttribute('frontend.controller');
     }
 }

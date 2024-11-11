@@ -13,13 +13,12 @@
 
 namespace Evoweb\SfRegister\ViewHelpers;
 
+use Doctrine\DBAL\Exception;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -33,35 +32,25 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class LanguageKeyViewHelper extends AbstractViewHelper
 {
+    public function __construct(protected ConnectionPool $connectionPool)
+    {
+    }
+
     public function initializeArguments(): void
     {
         $this->registerArgument(
             'type',
             'string',
-            'Purpose of this view helper. If it should check for certain static info tables or not'
+            'Purpose of this view helper. If it should check for certain static info tables or not',
         );
     }
 
     public function render(): string
     {
-        $languageCode = '';
-        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
-            $request = $GLOBALS['TYPO3_REQUEST'];
-            if (class_exists(SiteLanguage::class)) {
-                $language = $request->getAttribute('language');
-                if ($language instanceof SiteLanguage && trim($language->getLocale()->getLanguageCode())) {
-                    $languageCode = trim($language->getLocale()->getLanguageCode());
-                }
-            } else {
-                $languageCode = $this->getTypoScriptFrontendController()->config['config']['language'] ?: 'default';
-            }
-        } elseif ($this->getBackendUserAuthentication()->uc['lang'] != '') {
-            $languageCode = $this->getBackendUserAuthentication()->uc['lang'];
-        }
-
+        $languageCode = $this->getLanguageCode();
         $type = $this->getConfiguredType();
 
-        if ($languageCode != '' && $type != '') {
+        if ($languageCode !== '' && $type !== '') {
             if ($type == 'zones') {
                 $languageCode = $this->hasTableColumn('static_country_zones', 'zn_name_' . $languageCode)
                     ? $languageCode
@@ -76,6 +65,20 @@ class LanguageKeyViewHelper extends AbstractViewHelper
         return ucfirst(strtolower($languageCode) ?: 'en');
     }
 
+    protected function getLanguageCode(): string
+    {
+        $languageCode = '';
+        if (ApplicationType::fromRequest($this->getRequest())->isFrontend()) {
+            $language = $this->getRequest()->getAttribute('language');
+            if ($language instanceof SiteLanguage && trim($language->getLocale()->getLanguageCode())) {
+                $languageCode = trim($language->getLocale()->getLanguageCode());
+            }
+        } elseif ($this->getBackendUserAuthentication()->uc['lang'] != '') {
+            $languageCode = $this->getBackendUserAuthentication()->uc['lang'];
+        }
+        return $languageCode;
+    }
+
     protected function getConfiguredType(): string
     {
         $type = $this->arguments['type'] ?? '';
@@ -87,10 +90,11 @@ class LanguageKeyViewHelper extends AbstractViewHelper
     {
         try {
             $columns = $this
-                ->getConnection($tableName)
+                ->connectionPool
+                ->getConnectionForTable($tableName)
                 ->createSchemaManager()
                 ->listTableColumns($tableName);
-        } catch (\Exception) {
+        } catch (Exception) {
             $columns = [];
         }
 
@@ -104,14 +108,9 @@ class LanguageKeyViewHelper extends AbstractViewHelper
         return $result;
     }
 
-    protected function getConnection(string $tableName): Connection
+    protected function getRequest(): ServerRequestInterface
     {
-        return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($tableName);
-    }
-
-    protected function getTypoScriptFrontendController(): ?TypoScriptFrontendController
-    {
-        return $GLOBALS['TSFE'];
+        return $GLOBALS['TYPO3_REQUEST'];
     }
 
     protected function getBackendUserAuthentication(): ?BackendUserAuthentication

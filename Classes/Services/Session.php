@@ -21,7 +21,6 @@ use TYPO3\CMS\Core\Http\SetCookieService;
 use TYPO3\CMS\Core\Session\UserSession;
 use TYPO3\CMS\Core\Session\UserSessionManager;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /**
  * Service to handle the user session
@@ -45,9 +44,9 @@ class Session implements SingletonInterface
 
     protected UserSession $session;
 
-    public function initializeUserSessionManager(?UserSessionManager $userSessionManager = null): void
+    public function __construct()
     {
-        $this->userSessionManager = $userSessionManager ?? UserSessionManager::create('FE');
+        $this->userSessionManager = UserSessionManager::create('FE');
         $this->session = $this->userSessionManager->createFromRequestOrAnonymous(
             $this->getRequest(),
             $this->sessionName,

@@ -54,7 +54,7 @@ class TranslatedSelectViewHelper extends AbstractSelectViewHelper
 
         $output = '';
         foreach ($options as $value => $label) {
-            $label = htmlspecialchars(LocalizationUtility::translate((string)$label, $extensionName));
+            $label = htmlspecialchars(LocalizationUtility::translate($label, $extensionName));
 
             $isSelected = $this->isSelected($value);
             $output .= $this->renderOptionTag((string)$value, $label, $isSelected) . LF;

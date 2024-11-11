@@ -66,7 +66,9 @@ class FeuserPasswordController extends FeuserController
 
             $user->setPassword($this->encryptPassword($password->getPassword()));
 
-            $this->userRepository->update($user);
+            try {
+                $this->userRepository->update($user);
+            } catch (\Exception) {}
         }
 
         return new HtmlResponse($this->view->render());

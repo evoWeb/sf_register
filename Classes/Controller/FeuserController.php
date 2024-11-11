@@ -180,11 +180,11 @@ class FeuserController extends ActionController
     }
 
     /**
-     * @param array<string, mixed> $userData
+     * @param FrontendUser|array<string, mixed> $userData
      */
     protected function getPropertyMappingConfiguration(
         ?PropertyMappingConfiguration $configuration,
-        array $userData = [],
+        FrontendUser|array $userData = [],
     ): PropertyMappingConfiguration {
         if (is_null($configuration)) {
             $configuration = GeneralUtility::makeInstance(PropertyMappingConfiguration::class);

@@ -68,7 +68,10 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     protected ?Folder $imageFolder = null;
 
-    public function __construct(protected ConfigurationManager $configurationManager)
+    public function __construct(
+        protected ConfigurationManager $configurationManager,
+        protected ResourceFactory $resourceFactory,
+    )
     {
         try {
             $this->settings = $this->configurationManager->getConfiguration(
@@ -105,9 +108,7 @@ class File implements SingletonInterface, LoggerAwareInterface
     public function getStorage(): ?ResourceStorage
     {
         if (!$this->storage) {
-            /** @var ResourceFactory $resourceFactory */
-            $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
-            $this->storage = $resourceFactory->getStorageObject($this->storageUid);
+            $this->storage = $this->resourceFactory->getStorageObject($this->storageUid);
         }
 
         return $this->storage;

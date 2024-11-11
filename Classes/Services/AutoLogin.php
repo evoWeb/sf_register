@@ -15,13 +15,16 @@ namespace Evoweb\SfRegister\Services;
 
 use TYPO3\CMS\Core\Authentication\AuthenticationService;
 use TYPO3\CMS\Core\Registry;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Service to handle user login
  */
 class AutoLogin extends AuthenticationService
 {
+    protected function __construct(protected Registry $registry)
+    {
+    }
+
     /**
      * Find a user (e.g. look up the user record in database when a login is sent)
      * @return array<string, mixed>|null
@@ -29,23 +32,21 @@ class AutoLogin extends AuthenticationService
     public function getUser(): ?array
     {
         session_start();
-        $hmac = $_SESSION['sf-register-user'] ?? null;
-        unset($_SESSION['sf-register-user']);
+        $hmac = $_SESSION[FrontendUser::SESSION_KEY] ?? null;
         if ($hmac === null) {
             return null;
         }
+        unset($_SESSION[FrontendUser::SESSION_KEY]);
 
-        /** @var Registry $registry */
-        $registry = GeneralUtility::makeInstance(Registry::class);
-        $userId = (string)$registry->get('sf-register', $hmac);
-        $registry->remove('sf-register', $hmac);
+        $userId = (string)$this->registry->get('sf-register', $hmac);
+        $this->registry->remove('sf-register', $hmac);
 
         $dbUserSetup = [...$this->db_user, 'username_column' => 'uid', 'enable_clause' => ''];
         // @extensionScannerIgnoreLine
         $user = $this->fetchUserRecord($userId, '', $dbUserSetup);
 
         if (!empty($user)) {
-            $user['sf-register-autoload'] = true;
+            $user[FrontendUser::ADDITIONAL_SECRET] = true;
         }
 
         return is_array($user) ? $user : null;
@@ -61,6 +62,6 @@ class AutoLogin extends AuthenticationService
      */
     public function authUser(array $user): int
     {
-        return ($user['sf-register-autoload'] ?? false) ? 200 : 100;
+        return ($user[FrontendUser::ADDITIONAL_SECRET] ?? false) ? 200 : 100;
     }
 }
