@@ -27,6 +27,7 @@ class FrontenUserGroup
 
     /**
      * Determines whether a user is in given user groups.
+     * @param int[] $userGroupUids
      */
     public function isUserInUserGroups(FrontendUser $user, array $userGroupUids): bool
     {
@@ -54,6 +55,9 @@ class FrontenUserGroup
         return $in;
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function changeUsergroup(array $settings, FrontendUser $user, int $userGroupIdToAdd): FrontendUser
     {
         $this->removePreviousUserGroups($settings, $user);
@@ -67,6 +71,9 @@ class FrontenUserGroup
         return $user;
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     protected function removePreviousUserGroups(array $settings, FrontendUser $user): void
     {
         $userGroupIds = $this->getUserGroupIds($settings);
@@ -79,6 +86,10 @@ class FrontenUserGroup
         $user->setUsergroup($assignedUserGroups);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     * @return array<string, int>
+     */
     public function getConfiguredUserGroups(array $settings, int $currentUserGroup): array
     {
         $userGroups = $this->getUserGroupIds($settings);
@@ -92,6 +103,10 @@ class FrontenUserGroup
         return $reducedUserGroups;
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     * @return array<string, int>
+     */
     protected function getUserGroupIds(array $settings): array
     {
         $settingsUserGroupKeys = $this->getUserGroupIdSettingKeys($settings);
@@ -110,6 +125,8 @@ class FrontenUserGroup
     /**
      * Return the keys of the TypoScript configuration in the order which is relevant for the configured
      * registration workflow
+     * @param array<string, mixed> $settings
+     * @return string[]
      */
     protected function getUserGroupIdSettingKeys(array $settings): array
     {

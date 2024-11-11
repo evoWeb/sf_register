@@ -74,14 +74,14 @@ class SelectStaticCountryZonesViewHelper extends AbstractSelectViewHelper
                 $options = array_filter(
                     $options,
                     function ($option) use ($value) {
-                        /** @var array $option */
+                        /** @var array<string, mixed> $option */
                         return in_array($option['uid'], $value);
                     }
                 );
             }
 
             $this->arguments['options'] = $options;
-        } catch (\Exception|Exception) {
+        } catch (Exception) {
         }
     }
 }

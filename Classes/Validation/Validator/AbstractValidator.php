@@ -19,6 +19,7 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator as BaseAbstractVali
 abstract class AbstractValidator extends BaseAbstractValidator
 {
     /**
+     * @param array<int, mixed> $options
      * @throws InvalidValidationOptionsException
      */
     public function setOptions(array $options = []): void
@@ -37,6 +38,7 @@ abstract class AbstractValidator extends BaseAbstractValidator
     }
 
     /**
+     * @param array<int, mixed> $options
      * @throws InvalidValidationOptionsException
      */
     protected function assertAllOptionsAreAllowed(array $options): void
@@ -50,6 +52,7 @@ abstract class AbstractValidator extends BaseAbstractValidator
     }
 
     /**
+     * @param array<int, mixed> $options
      * @throws InvalidValidationOptionsException
      */
     protected function assertAllRequiredOptionsArePresent(array $options): void

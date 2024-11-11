@@ -24,6 +24,7 @@ class AutoLogin extends AuthenticationService
 {
     /**
      * Find a user (e.g. look up the user record in database when a login is sent)
+     * @return array<string, mixed>|null
      */
     public function getUser(): ?array
     {
@@ -52,7 +53,7 @@ class AutoLogin extends AuthenticationService
 
     /**
      * Authenticate a user based on a value set in session before redirect
-     *
+     * @param array<string, mixed> $user
      * @return int = 200: User authenticated successfully.
      *                    No more checking is needed by other auth services.
      *             = 100: User not authenticated; this service is not responsible.

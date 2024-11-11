@@ -16,6 +16,7 @@ namespace Evoweb\SfRegister\Validation\Validator;
 use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
 use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractGenericObjectValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ObjectValidatorInterface;
 
 class UserValidator extends AbstractGenericObjectValidator
@@ -41,9 +42,7 @@ class UserValidator extends AbstractGenericObjectValidator
      * Checks if the specified property of the given object is valid, and adds
      * found errors to the $messages object.
      *
-     * @param mixed $value The value to be validated
-     * @param \Traversable $validators The validators to be called on the value
-     * @param string $propertyName Name of ther property to check
+     * @param \Traversable<int, AbstractValidator> $validators The validators to be called on the value
      */
     protected function checkProperty(mixed $value, \Traversable $validators, string $propertyName): void
     {

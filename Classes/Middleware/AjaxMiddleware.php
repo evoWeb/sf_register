@@ -13,6 +13,7 @@
 
 namespace Evoweb\SfRegister\Middleware;
 
+use Doctrine\DBAL\Exception;
 use Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -53,11 +54,17 @@ class AjaxMiddleware implements MiddlewareInterface
         ]);
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     protected function errorAction(): array
     {
         return ['error', 'unknown action', []];
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     protected function zonesAction(string $parent): array
     {
         /** @var StaticCountryZoneRepository $zoneRepository */
@@ -86,7 +93,7 @@ class AjaxMiddleware implements MiddlewareInterface
                     ];
                 });
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $status = 'database caused an exception ' . $exception->getMessage();
             $message = 'no zones';
         }
@@ -94,6 +101,9 @@ class AjaxMiddleware implements MiddlewareInterface
         return [$status, $message, $result];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getParamFromRequest(ServerRequestInterface $request, string $name): array
     {
         $arguments = $request->getParsedBody()[$name] ?? $request->getQueryParams()[$name] ?? [];

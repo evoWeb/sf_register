@@ -20,6 +20,9 @@ use Psr\Http\Message\ResponseInterface;
 
 final class InitializeActionEvent
 {
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function __construct(
         protected readonly FeuserController $controller,
         protected readonly array $settings,
@@ -31,6 +34,9 @@ final class InitializeActionEvent
         return $this->controller;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getSettings(): array
     {
         return $this->settings;

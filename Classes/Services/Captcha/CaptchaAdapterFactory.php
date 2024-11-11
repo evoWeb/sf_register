@@ -22,6 +22,9 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
  */
 class CaptchaAdapterFactory
 {
+    /**
+     * @var array<string, mixed>
+     */
     protected array $settings = [];
 
     public function __construct(ConfigurationManager $configurationManager)
@@ -50,6 +53,7 @@ class CaptchaAdapterFactory
             $type = 'Evoweb\\SfRegister\\Services\\Captcha\\' . ucfirst(strtolower($type)) . 'Adapter';
         }
 
+        /** @var class-string<object> $type */
         /** @var AbstractAdapter $captchaAdapter */
         $captchaAdapter = GeneralUtility::makeInstance($type);
         $captchaAdapter->setSettings($settings);

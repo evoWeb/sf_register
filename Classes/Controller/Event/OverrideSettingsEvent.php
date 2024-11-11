@@ -19,6 +19,9 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class OverrideSettingsEvent
 {
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function __construct(
         protected array $settings,
         protected readonly string $controllerName,
@@ -35,11 +38,17 @@ class OverrideSettingsEvent
         return $this->contentObject;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getSettings(): array
     {
         return $this->settings;
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function setSettings(array $settings): void
     {
         $this->settings = $settings;

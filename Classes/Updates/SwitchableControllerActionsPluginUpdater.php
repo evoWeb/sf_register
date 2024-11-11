@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Updates;
 
 use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Exception as DbalException;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Database\Connection;
@@ -69,13 +70,12 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
         ],
     ];
 
-    protected FlexFormService $flexFormService;
-
     protected OutputInterface $output;
 
-    public function __construct()
-    {
-        $this->flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+    public function __construct(
+        protected FlexFormService $flexFormService,
+        protected ConnectionPool $connectionPool,
+    ) {
     }
 
     public function setOutput(OutputInterface $output): void
@@ -106,7 +106,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
     {
         try {
             $necessary = count($this->getRecordsToUpdate()) > 0;
-        } catch (\Exception) {
+        } catch (Exception) {
             $necessary = 0;
         }
         return $necessary;
@@ -116,7 +116,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
     {
         try {
             $records = $this->getRecordsToUpdate();
-        } catch (\Exception) {
+        } catch (Exception) {
             return false;
         }
 
@@ -140,6 +140,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
     }
 
     /**
+     * @return array<string, mixed>[]
      * @throws DbalException
      */
     protected function getRecordsToUpdate(): array
@@ -177,6 +178,9 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
         return $result;
     }
 
+    /**
+     * @return string[]
+     */
     protected function getSettingsFromFlexFormDataStructureFile(string $listType): array
     {
         $flexFormFile =
@@ -199,6 +203,11 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
         return $settings;
     }
 
+    /**
+     * @param array<string, array<string, mixed>> $flexFormData
+     * @param string[] $allowedSettings
+     * @return array<string, array<string, mixed>>
+     */
     protected function removeFieldsNotPresentInDataStructure(array $flexFormData, array $allowedSettings): array
     {
         foreach ($flexFormData['data'] as $sheetKey => $sheetData) {
@@ -235,6 +244,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
 
     /**
      * Transforms the flexform data array to FlexForm XML
+     * @param array<int|string, mixed> $input
      */
     protected function transformArrayToXml(array $input = []): string
     {
@@ -263,18 +273,11 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
 
     protected function getPreparedQueryBuilder(): QueryBuilder
     {
-        $queryBuilder = $this
-            ->getConnectionPool()
-            ->getQueryBuilderForTable(self::TABLE_NAME);
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE_NAME);
         $queryBuilder
             ->getRestrictions()
             ->removeAll();
 
         return $queryBuilder;
-    }
-
-    protected function getConnectionPool(): ConnectionPool
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }

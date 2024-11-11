@@ -40,6 +40,9 @@ class FeuserEditController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, accept, removeImage';
 
+    /**
+     * @var string[]
+     */
     protected array $ignoredActions = ['confirmAction', 'acceptAction'];
 
     public function __construct(
@@ -115,6 +118,7 @@ class FeuserEditController extends FeuserController
         }
 
         $user = $this->eventDispatcher->dispatch(new EditSaveEvent($user, $this->settings))->getUser();
+        /** @var FrontendUser $user */
         $user = $this->mailService->sendEmails(
             $this->request,
             $this->settings,

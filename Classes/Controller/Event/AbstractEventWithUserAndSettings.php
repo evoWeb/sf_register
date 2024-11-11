@@ -19,6 +19,9 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 
 abstract class AbstractEventWithUserAndSettings
 {
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function __construct(protected FrontendUser $user, protected array $settings) {}
 
     public function getUser(): FrontendUser
@@ -26,6 +29,9 @@ abstract class AbstractEventWithUserAndSettings
         return $this->user;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getSettings(): array
     {
         return $this->settings;

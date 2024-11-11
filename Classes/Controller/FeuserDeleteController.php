@@ -37,6 +37,9 @@ class FeuserDeleteController extends FeuserController
     public const DELETE_PLUGIN_ACTIONS = 'form, save, confirm';
     public const REQUEST_PLUGIN_ACTIONS = 'request, sendLink';
 
+    /**
+     * @var string[]
+     */
     protected array $ignoredActions = ['confirmAction', 'requestAction'];
 
     public function __construct(

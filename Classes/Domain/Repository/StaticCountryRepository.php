@@ -13,24 +13,36 @@
 
 namespace Evoweb\SfRegister\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use Evoweb\SfRegister\Domain\Model\StaticCountry;
+use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * A repository for static info tables country
+ *
+ * @extends Repository<StaticCountry>
  */
 class StaticCountryRepository extends Repository
 {
-    public function findAll(): QueryResultInterface
+    /**
+     * @return QueryResult<StaticCountry>
+     */
+    public function findAll(): QueryResult
     {
         $query = $this->createQuery();
         $query->getQuerySettings()
             ->setRespectStoragePage(false);
 
-        return $query->execute();
+        /** @var QueryResult<StaticCountry> $result */
+        $result = $query->execute();
+        return $result;
     }
 
-    public function findByCnIso2(array $cnIso2): QueryResultInterface
+    /**
+     * @param array<int, string> $cnIso2
+     * @return QueryResult<StaticCountry>
+     */
+    public function findByCnIso2(array $cnIso2): QueryResult
     {
         $query = $this->createQuery();
         $query->getQuerySettings()
@@ -41,6 +53,8 @@ class StaticCountryRepository extends Repository
         } catch (\Exception) {
         }
 
-        return $query->execute();
+        /** @var QueryResult<StaticCountry> $result */
+        $result = $query->execute();
+        return $result;
     }
 }

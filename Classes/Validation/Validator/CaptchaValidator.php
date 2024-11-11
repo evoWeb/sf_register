@@ -20,6 +20,9 @@ class CaptchaValidator extends AbstractValidator
 {
     protected $acceptsEmptyValues = false;
 
+    /**
+     * @var array<string, array<int, string>>
+     */
     protected $supportedOptions = [
         'type' => [
             'srfreecap',

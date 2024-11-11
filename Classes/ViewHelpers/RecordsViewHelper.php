@@ -29,8 +29,6 @@ class RecordsViewHelper extends AbstractViewHelper
     }
 
     /**
-     * ViewHelper returns HTML, thus we need to disable output escaping
-     *
      * @var bool
      */
     protected $escapeOutput = false;
@@ -41,6 +39,9 @@ class RecordsViewHelper extends AbstractViewHelper
         $this->registerArgument('uids', 'string', 'list of uids', true);
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     public function render(): array
     {
         $table = $this->arguments['table'];
@@ -51,6 +52,10 @@ class RecordsViewHelper extends AbstractViewHelper
         return $this->getRecordsFromTable($table, $uids);
     }
 
+    /**
+     * @param int[] $uids
+     * @return array<string, mixed>[]
+     */
     protected function getRecordsFromTable(string $table, array $uids): array
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable($table);
@@ -71,7 +76,7 @@ class RecordsViewHelper extends AbstractViewHelper
             ->executeQuery();
         try {
             return $result->fetchAllAssociative();
-        } catch (\Exception|Exception $exception) {
+        } catch (Exception $exception) {
             throw new \RuntimeException(
                 'Database query failed. Error was: ' . $exception->getPrevious()->getMessage(),
                 1511950673

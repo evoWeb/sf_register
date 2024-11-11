@@ -23,6 +23,7 @@ use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
 use Evoweb\SfRegister\Validation\Validator\SetPropertyNameInterface;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -37,10 +38,19 @@ use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
 
 class ModifyValidator
 {
-    public function __construct(protected ValidatorResolver $validatorResolver)
-    {
+    protected LoggerInterface $logger;
+
+    public function __construct(
+        protected ValidatorResolver $validatorResolver,
+        protected LogManager $logManager,
+    ) {
+        $this->logger = $logManager->getLogger(__CLASS__);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     * @param string[] $ignoredActions
+     */
     public function shouldValidationBeModified(
         FeuserController $controller,
         array $settings,
@@ -55,6 +65,10 @@ class ModifyValidator
         );
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     * @param string[] $ignoredActions
+     */
     protected function actionIsIgnored(
         string $controllerName,
         array $settings,
@@ -75,6 +89,9 @@ class ModifyValidator
         return $actionMethodName === 'formAction' && is_array($user) && ($user['byInvitation'] ?? '0');
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function modifyArgumentValidators(
         FeuserController $controller,
         array $settings,
@@ -97,6 +114,10 @@ class ModifyValidator
         return $arguments;
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     * @param array<string, string|array<int, string>> $configuredValidators
+     */
     protected function modifyValidatorsBasedOnSettings(
         string $controllerName,
         array $settings,
@@ -174,6 +195,7 @@ class ModifyValidator
         /** @var Extbase\Validate $validateAnnotation */
         $validateAnnotation = current($parser->parse('@' . Extbase\Validate::class . '(' . $configuration . ')'));
         try {
+            /** @var class-string<object> $validatorObjectName */
             $validatorObjectName = ValidatorClassNameResolver::resolve($validateAnnotation->validator);
             /** @var ValidatorInterface $validator */
             $validator = GeneralUtility::makeInstance($validatorObjectName);
@@ -190,9 +212,7 @@ class ModifyValidator
 
             return $validator;
         } catch (NoSuchValidatorException $e) {
-            /** @var LogManager $logManager */
-            $logManager = GeneralUtility::makeInstance(LogManager::class);
-            $logManager->getLogger(__CLASS__)->debug($e->getMessage());
+            $this->logger->debug($e->getMessage());
             return null;
         }
     }

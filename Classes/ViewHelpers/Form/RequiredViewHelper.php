@@ -32,8 +32,14 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
  */
 class RequiredViewHelper extends AbstractConditionViewHelper
 {
+    /**
+     * @var array<string, mixed>
+     */
     protected array $settings = [];
 
+    /**
+     * @var array<string, mixed>
+     */
     protected array $frameworkConfiguration = [];
 
     /**
@@ -52,15 +58,20 @@ class RequiredViewHelper extends AbstractConditionViewHelper
         $this->registerArgument('fieldName', 'string', 'Name of the field to render', true);
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     protected static function getSettings(): array
     {
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
         try {
+            /** @var array<string, mixed> $settings */
             $settings = $configurationManager->getConfiguration(
                 ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
                 'SfRegister',
                 'Form'
             );
+            /** @var array<string, mixed> $frameworkConfiguration */
             $frameworkConfiguration = $configurationManager->getConfiguration(
                 ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
             );

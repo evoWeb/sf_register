@@ -34,6 +34,8 @@ class FrontendUserConverter extends AbstractTypeConverter
      *   This will be a user-visible error message later on.
      * Furthermore, it should throw an Exception if an unexpected failure
      * (like a security error) occurred or a configuration issue happened.
+     *
+     * @param array<string, mixed> $convertedChildProperties
      */
     public function convertFrom(
         $source,

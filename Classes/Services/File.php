@@ -38,6 +38,9 @@ class File implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
+    /**
+     * @var array<string, mixed>
+     */
     protected array $settings = [];
 
     protected ServerRequestInterface $request;
@@ -48,6 +51,9 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     protected int $maxFilesize = 0;
 
+    /**
+     * @var Error[]
+     */
     protected array $errors = [];
 
     protected int $storageUid = 1;
@@ -163,6 +169,9 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $value;
     }
 
+    /**
+     * @return Error[]
+     */
     public function getErrors(): array
     {
         return $this->errors;

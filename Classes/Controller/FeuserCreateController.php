@@ -44,6 +44,9 @@ class FeuserCreateController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage';
 
+    /**
+     * @var string[]
+     */
     protected array $ignoredActions = ['confirmAction', 'refuseAction', 'acceptAction', 'declineAction'];
 
     public function __construct(
@@ -120,6 +123,7 @@ class FeuserCreateController extends FeuserController
 
             // Write back plain password
             $user->setPassword($plainPassword);
+            /** @var FrontendUser $user */
             $user = $this->mailService->sendEmails(
                 $this->request,
                 $this->settings,

@@ -14,6 +14,7 @@
 namespace Evoweb\SfRegister\Domain\Repository;
 
 use Doctrine\DBAL\Result;
+use Evoweb\SfRegister\Domain\Model\StaticCountryZone;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -23,6 +24,8 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * A repository for static info tables country zones
+ *
+ * @extends Repository<StaticCountryZone>
  */
 class StaticCountryZoneRepository extends Repository
 {

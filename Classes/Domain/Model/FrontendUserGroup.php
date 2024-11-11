@@ -27,9 +27,9 @@ class FrontendUserGroup extends AbstractEntity
     /**
      * Keep in mind that the property is called "subgroup" although it can hold several subgroups.
      *
-     * @var ?ObjectStorage<FrontendUserGroup>
+     * @var ObjectStorage<FrontendUserGroup>
      */
-    protected ?ObjectStorage $subgroup = null;
+    protected ObjectStorage $subgroup;
 
     public function __construct(string $title = '')
     {
@@ -42,11 +42,17 @@ class FrontendUserGroup extends AbstractEntity
         $this->subgroup = new ObjectStorage();
     }
 
-    public function getSubgroup(): ?ObjectStorage
+    /**
+     * @return ObjectStorage<FrontendUserGroup>
+     */
+    public function getSubgroup(): ObjectStorage
     {
         return $this->subgroup;
     }
 
+    /**
+     * @param ObjectStorage<FrontendUserGroup> $subgroup
+     */
     public function setSubgroup(ObjectStorage $subgroup): void
     {
         $this->subgroup = $subgroup;

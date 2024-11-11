@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -30,6 +32,9 @@ class ExplodeViewHelper extends AbstractViewHelper
         $this->registerArgument('delimiter', 'string', 'Character to explode by', false, ',');
     }
 
+    /**
+     * @return string[]
+     */
     public function render(): array
     {
         $string = $this->arguments['string'] !== '' ? $this->arguments['string'] : $this->renderChildren();

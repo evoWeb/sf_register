@@ -21,8 +21,8 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
 {
     /**
      * Resolve select items
-     *
-     * @throws \UnexpectedValueException
+     * @param array<string, mixed> $result
+     * @return array<string, mixed>
      */
     public function addData(array $result): array
     {
@@ -42,6 +42,10 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
         return $result;
     }
 
+    /**
+     * @param array<string, mixed> $fieldConfig
+     * @return array<string, mixed>
+     */
     protected function getAvailableFields(array $fieldConfig): array
     {
         $items = [];
@@ -58,11 +62,17 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
         return $fieldConfig;
     }
 
-    protected function getSelectedFields($formType): array
+    /**
+     * @return array<int, string>
+     */
+    protected function getSelectedFields(string $formType): array
     {
         return $this->getDefaultSelectedFieldsFromTsConfig()[$formType . '.'] ?? [];
     }
 
+    /**
+     * @return array<string, string>
+     */
     protected function getAvailableFieldsFromTsConfig(): array
     {
         $tsConfig = $this->getBackendUserAuthentication()->getTSConfig();
@@ -70,6 +80,9 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
         return $pluginConfiguration['settings.']['fields.']['configuration.'] ?? [];
     }
 
+    /**
+     * @return array<string, array<int, string>>
+     */
     protected function getDefaultSelectedFieldsFromTsConfig(): array
     {
         $tsConfig = $this->getBackendUserAuthentication()->getTSConfig();
@@ -77,6 +90,9 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
         return $pluginConfiguration['settings.']['fields.']['defaultSelected.'] ?? [];
     }
 
+    /**
+     * @param array<string, mixed>|string $configuration
+     */
     protected function getLabel(string $fieldName, array|string $configuration): string
     {
         $labelPath = $configuration['backendLabel']

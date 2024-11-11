@@ -45,6 +45,9 @@ class FeuserController extends ActionController
 {
     protected string $controller = '';
 
+    /**
+     * @var string[]
+     */
     protected array $ignoredActions = [];
 
     /**
@@ -170,15 +173,18 @@ class FeuserController extends ActionController
         $argumentName = 'user';
         if ($this->request->hasArgument($argumentName)) {
             $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
-            /** @var array $user */
+            /** @var array<string, mixed> $user */
             $user = $this->request->getArgument($argumentName);
             $this->getPropertyMappingConfiguration($configuration, $user);
         }
     }
 
+    /**
+     * @param array<string, mixed> $userData
+     */
     protected function getPropertyMappingConfiguration(
         ?PropertyMappingConfiguration $configuration,
-        $userData = [],
+        array $userData = [],
     ): PropertyMappingConfiguration {
         if (is_null($configuration)) {
             $configuration = GeneralUtility::makeInstance(PropertyMappingConfiguration::class);
@@ -293,7 +299,7 @@ class FeuserController extends ActionController
 
         $user->removeImage();
 
-        /** @var array $requestUser */
+        /** @var array<string, mixed> $requestUser */
         $requestUser = $this->request->getArgument('user');
         if (is_array($requestUser)) {
             $requestUser['image'] = $user->getImage();

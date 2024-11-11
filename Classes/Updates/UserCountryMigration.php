@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\ChattyInterface;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
@@ -34,7 +33,7 @@ class UserCountryMigration implements UpgradeWizardInterface, ChattyInterface
 
     protected OutputInterface $output;
 
-    public function __construct()
+    public function __construct(protected ConnectionPool $connectionPool)
     {
     }
 
@@ -155,18 +154,11 @@ class UserCountryMigration implements UpgradeWizardInterface, ChattyInterface
 
     protected function getPreparedQueryBuilder(): QueryBuilder
     {
-        $queryBuilder = $this
-            ->getConnectionPool()
-            ->getQueryBuilderForTable(self::TABLE_NAME);
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE_NAME);
         $queryBuilder
             ->getRestrictions()
             ->removeAll();
 
         return $queryBuilder;
-    }
-
-    protected function getConnectionPool(): ConnectionPool
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }

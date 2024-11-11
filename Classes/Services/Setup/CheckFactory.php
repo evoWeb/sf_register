@@ -17,12 +17,19 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CheckFactory
 {
+    /**
+     * @param array<string, string[]> $configuration
+     */
     public function __construct(protected array $configuration) {}
 
+    /**
+     * @return CheckInterface[]
+     */
     public function getCheckInstances(): array
     {
         $checks = [];
 
+        /** @var class-string<object> $checkClassname */
         foreach ($this->configuration['checks'] as $checkClassname) {
             $checks[] = GeneralUtility::makeInstance($checkClassname);
         }

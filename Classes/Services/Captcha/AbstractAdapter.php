@@ -19,20 +19,30 @@ abstract class AbstractAdapter implements CaptchaInterface
 {
     protected ?object $captcha = null;
 
+    /**
+     * @var array<string, mixed>
+     */
     protected array $settings = [];
 
+    /**
+     * @var Error[]
+     */
     protected array $errors = [];
 
     /**
      * Renders the output of a concrete captcha
+     * @return array<string, string>|string
      */
-    abstract public function render(): string|array;
+    abstract public function render(): array|string;
 
     /**
      * Returns if the result of the validation was valid or not
      */
     abstract public function isValid(string $value): bool;
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function setSettings(array $settings): void
     {
         $this->settings = $settings;
@@ -43,6 +53,9 @@ abstract class AbstractAdapter implements CaptchaInterface
         $this->errors[] = new Error($message, $code);
     }
 
+    /**
+     * @return Error[]
+     */
     public function getErrors(): array
     {
         return $this->errors;

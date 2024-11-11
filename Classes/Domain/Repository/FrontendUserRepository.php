@@ -13,15 +13,18 @@
 
 namespace Evoweb\SfRegister\Domain\Repository;
 
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * A repository for frontend user models
+ *
+ * @extends Repository<FrontendUser>
  */
 class FrontendUserRepository extends Repository
 {
-    public function findByUidIgnoringDisabledField(int $uid)
+    public function findByUidIgnoringDisabledField(int $uid): ?FrontendUser
     {
         $query = $this->createQuery();
 
@@ -36,7 +39,9 @@ class FrontendUserRepository extends Repository
             )
             ->execute();
 
-        return $result->getFirst();
+        /** @var ?FrontendUser $user */
+        $user = $result->getFirst();
+        return $user;
     }
 
     /**

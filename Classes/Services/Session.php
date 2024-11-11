@@ -37,6 +37,7 @@ class Session implements SingletonInterface
 
     /**
      * Values stored in session
+     * @var array<string, mixed>
      */
     protected ?array $values = null;
 

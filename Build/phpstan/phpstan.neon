@@ -6,7 +6,7 @@ parameters:
   # Use local .cache dir instead of /tmp
   tmpDir: ../.cache/phpstan
 
-  level: 5
+  level: 6
 
   bootstrapFiles:
     - phpstan-constants.php

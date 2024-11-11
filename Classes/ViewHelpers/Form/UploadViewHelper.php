@@ -21,7 +21,6 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
-use TYPO3\CMS\Form\Security\HashScope;
 
 class UploadViewHelper extends AbstractFormFieldViewHelper
 {
@@ -90,6 +89,9 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
         return $output;
     }
 
+    /**
+     * @param FileReference[] $resources
+     */
     protected function renderPreview(array $resources): string
     {
         $output = '';
@@ -124,6 +126,9 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
         return $output;
     }
 
+    /**
+     * @param array<int, mixed> $resources
+     */
     protected function isRenderUpload(array $resources): bool
     {
         return count($resources) === 0
@@ -133,6 +138,9 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
             );
     }
 
+    /**
+     * @return FileReference[]
+     */
     protected function getUploadedResource(): array
     {
         $result = [];

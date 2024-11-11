@@ -24,6 +24,9 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements SetMode
 {
     protected $acceptsEmptyValues = false;
 
+    /**
+     * @var array<string, array<int, mixed>>
+     */
     protected $supportedOptions = [
         'global' => [
             true,

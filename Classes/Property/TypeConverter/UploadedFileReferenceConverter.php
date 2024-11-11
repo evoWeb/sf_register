@@ -29,6 +29,7 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Property\TypeConverter;
 
 use TYPO3\CMS\Core\Crypto\HashService;
+use TYPO3\CMS\Core\Exception\Crypto\InvalidHashStringException;
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
@@ -85,7 +86,8 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      * Actually convert from $source to $targetType, taking into account the fully
      * built $convertedChildProperties and $configuration.
      *
-     * @param array|UploadedFile $source
+     * @param array<string, mixed>|UploadedFile $source
+     * @param array<string, mixed> $convertedChildProperties
      */
     public function convertFrom(
         $source,
@@ -150,6 +152,9 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
     /**
      * Import a resource and respect configuration given for properties
+     * @param array<string, mixed> $uploadInfo
+     * @throws TypeConverterException
+     * @throws InvalidHashStringException
      */
     protected function importUploadedResource(
         array $uploadInfo,
@@ -288,6 +293,9 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function convertUploadedFileToUploadInfoArray(UploadedFile $uploadedFile): array
     {
         return [

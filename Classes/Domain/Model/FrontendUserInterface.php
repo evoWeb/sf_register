@@ -28,7 +28,7 @@ interface FrontendUserInterface extends DomainObjectInterface
 
     public function getPassword(): string;
 
-    public function setPassword(string $password);
+    public function setPassword(string $password): void;
 
     /**
      * @return ObjectStorage<FrontendUserGroup> An object storage containing the usergroup

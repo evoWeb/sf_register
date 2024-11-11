@@ -17,5 +17,8 @@ use Psr\Http\Message\ResponseInterface;
 
 interface CheckInterface
 {
+    /**
+     * @param array<string, string|array<string, int|array<int, string>>> $settings
+     */
     public function check(array $settings): ?ResponseInterface;
 }

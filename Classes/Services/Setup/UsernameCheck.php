@@ -18,6 +18,9 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 
 class UsernameCheck implements CheckInterface
 {
+    /**
+     * @param array<string, string|array<string, int|array<int, string>>> $settings
+     */
     public function check(array $settings): ?ResponseInterface
     {
         $result = null;

@@ -37,7 +37,10 @@ class CaptchaViewHelper extends AbstractFormFieldViewHelper
         $this->registerArgument('type', 'string', 'Captcha type', true);
     }
 
-    public function render(): string|array
+    /**
+     * @return array<string, mixed>|string
+     */
+    public function render(): array|string
     {
         $type = $this->arguments['type'];
         return $this->captchaAdapterFactory->getCaptchaAdapter($type)->render();

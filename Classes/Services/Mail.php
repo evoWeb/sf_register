@@ -31,6 +31,9 @@ use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
  */
 class Mail implements SingletonInterface
 {
+    /**
+     * @var array<string, mixed>
+     */
     protected array $frameworkConfiguration = [];
 
     public function __construct(
@@ -42,6 +45,9 @@ class Mail implements SingletonInterface
         );
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function sendEmails(
         RequestInterface $request,
         array $settings,
@@ -63,6 +69,9 @@ class Mail implements SingletonInterface
         return $user;
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function isNotifyAdmin(array $settings, string $type): bool
     {
         $type = lcfirst($type);
@@ -70,6 +79,9 @@ class Mail implements SingletonInterface
         return !empty($notifySettings[$type]);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function isNotifyUser(array $settings, string $type): bool
     {
         $type = lcfirst($type);
@@ -77,6 +89,9 @@ class Mail implements SingletonInterface
         return !empty($notifySettings[$type]);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function sendNotifyAdmin(
         RequestInterface $request,
         array $settings,
@@ -100,6 +115,9 @@ class Mail implements SingletonInterface
         return $this->dispatchUserEvent($settings, $method, $user);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function sendNotifyUser(
         RequestInterface $request,
         array $settings,
@@ -123,6 +141,9 @@ class Mail implements SingletonInterface
         return $this->dispatchUserEvent($settings, $method, $user);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function sendInvitation(
         RequestInterface $request,
         array $settings,
@@ -145,6 +166,9 @@ class Mail implements SingletonInterface
         return $this->dispatchUserEvent($settings, $method, $user);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     protected function getSubject(array $settings, string $method, FrontendUserInterface $user): string
     {
         return (string)LocalizationUtility::translate(
@@ -154,6 +178,10 @@ class Mail implements SingletonInterface
         );
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     * @return array<string, string>
+     */
     protected function getAdminRecipient(array $settings): array
     {
         return [
@@ -161,6 +189,9 @@ class Mail implements SingletonInterface
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     protected function getUserRecipient(FrontendUserInterface $user): array
     {
         if ($user->getFirstName() || $user->getLastName()) {
@@ -174,6 +205,10 @@ class Mail implements SingletonInterface
         ];
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     * @param array<string, string> $recipient
+     */
     protected function sendEmail(
         array $settings,
         FrontendUserInterface $user,
@@ -207,6 +242,9 @@ class Mail implements SingletonInterface
         return $mail->send();
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     protected function renderHtmlBody(
         RequestInterface $request,
         array $settings,
@@ -236,6 +274,9 @@ class Mail implements SingletonInterface
         return $body;
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     protected function renderTextBody(
         RequestInterface $request,
         array $settings,
@@ -285,6 +326,9 @@ class Mail implements SingletonInterface
         return $view;
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     protected function dispatchMailEvent(
         array $settings,
         MailMessage $mail,
@@ -294,6 +338,9 @@ class Mail implements SingletonInterface
         return $this->eventDispatcher->dispatch($eventObject)->getMail();
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     protected function dispatchUserEvent(
         array $settings,
         string $method,

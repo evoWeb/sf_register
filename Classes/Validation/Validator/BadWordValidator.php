@@ -19,6 +19,9 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 class BadWordValidator extends AbstractValidator
 {
+    /**
+     * @var array<string, mixed>
+     */
     protected array $settings = [];
 
     public function __construct(ConfigurationManagerInterface $configurationManager)

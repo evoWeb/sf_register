@@ -15,10 +15,15 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Services\Event;
 
+use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 
 final class PreSubmitMailEvent
 {
+    /**
+     * @param array<string, mixed> $settings
+     * @param array<string, FrontendUserInterface> $arguments
+     */
     public function __construct(
         protected MailMessage $mail,
         protected array $settings,
@@ -30,11 +35,17 @@ final class PreSubmitMailEvent
         return $this->mail;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getSettings(): array
     {
         return $this->settings;
     }
 
+    /**
+     * @return array<string, FrontendUserInterface>
+     */
     public function getArguments(): array
     {
         return $this->arguments;

@@ -30,6 +30,9 @@ class AddViewHelper extends AbstractViewHelper
         $this->registerArgument('value', 'mixed', 'Value to add');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function render(): array
     {
         $array = $this->arguments['array'] ?: [];

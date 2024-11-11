@@ -140,12 +140,12 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         /** @var string|null $section */
         $section = $this->arguments['section'] ?? null;
         $linkAccessRestrictedPages = (bool)($this->arguments['linkAccessRestrictedPages'] ?? false);
-        /** @var array|null $additionalParams */
+        /** @var array<string, mixed>|null $additionalParams */
         $additionalParams = $this->arguments['additionalParams'] ?? null;
         $absolute = (bool)($this->arguments['absolute'] ?? false);
         /** @var bool|string $addQueryString */
         $addQueryString = $this->arguments['addQueryString'] ?? false;
-        /** @var array|null $argumentsToBeExcludedFromQueryString */
+        /** @var array<string>|null $argumentsToBeExcludedFromQueryString */
         $argumentsToBeExcludedFromQueryString = $this->arguments['argumentsToBeExcludedFromQueryString'] ?? null;
         /** @var string|null $action */
         $action = $this->arguments['action'] ?? null;
@@ -155,7 +155,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         $extensionName = $this->arguments['extensionName'] ?? null;
         /** @var string|null $pluginName */
         $pluginName = $this->arguments['pluginName'] ?? null;
-        /** @var array|null $arguments */
+        /** @var array<string, mixed> $arguments */
         $arguments = $this->arguments['arguments'] ?? [];
 
         $allExtbaseArgumentsAreSet = (

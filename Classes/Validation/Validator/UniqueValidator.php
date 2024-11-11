@@ -21,6 +21,9 @@ class UniqueValidator extends AbstractValidator implements SetModelInterface, Se
 {
     protected $acceptsEmptyValues = false;
 
+    /**
+     * @var array<string, array<int, mixed>>
+     */
     protected $supportedOptions = [
         'global' => [
             true,
