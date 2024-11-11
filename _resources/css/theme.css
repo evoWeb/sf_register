@@ -24588,6 +24588,36 @@ dl.command .command-arguments section {
   visibility: visible;
 }
 
+#indexNav {
+  background-color: rgb(242.25, 242.25, 242.25);
+  border-radius: 8px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+#indexNav .nav-link {
+  color: #333333;
+  font-weight: 500;
+  margin: 0 4px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+#indexNav .nav-link:hover {
+  color: rgb(12.75, 12.75, 12.75);
+  transform: scale(1.1);
+}
+#indexNav .nav-link.active {
+  color: #fff;
+  background-color: #333333;
+  border-radius: 50%;
+  padding: 4px 8px;
+  transition: background-color 0.2s ease;
+}
+@media (max-width: 576px) {
+  #indexNav .nav {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+}
+
 figure figcaption p:last-child {
   margin-bottom: 0;
 }
