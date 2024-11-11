@@ -301,6 +301,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         return [
             'name' => $uploadedFile->getClientFilename(),
             'tmp_name' => $uploadedFile->getTemporaryFileName(),
+            // @extensionScannerIgnoreLine
             'size' => $uploadedFile->getSize(),
             'error' => $uploadedFile->getError(),
             'type' => $uploadedFile->getClientMediaType(),

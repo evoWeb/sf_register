@@ -123,6 +123,7 @@ class FeuserController extends ActionController
                         $image = [
                             'name' => $image->getClientFilename(),
                             'tmp_name' => $image->getTemporaryFileName(),
+                            // @extensionScannerIgnoreLine
                             'size' => $image->getSize(),
                             'error' => $image->getError(),
                             'type' => $image->getClientMediaType(),
