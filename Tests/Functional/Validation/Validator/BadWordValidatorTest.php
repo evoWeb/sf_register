@@ -17,6 +17,7 @@ use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\BadWordValidator;
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
+use TYPO3\CMS\Core\Site\Entity\NullSite;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
@@ -78,6 +79,9 @@ class BadWordValidatorTest extends AbstractTestBase
     #[Test]
     public function isValidReturnsFalseForWordOnBadWordList(): void
     {
+        $this->request = $this->request->withAttribute('language', (new NullSite())->getDefaultLanguage());
+        $GLOBALS['TYPO3_REQUEST'] = $this->request;
+
         $typoScriptSetup = $this->request->getAttribute('frontend.typoscript')->getSetupArray();
         $words = GeneralUtility::trimExplode(
             ',',
