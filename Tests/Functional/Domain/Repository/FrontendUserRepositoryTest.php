@@ -18,8 +18,6 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Container\ContainerInterface;
-use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
-use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Backend;
@@ -41,12 +39,15 @@ class FrontendUserRepositoryTest extends AbstractTestBase
     #[Test]
     public function findByUid(): void
     {
-        $serverRequestFactory = new ServerRequestFactory();
-        $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
-        $serverRequest = $serverRequest->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_BE);
+        $this->initializeRequest();
+        $this->initializeFrontendTypoScript();
 
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-        $configurationManager->setRequest($serverRequest);
+        $configurationManager = $this->get(ConfigurationManager::class);
+        $configurationManager->setRequest($this->request);
+        $configurationManager->setConfiguration([
+            'extensionName' => 'SfRegister',
+            'pluginName' => 'Create',
+        ]);
         $dataMapFactory = GeneralUtility::makeInstance(DataMapFactory::class);
         $container = GeneralUtility::makeInstance(ContainerInterface::class);
 

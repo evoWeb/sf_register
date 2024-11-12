@@ -60,6 +60,7 @@ class FeuserPasswordController extends FeuserController
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'password'])]
     public function saveAction(Password $password): ResponseInterface
     {
+        $statusCode = 200;
         if ($this->frontendUserService->userIsLoggedIn()) {
             $user = $this->frontendUserService->getLoggedInUser();
             $user = $this->eventDispatcher->dispatch(new PasswordSaveEvent($user, $this->settings))->getUser();
@@ -68,9 +69,11 @@ class FeuserPasswordController extends FeuserController
 
             try {
                 $this->userRepository->update($user);
-            } catch (\Exception) {}
+            } catch (\Exception) {
+                $statusCode = 500;
+            }
         }
 
-        return new HtmlResponse($this->view->render());
+        return new HtmlResponse($this->view->render(), $statusCode);
     }
 }

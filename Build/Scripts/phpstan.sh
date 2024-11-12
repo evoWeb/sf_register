@@ -6,6 +6,7 @@ cd ../../ || exit 1
 CORE_ROOT="${PWD}"
 
 Build/Scripts/runTests.sh -s composerInstall
+
 Build/Scripts/runTests.sh -s phpstan
 
 Build/Scripts/runTests.sh -s clean
