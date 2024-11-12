@@ -88,8 +88,6 @@ class BadWordValidatorTest extends AbstractTestBase
             $typoScriptSetup['plugin.']['tx_sfregister.']['settings.']['badWordList']
         );
 
-        $GLOBALS['LANG'] = $this->get(LanguageServiceFactory::class)->create('default');
-
         $this->assertTrue($this->subject->validate(current($words))->hasErrors());
     }
 
