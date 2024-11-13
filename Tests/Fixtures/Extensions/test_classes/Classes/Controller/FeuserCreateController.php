@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -11,12 +13,12 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Evoweb\SfRegister\Tests\Functional\Mock;
+namespace EvowebTests\TestClasses\Controller;
 
-use Evoweb\SfRegister\Controller\FeuserPasswordController as BaseFeuserPasswordController;
+use Evoweb\SfRegister\Controller\FeuserCreateController as BaseFeuserCreateController;
 use Evoweb\SfRegister\Tests\Functional\Traits\SettableCallable;
 
-class FeuserPasswordController extends BaseFeuserPasswordController
+class FeuserCreateController extends BaseFeuserCreateController
 {
     use SettableCallable;
 }

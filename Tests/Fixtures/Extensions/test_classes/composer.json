@@ -1,0 +1,10 @@
+{
+	"name": "evowebtest/test-classes",
+	"type": "typo3-cms-extension",
+	"description": "A test extension for sf_register",
+	"autoload": {
+		"psr-4": {
+			"EvowebTests\\TestClasses\\": "Tests/"
+		}
+	}
+}

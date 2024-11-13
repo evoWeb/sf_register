@@ -17,18 +17,14 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Tests\Functional\Http;
 
-use TYPO3\CMS\Core\Http\Response;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-final class ShortCircuitResponse extends Response
+final class ShortCircuitHandler implements RequestHandlerInterface
 {
-    public function __construct(protected ServerRequestInterface $request)
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        parent::__construct();
-    }
-
-    public function getRequest(): ServerRequestInterface
-    {
-        return $this->request;
+        return new ShortCircuitResponse($request);
     }
 }

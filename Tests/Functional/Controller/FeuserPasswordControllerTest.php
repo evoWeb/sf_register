@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -20,7 +22,7 @@ use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
-use Evoweb\SfRegister\Tests\Functional\Mock\FeuserPasswordController;
+use EvowebTests\TestClasses\Controller\FeuserPasswordController;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Context\Context;
@@ -56,7 +58,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
     #[Test]
     public function userIsLoggedInReturnsTrueIfLoggedIn(): void
     {
-        $this->loginFrontEndUser(1);
+        $this->loginFrontendUser('testuser', 'TestPa$5');
 
         /** @var FrontendUserService $subject */
         $subject = $this->get(FrontendUserService::class);
@@ -68,7 +70,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository(): void
     {
         $userId = 1;
-        $this->loginFrontEndUser($userId);
+        $this->loginFrontendUser('testuser', 'TestPa$5');
 
         /** @var ModifyValidator $modifyValidator */
         $modifyValidator = $this->get(ModifyValidator::class);

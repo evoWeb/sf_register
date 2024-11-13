@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -13,19 +15,16 @@
 
 namespace Evoweb\SfRegister\Tests\Functional;
 
-use Evoweb\SfRegister\Tests\Functional\Http\ShortCircuitKernel;
+use Evoweb\SfRegister\Tests\Functional\Http\ShortCircuitHandler;
 use Evoweb\SfRegister\Tests\Functional\Http\ShortCircuitResponse;
 use Evoweb\SfRegister\Tests\Functional\Traits\SiteBasedTestTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Authentication\LoginType;
-use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
-use TYPO3\CMS\Core\Http\MiddlewareDispatcher;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\TypoScript\AST\Node\RootNode;
 use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
-use TYPO3\CMS\Frontend\Http\Application;
 use TYPO3\CMS\Frontend\Middleware\FrontendUserAuthenticator;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -40,6 +39,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
      */
     protected array $testExtensionsToLoad = [
         'typo3conf/ext/sf_register',
+        'typo3conf/ext/sf_register/Tests/Fixtures/Extensions/test_classes',
     ];
 
     /**
@@ -51,10 +51,6 @@ abstract class AbstractTestBase extends FunctionalTestCase
             'title' => 'English',
             'locale' => 'en_US.UTF8',
         ],
-    ];
-
-    protected array $loginMiddleWareStack = [
-        'typo3/cms-frontend/authentication' => FrontendUserAuthenticator::class,
     ];
 
     protected ServerRequestInterface $request;
@@ -76,12 +72,9 @@ abstract class AbstractTestBase extends FunctionalTestCase
         $GLOBALS['TYPO3_REQUEST'] = $this->request;
     }
 
-    public function loginFrontEndUser(int $frontEndUserUid): void
+    public function loginFrontendUser(string $username, string $password): void
     {
-        if ($frontEndUserUid === 0) {
-            throw new \InvalidArgumentException('The user ID must be > 0.', 1334439475);
-        }
-
+        // needed to ignore missing request token
         $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_alwaysFetchUser'] = true;
         $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_alwaysAuthUser'] = true;
 
@@ -91,35 +84,28 @@ abstract class AbstractTestBase extends FunctionalTestCase
                 'logintype' => LoginType::LOGIN->value
             ])
             ->withParsedBody([
-                ...($this->request->getParsedBody() ?? []),
-                'user' => 'testuser',
-                'pass' => 'TestPa$5',
+                ...((array) ($this->request->getParsedBody() ?? [])),
+                'user' => $username,
+                'pass' => $password,
             ]);
 
-        $this->request = $this->processLocalMiddleWareStack($this->request, $this->loginMiddleWareStack);
+        $this->request = $this->processLocalMiddleWareStack($this->request);
         $GLOBALS['TYPO3_REQUEST'] = $this->request;
     }
 
     public function createEmptyFrontendUser(): void
     {
-        $this->request = $this->processLocalMiddleWareStack($this->request, $this->loginMiddleWareStack);
+        $this->request = $this->processLocalMiddleWareStack($this->request);
         $GLOBALS['TYPO3_REQUEST'] = $this->request;
     }
 
-    protected function processLocalMiddleWareStack(
-        ServerRequestInterface $request,
-        array $subRequestMiddlewares
-    ): ServerRequestInterface {
-        $application = new Application(
-            new MiddlewareDispatcher(
-                new ShortCircuitKernel(),
-                $subRequestMiddlewares,
-                $this->getContainer(),
-            ),
-            $this->get(Context::class),
-        );
+    protected function processLocalMiddleWareStack(ServerRequestInterface $request): ServerRequestInterface
+    {
+        $shortCircuitHandler = new ShortCircuitHandler();
+        /** @var FrontendUserAuthenticator $frontendUserAuthenticator */
+        $frontendUserAuthenticator = $this->get(FrontendUserAuthenticator::class);
         /** @var ShortCircuitResponse $response */
-        $response = $application->handle($request);
+        $response = $frontendUserAuthenticator->process($request, $shortCircuitHandler);
         return $response->getRequest();
     }
 

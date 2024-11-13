@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -22,8 +24,8 @@ use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Services\Setup\CheckFactory;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
-use Evoweb\SfRegister\Tests\Functional\Mock\FeuserCreateController;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
+use EvowebTests\TestClasses\Controller\FeuserCreateController;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

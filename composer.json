@@ -94,7 +94,8 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Evoweb\\SfRegister\\Tests\\": "Tests/"
+			"Evoweb\\SfRegister\\Tests\\": "Tests/",
+			"EvowebTests\\TestClasses\\": "Tests/Fixtures/Extensions/test_classes/Classes/"
 		}
 	},
 	"repositories": {
