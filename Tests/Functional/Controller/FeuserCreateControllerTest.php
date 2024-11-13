@@ -15,25 +15,14 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Tests\Functional\Controller;
 
-use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Evoweb\SfRegister\Services\File as FileService;
-use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
-use Evoweb\SfRegister\Services\FrontenUserGroup as FrontenUserGroupService;
-use Evoweb\SfRegister\Services\Mail as MailService;
-use Evoweb\SfRegister\Services\ModifyValidator;
-use Evoweb\SfRegister\Services\Session as SessionService;
-use Evoweb\SfRegister\Services\Setup\CheckFactory;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use EvowebTests\TestClasses\Controller\FeuserCreateController;
 use PHPUnit\Framework\Attributes\Test;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
-use TYPO3\CMS\Extbase\Reflection\ReflectionService;
-use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class FeuserCreateControllerTest extends AbstractTestBase
@@ -72,11 +61,25 @@ class FeuserCreateControllerTest extends AbstractTestBase
     #[Test]
     public function isUserValidatorSet(): void
     {
-        $request = new Request($this->request);
-        $request = $request->withAttribute('currentContentObject', new ContentObjectRenderer());
-        $request = $request->withControllerActionName('form');
-        $request = $request->withControllerName('FeuserCreate');
-        $request = $request->withArgument('user', [
+        // configurationManager is a shared object, and will be a constructor parameter of the controller
+        // @see Bootstrap::initializeConfiguration
+        $configuration = [
+            'extensionName' => 'SfRegister',
+            'pluginName' => 'Create',
+        ];
+        /** @var ConfigurationManagerInterface $configurationManager */
+        $configurationManager = $this->get(ConfigurationManagerInterface::class);
+        $configurationManager->setRequest($this->request);
+        $configurationManager->setConfiguration($configuration);
+
+        // @see RequestBuilder::build
+        $extbaseAttribute = new ExtbaseRequestParameters();
+        $extbaseAttribute->setPluginName('Create');
+        $extbaseAttribute->setControllerExtensionName('SfRegister');
+        $extbaseAttribute->setControllerName('FeuserCreate');
+        $extbaseAttribute->setControllerActionName('create');
+
+        $extbaseAttribute->setArgument('user', [
             'gender' => 1,
             'title' => 'none',
             'firstName' => '',
@@ -86,58 +89,15 @@ class FeuserCreateControllerTest extends AbstractTestBase
             'passwortRepeat' => '',
             'email' => '',
             'emailRepeat' => '',
-            'gtc' => '',
-            'privacy' => '',
+            'gtc' => 1,
+            'privacy' => 1,
         ]);
 
-        /** @var ModifyValidator $modifyValidator */
-        $modifyValidator = $this->get(ModifyValidator::class);
-        /** @var FileService $fileService */
-        $fileService = $this->createMock(FileService::class);
-        /** @var FrontendUserRepository $userRepository */
-        $userRepository = $this->get(FrontendUserRepository::class);
-        /** @var MailService $mailService */
-        $mailService = $this->createMock(MailService::class);
-        /** @var FrontendUserService $frontendUserService */
-        $frontendUserService = $this->createMock(FrontendUserService::class);
-        /** @var FrontenUserGroupService $frontenUserGroupService */
-        $frontenUserGroupService = $this->createMock(FrontenUserGroupService::class);
-        /** @var SessionService $sessionService */
-        $sessionService = $this->createMock(SessionService::class);
-        /** @var CheckFactory $checkFactory */
-        $checkFactory = $this->createMock(CheckFactory::class);
+        $request = new Request($this->request->withAttribute('extbase', $extbaseAttribute));
+        $request = $request->withAttribute('currentContentObject', new ContentObjectRenderer());
 
-        $subject = new FeuserCreateController(
-            $modifyValidator,
-            $fileService,
-            $userRepository,
-            $mailService,
-            $frontendUserService,
-            $frontenUserGroupService,
-            $sessionService,
-            $checkFactory
-        );
-
-        /** @var ReflectionService $reflectionService */
-        $reflectionService = $this->get(ReflectionService::class);
-        $subject->injectReflectionService($reflectionService);
-
-        /** @var ValidatorResolver $validationResolver */
-        $validationResolver = $this->get(ValidatorResolver::class);
-        $subject->injectValidatorResolver($validationResolver);
-
-        /** @var EventDispatcherInterface $eventDispatcher */
-        $eventDispatcher = GeneralUtility::makeInstance(EventDispatcherInterface::class);
-        $subject->injectEventDispatcher($eventDispatcher);
-
-        /** @var ConfigurationManagerInterface $configurationManager */
-        $configurationManager = $this->get(ConfigurationManagerInterface::class);
-        $configurationManager->setRequest($this->request);
-        $configurationManager->setConfiguration([
-            'extensionName' => 'SfRegister',
-            'pluginName' => 'Create',
-        ]);
-        $subject->injectConfigurationManager($configurationManager);
+        /** @var FeuserCreateController $subject */
+        $subject = $this->get(FeuserCreateController::class);
 
         $subject->set('request', $request);
         $subject->set('actionMethodName', 'formAction');

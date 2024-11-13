@@ -29,6 +29,8 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Registry;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Fluid\View\FluidViewAdapter;
@@ -44,6 +46,15 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_users.csv');
 
         $this->initializeRequest();
+        $this->initializeFrontendTypoScript([
+            'plugin.' => [
+                'tx_sfregister.' => [
+                    'settings.' => [
+                        'encryptPassword' => ''
+                    ],
+                ],
+            ],
+        ]);
     }
 
     #[Test]
@@ -70,24 +81,17 @@ class FeuserPasswordControllerTest extends AbstractTestBase
     public function saveActionFetchUserObjectIfLoggedInSetsThePasswordAndCallsUpdateOnUserRepository(): void
     {
         $userId = 1;
-        $this->loginFrontendUser('testuser', 'TestPa$5');
-
-        /** @var ModifyValidator $modifyValidator */
-        $modifyValidator = $this->get(ModifyValidator::class);
-        /** @var FileService $fileService */
-        $fileService = $this->get(FileService::class);
-        /** @var Context $context */
-        $context = $this->get(Context::class);
-
         $expected = 'TestPa$5';
-        // we need to clone to create the object, else the isClone parameter is not set and both object wont match
+        $this->loginFrontendUser('testuser', $expected);
+
+        // we need to clone to create the object, else the isClone parameter is not set and both object won't match
         $frontendUser = clone new FrontendUser();
         $frontendUser->setPassword($expected);
 
         /** @var FrontendUserRepository|MockObject $frontendUserRepository */
         $frontendUserRepository = $this->getMockBuilder(FrontendUserRepository::class)
-            ->onlyMethods(['findByUid', 'update'])
             ->disableOriginalConstructor()
+            ->onlyMethods(['findByUid', 'update'])
             ->getMock();
         $frontendUserRepository->expects($this->once())
             ->method('findByUid')
@@ -97,32 +101,11 @@ class FeuserPasswordControllerTest extends AbstractTestBase
             ->method('update')
             ->with($this->equalTo($frontendUser));
 
-        /** @var HashService $hashService */
-        $hashService = $this->get(HashService::class);
-        /** @var UriBuilder $uriBuilder */
-        $uriBuilder = $this->get(UriBuilder::class);
-        /** @var Registry $registry */
-        $registry = $this->get(Registry::class);
+        /** @var \Symfony\Component\DependencyInjection\Container $container */
+        $container = $this->getContainer();
+        $container->set(FrontendUserRepository::class, $frontendUserRepository);
 
-        $frontendUserService = new FrontendUserService(
-            $context,
-            $frontendUserRepository,
-            $hashService,
-            $uriBuilder,
-            $registry
-        );
-
-        $subject = new FeuserPasswordController(
-            $modifyValidator,
-            $fileService,
-            $frontendUserRepository,
-            $frontendUserService
-        );
-
-        $property = $this->getPrivateProperty($subject, 'settings');
-        $property->setValue($subject, ['encryptPassword' => '']);
-
-        /** @var FluidViewAdapter $view */
+        /** @var FluidViewAdapter|MockObject $view */
         $view = $this->getMockBuilder(FluidViewAdapter::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['render'])
@@ -131,16 +114,31 @@ class FeuserPasswordControllerTest extends AbstractTestBase
             ->method('render')
             ->willReturn('Password successfully updated');
 
-        $property = $this->getPrivateProperty($subject, 'view');
-        $property->setValue($subject, $view);
+        // configurationManager is a shared object, and will be a constructor parameter of the controller
+        // @see Bootstrap::initializeConfiguration
+        $configuration = [
+            'extensionName' => 'SfRegister',
+            'pluginName' => 'Password',
+        ];
+        /** @var ConfigurationManagerInterface $configurationManager */
+        $configurationManager = $this->get(ConfigurationManagerInterface::class);
+        $configurationManager->setRequest($this->request);
+        $configurationManager->setConfiguration($configuration);
 
-        /** @var EventDispatcher $eventDispatcher */
-        $eventDispatcher = $this->get(EventDispatcher::class);
-        $subject->injectEventDispatcher($eventDispatcher);
+        $extbaseAttribute = new ExtbaseRequestParameters();
+        $extbaseAttribute->setPluginName('Password');
+        $extbaseAttribute->setControllerExtensionName('SfRegister');
+        $extbaseAttribute->setControllerName('FeuserPassword');
+        $extbaseAttribute->setControllerActionName('save');
 
-        $request = new Request($this->request);
+        $request = new Request($this->request->withAttribute('extbase', $extbaseAttribute));
         $request = $request->withAttribute('currentContentObject', new ContentObjectRenderer());
+
+        /** @var FeuserPasswordController $subject */
+        $subject = $this->get(FeuserPasswordController::class);
+
         $subject->set('request', $request);
+        $subject->set('view', $view);
 
         $password = new Password();
         $password->_setProperty('password', $expected);

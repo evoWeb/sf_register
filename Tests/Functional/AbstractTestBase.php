@@ -24,7 +24,6 @@ use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\TypoScript\AST\Node\RootNode;
 use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
-use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Frontend\Middleware\FrontendUserAuthenticator;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -58,9 +57,9 @@ abstract class AbstractTestBase extends FunctionalTestCase
     public function initializeRequest(): void
     {
         $serverRequestFactory = new ServerRequestFactory();
-        $this->request = $serverRequestFactory->createServerRequest('GET', '/');
-        $this->request = $this->request->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_FE);
-        $this->request = $this->request->withAttribute('extbase', new ExtbaseRequestParameters());
+        $this->request = $serverRequestFactory
+            ->createServerRequest('GET', '/')
+            ->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_FE);
         $GLOBALS['TYPO3_REQUEST'] = $this->request;
     }
 
