@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -52,9 +54,8 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
     #[Test]
     public function isValidReturnsTrueIfLoggedIn(): void
     {
-        $this->loginFrontEndUser(1);
-
         $expected = 'TestPa$5';
+        $this->loginFrontendUser('testuser', $expected);
 
         /** @var EqualCurrentPasswordValidator $subject */
         $subject = $this->get(EqualCurrentPasswordValidator::class);
