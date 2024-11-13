@@ -15,9 +15,9 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Tests\Functional\Traits;
 
+use EvowebTests\TestClasses\Error\PageErrorHandler\PhpErrorHandler;
 use TYPO3\CMS\Core\Configuration\SiteConfiguration;
 use TYPO3\CMS\Core\Configuration\SiteWriter;
-use TYPO3\CMS\Core\Tests\Functional\Fixtures\Frontend\PhpError;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\Internal\ArrayValueInstruction;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\Internal\InstructionInterface;
@@ -33,6 +33,9 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
  */
 trait SiteBasedTestTrait
 {
+    /**
+     * @param string[] $items
+     */
     protected static function failIfArrayIsNotEmpty(array $items): void
     {
         if (empty($items)) {
@@ -45,6 +48,11 @@ trait SiteBasedTestTrait
         );
     }
 
+    /**
+     * @param array<string, int|string> $site
+     * @param array<array<string, string>> $languages
+     * @param array<string, int|string> $errorHandling
+     */
     protected function writeSiteConfiguration(
         string $identifier,
         array $site = [],
@@ -68,6 +76,9 @@ trait SiteBasedTestTrait
         }
     }
 
+    /**
+     * @param array<string, array<string, mixed>> $overrides
+     */
     protected function mergeSiteConfiguration(
         string $identifier,
         array $overrides
@@ -83,6 +94,9 @@ trait SiteBasedTestTrait
         }
     }
 
+    /**
+     * @return array<string, int|string>
+     */
     protected function buildSiteConfiguration(
         int $rootPageId,
         string $base = ''
@@ -93,6 +107,9 @@ trait SiteBasedTestTrait
         ];
     }
 
+    /**
+     * @return array<string, int|string>
+     */
     protected function buildDefaultLanguageConfiguration(
         string $identifier,
         string $base
@@ -103,6 +120,10 @@ trait SiteBasedTestTrait
         return $configuration;
     }
 
+    /**
+     * @param string[] $fallbackIdentifiers
+     * @return array<string, int|string>
+     */
     protected function buildLanguageConfiguration(
         string $identifier,
         string $base,
@@ -137,6 +158,11 @@ trait SiteBasedTestTrait
         return $configuration;
     }
 
+    /**
+     * @param string $handler
+     * @param int[] $codes
+     * @return array<array<string, int|string>>
+     */
     protected function buildErrorHandlingConfiguration(
         string $handler,
         array $codes
@@ -163,7 +189,7 @@ trait SiteBasedTestTrait
             ];
         } elseif ($handler === 'PHP') {
             $baseConfiguration = [
-                'errorPhpClassFQCN' => PhpError::class,
+                'errorPhpClassFQCN' => PhpErrorHandler::class,
             ];
         } else {
             throw new \LogicException(
@@ -184,9 +210,9 @@ trait SiteBasedTestTrait
     }
 
     /**
-     * @return mixed
+     * @return array<string, int|string>
      */
-    protected function resolveLanguagePreset(string $identifier)
+    protected function resolveLanguagePreset(string $identifier): array
     {
         if (!isset(static::LANGUAGE_PRESETS[$identifier])) {
             throw new \LogicException(

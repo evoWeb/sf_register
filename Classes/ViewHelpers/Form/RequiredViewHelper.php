@@ -91,6 +91,9 @@ class RequiredViewHelper extends AbstractConditionViewHelper
         return [$settings, $frameworkConfiguration];
     }
 
+    /**
+     * @param array<string, string> $arguments
+     */
     public function classVerdict(array $arguments): bool
     {
         [$settings, $frameworkConfiguration] = $this->getSettings();

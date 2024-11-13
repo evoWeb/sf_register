@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -19,7 +21,7 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 class UserValidatorTest extends UnitTestCase
 {
     #[Test]
-    public function isValid()
+    public function isValid(): void
     {
         $this->markTestIncomplete('not implemented by now');
     }

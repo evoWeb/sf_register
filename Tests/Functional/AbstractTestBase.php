@@ -31,10 +31,8 @@ abstract class AbstractTestBase extends FunctionalTestCase
 {
     use SiteBasedTestTrait;
 
-    protected string $instancePath = '';
-
     /**
-     * @var string[]
+     * @var array<non-empty-string>
      */
     protected array $testExtensionsToLoad = [
         'typo3conf/ext/sf_register',
@@ -63,6 +61,9 @@ abstract class AbstractTestBase extends FunctionalTestCase
         $GLOBALS['TYPO3_REQUEST'] = $this->request;
     }
 
+    /**
+     * @param array<string, mixed> $setup
+     */
     public function initializeFrontendTypoScript(array $setup = []): void
     {
         $frontendTypoScript = new FrontendTypoScript(new RootNode(), [], [], []);
@@ -108,13 +109,13 @@ abstract class AbstractTestBase extends FunctionalTestCase
         return $response->getRequest();
     }
 
-    public function getPrivateMethod($object, $methodName): \ReflectionMethod
+    public function getPrivateMethod(object $object, string $methodName): \ReflectionMethod
     {
         $classReflection = new \ReflectionClass($object);
         return $classReflection->getMethod($methodName);
     }
 
-    public function getPrivateProperty($object, $propertyName): \ReflectionProperty
+    public function getPrivateProperty(object $object, string $propertyName): \ReflectionProperty
     {
         $classReflection = new \ReflectionClass($object);
         return $classReflection->getProperty($propertyName);
