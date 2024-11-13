@@ -13,18 +13,20 @@
 
 namespace Evoweb\SfRegister\Tests\Functional;
 
+use Evoweb\SfRegister\Tests\Functional\Http\ShortCircuitKernel;
+use Evoweb\SfRegister\Tests\Functional\Http\ShortCircuitResponse;
 use Evoweb\SfRegister\Tests\Functional\Traits\SiteBasedTestTrait;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Log\NullLogger;
+use TYPO3\CMS\Core\Authentication\LoginType;
 use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
+use TYPO3\CMS\Core\Http\MiddlewareDispatcher;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\TypoScript\AST\Node\RootNode;
 use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
-use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+use TYPO3\CMS\Frontend\Http\Application;
+use TYPO3\CMS\Frontend\Middleware\FrontendUserAuthenticator;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 abstract class AbstractTestBase extends FunctionalTestCase
@@ -51,7 +53,9 @@ abstract class AbstractTestBase extends FunctionalTestCase
         ],
     ];
 
-    protected ?FrontendUserAuthentication $frontendUser = null;
+    protected array $loginMiddleWareStack = [
+        'typo3/cms-frontend/authentication' => FrontendUserAuthenticator::class,
+    ];
 
     protected ServerRequestInterface $request;
 
@@ -78,38 +82,45 @@ abstract class AbstractTestBase extends FunctionalTestCase
             throw new \InvalidArgumentException('The user ID must be > 0.', 1334439475);
         }
 
-        $this->frontendUser = new FrontendUserAuthentication();
-        $this->frontendUser->setLogger(new NullLogger());
-        $this->frontendUser->start($this->request);
-        $this->frontendUser->user = $this->frontendUser->getRawUserByUid($frontEndUserUid);
-        $this->frontendUser->fetchGroupData($this->request);
+        $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_alwaysFetchUser'] = true;
+        $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_alwaysAuthUser'] = true;
 
-        if (isset($this->frontendUser->user['uc'])) {
-            $theUC = unserialize($this->frontendUser->user['uc'], ['allowed_classes' => false]);
-            if (is_array($theUC)) {
-                $this->frontendUser->uc = $theUC;
-            }
-        }
+        $this->request = $this->request
+            ->withQueryParams([
+                ...$this->request->getQueryParams(),
+                'logintype' => LoginType::LOGIN->value
+            ])
+            ->withParsedBody([
+                ...($this->request->getParsedBody() ?? []),
+                'user' => 'testuser',
+                'pass' => 'TestPa$5',
+            ]);
 
-        $userAspect = $this->frontendUser->createUserAspect();
-
-        /** @var Context $context */
-        $context = $this->get(Context::class);
-        $context->setAspect('frontend.user', $userAspect);
-        $this->request = $this->request->withAttribute('frontend.user', $this->frontendUser);
+        $this->request = $this->processLocalMiddleWareStack($this->request, $this->loginMiddleWareStack);
         $GLOBALS['TYPO3_REQUEST'] = $this->request;
     }
 
     public function createEmptyFrontendUser(): void
     {
-        $this->frontendUser = new FrontendUserAuthentication();
+        $this->request = $this->processLocalMiddleWareStack($this->request, $this->loginMiddleWareStack);
+        $GLOBALS['TYPO3_REQUEST'] = $this->request;
+    }
 
-        /** @var UserAspect $aspect */
-        $aspect = GeneralUtility::makeInstance(UserAspect::class, $this->frontendUser);
-
-        /** @var Context $context */
-        $context = $this->get(Context::class);
-        $context->setAspect('frontend.user', $aspect);
+    protected function processLocalMiddleWareStack(
+        ServerRequestInterface $request,
+        array $subRequestMiddlewares
+    ): ServerRequestInterface {
+        $application = new Application(
+            new MiddlewareDispatcher(
+                new ShortCircuitKernel(),
+                $subRequestMiddlewares,
+                $this->getContainer(),
+            ),
+            $this->get(Context::class),
+        );
+        /** @var ShortCircuitResponse $response */
+        $response = $application->handle($request);
+        return $response->getRequest();
     }
 
     public function getPrivateMethod($object, $methodName): \ReflectionMethod
