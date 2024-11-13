@@ -19,6 +19,9 @@ services:
   Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter:
     public: true
 
+  Evoweb\SfRegister\Services\AutoLogin:
+    public: true
+
   Evoweb\SfRegister\Services\FrontendUser:
     public: true
 

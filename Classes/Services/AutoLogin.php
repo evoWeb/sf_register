@@ -21,7 +21,7 @@ use TYPO3\CMS\Core\Registry;
  */
 class AutoLogin extends AuthenticationService
 {
-    protected function __construct(protected Registry $registry)
+    public function __construct(protected Registry $registry)
     {
     }
 
@@ -31,7 +31,10 @@ class AutoLogin extends AuthenticationService
      */
     public function getUser(): ?array
     {
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $hmac = $_SESSION[FrontendUser::SESSION_KEY] ?? null;
         if ($hmac === null) {
             return null;
