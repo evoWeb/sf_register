@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Authentication\Event\BeforeRequestTokenProcessedEvent;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\SecurityAspect;
 use TYPO3\CMS\Core\Security\RequestToken;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 final class BeforeRequestTokenProcessedListener
 {
@@ -28,6 +29,14 @@ final class BeforeRequestTokenProcessedListener
     #[AsEventListener('evoweb-sf-register-beforerequesttoken', BeforeRequestTokenProcessedEvent::class)]
     public function __invoke(BeforeRequestTokenProcessedEvent $event): void
     {
+        if ($event->getRequestToken() instanceof RequestToken) {
+            // fine, there is a valid request token
+            return;
+        }
+        if (!$event->getUser() instanceof FrontendUserAuthentication) {
+            return;
+        }
+
         $queryParams = $event->getRequest()->getQueryParams();
         $loginType = ($queryParams['logintype'] ?? '');
         $tokenValue = ($queryParams[RequestToken::PARAM_NAME] ?? '');
