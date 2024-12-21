@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -13,24 +15,36 @@
 
 namespace Evoweb\SfRegister\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use Evoweb\SfRegister\Domain\Model\StaticLanguage;
+use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * A repository for static info tables language
+ *
+ * @extends Repository<StaticLanguage>
  */
 class StaticLanguageRepository extends Repository
 {
-    public function findAll(): QueryResultInterface
+    /**
+     * @return QueryResult<StaticLanguage>
+     */
+    public function findAll(): QueryResult
     {
         $query = $this->createQuery();
         $query->getQuerySettings()
             ->setRespectStoragePage(false);
 
-        return $query->execute();
+        /** @var QueryResult<StaticLanguage> $result */
+        $result = $query->execute();
+        return $result;
     }
 
-    public function findByLgCollateLocale(array $lgCollateLocale): QueryResultInterface
+    /**
+     * @param array<int, string> $lgCollateLocale
+     * @return QueryResult<StaticLanguage>
+     */
+    public function findByLgCollateLocale(array $lgCollateLocale): QueryResult
     {
         $query = $this->createQuery();
         $query->getQuerySettings()
@@ -41,6 +55,8 @@ class StaticLanguageRepository extends Repository
         } catch (\Exception) {
         }
 
-        return $query->execute();
+        /** @var QueryResult<StaticLanguage> $result */
+        $result = $query->execute();
+        return $result;
     }
 }

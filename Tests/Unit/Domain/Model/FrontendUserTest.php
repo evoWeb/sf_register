@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -36,6 +38,9 @@ class FrontendUserTest extends UnitTestCase
         $this->assertFalse($this->subject->getDisable());
     }
 
+    /**
+     * @return array<string, array<int|bool|string>>
+     */
     public static function notEmptyDataProvider(): array
     {
         return [
@@ -47,9 +52,9 @@ class FrontendUserTest extends UnitTestCase
 
     #[Test]
     #[DataProvider('notEmptyDataProvider')]
-    public function disableReturnsTrueIfSetNotEmpty(mixed $input): void
+    public function disableReturnsTrueIfSetNotEmpty(int|bool|string $input): void
     {
-        $this->subject->setDisable($input);
+        $this->subject->setDisable((bool)$input);
 
         $this->assertTrue($this->subject->getDisable());
     }
@@ -57,6 +62,7 @@ class FrontendUserTest extends UnitTestCase
     #[Test]
     public function imageReturnsStringSetBySetImage(): void
     {
+        /** @var ObjectStorage<FileReference> $expected */
         $expected = new ObjectStorage();
 
         $this->subject->setImage($expected);
@@ -68,28 +74,28 @@ class FrontendUserTest extends UnitTestCase
     public function imageAsImageListAddFilenameToImage(): void
     {
         $this->markTestSkipped('needs to be changed to ObjectStorage');
-        $expected1 = 'foo.gif';
+        /*$expected1 = 'foo.gif';
         $expected2 = 'bar.jpg';
 
         // @todo fix test
         $this->subject->addImage($expected1);
         $this->subject->addImage($expected2);
 
-        $this->assertSame(implode(',', [$expected1, $expected2]), $this->subject->getImage());
+        $this->assertSame(implode(',', [$expected1, $expected2]), $this->subject->getImage());*/
     }
 
     #[Test]
     public function imageAsImageListRemoveFilenameFromImage(): void
     {
         $this->markTestSkipped('needs to be changed to ObjectStorage');
-        $expected1 = 'foo.gif';
+        /*$expected1 = 'foo.gif';
         $expected2 = 'bar.jpg';
 
         // @todo fix test
         $this->subject->setImage(implode(',', [$expected1, $expected2]));
         $this->subject->removeImage();
 
-        $this->assertSame($expected2, $this->subject->getImage());
+        $this->assertSame($expected2, $this->subject->getImage());*/
     }
 
     #[Test]
@@ -100,9 +106,9 @@ class FrontendUserTest extends UnitTestCase
 
     #[Test]
     #[DataProvider('notEmptyDataProvider')]
-    public function gtcReturnsTrueIfSetNotEmpty(mixed $input): void
+    public function gtcReturnsTrueIfSetNotEmpty(int|bool|string $input): void
     {
-        $this->subject->setDisable($input);
+        $this->subject->setDisable((bool)$input);
 
         $this->assertTrue($this->subject->getDisable());
     }

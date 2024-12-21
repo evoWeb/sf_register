@@ -640,8 +640,8 @@ case ${TEST_SUITE} in
         additionalCleanTestFiles
         ;;
     buildDocumentation)
-        COMMAND="render ${CORE_ROOT}/Documentation"
-        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name build-documentation-${SUFFIX} ${IMAGE_DOCUMENTATION} ${COMMAND}
+        COMMAND=(--config=Documentation "$@")
+        ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name build-documentation-${SUFFIX} ${IMAGE_DOCUMENTATION} "${COMMAND[@]}"
         SUITE_EXIT_CODE=$?
         ;;
     lintXliff)

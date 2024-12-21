@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -32,7 +34,6 @@ use Evoweb\SfRegister\Services\Setup\CheckFactory;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
@@ -44,6 +45,9 @@ class FeuserCreateController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage';
 
+    /**
+     * @var string[]
+     */
     protected array $ignoredActions = ['confirmAction', 'refuseAction', 'acceptAction', 'declineAction'];
 
     public function __construct(
@@ -53,6 +57,8 @@ class FeuserCreateController extends FeuserController
         protected MailService $mailService,
         protected FrontendUserService $frontendUserService,
         protected FrontenUserGroupService $frontenUserGroupService,
+        protected SessionService $sessionService,
+        protected CheckFactory $checkFactory,
     ) {
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
@@ -60,13 +66,16 @@ class FeuserCreateController extends FeuserController
     public function formAction(FrontendUser $user = null): ResponseInterface
     {
         $setupResponse = $this->setupCheck();
+        if ($setupResponse) {
+            return $setupResponse;
+        }
 
         if ($user) {
             $user = $this->eventDispatcher->dispatch(new CreateFormEvent($user, $this->settings))->getUser();
             $this->view->assign('user', $user);
         }
 
-        return $setupResponse ?? new HtmlResponse($this->view->render());
+        return new HtmlResponse($this->view->render());
     }
 
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
@@ -120,6 +129,7 @@ class FeuserCreateController extends FeuserController
 
             // Write back plain password
             $user->setPassword($plainPassword);
+            /** @var FrontendUser $user */
             $user = $this->mailService->sendEmails(
                 $this->request,
                 $this->settings,
@@ -138,9 +148,7 @@ class FeuserCreateController extends FeuserController
         } catch (IllegalObjectTypeException | UnknownObjectException) {
         }
 
-        /** @var SessionService $session */
-        $session = GeneralUtility::makeInstance(SessionService::class);
-        $session->remove('captchaWasValid');
+        $this->sessionService->remove('captchaWasValid');
 
         $this->view->assign('user', $user);
 
@@ -359,15 +367,15 @@ class FeuserCreateController extends FeuserController
 
     protected function setupCheck(): ?ResponseInterface
     {
-        $result = null;
+        $setupResponse = null;
 
-        $setupChecks = GeneralUtility::makeInstance(CheckFactory::class)->getCheckInstances();
+        $setupChecks = $this->checkFactory->getCheckInstances();
         foreach ($setupChecks as $setupCheck) {
-            if ($result = $setupCheck->check($this->settings)) {
+            if ($setupResponse = $setupCheck->check($this->settings)) {
                 break;
             }
         }
 
-        return $result;
+        return $setupResponse;
     }
 }

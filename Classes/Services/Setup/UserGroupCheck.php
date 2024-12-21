@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -18,6 +20,9 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 
 class UserGroupCheck implements CheckInterface
 {
+    /**
+     * @param array<string, string|array<string, int|array<int, string>>> $settings
+     */
     public function check(array $settings): ?ResponseInterface
     {
         $result = null;

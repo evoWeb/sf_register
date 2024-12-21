@@ -16,10 +16,8 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 use Evoweb\SfRegister\Validation\Validator\RequiredValidator;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 /**
@@ -32,8 +30,14 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
  */
 class RequiredViewHelper extends AbstractConditionViewHelper
 {
+    /**
+     * @var array<string, mixed>
+     */
     protected array $settings = [];
 
+    /**
+     * @var array<string, mixed>
+     */
     protected array $frameworkConfiguration = [];
 
     /**
@@ -46,22 +50,38 @@ class RequiredViewHelper extends AbstractConditionViewHelper
      */
     protected $escapeChildren = false;
 
+    public function __construct(protected ConfigurationManager $configurationManager)
+    {
+    }
+
     public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('fieldName', 'string', 'Name of the field to render', true);
     }
 
-    protected static function getSettings(): array
+    public function render()
     {
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        if ($this->classVerdict($this->arguments)) {
+            return $this->renderThenChild();
+        }
+        return $this->renderElseChild();
+    }
+
+    /**
+     * @return array<string, mixed>[]
+     */
+    protected function getSettings(): array
+    {
         try {
-            $settings = $configurationManager->getConfiguration(
+            /** @var array<string, mixed> $settings */
+            $settings = $this->configurationManager->getConfiguration(
                 ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
                 'SfRegister',
                 'Form'
             );
-            $frameworkConfiguration = $configurationManager->getConfiguration(
+            /** @var array<string, mixed> $frameworkConfiguration */
+            $frameworkConfiguration = $this->configurationManager->getConfiguration(
                 ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
             );
         } catch (\Exception) {
@@ -71,9 +91,12 @@ class RequiredViewHelper extends AbstractConditionViewHelper
         return [$settings, $frameworkConfiguration];
     }
 
-    public static function verdict(array $arguments, RenderingContextInterface $renderingContext): bool
+    /**
+     * @param array<string, string> $arguments
+     */
+    public function classVerdict(array $arguments): bool
     {
-        [$settings, $frameworkConfiguration] = static::getSettings();
+        [$settings, $frameworkConfiguration] = $this->getSettings();
 
         $mode = str_replace(
             ['evoweb\\sfregister\\controller\\feuser', 'controller'],

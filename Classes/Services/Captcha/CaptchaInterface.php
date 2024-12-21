@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -13,6 +15,8 @@
 
 namespace Evoweb\SfRegister\Services\Captcha;
 
+use TYPO3\CMS\Extbase\Validation\Error;
+
 /**
  * Interface to be implemented by every captcha adapter that should get used with this registration
  */
@@ -20,6 +24,7 @@ interface CaptchaInterface
 {
     /**
      * Getter for errors that needs to be implemented in every adapter
+     * @return Error[]
      */
     public function getErrors(): array;
 }

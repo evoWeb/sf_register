@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -24,6 +26,9 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements SetMode
 {
     protected $acceptsEmptyValues = false;
 
+    /**
+     * @var array<string, array<int, mixed>>
+     */
     protected $supportedOptions = [
         'global' => [
             true,

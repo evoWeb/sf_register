@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -183,11 +185,17 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
         $this->moduleSysDmailCategory = $this->moduleSysDmailCategory ?? new ObjectStorage();
     }
 
+    /**
+     * @param ObjectStorage<FrontendUserGroup> $usergroup
+     */
     public function setUsergroup(ObjectStorage $usergroup): void
     {
         $this->usergroup = $usergroup;
     }
 
+    /**
+     * @return ObjectStorage<FrontendUserGroup>
+     */
     public function getUsergroup(): ObjectStorage
     {
         return $this->usergroup;
@@ -203,11 +211,17 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
         $this->usergroup->detach($usergroup);
     }
 
+    /**
+     * @param ObjectStorage<FileReference> $image
+     */
     public function setImage(ObjectStorage $image): void
     {
         $this->image = $image;
     }
 
+    /**
+     * @return ObjectStorage<FileReference> $image
+     */
     public function getImage(): ObjectStorage
     {
         return $this->image;
@@ -218,11 +232,17 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
         $this->image->removeAll($this->image);
     }
 
+    /**
+     * @param ObjectStorage<Category> $moduleSysDmailCategory
+     */
     public function setModuleSysDmailCategory(ObjectStorage $moduleSysDmailCategory): void
     {
         $this->moduleSysDmailCategory = $moduleSysDmailCategory;
     }
 
+    /**
+     * @return ObjectStorage<Category>
+     */
     public function getModuleSysDmailCategory(): ObjectStorage
     {
         return $this->moduleSysDmailCategory;

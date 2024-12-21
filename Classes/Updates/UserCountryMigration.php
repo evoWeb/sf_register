@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\ChattyInterface;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
@@ -34,7 +33,7 @@ class UserCountryMigration implements UpgradeWizardInterface, ChattyInterface
 
     protected OutputInterface $output;
 
-    public function __construct()
+    public function __construct(protected ConnectionPool $connectionPool)
     {
     }
 
@@ -64,12 +63,7 @@ class UserCountryMigration implements UpgradeWizardInterface, ChattyInterface
 
     public function updateNecessary(): bool
     {
-        try {
-            $necessary = $this->getRecordsToUpdateCount() > 0;
-        } catch (Exception) {
-            $necessary = 0;
-        }
-        return $necessary;
+        return $this->getRecordsToUpdateCount() > 0;
     }
 
     public function executeUpdate(): bool
@@ -89,31 +83,30 @@ class UserCountryMigration implements UpgradeWizardInterface, ChattyInterface
         return true;
     }
 
-    /**
-     * @throws Exception
-     */
     protected function getRecordsToUpdateCount(): int
     {
         $queryBuilder = $this->getPreparedQueryBuilder();
         $expression = $queryBuilder->expr();
-        return $queryBuilder
+
+        $constraints = array_map(
+            fn($number): string => $expression->like('static_info_country', $queryBuilder->quote($number . '%')),
+            range(1,9)
+        );
+        $constraints = $expression->or(...$constraints);
+
+        $result = $queryBuilder
             ->count('uid')
             ->from(self::TABLE_NAME)
-            ->where(
-                $expression->or(
-                    $expression->like('static_info_country', $queryBuilder->quote('1%')),
-                    $expression->like('static_info_country', $queryBuilder->quote('2%')),
-                    $expression->like('static_info_country', $queryBuilder->quote('3%')),
-                    $expression->like('static_info_country', $queryBuilder->quote('4%')),
-                    $expression->like('static_info_country', $queryBuilder->quote('5%')),
-                    $expression->like('static_info_country', $queryBuilder->quote('6%')),
-                    $expression->like('static_info_country', $queryBuilder->quote('7%')),
-                    $expression->like('static_info_country', $queryBuilder->quote('8%')),
-                    $expression->like('static_info_country', $queryBuilder->quote('9%')),
-                )
-            )
-            ->executeQuery()
-            ->fetchOne();
+            ->where($constraints)
+            ->executeQuery();
+
+        try {
+            $count = $result->fetchOne();
+        } catch (Exception) {
+            $count = 0;
+        }
+
+        return $count;
     }
 
     protected function getRecordsToUpdate(): Result
@@ -155,18 +148,11 @@ class UserCountryMigration implements UpgradeWizardInterface, ChattyInterface
 
     protected function getPreparedQueryBuilder(): QueryBuilder
     {
-        $queryBuilder = $this
-            ->getConnectionPool()
-            ->getQueryBuilderForTable(self::TABLE_NAME);
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE_NAME);
         $queryBuilder
             ->getRestrictions()
             ->removeAll();
 
         return $queryBuilder;
-    }
-
-    protected function getConnectionPool(): ConnectionPool
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }

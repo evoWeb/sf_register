@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -26,7 +28,6 @@ use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
@@ -42,6 +43,7 @@ class FeuserResendController extends FeuserController
         protected FrontendUserRepository $userRepository,
         protected MailService $mailService,
         protected FrontendUserService $frontendUserService,
+        protected SessionService $sessionService,
     ) {
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
@@ -79,9 +81,7 @@ class FeuserResendController extends FeuserController
             );
         }
 
-        /** @var SessionService $session */
-        $session = GeneralUtility::makeInstance(SessionService::class);
-        $session->remove('captchaWasValid');
+        $this->sessionService->remove('captchaWasValid');
 
         return new HtmlResponse($this->view->render());
     }

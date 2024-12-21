@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -20,6 +22,9 @@ class CaptchaValidator extends AbstractValidator
 {
     protected $acceptsEmptyValues = false;
 
+    /**
+     * @var array<string, array<int, string>>
+     */
     protected $supportedOptions = [
         'type' => [
             'srfreecap',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -13,9 +15,12 @@
 
 namespace Evoweb\SfRegister\Domain\Repository;
 
+use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * A Frontend User Group Repository
+ *
+ * @extends Repository<FrontendUserGroup>
  */
 class FrontendUserGroupRepository extends Repository {}

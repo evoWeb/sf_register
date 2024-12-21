@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -25,8 +27,10 @@ class DateTimeConverter extends BaseDateTimeConverter
     /**
      * Converts $source to a \DateTime using the configured dateFormat
      *
+     * @param array<string, mixed> $source
+     * @param array<string, mixed> $convertedChildProperties
      * @throws TypeConverterException
-     * @throws \Exception
+     * @throws \DateMalformedStringException
      */
     public function convertFrom(
         $source,

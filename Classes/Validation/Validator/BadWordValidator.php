@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -19,6 +21,9 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 class BadWordValidator extends AbstractValidator
 {
+    /**
+     * @var array<string, mixed>
+     */
     protected array $settings = [];
 
     public function __construct(ConfigurationManagerInterface $configurationManager)

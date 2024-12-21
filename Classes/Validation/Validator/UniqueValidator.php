@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -21,6 +23,9 @@ class UniqueValidator extends AbstractValidator implements SetModelInterface, Se
 {
     protected $acceptsEmptyValues = false;
 
+    /**
+     * @var array<string, array<int, mixed>>
+     */
     protected $supportedOptions = [
         'global' => [
             true,

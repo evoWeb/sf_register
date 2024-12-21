@@ -29,10 +29,10 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Property\TypeConverter;
 
 use TYPO3\CMS\Core\Crypto\HashService;
+use TYPO3\CMS\Core\Exception\Crypto\InvalidHashStringException;
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
-use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File as File;
 use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
 use TYPO3\CMS\Core\Resource\Folder;
@@ -86,7 +86,8 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      * Actually convert from $source to $targetType, taking into account the fully
      * built $convertedChildProperties and $configuration.
      *
-     * @param array|UploadedFile $source
+     * @param array<string, mixed>|UploadedFile $source
+     * @param array<string, mixed> $convertedChildProperties
      */
     public function convertFrom(
         $source,
@@ -151,6 +152,9 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
     /**
      * Import a resource and respect configuration given for properties
+     * @param array<string, mixed> $uploadInfo
+     * @throws TypeConverterException
+     * @throws InvalidHashStringException
      */
     protected function importUploadedResource(
         array $uploadInfo,
@@ -254,9 +258,11 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      */
     protected function provideUploadFolder(string $uploadFolderIdentifier): Folder
     {
+        $this->resourceFactory->getFolderObjectFromCombinedIdentifier($uploadFolderIdentifier);
+
         try {
             return $this->resourceFactory->getFolderObjectFromCombinedIdentifier($uploadFolderIdentifier);
-        } catch (FolderDoesNotExistException) {
+        } catch (\Exception) {
             [$storageId, $storagePath] = explode(':', $uploadFolderIdentifier, 2);
             $storage = $this->resourceFactory->getStorageObject((int)$storageId);
             $folderNames = GeneralUtility::trimExplode('/', $storagePath, true);
@@ -287,11 +293,15 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function convertUploadedFileToUploadInfoArray(UploadedFile $uploadedFile): array
     {
         return [
             'name' => $uploadedFile->getClientFilename(),
             'tmp_name' => $uploadedFile->getTemporaryFileName(),
+            // @extensionScannerIgnoreLine
             'size' => $uploadedFile->getSize(),
             'error' => $uploadedFile->getError(),
             'type' => $uploadedFile->getClientMediaType(),

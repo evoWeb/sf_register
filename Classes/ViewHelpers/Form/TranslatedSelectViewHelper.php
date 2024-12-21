@@ -43,6 +43,10 @@ class TranslatedSelectViewHelper extends AbstractSelectViewHelper
         $this->registerArgument('extensionName', 'string', 'Extension from which labels should be taken');
     }
 
+    /**
+     * @param array<int|string, string> $options
+     * @return string
+     */
     protected function renderOptionTags(array $options): string
     {
         $extensionName = $this->hasArgument('extensionName') ? $this->arguments['extensionName'] : null;
@@ -50,7 +54,7 @@ class TranslatedSelectViewHelper extends AbstractSelectViewHelper
 
         $output = '';
         foreach ($options as $value => $label) {
-            $label = htmlspecialchars(LocalizationUtility::translate((string)$label, $extensionName));
+            $label = htmlspecialchars(LocalizationUtility::translate($label, $extensionName));
 
             $isSelected = $this->isSelected($value);
             $output .= $this->renderOptionTag((string)$value, $label, $isSelected) . LF;

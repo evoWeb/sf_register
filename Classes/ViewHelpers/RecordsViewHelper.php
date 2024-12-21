@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -14,20 +16,19 @@
 namespace Evoweb\SfRegister\ViewHelpers;
 
 use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\Exception;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 class RecordsViewHelper extends AbstractViewHelper
 {
-    use CompileWithRenderStatic;
+    public function __construct(protected ConnectionPool $connectionPool)
+    {
+    }
 
     /**
-     * ViewHelper returns HTML, thus we need to disable output escaping
-     *
      * @var bool
      */
     protected $escapeOutput = false;
@@ -38,41 +39,44 @@ class RecordsViewHelper extends AbstractViewHelper
         $this->registerArgument('uids', 'string', 'list of uids', true);
     }
 
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ): array {
-        $table = $arguments['table'];
-        $uids = is_array($arguments['uids']) ? $arguments['uids'] : GeneralUtility::intExplode(',', $arguments['uids']);
+    /**
+     * @return array<string, mixed>[]
+     */
+    public function render(): array
+    {
+        $table = $this->arguments['table'];
+        $uids = is_array($this->arguments['uids'])
+            ? $this->arguments['uids']
+            : GeneralUtility::intExplode(',', $this->arguments['uids']);
 
-        return self::getRecordsFromTable($table, $uids);
+        return $this->getRecordsFromTable($table, $uids);
     }
 
-    protected static function getRecordsFromTable(string $table, array $uids): array
+    /**
+     * @param int[] $uids
+     * @return array<string, mixed>[]
+     */
+    protected function getRecordsFromTable(string $table, array $uids): array
     {
-        /** @var ConnectionPool $connectionPool */
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-        $queryBuilder = $connectionPool->getQueryBuilderForTable($table);
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable($table);
         $queryBuilder
             ->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-
-        try {
-            return $queryBuilder
-                ->select('*')
-                ->from($table)
-                ->where(
-                    $queryBuilder->expr()->in(
-                        'uid',
-                        $queryBuilder->createNamedParameter($uids, ArrayParameterType::INTEGER)
-                    )
+                ->removeAll()
+                    ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $result = $queryBuilder
+            ->select('*')
+            ->from($table)
+            ->where(
+                $queryBuilder->expr()->in(
+                    'uid',
+                    $queryBuilder->createNamedParameter($uids, ArrayParameterType::INTEGER)
                 )
-                ->orderBy('uid')
-                ->executeQuery()
-                ->fetchAllAssociative();
-        } catch (\Exception $exception) {
+            )
+            ->orderBy('uid')
+            ->executeQuery();
+        try {
+            return $result->fetchAllAssociative();
+        } catch (Exception $exception) {
             throw new \RuntimeException(
                 'Database query failed. Error was: ' . $exception->getPrevious()->getMessage(),
                 1511950673

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -15,7 +17,6 @@ namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
@@ -25,8 +26,10 @@ class EqualCurrentPasswordValidator extends AbstractValidator
 {
     protected $acceptsEmptyValues = false;
 
-    public function __construct(protected FrontendUserService $frontendUserService)
-    {
+    public function __construct(
+        protected FrontendUserService $frontendUserService,
+        protected PasswordHashFactory $passwordHashFactory,
+    ) {
     }
 
     /**
@@ -44,10 +47,8 @@ class EqualCurrentPasswordValidator extends AbstractValidator
             }
 
             $user = $this->frontendUserService->getLoggedInUser();
-            /** @var PasswordHashFactory $passwordHashFactory */
-            $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
 
-            $passwordHash = $passwordHashFactory->get($user->getPassword(), 'FE');
+            $passwordHash = $this->passwordHashFactory->get($user->getPassword(), 'FE');
             if (!$passwordHash->checkPassword((string)$value, $user->getPassword())) {
                 $this->addError(
                     $this->translateErrorMessage('error_changepassword_notequal', 'SfRegister'),

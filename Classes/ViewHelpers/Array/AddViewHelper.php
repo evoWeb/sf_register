@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -13,14 +15,10 @@
 
 namespace Evoweb\SfRegister\ViewHelpers\Array;
 
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 class AddViewHelper extends AbstractViewHelper
 {
-    use CompileWithRenderStatic;
-
     /**
      * @var bool
      */
@@ -34,16 +32,15 @@ class AddViewHelper extends AbstractViewHelper
         $this->registerArgument('value', 'mixed', 'Value to add');
     }
 
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ): array {
-        $array = $arguments['array'] ?: [];
-        $key = $arguments['key'];
-        $value = $arguments['value'] ?: $renderChildrenClosure();
+    /**
+     * @return array<string, mixed>
+     */
+    public function render(): array
+    {
+        $array = $this->arguments['array'] ?: [];
+        $key = $this->arguments['key'];
 
-        $array[$key] = $value;
+        $array[$key] = $this->arguments['value'] ?: $this->renderChildren();
 
         return $array;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -58,6 +60,7 @@ class SrFreecapAdapter extends AbstractAdapter
 
     /**
      * Keys to be used as variables output
+     * @var string[]
      */
     protected array $keys = [
         'image',
@@ -74,6 +77,9 @@ class SrFreecapAdapter extends AbstractAdapter
         }
     }
 
+    /**
+     * @return array<string, string>|string
+     */
     public function render(): array|string
     {
         $this->session->remove('captchaWasValid');

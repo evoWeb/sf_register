@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -26,7 +28,6 @@ use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
@@ -37,7 +38,7 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use TYPO3\CMS\Fluid\View\TemplateView;
+use TYPO3\CMS\Fluid\View\FluidViewAdapter;
 
 /**
  * A frontend user controller containing common methods
@@ -46,10 +47,13 @@ class FeuserController extends ActionController
 {
     protected string $controller = '';
 
+    /**
+     * @var string[]
+     */
     protected array $ignoredActions = [];
 
     /**
-     * @var TemplateView
+     * @var FluidViewAdapter
      */
     protected $view;
 
@@ -121,6 +125,7 @@ class FeuserController extends ActionController
                         $image = [
                             'name' => $image->getClientFilename(),
                             'tmp_name' => $image->getTemporaryFileName(),
+                            // @extensionScannerIgnoreLine
                             'size' => $image->getSize(),
                             'error' => $image->getError(),
                             'type' => $image->getClientMediaType(),
@@ -171,15 +176,18 @@ class FeuserController extends ActionController
         $argumentName = 'user';
         if ($this->request->hasArgument($argumentName)) {
             $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
-            /** @var array $user */
+            /** @var array<string, mixed> $user */
             $user = $this->request->getArgument($argumentName);
             $this->getPropertyMappingConfiguration($configuration, $user);
         }
     }
 
+    /**
+     * @param FrontendUser|array<string, mixed> $userData
+     */
     protected function getPropertyMappingConfiguration(
         ?PropertyMappingConfiguration $configuration,
-        $userData = [],
+        FrontendUser|array $userData = [],
     ): PropertyMappingConfiguration {
         if (is_null($configuration)) {
             $configuration = GeneralUtility::makeInstance(PropertyMappingConfiguration::class);
@@ -225,8 +233,10 @@ class FeuserController extends ActionController
         if (($this->settings['templateRootPath'] ?? '') !== '') {
             $templateRootPath = GeneralUtility::getFileAbsFileName($this->settings['templateRootPath']);
             if (GeneralUtility::isAllowedAbsPath($templateRootPath)) {
-                $templateRootPaths = $this->view->getTemplateRootPaths();
-                $this->view->setTemplateRootPaths(array_merge($templateRootPaths, [$templateRootPath]));
+                $templatePaths = $this->view->getRenderingContext()->getTemplatePaths();
+                $templatePaths->setTemplateRootPaths(
+                    array_merge($templatePaths->getTemplateRootPaths(), [$templateRootPath])
+                );
             }
         }
     }
@@ -292,7 +302,7 @@ class FeuserController extends ActionController
 
         $user->removeImage();
 
-        /** @var array $requestUser */
+        /** @var array<string, mixed> $requestUser */
         $requestUser = $this->request->getArgument('user');
         if (is_array($requestUser)) {
             $requestUser['image'] = $user->getImage();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -13,16 +15,11 @@
 
 namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 
-use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator;
-use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 class EqualCurrentPasswordValidatorTest extends AbstractTestBase
 {
@@ -33,9 +30,7 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_groups.csv');
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_users.csv');
 
-        $this->createEmptyFrontendUser();
-        $this->initializeTypoScriptFrontendController();
-
+        $this->initializeRequest();
         $this->initializeFrontendTypoScript([
             'plugin.' => [
                 'tx_sfregister.' => [
@@ -48,16 +43,6 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
     }
 
     #[Test]
-    public function settingsContainsValidTypoScriptSettings(): void
-    {
-        $typoScriptSetup = $this->request->getAttribute('frontend.typoscript')->getSetupArray();
-        $this->assertArrayHasKey(
-            'badWordList',
-            $typoScriptSetup['plugin.']['tx_sfregister.']['settings.']
-        );
-    }
-
-    #[Test]
     public function isUserLoggedInReturnsFalseIfNotLoggedIn(): void
     {
         /** @var Context $context */
@@ -67,21 +52,13 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
     }
 
     #[Test]
-    #[RequiresPhp('9.3.0')]
-    public function isUserLoggedInReturnsTrueIfLoggedIn(): void
+    public function isValidReturnsTrueIfLoggedIn(): void
     {
-        $this->loginFrontEndUser(1);
+        $expected = 'TestPa$5';
+        $this->loginFrontendUser('testuser', $expected);
 
-        /** @var Context $context */
-        $context = GeneralUtility::makeInstance(Context::class);
-        /** @var FrontendUserRepository $frontendUserRepository */
-        $frontendUserRepository = $this->createMock(FrontendUserRepository::class);
-
-        $frontendUserService = new FrontendUserService($context, $frontendUserRepository);
-
-        $subject = new EqualCurrentPasswordValidator($frontendUserService);
-
-        $method = $this->getPrivateMethod($subject, 'userIsLoggedIn');
-        $this->assertTrue($method->invoke($subject));
+        /** @var EqualCurrentPasswordValidator $subject */
+        $subject = $this->get(EqualCurrentPasswordValidator::class);
+        $this->assertFalse($subject->validate($expected)->hasErrors());
     }
 }

@@ -11,12 +11,12 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Evoweb\SfRegister\Tests\Functional\Mock;
+namespace EvowebTests\TestClasses\Controller;
 
-use Evoweb\SfRegister\Controller\FeuserCreateController as BaseFeuserCreateController;
+use Evoweb\SfRegister\Controller\FeuserPasswordController as BaseFeuserPasswordController;
 use Evoweb\SfRegister\Tests\Functional\Traits\SettableCallable;
 
-class FeuserCreateController extends BaseFeuserCreateController
+class FeuserPasswordController extends BaseFeuserPasswordController
 {
     use SettableCallable;
 }

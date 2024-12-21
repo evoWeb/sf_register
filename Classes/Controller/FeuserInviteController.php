@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -41,6 +43,7 @@ class FeuserInviteController extends FeuserController
         protected FrontendUserRepository $userRepository,
         protected MailService $mailService,
         protected FrontendUserService $frontendUserService,
+        protected SessionService $sessionService,
     ) {
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
@@ -85,9 +88,7 @@ class FeuserInviteController extends FeuserController
             );
         }
 
-        /** @var SessionService $session */
-        $session = GeneralUtility::makeInstance(SessionService::class);
-        $session->remove('captchaWasValid');
+        $this->sessionService->remove('captchaWasValid');
 
         $this->view->assign('user', $user);
 

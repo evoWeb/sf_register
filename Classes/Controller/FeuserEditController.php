@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -40,6 +42,9 @@ class FeuserEditController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, accept, removeImage';
 
+    /**
+     * @var string[]
+     */
     protected array $ignoredActions = ['confirmAction', 'acceptAction'];
 
     public function __construct(
@@ -48,6 +53,7 @@ class FeuserEditController extends FeuserController
         protected FrontendUserRepository $userRepository,
         protected MailService $mailService,
         protected FrontendUserService $frontendUserService,
+        protected SessionService $sessionService,
     ) {
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
@@ -115,6 +121,7 @@ class FeuserEditController extends FeuserController
         }
 
         $user = $this->eventDispatcher->dispatch(new EditSaveEvent($user, $this->settings))->getUser();
+        /** @var FrontendUser $user */
         $user = $this->mailService->sendEmails(
             $this->request,
             $this->settings,
@@ -123,12 +130,12 @@ class FeuserEditController extends FeuserController
             __FUNCTION__
         );
 
-        $this->userRepository->update($user);
+        try {
+            $this->userRepository->update($user);
+        } catch (\Exception) {}
         $this->persistAll();
 
-        /** @var SessionService $session */
-        $session = GeneralUtility::makeInstance(SessionService::class);
-        $session->remove('captchaWasValid');
+        $this->sessionService->remove('captchaWasValid');
 
         if ($this->settings['forwardToEditAfterSave'] ?? false) {
             $response = new ForwardResponse('form');
@@ -168,7 +175,9 @@ class FeuserEditController extends FeuserController
                 }
 
                 $user = $this->eventDispatcher->dispatch(new EditConfirmEvent($user, $this->settings))->getUser();
-                $this->userRepository->update($user);
+                try {
+                    $this->userRepository->update($user);
+                } catch (\Exception) {}
 
                 $this->mailService->sendEmails(
                     $this->request,
@@ -218,7 +227,9 @@ class FeuserEditController extends FeuserController
                 }
 
                 $user = $this->eventDispatcher->dispatch(new EditAcceptEvent($user, $this->settings))->getUser();
-                $this->userRepository->update($user);
+                try {
+                    $this->userRepository->update($user);
+                } catch (\Exception) {}
 
                 $this->mailService->sendEmails(
                     $this->request,

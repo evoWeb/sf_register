@@ -38,6 +38,9 @@ class File implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
+    /**
+     * @var array<string, mixed>
+     */
     protected array $settings = [];
 
     protected ServerRequestInterface $request;
@@ -48,6 +51,9 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     protected int $maxFilesize = 0;
 
+    /**
+     * @var Error[]
+     */
     protected array $errors = [];
 
     protected int $storageUid = 1;
@@ -62,7 +68,10 @@ class File implements SingletonInterface, LoggerAwareInterface
 
     protected ?Folder $imageFolder = null;
 
-    public function __construct(protected ConfigurationManager $configurationManager)
+    public function __construct(
+        protected ConfigurationManager $configurationManager,
+        protected ResourceFactory $resourceFactory,
+    )
     {
         try {
             $this->settings = $this->configurationManager->getConfiguration(
@@ -99,9 +108,7 @@ class File implements SingletonInterface, LoggerAwareInterface
     public function getStorage(): ?ResourceStorage
     {
         if (!$this->storage) {
-            /** @var ResourceFactory $resourceFactory */
-            $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
-            $this->storage = $resourceFactory->getStorageObject($this->storageUid);
+            $this->storage = $this->resourceFactory->getStorageObject($this->storageUid);
         }
 
         return $this->storage;
@@ -163,6 +170,9 @@ class File implements SingletonInterface, LoggerAwareInterface
         return $value;
     }
 
+    /**
+     * @return Error[]
+     */
     public function getErrors(): array
     {
         return $this->errors;

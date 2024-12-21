@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -28,7 +30,7 @@ interface FrontendUserInterface extends DomainObjectInterface
 
     public function getPassword(): string;
 
-    public function setPassword(string $password);
+    public function setPassword(string $password): void;
 
     /**
      * @return ObjectStorage<FrontendUserGroup> An object storage containing the usergroup

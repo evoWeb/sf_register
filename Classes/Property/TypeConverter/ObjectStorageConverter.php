@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  *  Copyright notice
  *
@@ -35,6 +37,8 @@ class ObjectStorageConverter extends ExtbaseObjectStorageConverter
     /**
      * Return the source, if it is an array, otherwise an empty array.
      * Filter out empty uploads
+     *
+     * @return array<string, mixed>
      */
     public function getSourceChildPropertiesToBeConverted(mixed $source): array
     {

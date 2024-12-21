@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -37,11 +39,14 @@ class IsTrueValidatorTest extends UnitTestCase
     }
 
     #[Test]
-    public function isValidReturnsTrueIfTrueWasUsed()
+    public function isValidReturnsTrueIfTrueWasUsed(): void
     {
         $this->assertFalse($this->subject->validate(true)->hasErrors());
     }
 
+    /**
+     * @return array<string, array<string|int|array<string>>>
+     */
     public static function nonTrueValues(): array
     {
         return [

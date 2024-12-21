@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -20,10 +22,13 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\View\ViewFactoryData;
+use TYPO3\CMS\Core\View\ViewInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Fluid\View\FluidViewAdapter;
+use TYPO3\CMS\Fluid\View\FluidViewFactory;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 
 /**
@@ -31,17 +36,24 @@ use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
  */
 class Mail implements SingletonInterface
 {
+    /**
+     * @var array<string, mixed>
+     */
     protected array $frameworkConfiguration = [];
 
     public function __construct(
         protected EventDispatcherInterface $eventDispatcher,
-        protected ConfigurationManagerInterface $configurationManager
+        protected ConfigurationManagerInterface $configurationManager,
+        protected FluidViewFactory $viewFactory,
     ) {
         $this->frameworkConfiguration = $configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function sendEmails(
         RequestInterface $request,
         array $settings,
@@ -63,6 +75,9 @@ class Mail implements SingletonInterface
         return $user;
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function isNotifyAdmin(array $settings, string $type): bool
     {
         $type = lcfirst($type);
@@ -70,6 +85,9 @@ class Mail implements SingletonInterface
         return !empty($notifySettings[$type]);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function isNotifyUser(array $settings, string $type): bool
     {
         $type = lcfirst($type);
@@ -77,6 +95,9 @@ class Mail implements SingletonInterface
         return !empty($notifySettings[$type]);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function sendNotifyAdmin(
         RequestInterface $request,
         array $settings,
@@ -100,6 +121,9 @@ class Mail implements SingletonInterface
         return $this->dispatchUserEvent($settings, $method, $user);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function sendNotifyUser(
         RequestInterface $request,
         array $settings,
@@ -123,6 +147,9 @@ class Mail implements SingletonInterface
         return $this->dispatchUserEvent($settings, $method, $user);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function sendInvitation(
         RequestInterface $request,
         array $settings,
@@ -145,6 +172,9 @@ class Mail implements SingletonInterface
         return $this->dispatchUserEvent($settings, $method, $user);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     protected function getSubject(array $settings, string $method, FrontendUserInterface $user): string
     {
         return (string)LocalizationUtility::translate(
@@ -154,6 +184,10 @@ class Mail implements SingletonInterface
         );
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     * @return array<string, string>
+     */
     protected function getAdminRecipient(array $settings): array
     {
         return [
@@ -161,6 +195,9 @@ class Mail implements SingletonInterface
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     protected function getUserRecipient(FrontendUserInterface $user): array
     {
         if ($user->getFirstName() || $user->getLastName()) {
@@ -174,6 +211,10 @@ class Mail implements SingletonInterface
         ];
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     * @param array<string, string> $recipient
+     */
     protected function sendEmail(
         array $settings,
         FrontendUserInterface $user,
@@ -207,6 +248,9 @@ class Mail implements SingletonInterface
         return $mail->send();
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     protected function renderHtmlBody(
         RequestInterface $request,
         array $settings,
@@ -215,8 +259,8 @@ class Mail implements SingletonInterface
         string $method,
         FrontendUserInterface $user
     ): string {
-        $view = $this->getView($request, $controller, $action);
-        $view->setFormat('html');
+        /** @var FluidViewAdapter $view */
+        $view = $this->getView($request, $controller, $action, 'html');
 
         $context = $view->getRenderingContext();
         $context->setControllerName('Email');
@@ -236,6 +280,9 @@ class Mail implements SingletonInterface
         return $body;
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     protected function renderTextBody(
         RequestInterface $request,
         array $settings,
@@ -244,8 +291,8 @@ class Mail implements SingletonInterface
         string $method,
         FrontendUserInterface $user
     ): string {
-        $view = $this->getView($request, $controller, $action);
-        $view->setFormat('txt');
+        /** @var FluidViewAdapter $view */
+        $view = $this->getView($request, $controller, $action, 'txt');
 
         $context = $view->getRenderingContext();
         $context->setControllerName('Email');
@@ -268,23 +315,27 @@ class Mail implements SingletonInterface
     protected function getView(
         RequestInterface $request,
         string $controller,
-        string $action
-    ): StandaloneView {
-        /** @var StandaloneView $view */
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setLayoutRootPaths($this->frameworkConfiguration['view']['layoutRootPaths']);
-        $view->setPartialRootPaths($this->frameworkConfiguration['view']['partialRootPaths']);
-        $view->setTemplateRootPaths($this->frameworkConfiguration['view']['templateRootPaths']);
-
+        string $action,
+        string $format
+    ): ViewInterface {
         $request = $request->withControllerExtensionName($this->frameworkConfiguration['extensionName']);
         $request = $request->withPluginName($this->frameworkConfiguration['pluginName']);
         $request = $request->withControllerName($controller);
         $request = $request->withControllerActionName($action);
-        $view->setRequest($request);
+        $request = $request->withFormat($format);
 
-        return $view;
+        $viewFactoryData = new ViewFactoryData(
+            templateRootPaths: $this->frameworkConfiguration['view']['templateRootPaths'],
+            partialRootPaths: $this->frameworkConfiguration['view']['partialRootPaths'],
+            layoutRootPaths: $this->frameworkConfiguration['view']['layoutRootPaths'],
+            request: $request
+        );
+        return $this->viewFactory->create($viewFactoryData);
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     protected function dispatchMailEvent(
         array $settings,
         MailMessage $mail,
@@ -294,6 +345,9 @@ class Mail implements SingletonInterface
         return $this->eventDispatcher->dispatch($eventObject)->getMail();
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     protected function dispatchUserEvent(
         array $settings,
         string $method,

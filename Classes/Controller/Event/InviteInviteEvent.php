@@ -19,6 +19,9 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 
 final class InviteInviteEvent extends AbstractEventWithUserAndSettings
 {
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function __construct(
         protected FrontendUser $user,
         protected array $settings = [],

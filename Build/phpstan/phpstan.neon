@@ -4,9 +4,9 @@ includes:
 
 parameters:
   # Use local .cache dir instead of /tmp
-  tmpDir: ../Web/.cache/phpstan
+  tmpDir: ../.cache/phpstan
 
-  level: 5
+  level: 6
 
   bootstrapFiles:
     - phpstan-constants.php
@@ -15,7 +15,6 @@ parameters:
     - ../../
 
   excludePaths:
-    - ../../Tests/*
     # we do not check required extensions
     - ../../Build/*
     # ext_emconf.php get the $_EXTKEY set from outside. We'll ignore all of them

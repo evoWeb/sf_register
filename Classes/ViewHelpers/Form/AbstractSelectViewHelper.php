@@ -153,6 +153,9 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
         return $output;
     }
 
+    /**
+     * @param array<int|string, string> $options
+     */
     protected function renderOptionTags(array $options): string
     {
         $output = '';
@@ -163,6 +166,9 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
         return $output;
     }
 
+    /**
+     * @return array<int|string, string>
+     */
     protected function getOptions(): array
     {
         if (!is_array($this->arguments['options']) && !$this->arguments['options'] instanceof \Traversable) {
@@ -241,6 +247,9 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
         return false;
     }
 
+    /**
+     * @return array<int, string>|string
+     */
     protected function getSelectedValue(): array|string
     {
         $this->setRespectSubmittedDataValue(true);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -13,13 +15,14 @@
 
 namespace Evoweb\SfRegister\Middleware;
 
+use Doctrine\DBAL\Exception;
 use Evoweb\SfRegister\Domain\Repository\StaticCountryZoneRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Lazy;
 use TYPO3\CMS\Core\Http\JsonResponse;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
@@ -30,6 +33,12 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class AjaxMiddleware implements MiddlewareInterface
 {
+    public function __construct(
+        #[Lazy]
+        protected StaticCountryZoneRepository $staticCountryZoneRepository
+    ) {
+    }
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (!$this->canHandleRequest($request)) {
@@ -53,20 +62,25 @@ class AjaxMiddleware implements MiddlewareInterface
         ]);
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     protected function errorAction(): array
     {
         return ['error', 'unknown action', []];
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     protected function zonesAction(string $parent): array
     {
-        /** @var StaticCountryZoneRepository $zoneRepository */
-        $zoneRepository = GeneralUtility::makeInstance(StaticCountryZoneRepository::class);
-
         if (MathUtility::canBeInterpretedAsInteger($parent)) {
-            $zones = $zoneRepository->findAllByParentUid((int)$parent);
+            $zones = $this->staticCountryZoneRepository->findAllByParentUid((int)$parent);
         } else {
-            $zones = $zoneRepository->findAllByIso2(strtoupper(preg_replace('/[^A-Za-z]{2}/', '', $parent)));
+            $zones = $this->staticCountryZoneRepository->findAllByIso2(
+                strtoupper(preg_replace('/[^A-Za-z]{2}/', '', $parent))
+            );
         }
 
         $result = [];
@@ -86,7 +100,7 @@ class AjaxMiddleware implements MiddlewareInterface
                     ];
                 });
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $status = 'database caused an exception ' . $exception->getMessage();
             $message = 'no zones';
         }
@@ -94,6 +108,9 @@ class AjaxMiddleware implements MiddlewareInterface
         return [$status, $message, $result];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getParamFromRequest(ServerRequestInterface $request, string $name): array
     {
         $arguments = $request->getParsedBody()[$name] ?? $request->getQueryParams()[$name] ?? [];

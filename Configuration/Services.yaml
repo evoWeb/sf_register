@@ -19,6 +19,15 @@ services:
   Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter:
     public: true
 
+  Evoweb\SfRegister\Services\AutoLogin:
+    public: true
+
+  Evoweb\SfRegister\Services\FrontendUser:
+    public: true
+
+  Evoweb\SfRegister\Services\ModifyValidator:
+    public: true
+
   Evoweb\SfRegister\Validation\Validator\BadWordValidator:
     public: true
 

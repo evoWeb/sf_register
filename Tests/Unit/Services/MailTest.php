@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -19,7 +21,7 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 class MailTest extends UnitTestCase
 {
     #[Test]
-    public function sendEmail()
+    public function sendEmail(): void
     {
         $this->markTestIncomplete('not implemented by now');
     }

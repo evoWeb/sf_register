@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is developed by evoWeb.
  *
@@ -13,35 +15,32 @@
 
 namespace Evoweb\SfRegister\Tests\Functional;
 
+use Evoweb\SfRegister\Tests\Functional\Http\ShortCircuitHandler;
+use Evoweb\SfRegister\Tests\Functional\Http\ShortCircuitResponse;
 use Evoweb\SfRegister\Tests\Functional\Traits\SiteBasedTestTrait;
-use Psr\Log\NullLogger;
-use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Context\UserAspect;
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Authentication\LoginType;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
-use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
-use TYPO3\CMS\Core\Routing\PageArguments;
-use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\TypoScript\AST\Node\RootNode;
 use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use TYPO3\CMS\Frontend\Page\PageInformationFactory;
+use TYPO3\CMS\Frontend\Middleware\FrontendUserAuthenticator;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 abstract class AbstractTestBase extends FunctionalTestCase
 {
     use SiteBasedTestTrait;
 
-    protected string $instancePath = '';
-
+    /**
+     * @var array<non-empty-string>
+     */
     protected array $testExtensionsToLoad = [
         'typo3conf/ext/sf_register',
+        'typo3conf/ext/sf_register/Tests/Fixtures/Extensions/test_classes',
     ];
 
     /**
-     * @var array[]
+     * @var array<string, array<string, string|int>>
      */
     protected const LANGUAGE_PRESETS = [
         'EN' => [
@@ -51,144 +50,72 @@ abstract class AbstractTestBase extends FunctionalTestCase
         ],
     ];
 
-    protected ?TypoScriptFrontendController $typoScriptFrontendController = null;
+    protected ServerRequestInterface $request;
 
-    protected ?FrontendUserAuthentication $frontendUser = null;
-
-    protected ServerRequest $request;
-
-    public function initializeTypoScriptFrontendController(): void
+    public function initializeRequest(): void
     {
-        $this->setUpFrontendRootPage(
-            1,
-            [
-                'constants' => [
-                    'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript',
-                    'EXT:sf_register/Configuration/TypoScript/minimal/constants.typoscript',
-                ],
-                'setup' => [
-                    'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
-                    'EXT:sf_register/Configuration/TypoScript/minimal/setup.typoscript',
-                    __DIR__ . '/../Fixtures/PageWithUserObjectUsingSlWithLLL.typoscript',
-                ],
-            ]
-        );
-        $this->writeSiteConfiguration(
-            'website-example',
-            $this->buildSiteConfiguration(1, 'https://example.com/'),
-            [
-                $this->buildDefaultLanguageConfiguration('EN', '/en/'),
-            ]
-        );
-
-        GeneralUtility::flushInternalRuntimeCaches();
-
-        $_SERVER['HTTP_HOST'] = 'example.com';
-        $_SERVER['HTTPS'] = 'on';
-        $_SERVER['REQUEST_URI'] = '/en/';
-        $_GET['id'] = 1;
-
-        $request = ServerRequestFactory::fromGlobals();
-        $request = $request->withQueryParams($_GET);
-        $request = $request->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_FE);
-
-        $site = new Site('outside-site', 1, [
-            'base' => 'https://example.com/',
-            'languages' => [
-                0 => [
-                    'languageId' => 0,
-                    'locale' => 'en_US.UTF-8',
-                    'base' => '/en/',
-                ],
-            ],
-        ]);
-        $request = $request->withAttribute('site', $site);
-
-        $pageArguments = new PageArguments(1, '0', []);
-        $request = $request->withAttribute('routing', $pageArguments);
-
-        $pageInformationFactory = $this->get(PageInformationFactory::class);
-        $pageInformation = $pageInformationFactory->create($request);
-
-        /** @var TypoScriptFrontendController $controller */
-        $controller = GeneralUtility::makeInstance(TypoScriptFrontendController::class);
-        $controller->initializePageRenderer($request);
-        $controller->initializeLanguageService($request);
-        $controller->set_no_cache('testing');
-        // @extensionScannerIgnoreLine
-        $controller->id = $pageInformation->getId();
-        $controller->page = $pageInformation->getPageRecord();
-        $controller->contentPid = $pageInformation->getContentFromPid();
-        $controller->rootLine = $pageInformation->getRootLine();
-        $controller->config['rootLine'] = $pageInformation->getLocalRootLine();
-
-        $this->request = $request->withAttribute('frontend.controller', $controller);
+        $serverRequestFactory = new ServerRequestFactory();
+        $this->request = $serverRequestFactory
+            ->createServerRequest('GET', '/')
+            ->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_FE);
+        $GLOBALS['TYPO3_REQUEST'] = $this->request;
     }
 
+    /**
+     * @param array<string, mixed> $setup
+     */
     public function initializeFrontendTypoScript(array $setup = []): void
     {
-        /** @var FrontendTypoScript $frontendTypoScript */
-        $frontendTypoScript = GeneralUtility::makeInstance(
-            FrontendTypoScript::class,
-            new RootNode(),
-            [],
-            [],
-            []
-        );
+        $frontendTypoScript = new FrontendTypoScript(new RootNode(), [], [], []);
         $frontendTypoScript->setSetupArray($setup);
         $this->request = $this->request->withAttribute('frontend.typoscript', $frontendTypoScript);
+        $GLOBALS['TYPO3_REQUEST'] = $this->request;
     }
 
-    public function loginFrontEndUser(int $frontEndUserUid): void
+    public function loginFrontendUser(string $username, string $password): void
     {
-        if ($frontEndUserUid === 0) {
-            throw new \InvalidArgumentException('The user ID must be > 0.', 1334439475);
-        }
+        // needed to ignore missing request token
+        $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_alwaysFetchUser'] = true;
+        $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_alwaysAuthUser'] = true;
 
-        $serverRequestFactory = new ServerRequestFactory();
-        $serverRequest = $serverRequestFactory->createServerRequest('GET', '/');
+        $this->request = $this->request
+            ->withQueryParams([
+                ...$this->request->getQueryParams(),
+                'logintype' => LoginType::LOGIN->value
+            ])
+            ->withParsedBody([
+                ...((array) ($this->request->getParsedBody() ?? [])),
+                'user' => $username,
+                'pass' => $password,
+            ]);
 
-        $this->frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
-        $this->frontendUser->setLogger(new NullLogger());
-        $this->frontendUser->start($serverRequest);
-        $this->frontendUser->user = $this->frontendUser->getRawUserByUid($frontEndUserUid);
-        $this->frontendUser->fetchGroupData($serverRequest);
-
-        if (isset($this->frontendUser->user['uc'])) {
-            $theUC = unserialize($this->frontendUser->user['uc'], ['allowed_classes' => false]);
-            if (is_array($theUC)) {
-                $this->frontendUser->uc = $theUC;
-            }
-        }
-
-        $userAspect = $this->frontendUser->createUserAspect();
-
-        /** @var Context $context */
-        $context = GeneralUtility::makeInstance(Context::class);
-        $context->setAspect('frontend.user', $userAspect);
-        $this->request = $this->request->withAttribute('frontend.user', $this->frontendUser);
+        $this->request = $this->processLocalMiddleWareStack($this->request);
+        $GLOBALS['TYPO3_REQUEST'] = $this->request;
     }
 
     public function createEmptyFrontendUser(): void
     {
-        $this->frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
-
-        /** @var UserAspect $aspect */
-        $aspect = GeneralUtility::makeInstance(UserAspect::class, $this->frontendUser);
-
-        /** @var Context $context */
-        $context = GeneralUtility::makeInstance(Context::class);
-        $context->setAspect('frontend.user', $aspect);
-        $context->getPropertyFromAspect('frontend.user', 'isLoggedIn');
+        $this->request = $this->processLocalMiddleWareStack($this->request);
+        $GLOBALS['TYPO3_REQUEST'] = $this->request;
     }
 
-    public function getPrivateMethod($object, $methodName): \ReflectionMethod
+    protected function processLocalMiddleWareStack(ServerRequestInterface $request): ServerRequestInterface
+    {
+        $shortCircuitHandler = new ShortCircuitHandler();
+        /** @var FrontendUserAuthenticator $frontendUserAuthenticator */
+        $frontendUserAuthenticator = $this->get(FrontendUserAuthenticator::class);
+        /** @var ShortCircuitResponse $response */
+        $response = $frontendUserAuthenticator->process($request, $shortCircuitHandler);
+        return $response->getRequest();
+    }
+
+    public function getPrivateMethod(object $object, string $methodName): \ReflectionMethod
     {
         $classReflection = new \ReflectionClass($object);
         return $classReflection->getMethod($methodName);
     }
 
-    public function getPrivateProperty($object, $propertyName): \ReflectionProperty
+    public function getPrivateProperty(object $object, string $propertyName): \ReflectionProperty
     {
         $classReflection = new \ReflectionClass($object);
         return $classReflection->getProperty($propertyName);

@@ -98,6 +98,7 @@ class CleanupCommand extends Command
     }
 
     /**
+     * @return array<int, array<string, mixed>>
      * @throws DbalException
      */
     protected function findInOutdatedTemporaryUsers(int $inactiveUserGroup, int $days): array
@@ -123,6 +124,9 @@ class CleanupCommand extends Command
         return $result->fetchAllAssociative();
     }
 
+    /**
+     * @param array<string, mixed> $user
+     */
     protected function removeUser(array $user): void
     {
         $table = 'fe_users';
@@ -134,6 +138,8 @@ class CleanupCommand extends Command
     }
 
     /**
+     * @param array<string, mixed> $user
+     * @return array<int, array<string, mixed>>
      * @throws DbalException
      */
     protected function fetchReference(array $user): array
@@ -162,6 +168,9 @@ class CleanupCommand extends Command
         return $result->fetchAllAssociative();
     }
 
+    /**
+     * @param array<string, mixed> $user
+     */
     protected function removeReference(array $user): void
     {
         $table = 'sys_file_reference';
@@ -175,6 +184,7 @@ class CleanupCommand extends Command
     }
 
     /**
+     * @param array<int, array<string, mixed>> $references
      * @throws InsufficientFileAccessPermissionsException
      * @throws FileDoesNotExistException
      * @throws FileOperationErrorException
