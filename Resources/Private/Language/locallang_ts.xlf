@@ -133,6 +133,10 @@
 			<trans-unit id="maximal.autologinPostConfirmation">
 				<source>Whether the user should get logged in after activation</source>
 			</trans-unit>
+			<trans-unit id="maximal.allowDeleteIfNotLoggedIn">
+				<source>Allow user to delete if not logged in</source>
+			</trans-unit>
+
 			<trans-unit id="maximal.usergroupPostSave">
 				<source>Usergroup set if an account waits for activation</source>
 			</trans-unit>

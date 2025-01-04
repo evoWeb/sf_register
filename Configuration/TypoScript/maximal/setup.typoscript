@@ -70,6 +70,7 @@ plugin.tx_sfregister.settings {
   # boolean if user should get logged in after activation
   autologinPostConfirmation = {$plugin.tx_sfregister.settings.autologinPostConfirmation ?? $evoweb.sf-register.settings.autologinPostConfirmation}
 
+  allowDeleteIfNotLoggedIn = {$plugin.tx_sfregister.settings.allowDeleteIfNotLoggedIn ?? $evoweb.sf-register.settings.allowDeleteIfNotLoggedIn}
 
   userEmail {
     fromName = {$plugin.tx_sfregister.settings.userEmail.fromName ?? $evoweb.sf-register.settings.userEmail.fromName}

@@ -66,7 +66,7 @@ jobs:
 
       - name: Lint php
         run: |
-          Build/Scripts/additionalTests.sh \
+          Build/Scripts/runTests.sh \
             -p ${{ matrix.packages.php }} \
             -s lintPhp
 

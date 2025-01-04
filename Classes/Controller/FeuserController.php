@@ -176,9 +176,11 @@ class FeuserController extends ActionController
         $argumentName = 'user';
         if ($this->request->hasArgument($argumentName)) {
             $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
-            /** @var array<string, mixed> $user */
+            /** @var array<string, mixed>|FrontendUser $user */
             $user = $this->request->getArgument($argumentName);
-            $this->getPropertyMappingConfiguration($configuration, $user);
+            if (is_array($user) || $user instanceof FrontendUser) {
+                $this->getPropertyMappingConfiguration($configuration, $user);
+            }
         }
     }
 

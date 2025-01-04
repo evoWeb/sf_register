@@ -62,6 +62,14 @@ settings:
     default: false
     type: bool
     category: sf-register.maximal
+  evoweb.sf-register.settings.autologinPostConfirmation:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  evoweb.sf-register.settings.allowDeleteIfNotLoggedIn:
+    default: false
+    type: bool
+    category: sf-register.maximal
 
   evoweb.sf-register.settings.notifyAdmin.createSave:
     default: false
