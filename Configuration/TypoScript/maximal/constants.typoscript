@@ -101,6 +101,8 @@ plugin.tx_sfregister.settings {
   autologinPostRegistration = 0
   # cat=sf_register.settings/enable/56; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.autologinPostConfirmation
   autologinPostConfirmation = 0
+  # cat=sf_register.settings//60; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.allowDeleteIfNotLoggedIn
+  allowDeleteIfNotLoggedIn = 0
 
   # cat=sf_register.settings//18; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.usergroupPostSave
   usergroupPostSave = 0

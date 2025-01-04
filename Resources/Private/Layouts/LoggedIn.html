@@ -1,12 +1,19 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"><div class="tx_evoweb_sfregister">
 
-	<f:security.ifAuthenticated>
-		<f:then>
-			<f:render section="Main" />
-		</f:then>
-		<f:else>
-			<f:translate id="needTobBeLoggedIn"/>
-		</f:else>
-	</f:security.ifAuthenticated>
+    <f:security.ifAuthenticated>
+        <f:then>
+            <f:render section="Main" />
+        </f:then>
+        <f:else>
+            <f:if condition="{settings.allowDeleteIfNotLoggedIn}">
+                <f:then>
+                    <f:render section="Main" />
+                </f:then>
+                <f:else>
+                    <f:translate id="needTobBeLoggedIn"/>
+                </f:else>
+            </f:if>
+        </f:else>
+    </f:security.ifAuthenticated>
 
 </div></html>

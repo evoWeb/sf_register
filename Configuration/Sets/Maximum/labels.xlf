@@ -55,8 +55,15 @@
 			<trans-unit id="settings.evoweb.sf-register.settings.useEncryptedFilename" resname="settings.evoweb.sf-register.settings.useEncryptedFilename">
 				<source>Use encrypted filename: to deny direct access on uploaded files</source>
 			</trans-unit>
+
 			<trans-unit id="settings.evoweb.sf-register.settings.autologinPostRegistration" resname="settings.evoweb.sf-register.settings.autologinPostRegistration">
 				<source>Whether the user should get logged in after registration</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.autologinPostConfirmation" resname="settings.evoweb.sf-register.settings.autologinPostConfirmation">
+				<source>Whether the user should get logged in after activation</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.allowDeleteIfNotLoggedIn" resname="settings.evoweb.sf-register.settings.allowDeleteIfNotLoggedIn">
+				<source>Allow user to delete if not logged in</source>
 			</trans-unit>
 
 			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.createSave" resname="settings.evoweb.sf-register.settings.notifyAdmin.createSave">
