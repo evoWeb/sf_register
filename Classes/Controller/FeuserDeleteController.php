@@ -54,7 +54,7 @@ class FeuserDeleteController extends FeuserController
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
 
-    public function formAction(FrontendUser $user = null): ResponseInterface
+    public function formAction(?FrontendUser $user = null): ResponseInterface
     {
         if ($user === null) {
             $user = $this->frontendUserService->getLoggedInRequestUser($this->request);
@@ -70,8 +70,11 @@ class FeuserDeleteController extends FeuserController
     }
 
     #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
-    public function saveAction(FrontendUser $user): ResponseInterface
+    public function saveAction(?FrontendUser $user = null): ResponseInterface
     {
+        if ($user === null) {
+            return $this->redirect('form');
+        }
         $user = $this->eventDispatcher->dispatch(new DeleteSaveEvent($user, $this->settings))->getUser();
 
         if (!$user->getUsername()) {
