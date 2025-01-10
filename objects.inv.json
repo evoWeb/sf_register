@@ -2,91 +2,91 @@
     "std:doc": {
         "Administration\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Administration\/Index.html",
             "Administration"
         ],
         "BreakingChanges\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html",
             "Breaking Changes"
         ],
         "Changelog\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Changelog\/Index.html",
             "ChangeLog"
         ],
         "Configuration\/Emails\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html",
             "Emails"
         ],
         "Configuration\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html",
             "Configuration"
         ],
         "Configuration\/Validation\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html",
             "Validation"
         ],
         "Extendability\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html",
             "Extendability"
         ],
         "Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Index.html",
             "Frontend User Registration: Multipurpose configurable registration"
         ],
         "Introduction\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Introduction\/Index.html",
             "Introduction"
         ],
         "KnownProblems\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "KnownProblems\/Index.html",
             "Known problems"
         ],
         "RegistrationActions\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "RegistrationActions\/Index.html",
             "Registration actions"
         ],
         "Sitemap": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Sitemap.html",
             "Sitemap"
         ],
         "Templating\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Templating\/Index.html",
             "Templating"
         ],
         "Tutorial\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Tutorial\/Index.html",
             "Tutorial"
         ],
         "UsersManual\/Index": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "UsersManual\/Index.html",
             "Users manual"
         ]
@@ -94,1135 +94,1135 @@
     "std:label": {
         "administration": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Administration\/Index.html#administration",
             "Administration"
         ],
         "breaking-changes": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#breaking-changes",
             "Breaking Changes"
         ],
         "changelog": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Changelog\/Index.html#changelog",
             "ChangeLog"
         ],
         "configuration-emails": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#configuration-emails",
             "Emails"
         ],
         "configuration-emails-notify-admin-create-properties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#configuration-emails-notify-admin-create-properties",
             "Notify admin create properties"
         ],
         "notifyadminpostcreatesave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyAdminPostCreateSave",
             "-"
         ],
         "notifyadminpostcreateconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyAdminPostCreateConfirm",
             "-"
         ],
         "notifyadminpostcreaterefuse": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyAdminPostCreateRefuse",
             "-"
         ],
         "notifyadminpostcreateaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyAdminPostCreateAccept",
             "-"
         ],
         "notifyadminpostcreatedecline": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyAdminPostCreateDecline",
             "-"
         ],
         "acceptemailpostcreate": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#acceptEmailPostCreate",
             "-"
         ],
         "configuration-emails-notify-admin-edit-properties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#configuration-emails-notify-admin-edit-properties",
             "Notify admin edit properties"
         ],
         "notifyadminposteditsave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyAdminPostEditSave",
             "-"
         ],
         "notifyadminposteditconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyAdminPostEditConfirm",
             "-"
         ],
         "notifyadminposteditaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyAdminPostEditAccept",
             "-"
         ],
         "acceptemailpostedit": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#acceptEmailPostEdit",
             "-"
         ],
         "configuration-emails-notify-user-create-properties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#configuration-emails-notify-user-create-properties",
             "Notify user create properties"
         ],
         "notifyuserpostcreatesave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyUserPostCreateSave",
             "-"
         ],
         "notifyuserpostcreateconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyUserPostCreateConfirm",
             "-"
         ],
         "notifyuserpostcreaterefuse": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyUserPostCreateRefuse",
             "-"
         ],
         "notifyuserpostcreateaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyUserPostCreateAccept",
             "-"
         ],
         "notifyuserpostcreatedecline": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyUserPostCreateDecline",
             "-"
         ],
         "confirmemailpostcreate": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confirmEmailPostCreate",
             "-"
         ],
         "configuration-emails-notify-user-edit-properties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#configuration-emails-notify-user-edit-properties",
             "Notify user edit properties"
         ],
         "notifyuserposteditsave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyUserPostEditSave",
             "-"
         ],
         "notifyuserposteditconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyUserPostEditConfirm",
             "-"
         ],
         "notifyuserposteditaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyUserPostEditAccept",
             "-"
         ],
         "confirmemailpostedit": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confirmEmailPostEdit",
             "-"
         ],
         "configuration-emails-address-and-subject-properties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#configuration-emails-address-and-subject-properties",
             "Address and subject properties"
         ],
         "sitename": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#sitename",
             "-"
         ],
         "useremail-fromname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#userEmail.fromName",
             "-"
         ],
         "useremail-fromemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#userEmail.fromEmail",
             "-"
         ],
         "useremail-replyname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#userEmail.replyName",
             "-"
         ],
         "useremail-replyemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#userEmail.replyEmail",
             "-"
         ],
         "adminemail-toname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminEmail.toName",
             "-"
         ],
         "adminemail-toemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminEmail.toEmail",
             "-"
         ],
         "adminemail-fromname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminEmail.fromName",
             "-"
         ],
         "adminemail-fromemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminEmail.fromEmail",
             "-"
         ],
         "adminemail-replyname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminEmail.replyName",
             "-"
         ],
         "adminemail-replyemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminEmail.replyEmail",
             "-"
         ],
         "configuration": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#configuration",
             "Configuration"
         ],
         "badwordvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#badWordValidator",
             "-"
         ],
         "redirectpostregistrationpageid": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#redirectPostRegistrationPageId",
             "-"
         ],
         "redirectpostactivationpageid": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#redirectPostActivationPageId",
             "-"
         ],
         "useemailaddressasusername": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#useEmailAddressAsUsername",
             "-"
         ],
         "useencryptedfilename": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#useEncryptedFilename",
             "-"
         ],
         "autologinpostregistration": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#autologinPostRegistration",
             "-"
         ],
         "autologinpostconfirmation": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#autologinPostConfirmation",
             "-"
         ],
         "usergrouppostsave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#usergroupPostSave",
             "-"
         ],
         "usergrouppostconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#usergroupPostConfirm",
             "-"
         ],
         "usergroup": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#usergroup",
             "-"
         ],
         "captcha-jmrecaptcha": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#captcha-jmrecaptcha",
             "-"
         ],
         "captcha-srfreecap": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#captcha-srfreecap",
             "-"
         ],
         "storagepid": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#storagePid",
             "-"
         ],
         "configuration-validation": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#configuration-validation",
             "Validation"
         ],
         "configuration-validation-purpose": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#configuration-validation-purpose",
             "Purpose of Validators"
         ],
         "validation-badwordvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#validation-badWordValidator",
             "-"
         ],
         "istruevalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#IsTrueValidator",
             "-"
         ],
         "requiredvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#RequiredValidator",
             "-"
         ],
         "captchavalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#CaptchaValidator",
             "-"
         ],
         "emptyvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#EmptyValidator",
             "-"
         ],
         "equalcurrentpasswordvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#EqualCurrentPasswordValidator",
             "-"
         ],
         "equalcurrentuservalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#EqualCurrentUserValidator",
             "-"
         ],
         "imageuploadvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#ImageUploadValidator",
             "-"
         ],
         "uniquevalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#UniqueValidator",
             "-"
         ],
         "repeatvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#RepeatValidator",
             "-"
         ],
         "extendability": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#extendability",
             "Extendability"
         ],
         "createcustomfields": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#CreateCustomFields",
             "Use your own flavor of fields"
         ],
         "addcustomproperties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#AddCustomProperties",
             "Adding custom properties"
         ],
         "addcustomcaptcha": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#AddCustomCaptcha",
             "Bring in your own captcha"
         ],
         "psr14event": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#Psr14Event",
             "PSR-14 Events"
         ],
         "start": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Index.html#start",
             "Frontend User Registration: Multipurpose configurable registration"
         ],
         "introduction": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Introduction\/Index.html#introduction",
             "Introduction"
         ],
         "known-problems": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "KnownProblems\/Index.html#known_problems",
             "Known problems"
         ],
         "registration-actions": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "RegistrationActions\/Index.html#registration_actions",
             "Registration actions"
         ],
         "templating": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Templating\/Index.html#templating",
             "Templating"
         ],
         "tutorial": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Tutorial\/Index.html#tutorial",
             "Tutorial"
         ],
         "user-manual": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "UsersManual\/Index.html#user-manual",
             "Users manual"
         ],
         "confval-menu-admin-create": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-menu-admin-create",
             ""
         ],
         "confval-notifyadminpostcreatesave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyadminpostcreatesave",
             "notifyAdminPostCreateSave"
         ],
         "confval-notifyadminpostcreateconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyadminpostcreateconfirm",
             "notifyAdminPostCreateConfirm"
         ],
         "confval-notifyadminpostcreaterefuse": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyadminpostcreaterefuse",
             "notifyAdminPostCreateRefuse"
         ],
         "confval-notifyadminpostcreateaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyadminpostcreateaccept",
             "notifyAdminPostCreateAccept"
         ],
         "confval-notifyadminpostcreatedecline": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyadminpostcreatedecline",
             "notifyAdminPostCreateDecline"
         ],
         "confval-acceptemailpostcreate": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-acceptemailpostcreate",
             "acceptEmailPostCreate"
         ],
         "confval-menu-admin-edit": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-menu-admin-edit",
             ""
         ],
         "confval-notifyadminposteditsave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyadminposteditsave",
             "notifyAdminPostEditSave"
         ],
         "confval-notifyadminposteditconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyadminposteditconfirm",
             "notifyAdminPostEditConfirm"
         ],
         "confval-notifyadminposteditaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyadminposteditaccept",
             "notifyAdminPostEditAccept"
         ],
         "confval-acceptemailpostedit": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-acceptemailpostedit",
             "acceptEmailPostEdit"
         ],
         "confval-menu-user-create": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-menu-user-create",
             ""
         ],
         "confval-notifyuserpostcreatesave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyuserpostcreatesave",
             "notifyUserPostCreateSave"
         ],
         "confval-notifyuserpostcreateconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyuserpostcreateconfirm",
             "notifyUserPostCreateConfirm"
         ],
         "confval-notifyuserpostcreaterefuse": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyuserpostcreaterefuse",
             "notifyUserPostCreateRefuse"
         ],
         "confval-notifyuserpostcreateaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyuserpostcreateaccept",
             "notifyUserPostCreateAccept"
         ],
         "confval-notifyuserpostcreatedecline": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyuserpostcreatedecline",
             "notifyUserPostCreateDecline"
         ],
         "confval-confirmemailpostcreate": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-confirmemailpostcreate",
             "confirmEmailPostCreate"
         ],
         "confval-menu-user-edit": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-menu-user-edit",
             ""
         ],
         "confval-notifyuserposteditsave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyuserposteditsave",
             "notifyUserPostEditSave"
         ],
         "confval-notifyuserposteditconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyuserposteditconfirm",
             "notifyUserPostEditConfirm"
         ],
         "confval-notifyuserposteditaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-notifyuserposteditaccept",
             "notifyUserPostEditAccept"
         ],
         "confval-confirmemailpostedit": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-confirmemailpostedit",
             "confirmEmailPostEdit"
         ],
         "confval-menu-address-and-subject": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-menu-address-and-subject",
             ""
         ],
         "confval-sitename": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-sitename",
             "sitename"
         ],
         "confval-useremail-fromname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-useremail-fromname",
             "userEmail.fromName"
         ],
         "confval-useremail-fromemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-useremail-fromemail",
             "userEmail.fromEmail"
         ],
         "confval-useremail-replyname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-useremail-replyname",
             "userEmail.replyName"
         ],
         "confval-useremail-replyemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-useremail-replyemail",
             "userEmail.replyEmail"
         ],
         "confval-adminemail-toname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-adminemail-toname",
             "adminEmail.toName"
         ],
         "confval-adminemail-toemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-adminemail-toemail",
             "adminEmail.toEmail"
         ],
         "confval-adminemail-fromname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-adminemail-fromname",
             "adminEmail.fromName"
         ],
         "confval-adminemail-fromemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-adminemail-fromemail",
             "adminEmail.fromEmail"
         ],
         "confval-adminemail-replyname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-adminemail-replyname",
             "adminEmail.replyName"
         ],
         "confval-adminemail-replyemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confval-adminemail-replyemail",
             "adminEmail.replyEmail"
         ],
         "confval-menu-settings-reference": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-menu-settings-reference",
             ""
         ],
         "confval-badwordlist": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-badwordlist",
             "badWordList"
         ],
         "confval-redirectpostregistrationpageid": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-redirectpostregistrationpageid",
             "redirectPostRegistrationPageId"
         ],
         "confval-redirectpostactivationpageid": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-redirectpostactivationpageid",
             "redirectPostActivationPageId"
         ],
         "confval-useemailaddressasusername": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-useemailaddressasusername",
             "useEmailAddressAsUsername"
         ],
         "confval-useencryptedfilename": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-useencryptedfilename",
             "useEncryptedFilename"
         ],
         "confval-autologinpostregistration": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-autologinpostregistration",
             "autologinPostRegistration"
         ],
         "confval-autologinpostconfirmation": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-autologinpostconfirmation",
             "autologinPostConfirmation"
         ],
         "confval-usergrouppostsave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-usergrouppostsave",
             "usergroupPostSave"
         ],
         "confval-usergrouppostconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-usergrouppostconfirm",
             "usergroupPostConfirm"
         ],
         "confval-usergroup": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-usergroup",
             "usergroup"
         ],
         "confval-captcha-jmrecaptcha": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-captcha-jmrecaptcha",
             "captcha.jmrecaptcha"
         ],
         "confval-captcha-srfreecap": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-captcha-srfreecap",
             "captcha.srfreecap"
         ],
         "confval-menu-persistence-reference": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-menu-persistence-reference",
             ""
         ],
         "confval-storagepid": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#confval-storagepid",
             "storagePid"
         ],
         "confval-menu-available-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-menu-available-validators",
             ""
         ],
         "confval-badwordvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-badwordvalidator",
             "BadWordValidator"
         ],
         "confval-istruevalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-istruevalidator",
             "IsTrueValidator"
         ],
         "confval-requiredvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-requiredvalidator",
             "RequiredValidator"
         ],
         "confval-menu-special-fields-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-menu-special-fields-validators",
             ""
         ],
         "confval-captchavalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-captchavalidator",
             "CaptchaValidator"
         ],
         "confval-emptyvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-emptyvalidator",
             "EmptyValidator"
         ],
         "confval-equalcurrentpasswordvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-equalcurrentpasswordvalidator",
             "EqualCurrentPasswordValidator"
         ],
         "confval-equalcurrentuservalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-equalcurrentuservalidator",
             "EqualCurrentUserValidator"
         ],
         "confval-imageuploadvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-imageuploadvalidator",
             "ImageUploadValidator"
         ],
         "confval-uniquevalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-uniquevalidator",
             "UniqueValidator"
         ],
         "confval-repeatvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#confval-repeatvalidator",
             "RepeatValidator"
         ],
         "confval-evoweb-sfregister-controller-event-initializeactionevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-initializeactionevent",
             "Evoweb\\SfRegister\\Controller\\Event\\InitializeActionEvent"
         ],
         "confval-evoweb-sfregister-controller-event-createformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-createformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateFormEvent"
         ],
         "confval-evoweb-sfregister-controller-event-createpreviewevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-createpreviewevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreatePreviewEvent"
         ],
         "confval-evoweb-sfregister-controller-event-createsaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-createsaveevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateSaveEvent"
         ],
         "confval-evoweb-sfregister-controller-event-createconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-createconfirmevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateConfirmEvent"
         ],
         "confval-evoweb-sfregister-controller-event-createrefuseevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-createrefuseevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateRefuseEvent"
         ],
         "confval-evoweb-sfregister-controller-event-createacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-createacceptevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateAcceptEvent"
         ],
         "confval-evoweb-sfregister-controller-event-createdeclineevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-createdeclineevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateDeclineEvent"
         ],
         "confval-evoweb-sfregister-controller-event-deleteformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-deleteformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\DeleteFormEvent"
         ],
         "confval-evoweb-sfregister-controller-event-deletesaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-deletesaveevent",
             "Evoweb\\SfRegister\\Controller\\Event\\DeleteSaveEvent"
         ],
         "confval-evoweb-sfregister-controller-event-deleteconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-deleteconfirmevent",
             "Evoweb\\SfRegister\\Controller\\Event\\DeleteConfirmEvent"
         ],
         "confval-evoweb-sfregister-controller-event-editformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-editformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\EditFormEvent"
         ],
         "confval-evoweb-sfregister-controller-event-editpreviewevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-editpreviewevent",
             "Evoweb\\SfRegister\\Controller\\Event\\EditPreviewEvent"
         ],
         "confval-evoweb-sfregister-controller-event-editsaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-editsaveevent",
             "Evoweb\\SfRegister\\Controller\\Event\\EditSaveEvent"
         ],
         "confval-evoweb-sfregister-controller-event-editconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-editconfirmevent",
             "Evoweb\\SfRegister\\Controller\\Event\\EditConfirmEvent"
         ],
         "confval-evoweb-sfregister-controller-event-editacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-editacceptevent",
             "Evoweb\\SfRegister\\Controller\\Event\\EditAcceptEvent"
         ],
         "confval-evoweb-sfregister-controller-event-inviteformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-inviteformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\InviteFormEvent"
         ],
         "confval-evoweb-sfregister-controller-event-inviteinviteevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-inviteinviteevent",
             "Evoweb\\SfRegister\\Controller\\Event\\InviteInviteEvent"
         ],
         "confval-evoweb-sfregister-controller-event-passwordformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-passwordformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\PasswordFormEvent"
         ],
         "confval-evoweb-sfregister-controller-event-passwordsaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-passwordsaveevent",
             "Evoweb\\SfRegister\\Controller\\Event\\PasswordSaveEvent"
         ],
         "confval-evoweb-sfregister-controller-event-resendformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-resendformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\ResendFormEvent"
         ],
         "confval-evoweb-sfregister-controller-event-resendmailevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-controller-event-resendmailevent",
             "Evoweb\\SfRegister\\Controller\\Event\\ResendMailEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadmincreateacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadmincreateacceptevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateAcceptEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadmincreateconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadmincreateconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateConfirmEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadmincreatedeclineevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadmincreatedeclineevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateDeclineEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadmincreaterefuseevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadmincreaterefuseevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateRefuseEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadmincreatesaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadmincreatesaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateSaveEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadmindeleteconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadmindeleteconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminDeleteConfirmEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadmindeletesaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadmindeletesaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminDeleteSaveEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadmineditacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadmineditacceptevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminEditAcceptEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadmineditconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadmineditconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminEditConfirmEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadmineditsaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadmineditsaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminEditSaveEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadmininviteinviteevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadmininviteinviteevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminInviteInviteEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyadminresendmailevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyadminresendmailevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminResendMailEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyusercreateacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyusercreateacceptevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateAcceptEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyusercreateconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyusercreateconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateConfirmEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyusercreatedeclineevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyusercreatedeclineevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateDeclineEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyusercreaterefuseevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyusercreaterefuseevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateRefuseEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyusercreatesaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyusercreatesaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateSaveEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyuserdeleteconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyuserdeleteconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserDeleteConfirmEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyuserdeletesaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyuserdeletesaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserDeleteSaveEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyusereditacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyusereditacceptevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserEditAcceptEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyusereditconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyusereditconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserEditConfirmEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyusereditsaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyusereditsaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserEditSaveEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyuserinviteinviteevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyuserinviteinviteevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserInviteInviteEvent"
         ],
         "confval-evoweb-sfregister-services-event-notifyuserresendmailevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-notifyuserresendmailevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserResendMailEvent"
         ],
         "confval-evoweb-sfregister-services-event-invitationtoregisterevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-invitationtoregisterevent",
             "Evoweb\\SfRegister\\Services\\Event\\InvitationToRegisterEvent"
         ],
         "confval-evoweb-sfregister-services-event-presubmitmailevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#confval-evoweb-sfregister-services-event-presubmitmailevent",
             "Evoweb\\SfRegister\\Services\\Event\\PreSubmitMailEvent"
         ]
@@ -1230,523 +1230,523 @@
     "std:title": {
         "administration-1": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Administration\/Index.html#administration-1",
             "Administration"
         ],
         "breaking-changes-1": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#breaking-changes-1",
             "Breaking Changes"
         ],
         "2024-10-24": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2024-10-24",
             "2024.10.24"
         ],
         "2024-10-23": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2024-10-23",
             "2024.10.23"
         ],
         "2024-10-22": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2024-10-22",
             "2024.10.22"
         ],
         "2024-10-18": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2024-10-18",
             "2024.10.18"
         ],
         "2024-08-31": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2024-08-31",
             "2024.08.31"
         ],
         "2024-08-26": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2024-08-26",
             "2024.08.26"
         ],
         "2024-05-13": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2024-05-13",
             "2024.05.13"
         ],
         "2022-01-01": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2022-01-01",
             "2022.01.01"
         ],
         "2021-12-31": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2021-12-31",
             "2021.12.31"
         ],
         "2020-04-29": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2020-04-29",
             "2020.04.29"
         ],
         "2019-02-03": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2019-02-03",
             "2019.02.03"
         ],
         "2019-02-02": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2019-02-02",
             "2019.02.02"
         ],
         "2019-01-17": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2019-01-17",
             "2019.01.17"
         ],
         "2019-01-13": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2019-01-13",
             "2019.01.13"
         ],
         "2015-11-15": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "BreakingChanges\/Index.html#2015-11-15",
             "2015.11.15"
         ],
         "changelog-1": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Changelog\/Index.html#changelog-1",
             "ChangeLog"
         ],
         "emails": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#emails",
             "Emails"
         ],
         "notify-admin-create-properties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notify-admin-create-properties",
             "Notify admin create properties"
         ],
         "notify-admin-edit-properties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notify-admin-edit-properties",
             "Notify admin edit properties"
         ],
         "notify-user-create-properties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notify-user-create-properties",
             "Notify user create properties"
         ],
         "notify-user-edit-properties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notify-user-edit-properties",
             "Notify user edit properties"
         ],
         "address-and-subject-properties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#address-and-subject-properties",
             "Address and subject properties"
         ],
         "configuration-1": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#configuration-1",
             "Configuration"
         ],
         "more-complex-configuration": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#more-complex-configuration",
             "More complex configuration"
         ],
         "table-of-content": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#table-of-content",
             "Table of content"
         ],
         "integrate-other-captcha-extension": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#integrate-other-captcha-extension",
             "Integrate other captcha extension"
         ],
         "write-own-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#write-own-validators",
             "Write own validators"
         ],
         "settings": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#settings",
             "Settings"
         ],
         "persistence": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#persistence",
             "Persistence"
         ],
         "validation": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#validation",
             "Validation"
         ],
         "purpose-of-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#purpose-of-validators",
             "Purpose of Validators"
         ],
         "changes-since-version-9-0-0": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#changes-since-version-9-0-0",
             "Changes since version 9.0.0"
         ],
         "different-possibilities-of-assigning-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#different-possibilities-of-assigning-validators",
             "Different possibilities of assigning validators"
         ],
         "remove-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#remove-validators",
             "Remove validators"
         ],
         "assign-only-one-validator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#assign-only-one-validator",
             "Assign only one validator"
         ],
         "assign-multiple-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#assign-multiple-validators",
             "Assign multiple validators"
         ],
         "poor-man-s-passwords-with-short-length": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#poor-man-s-passwords-with-short-length",
             "Poor man\u00b4s passwords with short length"
         ],
         "bulletproof-passwords-with-long-length": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#bulletproof-passwords-with-long-length",
             "Bulletproof passwords with long length"
         ],
         "separate-validators-per-process": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#separate-validators-per-process",
             "Separate validators per process"
         ],
         "special-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#special-validators",
             "Special validators"
         ],
         "prefixing-needed-for-non-extbase-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#prefixing-needed-for-non-extbase-validators",
             "Prefixing needed for non extbase validators"
         ],
         "custom-validator-usage": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#custom-validator-usage",
             "Custom validator usage"
         ],
         "available-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#available-validators",
             "Available validators"
         ],
         "special-fields-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#special-fields-validators",
             "Special fields Validators"
         ],
         "extendability-1": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#extendability-1",
             "Extendability"
         ],
         "use-your-own-flavor-of-fields": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#use-your-own-flavor-of-fields",
             "Use your own flavor of fields"
         ],
         "adding-custom-properties": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#adding-custom-properties",
             "Adding custom properties"
         ],
         "bring-in-your-own-captcha": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#bring-in-your-own-captcha",
             "Bring in your own captcha"
         ],
         "psr-14-events": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#psr-14-events",
             "PSR-14 Events"
         ],
         "how-to-implement-a-slot": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#how-to-implement-a-slot",
             "How to implement a slot"
         ],
         "available-events": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#available-events",
             "Available events"
         ],
         "feusercontroller": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#feusercontroller",
             "FeuserController"
         ],
         "feusercreatecontroller": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#feusercreatecontroller",
             "FeuserCreateController"
         ],
         "feuserdeletecontroller": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#feuserdeletecontroller",
             "FeuserDeleteController"
         ],
         "feusereditcontroller": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#feusereditcontroller",
             "FeuserEditController"
         ],
         "feuserinvitecontroller": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#feuserinvitecontroller",
             "FeuserInviteController"
         ],
         "feuserpasswordcontroller": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#feuserpasswordcontroller",
             "FeuserPasswordController"
         ],
         "feuserresendcontroller": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#feuserresendcontroller",
             "FeuserResendController"
         ],
         "mail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#mail",
             "Mail"
         ],
         "frontend-user-registration-multipurpose-configurable-registration": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Index.html#frontend-user-registration-multipurpose-configurable-registration",
             "Frontend User Registration: Multipurpose configurable registration"
         ],
         "introduction-1": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Introduction\/Index.html#introduction-1",
             "Introduction"
         ],
         "what-does-it-do": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Introduction\/Index.html#what-does-it-do",
             "What does it do?"
         ],
         "registration-with-admin-review-and-all-notifications": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Introduction\/Index.html#registration-with-admin-review-and-all-notifications",
             "Registration with admin review and all notifications"
         ],
         "features": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Introduction\/Index.html#features",
             "Features"
         ],
         "screenshots": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "UsersManual\/Index.html#screenshots",
             "Screenshots"
         ],
         "known-problems": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "KnownProblems\/Index.html#known-problems",
             "Known problems"
         ],
         "to-do-list": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "KnownProblems\/Index.html#to-do-list",
             "To-Do list"
         ],
         "registration-actions": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "RegistrationActions\/Index.html#registration-actions",
             "Registration actions"
         ],
         "possible-actions": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "RegistrationActions\/Index.html#possible-actions",
             "Possible actions"
         ],
         "sitemap": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Sitemap.html#sitemap",
             "Sitemap"
         ],
         "templating-1": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Templating\/Index.html#templating-1",
             "Templating"
         ],
         "template-for-dynamic-fields": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Templating\/Index.html#template-for-dynamic-fields",
             "Template for dynamic fields"
         ],
         "customize-the-output": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Templating\/Index.html#customize-the-output",
             "Customize the output"
         ],
         "viewhelper-for-templates": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Templating\/Index.html#viewhelper-for-templates",
             "Viewhelper for templates"
         ],
         "birthdate-with-three-select-boxes": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Templating\/Index.html#birthdate-with-three-select-boxes",
             "Birthdate with three select boxes"
         ],
         "single-select-with-radio-buttons": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Templating\/Index.html#single-select-with-radio-buttons",
             "Single select with radio buttons"
         ],
         "single-select-as-select-box": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Templating\/Index.html#single-select-as-select-box",
             "Single select as select box"
         ],
         "automatic-marking-of-required-fields": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Templating\/Index.html#automatic-marking-of-required-fields",
             "Automatic marking of required fields"
         ],
         "tutorial-1": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Tutorial\/Index.html#tutorial-1",
             "Tutorial"
         ],
         "how-to-setup-different-registration-processes": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Tutorial\/Index.html#how-to-setup-different-registration-processes",
             "How to setup different registration processes?"
         ],
         "simple-like-peanut-butter-jelly-sandwich": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Tutorial\/Index.html#simple-like-peanut-butter-jelly-sandwich",
             "Simple like peanut butter jelly sandwich"
         ],
         "somewhat-like-creme-brulee": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Tutorial\/Index.html#somewhat-like-creme-brulee",
             "Somewhat like creme brule\u00e9"
         ],
         "your-christmas-stuffed-turkey": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Tutorial\/Index.html#your-christmas-stuffed-turkey",
             "Your christmas stuffed Turkey"
         ],
         "users-manual": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "UsersManual\/Index.html#users-manual",
             "Users manual"
         ],
         "changing-sorting-of-fields": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "UsersManual\/Index.html#changing-sorting-of-fields",
             "Changing sorting of fields"
         ]
@@ -1754,55 +1754,55 @@
     "std:confval-menu": {
         "admin-create": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#admin-create",
             ""
         ],
         "admin-edit": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#admin-edit",
             ""
         ],
         "user-create": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#user-create",
             ""
         ],
         "user-edit": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#user-edit",
             ""
         ],
         "address-and-subject": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#address-and-subject",
             ""
         ],
         "settings-reference": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#settings-reference",
             ""
         ],
         "persistence-reference": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#persistence-reference",
             ""
         ],
         "available-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#available-validators",
             ""
         ],
         "special-fields-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#special-fields-validators",
             ""
         ]
@@ -1810,613 +1810,613 @@
     "std:confval": {
         "notifyadminpostcreatesave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyadminpostcreatesave",
             "notifyAdminPostCreateSave"
         ],
         "notifyadminpostcreateconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyadminpostcreateconfirm",
             "notifyAdminPostCreateConfirm"
         ],
         "notifyadminpostcreaterefuse": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyadminpostcreaterefuse",
             "notifyAdminPostCreateRefuse"
         ],
         "notifyadminpostcreateaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyadminpostcreateaccept",
             "notifyAdminPostCreateAccept"
         ],
         "notifyadminpostcreatedecline": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyadminpostcreatedecline",
             "notifyAdminPostCreateDecline"
         ],
         "acceptemailpostcreate": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#acceptemailpostcreate",
             "acceptEmailPostCreate"
         ],
         "notifyadminposteditsave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyadminposteditsave",
             "notifyAdminPostEditSave"
         ],
         "notifyadminposteditconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyadminposteditconfirm",
             "notifyAdminPostEditConfirm"
         ],
         "notifyadminposteditaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyadminposteditaccept",
             "notifyAdminPostEditAccept"
         ],
         "acceptemailpostedit": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#acceptemailpostedit",
             "acceptEmailPostEdit"
         ],
         "notifyuserpostcreatesave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyuserpostcreatesave",
             "notifyUserPostCreateSave"
         ],
         "notifyuserpostcreateconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyuserpostcreateconfirm",
             "notifyUserPostCreateConfirm"
         ],
         "notifyuserpostcreaterefuse": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyuserpostcreaterefuse",
             "notifyUserPostCreateRefuse"
         ],
         "notifyuserpostcreateaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyuserpostcreateaccept",
             "notifyUserPostCreateAccept"
         ],
         "notifyuserpostcreatedecline": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyuserpostcreatedecline",
             "notifyUserPostCreateDecline"
         ],
         "confirmemailpostcreate": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confirmemailpostcreate",
             "confirmEmailPostCreate"
         ],
         "notifyuserposteditsave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyuserposteditsave",
             "notifyUserPostEditSave"
         ],
         "notifyuserposteditconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyuserposteditconfirm",
             "notifyUserPostEditConfirm"
         ],
         "notifyuserposteditaccept": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#notifyuserposteditaccept",
             "notifyUserPostEditAccept"
         ],
         "confirmemailpostedit": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#confirmemailpostedit",
             "confirmEmailPostEdit"
         ],
         "sitename": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#sitename",
             "sitename"
         ],
         "useremail-fromname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#useremail-fromname",
             "userEmail.fromName"
         ],
         "useremail-fromemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#useremail-fromemail",
             "userEmail.fromEmail"
         ],
         "useremail-replyname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#useremail-replyname",
             "userEmail.replyName"
         ],
         "useremail-replyemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#useremail-replyemail",
             "userEmail.replyEmail"
         ],
         "adminemail-toname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminemail-toname",
             "adminEmail.toName"
         ],
         "adminemail-toemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminemail-toemail",
             "adminEmail.toEmail"
         ],
         "adminemail-fromname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminemail-fromname",
             "adminEmail.fromName"
         ],
         "adminemail-fromemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminemail-fromemail",
             "adminEmail.fromEmail"
         ],
         "adminemail-replyname": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminemail-replyname",
             "adminEmail.replyName"
         ],
         "adminemail-replyemail": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Emails\/Index.html#adminemail-replyemail",
             "adminEmail.replyEmail"
         ],
         "badwordlist": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#badwordlist",
             "badWordList"
         ],
         "redirectpostregistrationpageid": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#redirectpostregistrationpageid",
             "redirectPostRegistrationPageId"
         ],
         "redirectpostactivationpageid": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#redirectpostactivationpageid",
             "redirectPostActivationPageId"
         ],
         "useemailaddressasusername": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#useemailaddressasusername",
             "useEmailAddressAsUsername"
         ],
         "useencryptedfilename": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#useencryptedfilename",
             "useEncryptedFilename"
         ],
         "autologinpostregistration": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#autologinpostregistration",
             "autologinPostRegistration"
         ],
         "autologinpostconfirmation": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#autologinpostconfirmation",
             "autologinPostConfirmation"
         ],
         "usergrouppostsave": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#usergrouppostsave",
             "usergroupPostSave"
         ],
         "usergrouppostconfirm": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#usergrouppostconfirm",
             "usergroupPostConfirm"
         ],
         "usergroup": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#usergroup",
             "usergroup"
         ],
         "captcha-jmrecaptcha": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#captcha-jmrecaptcha",
             "captcha.jmrecaptcha"
         ],
         "captcha-srfreecap": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#captcha-srfreecap",
             "captcha.srfreecap"
         ],
         "storagepid": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Index.html#storagepid",
             "storagePid"
         ],
         "badwordvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#badwordvalidator",
             "BadWordValidator"
         ],
         "istruevalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#istruevalidator",
             "IsTrueValidator"
         ],
         "requiredvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#requiredvalidator",
             "RequiredValidator"
         ],
         "captchavalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#captchavalidator",
             "CaptchaValidator"
         ],
         "emptyvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#emptyvalidator",
             "EmptyValidator"
         ],
         "equalcurrentpasswordvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#equalcurrentpasswordvalidator",
             "EqualCurrentPasswordValidator"
         ],
         "equalcurrentuservalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#equalcurrentuservalidator",
             "EqualCurrentUserValidator"
         ],
         "imageuploadvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#imageuploadvalidator",
             "ImageUploadValidator"
         ],
         "uniquevalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#uniquevalidator",
             "UniqueValidator"
         ],
         "repeatvalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Configuration\/Validation\/Index.html#repeatvalidator",
             "RepeatValidator"
         ],
         "evoweb-sfregister-controller-event-initializeactionevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-initializeactionevent",
             "Evoweb\\SfRegister\\Controller\\Event\\InitializeActionEvent"
         ],
         "evoweb-sfregister-controller-event-createformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-createformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateFormEvent"
         ],
         "evoweb-sfregister-controller-event-createpreviewevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-createpreviewevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreatePreviewEvent"
         ],
         "evoweb-sfregister-controller-event-createsaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-createsaveevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateSaveEvent"
         ],
         "evoweb-sfregister-controller-event-createconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-createconfirmevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateConfirmEvent"
         ],
         "evoweb-sfregister-controller-event-createrefuseevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-createrefuseevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateRefuseEvent"
         ],
         "evoweb-sfregister-controller-event-createacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-createacceptevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateAcceptEvent"
         ],
         "evoweb-sfregister-controller-event-createdeclineevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-createdeclineevent",
             "Evoweb\\SfRegister\\Controller\\Event\\CreateDeclineEvent"
         ],
         "evoweb-sfregister-controller-event-deleteformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-deleteformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\DeleteFormEvent"
         ],
         "evoweb-sfregister-controller-event-deletesaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-deletesaveevent",
             "Evoweb\\SfRegister\\Controller\\Event\\DeleteSaveEvent"
         ],
         "evoweb-sfregister-controller-event-deleteconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-deleteconfirmevent",
             "Evoweb\\SfRegister\\Controller\\Event\\DeleteConfirmEvent"
         ],
         "evoweb-sfregister-controller-event-editformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-editformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\EditFormEvent"
         ],
         "evoweb-sfregister-controller-event-editpreviewevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-editpreviewevent",
             "Evoweb\\SfRegister\\Controller\\Event\\EditPreviewEvent"
         ],
         "evoweb-sfregister-controller-event-editsaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-editsaveevent",
             "Evoweb\\SfRegister\\Controller\\Event\\EditSaveEvent"
         ],
         "evoweb-sfregister-controller-event-editconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-editconfirmevent",
             "Evoweb\\SfRegister\\Controller\\Event\\EditConfirmEvent"
         ],
         "evoweb-sfregister-controller-event-editacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-editacceptevent",
             "Evoweb\\SfRegister\\Controller\\Event\\EditAcceptEvent"
         ],
         "evoweb-sfregister-controller-event-inviteformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-inviteformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\InviteFormEvent"
         ],
         "evoweb-sfregister-controller-event-inviteinviteevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-inviteinviteevent",
             "Evoweb\\SfRegister\\Controller\\Event\\InviteInviteEvent"
         ],
         "evoweb-sfregister-controller-event-passwordformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-passwordformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\PasswordFormEvent"
         ],
         "evoweb-sfregister-controller-event-passwordsaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-passwordsaveevent",
             "Evoweb\\SfRegister\\Controller\\Event\\PasswordSaveEvent"
         ],
         "evoweb-sfregister-controller-event-resendformevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-resendformevent",
             "Evoweb\\SfRegister\\Controller\\Event\\ResendFormEvent"
         ],
         "evoweb-sfregister-controller-event-resendmailevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-controller-event-resendmailevent",
             "Evoweb\\SfRegister\\Controller\\Event\\ResendMailEvent"
         ],
         "evoweb-sfregister-services-event-notifyadmincreateacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadmincreateacceptevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateAcceptEvent"
         ],
         "evoweb-sfregister-services-event-notifyadmincreateconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadmincreateconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateConfirmEvent"
         ],
         "evoweb-sfregister-services-event-notifyadmincreatedeclineevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadmincreatedeclineevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateDeclineEvent"
         ],
         "evoweb-sfregister-services-event-notifyadmincreaterefuseevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadmincreaterefuseevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateRefuseEvent"
         ],
         "evoweb-sfregister-services-event-notifyadmincreatesaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadmincreatesaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateSaveEvent"
         ],
         "evoweb-sfregister-services-event-notifyadmindeleteconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadmindeleteconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminDeleteConfirmEvent"
         ],
         "evoweb-sfregister-services-event-notifyadmindeletesaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadmindeletesaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminDeleteSaveEvent"
         ],
         "evoweb-sfregister-services-event-notifyadmineditacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadmineditacceptevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminEditAcceptEvent"
         ],
         "evoweb-sfregister-services-event-notifyadmineditconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadmineditconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminEditConfirmEvent"
         ],
         "evoweb-sfregister-services-event-notifyadmineditsaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadmineditsaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminEditSaveEvent"
         ],
         "evoweb-sfregister-services-event-notifyadmininviteinviteevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadmininviteinviteevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminInviteInviteEvent"
         ],
         "evoweb-sfregister-services-event-notifyadminresendmailevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyadminresendmailevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminResendMailEvent"
         ],
         "evoweb-sfregister-services-event-notifyusercreateacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyusercreateacceptevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateAcceptEvent"
         ],
         "evoweb-sfregister-services-event-notifyusercreateconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyusercreateconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateConfirmEvent"
         ],
         "evoweb-sfregister-services-event-notifyusercreatedeclineevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyusercreatedeclineevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateDeclineEvent"
         ],
         "evoweb-sfregister-services-event-notifyusercreaterefuseevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyusercreaterefuseevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateRefuseEvent"
         ],
         "evoweb-sfregister-services-event-notifyusercreatesaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyusercreatesaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateSaveEvent"
         ],
         "evoweb-sfregister-services-event-notifyuserdeleteconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyuserdeleteconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserDeleteConfirmEvent"
         ],
         "evoweb-sfregister-services-event-notifyuserdeletesaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyuserdeletesaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserDeleteSaveEvent"
         ],
         "evoweb-sfregister-services-event-notifyusereditacceptevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyusereditacceptevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserEditAcceptEvent"
         ],
         "evoweb-sfregister-services-event-notifyusereditconfirmevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyusereditconfirmevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserEditConfirmEvent"
         ],
         "evoweb-sfregister-services-event-notifyusereditsaveevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyusereditsaveevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserEditSaveEvent"
         ],
         "evoweb-sfregister-services-event-notifyuserinviteinviteevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyuserinviteinviteevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserInviteInviteEvent"
         ],
         "evoweb-sfregister-services-event-notifyuserresendmailevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-notifyuserresendmailevent",
             "Evoweb\\SfRegister\\Services\\Event\\NotifyUserResendMailEvent"
         ],
         "evoweb-sfregister-services-event-invitationtoregisterevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-invitationtoregisterevent",
             "Evoweb\\SfRegister\\Services\\Event\\InvitationToRegisterEvent"
         ],
         "evoweb-sfregister-services-event-presubmitmailevent": [
             "Frontend User Registration: Multipurpose configurable registration",
-            "13.1.0",
+            "13.1.2",
             "Extendability\/Index.html#evoweb-sfregister-services-event-presubmitmailevent",
             "Evoweb\\SfRegister\\Services\\Event\\PreSubmitMailEvent"
         ]
