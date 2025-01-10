@@ -45,10 +45,10 @@ class FeuserCreateControllerTest extends AbstractTestBase
                         'validation.' => [
                             'create.' => [
                                 'username.' => [
-                                    1 => '"Evoweb.SfRegister:Required"',
-                                    2 => '"StringLength", options={"minimum": 4, "maximum": 80}',
-                                    3 => '"Evoweb.SfRegister:Unique"',
-                                    4 => '"Evoweb.SfRegister:Unique", options={"global": 1}',
+                                    1 => '"Evoweb\\SfRegister\\Validation\\Validator\\RequiredValidator"',
+                                    2 => '"TYPO3\\CMS\\Extbase\\Validation\\Validator\\StringLengthValidator", options={"minimum": 4, "maximum": 80}',
+                                    3 => '"Evoweb\\SfRegister\\Validation\\Validator\\UniqueValidator"',
+                                    4 => '"Evoweb\\SfRegister\\Validation\\Validator\\UniqueValidator", options={"global": 1}',
                                 ],
                             ],
                         ],

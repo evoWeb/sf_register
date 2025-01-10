@@ -6,6 +6,25 @@
 Breaking Changes
 ================
 
+2025.01.10
+==========
+
+The breaking change of 2019.01.13 is reverted. Since commit d10e1bc the shorthand
+notation for validators got deprecated and will be removed in 14.0. So now you
+need to use the fully qualified classname again.
+
+Required validator:
+
+..  code-block:: typoscript
+    :caption: Before
+
+    "Evoweb.SfRegister:Required"
+
+..  code-block:: typoscript
+    :caption: After
+
+    Evoweb\SfRegister\Validation\Validator\RequiredValidator
+
 2024.10.24
 ==========
 
@@ -192,53 +211,6 @@ By this its always possible to properly hash passwords.
 
 Due to this shift the support for md5 and sha1 configuration is dropped in
 EqualCurrentPasswordValidator::isValid and FeuserController::encryptPassword.
-
-2019.01.13
-==========
-
-Changes in validation were done to match the new pattern used since TYPO3 9. To ensure that the user/password model
-still validates you need to check whether you changed rules in plugin.tx_sfregister.settings.validation.*.*
-
-Here are some examples how old rules need to be converted:
-
-Required validator:
-
-..  code-block:: typoscript
-    :caption: Before
-
-    Evoweb\SfRegister\Validation\Validator\RequiredValidator
-
-..  code-block:: typoscript
-    :caption: After
-
-    "Evoweb.SfRegister:Required"
-
-String length validator:
-
-..  code-block:: typoscript
-    :caption: Before
-
-    StringLength(minimum = 4, maximum = 80)
-
-..  code-block:: typoscript
-    :caption: After
-
-    "StringLength", options={"minimum": 4, "maximum": 80}
-
-Uniqueness validator:
-
-..  code-block:: typoscript
-    :caption: Before
-
-    Evoweb\SfRegister\Validation\Validator\UniqueValidator(global = 1)
-
-..  code-block:: typoscript
-    :caption: After
-
-    "Evoweb.SfRegister:Unique", options={"global": 1}
-
-In general `Evoweb\SfRegister\Validation\Validator` needs to be replaced with `"Evoweb.SfRegister:` and the
-ending `Validator` with '"'
 
 2015.11.15
 ==========

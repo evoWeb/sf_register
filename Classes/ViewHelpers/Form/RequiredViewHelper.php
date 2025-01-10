@@ -111,12 +111,12 @@ class RequiredViewHelper extends AbstractConditionViewHelper
         $result = false;
         if (
             $fieldSettings === RequiredValidator::class
-            || $fieldSettings === '"Evoweb.SfRegister:Required"'
+            || $fieldSettings === '"' . RequiredValidator::class . '"'
             || (
                 is_array($fieldSettings)
                 && (
                     in_array(RequiredValidator::class, $fieldSettings)
-                    || in_array('"Evoweb.SfRegister:Required"', $fieldSettings)
+                    || in_array('"' . RequiredValidator::class . '"', $fieldSettings)
                 )
             )
         ) {

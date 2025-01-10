@@ -29,86 +29,86 @@ plugin.tx_sfregister.settings {
 
   validation.create {
     username {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "StringLength", options={"minimum": 4, "maximum": 80}
-      3 = "Evoweb.SfRegister:Unique"
-      4 = "Evoweb.SfRegister:Unique", options={"global": 1}
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator", options={"minimum": 4, "maximum": 80}
+      3 = "Evoweb\SfRegister\Validation\Validator\UniqueValidator"
+      4 = "Evoweb\SfRegister\Validation\Validator\UniqueValidator", options={"global": 1}
     }
     password {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "StringLength", options={"minimum": 8, "maximum": 40}
-      3 = "Evoweb.SfRegister:BadWord"
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator", options={"minimum": 8, "maximum": 40}
+      3 = "Evoweb\SfRegister\Validation\Validator\BadWordValidator"
     }
-    passwordRepeat = "Evoweb.SfRegister:Repeat"
-    firstName = "Evoweb.SfRegister:Required"
-    lastName = "Evoweb.SfRegister:Required"
+    passwordRepeat = "Evoweb\SfRegister\Validation\Validator\RepeatValidator"
+    firstName = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+    lastName = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
     email {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "EmailAddress"
-      3 = "Evoweb.SfRegister:Unique"
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "TYPO3\CMS\Extbase\Validation\Validator\EmailAddressValidator"
+      3 = "Evoweb\SfRegister\Validation\Validator\UniqueValidator"
     }
-    emailRepeat = "Evoweb.SfRegister:Repeat"
+    emailRepeat = "Evoweb\SfRegister\Validation\Validator\RepeatValidator"
     privacy {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "Evoweb.SfRegister:IsTrue"
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "Evoweb\SfRegister\Validation\Validator\IsTrueValidator"
     }
     gtc {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "Evoweb.SfRegister:IsTrue"
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "Evoweb\SfRegister\Validation\Validator\IsTrueValidator"
     }
-    image = "Evoweb.SfRegister:ImageUpload"
-    captcha = "Evoweb.SfRegister:Captcha", options={"type": "{$plugin.tx_sfregister.settings.captchaId ?? $evoweb.sf-register.settings.captchaId}"}
+    image = "Evoweb\SfRegister\Validation\Validator\ImageUploadValidator"
+    captcha = "Evoweb\SfRegister\Validation\Validator\CaptchaValidator", options={"type": "{$plugin.tx_sfregister.settings.captchaId ?? $evoweb.sf-register.settings.captchaId}"}
   }
 
   validation.edit {
-    firstName = "Evoweb.SfRegister:Required"
-    lastName = "Evoweb.SfRegister:Required"
-    email = "EmailAddress"
-    gtc = "Evoweb.SfRegister:IsTrue"
-    image = "Evoweb.SfRegister:ImageUpload"
+    firstName = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+    lastName = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+    email = "TYPO3\CMS\Extbase\Validation\Validator\EmailAddressValidator"
+    gtc = "Evoweb\SfRegister\Validation\Validator\IsTrueValidator"
+    image = "Evoweb\SfRegister\Validation\Validator\ImageUploadValidator"
   }
 
   validation.password {
     password {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "StringLength", options={"minimum": 2, "maximum": 40}
-      3 = "Evoweb.SfRegister:BadWord"
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator", options={"minimum": 2, "maximum": 40}
+      3 = "Evoweb\SfRegister\Validation\Validator\BadWordValidator"
     }
     passwordRepeat {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "StringLength", options={"minimum": 2, "maximum": 40}
-      3 = "Evoweb.SfRegister:Repeat"
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator", options={"minimum": 2, "maximum": 40}
+      3 = "Evoweb\SfRegister\Validation\Validator\RepeatValidator"
     }
     oldPassword {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "StringLength", options={"minimum": 2, "maximum": 40}
-      3 = "Evoweb.SfRegister:EqualCurrentPassword"
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator", options={"minimum": 2, "maximum": 40}
+      3 = "Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator"
     }
   }
 
   validation.invite {
     username {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "StringLength", options={"minimum": 4, "maximum": 80}
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator", options={"minimum": 4, "maximum": 80}
     }
     invitationEmail {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "EmailAddress"
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "TYPO3\CMS\Extbase\Validation\Validator\EmailAddressValidator"
     }
-    captcha = "Evoweb.SfRegister:Captcha", options={"type": "{$plugin.tx_sfregister.settings.captchaId ?? $evoweb.sf-register.settings.captchaId}"}
+    captcha = "Evoweb\SfRegister\Validation\Validator\CaptchaValidator", options={"type": "{$plugin.tx_sfregister.settings.captchaId ?? $evoweb.sf-register.settings.captchaId}"}
   }
 
   validation.delete {
     email {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "EmailAddress"
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "TYPO3\CMS\Extbase\Validation\Validator\EmailAddressValidator"
     }
   }
 
   validation.resend {
     email {
-      1 = "Evoweb.SfRegister:Required"
-      2 = "EmailAddress"
+      1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+      2 = "TYPO3\CMS\Extbase\Validation\Validator\EmailAddressValidator"
     }
   }
 
