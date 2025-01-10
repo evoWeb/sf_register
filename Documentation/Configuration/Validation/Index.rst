@@ -33,8 +33,6 @@ Changes since version 9.0.0
 Since version 9 validators are only used for selected fields, it's not necessary
 to remove validation configuration only because certain fields should not be
 present in the form.
-Beside that the configuration changed from using "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
-to "Evoweb.SfRegister:Required"
 
 In general the pattern for a validation rule is
 
@@ -69,7 +67,7 @@ below.
 ..  code-block:: typoscript
     :caption: EXT:site_package/Configuration/TypoScript/setup.typoscript
 
-    plugin.tx_sfregister.settings.validation.create.passwordRepeat = "Evoweb.SfRegister:Repeat"
+    plugin.tx_sfregister.settings.validation.create.passwordRepeat = "Evoweb\SfRegister\Validation\Validator\RepeatValidator"
 
 Assign multiple validators
 ''''''''''''''''''''''''''
@@ -81,8 +79,8 @@ next example.
     :caption: EXT:site_package/Configuration/TypoScript/setup.typoscript
 
     plugin.tx_sfregister.settings.validation.create.password {
-        1 = "Evoweb.SfRegister:Required"
-        2 = "Evoweb.SfRegister:BadWord"
+        1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+        2 = "Evoweb\SfRegister\Validation\Validator\BadWordValidator"
     }
 
 Regarding validator it's possible to have values attached to the assigned one.
@@ -99,7 +97,7 @@ Poor man´s passwords with short length
     :caption: EXT:site_package/Configuration/TypoScript/setup.typoscript
 
     plugin.tx_sfregister.settings.validation.create.password {
-        1 = "Evoweb.SfRegister:Required"
+        1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
         2 = "StringLength", options={"minimum": 4, "maximum": 8}
     }
 
@@ -110,9 +108,9 @@ Bulletproof passwords with long length
     :caption: EXT:site_package/Configuration/TypoScript/setup.typoscript
 
     plugin.tx_sfregister.settings.validation.create.password {
-        1 = "Evoweb.SfRegister:Required"
+        1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
         2 = "StringLength", options={"minimum": 8, "maximum": 40}
-        3 = "Evoweb.SfRegister:BadWord"
+        3 = "Evoweb\SfRegister\Validation\Validator\BadWordValidator"
     }
 
 In total you have five possible combination of validator assignments for each
@@ -155,17 +153,12 @@ is a special construct to make the configuration via TypoScript possible. All
 others are free to combine. If a validator is only suited for a certain field
 it will be mentioned in the detail configuration.
 
-Prefixing needed for non extbase validators
-===========================================
+Custom validators
+=================
 
-To use the extension validators you need to prefix them in the TypoScript with
-Evoweb.SfRegister: . For all validators without this prefix the validation assumes
-that they are extbase specific validators and use them as such.
-
-Secondly this makes it possible to use custom validators that do not come with
-extbase or sf_register. Just code your validator and make it available for auto
-loading (either in an extbase standard path or via ext_autoload.php). Afterwards
-you are ready to use your validator like in the following example.
+You can use your own validators. Just code your validator and make it available
+for auto loading (either in an extbase standard path or via ext_autoload.php).
+Afterwards you are ready to use your validator like in the following example.
 
 Custom validator usage
 ''''''''''''''''''''''
@@ -173,7 +166,7 @@ Custom validator usage
 ..  code-block:: typoscript
     :caption: EXT:site_package/Configuration/TypoScript/setup.typoscript
 
-    plugin.tx_sfregister.settings.validation.create.password = "Evoweb.SfRegister:Required"
+    plugin.tx_sfregister.settings.validation.create.password = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
 
 Available validators
 ====================
