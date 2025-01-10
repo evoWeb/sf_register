@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <title>Frontend User Registration: Multipurpose configurable registration 13.1.2
+    <title>Frontend User Registration: Multipurpose configurable registration 13.1.3
         documentation</title>
 
     
@@ -10,11 +10,11 @@
 <meta content="phpdocumentor/guides" name="generator">
 <meta content="Frontend User Registration: Multipurpose configurable registration" name="docsearch:name">
 <meta content="" name="docsearch:package_type">
-<meta content="13.1.2" name="docsearch:release">
-<meta content="13.1.2" name="docsearch:version">
-<meta content="2025-01-10T16:03:41+00:00" name="docsearch:modified">
-<meta content="2025-01-10T16:03:41+00:00" name="dc.modified">
-<meta content="2025-01-10T16:03:41+00:00" property="article:modified_time">
+<meta content="13.1.3" name="docsearch:release">
+<meta content="13.1.3" name="docsearch:version">
+<meta content="2025-01-10T20:11:04+00:00" name="docsearch:modified">
+<meta content="2025-01-10T20:11:04+00:00" name="dc.modified">
+<meta content="2025-01-10T20:11:04+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -77,7 +77,7 @@
                 <div id="toc-version" class="toc-version" data-override-url-proxy="https://render-guides.ddev.site/_resources/js/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html">
                 
                     <span class="toc-version-prefix">Release:</span>
-                    <span class="toc-version-number" tabindex="0">13.1.2</span>
+                    <span class="toc-version-number" tabindex="0">13.1.3</span>
                 </div>
                 <div id="toc-version-options" class="toc-version-options">
                     <p><span class="fa fa-spinner fa-spin"></span> Loading data.</p>
@@ -119,7 +119,7 @@
 
         <dd class="field-odd">
             
-    <p>13.1.2</p>
+    <p>13.1.3</p>
         </dd>
             <dt class="field-odd">Language</dt>
 
@@ -145,7 +145,7 @@ license.</p>
 
         <dd class="field-odd">
             
-    <p>Fri, 10 Jan 2025 16:03:41 +0000</p>
+    <p>Fri, 10 Jan 2025 20:11:04 +0000</p>
         </dd>
             <dt class="field-odd">Copyright</dt>
 
@@ -263,7 +263,7 @@ a GNU/GPL CMS/Framework available from <a href="http://typo3.org">http://typo3.o
 
         <dd class="field-odd">
             
-    <p>13.1.2</p>
+    <p>13.1.3</p>
         </dd>
             <dt class="field-odd">Language</dt>
 
@@ -289,7 +289,7 @@ license.</p>
 
         <dd class="field-odd">
             
-    <p>Fri, 10 Jan 2025 16:03:41 +0000</p>
+    <p>Fri, 10 Jan 2025 20:11:04 +0000</p>
         </dd>
             <dt class="field-odd">Copyright</dt>
 
@@ -3136,7 +3136,7 @@ and require the function <code class="code-inline" translate="no">is<wbr>Valid<w
 
 </li>
     <li class="toc-item">
-    <a href="#prefixing-needed-for-non-extbase-validators">Prefixing needed for non extbase validators</a>
+    <a href="#custom-validators">Custom validators</a>
 
         <ul class="section-level-1">
             <li class="toc-item">
@@ -3185,9 +3185,7 @@ validators should take care of a value.</p>
             
     <p>Since version 9 validators are only used for selected fields, it&#039;s not necessary
 to remove validation configuration only because certain fields should not be
-present in the form.
-Beside that the configuration changed from using &quot;EvowebSfRegisterValidationValidatorRequiredValidator&quot;
-to &quot;Evoweb.SfRegister:Required&quot;</p>
+present in the form.</p>
 
             
     <p>In general the pattern for a validation rule is</p>
@@ -3239,7 +3237,7 @@ below.</p>
         <span class="caption-text">EXT:site_package/Configuration/TypoScript/setup.typoscript</span>
     </div><div class="code-block-wrapper" translate="no">
             
-    <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.passwordRepeat = "Evoweb.SfRegister:Repeat"</code></pre>
+    <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.passwordRepeat = "Evoweb\SfRegister\Validation\Validator\RepeatValidator"</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -3259,8 +3257,8 @@ next example.</p>
     </div><div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.password {
-    <span class="hljs-title">1</span> = "Evoweb.SfRegister:Required"
-    <span class="hljs-title">2</span> = "Evoweb.SfRegister:BadWord"
+    <span class="hljs-title">1</span> = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
+    <span class="hljs-title">2</span> = "Evoweb\SfRegister\Validation\Validator\BadWordValidator"
 }</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
@@ -3285,7 +3283,7 @@ for Fort Knox.</p>
     </div><div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.password {
-    <span class="hljs-title">1</span> = "Evoweb.SfRegister:Required"
+    <span class="hljs-title">1</span> = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
     <span class="hljs-title">2</span> = "StringLength", options={"minimum": 4, "maximum": 8}
 }</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
@@ -3303,9 +3301,9 @@ for Fort Knox.</p>
     </div><div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.password {
-    <span class="hljs-title">1</span> = "Evoweb.SfRegister:Required"
+    <span class="hljs-title">1</span> = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
     <span class="hljs-title">2</span> = "StringLength", options={"minimum": 8, "maximum": 40}
-    <span class="hljs-title">3</span> = "Evoweb.SfRegister:BadWord"
+    <span class="hljs-title">3</span> = "Evoweb\SfRegister\Validation\Validator\BadWordValidator"
 }</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
@@ -3366,18 +3364,12 @@ others are free to combine. If a validator is only suited for a certain field
 it will be mentioned in the detail configuration.</p>
 
     </section>
-            <section class="section" id="prefixing-needed-for-non-extbase-validators">
-            <h2>Prefixing needed for non extbase validators<a class="headerlink" href="#prefixing-needed-for-non-extbase-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <section class="section" id="custom-validators">
+            <h2>Custom validators<a class="headerlink" href="#custom-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
-    <p>To use the extension validators you need to prefix them in the TypoScript with
-Evoweb.SfRegister: . For all validators without this prefix the validation assumes
-that they are extbase specific validators and use them as such.</p>
-
-            
-    <p>Secondly this makes it possible to use custom validators that do not come with
-extbase or sf_register. Just code your validator and make it available for auto
-loading (either in an extbase standard path or via ext_autoload.php). Afterwards
-you are ready to use your validator like in the following example.</p>
+    <p>You can use your own validators. Just code your validator and make it available
+for auto loading (either in an extbase standard path or via ext_autoload.php).
+Afterwards you are ready to use your validator like in the following example.</p>
 
             <section class="section" id="custom-validator-usage">
             <h3>Custom validator usage<a class="headerlink" href="#custom-validator-usage" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
@@ -3385,7 +3377,7 @@ you are ready to use your validator like in the following example.</p>
         <span class="caption-text">EXT:site_package/Configuration/TypoScript/setup.typoscript</span>
     </div><div class="code-block-wrapper" translate="no">
             
-    <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.password = "Evoweb.SfRegister:Required"</code></pre>
+    <pre class="code-block"><code class="hljs typoscript">plugin.tx_sfregister.settings.validation.create.password = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"</code></pre>
     <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
@@ -6911,6 +6903,41 @@ the confirmation and activation. Some are mandatory to get a valid user to login
 <section class="section" id="breaking-changes-1" data-rst-anchor="breaking-changes">
             <a id="breaking-changes"></a>
             <h1>Breaking Changes<a class="headerlink" href="#breaking-changes-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+            <section class="section" id="2025-01-10">
+            <h2>2025.01.10<a class="headerlink" href="#2025-01-10" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            
+    <p>The breaking change of 2019.01.13 is reverted. Since commit d10e1bc the shorthand
+notation for validators got deprecated and will be removed in 14.0. So now you
+need to use the fully qualified classname again.</p>
+
+            
+    <p>Required validator:</p>
+
+                <div class="code-block-caption">
+        <span class="caption-text">Before</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs typoscript">"Evoweb.SfRegister:Required"</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div>
+                <div class="code-block-caption">
+        <span class="caption-text">After</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs typoscript">Evoweb\SfRegister\Validation\Validator\RequiredValidator</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div>
+    </section>
             <section class="section" id="2024-10-24">
             <h2>2024.10.24<a class="headerlink" href="#2024-10-24" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
@@ -7171,101 +7198,6 @@ Deprecation: #85804 - Salted password hash class deprecations)</p>
 EqualCurrentPasswordValidator::isValid and FeuserController::encryptPassword.</p>
 
     </section>
-            <section class="section" id="2019-01-13">
-            <h2>2019.01.13<a class="headerlink" href="#2019-01-13" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
-            
-    <p>Changes in validation were done to match the new pattern used since TYPO3 9. To ensure that the user/password model
-still validates you need to check whether you changed rules in plugin.tx_sfregister.settings.validation.<em>.</em></p>
-
-            
-    <p>Here are some examples how old rules need to be converted:</p>
-
-            
-    <p>Required validator:</p>
-
-                <div class="code-block-caption">
-        <span class="caption-text">Before</span>
-    </div><div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code class="hljs typoscript">Evoweb\SfRegister\Validation\Validator\RequiredValidator</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-                <div class="code-block-caption">
-        <span class="caption-text">After</span>
-    </div><div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code class="hljs typoscript">"Evoweb.SfRegister:Required"</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-            
-    <p>String length validator:</p>
-
-                <div class="code-block-caption">
-        <span class="caption-text">Before</span>
-    </div><div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code class="hljs typoscript">StringLength(minimum = 4, maximum = 80)</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-                <div class="code-block-caption">
-        <span class="caption-text">After</span>
-    </div><div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code class="hljs typoscript">"StringLength", options={"minimum": 4, "maximum": 80}</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-            
-    <p>Uniqueness validator:</p>
-
-                <div class="code-block-caption">
-        <span class="caption-text">Before</span>
-    </div><div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code class="hljs typoscript">Evoweb\SfRegister\Validation\Validator\UniqueValidator(global = 1)</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-                <div class="code-block-caption">
-        <span class="caption-text">After</span>
-    </div><div class="code-block-wrapper" translate="no">
-            
-    <pre class="code-block"><code class="hljs typoscript">"Evoweb.SfRegister:Unique", options={"global": 1}</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
-            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
-            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-        </button>
-        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-    </div>
-</div>
-            
-    <p>In general <code class="code-inline" translate="no">Evoweb\<wbr>Sf<wbr>Register\<wbr>Validation\<wbr>Validator</code> needs to be replaced with <code class="code-inline" translate="no">&quot;Evoweb.<wbr>Sf<wbr>Register:</code> and the
-ending <code class="code-inline" translate="no">Validator</code> with &#039;&quot;&#039;</p>
-
-    </section>
             <section class="section" id="2015-11-15">
             <h2>2015.11.15<a class="headerlink" href="#2015-11-15" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
@@ -7384,7 +7316,7 @@ method needs to be changed accordingly.</li>
                                                 <li><a href="https://github.com/evoWeb/sf_register/issues" rel="nofollow noopener" title="Issues"><span>Issues</span></a></li>
                                                 <li><a href="https://github.com/evoWeb/sf_register" rel="nofollow noopener" title="Repository"><span>Repository</span></a></li>
                                             </ul>                <div class="footer-additional">
-                    <p class="text-center">Last rendered: Jan 10, 2025 16:03</p>
+                    <p class="text-center">Last rendered: Jan 10, 2025 20:11</p>
                 </div>
                 <div class="footer-meta">
                                         <div class="footer-meta-copyright">
