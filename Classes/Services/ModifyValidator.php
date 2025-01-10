@@ -108,7 +108,7 @@ class ModifyValidator
                 $settings,
                 $request,
                 $argument,
-                $this->settings['validation'][strtolower($controllerName)] ?? []
+                $settings['validation'][strtolower($controllerName)] ?? []
             );
         }
         return $arguments;
