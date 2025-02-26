@@ -41,12 +41,35 @@
 			<trans-unit id="settings.evoweb.sf-register.settings.resendPid" resname="settings.evoweb.sf-register.settings.resendPid">
 				<source>Page ID with resend form</source>
 			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.badWordList" resname="settings.evoweb.sf-register.settings.badWordList">
+				<source>Comma separated list of words used in bad word validator</source>
+			</trans-unit>
 			<trans-unit id="settings.evoweb.sf-register.settings.captchaId" resname="settings.evoweb.sf-register.settings.captchaId">
 				<source>Short name for the desired captcha extension: recaptcha, jmrecaptcha, srfreecap</source>
 			</trans-unit>
 
+			<trans-unit id="settings.evoweb.sf-register.settings.usergroup" resname="settings.evoweb.sf-register.settings.usergroup">
+				<source>Default usergroup if no confirmation or acceptance is necessary</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.usergroupPostSave" resname="settings.evoweb.sf-register.settings.usergroupPostSave">
+				<source>Usergroup ID before confirming the registration</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.usergroupPostConfirm" resname="settings.evoweb.sf-register.settings.usergroupPostConfirm">
+				<source>Usergroup ID after confirming the registration</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.usergroupPostAccept" resname="settings.evoweb.sf-register.settings.usergroupPostAccept">
+				<source>Usergroup ID after accepting the registration</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.emailSitename" resname="settings.evoweb.sf-register.settings.emailSitename">
+				<source>Site name used in email subject and body text</source>
+			</trans-unit>
+
 			<trans-unit id="settings.evoweb.sf-register.settings.redirectPostRegistrationPageId" resname="settings.evoweb.sf-register.settings.redirectPostRegistrationPageId">
 				<source>Page ID to redirect to after the user is saved (not after confirmation)</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.redirectPostActivationPageId" resname="settings.evoweb.sf-register.settings.redirectPostActivationPageId">
+				<source>Uid of the page to redirect to0, after the registration is confirmed (not after saving)</source>
 			</trans-unit>
 
 			<trans-unit id="settings.evoweb.sf-register.settings.useEmailAddressAsUsername" resname="settings.evoweb.sf-register.settings.useEmailAddressAsUsername">
@@ -54,16 +77,6 @@
 			</trans-unit>
 			<trans-unit id="settings.evoweb.sf-register.settings.useEncryptedFilename" resname="settings.evoweb.sf-register.settings.useEncryptedFilename">
 				<source>Use encrypted filename: to deny direct access on uploaded files</source>
-			</trans-unit>
-
-			<trans-unit id="settings.evoweb.sf-register.settings.autologinPostRegistration" resname="settings.evoweb.sf-register.settings.autologinPostRegistration">
-				<source>Whether the user should get logged in after registration</source>
-			</trans-unit>
-			<trans-unit id="settings.evoweb.sf-register.settings.autologinPostConfirmation" resname="settings.evoweb.sf-register.settings.autologinPostConfirmation">
-				<source>Whether the user should get logged in after activation</source>
-			</trans-unit>
-			<trans-unit id="settings.evoweb.sf-register.settings.allowDeleteIfNotLoggedIn" resname="settings.evoweb.sf-register.settings.allowDeleteIfNotLoggedIn">
-				<source>Allow user to delete if not logged in</source>
 			</trans-unit>
 
 			<trans-unit id="settings.evoweb.sf-register.settings.notifyAdmin.createSave" resname="settings.evoweb.sf-register.settings.notifyAdmin.createSave">
@@ -152,6 +165,35 @@
 
 			<trans-unit id="settings.evoweb.sf-register.settings.notifyUser.resendMail" resname="settings.evoweb.sf-register.settings.notifyUser.resendMail">
 				<source>The user should get an email with the activation key for an awaiting registration</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.confirmEmailPostCreate" resname="settings.evoweb.sf-register.settings.confirmEmailPostCreate">
+				<source>Send email to confirm post create</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.acceptEmailPostCreate" resname="settings.evoweb.sf-register.settings.acceptEmailPostCreate">
+				<source>Send email to accept after create</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.confirmEmailPostAccept" resname="settings.evoweb.sf-register.settings.confirmEmailPostAccept">
+				<source>Send email to confirm after accept</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.acceptEmailPostConfirm" resname="settings.evoweb.sf-register.settings.acceptEmailPostConfirm">
+				<source>Send email to accept after confirm</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.confirmEmailPostEdit" resname="settings.evoweb.sf-register.settings.confirmEmailPostEdit">
+				<source>Send email to confirm after edit</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.acceptEmailPostEdit" resname="settings.evoweb.sf-register.settings.acceptEmailPostEdit">
+				<source>Send email to accept after edit</source>
+			</trans-unit>
+
+			<trans-unit id="settings.evoweb.sf-register.settings.autologinPostRegistration" resname="settings.evoweb.sf-register.settings.autologinPostRegistration">
+				<source>Whether the user should get logged in after registration</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.autologinPostConfirmation" resname="settings.evoweb.sf-register.settings.autologinPostConfirmation">
+				<source>Whether the user should get logged in after activation</source>
+			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.allowDeleteIfNotLoggedIn" resname="settings.evoweb.sf-register.settings.allowDeleteIfNotLoggedIn">
+				<source>Allow user to delete if not logged in</source>
 			</trans-unit>
 
 			<trans-unit id="settings.evoweb.sf-register.settings.userEmail.fromName" resname="settings.evoweb.sf-register.settings.userEmail.fromName">

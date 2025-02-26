@@ -38,12 +38,43 @@ settings:
     default: 0
     type: int
     category: sf-register.common
+  evoweb.sf-register.settings.badWordList:
+    default: 'god, sex, password'
+    type: string
+    category: sf-register.common
   evoweb.sf-register.settings.captchaId:
     default: 'recaptcha'
     type: string
     category: sf-register.common
 
+  evoweb.sf-register.settings.usergroup:
+    default: 0
+    type: int
+    category: sf-register.common
+  evoweb.sf-register.settings.usergroupPostSave:
+    default: 0
+    type: int
+    category: sf-register.common
+  evoweb.sf-register.settings.usergroupPostConfirm:
+    default: 0
+    type: int
+    category: sf-register.common
+  evoweb.sf-register.settings.usergroupPostAccept:
+    default: 0
+    type: int
+    category: sf-register.common
+
+  evoweb.sf-register.settings.emailSitename:
+    default: 'dummy Site'
+    type: string
+    category: sf-register.common
+
+
   evoweb.sf-register.settings.redirectPostRegistrationPageId:
+    default: 0
+    type: int
+    category: sf-register.maximal
+  evoweb.sf-register.settings.redirectPostActivationPageId:
     default: 0
     type: int
     category: sf-register.maximal
@@ -52,21 +83,7 @@ settings:
     default: false
     type: bool
     category: sf-register.maximal
-
   evoweb.sf-register.settings.useEncryptedFilename:
-    default: false
-    type: bool
-    category: sf-register.maximal
-
-  evoweb.sf-register.settings.autologinPostRegistration:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.autologinPostConfirmation:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.allowDeleteIfNotLoggedIn:
     default: false
     type: bool
     category: sf-register.maximal
@@ -185,6 +202,44 @@ settings:
     type: bool
     category: sf-register.maximal
 
+  evoweb.sf-register.settings.confirmEmailPostCreate:
+    default: true
+    type: bool
+    category: sf-register.maximal
+  evoweb.sf-register.settings.acceptEmailPostCreate:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  evoweb.sf-register.settings.confirmEmailPostAccept:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  evoweb.sf-register.settings.acceptEmailPostConfirm:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  evoweb.sf-register.settings.confirmEmailPostEdit:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  evoweb.sf-register.settings.acceptEmailPostEdit:
+    default: false
+    type: bool
+    category: sf-register.maximal
+
+  evoweb.sf-register.settings.autologinPostRegistration:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  evoweb.sf-register.settings.autologinPostConfirmation:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  evoweb.sf-register.settings.allowDeleteIfNotLoggedIn:
+    default: false
+    type: bool
+    category: sf-register.maximal
+
   evoweb.sf-register.settings.userEmail.fromName:
     default: 'userEmail from'
     type: string
@@ -201,7 +256,6 @@ settings:
     default: ''
     type: string
     category: sf-register.maximal
-
   evoweb.sf-register.settings.adminEmail.toName:
     default: 'adminEmail to'
     type: string
@@ -236,4 +290,3 @@ settings:
     default: ''
     type: string
     category: sf-register.maximal
-
