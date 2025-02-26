@@ -1,19 +1,83 @@
 categories:
   sf-register: ~
+  sf-register.common:
+    parent: sf-register
   sf-register.minimal:
     parent: sf-register
 
 settings:
+  evoweb.sf-register.view.templateRootPath:
+    default: 'EXT:sf_register/Resources/Private/Templates/'
+    type: string
+    category: sf-register.common
+  evoweb.sf-register.view.partialRootPath:
+    default: 'EXT:sf_register/Resources/Private/Partials/'
+    type: string
+    category: sf-register.common
+  evoweb.sf-register.view.layoutRootPath:
+    default: 'EXT:sf_register/Resources/Private/Layouts/'
+    type: string
+    category: sf-register.common
+  evoweb.sf-register.settings.createPid:
+    default: 0
+    type: int
+    category: sf-register.common
+  evoweb.sf-register.settings.editPid:
+    default: 0
+    type: int
+    category: sf-register.common
+  evoweb.sf-register.settings.passwordPid:
+    default: 0
+    type: int
+    category: sf-register.common
+  evoweb.sf-register.settings.invitePid:
+    default: 0
+    type: int
+    category: sf-register.common
+  evoweb.sf-register.settings.resendPid:
+    default: 0
+    type: int
+    category: sf-register.common
   evoweb.sf-register.settings.badWordList:
     default: 'god, sex, password'
     type: string
-    category: sf-register.minimal
+    category: sf-register.common
+  evoweb.sf-register.settings.captchaId:
+    default: 'recaptcha'
+    type: string
+    category: sf-register.common
 
+  evoweb.sf-register.settings.usergroup:
+    default: 0
+    type: int
+    category: sf-register.common
+  evoweb.sf-register.settings.usergroupPostSave:
+    default: 0
+    type: int
+    category: sf-register.common
+  evoweb.sf-register.settings.usergroupPostConfirm:
+    default: 0
+    type: int
+    category: sf-register.common
+  evoweb.sf-register.settings.usergroupPostAccept:
+    default: 0
+    type: int
+    category: sf-register.common
+
+  evoweb.sf-register.settings.emailSitename:
+    default: 'dummy Site'
+    type: string
+    category: sf-register.common
+
+
+  evoweb.sf-register.settings.redirectPostActivationPageId:
+    default: 0
+    type: int
+    category: sf-register.minimal
   evoweb.sf-register.settings.confirmEmailPostCreate:
     default: true
     type: bool
     category: sf-register.minimal
-
   evoweb.sf-register.settings.acceptEmailPostCreate:
     default: false
     type: bool
@@ -35,36 +99,9 @@ settings:
     type: bool
     category: sf-register.minimal
 
-  evoweb.sf-register.settings.redirectPostActivationPageId:
-    default: 0
-    type: int
-    category: sf-register.minimal
-
   evoweb.sf-register.settings.autologinPostConfirmation:
     default: false
     type: bool
-    category: sf-register.minimal
-
-  evoweb.sf-register.settings.usergroupPostSave:
-    default: 0
-    type: int
-    category: sf-register.minimal
-  evoweb.sf-register.settings.usergroupPostConfirm:
-    default: 0
-    type: int
-    category: sf-register.minimal
-  evoweb.sf-register.settings.usergroupPostAccept:
-    default: 0
-    type: int
-    category: sf-register.minimal
-  evoweb.sf-register.settings.usergroup:
-    default: 0
-    type: int
-    category: sf-register.minimal
-
-  evoweb.sf-register.settings.emailSitename:
-    default: 'dummy Site'
-    type: string
     category: sf-register.minimal
 
   evoweb.sf-register.settings.emailName:
