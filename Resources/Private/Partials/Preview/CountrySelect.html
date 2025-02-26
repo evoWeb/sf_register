@@ -5,12 +5,13 @@
 <f:variable name="languageKey"><register:languageKey type="countries"/></f:variable>
 <div class="col-md-6 mb-3 {fieldName}">
 	<label><f:translate id="{fieldName}" /></label>
-	<register:form.selectStaticCountries
+	<f:form.countrySelect
 		property="{fieldName}"
 		id="sfrCountry"
+		additionalAttributes="{disabled: true}"
+		optionLabelField="localizedName"
 		value="{user.{fieldName}}"
-		disabled="disabled"
-		optionLabelField="cnShort{languageKey}"
+		onlyCountries="{options.allowedCountries}"
 		class="form-control" />
 	<f:form.hidden property="{fieldName}"/>
 </div>
