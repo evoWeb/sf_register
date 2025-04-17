@@ -5,6 +5,9 @@ plugin.tx_sfregister.settings {
   # cat=sf_register.settings//50; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.badWordList
   badWordList = god, sex, password
 
+  # cat=sf_register.settings//60; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.blockDomainList
+  blockDomainList = 0-mail.com, 027168.com, 0815.ru, mail.ru, bk.ru, list.ru
+
   confirmEmailPostCreate = 1
   acceptEmailPostCreate =
   confirmEmailPostAccept =

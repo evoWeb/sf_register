@@ -5,6 +5,9 @@ plugin.tx_sfregister.settings {
   # cat=sf_register.settings//40; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.badWordList
   badWordList = god, sex, password
 
+  # cat=sf_register.settings//60; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.blockDomainList
+  blockDomainList = 0-mail.com, 027168.com, 0815.ru, mail.ru, bk.ru, list.ru
+
   # cat=sf_register.settings/enable/80; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.redirectPostRegistrationPageId
   redirectPostRegistrationPageId =
   # cat=sf_register.settings/enable/81; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:maximal.redirectPostActivationPageId

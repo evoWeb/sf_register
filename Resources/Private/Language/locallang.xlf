@@ -368,6 +368,9 @@
 			<trans-unit id="error_badword">
 				<source>The password you entered is on the disallowed list</source>
 			</trans-unit>
+			<trans-unit id="error_blockdomain">
+				<source>The email you entered is on the disallowed list.</source>
+			</trans-unit>
 			<trans-unit id="error_nottrue">
 				<source>The %1$s was not accepted</source>
 			</trans-unit>

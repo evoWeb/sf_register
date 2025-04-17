@@ -31,6 +31,9 @@ services:
   Evoweb\SfRegister\Validation\Validator\BadWordValidator:
     public: true
 
+  Evoweb\SfRegister\Validation\Validator\BlockDomainValidator:
+    public: true  
+
   Evoweb\SfRegister\Validation\Validator\CaptchaValidator:
     public: true
 
