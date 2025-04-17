@@ -27,6 +27,9 @@ plugin.tx_sfregister.settings {
   # comma separated list of words used in bad word validator
   badWordList = {$plugin.tx_sfregister.settings.badWordList ?? $evoweb.sf-register.settings.badWordList}
 
+  # comma separated list of words used in block domain validator
+  blockDomainList = {$plugin.tx_sfregister.settings.blockDomainList ?? $evoweb.sf-register.settings.blockDomainList}
+
   validation.create {
     username {
       1 = "Evoweb\SfRegister\Validation\Validator\RequiredValidator"
