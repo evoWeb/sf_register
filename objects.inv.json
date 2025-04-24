@@ -446,6 +446,12 @@
             "Configuration\/Validation\/Index.html#RequiredValidator",
             "-"
         ],
+        "blockdomainvalidator": [
+            "Frontend User Registration: Multipurpose configurable registration",
+            "13.1.4",
+            "Configuration\/Validation\/Index.html#BlockDomainValidator",
+            "-"
+        ],
         "captchavalidator": [
             "Frontend User Registration: Multipurpose configurable registration",
             "13.1.4",
@@ -889,6 +895,12 @@
             "13.1.4",
             "Configuration\/Validation\/Index.html#confval-requiredvalidator",
             "RequiredValidator"
+        ],
+        "confval-blockdomainvalidator": [
+            "Frontend User Registration: Multipurpose configurable registration",
+            "13.1.4",
+            "Configuration\/Validation\/Index.html#confval-blockdomainvalidator",
+            "BlockDomainValidator"
         ],
         "confval-menu-special-fields-validators": [
             "Frontend User Registration: Multipurpose configurable registration",
@@ -2089,6 +2101,12 @@
             "13.1.4",
             "Configuration\/Validation\/Index.html#confval-requiredvalidator",
             "RequiredValidator"
+        ],
+        "blockdomainvalidator": [
+            "Frontend User Registration: Multipurpose configurable registration",
+            "13.1.4",
+            "Configuration\/Validation\/Index.html#confval-blockdomainvalidator",
+            "BlockDomainValidator"
         ],
         "captchavalidator": [
             "Frontend User Registration: Multipurpose configurable registration",

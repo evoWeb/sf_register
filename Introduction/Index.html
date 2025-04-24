@@ -12,9 +12,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="13.1.4" name="docsearch:release">
 <meta content="13.1.4" name="docsearch:version">
-<meta content="2025-02-26T19:43:43+00:00" name="docsearch:modified">
-<meta content="2025-02-26T19:43:43+00:00" name="dc.modified">
-<meta content="2025-02-26T19:43:43+00:00" property="article:modified_time">
+<meta content="2025-04-24T14:50:59+00:00" name="docsearch:modified">
+<meta content="2025-04-24T14:50:59+00:00" name="dc.modified">
+<meta content="2025-04-24T14:50:59+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -36,14 +36,36 @@
     </div>
     <div class="page-header">
         <div class="page-header-inner">
-            <div class="row">
-                <div class="col-md-2 col-lg-4">
+            <div class="d-flex flex-wrap">
+                <div class="logo-wrapper">
                     <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
                         <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
                     </a>
                 </div>
-                <div class="col-md-10 col-lg-8">
+                <div class="align-self-center order-lg-2 order-last">
+                    
+<div class="toc-header">
+    <div class="toc-title pe-3">
+                            <a class="toc-title-project" href="../Index.html">Frontend User Registration: Multipurpose configurable registration</a>
+            </div>
+    <label for="languageSelect" class="visually-hidden">Select language</label>
+        <select id="languageSelect" class="form-select d-none">
+        </select>
+
+                                    
+        <label for="versionSelect" class="visually-hidden">Select version</label>
+        <select id="versionSelect" class="form-select"
+                data-current-version="13.1.4"
+            data-override-url-proxy="https://render-guides.ddev.site/_resources/js/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html"
+        >
+            <option disabled selected>Loading versions...</option>
+        </select>
+    </div>                </div>
+                <div class="ms-auto order-lg-3 d-flex">
                     <div class="menu-search-wrapper">
+                        <button id="toc-toggle" class="btn btn-light d-block d-lg-none" tabindex="0" aria-controls="toc-collapse" aria-expanded="false">
+                            <i class="fas fa-bars"></i> <span class="visually-hidden">Mobile Menu</span>
+                        </button>
                         <all-documentations-menu data-override-url="https://render-guides.ddev.site/_resources/js/menu-proxy.php"></all-documentations-menu>
                                                 <search role="search">
                             <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
@@ -53,11 +75,44 @@
                                         <option value="">Search all</option>
                                     </select>
                                     <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                    <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                                    <button class="btn btn-light" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
                                 </div>
                             </form>
                             <div id="global-search-root"></div>
                         </search>
+                        <div class="position-relative d-inline-block">
+                            <button id="options-toggle" class="btn btn-light d-block" type="button" aria-expanded="false">
+                                <i class="fas fa-cog"></i> <span class="visually-hidden">Options</span>
+                            </button>
+
+                            <div id="options-panel"
+                                 class="shadow p-3"
+                                 role="menu"
+                                 aria-hidden="true">
+                                <h6 class="dropdown-header text-muted text-uppercase small mb-2">Options</h6>
+
+                                                                                                            <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FIntroduction%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+        <i class="fas fa-comment-dots"></i>
+        Give feedback
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="../_sources/Introduction/Index.rst.txt" rel="nofollow noopener" target="_blank">
+        <i class="fas fa-code"></i>
+        View source
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <i class="fas fa-info-circle"></i>
+        How to edit
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/Documentation/edit/develop/Documentation/Introduction/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
+        <i class="fab fa-github"></i>
+        Edit on GitHub
+    </a>
+                                                                                                                <a class="dropdown-item d-flex align-items-center gap-2" href="../singlehtml/Index.html" target="_blank" rel="noopener">
+                                            <i class="fas fa-print"></i>
+                                            Full documentation (single file)
+                                        </a>
+                                                                                                </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -67,34 +122,14 @@
         <div class="page-main-inner">
             <div class="page-main-navigation">
                 <nav>
-                    
-<div class="toc-header">
-    <div class="toc-title">
-        <a class="toc-title-project" href="../Index.html">Frontend User Registration: Multipurpose configurable registration</a>
-            <div class="toc-version-wrapper" id="toc-version-wrapper">
-                <!--
-                    LOCAL RENDERING NOTICE:
-                    https://docs.typo3.org/other/t3docs/render-guides/main/en-us/Developer/AjaxVersions.html
-                -->
 
-                <div id="toc-version" class="toc-version" data-override-url-proxy="https://render-guides.ddev.site/_resources/js/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html">
-                
-                    <span class="toc-version-prefix">Release:</span>
-                    <span class="toc-version-number" tabindex="0">13.1.4</span>
-                </div>
-                <div id="toc-version-options" class="toc-version-options">
-                    <p><span class="fa fa-spinner fa-spin"></span> Loading data.</p>
-                </div>
-            </div></div>
-    <div class="toc-actions">
-        <button id="toc-toggle" class="btn btn-light d-block d-lg-none" tabindex="0" aria-controls="toc-collapse" aria-expanded="false">
-            Menu
-        </button>
-    </div>
-</div>                    <div id="toc-collapse">
+                    <div id="toc-collapse">
                                                 <div aria-label="main navigation" class="toc"
                              role="navigation">
-                                <div aria-label="Main navigation" class="main_menu" role="navigation">
+                                <all-documentations-menu-mobile
+        data-override-url="https://render-guides.ddev.site/_resources/js/menu-proxy.php"></all-documentations-menu-mobile>
+    <div aria-label="Main navigation" class="main_menu" role="navigation">
+                <p class="caption">Frontend User Registration: Multipurpose configurable registration</p>
             <ul class="menu-level-1" role="menubar">
     <li class=" current active" role="menuitem">
     <a href="#" aria-current="page">
@@ -141,22 +176,6 @@
         Sitemap
     </a></li>    </ul>
     </div>
-    <div aria-label="Meta navigation" class="main_menu  d-block d-lg-none" role="navigation">
-    <hr/>
-    <p class="caption">Contributors Corner</p>
-    <ul class="menu-level-1">            <li><a href="../_sources/Introduction/Index.rst.txt" rel="nofollow noopener" target="_blank">
-                    View source of current document
-            </a></li>
-                    <li><a href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" rel="nofollow noopener" target="_blank">
-                    How to edit
-            </a></li>
-                    <li><a href="https://github.com/Documentation/edit/develop/Documentation/Introduction/Index.rst" rel="nofollow noopener" target="_blank">
-                    Edit current document on GitHub
-            </a></li>
-        </ul>
-</div>
-    <all-documentations-menu-mobile
-        data-override-url="https://render-guides.ddev.site/_resources/js/menu-proxy.php"></all-documentations-menu-mobile>
                         </div>
                     </div>
                 </nav>
@@ -168,23 +187,16 @@
     <li class="breadcrumb-item"><a href="../Index.html">Frontend User Registration: Multipurpose configurable registration</a></li>
                     <li aria-current="page"  class="breadcrumb-item  active">Introduction</li>
         </ol>
-        <div class="breadcrumb-additions">        <a class="btn btn-sm btn-light" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FIntroduction%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
-            <span class="btn-icon"><i class="fas fa-bug"></i></span>
-            <span class="btn-text">Report issue</span>
-        </a>
-        <a class="btn btn-sm btn-light" href="../_sources/Introduction/Index.rst.txt" rel="nofollow noopener" target="_blank">
-        <span class="btn-icon"><span class="fas fa-code"></span></span>
-        <span class="btn-text">View source</span>
-    </a>
-        <a class="btn btn-sm btn-light" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
-        <span class="btn-icon"><span class="fas fa-info-circle"></span></span>
-        <span class="btn-text">How to edit</span>
-    </a>
-        <a class="btn btn-sm btn-secondary" href="https://github.com/Documentation/edit/develop/Documentation/Introduction/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
-        <span class="btn-icon"><span class="fab fa-github"></span></span>
-        <span class="btn-text">Edit on GitHub</span>
-    </a>
-    </div>    </nav>
+        <div class="breadcrumb-additions">                <a class="btn btn-sm btn-light" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FIntroduction%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+                    <span class="btn-icon"><i class="fas fa-comment-dots"></i></span>
+                    <span class="btn-text">Give feedback</span>
+                </a>
+                            <a class="btn btn-sm btn-secondary" href="https://github.com/Documentation/edit/develop/Documentation/Introduction/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
+                    <span class="btn-icon"><span class="fab fa-github"></span></span>
+                    <span class="btn-text">Edit on GitHub</span>
+                </a>
+            </div>
+    </nav>
                     
 <article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
     <div itemprop="articleBody">
@@ -315,13 +327,13 @@ support</li>
             <ul class="pagination justify-content-center"><li class="page-item">
                             <a class="page-link" href="../Index.html"
                                title="Accesskey Alt(+Shift)+p">
-                                Previous
+                                <i class="fa-solid fa-chevron-left"></i> Previous
                             </a>
                         </li>
                     <li class="page-item">
                             <a class="page-link" href="../UsersManual/Index.html"
                                title="Accesskey Alt(+Shift)+n">
-                                Next
+                                Next <i class="fa-solid fa-chevron-right"></i>
                             </a>
                         </li>
                     </ul>
@@ -420,7 +432,7 @@ support</li>
                                                 <li><a href="https://github.com/evoWeb/sf_register/issues" rel="nofollow noopener" title="Issues"><span>Issues</span></a></li>
                                                 <li><a href="https://github.com/evoWeb/sf_register" rel="nofollow noopener" title="Repository"><span>Repository</span></a></li>
                                             </ul>                <div class="footer-additional">
-                    <p class="text-center">Last rendered: Feb 26, 2025 19:43</p>
+                    <p class="text-center">Last rendered: Apr 24, 2025 14:50</p>
                 </div>
                 <div class="footer-meta">
                                         <div class="footer-meta-copyright">

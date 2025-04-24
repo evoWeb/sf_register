@@ -12,9 +12,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="13.1.4" name="docsearch:release">
 <meta content="13.1.4" name="docsearch:version">
-<meta content="2025-02-26T19:43:43+00:00" name="docsearch:modified">
-<meta content="2025-02-26T19:43:43+00:00" name="dc.modified">
-<meta content="2025-02-26T19:43:43+00:00" property="article:modified_time">
+<meta content="2025-04-24T14:50:59+00:00" name="docsearch:modified">
+<meta content="2025-04-24T14:50:59+00:00" name="dc.modified">
+<meta content="2025-04-24T14:50:59+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -36,14 +36,36 @@
     </div>
     <div class="page-header">
         <div class="page-header-inner">
-            <div class="row">
-                <div class="col-md-2 col-lg-4">
+            <div class="d-flex flex-wrap">
+                <div class="logo-wrapper">
                     <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
                         <img alt="TYPO3 Logo" class="logo-image" src="../../_resources/img/typo3-logo.svg" width="484" height="130">
                     </a>
                 </div>
-                <div class="col-md-10 col-lg-8">
+                <div class="align-self-center order-lg-2 order-last">
+                    
+<div class="toc-header">
+    <div class="toc-title pe-3">
+                            <a class="toc-title-project" href="../../Index.html">Frontend User Registration: Multipurpose configurable registration</a>
+            </div>
+    <label for="languageSelect" class="visually-hidden">Select language</label>
+        <select id="languageSelect" class="form-select d-none">
+        </select>
+
+                                    
+        <label for="versionSelect" class="visually-hidden">Select version</label>
+        <select id="versionSelect" class="form-select"
+                data-current-version="13.1.4"
+            data-override-url-proxy="https://render-guides.ddev.site/_resources/js/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html"
+        >
+            <option disabled selected>Loading versions...</option>
+        </select>
+    </div>                </div>
+                <div class="ms-auto order-lg-3 d-flex">
                     <div class="menu-search-wrapper">
+                        <button id="toc-toggle" class="btn btn-light d-block d-lg-none" tabindex="0" aria-controls="toc-collapse" aria-expanded="false">
+                            <i class="fas fa-bars"></i> <span class="visually-hidden">Mobile Menu</span>
+                        </button>
                         <all-documentations-menu data-override-url="https://render-guides.ddev.site/_resources/js/menu-proxy.php"></all-documentations-menu>
                                                 <search role="search">
                             <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
@@ -53,11 +75,44 @@
                                         <option value="">Search all</option>
                                     </select>
                                     <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                    <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                                    <button class="btn btn-light" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
                                 </div>
                             </form>
                             <div id="global-search-root"></div>
                         </search>
+                        <div class="position-relative d-inline-block">
+                            <button id="options-toggle" class="btn btn-light d-block" type="button" aria-expanded="false">
+                                <i class="fas fa-cog"></i> <span class="visually-hidden">Options</span>
+                            </button>
+
+                            <div id="options-panel"
+                                 class="shadow p-3"
+                                 role="menu"
+                                 aria-hidden="true">
+                                <h6 class="dropdown-header text-muted text-uppercase small mb-2">Options</h6>
+
+                                                                                                            <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FConfiguration%2FEmails%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+        <i class="fas fa-comment-dots"></i>
+        Give feedback
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="../../_sources/Configuration/Emails/Index.rst.txt" rel="nofollow noopener" target="_blank">
+        <i class="fas fa-code"></i>
+        View source
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <i class="fas fa-info-circle"></i>
+        How to edit
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/Documentation/edit/develop/Documentation/Configuration/Emails/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
+        <i class="fab fa-github"></i>
+        Edit on GitHub
+    </a>
+                                                                                                                <a class="dropdown-item d-flex align-items-center gap-2" href="../../singlehtml/Index.html" target="_blank" rel="noopener">
+                                            <i class="fas fa-print"></i>
+                                            Full documentation (single file)
+                                        </a>
+                                                                                                </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -67,34 +122,14 @@
         <div class="page-main-inner">
             <div class="page-main-navigation">
                 <nav>
-                    
-<div class="toc-header">
-    <div class="toc-title">
-        <a class="toc-title-project" href="../../Index.html">Frontend User Registration: Multipurpose configurable registration</a>
-            <div class="toc-version-wrapper" id="toc-version-wrapper">
-                <!--
-                    LOCAL RENDERING NOTICE:
-                    https://docs.typo3.org/other/t3docs/render-guides/main/en-us/Developer/AjaxVersions.html
-                -->
 
-                <div id="toc-version" class="toc-version" data-override-url-proxy="https://render-guides.ddev.site/_resources/js/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html">
-                
-                    <span class="toc-version-prefix">Release:</span>
-                    <span class="toc-version-number" tabindex="0">13.1.4</span>
-                </div>
-                <div id="toc-version-options" class="toc-version-options">
-                    <p><span class="fa fa-spinner fa-spin"></span> Loading data.</p>
-                </div>
-            </div></div>
-    <div class="toc-actions">
-        <button id="toc-toggle" class="btn btn-light d-block d-lg-none" tabindex="0" aria-controls="toc-collapse" aria-expanded="false">
-            Menu
-        </button>
-    </div>
-</div>                    <div id="toc-collapse">
+                    <div id="toc-collapse">
                                                 <div aria-label="main navigation" class="toc"
                              role="navigation">
-                                <div aria-label="Main navigation" class="main_menu" role="navigation">
+                                <all-documentations-menu-mobile
+        data-override-url="https://render-guides.ddev.site/_resources/js/menu-proxy.php"></all-documentations-menu-mobile>
+    <div aria-label="Main navigation" class="main_menu" role="navigation">
+                <p class="caption">Frontend User Registration: Multipurpose configurable registration</p>
             <ul class="menu-level-1" role="menubar">
     <li class="" role="menuitem">
     <a href="../../Introduction/Index.html">
@@ -141,22 +176,6 @@
         Sitemap
     </a></li>    </ul>
     </div>
-    <div aria-label="Meta navigation" class="main_menu  d-block d-lg-none" role="navigation">
-    <hr/>
-    <p class="caption">Contributors Corner</p>
-    <ul class="menu-level-1">            <li><a href="../../_sources/Configuration/Emails/Index.rst.txt" rel="nofollow noopener" target="_blank">
-                    View source of current document
-            </a></li>
-                    <li><a href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" rel="nofollow noopener" target="_blank">
-                    How to edit
-            </a></li>
-                    <li><a href="https://github.com/Documentation/edit/develop/Documentation/Configuration/Emails/Index.rst" rel="nofollow noopener" target="_blank">
-                    Edit current document on GitHub
-            </a></li>
-        </ul>
-</div>
-    <all-documentations-menu-mobile
-        data-override-url="https://render-guides.ddev.site/_resources/js/menu-proxy.php"></all-documentations-menu-mobile>
                         </div>
                     </div>
                 </nav>
@@ -169,23 +188,16 @@
         <li class="breadcrumb-item"><a href="../Index.html">Configuration</a></li>
                     <li aria-current="page"  class="breadcrumb-item  active">Emails</li>
         </ol>
-        <div class="breadcrumb-additions">        <a class="btn btn-sm btn-light" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FConfiguration%2FEmails%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
-            <span class="btn-icon"><i class="fas fa-bug"></i></span>
-            <span class="btn-text">Report issue</span>
-        </a>
-        <a class="btn btn-sm btn-light" href="../../_sources/Configuration/Emails/Index.rst.txt" rel="nofollow noopener" target="_blank">
-        <span class="btn-icon"><span class="fas fa-code"></span></span>
-        <span class="btn-text">View source</span>
-    </a>
-        <a class="btn btn-sm btn-light" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
-        <span class="btn-icon"><span class="fas fa-info-circle"></span></span>
-        <span class="btn-text">How to edit</span>
-    </a>
-        <a class="btn btn-sm btn-secondary" href="https://github.com/Documentation/edit/develop/Documentation/Configuration/Emails/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
-        <span class="btn-icon"><span class="fab fa-github"></span></span>
-        <span class="btn-text">Edit on GitHub</span>
-    </a>
-    </div>    </nav>
+        <div class="breadcrumb-additions">                <a class="btn btn-sm btn-light" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FConfiguration%2FEmails%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+                    <span class="btn-icon"><i class="fas fa-comment-dots"></i></span>
+                    <span class="btn-text">Give feedback</span>
+                </a>
+                            <a class="btn btn-sm btn-secondary" href="https://github.com/Documentation/edit/develop/Documentation/Configuration/Emails/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
+                    <span class="btn-icon"><span class="fab fa-github"></span></span>
+                    <span class="btn-text">Edit on GitHub</span>
+                </a>
+            </div>
+    </nav>
                     
 <article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
     <div itemprop="articleBody">
@@ -314,7 +326,7 @@
     <h3 class="sr-only">notifyAdminPostCreateSave</h3>
     <dl class="confval">
         <dt id="confval-notifyadminpostcreatesave"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Save</span></code>
                                     <a class="headerlink" href="#confval-notifyadminpostcreatesave"
@@ -326,8 +338,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -354,7 +365,7 @@
     <h3 class="sr-only">notifyAdminPostCreateConfirm</h3>
     <dl class="confval">
         <dt id="confval-notifyadminpostcreateconfirm"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Confirm</span></code>
                                     <a class="headerlink" href="#confval-notifyadminpostcreateconfirm"
@@ -366,8 +377,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -394,7 +404,7 @@
     <h3 class="sr-only">notifyAdminPostCreateRefuse</h3>
     <dl class="confval">
         <dt id="confval-notifyadminpostcreaterefuse"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Refuse</span></code>
                                     <a class="headerlink" href="#confval-notifyadminpostcreaterefuse"
@@ -406,8 +416,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -434,7 +443,7 @@
     <h3 class="sr-only">notifyAdminPostCreateAccept</h3>
     <dl class="confval">
         <dt id="confval-notifyadminpostcreateaccept"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Accept</span></code>
                                     <a class="headerlink" href="#confval-notifyadminpostcreateaccept"
@@ -446,8 +455,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -474,7 +482,7 @@
     <h3 class="sr-only">notifyAdminPostCreateDecline</h3>
     <dl class="confval">
         <dt id="confval-notifyadminpostcreatedecline"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Decline</span></code>
                                     <a class="headerlink" href="#confval-notifyadminpostcreatedecline"
@@ -486,8 +494,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -514,7 +521,7 @@
     <h3 class="sr-only">acceptEmailPostCreate</h3>
     <dl class="confval">
         <dt id="confval-acceptemailpostcreate"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">accept<wbr>Email<wbr>Post<wbr>Create</span></code>
                                     <a class="headerlink" href="#confval-acceptemailpostcreate"
@@ -526,8 +533,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -616,7 +622,7 @@
     <h3 class="sr-only">notifyAdminPostEditSave</h3>
     <dl class="confval">
         <dt id="confval-notifyadminposteditsave"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Save</span></code>
                                     <a class="headerlink" href="#confval-notifyadminposteditsave"
@@ -628,8 +634,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -656,7 +661,7 @@
     <h3 class="sr-only">notifyAdminPostEditConfirm</h3>
     <dl class="confval">
         <dt id="confval-notifyadminposteditconfirm"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Confirm</span></code>
                                     <a class="headerlink" href="#confval-notifyadminposteditconfirm"
@@ -668,8 +673,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -696,7 +700,7 @@
     <h3 class="sr-only">notifyAdminPostEditAccept</h3>
     <dl class="confval">
         <dt id="confval-notifyadminposteditaccept"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Accept</span></code>
                                     <a class="headerlink" href="#confval-notifyadminposteditaccept"
@@ -708,8 +712,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -736,7 +739,7 @@
     <h3 class="sr-only">acceptEmailPostEdit</h3>
     <dl class="confval">
         <dt id="confval-acceptemailpostedit"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">accept<wbr>Email<wbr>Post<wbr>Edit</span></code>
                                     <a class="headerlink" href="#confval-acceptemailpostedit"
@@ -748,8 +751,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -858,7 +860,7 @@
     <h3 class="sr-only">notifyUserPostCreateSave</h3>
     <dl class="confval">
         <dt id="confval-notifyuserpostcreatesave"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>User<wbr>Post<wbr>Create<wbr>Save</span></code>
                                     <a class="headerlink" href="#confval-notifyuserpostcreatesave"
@@ -870,8 +872,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -898,7 +899,7 @@
     <h3 class="sr-only">notifyUserPostCreateConfirm</h3>
     <dl class="confval">
         <dt id="confval-notifyuserpostcreateconfirm"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>User<wbr>Post<wbr>Create<wbr>Confirm</span></code>
                                     <a class="headerlink" href="#confval-notifyuserpostcreateconfirm"
@@ -910,8 +911,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -938,7 +938,7 @@
     <h3 class="sr-only">notifyUserPostCreateRefuse</h3>
     <dl class="confval">
         <dt id="confval-notifyuserpostcreaterefuse"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>User<wbr>Post<wbr>Create<wbr>Refuse</span></code>
                                     <a class="headerlink" href="#confval-notifyuserpostcreaterefuse"
@@ -950,8 +950,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -978,7 +977,7 @@
     <h3 class="sr-only">notifyUserPostCreateAccept</h3>
     <dl class="confval">
         <dt id="confval-notifyuserpostcreateaccept"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>User<wbr>Post<wbr>Create<wbr>Accept</span></code>
                                     <a class="headerlink" href="#confval-notifyuserpostcreateaccept"
@@ -990,8 +989,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1018,7 +1016,7 @@
     <h3 class="sr-only">notifyUserPostCreateDecline</h3>
     <dl class="confval">
         <dt id="confval-notifyuserpostcreatedecline"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>User<wbr>Post<wbr>Create<wbr>Decline</span></code>
                                     <a class="headerlink" href="#confval-notifyuserpostcreatedecline"
@@ -1030,8 +1028,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1058,7 +1055,7 @@
     <h3 class="sr-only">confirmEmailPostCreate</h3>
     <dl class="confval">
         <dt id="confval-confirmemailpostcreate"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">confirm<wbr>Email<wbr>Post<wbr>Create</span></code>
                                     <a class="headerlink" href="#confval-confirmemailpostcreate"
@@ -1070,8 +1067,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1160,7 +1156,7 @@
     <h3 class="sr-only">notifyUserPostEditSave</h3>
     <dl class="confval">
         <dt id="confval-notifyuserposteditsave"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Save</span></code>
                                     <a class="headerlink" href="#confval-notifyuserposteditsave"
@@ -1172,8 +1168,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1200,7 +1195,7 @@
     <h3 class="sr-only">notifyUserPostEditConfirm</h3>
     <dl class="confval">
         <dt id="confval-notifyuserposteditconfirm"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Confirm</span></code>
                                     <a class="headerlink" href="#confval-notifyuserposteditconfirm"
@@ -1212,8 +1207,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1240,7 +1234,7 @@
     <h3 class="sr-only">notifyUserPostEditAccept</h3>
     <dl class="confval">
         <dt id="confval-notifyuserposteditaccept"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Accept</span></code>
                                     <a class="headerlink" href="#confval-notifyuserposteditaccept"
@@ -1252,8 +1246,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1280,7 +1273,7 @@
     <h3 class="sr-only">confirmEmailPostEdit</h3>
     <dl class="confval">
         <dt id="confval-confirmemailpostedit"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">confirm<wbr>Email<wbr>Post<wbr>Edit</span></code>
                                     <a class="headerlink" href="#confval-confirmemailpostedit"
@@ -1292,8 +1285,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1452,7 +1444,7 @@
     <h3 class="sr-only">sitename</h3>
     <dl class="confval">
         <dt id="confval-sitename"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">sitename</span></code>
                                     <a class="headerlink" href="#confval-sitename"
@@ -1464,8 +1456,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1492,7 +1483,7 @@
     <h3 class="sr-only">userEmail.fromName</h3>
     <dl class="confval">
         <dt id="confval-useremail-fromname"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">user<wbr>Email.<wbr>from<wbr>Name</span></code>
                                     <a class="headerlink" href="#confval-useremail-fromname"
@@ -1504,8 +1495,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1532,7 +1522,7 @@
     <h3 class="sr-only">userEmail.fromEmail</h3>
     <dl class="confval">
         <dt id="confval-useremail-fromemail"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">user<wbr>Email.<wbr>from<wbr>Email</span></code>
                                     <a class="headerlink" href="#confval-useremail-fromemail"
@@ -1544,8 +1534,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1572,7 +1561,7 @@
     <h3 class="sr-only">userEmail.replyName</h3>
     <dl class="confval">
         <dt id="confval-useremail-replyname"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">user<wbr>Email.<wbr>reply<wbr>Name</span></code>
                                     <a class="headerlink" href="#confval-useremail-replyname"
@@ -1584,8 +1573,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1612,7 +1600,7 @@
     <h3 class="sr-only">userEmail.replyEmail</h3>
     <dl class="confval">
         <dt id="confval-useremail-replyemail"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">user<wbr>Email.<wbr>reply<wbr>Email</span></code>
                                     <a class="headerlink" href="#confval-useremail-replyemail"
@@ -1624,8 +1612,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1652,7 +1639,7 @@
     <h3 class="sr-only">adminEmail.toName</h3>
     <dl class="confval">
         <dt id="confval-adminemail-toname"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">admin<wbr>Email.<wbr>to<wbr>Name</span></code>
                                     <a class="headerlink" href="#confval-adminemail-toname"
@@ -1664,8 +1651,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1692,7 +1678,7 @@
     <h3 class="sr-only">adminEmail.toEmail</h3>
     <dl class="confval">
         <dt id="confval-adminemail-toemail"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">admin<wbr>Email.<wbr>to<wbr>Email</span></code>
                                     <a class="headerlink" href="#confval-adminemail-toemail"
@@ -1704,8 +1690,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1732,7 +1717,7 @@
     <h3 class="sr-only">adminEmail.fromName</h3>
     <dl class="confval">
         <dt id="confval-adminemail-fromname"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">admin<wbr>Email.<wbr>from<wbr>Name</span></code>
                                     <a class="headerlink" href="#confval-adminemail-fromname"
@@ -1744,8 +1729,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1772,7 +1756,7 @@
     <h3 class="sr-only">adminEmail.fromEmail</h3>
     <dl class="confval">
         <dt id="confval-adminemail-fromemail"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">admin<wbr>Email.<wbr>from<wbr>Email</span></code>
                                     <a class="headerlink" href="#confval-adminemail-fromemail"
@@ -1784,8 +1768,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1812,7 +1795,7 @@
     <h3 class="sr-only">adminEmail.replyName</h3>
     <dl class="confval">
         <dt id="confval-adminemail-replyname"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">admin<wbr>Email.<wbr>reply<wbr>Name</span></code>
                                     <a class="headerlink" href="#confval-adminemail-replyname"
@@ -1824,8 +1807,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1852,7 +1834,7 @@
     <h3 class="sr-only">adminEmail.replyEmail</h3>
     <dl class="confval">
         <dt id="confval-adminemail-replyemail"            class="d-flex justify-content-between">
-            <div class="confval-header">
+            <div class="confval-header flex-grow-1">
                 <code class="sig-name descname"><span
                         class="pre">admin<wbr>Email.<wbr>reply<wbr>Email</span></code>
                                     <a class="headerlink" href="#confval-adminemail-replyemail"
@@ -1864,8 +1846,7 @@
                             class="fa-solid fa-paragraph"></i></a>
                 </div>
             <div class="confval-back-to-top">                    <a href="#" class="backToTop" title="Back to top"><i
-                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>
-        </dt>
+                            class="fa-solid fa-arrow-up fa-xs"></i></a>            </div>        </dt>
         <dd>
                             <dl class="field-list simple">
                                             <dt class="field-even">Type</dt>
@@ -1894,13 +1875,13 @@
             <ul class="pagination justify-content-center"><li class="page-item">
                             <a class="page-link" href="../Index.html"
                                title="Accesskey Alt(+Shift)+p">
-                                Previous
+                                <i class="fa-solid fa-chevron-left"></i> Previous
                             </a>
                         </li>
                     <li class="page-item">
                             <a class="page-link" href="../Validation/Index.html"
                                title="Accesskey Alt(+Shift)+n">
-                                Next
+                                Next <i class="fa-solid fa-chevron-right"></i>
                             </a>
                         </li>
                     </ul>
@@ -1999,7 +1980,7 @@
                                                 <li><a href="https://github.com/evoWeb/sf_register/issues" rel="nofollow noopener" title="Issues"><span>Issues</span></a></li>
                                                 <li><a href="https://github.com/evoWeb/sf_register" rel="nofollow noopener" title="Repository"><span>Repository</span></a></li>
                                             </ul>                <div class="footer-additional">
-                    <p class="text-center">Last rendered: Feb 26, 2025 19:43</p>
+                    <p class="text-center">Last rendered: Apr 24, 2025 14:50</p>
                 </div>
                 <div class="footer-meta">
                                         <div class="footer-meta-copyright">
