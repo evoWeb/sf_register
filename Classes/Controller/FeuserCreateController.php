@@ -63,7 +63,7 @@ class FeuserCreateController extends FeuserController
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
 
-    public function formAction(FrontendUser $user = null): ResponseInterface
+    public function formAction(?FrontendUser $user = null): ResponseInterface
     {
         $setupResponse = $this->setupCheck();
         if ($setupResponse) {

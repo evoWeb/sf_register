@@ -48,7 +48,7 @@ class FeuserInviteController extends FeuserController
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
 
-    public function formAction(FrontendUser $user = null): ResponseInterface
+    public function formAction(?FrontendUser $user = null): ResponseInterface
     {
         if ($user === null) {
             if ($this->frontendUserService->userIsLoggedIn()) {

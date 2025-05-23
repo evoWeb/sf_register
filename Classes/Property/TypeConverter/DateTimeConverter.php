@@ -36,7 +36,7 @@ class DateTimeConverter extends BaseDateTimeConverter
         $source,
         string $targetType,
         array $convertedChildProperties = [],
-        PropertyMappingConfigurationInterface $configuration = null
+        ?PropertyMappingConfigurationInterface $configuration = null
     ): null|\DateTime|Error {
         $userData = $configuration->getConfigurationValue(self::class, self::CONFIGURATION_USER_DATA);
         if (
