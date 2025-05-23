@@ -48,7 +48,7 @@ class FeuserResendController extends FeuserController
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
 
-    public function formAction(Email $email = null): ResponseInterface
+    public function formAction(?Email $email = null): ResponseInterface
     {
         if ($email === null) {
             $email = new Email();

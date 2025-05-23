@@ -58,7 +58,7 @@ class FeuserEditController extends FeuserController
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
 
-    public function formAction(FrontendUser $user = null): ResponseInterface
+    public function formAction(?FrontendUser $user = null): ResponseInterface
     {
         if ($user === null) {
             $user = $this->frontendUserService->getLoggedInRequestUser($this->request);
@@ -147,7 +147,7 @@ class FeuserEditController extends FeuserController
         return $response;
     }
 
-    public function confirmAction(FrontendUser $user = null, string $hash = null): ResponseInterface
+    public function confirmAction(?FrontendUser $user = null, ?string $hash = null): ResponseInterface
     {
         $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
@@ -204,7 +204,7 @@ class FeuserEditController extends FeuserController
         return $redirectResponse ?: new HtmlResponse($this->view->render());
     }
 
-    public function acceptAction(FrontendUser $user = null, string $hash = null): ResponseInterface
+    public function acceptAction(?FrontendUser $user = null, ?string $hash = null): ResponseInterface
     {
         $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
 
