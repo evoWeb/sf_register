@@ -200,7 +200,7 @@
 				<source>Comma separated list of words used in block domain validator</source>
 			</trans-unit>
 			<trans-unit id="minimal.redirectPostActivationPageId">
-				<source>Uid of the page to redirect to0, after the registration is confirmed (not after saving)</source>
+				<source>Uid of the page to redirect to, after the registration is confirmed (not after saving)</source>
 			</trans-unit>
 			<trans-unit id="minimal.autologinPostRegistration">
 				<source>Whether the user should get logged in after registration or confirmation</source>

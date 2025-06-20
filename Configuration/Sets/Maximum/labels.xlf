@@ -72,7 +72,7 @@
 				<source>Page ID to redirect to after the user is saved (not after confirmation)</source>
 			</trans-unit>
 			<trans-unit id="settings.evoweb.sf-register.settings.redirectPostActivationPageId" resname="settings.evoweb.sf-register.settings.redirectPostActivationPageId">
-				<source>Uid of the page to redirect to0, after the registration is confirmed (not after saving)</source>
+				<source>Uid of the page to redirect to, after the registration is confirmed (not after saving)</source>
 			</trans-unit>
 
 			<trans-unit id="settings.evoweb.sf-register.settings.useEmailAddressAsUsername" resname="settings.evoweb.sf-register.settings.useEmailAddressAsUsername">
