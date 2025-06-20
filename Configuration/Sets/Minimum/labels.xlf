@@ -69,7 +69,7 @@
 			</trans-unit>
 
 			<trans-unit id="settings.evoweb.sf-register.settings.redirectPostActivationPageId" resname="settings.evoweb.sf-register.settings.redirectPostActivationPageId">
-				<source>Uid of the page to redirect to0, after the registration is confirmed (not after saving)</source>
+				<source>Uid of the page to redirect to, after the registration is confirmed (not after saving)</source>
 			</trans-unit>
 			<trans-unit id="settings.evoweb.sf-register.settings.confirmEmailPostCreate" resname="settings.evoweb.sf-register.settings.confirmEmailPostCreate">
 				<source>Send email to confirm post create</source>
