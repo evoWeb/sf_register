@@ -328,7 +328,8 @@ class Mail implements SingletonInterface
             templateRootPaths: $this->frameworkConfiguration['view']['templateRootPaths'],
             partialRootPaths: $this->frameworkConfiguration['view']['partialRootPaths'],
             layoutRootPaths: $this->frameworkConfiguration['view']['layoutRootPaths'],
-            request: $request
+            request: $request,
+            format: $format
         );
         return $this->viewFactory->create($viewFactoryData);
     }
