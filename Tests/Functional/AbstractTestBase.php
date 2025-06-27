@@ -64,10 +64,11 @@ abstract class AbstractTestBase extends FunctionalTestCase
     /**
      * @param array<string, mixed> $setup
      */
-    public function initializeFrontendTypoScript(array $setup = []): void
+    public function initializeFrontendTypoScript(array $setup = [], array $config = []): void
     {
         $frontendTypoScript = new FrontendTypoScript(new RootNode(), [], [], []);
         $frontendTypoScript->setSetupArray($setup);
+        $frontendTypoScript->setConfigArray($config);
         $this->request = $this->request->withAttribute('frontend.typoscript', $frontendTypoScript);
         $GLOBALS['TYPO3_REQUEST'] = $this->request;
     }
