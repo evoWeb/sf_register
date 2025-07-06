@@ -43,10 +43,10 @@
 				<source>Registration: Invite user</source>
 			</trans-unit>
 			<trans-unit id="tt_content.list_type_resend">
-				<source>Registration: Resent confirmation</source>
+				<source>Registration: Resend confirmation</source>
 			</trans-unit>
 			<trans-unit id="tt_content.list_type_resend_description">
-				<source>Registration: Resent confirmation</source>
+				<source>Registration: Resend confirmation</source>
 			</trans-unit>
 
 			<trans-unit id="felogin_redirectPid">

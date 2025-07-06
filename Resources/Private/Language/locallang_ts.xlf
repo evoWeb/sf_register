@@ -6,6 +6,9 @@
 			<trans-unit id="maximal.badWordList">
 				<source>comma separated list of words used in bad word validator</source>
 			</trans-unit>
+			<trans-unit id="maximal.blockDomainList">
+				<source>comma separated list of words used in block domain validator</source>
+			</trans-unit>
 			<trans-unit id="maximal.redirectPostRegistrationPageId">
 				<source>Page ID to redirect to after the user is saved (not after confirmation)</source>
 			</trans-unit>
@@ -193,8 +196,11 @@
 			<trans-unit id="minimal.badWordList">
 				<source>Comma separated list of words used in bad word validator</source>
 			</trans-unit>
+			<trans-unit id="minimal.blockDomainList">
+				<source>Comma separated list of words used in block domain validator</source>
+			</trans-unit>
 			<trans-unit id="minimal.redirectPostActivationPageId">
-				<source>Uid of the page to redirect to0, after the registration is confirmed (not after saving)</source>
+				<source>Uid of the page to redirect to, after the registration is confirmed (not after saving)</source>
 			</trans-unit>
 			<trans-unit id="minimal.autologinPostRegistration">
 				<source>Whether the user should get logged in after registration or confirmation</source>

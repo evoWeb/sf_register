@@ -44,6 +44,9 @@
 			<trans-unit id="settings.evoweb.sf-register.settings.badWordList" resname="settings.evoweb.sf-register.settings.badWordList">
 				<source>Comma separated list of words used in bad word validator</source>
 			</trans-unit>
+			<trans-unit id="settings.evoweb.sf-register.settings.blockDomainList" resname="settings.evoweb.sf-register.settings.blockDomainList">
+				<source>Comma separated list of words used in block domain validator</source>
+			</trans-unit>
 			<trans-unit id="settings.evoweb.sf-register.settings.captchaId" resname="settings.evoweb.sf-register.settings.captchaId">
 				<source>Short name for the desired captcha extension: recaptcha, jmrecaptcha, srfreecap</source>
 			</trans-unit>
@@ -66,7 +69,7 @@
 			</trans-unit>
 
 			<trans-unit id="settings.evoweb.sf-register.settings.redirectPostActivationPageId" resname="settings.evoweb.sf-register.settings.redirectPostActivationPageId">
-				<source>Uid of the page to redirect to0, after the registration is confirmed (not after saving)</source>
+				<source>Uid of the page to redirect to, after the registration is confirmed (not after saving)</source>
 			</trans-unit>
 			<trans-unit id="settings.evoweb.sf-register.settings.confirmEmailPostCreate" resname="settings.evoweb.sf-register.settings.confirmEmailPostCreate">
 				<source>Send email to confirm post create</source>

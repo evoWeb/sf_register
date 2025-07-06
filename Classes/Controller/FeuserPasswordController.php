@@ -43,7 +43,7 @@ class FeuserPasswordController extends FeuserController
         parent::__construct($modifyValidator, $fileService, $userRepository);
     }
 
-    public function formAction(Password $password = null): ResponseInterface
+    public function formAction(?Password $password = null): ResponseInterface
     {
         if (!$this->frontendUserService->userIsLoggedIn()) {
             $this->view->assign('notLoggedIn', true);

@@ -209,6 +209,17 @@ which are suited for the usage on fields.
         a value and that it is not empty. Second the rendering uses this
         validator as condition to render required sign or not.
 
+    ..  _BlockDomainValidator:
+
+    ..  confval:: BlockDomainValidator
+        :type: string
+        :Default: 0-mail.com, 027168.com, 0815.ru, mail.ru, bk.ru, list.ru
+        :Configured in: plugin.tx_sfregister.settings.blockDomainList
+
+        Check that the email field does not contain any of the words in the list for the domain.
+
+        Words to check against are configured in blockDomainList.
+
 
 Special fields Validators
 =========================
