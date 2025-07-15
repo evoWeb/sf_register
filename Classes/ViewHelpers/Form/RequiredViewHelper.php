@@ -36,11 +36,6 @@ class RequiredViewHelper extends AbstractConditionViewHelper
     protected array $settings = [];
 
     /**
-     * @var array<string, mixed>
-     */
-    protected array $frameworkConfiguration = [];
-
-    /**
      * @var bool
      */
     protected $escapeOutput = false;
@@ -80,15 +75,10 @@ class RequiredViewHelper extends AbstractConditionViewHelper
                 'SfRegister',
                 'Form'
             );
-            /** @var array<string, mixed> $frameworkConfiguration */
-            $frameworkConfiguration = $this->configurationManager->getConfiguration(
-                ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-            );
         } catch (\Exception) {
             $settings = [];
-            $frameworkConfiguration = [];
         }
-        return [$settings, $frameworkConfiguration];
+        return $settings;
     }
 
     /**
@@ -96,12 +86,14 @@ class RequiredViewHelper extends AbstractConditionViewHelper
      */
     public function classVerdict(array $arguments): bool
     {
-        [$settings, $frameworkConfiguration] = $this->getSettings();
+        $settings = $this->getSettings();
 
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $controllerName = $this->renderingContext->getControllerName();
         $mode = str_replace(
-            ['evoweb\\sfregister\\controller\\feuser', 'controller'],
+            ['feuser', 'controller'],
             '',
-            strtolower(key($frameworkConfiguration['controllerConfiguration'] ?? ''))
+            strtolower($controllerName)
         );
         $controllerSettings = $settings['validation'][$mode] ?? [];
 
