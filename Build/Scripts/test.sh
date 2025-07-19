@@ -156,8 +156,8 @@ DEBUG_TESTS=false
 if [[ $DEBUG_TESTS != true ]]; then
     checkResources
 
-    TCORE="^13.1"
-    TFRAMEWORK="dev-main"
+    TCORE="^13.4"
+    TFRAMEWORK="^9.2.0"
 
     runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
     runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
@@ -165,8 +165,8 @@ if [[ $DEBUG_TESTS != true ]]; then
     runFunctionalTests "8.3" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
 else
     #cleanup
-    runFunctionalTests "8.3" "^13.3" "dev-main" ${TPATH} ${LOWEST} || exit 1
-    #runFunctionalTests "8.2" "^13.0" "dev-main" "Tests/Functional" || exit 1
+    runFunctionalTests "8.3" "^13.4" "^9.2.0" ${TPATH} ${LOWEST} || exit 1
+    #runFunctionalTests "8.2" "^13.0" "^9.2.0" "Tests/Functional" || exit 1
     # ./runTests.sh -x -p 8.2 -d sqlite -s functional -e "--group selected" Tests/Functional12
     # ./runTests.sh -p "8.1" -x -d sqlite -s functional Tests/Functional;
 fi

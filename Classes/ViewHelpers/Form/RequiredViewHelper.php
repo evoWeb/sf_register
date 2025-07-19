@@ -90,11 +90,7 @@ class RequiredViewHelper extends AbstractConditionViewHelper
 
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
         $controllerName = $this->renderingContext->getControllerName();
-        $mode = str_replace(
-            ['feuser', 'controller'],
-            '',
-            strtolower($controllerName)
-        );
+        $mode = str_replace('feuser', '', strtolower($controllerName));
         $controllerSettings = $settings['validation'][$mode] ?? [];
 
         $fieldName = $arguments['fieldName'];
