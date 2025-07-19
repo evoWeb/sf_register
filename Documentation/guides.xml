@@ -14,8 +14,8 @@
                confval-default="TypoScript"
     />
     <project title="Frontend User Registration: Multipurpose configurable registration"
-             release="13.2.0"
-             version="13.2.0"
+             release="13.2.1"
+             version="13.2.1"
              copyright="since 2010 by evoWeb"
     />
 </guides>
