@@ -54,7 +54,9 @@ class FeuserResendController extends FeuserController
             $email = new Email();
             try {
                 $user = $this->frontendUserService->getLoggedInUser();
-                $email->setEmail($user->getEmail());
+                if ($user !== null) {
+                    $email->setEmail($user->getEmail());
+                }
             } catch (\Exception) {
             }
         }
