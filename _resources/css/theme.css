@@ -24729,19 +24729,6 @@ article a.headerlink, article a.permalink {
   top: -0.15em;
   text-decoration: none;
 }
-article a.headerlink:after, article a.permalink:after {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: normal;
-  line-height: 1;
-  content: "\f0c1";
-  font-family: "Font Awesome 6 Free";
-  font-weight: 900;
-  margin-left: -0.35em;
-}
 article .headerNoindex {
   position: relative;
   font-size: 0.65em;
@@ -24749,7 +24736,7 @@ article .headerNoindex {
   top: -0.15em;
   text-decoration: none;
 }
-article *:hover > a.headerlink:after, article *:hover > a.permalink:after, article *:hover .headerNoindex {
+article *:hover > a.headerlink, article *:hover > a.permalink, article *:hover .headerNoindex {
   visibility: visible;
 }
 
