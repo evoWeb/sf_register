@@ -75,18 +75,6 @@ class SelectStaticLanguageViewHelper extends AbstractSelectViewHelper
         }
         $options = $options->toArray();
 
-        if ($this->arguments['disabled']) {
-            $value = (array)$this->getSelectedValue();
-
-            $options = array_filter(
-                $options,
-                function ($option) use ($value) {
-                    /** @var StaticLanguage $option */
-                    return in_array($option->getLgIso2(), $value);
-                }
-            );
-        }
-
         $this->arguments['options'] = $options;
     }
 }
