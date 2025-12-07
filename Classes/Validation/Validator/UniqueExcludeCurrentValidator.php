@@ -17,11 +17,13 @@ namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * A validator to check if a value is unique only if current value has changed
  */
+#[Autoconfigure(public: true)]
 class UniqueExcludeCurrentValidator extends AbstractValidator implements SetModelInterface, SetPropertyNameInterface
 {
     protected $acceptsEmptyValues = false;
@@ -44,7 +46,9 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements SetMode
 
     protected string $propertyName = '';
 
-    public function __construct(protected FrontendUserRepository $userRepository) {}
+    public function __construct(protected FrontendUserRepository $userRepository)
+    {
+    }
 
     public function setModel(ValidatableInterface $model): void
     {

@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Command;
 
 use Doctrine\DBAL\Exception as DbalException;
+use Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -89,7 +90,7 @@ class CleanupCommand extends Command
 
                 $io->comment('Cleaned up all outdated temporary accounts.');
                 $result = self::SUCCESS;
-            } catch (\Exception | DbalException $exception) {
+            } catch (Exception | DbalException $exception) {
                 $io->comment($exception->getMessage());
             }
         }

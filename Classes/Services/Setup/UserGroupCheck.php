@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -27,13 +27,13 @@ class UserGroupCheck implements CheckInterface
     {
         $result = null;
         if (
-            // notify user and post save is set but confirm save isn't
+            // notify the user and post save is set but confirm save isn't
             (
                 ($settings['notifyUser']['createSave'] ?? false)
                 && ($settings['usergroupPostSave'] ?? false)
                 && !($settings['usergroupPostConfirm'] ?? false)
             )
-            // notify user and post confirm is set but post save isn't
+            // notify the user and post confirm is set but post save isn't
             || (
                 ($settings['notifyUser']['createSave'] ?? false)
                 && !($settings['usergroupPostSave'] ?? false)

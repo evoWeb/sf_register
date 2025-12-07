@@ -15,10 +15,12 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Validation\Validator;
 
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
+#[Autoconfigure(public: true)]
 class BadWordValidator extends AbstractValidator
 {
     /**

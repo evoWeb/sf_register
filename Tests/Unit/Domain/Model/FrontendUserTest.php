@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -35,7 +35,7 @@ class FrontendUserTest extends UnitTestCase
     #[Test]
     public function disableDefaultToFalseOnInitialize(): void
     {
-        $this->assertFalse($this->subject->getDisable());
+        self::assertFalse($this->subject->getDisable());
     }
 
     /**
@@ -56,7 +56,7 @@ class FrontendUserTest extends UnitTestCase
     {
         $this->subject->setDisable((bool)$input);
 
-        $this->assertTrue($this->subject->getDisable());
+        self::assertTrue($this->subject->getDisable());
     }
 
     #[Test]
@@ -73,7 +73,7 @@ class FrontendUserTest extends UnitTestCase
     #[Test]
     public function imageAsImageListAddFilenameToImage(): void
     {
-        $this->markTestSkipped('needs to be changed to ObjectStorage');
+        self::markTestSkipped('needs to be changed to ObjectStorage');
         /*$expected1 = 'foo.gif';
         $expected2 = 'bar.jpg';
 
@@ -87,7 +87,7 @@ class FrontendUserTest extends UnitTestCase
     #[Test]
     public function imageAsImageListRemoveFilenameFromImage(): void
     {
-        $this->markTestSkipped('needs to be changed to ObjectStorage');
+        self::markTestSkipped('needs to be changed to ObjectStorage');
         /*$expected1 = 'foo.gif';
         $expected2 = 'bar.jpg';
 
@@ -101,7 +101,7 @@ class FrontendUserTest extends UnitTestCase
     #[Test]
     public function gtcDefaultToFalseOnInitialize(): void
     {
-        $this->assertFalse($this->subject->getDisable());
+        self::assertFalse($this->subject->getDisable());
     }
 
     #[Test]
@@ -110,13 +110,13 @@ class FrontendUserTest extends UnitTestCase
     {
         $this->subject->setDisable((bool)$input);
 
-        $this->assertTrue($this->subject->getDisable());
+        self::assertTrue($this->subject->getDisable());
     }
 
     #[Test]
     public function mobilephoneOnInitializeIsEmpty(): void
     {
-        $this->assertEquals('', $this->subject->getMobilephone());
+        self::assertEquals('', $this->subject->getMobilephone());
     }
 
     #[Test]
@@ -126,6 +126,6 @@ class FrontendUserTest extends UnitTestCase
 
         $this->subject->setMobilephone($expected);
 
-        $this->assertSame($expected, $this->subject->getMobilephone());
+        self::assertSame($expected, $this->subject->getMobilephone());
     }
 }

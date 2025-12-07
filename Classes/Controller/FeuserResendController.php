@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -26,12 +26,13 @@ use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute;
 
 /**
- * An frontend user resend controller
+ * Resend invitation for frontend user controller
  */
 class FeuserResendController extends FeuserController
 {
@@ -57,7 +58,7 @@ class FeuserResendController extends FeuserController
                 if ($user !== null) {
                     $email->setEmail($user->getEmail());
                 }
-            } catch (\Exception) {
+            } catch (Exception) {
             }
         }
 
@@ -67,9 +68,10 @@ class FeuserResendController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'email'])]
-    public function mailAction(Email $email): ResponseInterface
-    {
+    public function mailAction(
+        #[Attribute\Validate(validator: UserValidator::class)]
+        Email $email
+    ): ResponseInterface {
         $email = $this->eventDispatcher->dispatch(new ResendMailEvent($email, $this->settings))->getEmail();
         $user = $this->userRepository->findByEmail($email->getEmail());
 

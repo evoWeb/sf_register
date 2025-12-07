@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -17,6 +17,7 @@ namespace Evoweb\SfRegister\ViewHelpers;
 
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Exception;
+use RuntimeException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -24,14 +25,14 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 class RecordsViewHelper extends AbstractViewHelper
 {
-    public function __construct(protected ConnectionPool $connectionPool)
-    {
-    }
-
     /**
      * @var bool
      */
     protected $escapeOutput = false;
+
+    public function __construct(protected ConnectionPool $connectionPool)
+    {
+    }
 
     public function initializeArguments(): void
     {
@@ -77,7 +78,7 @@ class RecordsViewHelper extends AbstractViewHelper
         try {
             return $result->fetchAllAssociative();
         } catch (Exception $exception) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 'Database query failed. Error was: ' . $exception->getPrevious()->getMessage(),
                 1511950673
             );

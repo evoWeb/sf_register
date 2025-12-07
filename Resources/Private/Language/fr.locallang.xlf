@@ -613,7 +613,7 @@
 				<source>You invited someone to register at %1$s</source>
 				<target>Vous avez invité quelqu'un à s'inscrire à %1$s</target>
 			</trans-unit>
-			<trans-unit id="subjectInvitationToRegister">
+			<trans-unit id="subjectInviteToRegister">
 				<source>You were invite to register at %1$s</source>
 				<target>Vous avez été invité à vous inscrire à %1$s</target>
 			</trans-unit>

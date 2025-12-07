@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -18,8 +18,10 @@ namespace Evoweb\SfRegister\Services;
 use Evoweb\SfRegister\Domain\Model\FrontendUser as FrontendUserModel;
 use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Context\Exception\AspectPropertyNotFoundException;
@@ -34,6 +36,7 @@ use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Frontend\Page\PageInformation;
 
+#[Autoconfigure(public: true)]
 class FrontendUser
 {
     public const SESSION_KEY = 'sf-register-user';
@@ -56,7 +59,8 @@ class FrontendUser
             /** @var UserAspect $userAspect */
             $userAspect = $this->context->getAspect('frontend.user');
             $userId = (int)$userAspect->get('id');
-        } catch (AspectNotFoundException | AspectPropertyNotFoundException) {}
+        } catch (AspectNotFoundException | AspectPropertyNotFoundException) {
+        }
 
         return $userId;
     }
@@ -70,7 +74,7 @@ class FrontendUser
     }
 
     /**
-     * Determines the frontend user, either if it's already submitted, or by looking up the mail hash code.
+     * Determines the frontend user, either if it's already submitted or by looking up the mail hash code.
      */
     public function determineFrontendUser(
         RequestInterface $request,
@@ -101,7 +105,7 @@ class FrontendUser
             /** @var UserAspect $userAspect */
             $userAspect = $this->context->getAspect('frontend.user');
             $result = $userAspect->isLoggedIn();
-        } catch (\Exception) {
+        } catch (Exception) {
         }
         return $result;
     }
@@ -121,52 +125,50 @@ class FrontendUser
             }
         }
 
-        // if redirect is empty set it to current page
+        // if redirect is empty set it to the current page
         if ($redirectPageId == 0) {
             /** @var PageInformation $pageInformation */
             $pageInformation = $request->getAttribute('frontend.page.information');
             $redirectPageId = $pageInformation->getId();
         }
 
-        session_start();
+        $salt = \DateTime::createFromFormat('U.u', (string)microtime(true))->format('Y-m-d H:i:s.u');
+        $hmac = $this->hashService->hmac('auto-login::' . $user->getUid(), self::ADDITIONAL_SECRET . $salt);
 
-        $_SESSION[self::SESSION_KEY] = $this->hashService->hmac(
-            'auto-login::' . $user->getUid(),
-            self::ADDITIONAL_SECRET,
-        );
-
-        $this->registry->set('sf-register', $_SESSION[self::SESSION_KEY], $user->getUid());
+        $this->registry->set('sf-register', $hmac, $user->getUid());
 
         if ($redirectPageId > 0) {
             $nonce = SecurityAspect::provideIn($this->context)->provideNonce();
 
             $parameter = [
                 'logintype' => 'login',
+                self::SESSION_KEY => $hmac,
                 RequestToken::PARAM_NAME => RequestToken::create('core/user-auth/fe')->toHashSignedJwt($nonce),
             ];
 
-            $response = $this->redirectToPage($request, $redirectPageId);
-            $response = $response
-                ->withHeader(
-                    'location',
-                    $response->getHeaderLine('location') . '?' . http_build_query($parameter),
-                );
+            $response = $this->redirectToPage($request, $redirectPageId, $parameter);
             throw new PropagateResponseException($response);
         }
     }
 
-    public function redirectToPage(RequestInterface $request, int $pageId): ResponseInterface
+    /**
+     * @param array<string, string> $parameter
+     */
+    public function redirectToPage(RequestInterface $request, int $pageId, array $parameter = []): ResponseInterface
     {
         $this->uriBuilder->reset();
         $this->uriBuilder->setRequest($request);
 
-        $uri = $this->uriBuilder
+        $this->uriBuilder
             ->setTargetPageUid($pageId)
             ->setLinkAccessRestrictedPages(true)
-            ->setCreateAbsoluteUri(true)
-            ->build();
+            ->setCreateAbsoluteUri(true);
 
-        return $this->getRedirectResponseForUri($uri);
+        if (!empty($parameter)) {
+            $this->uriBuilder->setArguments($parameter);
+        }
+
+        return $this->getRedirectResponseForUri($this->uriBuilder->build());
     }
 
     /**

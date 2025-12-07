@@ -15,10 +15,12 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Validation\Validator;
 
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
+#[Autoconfigure(public: true)]
 class BlockDomainValidator extends AbstractValidator
 {
     /**
@@ -44,7 +46,7 @@ class BlockDomainValidator extends AbstractValidator
         $email = trim((string)$value);
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $emailDomain = substr(strrchr($email, "@"), 1);
+            $emailDomain = substr(strrchr($email, '@'), 1);
 
             if (in_array($emailDomain, $blockDomainItems, true)) {
                 $this->addError(

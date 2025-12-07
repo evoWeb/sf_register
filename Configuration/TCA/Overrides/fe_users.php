@@ -7,21 +7,18 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 defined('TYPO3') or die();
 
 (static function () {
-    $languageFile = 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:';
-
     $temporaryColumns = [
         'activated_on' => [
             'exclude' => true,
-            'label' => $languageFile . 'fe_users.activated_on',
+            'label' => 'sf_register.be:fe_users.activated_on',
             'config' => [
                 'type' => 'datetime',
                 'readOnly' => true,
                 'format' => 'datetime',
-                'eval' => 'int',
             ],
         ],
         'pseudonym' => [
-            'label' => $languageFile . 'fe_users.pseudonym',
+            'label' => 'sf_register.be:fe_users.pseudonym',
             'config' => [
                 'type' => 'input',
                 'size' => 20,
@@ -30,27 +27,26 @@ defined('TYPO3') or die();
             ],
         ],
         'gender' => [
-            'label' => $languageFile . 'fe_users.gender',
+            'label' => 'sf_register.be:fe_users.gender',
             'config' => [
                 'type' => 'radio',
                 'items' => [
-                    ['label' => $languageFile . 'fe_users.gender.I.1', 'value' => 1],
-                    ['label' => $languageFile . 'fe_users.gender.I.2', 'value' => 2],
+                    ['label' => 'sf_register.be:fe_users.gender.I.1', 'value' => 1],
+                    ['label' => 'sf_register.be:fe_users.gender.I.2', 'value' => 2],
                 ],
             ],
         ],
         'date_of_birth' => [
-            'label' => $languageFile . 'fe_users.date_of_birth',
+            'label' => 'sf_register.be:fe_users.date_of_birth',
             'config' => [
                 'type' => 'datetime',
                 'size' => 10,
                 'format' => 'date',
-                'eval' => 'int',
                 'default' => 0,
             ],
         ],
         'language' => [
-            'label' => $languageFile . 'fe_users.language',
+            'label' => 'sf_register.be:fe_users.language',
             'config' => [
                 'type' => 'input',
                 'size' => 4,
@@ -60,7 +56,7 @@ defined('TYPO3') or die();
             ],
         ],
         'zone' => [
-            'label' => $languageFile . 'fe_users.zone',
+            'label' => 'sf_register.be:fe_users.zone',
             'config' => [
                 'type' => 'input',
                 'size' => 20,
@@ -70,50 +66,50 @@ defined('TYPO3') or die();
             ],
         ],
         'timezone' => [
-            'label' => $languageFile . 'fe_users.timezone',
+            'label' => 'sf_register.be:fe_users.timezone',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => $languageFile . 'fe_users.timezone.I.-12', 'value' => -12],
-                    ['label' => $languageFile . 'fe_users.timezone.I.-11', 'value' => -11],
-                    ['label' => $languageFile . 'fe_users.timezone.I.-10', 'value' => -10],
-                    ['label' => $languageFile . 'fe_users.timezone.I.-9', 'value' => -9],
-                    ['label' => $languageFile . 'fe_users.timezone.I.-8', 'value' => -8],
-                    ['label' => $languageFile . 'fe_users.timezone.I.-7', 'value' => -7],
-                    ['label' => $languageFile . 'fe_users.timezone.I.-6', 'value' => -6],
-                    ['label' => $languageFile . 'fe_users.timezone.I.-5', 'value' => -5],
-                    ['label' => $languageFile . 'fe_users.timezone.I.-4', 'value' => -4],
-                    ['label' => $languageFile . 'fe_users.timezone.I.-3', 'value' => -3],
-                    ['label' => $languageFile . 'fe_users.timezone.I.-2', 'value' => -2],
-                    ['label' => $languageFile . 'fe_users.timezone.I.-1', 'value' => -1],
-                    ['label' => $languageFile . 'fe_users.timezone.I.0', 'value' => 0],
-                    ['label' => $languageFile . 'fe_users.timezone.I.1', 'value' => 1],
-                    ['label' => $languageFile . 'fe_users.timezone.I.2', 'value' => 2],
-                    ['label' => $languageFile . 'fe_users.timezone.I.3', 'value' => 3],
-                    ['label' => $languageFile . 'fe_users.timezone.I.4', 'value' => 4],
-                    ['label' => $languageFile . 'fe_users.timezone.I.5', 'value' => 5],
-                    ['label' => $languageFile . 'fe_users.timezone.I.6', 'value' => 6],
-                    ['label' => $languageFile . 'fe_users.timezone.I.7', 'value' => 7],
-                    ['label' => $languageFile . 'fe_users.timezone.I.8', 'value' => 8],
-                    ['label' => $languageFile . 'fe_users.timezone.I.9', 'value' => 9],
-                    ['label' => $languageFile . 'fe_users.timezone.I.10', 'value' => 10],
-                    ['label' => $languageFile . 'fe_users.timezone.I.11', 'value' => 11],
-                    ['label' => $languageFile . 'fe_users.timezone.I.12', 'value' => 12],
-                    ['label' => $languageFile . 'fe_users.timezone.I.13', 'value' => 13],
-                    ['label' => $languageFile . 'fe_users.timezone.I.14', 'value' => 14],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-12', 'value' => -12],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-11', 'value' => -11],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-10', 'value' => -10],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-9', 'value' => -9],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-8', 'value' => -8],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-7', 'value' => -7],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-6', 'value' => -6],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-5', 'value' => -5],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-4', 'value' => -4],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-3', 'value' => -3],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-2', 'value' => -2],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.-1', 'value' => -1],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.0', 'value' => 0],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.1', 'value' => 1],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.2', 'value' => 2],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.3', 'value' => 3],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.4', 'value' => 4],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.5', 'value' => 5],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.6', 'value' => 6],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.7', 'value' => 7],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.8', 'value' => 8],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.9', 'value' => 9],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.10', 'value' => 10],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.11', 'value' => 11],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.12', 'value' => 12],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.13', 'value' => 13],
+                    ['label' => 'sf_register.be:fe_users.timezone.I.14', 'value' => 14],
                 ],
                 'default' => 0,
             ],
         ],
         'daylight' => [
-            'label' => $languageFile . 'fe_users.daylight',
+            'label' => 'sf_register.be:fe_users.daylight',
             'config' => [
                 'type' => 'check',
             ],
         ],
         'mobilephone' => [
-            'label' => $languageFile . 'fe_users.mobilephone',
+            'label' => 'sf_register.be:fe_users.mobilephone',
             'config' => [
                 'type' => 'input',
                 'size' => 20,
@@ -122,41 +118,41 @@ defined('TYPO3') or die();
         ],
         'gtc' => [
             'exclude' => true,
-            'label' => $languageFile . 'fe_users.gtc',
+            'label' => 'sf_register.be:fe_users.gtc',
             'config' => [
                 'type' => 'check',
             ],
         ],
         'privacy' => [
             'exclude' => true,
-            'label' => $languageFile . 'fe_users.privacy',
+            'label' => 'sf_register.be:fe_users.privacy',
             'config' => [
                 'type' => 'check',
             ],
         ],
         'status' => [
-            'label' => $languageFile . 'fe_users.status',
+            'label' => 'sf_register.be:fe_users.status',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['label' => $languageFile . 'fe_users.status.I.0', 'value' => 0],
-                    ['label' => $languageFile . 'fe_users.status.I.1', 'value' => 1],
-                    ['label' => $languageFile . 'fe_users.status.I.2', 'value' => 2],
-                    ['label' => $languageFile . 'fe_users.status.I.3', 'value' => 3],
-                    ['label' => $languageFile . 'fe_users.status.I.4', 'value' => 4],
+                    ['label' => 'sf_register.be:fe_users.status.I.0', 'value' => 0],
+                    ['label' => 'sf_register.be:fe_users.status.I.1', 'value' => 1],
+                    ['label' => 'sf_register.be:fe_users.status.I.2', 'value' => 2],
+                    ['label' => 'sf_register.be:fe_users.status.I.3', 'value' => 3],
+                    ['label' => 'sf_register.be:fe_users.status.I.4', 'value' => 4],
                 ],
             ],
         ],
         'by_invitation' => [
-            'label' => $languageFile . 'fe_users.by_invitation',
+            'label' => 'sf_register.be:fe_users.by_invitation',
             'config' => [
                 'type' => 'check',
                 'default' => 0,
             ],
         ],
         'comments' => [
-            'label' => $languageFile . 'fe_users.comments',
+            'label' => 'sf_register.be:fe_users.comments',
             'config' => [
                 'type' => 'text',
                 'rows' => 5,
@@ -165,7 +161,7 @@ defined('TYPO3') or die();
             ],
         ],
         'email_new' => [
-            'label' => $languageFile . 'fe_users.email_new',
+            'label' => 'sf_register.be:fe_users.email_new',
             'config' => [
                 'type' => 'input',
                 'size' => 20,
@@ -181,28 +177,28 @@ defined('TYPO3') or die();
         ],
         'module_sys_dmail_newsletter' => [
             'exclude' => true,
-            'label' => $languageFile . 'fe_users.module_sys_dmail_newsletter',
+            'label' => 'sf_register.be:fe_users.module_sys_dmail_newsletter',
             'config' => [
                 'type' => 'check',
             ],
         ],
         'module_sys_dmail_html' => [
             'exclude' => true,
-            'label' => $languageFile . 'fe_users.module_sys_dmail_html',
+            'label' => 'sf_register.be:fe_users.module_sys_dmail_html',
             'config' => [
                 'type' => 'check',
             ],
         ],
         'module_sys_dmail_category' => [
             'exclude' => true,
-            'label' => $languageFile . 'fe_users.module_sys_dmail_category',
+            'label' => 'sf_register.be:fe_users.module_sys_dmail_category',
             'config' => [
                 'type' => 'category',
             ],
         ],
         'image' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.image',
+            'label' => 'core.general:LGL.image',
             'config' => [
                 'type' => 'file',
                 'allowed' => 'common-image-types',
@@ -236,14 +232,14 @@ defined('TYPO3') or die();
     );
     ExtensionManagementUtility::addToAllTCAtypes(
         'fe_users',
-        '--div--;LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.div.registration,
+        '--div--;sf_register.be:fe_users.div.registration,
             activated_on, gtc, privacy, by_invitation, comments, module_sys_dmail_newsletter, module_sys_dmail_html'
     );
 
     $tempColumns = [
         'static_info_country' => [
             'exclude' => 0,
-            'label' => $languageFile . 'fe_users.static_info_country',
+            'label' => 'sf_register.be:fe_users.static_info_country',
             'config' => [
                 'type' => 'input',
                 'size' => '5',

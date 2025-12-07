@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -19,6 +19,7 @@ use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Services\Event\AbstractEventWithUser;
 use Evoweb\SfRegister\Services\Event\PreSubmitMailEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -45,6 +46,7 @@ class Mail implements SingletonInterface
         protected EventDispatcherInterface $eventDispatcher,
         protected ConfigurationManagerInterface $configurationManager,
         protected FluidViewFactory $viewFactory,
+        protected MailerInterface $mailer,
     ) {
         $this->frameworkConfiguration = $configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
@@ -179,7 +181,7 @@ class Mail implements SingletonInterface
     {
         return (string)LocalizationUtility::translate(
             'subject' . $method,
-            'SfRegister',
+            'sf_register.messages',
             [$settings['sitename'] ?? '', $user->getUsername()]
         );
     }
@@ -244,8 +246,9 @@ class Mail implements SingletonInterface
         }
 
         $mail = $this->dispatchMailEvent($settings, $mail, $user);
+        $this->mailer->send($mail);
 
-        return $mail->send();
+        return $this->mailer->getSentMessage() !== null;
     }
 
     /**

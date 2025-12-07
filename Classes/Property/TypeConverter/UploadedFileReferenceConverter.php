@@ -12,7 +12,7 @@ declare(strict_types=1);
  *  This script is part of the TYPO3 project. The TYPO3 project is
  *  free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
+ *  the Free Software Foundation; either version 3 of the License or
  *  (at your option) any later version.
  *
  *  The GNU General Public License can be found at
@@ -28,6 +28,8 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Property\TypeConverter;
 
+use Exception;
+use InvalidArgumentException;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Exception\Crypto\InvalidHashStringException;
 use TYPO3\CMS\Core\Http\UploadedFile;
@@ -38,6 +40,7 @@ use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Resource\Security\FileNameValidator;
+use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Core\Utility\StringUtility;
@@ -67,6 +70,8 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      */
     public const CONFIGURATION_FILE_VALIDATORS = 4;
 
+    public const RESOURCE_POINTER_PREFIX = 'sf-register-upload';
+
     protected string $defaultUploadFolder = '1:/user_upload/';
 
     /**
@@ -74,13 +79,13 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      */
     protected array $convertedResources = [];
 
-    public const RESOURCE_POINTER_PREFIX = 'sf-register-upload';
-
     public function __construct(
         protected ResourceFactory $resourceFactory,
         protected HashService $hashService,
-        protected PersistenceManager $persistenceManager
-    ) {}
+        protected PersistenceManager $persistenceManager,
+        protected StorageRepository $storageRepository,
+    ) {
+    }
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
@@ -117,8 +122,8 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
                         );
                     }
                     return $resource;
-                } catch (\Exception) {
-                    // Nothing to do. No file is uploaded and resource pointer is invalid. Discard!
+                } catch (Exception) {
+                    // Nothing to do. No file is uploaded, and a resource pointer is invalid. Discard!
                 }
             }
             return null;
@@ -137,12 +142,12 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         }
 
         if ($configuration === null) {
-            throw new \InvalidArgumentException('Argument $configuration must not be null', 1589183114);
+            throw new InvalidArgumentException('Argument $configuration must not be null', 1589183114);
         }
 
         try {
             $resource = $this->importUploadedResource($source, $configuration);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return GeneralUtility::makeInstance(Error::class, $e->getMessage(), $e->getCode());
         }
 
@@ -218,7 +223,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     }
 
     /**
-     * In case no $resourcePointer is given a new file reference domain object
+     * In case no $resourcePointer is given, a new file reference domain object
      * will be returned. Otherwise, the file reference is reconstituted from
      * storage and will be updated(!) with the provided $falFileReference.
      */
@@ -248,13 +253,11 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             \UPLOAD_ERR_NO_FILE => 'upload.error.150530347',
             default => 'upload.error.150530348',
         };
-        return $this->getLanguageService()->sL(
-            'LLL:EXT:sf_register/Resources/Private/Language/locallang.xlf:' . $key
-        );
+        return $this->getLanguageService()->sL('sf_register.messages:' . $key);
     }
 
     /**
-     * Ensures that upload folder exists, creates it if it does not.
+     * Ensures that the upload folder exists, creates it if it does not.
      */
     protected function provideUploadFolder(string $uploadFolderIdentifier): Folder
     {
@@ -262,9 +265,10 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
         try {
             return $this->resourceFactory->getFolderObjectFromCombinedIdentifier($uploadFolderIdentifier);
-        } catch (\Exception) {
+        } catch (Exception) {
             [$storageId, $storagePath] = explode(':', $uploadFolderIdentifier, 2);
-            $storage = $this->resourceFactory->getStorageObject((int)$storageId);
+            // @extensionScannerIgnoreLine
+            $storage = $this->storageRepository->getStorageObject((int)$storageId);
             $folderNames = GeneralUtility::trimExplode('/', $storagePath, true);
             $uploadFolder = $this->provideTargetFolder($storage->getRootLevelFolder(), ...$folderNames);
             $this->provideFolderInitialization($uploadFolder);
@@ -273,7 +277,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     }
 
     /**
-     * Ensures that particular target folder exists, creates it if it does not.
+     * Ensures that a particular target folder exists, creates it if it does not.
      */
     protected function provideTargetFolder(Folder $parentFolder, string $folderName): Folder
     {
@@ -283,7 +287,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     }
 
     /**
-     * Creates empty index.html file to avoid directory indexing,
+     * Creates an empty index.html file to avoid directory indexing,
      * in case it does not exist yet.
      */
     protected function provideFolderInitialization(Folder $parentFolder): void

@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
+use Traversable;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
@@ -171,7 +172,7 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
      */
     protected function getOptions(): array
     {
-        if (!is_array($this->arguments['options']) && !$this->arguments['options'] instanceof \Traversable) {
+        if (!is_array($this->arguments['options']) && !$this->arguments['options'] instanceof Traversable) {
             return [];
         }
         $options = [];
@@ -254,7 +255,7 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
     {
         $this->setRespectSubmittedDataValue(true);
         $value = $this->getValueAttribute();
-        if (!is_array($value) && !$value instanceof \Traversable) {
+        if (!is_array($value) && !$value instanceof Traversable) {
             return $this->getOptionValueScalar($value);
         }
         $selectedValues = [];

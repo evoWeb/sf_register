@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -19,7 +19,6 @@ use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use PHPUnit\Framework\Attributes\Test;
-use Psr\Container\ContainerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Backend;
@@ -41,22 +40,21 @@ class FrontendUserRepositoryTest extends AbstractTestBase
     #[Test]
     public function findByUid(): void
     {
-        $this->initializeRequest();
+        $this->createServerRequest();
         $this->initializeFrontendTypoScript();
 
         $configurationManager = $this->get(ConfigurationManager::class);
         $configurationManager->setRequest($this->request);
+        // @extensionScannerIgnoreLine
         $configurationManager->setConfiguration([
             'extensionName' => 'SfRegister',
             'pluginName' => 'Create',
         ]);
-        $dataMapFactory = GeneralUtility::makeInstance(DataMapFactory::class);
-        $container = GeneralUtility::makeInstance(ContainerInterface::class);
+        $dataMapFactory = $this->get(DataMapFactory::class);
 
         $queryFactory = new QueryFactory(
             $configurationManager,
-            $dataMapFactory,
-            $container
+            $dataMapFactory
         );
         $backend = GeneralUtility::makeInstance(Backend::class);
         $persistenceSession = GeneralUtility::makeInstance(Session::class);
@@ -74,7 +72,7 @@ class FrontendUserRepositoryTest extends AbstractTestBase
         /** @var FrontendUser $user */
         $user = $subject->findByUid(1);
 
-        $this->assertInstanceOf(FrontendUser::class, $user);
-        $this->assertEquals('testuser', $user->getUsername());
+        self::assertInstanceOf(FrontendUser::class, $user);
+        self::assertEquals('testuser', $user->getUsername());
     }
 }

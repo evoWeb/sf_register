@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -15,7 +15,8 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Domain\Model;
 
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use DateTime;
+use TYPO3\CMS\Extbase\Attribute as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -138,11 +139,11 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
      */
     protected string $invitationEmail = '';
 
-    protected ?\DateTime $lastlogin = null;
+    protected ?DateTime $lastlogin = null;
 
-    protected ?\DateTime $activatedOn = null;
+    protected ?DateTime $activatedOn = null;
 
-    protected ?\DateTime $dateOfBirth = null;
+    protected ?DateTime $dateOfBirth = null;
 
     #[Extbase\ORM\Transient]
     protected string $captcha = '';
@@ -248,32 +249,32 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
         return $this->moduleSysDmailCategory;
     }
 
-    public function setLastlogin(\DateTime $lastlogin): void
+    public function setLastlogin(DateTime $lastlogin): void
     {
         $this->lastlogin = $lastlogin;
     }
 
-    public function getLastlogin(): ?\DateTime
+    public function getLastlogin(): ?DateTime
     {
         return $this->lastlogin;
     }
 
-    public function setActivatedOn(?\DateTime $activatedOn): void
+    public function setActivatedOn(?DateTime $activatedOn): void
     {
         $this->activatedOn = $activatedOn;
     }
 
-    public function getActivatedOn(): ?\DateTime
+    public function getActivatedOn(): ?DateTime
     {
         return $this->activatedOn;
     }
 
-    public function setDateOfBirth(?\DateTime $dateOfBirth): void
+    public function setDateOfBirth(?DateTime $dateOfBirth): void
     {
         $this->dateOfBirth = $dateOfBirth;
     }
 
-    public function getDateOfBirth(): ?\DateTime
+    public function getDateOfBirth(): ?DateTime
     {
         return $this->dateOfBirth;
     }
@@ -285,7 +286,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
     {
         if ($this->dateOfBirthDay > 0 && $this->dateOfBirthMonth > 0 && $this->dateOfBirthYear > 0) {
             if ($this->dateOfBirth === null) {
-                $this->dateOfBirth = new \DateTime();
+                $this->dateOfBirth = new DateTime();
             }
             $this->dateOfBirth->setDate($this->dateOfBirthYear, $this->dateOfBirthMonth, $this->dateOfBirthDay);
         }
@@ -301,7 +302,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
     {
         $result = 1;
 
-        if ($this->dateOfBirth instanceof \DateTime) {
+        if ($this->dateOfBirth instanceof DateTime) {
             $result = $this->dateOfBirth->format('j');
         }
 
@@ -318,7 +319,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
     {
         $result = 1;
 
-        if ($this->dateOfBirth instanceof \DateTime) {
+        if ($this->dateOfBirth instanceof DateTime) {
             $result = $this->dateOfBirth->format('n');
         }
 
@@ -335,7 +336,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
     {
         $result = 1970;
 
-        if ($this->dateOfBirth instanceof \DateTime) {
+        if ($this->dateOfBirth instanceof DateTime) {
             $result = $this->dateOfBirth->format('Y');
         }
 

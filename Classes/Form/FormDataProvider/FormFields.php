@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -97,8 +97,7 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
      */
     protected function getLabel(string $fieldName, array|string $configuration): string
     {
-        $labelPath = $configuration['backendLabel']
-            ?? 'LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.' . $fieldName;
+        $labelPath = $configuration['backendLabel'] ?? 'sf_register.be:fe_users.' . $fieldName;
         return $this->getLanguageService()->sL($labelPath);
     }
 

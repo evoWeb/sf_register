@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Controller;
 
+use DateTime;
 use Evoweb\SfRegister\Controller\Event\CreateAcceptEvent;
 use Evoweb\SfRegister\Controller\Event\CreateConfirmEvent;
 use Evoweb\SfRegister\Controller\Event\CreateDeclineEvent;
@@ -34,12 +35,12 @@ use Evoweb\SfRegister\Services\Setup\CheckFactory;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 
 /**
- * A frontend user create controller
+ * Create frontend user controller
  */
 class FeuserCreateController extends FeuserController
 {
@@ -78,9 +79,10 @@ class FeuserCreateController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
-    public function previewAction(FrontendUser $user): ResponseInterface
-    {
+    public function previewAction(
+        #[Attribute\Validate(validator: UserValidator::class)]
+        FrontendUser $user
+    ): ResponseInterface {
         if ($this->request->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
@@ -91,9 +93,10 @@ class FeuserCreateController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
-    public function saveAction(FrontendUser $user): ResponseInterface
-    {
+    public function saveAction(
+        #[Attribute\Validate(validator: UserValidator::class)]
+        FrontendUser $user
+    ): ResponseInterface {
         if (
             ($this->settings['confirmEmailPostCreate'] ?? false)
             || ($this->settings['acceptEmailPostCreate'] ?? false)
@@ -127,7 +130,7 @@ class FeuserCreateController extends FeuserController
             $this->userRepository->add($user);
             $this->persistAll();
 
-            // Write back plain password
+            // Write back a plain password
             $user->setPassword($plainPassword);
             /** @var FrontendUser $user */
             $user = $this->mailService->sendEmails(
@@ -166,7 +169,7 @@ class FeuserCreateController extends FeuserController
     }
 
     /**
-     * Confirm registration process by user. Can be followed by acceptance of admin
+     * Confirm the registration process by user. Can be followed by acceptance of admin
      */
     public function confirmAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -195,7 +198,7 @@ class FeuserCreateController extends FeuserController
                     (int)($this->settings['usergroupPostConfirm'] ?? 0)
                 );
                 $this->fileService->moveTemporaryImage($user);
-                $user->setActivatedOn(new \DateTime('now'));
+                $user->setActivatedOn(new DateTime('now'));
 
                 if (!($this->settings['acceptEmailPostConfirm'] ?? false)) {
                     $user->setDisable(false);
@@ -272,7 +275,7 @@ class FeuserCreateController extends FeuserController
     }
 
     /**
-     * Accept registration process by admin after user confirmation
+     * Accept the registration process by admin after user confirmation
      */
     public function acceptAction(?FrontendUser $user, ?string $hash): ResponseInterface
     {
@@ -302,7 +305,7 @@ class FeuserCreateController extends FeuserController
                 $user->setDisable(false);
 
                 if (!($this->settings['confirmEmailPostAccept'] ?? false)) {
-                    $user->setActivatedOn(new \DateTime('now'));
+                    $user->setActivatedOn(new DateTime('now'));
                 }
 
                 $user = $this->eventDispatcher->dispatch(new CreateAcceptEvent($user, $this->settings))->getUser();
@@ -328,7 +331,7 @@ class FeuserCreateController extends FeuserController
     }
 
     /**
-     * Decline registration process by admin with removing the user data
+     * Decline the registration process by admin with removing the user data
      *
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException

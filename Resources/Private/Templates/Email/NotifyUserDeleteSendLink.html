@@ -9,7 +9,7 @@
 	<br>
 	<f:format.raw><f:translate id="email_email_account_sendlink" arguments="{0: user.username}"/></f:format.raw><br>
 	<br>
-	<register:link.action arguments="{user: user.uid}" action="form" controller="FeuserDelete" absolute="true">
+	<register:link.action pageUid="{settings.deletePid}" arguments="{user: user.uid}" action="form" controller="FeuserDelete" absolute="true">
 		<f:translate id="email_email_account_sendlink_link"/>
 	</register:link.action>
 </f:section>

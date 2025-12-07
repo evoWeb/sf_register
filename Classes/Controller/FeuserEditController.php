@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -28,15 +28,16 @@ use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 
 /**
- * A frontend user edit controller
+ * Edit frontend user controller
  */
 class FeuserEditController extends FeuserController
 {
@@ -78,9 +79,10 @@ class FeuserEditController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
-    public function previewAction(FrontendUser $user): ResponseInterface
-    {
+    public function previewAction(
+        #[Attribute\Validate(validator: UserValidator::class)]
+        FrontendUser $user
+    ): ResponseInterface {
         if ($this->request->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
@@ -91,14 +93,15 @@ class FeuserEditController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
-    public function saveAction(FrontendUser $user): ResponseInterface
-    {
+    public function saveAction(
+        #[Attribute\Validate(validator: UserValidator::class)]
+        FrontendUser $user
+    ): ResponseInterface {
         if (
             ($this->settings['confirmEmailPostEdit'] ?? false)
             || ($this->settings['acceptEmailPostEdit'] ?? false)
         ) {
-            // Remove user object from session to fetch it really from database
+            // Remove user object from session to fetch it really from a database
             /** @var Session $session */
             $session = GeneralUtility::makeInstance(Session::class);
             $session->unregisterObject($user);
@@ -132,7 +135,8 @@ class FeuserEditController extends FeuserController
 
         try {
             $this->userRepository->update($user);
-        } catch (\Exception) {}
+        } catch (Exception) {
+        }
         $this->persistAll();
 
         $this->sessionService->remove('captchaWasValid');
@@ -177,7 +181,8 @@ class FeuserEditController extends FeuserController
                 $user = $this->eventDispatcher->dispatch(new EditConfirmEvent($user, $this->settings))->getUser();
                 try {
                     $this->userRepository->update($user);
-                } catch (\Exception) {}
+                } catch (Exception) {
+                }
 
                 $this->mailService->sendEmails(
                     $this->request,
@@ -229,7 +234,8 @@ class FeuserEditController extends FeuserController
                 $user = $this->eventDispatcher->dispatch(new EditAcceptEvent($user, $this->settings))->getUser();
                 try {
                     $this->userRepository->update($user);
-                } catch (\Exception) {}
+                } catch (Exception) {
+                }
 
                 $this->mailService->sendEmails(
                     $this->request,

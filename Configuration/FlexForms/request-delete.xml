@@ -1,0 +1,31 @@
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT type="array">
+                <sheetTitle>sf_register.be:form_flexform.sheet_general</sheetTitle>
+                <type>array</type>
+                <el type="array">
+                    <settings.templateRootPath>
+                        <label>sf_register.be:form_flexform.settings.viewTemplateRootPath</label>
+                        <config type="array">
+                            <type>input</type>
+                        </config>
+                    </settings.templateRootPath>
+
+                    <settings.deletePid>
+                        <label>sf_register.be:form_flexform.settings.deletePid</label>
+                        <config type="array">
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.deletePid>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

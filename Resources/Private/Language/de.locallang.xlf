@@ -30,7 +30,7 @@
 			</trans-unit>
 			<trans-unit id="gender_3">
 				<source>Div</source>
-				<target>Div</target>
+				<target>Divers</target>
 			</trans-unit>
 			<trans-unit id="title">
 				<source>Title</source>
@@ -601,6 +601,19 @@
 			<trans-unit id="subjectNotifyUserEditAccept">
 				<source>Your change of information for account %2$s on site %1$s was accepted</source>
 				<target>Ihre Änderungen an Ihrem Account %2$s auf Seite %1$s wurden akzeptiert</target>
+			</trans-unit>
+
+			<trans-unit id="subjectNotifyAdminSendInvitation">
+				<source>User invitation at %1$s</source>
+				<target>Benutzereinladung auf %1$s</target>
+			</trans-unit>
+			<trans-unit id="subjectNotifyUserSendInvitation">
+				<source>You invited someone to register at %1$s</source>
+				<target>Sie haben jemanden eingelanden sich auf %1$s zu registrieren</target>
+			</trans-unit>
+			<trans-unit id="subjectInviteToRegister">
+				<source>You were invite to register at %1$s</source>
+				<target>Sie wurden eingeladen sich auf %1$s zu registrieren</target>
 			</trans-unit>
 
 			<trans-unit id="subjectNotifyAdminDeleteSave">

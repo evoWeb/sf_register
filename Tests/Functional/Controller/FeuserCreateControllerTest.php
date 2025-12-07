@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -16,6 +16,8 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Tests\Functional\Controller;
 
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use Evoweb\SfRegister\Validation\Validator\RequiredValidator;
+use Evoweb\SfRegister\Validation\Validator\UniqueValidator;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use EvowebTests\TestClasses\Controller\FeuserCreateController;
 use PHPUnit\Framework\Attributes\Test;
@@ -23,6 +25,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class FeuserCreateControllerTest extends AbstractTestBase
@@ -34,7 +37,7 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_groups.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_users.csv');
 
-        $this->initializeRequest();
+        $this->createServerRequest();
         $this->initializeFrontendTypoScript([
             'plugin.' => [
                 'tx_sfregister.' => [
@@ -45,10 +48,10 @@ class FeuserCreateControllerTest extends AbstractTestBase
                         'validation.' => [
                             'create.' => [
                                 'username.' => [
-                                    1 => '"Evoweb\\SfRegister\\Validation\\Validator\\RequiredValidator"',
-                                    2 => '"TYPO3\\CMS\\Extbase\\Validation\\Validator\\StringLengthValidator", options={"minimum": 4, "maximum": 80}',
-                                    3 => '"Evoweb\\SfRegister\\Validation\\Validator\\UniqueValidator"',
-                                    4 => '"Evoweb\\SfRegister\\Validation\\Validator\\UniqueValidator", options={"global": 1}',
+                                    1 => '"' . RequiredValidator::class . '"',
+                                    2 => '"' . StringLengthValidator::class . '",options={"minimum":4,"maximum":80}',
+                                    3 => '"' . UniqueValidator::class . '"',
+                                    4 => '"' . UniqueValidator::class . '", options={"global": 1}',
                                 ],
                             ],
                         ],
@@ -61,7 +64,7 @@ class FeuserCreateControllerTest extends AbstractTestBase
     #[Test]
     public function isUserValidatorSet(): void
     {
-        // configurationManager is a shared object, and will be a constructor parameter of the controller
+        // configurationManager is a shared object and will be a constructor parameter of the controller
         // @see Bootstrap::initializeConfiguration
         $configuration = [
             'extensionName' => 'SfRegister',
@@ -70,6 +73,7 @@ class FeuserCreateControllerTest extends AbstractTestBase
         /** @var ConfigurationManagerInterface $configurationManager */
         $configurationManager = $this->get(ConfigurationManagerInterface::class);
         $configurationManager->setRequest($this->request);
+        // @extensionScannerIgnoreLine
         $configurationManager->setConfiguration($configuration);
 
         // @see RequestBuilder::build
@@ -94,7 +98,9 @@ class FeuserCreateControllerTest extends AbstractTestBase
         ]);
 
         $request = new Request($this->request->withAttribute('extbase', $extbaseAttribute));
-        $request = $request->withAttribute('currentContentObject', new ContentObjectRenderer());
+
+        $contentObjectRenderer = $this->createMock(ContentObjectRenderer::class);
+        $request = $request->withAttribute('currentContentObject', $contentObjectRenderer);
 
         /** @var FeuserCreateController $subject */
         $subject = $this->get(FeuserCreateController::class);
@@ -108,6 +114,6 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $arguments = $subject->get('arguments');
         $validator = $arguments->getArgument('user')->getValidator();
 
-        $this->assertInstanceOf(UserValidator::class, $validator);
+        self::assertInstanceOf(UserValidator::class, $validator);
     }
 }

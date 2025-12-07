@@ -37,8 +37,8 @@
 	},
 	"scripts": {
 		"lint:css": "stylelint Sources/Css/*.css",
-		"prefix:css": "postcss --use autoprefixer -m -d ../Resources/Public/Stylesheets/ Sources/Css/*.css",
-		"minify:css": "css-minify -d ../Resources/Public/Stylesheets/ -o ../Resources/Public/Stylesheets",
+		"prefix:css": "postcss --use autoprefixer -m -d ../Resources/Public/Stylesheets Sources/Css/*.css",
+		"minify:css": "css-minify -d ../Resources/Public/Stylesheets -o ../Resources/Public/Stylesheets",
 		"build:css": "npm run lint:css && npm run prefix:css && npm run minify:css",
 		"lint:ts": "eslint -c eslint.config.mjs Sources/TypeScript/*.ts",
 		"compile:ts": "tsc --project tsconfig.build.json && rollup -c",

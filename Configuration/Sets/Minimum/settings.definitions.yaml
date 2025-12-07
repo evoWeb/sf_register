@@ -6,109 +6,109 @@ categories:
     parent: sf-register
 
 settings:
-  evoweb.sf-register.view.templateRootPath:
+  plugin.tx_sfregister.view.templateRootPath:
     default: 'EXT:sf_register/Resources/Private/Templates/'
     type: string
     category: sf-register.common
-  evoweb.sf-register.view.partialRootPath:
+  plugin.tx_sfregister.view.partialRootPath:
     default: 'EXT:sf_register/Resources/Private/Partials/'
     type: string
     category: sf-register.common
-  evoweb.sf-register.view.layoutRootPath:
+  plugin.tx_sfregister.view.layoutRootPath:
     default: 'EXT:sf_register/Resources/Private/Layouts/'
     type: string
     category: sf-register.common
-  evoweb.sf-register.settings.createPid:
+  plugin.tx_sfregister.settings.createPid:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.editPid:
+  plugin.tx_sfregister.settings.editPid:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.passwordPid:
+  plugin.tx_sfregister.settings.passwordPid:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.invitePid:
+  plugin.tx_sfregister.settings.invitePid:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.resendPid:
+  plugin.tx_sfregister.settings.resendPid:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.badWordList:
+  plugin.tx_sfregister.settings.badWordList:
     default: 'god, sex, password'
     type: string
     category: sf-register.common
-  evoweb.sf-register.settings.captchaId:
+  plugin.tx_sfregister.settings.captchaId:
     default: 'recaptcha'
     type: string
     category: sf-register.common
 
-  evoweb.sf-register.settings.usergroup:
+  plugin.tx_sfregister.settings.usergroup:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.usergroupPostSave:
+  plugin.tx_sfregister.settings.usergroupPostSave:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.usergroupPostConfirm:
+  plugin.tx_sfregister.settings.usergroupPostConfirm:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.usergroupPostAccept:
+  plugin.tx_sfregister.settings.usergroupPostAccept:
     default: 0
     type: int
     category: sf-register.common
 
-  evoweb.sf-register.settings.emailSitename:
+  plugin.tx_sfregister.settings.emailSitename:
     default: 'dummy Site'
     type: string
     category: sf-register.common
 
 
-  evoweb.sf-register.settings.redirectPostActivationPageId:
+  plugin.tx_sfregister.settings.redirectPostActivationPageId:
     default: 0
     type: int
     category: sf-register.minimal
-  evoweb.sf-register.settings.confirmEmailPostCreate:
+  plugin.tx_sfregister.settings.confirmEmailPostCreate:
     default: true
     type: bool
     category: sf-register.minimal
-  evoweb.sf-register.settings.acceptEmailPostCreate:
+  plugin.tx_sfregister.settings.acceptEmailPostCreate:
     default: false
     type: bool
     category: sf-register.minimal
-  evoweb.sf-register.settings.confirmEmailPostAccept:
+  plugin.tx_sfregister.settings.confirmEmailPostAccept:
     default: false
     type: bool
     category: sf-register.minimal
-  evoweb.sf-register.settings.acceptEmailPostConfirm:
+  plugin.tx_sfregister.settings.acceptEmailPostConfirm:
     default: false
     type: bool
     category: sf-register.minimal
-  evoweb.sf-register.settings.confirmEmailPostEdit:
+  plugin.tx_sfregister.settings.confirmEmailPostEdit:
     default: false
     type: bool
     category: sf-register.minimal
-  evoweb.sf-register.settings.acceptEmailPostEdit:
-    default: false
-    type: bool
-    category: sf-register.minimal
-
-  evoweb.sf-register.settings.autologinPostConfirmation:
+  plugin.tx_sfregister.settings.acceptEmailPostEdit:
     default: false
     type: bool
     category: sf-register.minimal
 
-  evoweb.sf-register.settings.emailName:
+  plugin.tx_sfregister.settings.autologinPostConfirmation:
+    default: false
+    type: bool
+    category: sf-register.minimal
+
+  plugin.tx_sfregister.settings.emailName:
     default: 'userEmail from'
     type: string
     category: sf-register.minimal
-  evoweb.sf-register.settings.emailAddress:
+  plugin.tx_sfregister.settings.emailAddress:
     default: 'userEmailfrom@test.local'
     type: string
     category: sf-register.minimal

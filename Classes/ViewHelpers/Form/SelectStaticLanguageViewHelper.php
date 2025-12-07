@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
-use Evoweb\SfRegister\Domain\Model\StaticLanguage;
 use Evoweb\SfRegister\Domain\Repository\StaticLanguageRepository;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 

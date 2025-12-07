@@ -3,7 +3,7 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2018-06-26T07:34:54Z" product-name="sf_register">
 		<header/>
 		<body>
-			<trans-unit id="wizard.group.sf_register">
+			<trans-unit id="tt_content.list_type_group">
 				<source>User registration</source>
 			</trans-unit>
 			<trans-unit id="tt_content.list_type_create">
@@ -310,6 +310,9 @@
 			<trans-unit id="fe_users.status">
 				<source>Status</source>
 			</trans-unit>
+			<trans-unit id="fe_users.status.I.0">
+				<source>not given</source>
+			</trans-unit>
 			<trans-unit id="fe_users.status.I.1">
 				<source>Student</source>
 			</trans-unit>
@@ -346,6 +349,9 @@
 			<trans-unit id="fe_users.invitationEmail">
 				<source>Email to send invitation</source>
 			</trans-unit>
+			<trans-unit id="form_flexform.settings-of">
+				<source>Settings of</source>
+			</trans-unit>
 			<trans-unit id="form_flexform.sheet_general">
 				<source>General settings</source>
 			</trans-unit>
@@ -353,7 +359,7 @@
 				<source>Selected fields</source>
 			</trans-unit>
 			<trans-unit id="form_flexform.settings.fields.nonSelected">
-				<source>No fields selected. Please edit element and save with selected fields.</source>
+				<source>No fields selected. Please edit the element and save with selected fields.</source>
 			</trans-unit>
 			<trans-unit id="form_flexform.settings.viewTemplateRootPath">
 				<source>Template root path (EXT:sf_register/Resources/Private/Templates)</source>
@@ -363,6 +369,9 @@
 			</trans-unit>
 			<trans-unit id="form_flexform.settings.createPid">
 				<source>Page id of registration page</source>
+			</trans-unit>
+			<trans-unit id="form_flexform.settings.deletePid">
+				<source>Page id of delete page</source>
 			</trans-unit>
 			<trans-unit id="pages">
 				<source>Record Storage Page</source>

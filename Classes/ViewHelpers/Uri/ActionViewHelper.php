@@ -17,6 +17,7 @@ namespace Evoweb\SfRegister\ViewHelpers\Uri;
 
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\HttpUtility;
@@ -42,8 +43,7 @@ class ActionViewHelper extends AbstractViewHelper
         protected ContentObjectRenderer $contentObjectRenderer,
         protected LinkFactory $linkFactory,
         protected UriBuilder $uriBuilder,
-    )
-    {
+    ) {
     }
 
     public function initializeArguments(): void
@@ -121,7 +121,7 @@ class ActionViewHelper extends AbstractViewHelper
         if ($request instanceof ServerRequestInterface && ApplicationType::fromRequest($request)->isFrontend()) {
             return $this->renderFrontendLinkWithCoreContext($request);
         }
-        throw new \RuntimeException(
+        throw new RuntimeException(
             'The rendering context of ViewHelper sf:link.action is missing a valid request object.',
             1690365240
         );
@@ -164,7 +164,7 @@ class ActionViewHelper extends AbstractViewHelper
             && is_string($action) && $action !== ''
         );
         if (!$allExtbaseArgumentsAreSet) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 'ViewHelper sf:link.action needs either all extbase arguments set'
                 . ' ("extensionName", "pluginName", "controller", "action")'
                 . ' or needs a request implementing extbase RequestInterface.',
@@ -187,7 +187,7 @@ class ActionViewHelper extends AbstractViewHelper
         );
 
         $typolinkConfiguration = [
-            'parameter' => $pageUid
+            'parameter' => $pageUid,
         ];
         if ($pageType) {
             $typolinkConfiguration['parameter'] .= ',' . $pageType;
@@ -240,6 +240,7 @@ class ActionViewHelper extends AbstractViewHelper
         $noCache = (bool)($this->arguments['noCache'] ?? false);
         $language = isset($this->arguments['language']) ? (string)$this->arguments['language'] : null;
         $section = (string)$this->arguments['section'];
+        // @extensionScannerIgnoreLine
         $format = (string)$this->arguments['format'];
         $linkAccessRestrictedPages = (bool)($this->arguments['linkAccessRestrictedPages'] ?? false);
         $additionalParams = (array)$this->arguments['additionalParams'];

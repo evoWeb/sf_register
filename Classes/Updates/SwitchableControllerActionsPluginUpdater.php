@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -19,15 +19,15 @@ use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Exception as DbalException;
 use Symfony\Component\Console\Output\OutputInterface;
+use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Install\Attribute\UpgradeWizard;
-use TYPO3\CMS\Install\Updates\ChattyInterface;
-use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
-use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
+use TYPO3\CMS\Core\Attribute\UpgradeWizard;
+use TYPO3\CMS\Core\Upgrades\ChattyInterface;
+use TYPO3\CMS\Core\Upgrades\DatabaseUpdatedPrerequisite;
+use TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface;
 
 #[UpgradeWizard('sfrSwitchableControllerActionsPluginUpdater')]
 class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface, ChattyInterface
@@ -73,7 +73,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
     protected OutputInterface $output;
 
     public function __construct(
-        protected FlexFormService $flexFormService,
+        protected FlexFormTools $flexFormTools,
         protected ConnectionPool $connectionPool,
     ) {
     }
@@ -109,7 +109,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
         } catch (Exception) {
             $necessary = 0;
         }
-        return $necessary;
+        return $necessary > 0;
     }
 
     public function executeUpdate(): bool
@@ -125,7 +125,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
                 continue;
             }
 
-            $flexForm = $this->flexFormService->convertFlexFormContentToArray($record['pi_flexform']);
+            $flexForm = $this->flexFormTools->convertFlexFormContentToArray($record['pi_flexform']);
             $newListType = $this->getTargetListType($record['list_type'], $flexForm['switchableControllerActions']);
             $allowedSettings = $this->getSettingsFromFlexFormDataStructureFile($newListType);
 

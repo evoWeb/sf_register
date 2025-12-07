@@ -17,6 +17,7 @@ namespace Evoweb\SfRegister\Services\Captcha;
 
 use Evoweb\SfRegister\Services\Session;
 use SJBR\SrFreecap\PiBaseApi;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -54,6 +55,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * </p>
  * </output>
  */
+#[Autoconfigure(public: true)]
 class SrFreecapAdapter extends AbstractAdapter
 {
     protected ?object $captchaService = null;

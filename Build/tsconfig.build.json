@@ -1,9 +1,9 @@
 {
-	"extends": "./tsconfig",
+	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"outDir": "./Public"
 	},
 	"files": [
-		"Sources/TypeScript/sf_register.ts"
+      "Sources/TypeScript/sf_register.ts"
 	]
 }

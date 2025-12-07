@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Services;
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -23,6 +24,7 @@ use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Resource\ResourceStorage;
+use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
@@ -71,14 +73,14 @@ class File implements SingletonInterface, LoggerAwareInterface
     public function __construct(
         protected ConfigurationManager $configurationManager,
         protected ResourceFactory $resourceFactory,
-    )
-    {
+        protected StorageRepository $storageRepository,
+    ) {
         try {
             $this->settings = $this->configurationManager->getConfiguration(
                 ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
                 'SfRegister'
             );
-        } catch (\Exception) {
+        } catch (Exception) {
         }
 
         if (($this->settings['imageFolder'] ?? '') !== '') {
@@ -108,7 +110,8 @@ class File implements SingletonInterface, LoggerAwareInterface
     public function getStorage(): ?ResourceStorage
     {
         if (!$this->storage) {
-            $this->storage = $this->resourceFactory->getStorageObject($this->storageUid);
+            // @extensionScannerIgnoreLine
+            $this->storage = $this->storageRepository->getStorageObject($this->storageUid);
         }
 
         return $this->storage;
@@ -129,7 +132,7 @@ class File implements SingletonInterface, LoggerAwareInterface
 
             try {
                 $this->imageFolder = $this->getStorage()->getFolder($this->imageFolderIdentifier);
-            } catch (\Exception) {
+            } catch (Exception) {
             }
         }
         return $this->imageFolder;
@@ -142,7 +145,7 @@ class File implements SingletonInterface, LoggerAwareInterface
 
             try {
                 $this->tempFolder = $this->getStorage()->getFolder($this->tempFolderIdentifier);
-            } catch (\Exception) {
+            } catch (Exception) {
             }
         }
         return $this->tempFolder;
@@ -193,7 +196,7 @@ class File implements SingletonInterface, LoggerAwareInterface
                 $this->namespace = strtolower(
                     'tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']
                 );
-            } catch (\Exception) {
+            } catch (Exception) {
                 $this->namespace = 'tx_sfregister_create';
             }
         }
@@ -278,7 +281,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         if (!$this->getStorage()->hasFolder($uploadFolder)) {
             try {
                 $this->getStorage()->createFolder($uploadFolder);
-            } catch (\Exception) {
+            } catch (Exception) {
             }
         }
     }
@@ -291,7 +294,7 @@ class File implements SingletonInterface, LoggerAwareInterface
             try {
                 $file->getStorage()
                     ->moveFile($file, $this->getImageFolder());
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 $this->logger->info(
                     'sf_register: Image ' . $file->getName() . ' could not be moved! ' . $exception->getMessage()
                 );

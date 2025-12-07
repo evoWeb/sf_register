@@ -9,7 +9,7 @@ return [
             ],
             'before' => [
                 'typo3/cms-core/request-token-middleware',
-            ]
+            ],
         ],
     ],
 ];
