@@ -15,7 +15,7 @@ cd "$THIS_SCRIPT_DIR" || exit 1
 checkResources () {
     clear
     echo "#################################################################" >&2
-    echo " Checking documentation, TypeScript and Scss files" >&2
+    echo " Checking documentation, TypeScript, Scss and Xliff files" >&2
     echo "#################################################################" >&2
     echo "" >&2
 
@@ -32,7 +32,7 @@ checkResources () {
     EXIT_CODE_DOCUMENTATION=$?
 
     echo "#################################################################" >&2
-    echo " Checked documentation, TypeScript and Scss files" >&2
+    echo " Checked documentation, TypeScript, Scss and Xliff files" >&2
     if [[ ${EXIT_CODE_SCSS} -eq 0 ]] && \
         [[ ${EXIT_CODE_TYPESCRIPT} -eq 0 ]] && \
         [[ ${EXIT_CODE_XLIFF} -eq 0 ]] && \
@@ -46,6 +46,7 @@ checkResources () {
     echo "#################################################################" >&2
     echo "" >&2
 
+    ./runTests.sh -s clean
     ./additionalTests.sh -s clean
 }
 
@@ -151,15 +152,6 @@ DEBUG_TESTS=false
 if [[ $DEBUG_TESTS != true ]]; then
     checkResources
 
-    TCORE="^13.4"
-    TFRAMEWORK="^9.2.0"
-    runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
-    runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
-    runFunctionalTests "8.3" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
-    runFunctionalTests "8.3" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
-    runFunctionalTests "8.4" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
-    runFunctionalTests "8.4" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
-
     TCORE="^14.0"
     TFRAMEWORK="dev-main"
     runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
@@ -168,6 +160,8 @@ if [[ $DEBUG_TESTS != true ]]; then
     runFunctionalTests "8.3" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
     runFunctionalTests "8.4" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
     #runFunctionalTests "8.4" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
+    runFunctionalTests "8.5" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
+    #runFunctionalTests "8.5" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
 else
     #cleanup
     runFunctionalTests "8.4" "^14.0" "dev-main" ${TPATH} ${LOWEST} || exit 1
