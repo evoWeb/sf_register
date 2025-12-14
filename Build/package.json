@@ -13,27 +13,25 @@
 	},
 	"type": "module",
 	"devDependencies": {
-		"autoprefixer": "^10.4.20",
-		"css-minify": "^2.0.1",
-		"postcss-cli": "^11.0.0",
+		"autoprefixer": "^10.4.21",
+		"css-minify": "^2.1.0",
+		"postcss-cli": "^11.0.1",
 
-		"stylelint": "^16.9.0",
-		"stylelint-order": "^6.0.4",
+		"stylelint": "^14.16.1",
+		"stylelint-order": "^5.0.0",
 
-		"typescript": "< 5.6.0",
-		"rollup": "^4.24.0",
+		"typescript": "< 5.9.3",
+		"rollup": "^4.53.3",
 		"@rollup/plugin-terser": "^0.4.4",
-		"terser": "^5.34.1",
+		"terser": "^5.44.1",
 
-		"@stylistic/eslint-plugin": "^2.8.0",
-		"@typescript-eslint/eslint-plugin": "^8.8.0",
-		"@typescript-eslint/parser": "^8.8.0",
-		"@typescript-eslint/typescript-estree": "^8.8.0",
-		"@eslint/js": "^9.11.1",
-		"@eslint/eslintrc": "^3.1.0",
-		"eslint": "^9.11.1",
-		"eslint-plugin-lit": "^1.15.0",
-		"eslint-plugin-wc": "^2.1.1"
+		"@stylistic/eslint-plugin": "^5.6.1",
+		"@typescript-eslint/eslint-plugin": "^8.49.0",
+		"@typescript-eslint/parser": "^8.49.0",
+		"@typescript-eslint/typescript-estree": "^8.49.0",
+		"@eslint/js": "^9.39.2",
+		"@eslint/eslintrc": "^3.3.3",
+		"eslint": "^9.39.2"
 	},
 	"scripts": {
 		"lint:css": "stylelint Sources/Css/*.css",
@@ -41,8 +39,9 @@
 		"minify:css": "css-minify -d ../Resources/Public/Stylesheets -o ../Resources/Public/Stylesheets",
 		"build:css": "npm run lint:css && npm run prefix:css && npm run minify:css",
 		"lint:ts": "eslint -c eslint.config.mjs Sources/TypeScript/*.ts",
-		"compile:ts": "tsc --project tsconfig.build.json && rollup -c",
-		"minify:ts": "tsc --project tsconfig.build.json && rollup -c --environment COMPRESS",
-		"build:js": "npm run lint:ts && npm run compile:ts && npm run minify:ts"
+		"compile:ts": "tsc --project tsconfig.json && rollup -c",
+		"minify:ts": "tsc --project tsconfig.json && rollup -c --environment COMPRESS",
+		"build:js": "npm run lint:ts && npm run compile:ts && npm run minify:ts",
+		"build": "npm run build:css && npm run build:js"
 	}
 }
