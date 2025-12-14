@@ -98,27 +98,17 @@ jobs:
             -p ${{ matrix.packages.php }} \
             -s lintPhp
 
-      - name: Composer install
+      - name: Composer install core
         run: |
           Build/Scripts/runTests.sh \
             -p ${{ matrix.packages.php }} \
-            -s composerInstall
-
-      - name: Composer install core
-        run: |
-          Build/Scripts/additionalTests.sh \
-            -p ${{ matrix.packages.php }} \
-            -s composerInstallPackage \
-            -q "typo3/cms-core:${{ matrix.packages.core }}" \
-            -r " ${{ matrix.packages.prefer }}"
+            -s composer require ${{ matrix.packages.prefer }} "typo3/cms-core:${{ matrix.packages.core }}"
 
       - name: Composer install framework
         run: |
-          Build/Scripts/additionalTests.sh \
+          Build/Scripts/runTests.sh \
             -p ${{ matrix.packages.php }} \
-            -s composerInstallPackage \
-            -q "typo3/testing-framework:${{ matrix.packages.framework }}" \
-            -r " --dev ${{ matrix.packages.prefer }}"
+            -s composer require --dev ${{ matrix.packages.prefer }} "typo3/testing-framework:${{ matrix.packages.framework }}"
 
       - name: Composer validate
         run: |
