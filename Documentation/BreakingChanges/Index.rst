@@ -6,6 +6,16 @@
 Breaking Changes
 ================
 
+2025.12.09
+==========
+
+With version 13 site sets with own settings $evoweb.sf-register.settings.* were introduced.
+These should have override TypoScript constants.
+
+This concept is now discarded in favor for $plugin.tx_sfregister.settings.* which is now
+also used in the siteSets. Please be aware and migrate them. Most likely its replacing
+`evoweb.sf-register` with `plugin.tx_sfregister`.
+
 2025.01.10
 ==========
 

@@ -6,5 +6,10 @@
 		"psr-4": {
 			"EvowebTests\\TestClasses\\": "Tests/"
 		}
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "test_classes"
+		}
 	}
 }

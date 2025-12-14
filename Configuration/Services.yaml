@@ -8,53 +8,6 @@ services:
   Evoweb\SfRegister\:
     resource: '../Classes/*'
 
-  Evoweb\SfRegister\Services\Setup\CheckFactory:
-    arguments:
-      $configuration:
-        checks:
-            - Evoweb\SfRegister\Services\Setup\UserGroupCheck
-            - Evoweb\SfRegister\Services\Setup\UsernameCheck
-    public: true
-
-  Evoweb\SfRegister\Services\Captcha\SrFreecapAdapter:
-    public: true
-
-  Evoweb\SfRegister\Services\AutoLogin:
-    public: true
-
-  Evoweb\SfRegister\Services\FrontendUser:
-    public: true
-
-  Evoweb\SfRegister\Services\ModifyValidator:
-    public: true
-
-  Evoweb\SfRegister\Validation\Validator\BadWordValidator:
-    public: true
-
-  Evoweb\SfRegister\Validation\Validator\BlockDomainValidator:
-    public: true  
-
-  Evoweb\SfRegister\Validation\Validator\CaptchaValidator:
-    public: true
-
-  Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator:
-    public: true
-
-  Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator:
-    public: true
-
-  Evoweb\SfRegister\Validation\Validator\ImageUploadValidator:
-    public: true
-
-  Evoweb\SfRegister\Validation\Validator\UniqueExcludeCurrentValidator:
-    public: true
-
-  Evoweb\SfRegister\Validation\Validator\UniqueValidator:
-    public: true
-
-  Evoweb\SfRegister\ViewHelpers\Link\ActionViewHelper:
-    public: true
-
   Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter:
     tags:
       - name: extbase.type_converter

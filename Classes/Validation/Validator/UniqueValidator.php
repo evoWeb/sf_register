@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -17,8 +17,10 @@ namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
+#[Autoconfigure(public: true)]
 class UniqueValidator extends AbstractValidator implements SetModelInterface, SetPropertyNameInterface
 {
     protected $acceptsEmptyValues = false;
@@ -41,7 +43,9 @@ class UniqueValidator extends AbstractValidator implements SetModelInterface, Se
 
     protected string $propertyName = '';
 
-    public function __construct(protected FrontendUserRepository $userRepository) {}
+    public function __construct(protected FrontendUserRepository $userRepository)
+    {
+    }
 
     public function setModel(ValidatableInterface $model): void
     {
@@ -69,17 +73,15 @@ class UniqueValidator extends AbstractValidator implements SetModelInterface, Se
                     1301599619
                 );
             }
-        } else {
-            if ($this->userRepository->countByField($this->propertyName, $value)) {
-                $this->addError(
-                    $this->translateErrorMessage(
-                        'error_notunique_local',
-                        'SfRegister',
-                        [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
-                    ),
-                    1301599608
-                );
-            }
+        } elseif ($this->userRepository->countByField($this->propertyName, $value)) {
+            $this->addError(
+                $this->translateErrorMessage(
+                    'error_notunique_local',
+                    'SfRegister',
+                    [$this->translateErrorMessage($this->propertyName, 'SfRegister')]
+                ),
+                1301599608
+            );
         }
     }
 }

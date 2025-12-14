@@ -654,7 +654,7 @@
                 <source>You invited someone to register at %1$s</source>
                 <target>Poslali ste vabilo za registracijo na %1$s</target>
             </trans-unit>
-            <trans-unit id="subjectInvitationToRegister">
+            <trans-unit id="subjectInviteToRegister">
                 <source>You were invite to register at %1$s</source>
                 <target>Vabljeni ste k registraciji na %1$s</target>
             </trans-unit>
@@ -847,7 +847,7 @@
                 <source>register</source>
                 <target>registracija</target>
             </trans-unit>
-			
+
 		</body>
 	</file>
 </xliff>

@@ -1,0 +1,34 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<table class="table table-condensed table-hover news-table">
+    <colgroup>
+        <col style="width: 40%"/>
+        <col style="width: 60%"/>
+    </colgroup>
+    <thead>
+        <tr>
+            <th colspan="2">
+                <f:translate id="form_flexform.settings-of" domain="sf_register.be"/>
+                "<f:translate id="tt_content.list_type_requestlink" domain="sf_register.be"/>"
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <f:if condition="{record.pi_flexform.sheets.sDEF.settings.templateRootPath}">
+            <tr>
+                <th><f:translate id="form_flexform.settings.viewTemplateRootPath.short" domain="sf_register.be"/></th>
+                <td>{record.pi_flexform.sheets.sDEF.settings.templateRootPath}</td>
+            </tr>
+        </f:if>
+        <f:if condition="{record.pi_flexform.sheets.sDEF.settings.deletePid.0}">
+            <tr>
+                <th><f:translate id="form_flexform.settings.deletePid" domain="sf_register.be"/></th>
+                <td>[{record.pi_flexform.sheets.sDEF.settings.deletePid.0.uid}] {record.pi_flexform.sheets.sDEF.settings.deletePid.0.title}</td>
+            </tr>
+        </f:if>
+    </tbody>
+</table>
+
+</html>

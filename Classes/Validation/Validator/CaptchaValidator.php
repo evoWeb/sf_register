@@ -16,8 +16,10 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Services\Captcha\CaptchaAdapterFactory;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
+#[Autoconfigure(public: true)]
 class CaptchaValidator extends AbstractValidator
 {
     protected $acceptsEmptyValues = false;
@@ -33,7 +35,9 @@ class CaptchaValidator extends AbstractValidator
         ],
     ];
 
-    public function __construct(protected CaptchaAdapterFactory $captchaAdapterFactory) {}
+    public function __construct(protected CaptchaAdapterFactory $captchaAdapterFactory)
+    {
+    }
 
     /**
      * If the given captcha is valid

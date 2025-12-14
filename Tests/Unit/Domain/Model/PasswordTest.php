@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -38,7 +38,7 @@ class PasswordTest extends UnitTestCase
     #[Test]
     public function passwordOnInitializeIsEmptyString(): void
     {
-        $this->assertEquals('', $this->subject->getPassword());
+        self::assertEquals('', $this->subject->getPassword());
     }
 
     #[Test]
@@ -48,13 +48,13 @@ class PasswordTest extends UnitTestCase
 
         $this->subject->setPassword($expected);
 
-        $this->assertSame($expected, $this->subject->getPassword());
+        self::assertSame($expected, $this->subject->getPassword());
     }
 
     #[Test]
     public function passwordRepeatOnInitializeIsEmptyString(): void
     {
-        $this->assertEquals('', $this->subject->getPasswordRepeat());
+        self::assertEquals('', $this->subject->getPasswordRepeat());
     }
 
     #[Test]
@@ -64,13 +64,13 @@ class PasswordTest extends UnitTestCase
 
         $this->subject->setPasswordRepeat($expected);
 
-        $this->assertSame($expected, $this->subject->getPasswordRepeat());
+        self::assertSame($expected, $this->subject->getPasswordRepeat());
     }
 
     #[Test]
     public function oldPasswordOnInitializeIsEmptyString(): void
     {
-        $this->assertEquals('', $this->subject->getOldPassword());
+        self::assertEquals('', $this->subject->getOldPassword());
     }
 
     #[Test]
@@ -80,6 +80,6 @@ class PasswordTest extends UnitTestCase
 
         $this->subject->setOldPassword($expected);
 
-        $this->assertSame($expected, $this->subject->getOldPassword());
+        self::assertSame($expected, $this->subject->getOldPassword());
     }
 }

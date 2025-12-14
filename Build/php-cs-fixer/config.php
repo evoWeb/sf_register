@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -21,12 +21,8 @@ declare(strict_types=1);
  *
  * Run it using runTests.sh, see 'runTests.sh -h' for more options.
  *
- * Fix entire extension:
- * > Build/Scripts/additionalTests.sh -p 8.3 -s composerInstallPackage -q "typo3/cms-core:[dev-main,13...]"
+ * Fix the entire extension:
  * > Build/Scripts/runTests.sh -s cgl
- *
- * Fix your current patch:
- * > Build/Scripts/runTests.sh -s cglGit
  */
 if (PHP_SAPI !== 'cli') {
     die('This script supports command line usage only. Please check your command.');
@@ -36,44 +32,62 @@ if (PHP_SAPI !== 'cli') {
 // all sniffers needed for PER
 // and additionally:
 //  - Remove leading slashes in use clauses.
-//  - PHP single-line arrays should not have trailing comma.
-//  - Single-line whitespace before closing semicolon are prohibited.
+//  - PHP single-line arrays should not have a trailing comma.
+//  - Single-line whitespace before closing semicolon is prohibited.
 //  - Remove unused use statements in the PHP source code
 //  - Ensure Concatenation to have at least one whitespace around
 //  - Remove trailing whitespace at the end of blank lines.
 return (new \PhpCsFixer\Config())
     ->setParallelConfig(\PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
     ->setFinder(
-        PhpCsFixer\Finder::create()
+        (new PhpCsFixer\Finder())
             ->ignoreVCSIgnored(true)
-            ->in(realpath(__DIR__ . '/../../'))
-            ->exclude('bin')
-            ->exclude('public')
-            ->exclude('typo3temp')
-            ->exclude('vendor')
+            ->in([
+                __DIR__ . '/../../',
+            ])
+            ->exclude([
+                '.cache',
+                'bin',
+                'Build',
+                'typo3temp',
+            ])
     )
     ->setRiskyAllowed(true)
     ->setRules([
         '@DoctrineAnnotation' => true,
-        // @todo: Switch to @PER-CS2.0 once php-cs-fixer's todo list is done: https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues/7247
-        '@PER-CS1.0' => true,
+        // @todo: Switch to @PER-CS2x0 once php-cs-fixer's todo list is
+        //        done: https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues/7247
+        '@PER-CS1x0' => true,
         'array_indentation' => true,
         'array_syntax' => ['syntax' => 'short'],
         'cast_spaces' => ['space' => 'none'],
-        // @todo: Can be dropped once we enable @PER-CS2.0
+        // @todo: Can be dropped once we enable @PER-CS2x0
         'concat_space' => ['spacing' => 'one'],
         'declare_equal_normalize' => ['space' => 'none'],
         'declare_parentheses' => true,
         'dir_constant' => true,
-        // @todo: Can be dropped once we enable @PER-CS2.0
+        // @todo: Can be dropped once we enable @PER-CS2x0
         'function_declaration' => [
             'closure_fn_spacing' => 'none',
         ],
-        'function_to_constant' => ['functions' => ['get_called_class', 'get_class', 'get_class_this', 'php_sapi_name', 'phpversion', 'pi']],
+        'function_to_constant' => [
+            'functions' => [
+                'get_called_class',
+                'get_class',
+                'get_class_this',
+                'php_sapi_name',
+                'phpversion',
+                'pi'
+            ]
+        ],
         'type_declaration_spaces' => true,
-        'global_namespace_import' => ['import_classes' => false, 'import_constants' => false, 'import_functions' => false],
+        'global_namespace_import' => [
+            'import_classes' => true,
+            'import_constants' => false,
+            'import_functions' => false
+        ],
         'list_syntax' => ['syntax' => 'short'],
-        // @todo: Can be dropped once we enable @PER-CS2.0
+        // @todo: Can be dropped once we enable @PER-CS2x0
         'method_argument_space' => true,
         'modernize_strpos' => true,
         'modernize_types_casting' => true,
@@ -93,10 +107,32 @@ return (new \PhpCsFixer\Config())
         'no_unused_imports' => true,
         'no_useless_else' => true,
         'no_useless_nullsafe_operator' => true,
+        'nullable_type_declaration' => [
+            'syntax' => 'question_mark',
+        ],
+        'nullable_type_declaration_for_default_null_value' => true,
+        'ordered_class_elements' => ['order' => ['use_trait', 'case', 'constant', 'property']],
         'ordered_imports' => ['imports_order' => ['class', 'function', 'const'], 'sort_algorithm' => 'alpha'],
         'php_unit_construct' => ['assertions' => ['assertEquals', 'assertSame', 'assertNotEquals', 'assertNotSame']],
         'php_unit_mock_short_will_return' => true,
-        'php_unit_test_case_static_method_calls' => ['call_type' => 'self'],
+        'php_unit_test_case_static_method_calls' => ['call_type' => 'self',
+            'methods' => [
+                'any' => 'this',
+                'atLeast' => 'this',
+                'atLeastOnce' => 'this',
+                'atMost' => 'this',
+                'exactly' => 'this',
+                'never' => 'this',
+                'onConsecutiveCalls' => 'this',
+                'once' => 'this',
+                'returnArgument' => 'this',
+                'returnCallback' => 'this',
+                'returnSelf' => 'this',
+                'returnValue' => 'this',
+                'returnValueMap' => 'this',
+                'throwException' => 'this',
+            ],
+        ],
         'phpdoc_no_access' => true,
         'phpdoc_no_empty_return' => true,
         'phpdoc_no_package' => true,
@@ -108,8 +144,8 @@ return (new \PhpCsFixer\Config())
         'single_quote' => true,
         'single_space_around_construct' => true,
         'single_line_comment_style' => ['comment_types' => ['hash']],
-        // @todo: Can be dropped once we enable @PER-CS2.0
-        'single_line_empty_body' => true,
+        // @todo: Can be dropped once we enable @PER-CS2x0
+        'single_line_empty_body' => false,
         'trailing_comma_in_multiline' => ['elements' => ['arrays']],
         'whitespace_after_comma_in_array' => ['ensure_single_space' => true],
         'yoda_style' => ['equal' => false, 'identical' => false, 'less_and_greater' => false],

@@ -31,7 +31,7 @@ if (PHP_SAPI !== 'cli') {
 
 $finder = PhpCsFixer\Finder::create()
     ->name('*.php')
-    ->in(__DIR__ . '/../../')
+    ->in(__DIR__ . '/../sf-register/')
     ->exclude('Acceptance/Support/_generated') // EXT:core
     ->exclude('Build')
     // Configuration files do not need header comments

@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -15,12 +15,15 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Services;
 
+use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Authentication\AuthenticationService;
 use TYPO3\CMS\Core\Registry;
 
 /**
  * Service to handle user login
  */
+#[Autoconfigure(public: true)]
 class AutoLogin extends AuthenticationService
 {
     public function __construct(protected Registry $registry)
@@ -28,20 +31,17 @@ class AutoLogin extends AuthenticationService
     }
 
     /**
-     * Find a user (e.g. look up the user record in database when a login is sent)
+     * Find a user (e.g., look up the user record in the database when a login is sent)
      * @return array<string, mixed>|null
      */
     public function getUser(): ?array
     {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            session_start();
-        }
-
-        $hmac = $_SESSION[FrontendUser::SESSION_KEY] ?? null;
+        /** @var ServerRequestInterface $request */
+        $request = $this->authInfo['request'];
+        $hmac = $request->getQueryParams()[FrontendUser::SESSION_KEY] ?? null;
         if ($hmac === null) {
             return null;
         }
-        unset($_SESSION[FrontendUser::SESSION_KEY]);
 
         $userId = (string)$this->registry->get('sf-register', $hmac);
         $this->registry->remove('sf-register', $hmac);

@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 use Evoweb\SfRegister\Validation\Validator\RequiredValidator;
+use Exception;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
@@ -55,7 +56,7 @@ class RequiredViewHelper extends AbstractConditionViewHelper
         $this->registerArgument('fieldName', 'string', 'Name of the field to render', true);
     }
 
-    public function render()
+    public function render(): ?string
     {
         if ($this->classVerdict($this->arguments)) {
             return $this->renderThenChild();
@@ -75,7 +76,7 @@ class RequiredViewHelper extends AbstractConditionViewHelper
                 'SfRegister',
                 'Form'
             );
-        } catch (\Exception) {
+        } catch (Exception) {
             $settings = [];
         }
         return $settings;
@@ -88,7 +89,6 @@ class RequiredViewHelper extends AbstractConditionViewHelper
     {
         $settings = $this->getSettings();
 
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
         $controllerName = $this->renderingContext->getControllerName();
         $mode = str_replace('feuser', '', strtolower($controllerName));
         $controllerSettings = $settings['validation'][$mode] ?? [];

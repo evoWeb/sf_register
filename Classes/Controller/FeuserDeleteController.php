@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -27,12 +27,12 @@ use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 
 /**
- * A frontend user create controller
+ * Delete frontend user controller
  */
 class FeuserDeleteController extends FeuserController
 {
@@ -69,9 +69,10 @@ class FeuserDeleteController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
-    public function saveAction(?FrontendUser $user = null): ResponseInterface
-    {
+    public function saveAction(
+        #[Attribute\Validate(validator: UserValidator::class)]
+        ?FrontendUser $user = null
+    ): ResponseInterface {
         if ($user === null) {
             return $this->redirect('form');
         }
@@ -102,7 +103,7 @@ class FeuserDeleteController extends FeuserController
     }
 
     /**
-     * Confirm delete process by user
+     * Confirm the delete process by user
      *
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
@@ -140,16 +141,17 @@ class FeuserDeleteController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    public function requestAction(?string $email): ResponseInterface
+    public function requestAction(?string $email = ''): ResponseInterface
     {
         $this->view->assign('user', ['email' => $email]);
 
         return new HtmlResponse($this->view->render());
     }
 
-    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'requestUser'])]
-    public function sendLinkAction(FrontendUser $requestUser): ResponseInterface
-    {
+    public function sendLinkAction(
+        #[Attribute\Validate(validator: UserValidator::class)]
+        FrontendUser $requestUser
+    ): ResponseInterface {
         /** @var FrontendUser $user */
         $user = $this->userRepository->findByEmail($requestUser->getEmail());
 

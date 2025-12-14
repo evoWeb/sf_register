@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -41,7 +41,7 @@ class IsTrueValidatorTest extends UnitTestCase
     #[Test]
     public function isValidReturnsTrueIfTrueWasUsed(): void
     {
-        $this->assertFalse($this->subject->validate(true)->hasErrors());
+        self::assertFalse($this->subject->validate(true)->hasErrors());
     }
 
     /**
@@ -60,6 +60,6 @@ class IsTrueValidatorTest extends UnitTestCase
     #[DataProvider('nonTrueValues')]
     public function isValidReturnsFalseIfNonTrueWasUsed(mixed $input): void
     {
-        $this->assertTrue($this->subject->validate($input)->hasErrors());
+        self::assertTrue($this->subject->validate($input)->hasErrors());
     }
 }

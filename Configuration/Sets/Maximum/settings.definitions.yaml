@@ -6,287 +6,287 @@ categories:
     parent: sf-register
 
 settings:
-  evoweb.sf-register.view.templateRootPath:
+  plugin.tx_sfregister.view.templateRootPath:
     default: 'EXT:sf_register/Resources/Private/Templates/'
     type: string
     category: sf-register.common
-  evoweb.sf-register.view.partialRootPath:
+  plugin.tx_sfregister.view.partialRootPath:
     default: 'EXT:sf_register/Resources/Private/Partials/'
     type: string
     category: sf-register.common
-  evoweb.sf-register.view.layoutRootPath:
+  plugin.tx_sfregister.view.layoutRootPath:
     default: 'EXT:sf_register/Resources/Private/Layouts/'
     type: string
     category: sf-register.common
-  evoweb.sf-register.settings.createPid:
+  plugin.tx_sfregister.settings.createPid:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.editPid:
+  plugin.tx_sfregister.settings.editPid:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.passwordPid:
+  plugin.tx_sfregister.settings.passwordPid:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.invitePid:
+  plugin.tx_sfregister.settings.invitePid:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.resendPid:
+  plugin.tx_sfregister.settings.resendPid:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.badWordList:
+  plugin.tx_sfregister.settings.badWordList:
     default: 'god, sex, password'
     type: string
     category: sf-register.common
-  evoweb.sf-register.settings.captchaId:
+  plugin.tx_sfregister.settings.captchaId:
     default: 'recaptcha'
     type: string
     category: sf-register.common
 
-  evoweb.sf-register.settings.usergroup:
+  plugin.tx_sfregister.settings.usergroup:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.usergroupPostSave:
+  plugin.tx_sfregister.settings.usergroupPostSave:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.usergroupPostConfirm:
+  plugin.tx_sfregister.settings.usergroupPostConfirm:
     default: 0
     type: int
     category: sf-register.common
-  evoweb.sf-register.settings.usergroupPostAccept:
+  plugin.tx_sfregister.settings.usergroupPostAccept:
     default: 0
     type: int
     category: sf-register.common
 
-  evoweb.sf-register.settings.emailSitename:
+  plugin.tx_sfregister.settings.emailSitename:
     default: 'dummy Site'
     type: string
     category: sf-register.common
 
 
-  evoweb.sf-register.settings.redirectPostRegistrationPageId:
+  plugin.tx_sfregister.settings.redirectPostRegistrationPageId:
     default: 0
     type: int
     category: sf-register.maximal
-  evoweb.sf-register.settings.redirectPostActivationPageId:
+  plugin.tx_sfregister.settings.redirectPostActivationPageId:
     default: 0
     type: int
     category: sf-register.maximal
 
-  evoweb.sf-register.settings.useEmailAddressAsUsername:
+  plugin.tx_sfregister.settings.useEmailAddressAsUsername:
     default: false
     type: bool
     category: sf-register.maximal
-  evoweb.sf-register.settings.useEncryptedFilename:
-    default: false
-    type: bool
-    category: sf-register.maximal
-
-  evoweb.sf-register.settings.notifyAdmin.createSave:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.notifyAdmin.createConfirm:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.notifyAdmin.createRefuse:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.notifyAdmin.createAccept:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.notifyAdmin.createDecline:
+  plugin.tx_sfregister.settings.useEncryptedFilename:
     default: false
     type: bool
     category: sf-register.maximal
 
-  evoweb.sf-register.settings.notifyAdmin.deleteSave:
+  plugin.tx_sfregister.settings.notifyAdmin.createSave:
     default: false
     type: bool
     category: sf-register.maximal
-  evoweb.sf-register.settings.notifyAdmin.deleteConfirm:
+  plugin.tx_sfregister.settings.notifyAdmin.createConfirm:
     default: false
     type: bool
     category: sf-register.maximal
-  evoweb.sf-register.settings.notifyAdmin.deleteSendLink:
+  plugin.tx_sfregister.settings.notifyAdmin.createRefuse:
     default: false
     type: bool
     category: sf-register.maximal
-
-  evoweb.sf-register.settings.notifyAdmin.editSave:
+  plugin.tx_sfregister.settings.notifyAdmin.createAccept:
     default: false
     type: bool
     category: sf-register.maximal
-  evoweb.sf-register.settings.notifyAdmin.editConfirm:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.notifyAdmin.editAccept:
+  plugin.tx_sfregister.settings.notifyAdmin.createDecline:
     default: false
     type: bool
     category: sf-register.maximal
 
-  evoweb.sf-register.settings.notifyAdmin.inviteInvite:
+  plugin.tx_sfregister.settings.notifyAdmin.deleteSave:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyAdmin.deleteConfirm:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyAdmin.deleteSendLink:
     default: false
     type: bool
     category: sf-register.maximal
 
-  evoweb.sf-register.settings.notifyAdmin.resendMail:
+  plugin.tx_sfregister.settings.notifyAdmin.editSave:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyAdmin.editConfirm:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyAdmin.editAccept:
     default: false
     type: bool
     category: sf-register.maximal
 
-  evoweb.sf-register.settings.notifyUser.createSave:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.notifyUser.createConfirm:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.notifyUser.createRefuse:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.notifyUser.createAccept:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.notifyUser.createDecline:
+  plugin.tx_sfregister.settings.notifyAdmin.inviteInvite:
     default: false
     type: bool
     category: sf-register.maximal
 
-  evoweb.sf-register.settings.notifyUser.deleteSave:
+  plugin.tx_sfregister.settings.notifyAdmin.resendMail:
+    default: false
+    type: bool
+    category: sf-register.maximal
+
+  plugin.tx_sfregister.settings.notifyUser.createSave:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyUser.createConfirm:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyUser.createRefuse:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyUser.createAccept:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyUser.createDecline:
+    default: false
+    type: bool
+    category: sf-register.maximal
+
+  plugin.tx_sfregister.settings.notifyUser.deleteSave:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyUser.deleteConfirm:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyUser.deleteSendLink:
+    default: false
+    type: bool
+    category: sf-register.maximal
+
+  plugin.tx_sfregister.settings.notifyUser.editSave:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyUser.editConfirm:
+    default: false
+    type: bool
+    category: sf-register.maximal
+  plugin.tx_sfregister.settings.notifyUser.editAccept:
+    default: false
+    type: bool
+    category: sf-register.maximal
+
+  plugin.tx_sfregister.settings.notifyUser.inviteInvite:
+    default: false
+    type: bool
+    category: sf-register.maximal
+
+  plugin.tx_sfregister.settings.notifyUser.resendMail:
     default: true
     type: bool
     category: sf-register.maximal
-  evoweb.sf-register.settings.notifyUser.deleteConfirm:
+
+  plugin.tx_sfregister.settings.confirmEmailPostCreate:
     default: true
     type: bool
     category: sf-register.maximal
-  evoweb.sf-register.settings.notifyUser.deleteSendLink:
-    default: true
-    type: bool
-    category: sf-register.maximal
-
-  evoweb.sf-register.settings.notifyUser.editSave:
+  plugin.tx_sfregister.settings.acceptEmailPostCreate:
     default: false
     type: bool
     category: sf-register.maximal
-  evoweb.sf-register.settings.notifyUser.editConfirm:
+  plugin.tx_sfregister.settings.confirmEmailPostAccept:
     default: false
     type: bool
     category: sf-register.maximal
-  evoweb.sf-register.settings.notifyUser.editAccept:
+  plugin.tx_sfregister.settings.acceptEmailPostConfirm:
     default: false
     type: bool
     category: sf-register.maximal
-
-  evoweb.sf-register.settings.notifyUser.inviteInvite:
+  plugin.tx_sfregister.settings.confirmEmailPostEdit:
     default: false
     type: bool
     category: sf-register.maximal
-
-  evoweb.sf-register.settings.notifyUser.resendMail:
-    default: true
-    type: bool
-    category: sf-register.maximal
-
-  evoweb.sf-register.settings.confirmEmailPostCreate:
-    default: true
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.acceptEmailPostCreate:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.confirmEmailPostAccept:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.acceptEmailPostConfirm:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.confirmEmailPostEdit:
-    default: false
-    type: bool
-    category: sf-register.maximal
-  evoweb.sf-register.settings.acceptEmailPostEdit:
+  plugin.tx_sfregister.settings.acceptEmailPostEdit:
     default: false
     type: bool
     category: sf-register.maximal
 
-  evoweb.sf-register.settings.autologinPostRegistration:
+  plugin.tx_sfregister.settings.autologinPostRegistration:
     default: false
     type: bool
     category: sf-register.maximal
-  evoweb.sf-register.settings.autologinPostConfirmation:
+  plugin.tx_sfregister.settings.autologinPostConfirmation:
     default: false
     type: bool
     category: sf-register.maximal
-  evoweb.sf-register.settings.allowDeleteIfNotLoggedIn:
+  plugin.tx_sfregister.settings.allowDeleteIfNotLoggedIn:
     default: false
     type: bool
     category: sf-register.maximal
 
-  evoweb.sf-register.settings.userEmail.fromName:
+  plugin.tx_sfregister.settings.userEmail.fromName:
     default: 'userEmail from'
     type: string
     category: sf-register.maximal
-  evoweb.sf-register.settings.userEmail.fromEmail:
+  plugin.tx_sfregister.settings.userEmail.fromEmail:
     default: 'userEmailfrom@test.local'
     type: string
     category: sf-register.maximal
-  evoweb.sf-register.settings.userEmail.replyName:
+  plugin.tx_sfregister.settings.userEmail.replyName:
     default: ''
     type: string
     category: sf-register.maximal
-  evoweb.sf-register.settings.userEmail.replyEmail:
+  plugin.tx_sfregister.settings.userEmail.replyEmail:
     default: ''
     type: string
     category: sf-register.maximal
-  evoweb.sf-register.settings.adminEmail.toName:
+  plugin.tx_sfregister.settings.adminEmail.toName:
     default: 'adminEmail to'
     type: string
     category: sf-register.maximal
-  evoweb.sf-register.settings.adminEmail.toEmail:
+  plugin.tx_sfregister.settings.adminEmail.toEmail:
     default: 'adminToEmail@test.local'
     type: string
     category: sf-register.maximal
-  evoweb.sf-register.settings.adminEmail.fromName:
+  plugin.tx_sfregister.settings.adminEmail.fromName:
     default: 'adminEmail from'
     type: string
     category: sf-register.maximal
-  evoweb.sf-register.settings.adminEmail.fromEmail:
+  plugin.tx_sfregister.settings.adminEmail.fromEmail:
     default: 'adminEmailfrom@test.local'
     type: string
     category: sf-register.maximal
-  evoweb.sf-register.settings.adminEmail.replyName:
+  plugin.tx_sfregister.settings.adminEmail.replyName:
     default: ''
     type: string
     category: sf-register.maximal
-  evoweb.sf-register.settings.adminEmail.replyEmail:
-    default: ''
-    type: string
-    category: sf-register.maximal
-
-  evoweb.sf-register.settings.redirect.page:
+  plugin.tx_sfregister.settings.adminEmail.replyEmail:
     default: ''
     type: string
     category: sf-register.maximal
 
-  evoweb.sf-register.persistence.storagePid:
+  plugin.tx_sfregister.settings.redirect.page:
+    default: ''
+    type: string
+    category: sf-register.maximal
+
+  plugin.tx_sfregister.persistence.storagePid:
     default: ''
     type: string
     category: sf-register.maximal

@@ -16,14 +16,18 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Services\File;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Validator to check if the uploaded image could be handled
  */
+#[Autoconfigure(public: true)]
 class ImageUploadValidator extends AbstractValidator
 {
-    public function __construct(protected File $fileService) {}
+    public function __construct(protected File $fileService)
+    {
+    }
 
     /**
      * If the given value is a valid image

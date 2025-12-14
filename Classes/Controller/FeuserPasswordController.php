@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -23,12 +23,13 @@ use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute;
 
 /**
- * A frontend user password controller
+ * Change password of frontend user controller
  */
 class FeuserPasswordController extends FeuserController
 {
@@ -59,9 +60,10 @@ class FeuserPasswordController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'password'])]
-    public function saveAction(Password $password): ResponseInterface
-    {
+    public function saveAction(
+        #[Attribute\Validate(validator: UserValidator::class)]
+        Password $password
+    ): ResponseInterface {
         $statusCode = 200;
         if ($this->frontendUserService->userIsLoggedIn()) {
             $user = $this->frontendUserService->getLoggedInUser();
@@ -71,7 +73,7 @@ class FeuserPasswordController extends FeuserController
 
             try {
                 $this->userRepository->update($user);
-            } catch (\Exception) {
+            } catch (Exception) {
                 $statusCode = 500;
             }
         }

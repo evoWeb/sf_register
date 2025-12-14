@@ -21,7 +21,7 @@ class ActionViewHelperTest extends AbstractTestBase
         parent::setUp();
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/pages.csv');
 
-        $this->initializeRequest();
+        $this->createServerRequest();
         $this->initializeFrontendTypoScript();
 
         $this->writeSiteConfiguration(
@@ -61,13 +61,17 @@ class ActionViewHelperTest extends AbstractTestBase
         self::assertMatchesRegularExpression($expectedPattern, $result);
     }
 
-    public static function templateProvider(): array
+    /**
+     * @return iterable<array<int, string>>
+     */
+    public static function templateProvider(): iterable
     {
-        return [
-            [
-                '<register:uri.action pageUid="1" arguments="{user: 123}" extensionName="SfRegister" pluginName="Create" action="decline" controller="FeuserCreate" absolute="true" />',
-                '#^https://example.org/\?tx_sfregister_create%5Baction%5D=decline&tx_sfregister_create%5Bcontroller%5D=FeuserCreate&tx_sfregister_create%5Bhash%5D=[a-f0-9]+&tx_sfregister_create%5Buser%5D=123&cHash=[a-f0-9]+$#',
-            ],
+        yield [
+            '<register:uri.action pageUid="1" arguments="{user: 123}" extensionName="SfRegister" '
+            . 'pluginName="Create" action="decline" controller="FeuserCreate" absolute="true" />',
+            '#^https://example.org/\?tx_sfregister_create%5Baction%5D=decline&'
+            . 'tx_sfregister_create%5Bcontroller%5D=FeuserCreate&tx_sfregister_create%5Bhash%5D=[a-f0-9]+&'
+            . 'tx_sfregister_create%5Buser%5D=123&cHash=[a-f0-9]+$#',
         ];
     }
 }

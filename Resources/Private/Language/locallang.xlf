@@ -492,7 +492,7 @@
 			<trans-unit id="subjectNotifyUserSendInvitation">
 				<source>You invited someone to register at %1$s</source>
 			</trans-unit>
-			<trans-unit id="subjectInvitationToRegister">
+			<trans-unit id="subjectInviteToRegister">
 				<source>You were invite to register at %1$s</source>
 			</trans-unit>
 

@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -17,32 +17,33 @@ namespace Evoweb\SfRegister\Services;
 
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\DocParser;
+use Evoweb\SfRegister\Annotation\Validate;
 use Evoweb\SfRegister\Controller\FeuserController;
 use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
 use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
 use Evoweb\SfRegister\Validation\Validator\SetPropertyNameInterface;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
+use Exception;
 use Psr\Log\LoggerInterface;
+use ReflectionException;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Log\LogManager;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
-use TYPO3\CMS\Extbase\Validation\Exception\NoSuchValidatorException;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
-use TYPO3\CMS\Extbase\Validation\ValidatorClassNameResolver;
 use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
 
+#[Autoconfigure(public: true)]
 class ModifyValidator
 {
     protected LoggerInterface $logger;
 
     public function __construct(
         protected ValidatorResolver $validatorResolver,
-        protected LogManager $logManager,
+        LogManager $logManager,
     ) {
         $this->logger = $logManager->getLogger(__CLASS__);
     }
@@ -98,37 +99,35 @@ class ModifyValidator
         RequestInterface $request,
         Arguments $arguments,
     ): Arguments {
-        $controllerName = $controller->getControllerName();
         foreach ($arguments as $argumentName => $argument) {
             if (!in_array($argumentName, ['user', 'password', 'email'])) {
                 continue;
             }
+
             $this->modifyValidatorsBasedOnSettings(
-                $controllerName,
-                $settings,
-                $request,
                 $argument,
-                $settings['validation'][strtolower($controllerName)] ?? []
+                $request,
+                $settings,
+                $controller,
             );
         }
         return $arguments;
     }
 
     /**
-     * @param array<string, mixed> $settings
-     * @param array<string, string|array<int, string>> $configuredValidators
+     * @param array<string, string|string[]> $settings
      */
     protected function modifyValidatorsBasedOnSettings(
-        string $controllerName,
-        array $settings,
-        RequestInterface $request,
         Argument $argument,
-        array $configuredValidators,
+        RequestInterface $request,
+        array $settings,
+        FeuserController $controller,
     ): void {
+        $configuredValidators = $settings['validation'][strtolower($controller->getControllerName())] ?? [];
         $parser = new DocParser();
 
         /** @var UserValidator $validator */
-        $validator = GeneralUtility::makeInstance(UserValidator::class);
+        $validator = $this->validatorResolver->createValidator(UserValidator::class);
         foreach ($configuredValidators as $fieldName => $configuredValidator) {
             if (!in_array($fieldName, $settings['fields']['selected'] ?? [])) {
                 continue;
@@ -141,28 +140,28 @@ class ModifyValidator
             if (!is_array($configuredValidator)) {
                 try {
                     $validatorInstance = $this->getValidatorByConfiguration(
-                        $request,
                         $configuredValidator,
                         $parser,
-                        $fieldName
+                        $fieldName,
+                        $request,
                     );
-                } catch (\Exception) {
+                } catch (Exception $exception) {
+                    $this->logger->debug($exception->getMessage());
                     continue;
                 }
             } else {
                 /** @var ConjunctionValidator $validatorInstance */
-                $validatorInstance = $this->validatorResolver->createValidator(
-                    ConjunctionValidator::class
-                );
+                $validatorInstance = $this->validatorResolver->createValidator(ConjunctionValidator::class);
                 foreach ($configuredValidator as $individualConfiguredValidator) {
                     try {
                         $individualValidatorInstance = $this->getValidatorByConfiguration(
-                            $request,
                             $individualConfiguredValidator,
                             $parser,
-                            $fieldName
+                            $fieldName,
+                            $request,
                         );
-                    } catch (\Exception) {
+                    } catch (Exception $exception) {
+                        $this->logger->debug($exception->getMessage());
                         continue;
                     }
 
@@ -173,48 +172,39 @@ class ModifyValidator
             $validator->addPropertyValidator($fieldName, $validatorInstance);
         }
 
-        $this->addUidValidator($controllerName, $validator);
+        $this->addUidValidator($controller->getControllerName(), $validator);
 
         $argument->setValidator($validator);
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      * @throws AnnotationException
      */
     protected function getValidatorByConfiguration(
-        RequestInterface $request,
         string $configuration,
         DocParser $parser,
         string $fieldName,
+        RequestInterface $request,
     ): ?ValidatorInterface {
         if (!str_contains($configuration, '"') && !str_contains($configuration, '(')) {
             $configuration = '"' . $configuration . '"';
         }
 
         /** @var Extbase\Validate $validateAnnotation */
-        $validateAnnotation = current($parser->parse('@' . Extbase\Validate::class . '(' . $configuration . ')'));
-        try {
-            /** @var class-string<object> $validatorObjectName */
-            $validatorObjectName = ValidatorClassNameResolver::resolve($validateAnnotation->validator);
-            /** @var ValidatorInterface $validator */
-            $validator = GeneralUtility::makeInstance($validatorObjectName);
-            // @extensionScannerIgnoreLine
-            $validator->setOptions($validateAnnotation->options);
+        $configuration = '@' . Validate::class . '(' . $configuration . ')';
+        $validateAnnotation = current($parser->parse($configuration));
+        $validator = $this->validatorResolver->createValidator(
+            $validateAnnotation->validator,
+            $validateAnnotation->options,
+            $request
+        );
 
-            if ($validator instanceof AbstractValidator) {
-                $validator->setRequest($request);
-            }
-
-            if ($validator instanceof SetPropertyNameInterface) {
-                $validator->setPropertyName($fieldName);
-            }
-
-            return $validator;
-        } catch (NoSuchValidatorException $e) {
-            $this->logger->debug($e->getMessage());
-            return null;
+        if ($validator instanceof SetPropertyNameInterface) {
+            $validator->setPropertyName($fieldName);
         }
+
+        return $validator;
     }
 
     protected function addUidValidator(string $controllerName, UserValidator $validator): UserValidator
@@ -226,9 +216,9 @@ class ModifyValidator
         }
 
         try {
-            $validatorInstance = GeneralUtility::makeInstance($validatorName);
+            $validatorInstance = $this->validatorResolver->createValidator($validatorName);
             $validator->addPropertyValidator('uid', $validatorInstance);
-        } catch (\Exception) {
+        } catch (Exception) {
         }
 
         return $validator;

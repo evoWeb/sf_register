@@ -16,12 +16,15 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
+use Exception;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Validator to check against current password
  */
+#[Autoconfigure(public: true)]
 class EqualCurrentPasswordValidator extends AbstractValidator
 {
     protected $acceptsEmptyValues = false;
@@ -55,7 +58,7 @@ class EqualCurrentPasswordValidator extends AbstractValidator
                     1301599507
                 );
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->addError($exception->getMessage(), $exception->getCode());
         }
     }

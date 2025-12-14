@@ -1,24 +1,39 @@
 {
 	"compilerOptions": {
-		"target": "es2020",
+		"target": "es2023",
+		"lib": [
+			"es2023",
+			"dom",
+			"dom.iterable"
+		],
+		"module": "es2022",
+		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
 		"incremental": true,
 		"tsBuildInfoFile": "./.cache/tsconfig.tsbuildinfo",
-		"module": "es2020",
-		"moduleResolution": "node",
 		"sourceMap": false,
 		"removeComments": false,
 		"alwaysStrict": true,
+		"strictBindCallApply": true,
+		"strictBuiltinIteratorReturn": true,
 		"downlevelIteration": true,
 		"experimentalDecorators": true,
 		"useDefineForClassFields": false,
 		"noImplicitAny": true,
+		"noImplicitOverride": true,
 		"noImplicitThis": true,
 		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"useUnknownInCatchVariables": true,
+		"verbatimModuleSyntax": true,
 		"pretty": true,
 		"baseUrl": "Sources/TypeScript",
+		"outDir": "./Public/",
 		"typeRoots": [
 			"node_modules/@types"
 		]
-	}
+	},
+	"files": [
+		"Sources/TypeScript/sf_register.ts"
+	]
 }

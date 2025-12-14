@@ -1,0 +1,9 @@
+mod.web_layout.tt_content.preview {
+  sfregister_create = EXT:sf_register/Resources/Private/Templates/Preview/Create.html
+  sfregister_edit = EXT:sf_register/Resources/Private/Templates/Preview/Edit.html
+  sfregister_delete = EXT:sf_register/Resources/Private/Templates/Preview/Delete.html
+  sfregister_password = EXT:sf_register/Resources/Private/Templates/Preview/Password.html
+  sfregister_invite = EXT:sf_register/Resources/Private/Templates/Preview/Invite.html
+  sfregister_resend = EXT:sf_register/Resources/Private/Templates/Preview/Resend.html
+  sfregister_requestlink = EXT:sf_register/Resources/Private/Templates/Preview/RequestDelete.html
+}

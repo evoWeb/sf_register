@@ -1,7 +1,7 @@
 {
 	"name": "evoweb/sf-register",
 	"type": "typo3-cms-extension",
-	"description": "Frontend User Registration: Offers the possibility to maintain the fe_user data in frontend.",
+	"description": "Frontend User Registration",
 	"homepage": "https://www.evoweb.de",
 	"license": [
 		"GPL-2.0-or-later"
@@ -29,12 +29,12 @@
 		}
 	},
 	"require": {
-		"php": "^8.1",
-		"typo3/cms-backend": "^13.2 || 13.3.x-dev || dev-main",
-		"typo3/cms-core": "^13.2 || 13.3.x-dev || dev-main",
-		"typo3/cms-extbase": "^13.2 || 13.3.x-dev || dev-main",
-		"typo3/cms-fluid": "^13.2 || 13.3.x-dev || dev-main",
-		"typo3/cms-frontend": "^13.2 || 13.3.x-dev || dev-main",
+		"php": "^8.2",
+		"typo3/cms-backend": "^14.0 || 14.*.*@dev || dev-main",
+		"typo3/cms-core": "^14.0 || 14.*.*@dev || dev-main",
+		"typo3/cms-extbase": "^14.0 || 14.*.*@dev || dev-main",
+		"typo3/cms-fluid": "^14.0 || 14.*.*@dev || dev-main",
+		"typo3/cms-frontend": "^14.0 || 14.*.*@dev || dev-main",
 		"doctrine/annotations": "^1.13.3 || ^2.0",
 		"doctrine/dbal": "^4.1",
 		"psr/event-dispatcher": "^1.0",
@@ -46,7 +46,7 @@
 		"webmozart/assert": "^1.11.0"
 	},
 	"require-dev": {
-		"typo3/cms-install": "^13.2 || 13.3.x-dev || dev-main",
+		"typo3/cms-install": "^14.0 || 14.*.*@dev || dev-main",
 		"friendsofphp/php-cs-fixer": "^3.64.0",
 		"friendsoftypo3/phpstan-typo3": "^0.9.0",
 		"phpstan/phpdoc-parser": "^1.30.0",
@@ -57,9 +57,10 @@
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"suggest": {
+		"evoweb/extender": "^11.0",
 		"evoweb/recaptcha": "^14.0",
 		"sjbr/static-info-tables": "dev-master",
-		"typo3/cms-install": "^13.2 || 13.3.x-dev || dev-main"
+		"typo3/cms-install": "^14.0 || 14.*.*@dev || dev-main"
 	},
 	"extra": {
 		"typo3/cms": {

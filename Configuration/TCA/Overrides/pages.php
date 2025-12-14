@@ -8,6 +8,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 ExtensionManagementUtility::registerPageTSConfigFile(
     'sf_register',
-    'Configuration/TSconfig/NewContentElementWizard.tsconfig',
+    'Configuration/TSconfig/mod.tsconfig',
     '[Frontend user registration] New content element wizards',
 );

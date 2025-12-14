@@ -214,19 +214,19 @@ plugin.tx_sfregister.settings.fields.configuration {
 
   byInvitation {
     partial = Hidden
-    backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.by_invitation
+    backendLabel = sf_register.be:fe_users.by_invitation
   }
 
   gtc {
     partial = Checkbox
-    backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.gtc_selectField
+    backendLabel = sf_register.be:fe_users.gtc_selectField
   }
 
   privacy.partial = Checkbox
 
   captcha {
     partial = Captcha
-    type = {$plugin.tx_sfregister.settings.captchaId ?? $evoweb.sf-register.settings.captchaId}
+    type = {$plugin.tx_sfregister.settings.captchaId}
   }
 
   invitationEmail {
@@ -252,6 +252,6 @@ plugin.tx_sfregister.settings.fields.configuration {
 
   passwordButton {
     partial = PasswordButton
-    backendLabel = LLL:EXT:sf_register/Resources/Private/Language/locallang_be.xlf:fe_users.password_button
+    backendLabel = sf_register.be:fe_users.password_button
   }
 }

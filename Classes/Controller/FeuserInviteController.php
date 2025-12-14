@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -28,10 +28,10 @@ use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute;
 
 /**
- * An frontend user invite controller
+ * Invite frontend user controller
  */
 class FeuserInviteController extends FeuserController
 {
@@ -64,9 +64,10 @@ class FeuserInviteController extends FeuserController
         return new HtmlResponse($this->view->render());
     }
 
-    #[Extbase\Validate(['validator' => UserValidator::class, 'param' => 'user'])]
-    public function inviteAction(FrontendUser $user): ResponseInterface
-    {
+    public function inviteAction(
+        #[Attribute\Validate(validator: UserValidator::class)]
+        FrontendUser $user
+    ): ResponseInterface {
         /** @var FrontendUser $user */
         $user = $this->mailService->sendEmails(
             $this->request,

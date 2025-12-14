@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -18,21 +18,15 @@ namespace Evoweb\SfRegister\Tests\Functional\Controller;
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
-use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use EvowebTests\TestClasses\Controller\FeuserPasswordController;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
-use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Crypto\HashService;
-use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
-use TYPO3\CMS\Core\Registry;
+use Symfony\Component\DependencyInjection\Container;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
-use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Fluid\View\FluidViewAdapter;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
@@ -45,12 +39,12 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_groups.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_users.csv');
 
-        $this->initializeRequest();
+        $this->createServerRequest();
         $this->initializeFrontendTypoScript([
             'plugin.' => [
                 'tx_sfregister.' => [
                     'settings.' => [
-                        'encryptPassword' => ''
+                        'encryptPassword' => '',
                     ],
                 ],
             ],
@@ -63,7 +57,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         /** @var FrontendUserService $subject */
         $subject = $this->get(FrontendUserService::class);
 
-        $this->assertFalse($subject->userIsLoggedIn());
+        self::assertFalse($subject->userIsLoggedIn());
     }
 
     #[Test]
@@ -74,7 +68,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         /** @var FrontendUserService $subject */
         $subject = $this->get(FrontendUserService::class);
 
-        $this->assertTrue($subject->userIsLoggedIn());
+        self::assertTrue($subject->userIsLoggedIn());
     }
 
     #[Test]
@@ -84,7 +78,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $expected = 'TestPa$5';
         $this->loginFrontendUser('testuser', $expected);
 
-        // we need to clone to create the object, else the isClone parameter is not set and both object won't match
+        // we need to clone to create the object, else the isClone parameter is not set, and both objects won't match
         $frontendUser = clone new FrontendUser();
         $frontendUser->setPassword($expected);
 
@@ -93,15 +87,17 @@ class FeuserPasswordControllerTest extends AbstractTestBase
             ->disableOriginalConstructor()
             ->onlyMethods(['findByUid', 'update'])
             ->getMock();
+        // @extensionScannerIgnoreLine
         $frontendUserRepository->expects($this->once())
             ->method('findByUid')
-            ->with($this->equalTo($userId))
+            ->with(self::equalTo($userId))
             ->willReturn($frontendUser);
+        // @extensionScannerIgnoreLine
         $frontendUserRepository->expects($this->once())
             ->method('update')
-            ->with($this->equalTo($frontendUser));
+            ->with(self::equalTo($frontendUser));
 
-        /** @var \Symfony\Component\DependencyInjection\Container $container */
+        /** @var Container $container */
         $container = $this->getContainer();
         $container->set(FrontendUserRepository::class, $frontendUserRepository);
 
@@ -114,7 +110,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
             ->method('render')
             ->willReturn('Password successfully updated');
 
-        // configurationManager is a shared object, and will be a constructor parameter of the controller
+        // configurationManager is a shared object and will be a constructor parameter of the controller
         // @see Bootstrap::initializeConfiguration
         $configuration = [
             'extensionName' => 'SfRegister',
@@ -123,6 +119,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         /** @var ConfigurationManagerInterface $configurationManager */
         $configurationManager = $this->get(ConfigurationManagerInterface::class);
         $configurationManager->setRequest($this->request);
+        // @extensionScannerIgnoreLine
         $configurationManager->setConfiguration($configuration);
 
         $extbaseAttribute = new ExtbaseRequestParameters();
@@ -132,7 +129,9 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $extbaseAttribute->setControllerActionName('save');
 
         $request = new Request($this->request->withAttribute('extbase', $extbaseAttribute));
-        $request = $request->withAttribute('currentContentObject', new ContentObjectRenderer());
+
+        $contentObjectRenderer = $this->createMock(ContentObjectRenderer::class);
+        $request = $request->withAttribute('currentContentObject', $contentObjectRenderer);
 
         /** @var FeuserPasswordController $subject */
         $subject = $this->get(FeuserPasswordController::class);
@@ -144,6 +143,6 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $password->_setProperty('password', $expected);
         $response = $subject->saveAction($password);
 
-        $this->assertEquals(200, $response->getStatusCode());
+        self::assertEquals(200, $response->getStatusCode());
     }
 }

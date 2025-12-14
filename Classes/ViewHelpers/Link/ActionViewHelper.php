@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -17,6 +17,8 @@ namespace Evoweb\SfRegister\ViewHelpers\Link;
 
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\HttpUtility;
@@ -33,6 +35,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
  * Link Action view helper that automatically
  * adds a "hash" argument on the "user" and "action" arguments
  */
+#[Autoconfigure(public: true)]
 class ActionViewHelper extends AbstractTagBasedViewHelper
 {
     /**
@@ -103,13 +106,11 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
 
     public function render(): string
     {
-        if (
-            $this->arguments['action'] !== null
-            && is_array($this->arguments['arguments'])
-            && isset($this->arguments['arguments']['user'])
-        ) {
+        $arguments = $this->arguments['arguments'] ?? [];
+        if ($this->arguments['action'] !== null && is_array($arguments) && isset($arguments['user'])) {
+            $user = is_array($arguments['user']) ? $arguments['user']['email'] : (string)$arguments['user'];
             $this->arguments['arguments']['hash'] = $this->hashService->hmac(
-                $this->arguments['action'] . '::' . $this->arguments['arguments']['user'],
+                $this->arguments['action'] . '::' . $user,
                 FrontendUserService::ADDITIONAL_SECRET
             );
         }
@@ -124,7 +125,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         if ($request instanceof ServerRequestInterface && ApplicationType::fromRequest($request)->isFrontend()) {
             return $this->renderFrontendLinkWithCoreContext($request);
         }
-        throw new \RuntimeException(
+        throw new RuntimeException(
             'The rendering context of ViewHelper sf:link.action is missing a valid request object.',
             1690365240
         );
@@ -167,7 +168,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
             && is_string($action) && $action !== ''
         );
         if (!$allExtbaseArgumentsAreSet) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 'ViewHelper sf:link.action needs either all extbase arguments set'
                 . ' ("extensionName", "pluginName", "controller", "action")'
                 . ' or needs a request implementing extbase RequestInterface.',
@@ -246,6 +247,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         $noCache = (bool)($this->arguments['noCache'] ?? false);
         $language = isset($this->arguments['language']) ? (string)$this->arguments['language'] : null;
         $section = (string)$this->arguments['section'];
+        // @extensionScannerIgnoreLine
         $format = (string)$this->arguments['format'];
         $linkAccessRestrictedPages = (bool)($this->arguments['linkAccessRestrictedPages'] ?? false);
         $additionalParams = (array)$this->arguments['additionalParams'];

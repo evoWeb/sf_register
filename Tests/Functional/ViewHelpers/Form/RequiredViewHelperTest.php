@@ -25,7 +25,7 @@ class RequiredViewHelperTest extends AbstractTestBase
         parent::setUp();
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/pages.csv');
 
-        $this->initializeRequest();
+        $this->createServerRequest();
         $this->initializeFrontendTypoScript();
 
         $this->writeSiteConfiguration(
@@ -34,6 +34,9 @@ class RequiredViewHelperTest extends AbstractTestBase
         );
     }
 
+    /**
+     * @param array<string, array<string, object>> $validation
+     */
     #[Test]
     #[DataProvider('templateProvider')]
     public function renderRequiredCharacter(string $template, ?string $expected, array $validation): void
@@ -52,8 +55,10 @@ class RequiredViewHelperTest extends AbstractTestBase
 
         $context = $this->get(RenderingContextFactory::class)->create();
         $context->setAttribute(ServerRequestInterface::class, $extbaseRequest);
-        $context->getTemplatePaths()->setTemplateSource('{namespace register=Evoweb\SfRegister\ViewHelpers}' . $template);
+        $context->getTemplatePaths()
+            ->setTemplateSource('{namespace register=Evoweb\SfRegister\ViewHelpers}' . $template);
         $context->setControllerName(
+            // @extensionScannerIgnoreLine
             ExtensionUtility::resolveControllerAliasFromControllerClassName(FeuserCreateController::class)
         );
         $actual = (new TemplateView($context))->render();
@@ -61,6 +66,9 @@ class RequiredViewHelperTest extends AbstractTestBase
         self::assertEquals($expected, $actual);
     }
 
+    /**
+     * @return iterable<array<string, string|array<string, object>>>
+     */
     public static function templateProvider(): iterable
     {
         yield [
@@ -68,9 +76,9 @@ class RequiredViewHelperTest extends AbstractTestBase
             'expected' => '*',
             'validation' => [
                 'create.' => [
-                    'username' => RequiredValidator::class
-                ]
-            ]
+                    'username' => RequiredValidator::class,
+                ],
+            ],
         ];
 
         yield [
@@ -78,9 +86,9 @@ class RequiredViewHelperTest extends AbstractTestBase
             'expected' => '*',
             'validation' => [
                 'create.' => [
-                    'username' => RequiredValidator::class
-                ]
-            ]
+                    'username' => RequiredValidator::class,
+                ],
+            ],
         ];
 
         yield [
@@ -88,9 +96,9 @@ class RequiredViewHelperTest extends AbstractTestBase
             'expected' => '*',
             'validation' => [
                 'create.' => [
-                    'username' => RequiredValidator::class
-                ]
-            ]
+                    'username' => RequiredValidator::class,
+                ],
+            ],
         ];
 
         yield [
@@ -98,9 +106,9 @@ class RequiredViewHelperTest extends AbstractTestBase
             'expected' => null,
             'validation' => [
                 'create.' => [
-                    'firstName' => RequiredValidator::class
-                ]
-            ]
+                    'firstName' => RequiredValidator::class,
+                ],
+            ],
         ];
 
         yield [
@@ -108,9 +116,9 @@ class RequiredViewHelperTest extends AbstractTestBase
             'expected' => '*',
             'validation' => [
                 'create.' => [
-                    'firstName' => RequiredValidator::class
-                ]
-            ]
+                    'firstName' => RequiredValidator::class,
+                ],
+            ],
         ];
 
         yield [
@@ -118,9 +126,9 @@ class RequiredViewHelperTest extends AbstractTestBase
             'expected' => '*',
             'validation' => [
                 'create.' => [
-                    'firstName' => RequiredValidator::class
-                ]
-            ]
+                    'firstName' => RequiredValidator::class,
+                ],
+            ],
         ];
     }
 }

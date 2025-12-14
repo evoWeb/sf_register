@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -27,11 +27,9 @@ use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
  */
 class CaptchaViewHelper extends AbstractFormFieldViewHelper
 {
-    protected ?CaptchaAdapterFactory $captchaAdapterFactory = null;
-
-    public function injectCaptchaAdapterFactory(CaptchaAdapterFactory $captchaAdapterFactory): void
+    public function __construct(protected CaptchaAdapterFactory $captchaAdapterFactory)
     {
-        $this->captchaAdapterFactory = $captchaAdapterFactory;
+        parent::__construct();
     }
 
     public function initializeArguments(): void
@@ -39,10 +37,7 @@ class CaptchaViewHelper extends AbstractFormFieldViewHelper
         $this->registerArgument('type', 'string', 'Captcha type', true);
     }
 
-    /**
-     * @return array<string, mixed>|string
-     */
-    public function render(): array|string
+    public function render(): string
     {
         $type = $this->arguments['type'];
         return $this->captchaAdapterFactory->getCaptchaAdapter($type)->render();

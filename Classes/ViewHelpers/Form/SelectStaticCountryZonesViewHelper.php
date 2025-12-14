@@ -68,18 +68,6 @@ class SelectStaticCountryZonesViewHelper extends AbstractSelectViewHelper
         try {
             $options = $this->countryZonesRepository->findAllByIso2($this->arguments['parent'])->fetchAllAssociative();
 
-            if ($this->arguments['disabled']) {
-                $value = (array)$this->getSelectedValue();
-
-                $options = array_filter(
-                    $options,
-                    function ($option) use ($value) {
-                        /** @var array<string, mixed> $option */
-                        return in_array($option['uid'], $value);
-                    }
-                );
-            }
-
             $this->arguments['options'] = $options;
         } catch (Exception) {
         }

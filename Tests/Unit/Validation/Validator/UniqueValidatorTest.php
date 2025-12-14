@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -42,7 +42,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->getMock();
         $subject->setPropertyName($fieldName);
 
-        $this->assertFalse($subject->validate($expected)->hasErrors());
+        self::assertFalse($subject->validate($expected)->hasErrors());
     }
 
     #[Test]
@@ -64,7 +64,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->getMock();
         $subject->setPropertyName($fieldName);
 
-        $this->assertTrue($subject->validate($expected)->hasErrors());
+        self::assertTrue($subject->validate($expected)->hasErrors());
     }
 
     #[Test]
@@ -90,7 +90,7 @@ class UniqueValidatorTest extends UnitTestCase
             ->getMock();
         $subject->setPropertyName($fieldName);
 
-        $this->assertFalse($subject->validate($expected)->hasErrors());
+        self::assertFalse($subject->validate($expected)->hasErrors());
     }
 
     #[Test]
@@ -120,6 +120,6 @@ class UniqueValidatorTest extends UnitTestCase
         $subject->setPropertyName($fieldName);
 
         $current = $subject->validate($expected);
-        $this->assertTrue($current->hasErrors());
+        self::assertTrue($current->hasErrors());
     }
 }

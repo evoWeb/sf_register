@@ -1,0 +1,75 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
+namespace Evoweb\SfRegister\Annotation;
+
+use Attribute;
+
+#[Attribute(Attribute::TARGET_PROPERTY | Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
+class Validate
+{
+    public string $validator = '';
+
+    public string $param = '';
+
+    /**
+     * @var array<string, mixed>
+     */
+    public array $options = [];
+
+    /**
+     * @param array{value?: non-empty-string, validator?: non-empty-string, options?: array<string, mixed>, param?: string} $values
+     */
+    public function __construct(array $values)
+    {
+        if (isset($values['value'])) {
+            $this->validator = $values['value'];
+        }
+
+        if (isset($values['validator'])) {
+            $this->validator = $values['validator'];
+        }
+
+        if (isset($values['options'])) {
+            $this->options = $values['options'];
+        }
+
+        if (isset($values['param'])) {
+            $this->param = $values['param'];
+        }
+    }
+
+    public function __toString(): string
+    {
+        $strings = [];
+
+        if ($this->param !== '') {
+            $strings[] = $this->param;
+        }
+
+        $strings[] = $this->validator;
+
+        if (count($this->options) > 0) {
+            $validatorOptionsStrings = [];
+            foreach ($this->options as $optionKey => $optionValue) {
+                $validatorOptionsStrings[] = $optionKey . '=' . $optionValue;
+            }
+
+            $strings[] = '(' . implode(', ', $validatorOptionsStrings) . ')';
+        }
+
+        return trim(implode(' ', $strings));
+    }
+}

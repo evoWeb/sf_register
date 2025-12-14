@@ -17,10 +17,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Lint SCSS
-        run: Build/Scripts/additionalTests.sh -s lintScss
+        run: Build/Scripts/runTests.sh -s lintScss
 
       - name: Lint Typescript
-        run: Build/Scripts/additionalTests.sh -s lintTypescript
+        run: Build/Scripts/runTests.sh -s lintTypescript
 
       - name: Run the xliff lint
         run: Build/Scripts/additionalTests.sh -s lintXliff
@@ -40,26 +40,54 @@ jobs:
     strategy:
       matrix:
         packages:
+
           - php: '8.2'
-            core: '^13.1'
+            core: '^14.0'
             framework: 'dev-main'
             prefer: ''
             testpath: 'Tests/Functional'
+
           - php: '8.2'
-            core: '^13.1'
+            core: '^14.0'
             framework: 'dev-main'
             prefer: '--prefer-lowest'
             testpath: 'Tests/Functional'
+
           - php: '8.3'
-            core: '^13.1'
+            core: '^14.0'
             framework: 'dev-main'
             prefer: ''
             testpath: 'Tests/Functional'
+
           - php: '8.3'
-            core: '^13.1'
+            core: '^14.0'
             framework: 'dev-main'
             prefer: '--prefer-lowest'
             testpath: 'Tests/Functional'
+
+          - php: '8.4'
+            core: '^14.0'
+            framework: 'dev-main'
+            prefer: ''
+            testpath: 'Tests/Functional'
+
+#          - php: '8.4'
+#            core: '^14.0'
+#            framework: 'dev-main'
+#            prefer: '--prefer-lowest'
+#            testpath: 'Tests/Functional'
+
+          - php: '8.5'
+            core: '^14.0'
+            framework: 'dev-main'
+            prefer: ''
+            testpath: 'Tests/Functional'
+
+#          - php: '8.5'
+#            core: '^14.0'
+#            framework: 'dev-main'
+#            prefer: '--prefer-lowest'
+#            testpath: 'Tests/Functional'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,27 +98,17 @@ jobs:
             -p ${{ matrix.packages.php }} \
             -s lintPhp
 
-      - name: Composer install
+      - name: Composer install core
         run: |
           Build/Scripts/runTests.sh \
             -p ${{ matrix.packages.php }} \
-            -s composerInstall
-
-      - name: Composer install core
-        run: |
-          Build/Scripts/additionalTests.sh \
-            -p ${{ matrix.packages.php }} \
-            -s composerInstallPackage \
-            -q "typo3/cms-core:${{ matrix.packages.core }}" \
-            -r " ${{ matrix.packages.prefer }}"
+            -s composer require ${{ matrix.packages.prefer }} "typo3/cms-core:${{ matrix.packages.core }}"
 
       - name: Composer install framework
         run: |
-          Build/Scripts/additionalTests.sh \
+          Build/Scripts/runTests.sh \
             -p ${{ matrix.packages.php }} \
-            -s composerInstallPackage \
-            -q "typo3/testing-framework:${{ matrix.packages.framework }}" \
-            -r " --dev ${{ matrix.packages.prefer }}"
+            -s composer require --dev ${{ matrix.packages.prefer }} "typo3/testing-framework:${{ matrix.packages.framework }}"
 
       - name: Composer validate
         run: |

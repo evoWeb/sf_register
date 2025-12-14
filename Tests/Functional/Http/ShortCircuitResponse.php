@@ -9,7 +9,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -17,8 +17,8 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Tests\Functional\Http;
 
-use TYPO3\CMS\Core\Http\Response;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\Response;
 
 final class ShortCircuitResponse extends Response
 {

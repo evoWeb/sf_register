@@ -2,10 +2,10 @@
 
 
 plugin.tx_sfregister.settings {
-  # cat=sf_register.settings//50; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.badWordList
+  # cat=sf_register.settings//50; type=text; label= sf_register.ts:minimal.badWordList
   badWordList = god, sex, password
 
-  # cat=sf_register.settings//60; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.blockDomainList
+  # cat=sf_register.settings//60; type=text; label= sf_register.ts:minimal.blockDomainList
   blockDomainList = 0-mail.com, 027168.com, 0815.ru, mail.ru, bk.ru, list.ru
 
   confirmEmailPostCreate = 1
@@ -16,26 +16,26 @@ plugin.tx_sfregister.settings {
   confirmEmailPostEdit =
   acceptEmailPostEdit =
 
-  # cat=sf_register.settings//50; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.redirectPostActivationPageId
+  # cat=sf_register.settings//50; type=int+; label= sf_register.ts:minimal.redirectPostActivationPageId
   redirectPostActivationPageId =
 
-  # cat=sf_register.settings//55; type=boolean; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.autologinPostConfirmation
+  # cat=sf_register.settings//55; type=boolean; label= sf_register.ts:minimal.autologinPostConfirmation
   autologinPostConfirmation = 0
 
-  # cat=sf_register.settings//15; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroupPostSave
+  # cat=sf_register.settings//15; type=int+; label= sf_register.ts:minimal.usergroupPostSave
   usergroupPostSave = 0
-  # cat=sf_register.settings//16; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroupPostConfirm
+  # cat=sf_register.settings//16; type=int+; label= sf_register.ts:minimal.usergroupPostConfirm
   usergroupPostConfirm = 0
-  # cat=sf_register.settings//17; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroupPostAccept
+  # cat=sf_register.settings//17; type=int+; label= sf_register.ts:minimal.usergroupPostAccept
   usergroupPostAccept = 0
-  # cat=sf_register.settings//18; type=int+; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.usergroup
+  # cat=sf_register.settings//18; type=int+; label= sf_register.ts:minimal.usergroup
   usergroup = 0
 
-  # cat=sf_register.settings//31; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.emailSitename
+  # cat=sf_register.settings//31; type=text; label= sf_register.ts:minimal.emailSitename
   emailSitename = dummy Site
 
-  # cat=sf_register.settings//32; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.emailName
+  # cat=sf_register.settings//32; type=text; label= sf_register.ts:minimal.emailName
   emailName = userEmail from
-  # cat=sf_register.settings//33; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:minimal.emailAddress
+  # cat=sf_register.settings//33; type=text; label= sf_register.ts:minimal.emailAddress
   emailAddress = userEmailfrom@test.local
 }

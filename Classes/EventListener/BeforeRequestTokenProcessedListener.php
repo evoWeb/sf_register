@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\EventListener;
 
+use Exception;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Authentication\Event\BeforeRequestTokenProcessedEvent;
 use TYPO3\CMS\Core\Context\Context;
@@ -24,7 +25,9 @@ use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 final class BeforeRequestTokenProcessedListener
 {
-    public function __construct(protected Context $context) {}
+    public function __construct(protected Context $context)
+    {
+    }
 
     #[AsEventListener('evoweb-sf-register-beforerequesttoken', BeforeRequestTokenProcessedEvent::class)]
     public function __invoke(BeforeRequestTokenProcessedEvent $event): void
@@ -45,7 +48,7 @@ final class BeforeRequestTokenProcessedListener
             $signingSecretResolver = SecurityAspect::provideIn($this->context)->getSigningSecretResolver();
             try {
                 $event->setRequestToken(RequestToken::fromHashSignedJwt($tokenValue, $signingSecretResolver));
-            } catch (\Exception) {
+            } catch (Exception) {
             }
         }
     }

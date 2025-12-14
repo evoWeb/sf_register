@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -30,7 +30,7 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_groups.csv');
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/fe_users.csv');
 
-        $this->initializeRequest();
+        $this->createServerRequest();
         $this->initializeFrontendTypoScript([
             'plugin.' => [
                 'tx_sfregister.' => [
@@ -48,7 +48,7 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
 
-        $this->assertFalse((bool)$context->getPropertyFromAspect('frontend.user', 'isLoggedIn'));
+        self::assertFalse((bool)$context->getPropertyFromAspect('frontend.user', 'isLoggedIn'));
     }
 
     #[Test]
@@ -59,6 +59,6 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
 
         /** @var EqualCurrentPasswordValidator $subject */
         $subject = $this->get(EqualCurrentPasswordValidator::class);
-        $this->assertFalse($subject->validate($expected)->hasErrors());
+        self::assertFalse($subject->validate($expected)->hasErrors());
     }
 }

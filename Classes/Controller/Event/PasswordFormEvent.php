@@ -22,7 +22,9 @@ final class PasswordFormEvent
     /**
      * @param array<string, mixed> $settings
      */
-    public function __construct(protected Password $password, protected array $settings) {}
+    public function __construct(protected Password $password, protected array $settings)
+    {
+    }
 
     public function getPassword(): Password
     {

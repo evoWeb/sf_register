@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Domain\Repository;
 
 use Evoweb\SfRegister\Domain\Model\StaticLanguage;
+use Exception;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
@@ -52,7 +53,7 @@ class StaticLanguageRepository extends Repository
 
         try {
             $query->matching($query->in('lg_collate_locale', $lgCollateLocale));
-        } catch (\Exception) {
+        } catch (Exception) {
         }
 
         /** @var QueryResult<StaticLanguage> $result */

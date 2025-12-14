@@ -1,31 +1,31 @@
 plugin.tx_sfregister.view {
-  # cat=sf_register.settings/file; type=string; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:templateRootPath
+  # cat=sf_register.settings/file; type=string; label=sf_register.ts:templateRootPath
   templateRootPath = EXT:sf_register/Resources/Private/Templates/
 
-  # cat=sf_register.settings/file; type=string; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:partialRootPath
+  # cat=sf_register.settings/file; type=string; label=sf_register.ts:partialRootPath
   partialRootPath = EXT:sf_register/Resources/Private/Partials/
 
-  # cat=sf_register.settings/file; type=string; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:layoutRootPath
+  # cat=sf_register.settings/file; type=string; label=sf_register.ts:layoutRootPath
   layoutRootPath = EXT:sf_register/Resources/Private/Layouts/
 }
 
 
 plugin.tx_sfregister.settings {
-  # cat=sf_register.settings//11; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.createPid
+  # cat=sf_register.settings//11; type=int+; label=sf_register.ts:common.createPid
   createPid = 0
 
-  # cat=sf_register.settings//12; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.editPid
+  # cat=sf_register.settings//12; type=int+; label=sf_register.ts:common.editPid
   editPid = 0
 
-  # cat=sf_register.settings//13; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.passwordPid
+  # cat=sf_register.settings//13; type=int+; label=sf_register.ts:common.passwordPid
   passwordPid = 0
 
-  # cat=sf_register.settings//14; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.invitePid
+  # cat=sf_register.settings//14; type=int+; label=sf_register.ts:common.invitePid
   invitePid = 0
 
-  # cat=sf_register.settings//15; type=int+; label=LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.resendPid
+  # cat=sf_register.settings//15; type=int+; label=sf_register.ts:common.resendPid
   resendPid = 0
 
-  # cat=sf_register.settings//30; type=text; label= LLL:EXT:sf_register/Resources/Private/Language/locallang_ts.xlf:common.captchaId
+  # cat=sf_register.settings//30; type=text; label= sf_register.ts:common.captchaId
   captchaId = recaptcha
 }

@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
-use Evoweb\SfRegister\Domain\Model\StaticLanguage;
 use Evoweb\SfRegister\Domain\Repository\StaticLanguageRepository;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -74,18 +73,6 @@ class SelectStaticLanguageViewHelper extends AbstractSelectViewHelper
             $options = $this->languageRepository->findAll();
         }
         $options = $options->toArray();
-
-        if ($this->arguments['disabled']) {
-            $value = (array)$this->getSelectedValue();
-
-            $options = array_filter(
-                $options,
-                function ($option) use ($value) {
-                    /** @var StaticLanguage $option */
-                    return in_array($option->getLgIso2(), $value);
-                }
-            );
-        }
 
         $this->arguments['options'] = $options;
     }

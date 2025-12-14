@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -23,11 +23,13 @@ use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\ModifyValidator;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Core\View\ViewInterface;
+use TYPO3\CMS\Extbase\Attribute;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
@@ -55,7 +57,7 @@ class FeuserController extends ActionController
     /**
      * @var FluidViewAdapter
      */
-    protected $view;
+    protected ViewInterface $view;
 
     /**
      * The current request.
@@ -68,7 +70,8 @@ class FeuserController extends ActionController
         protected ModifyValidator $modifyValidator,
         protected FileService $fileService,
         protected FrontendUserRepository $userRepository,
-    ) {}
+    ) {
+    }
 
     protected function getErrorFlashMessage(): bool
     {
@@ -80,13 +83,15 @@ class FeuserController extends ActionController
     {
         $this->modifySettingsBeforeActionMethodValidators();
 
-        if ($this->modifyValidator->shouldValidationBeModified(
-            $this,
-            $this->settings,
-            $this->request,
-            $this->actionMethodName,
-            $this->ignoredActions,
-        )) {
+        if (
+            $this->modifyValidator->shouldValidationBeModified(
+                $this,
+                $this->settings,
+                $this->request,
+                $this->actionMethodName,
+                $this->ignoredActions,
+            )
+        ) {
             $this->arguments = $this->modifyValidator->modifyArgumentValidators(
                 $this,
                 $this->settings,
@@ -105,7 +110,7 @@ class FeuserController extends ActionController
         if (!is_array($this->settings['fields']['selected'] ?? [])) {
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
         }
-        if (!is_array($this->settings['fields']['selected'])) {
+        if (!is_array($this->settings['fields']['selected'] ?? false)) {
             $this->settings['fields']['selected'] = [];
         }
     }
@@ -116,7 +121,7 @@ class FeuserController extends ActionController
             $this->arguments = GeneralUtility::makeInstance(Arguments::class);
         }
 
-        // Convert image if type is UploadedFile to array
+        // Convert image if the type is UploadedFile to array
         if ($this->request->hasArgument('user')) {
             $user = $this->request->getArgument('user');
             if (is_array($user) && is_array($user['image'] ?? false) && !empty($user['image'])) {
@@ -176,7 +181,6 @@ class FeuserController extends ActionController
         $argumentName = 'user';
         if ($this->request->hasArgument($argumentName)) {
             $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
-            /** @var array<string, mixed>|FrontendUser $user */
             $user = $this->request->getArgument($argumentName);
             if (is_array($user) || $user instanceof FrontendUser) {
                 $this->getPropertyMappingConfiguration($configuration, $user);
@@ -251,9 +255,10 @@ class FeuserController extends ActionController
         return parent::callActionMethod($request);
     }
 
-    #[Extbase\IgnoreValidation(['value' => 'user'])]
-    public function proxyAction(FrontendUser $user): ResponseInterface
-    {
+    public function proxyAction(
+        #[Attribute\IgnoreValidation]
+        FrontendUser $user
+    ): ResponseInterface {
         $action = $this->request->hasArgument('form') ? 'form' : 'save';
 
         return (new ForwardResponse($action))
@@ -267,9 +272,10 @@ class FeuserController extends ActionController
      * @throws InvalidArgumentNameException
      * @throws UnknownObjectException
      */
-    #[Extbase\IgnoreValidation(['value' => 'user'])]
-    protected function removeImageAction(FrontendUser $user): ResponseInterface
-    {
+    protected function removeImageAction(
+        #[Attribute\IgnoreValidation]
+        FrontendUser $user
+    ): ResponseInterface {
         $images = $user->getImage();
 
         array_walk(
@@ -321,7 +327,7 @@ class FeuserController extends ActionController
             $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
             $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
             return $passwordHash->getHashedPassword($password);
-        } catch (\Exception) {
+        } catch (Exception) {
             return (string)time();
         }
     }
