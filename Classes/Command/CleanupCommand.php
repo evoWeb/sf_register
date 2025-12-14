@@ -106,6 +106,7 @@ class CleanupCommand extends Command
     {
         $table = 'fe_users';
         $queryBuilder = $this->getQueryBuilderForTable($table);
+        $queryBuilder->resetRestrictions();
 
         $result = $queryBuilder
             ->select('uid')
