@@ -26,7 +26,8 @@ be selected in the plugin too.
     plugin.tx_sfregister.settings.fields.configuration {
         your_field_key {
             partial = YourFieldKey
-            backendLabel = LLL:EXT:your_extension/Resources/Private/Language/locallang_be.xlf:your_field_key
+            # @see Feature: #93334 - Translation Domain Mapping
+            backendLabel = your_extension.be:your_field_key
         }
     }
 
