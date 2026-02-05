@@ -41,12 +41,12 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Session;
  */
 class FeuserEditController extends FeuserController
 {
-    public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, accept, removeImage';
+    public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, accept, confirmForm, acceptForm, removeImage';
 
     /**
      * @var string[]
      */
-    protected array $ignoredActions = ['confirmAction', 'acceptAction'];
+    protected array $ignoredActions = ['confirmAction', 'acceptAction', 'confirmFormAction', 'acceptFormAction'];
 
     public function __construct(
         protected ModifyValidator $modifyValidator,
@@ -151,6 +151,25 @@ class FeuserEditController extends FeuserController
         return $response;
     }
 
+    public function confirmFormAction(FrontendUser $user = null, string $hash = null): ResponseInterface
+    {
+        // Microsoft Safelinks is said to call the page by HEAD command for verification.
+        // So: if not HEAD, proceed normally. Otherwise, show an intermediate page.
+        if ($this->request->getMethod() !== 'HEAD' && !$this->settings['forceConfirmationButtonForEmailLinks']) {
+            return $this->confirmAction($user, $hash);
+        }
+
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
+
+        if (!($user instanceof FrontendUser)) {
+            $this->view->assign('userNotFound', 1);
+        } else {
+            $this->view->assign('user', $user);
+        }
+
+        return $this->htmlResponse();
+    }
+
     public function confirmAction(?FrontendUser $user = null, ?string $hash = null): ResponseInterface
     {
         $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
@@ -207,6 +226,25 @@ class FeuserEditController extends FeuserController
         }
 
         return $redirectResponse ?: new HtmlResponse($this->view->render());
+    }
+
+    public function acceptFormAction(FrontendUser $user = null, string $hash = null): ResponseInterface
+    {
+        // Microsoft Safelinks is said to call the page by HEAD command for verification.
+        // So: if not HEAD, proceed normally. Otherwise, show an intermediate page.
+        if ($this->request->getMethod() !== 'HEAD' && !$this->settings['forceConfirmationButtonForEmailLinks']) {
+            return $this->acceptAction($user, $hash);
+        }
+
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
+
+        if (!($user instanceof FrontendUser)) {
+            $this->view->assign('userNotFound', 1);
+        } else {
+            $this->view->assign('user', $user);
+        }
+
+        return $this->htmlResponse();
     }
 
     public function acceptAction(?FrontendUser $user = null, ?string $hash = null): ResponseInterface
