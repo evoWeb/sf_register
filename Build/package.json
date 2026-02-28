@@ -21,7 +21,7 @@
 		"stylelint-order": "^5.0.0",
 
 		"typescript": "< 5.9.3",
-		"rollup": "^4.53.3",
+		"rollup": "^4.59.0",
 		"@rollup/plugin-terser": "^0.4.4",
 		"terser": "^5.44.1",
 
