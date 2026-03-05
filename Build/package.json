@@ -22,7 +22,7 @@
 
 		"typescript": "< 5.9.3",
 		"rollup": "^4.59.0",
-		"@rollup/plugin-terser": "^0.4.4",
+		"@rollup/plugin-terser": "^1.0.0",
 		"terser": "^5.44.1",
 
 		"@stylistic/eslint-plugin": "^5.6.1",
