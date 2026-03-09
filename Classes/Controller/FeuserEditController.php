@@ -151,7 +151,7 @@ class FeuserEditController extends FeuserController
         return $response;
     }
 
-    public function confirmFormAction(FrontendUser $user = null, string $hash = null): ResponseInterface
+    public function confirmFormAction(?FrontendUser $user = null, string $hash = null): ResponseInterface
     {
         // Microsoft Safelinks is said to call the page by HEAD command for verification.
         // So: if not HEAD, proceed normally. Otherwise, show an intermediate page.
@@ -228,7 +228,7 @@ class FeuserEditController extends FeuserController
         return $redirectResponse ?: new HtmlResponse($this->view->render());
     }
 
-    public function acceptFormAction(FrontendUser $user = null, string $hash = null): ResponseInterface
+    public function acceptFormAction(?FrontendUser $user = null, string $hash = null): ResponseInterface
     {
         // Microsoft Safelinks is said to call the page by HEAD command for verification.
         // So: if not HEAD, proceed normally. Otherwise, show an intermediate page.
