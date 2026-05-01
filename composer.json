@@ -42,17 +42,16 @@
 		"psr/http-server-handler": "^1.0",
 		"psr/http-server-middleware": "^1.0",
 		"psr/log": "^2.0 || ^3.0",
-		"symfony/console": "^7.1",
-		"webmozart/assert": "^1.11.0"
+		"symfony/console": "^7.1"
 	},
 	"require-dev": {
-		"typo3/cms-install": "^13.2 || 13.3.x-dev || dev-main",
-		"friendsofphp/php-cs-fixer": "^3.64.0",
-		"friendsoftypo3/phpstan-typo3": "^0.9.0",
+		"typo3/cms-install": "^13.4",
+		"friendsofphp/php-cs-fixer": "^3.88.2",
 		"phpstan/phpdoc-parser": "^1.30.0",
-		"phpstan/phpstan": "^1.12.5",
-		"phpunit/phpunit": "^11.0.3",
-		"typo3/testing-framework": "dev-main"
+		"phpstan/phpstan": "^2.1.47",
+		"phpunit/phpunit": "^11.5.50",
+		"typo3/testing-framework": "^9.2.1",
+		"webmozart/assert": "^1.11.0 || ^2.0"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
