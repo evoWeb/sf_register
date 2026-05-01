@@ -638,6 +638,24 @@
 			<trans-unit id="email_invitee_register_link">
 				<source>register</source>
 			</trans-unit>
+            <trans-unit id="email_confirmation_create_accept_message">
+                <source>You are about to accept the email %2$s as account "%1$s".</source>
+            </trans-unit>
+            <trans-unit id="email_confirmation_create_confirm_message">
+                <source>You are about to register the email %2$s as account "%1$s".</source>
+            </trans-unit>
+            <trans-unit id="email_confirmation_create_decline_message">
+                <source>You are about to decline the registration of %2$s as account "%1$s".</source>
+            </trans-unit>
+            <trans-unit id="email_confirmation_create_refuse_message">
+                <source>You are about to cancel the registration of %2$s as account "%1$s".</source>
+            </trans-unit>
+            <trans-unit id="email_confirmation_edit_accept_message">
+                <source>You are about to accept the changes to account "%1$s".</source>
+            </trans-unit>
+            <trans-unit id="email_confirmation_edit_confirm_message">
+                <source>You are about to confirm the changes to account "%1$s".</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

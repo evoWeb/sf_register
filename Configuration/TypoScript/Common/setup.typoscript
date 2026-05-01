@@ -136,6 +136,9 @@ plugin.tx_sfregister.settings {
   }
 
   processInitializeActionEvent = 0
+
+  enableConfirmationButtonForEmailLinks = 0
+  forceConfirmationButtonForEmailLinks = 0
 }
 
 plugin.tx_sfregister.features {

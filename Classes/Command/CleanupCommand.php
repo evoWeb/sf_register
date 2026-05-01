@@ -106,6 +106,7 @@ class CleanupCommand extends Command
     {
         $table = 'fe_users';
         $queryBuilder = $this->getQueryBuilderForTable($table);
+        $queryBuilder->resetRestrictions();
 
         $result = $queryBuilder
             ->select('uid')
@@ -179,8 +180,8 @@ class CleanupCommand extends Command
             ->getConnection()
             ->delete($table, [
                 'uid_foreign' => $user['uid'],
-                'tablenames' => $user['fe_users'],
-                'fieldname' => $user['image'],
+                'tablenames' => 'fe_users',
+                'fieldname' => 'image',
             ]);
     }
 

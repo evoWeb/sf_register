@@ -793,6 +793,31 @@
 				<source>register</source>
 				<target>registrieren</target>
 			</trans-unit>
+
+            <trans-unit id="email_confirmation_create_accept_message">
+                <source>You are about to accept the email %2$s as account "%1$s".</source>
+                <target>Sie sind im Begriff, die E-Mail %2$s als Konto "%1$s" zu akzeptieren.</target>
+            </trans-unit>
+            <trans-unit id="email_confirmation_create_confirm_message">
+                <source>You are about to register the email %2$s as account "%1$s".</source>
+                <target>Sie sind im Begriff, die E-Mail-Adresse %2$s als Konto "%1$s" zu registrieren.</target>
+            </trans-unit>
+            <trans-unit id="email_confirmation_create_decline_message">
+                <source>You are about to decline the registration of %2$s as account "%1$s".</source>
+                <target>Sie sind im Begriff, die Registrierung von %2$s als Konto "%1$s" abzulehnen.</target>
+            </trans-unit>
+            <trans-unit id="email_confirmation_create_refuse_message">
+                <source>You are about to refuse the registration of %2$s as account "%1$s".</source>
+                <target>Sie sind im Begriff, die Registrierung von %2$s als Konto "%1$s" abzulehnen.</target>
+            </trans-unit>
+            <trans-unit id="email_confirmation_edit_accept_message">
+                <source>You are about to accept the changes to account "%1$s".</source>
+                <target>Sie sind im Begriff, die Änderungen am Konto "%1$s" zu akzeptieren.</target>
+            </trans-unit>
+            <trans-unit id="email_confirmation_edit_confirm_message">
+                <source>You are about to confirm the changes to account "%1$s".</source>
+                <target>Sie sind im Begriff, die Änderungen am Konto "%1$s" zu bestätigen.</target>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

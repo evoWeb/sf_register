@@ -141,6 +141,67 @@ plugin.tx_sfregister.settings.*
 
         Adapter for Captcha-Extension sr_freecap
 
+ - :Property:
+         enableConfirmationButtonForEmailLinks
+
+   :Data type:
+         boolean
+
+   :Description:
+         If set to true, email links will not directly manipulate the state of an user subscription,
+         but check for the HTTP method first. In case of HEAD method, a confirmation page with a button
+         will be shown. This should prevent double click issues by MicroSoft's SafeLinks feature. In case
+         of other methods, the default action gets called immediately.
+
+   :Default:
+         0
+
+
+
+ - :Property:
+         forceConfirmationButtonForEmailLinks
+
+   :Data type:
+         boolean
+
+   :Description:
+         If `enableConfirmationButtonForEmailLinks` is true and this setting is set to true,
+         the confirmation page is always shown regardless of the HTTP method. This can help against
+         the link preview features of some email clients.
+
+   :Default:
+         0
+
+
+
+ - :Property:
+         captcha.jmrecaptcha
+
+   :Data type:
+         String
+
+   :Description:
+         Adapter for Captcha-Extension jm\_recaptcha
+
+   :Default:
+         \\Evoweb\\SfRegister\\Services\\Captcha\\JmRecaptchaAdapter
+
+
+
+ - :Property:
+         captcha.srfreecap
+
+   :Data type:
+         string
+
+   :Description:
+         Adapter for Captcha-Extension sr\_freecap
+
+   :Default:
+         \\Evoweb\\SfRegister\\Services\\Captcha\\SrFreecapAdapter
+
+
+
 Persistence
 ===========
 

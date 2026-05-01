@@ -5,11 +5,13 @@
 <f:layout name="Email" />
 
 <f:section name="Main">
-	<f:format.raw><f:translate id="email_user_salutation"/></f:format.raw>,<br>
+    <f:variable name="form" value="{f:if(condition: '{settings.enableConfirmationButtonForEmailLinks} == true', then: 'Form')}" />
+
+    <f:format.raw><f:translate id="email_user_salutation"/></f:format.raw>,<br>
 	<br>
 	<f:format.raw><f:translate id="email_user_activate_message" arguments="{0: user.username}"/></f:format.raw><br>
 	<br>
-	<register:link.action arguments="{user: user.uid}" action="confirm" controller="FeuserEdit" absolute="true">
+	<register:link.action arguments="{user: user.uid}" action="confirm{form}" controller="FeuserEdit" absolute="true">
 		<f:translate id="email_user_activate_link"/>
 	</register:link.action>
 </f:section>

@@ -1,0 +1,20 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:register="http://typo3.org/ns/Evoweb/SfRegister/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:if condition="{userNotFound}">
+        <f:then><f:translate id="account_not_found"/></f:then>
+        <f:else>
+            <p><strong><f:translate id="email_confirmation_create_accept_message" arguments="{0: user.username, 1: user.email}"/></strong></p>
+
+            <register:link.action arguments="{user: user.uid}" action="accept" controller="FeuserCreate" absolute="true">
+                <f:translate id="email_user_accept_link"/>
+            </register:link.action>
+        </f:else>
+    </f:if>
+</f:section>
+
+</html>

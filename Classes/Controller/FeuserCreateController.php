@@ -44,12 +44,22 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
  */
 class FeuserCreateController extends FeuserController
 {
-    public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, refuse, accept, decline, removeImage';
+    public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, refuse, accept, decline,'
+        .  ' confirmForm, refuseForm, acceptForm, declineForm, removeImage';
 
     /**
      * @var string[]
      */
-    protected array $ignoredActions = ['confirmAction', 'refuseAction', 'acceptAction', 'declineAction'];
+    protected array $ignoredActions = [
+        'confirmAction',
+        'refuseAction',
+        'acceptAction',
+        'declineAction',
+        'confirmFormAction',
+        'refuseFormAction',
+        'acceptFormAction',
+        'declineFormAction'
+    ];
 
     public function __construct(
         protected ModifyValidator $modifyValidator,
@@ -168,6 +178,25 @@ class FeuserCreateController extends FeuserController
         return $redirectResponse ?: new HtmlResponse($this->view->render());
     }
 
+    public function confirmFormAction(?FrontendUser $user, ?string $hash): ResponseInterface
+    {
+        // Microsoft Safelinks is said to call the page by HEAD command for verification.
+        // So: if not HEAD, proceed normally. Otherwise, show an intermediate page.
+        if ($this->request->getMethod() !== 'HEAD' && !$this->settings['forceConfirmationButtonForEmailLinks']) {
+            return $this->confirmAction($user, $hash);
+        }
+
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
+
+        if (!($user instanceof FrontendUser)) {
+            $this->view->assign('userNotFound', 1);
+        } else {
+            $this->view->assign('user', $user);
+        }
+
+        return $this->htmlResponse();
+    }
+
     /**
      * Confirm the registration process by user. Can be followed by acceptance of admin
      */
@@ -237,6 +266,29 @@ class FeuserCreateController extends FeuserController
     }
 
     /**
+     * @throws UnknownObjectException
+     * @throws IllegalObjectTypeException
+     */
+    public function refuseFormAction(?FrontendUser $user, ?string $hash): ResponseInterface
+    {
+        // Microsoft Safelinks is said to call the page by HEAD command for verification.
+        // So: if not HEAD, proceed normally. Otherwise, show an intermediate page.
+        if ($this->request->getMethod() !== 'HEAD' && !$this->settings['forceConfirmationButtonForEmailLinks']) {
+            return $this->refuseAction($user, $hash);
+        }
+
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
+
+        if (!($user instanceof FrontendUser)) {
+            $this->view->assign('userNotFound', 1);
+        } else {
+            $this->view->assign('user', $user);
+        }
+
+        return $this->htmlResponse();
+    }
+
+    /**
      * Refuse registration process by user with removing the user data
      *
      * @throws IllegalObjectTypeException
@@ -272,6 +324,25 @@ class FeuserCreateController extends FeuserController
         }
 
         return new HtmlResponse($this->view->render());
+    }
+
+    public function acceptFormAction(?FrontendUser $user, ?string $hash): ResponseInterface
+    {
+        // Microsoft Safelinks is said to call the page by HEAD command for verification.
+        // So: if not HEAD, proceed normally. Otherwise, show an intermediate page.
+        if ($this->request->getMethod() !== 'HEAD' && !$this->settings['forceConfirmationButtonForEmailLinks']) {
+            return $this->acceptAction($user, $hash);
+        }
+
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
+
+        if (!($user instanceof FrontendUser)) {
+            $this->view->assign('userNotFound', 1);
+        } else {
+            $this->view->assign('user', $user);
+        }
+
+        return $this->htmlResponse();
     }
 
     /**
@@ -328,6 +399,29 @@ class FeuserCreateController extends FeuserController
         }
 
         return new HtmlResponse($this->view->render());
+    }
+
+    /**
+     * @throws UnknownObjectException
+     * @throws IllegalObjectTypeException
+     */
+    public function declineFormAction(?FrontendUser $user, ?string $hash): ResponseInterface
+    {
+        // Microsoft Safelinks is said to call the page by HEAD command for verification.
+        // So: if not HEAD, proceed normally. Otherwise, show an intermediate page.
+        if ($this->request->getMethod() !== 'HEAD' && !$this->settings['forceConfirmationButtonForEmailLinks']) {
+            return $this->declineAction($user, $hash);
+        }
+
+        $user = $this->frontendUserService->determineFrontendUser($this->request, $user, $hash);
+
+        if (!($user instanceof FrontendUser)) {
+            $this->view->assign('userNotFound', 1);
+        } else {
+            $this->view->assign('user', $user);
+        }
+
+        return $this->htmlResponse();
     }
 
     /**
