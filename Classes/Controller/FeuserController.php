@@ -199,7 +199,8 @@ class FeuserController extends ActionController
             $configuration = GeneralUtility::makeInstance(PropertyMappingConfiguration::class);
         }
 
-        $configuration->allowAllProperties();
+        $configuration->allowProperties(...($this->settings['fields']['selected'] ?? []));
+
         $configuration->forProperty('usergroup')->allowAllProperties();
         $configuration->forProperty('moduleSysDmailCategory')->allowAllProperties();
         $configuration->forProperty('image')->allowAllProperties();
