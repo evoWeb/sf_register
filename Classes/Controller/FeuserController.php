@@ -103,6 +103,9 @@ class FeuserController extends ActionController
         }
     }
 
+    /**
+     * @throws Exception
+     */
     protected function modifySettingsBeforeActionMethodValidators(): void
     {
         $this->settings['hasOriginalRequest'] = $this->request->getAttribute('extbase')->getOriginalRequest() !== null;
@@ -112,6 +115,9 @@ class FeuserController extends ActionController
         }
         if (!is_array($this->settings['fields']['selected'] ?? false)) {
             $this->settings['fields']['selected'] = [];
+        }
+        if (in_array('usergroup', $this->settings['fields']['selected'])) {
+            throw new Exception('Selecting "usergroup" in frontend isn\'t supported.');
         }
     }
 
@@ -201,7 +207,6 @@ class FeuserController extends ActionController
 
         $configuration->allowProperties(...($this->settings['fields']['selected'] ?? []));
 
-        $configuration->forProperty('usergroup')->allowAllProperties();
         $configuration->forProperty('moduleSysDmailCategory')->allowAllProperties();
         $configuration->forProperty('image')->allowAllProperties();
         $configuration->setTypeConverterOption(
