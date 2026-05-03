@@ -207,7 +207,6 @@ class FeuserController extends ActionController
 
         $configuration->allowProperties(...($this->settings['fields']['selected'] ?? []));
 
-        $configuration->forProperty('image')->allowAllProperties();
         $configuration->setTypeConverterOption(
             PersistentObjectConverter::class,
             (string)PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
