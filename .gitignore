@@ -7,5 +7,6 @@ typo3temp/
 var/
 public/
 vendor/
+auth.json
 composer.lock
 .php-cs-fixer.cache
