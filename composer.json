@@ -21,7 +21,7 @@
 		"docs": "https://docs.typo3.org/p/evoweb/sf-register/main/en-us/"
 	},
 	"config": {
-		"vendor-dir": "Build/vendor",
+		"cache-dir": ".cache/composer",
 		"bin-dir": "bin",
 		"allow-plugins": {
 			"typo3/class-alias-loader": true,
@@ -30,11 +30,11 @@
 	},
 	"require": {
 		"php": "^8.2",
-		"typo3/cms-backend": "^14.3 || 14.*.*@dev || dev-main",
-		"typo3/cms-core": "^14.3 || 14.*.*@dev || dev-main",
-		"typo3/cms-extbase": "^14.3 || 14.*.*@dev || dev-main",
-		"typo3/cms-fluid": "^14.3 || 14.*.*@dev || dev-main",
-		"typo3/cms-frontend": "^14.3 || 14.*.*@dev || dev-main",
+		"typo3/cms-backend": "^14.3 || 15.*.*@dev || dev-main",
+		"typo3/cms-core": "^14.3 || 15.*.*@dev || dev-main",
+		"typo3/cms-extbase": "^14.3 || 15.*.*@dev || dev-main",
+		"typo3/cms-fluid": "^14.3 || 15.*.*@dev || dev-main",
+		"typo3/cms-frontend": "^14.3 || 15.*.*@dev || dev-main",
 		"doctrine/annotations": "^1.13.3 || ^2.0",
 		"doctrine/dbal": "^4.1",
 		"psr/event-dispatcher": "^1.0",
@@ -45,14 +45,13 @@
 		"symfony/console": "^7.1"
 	},
 	"require-dev": {
-		"typo3/cms-install": "^14.0 || 14.*.*@dev || dev-main",
-		"friendsofphp/php-cs-fixer": "^3.64.0",
-		"friendsoftypo3/phpstan-typo3": "^0.9.0",
-		"phpstan/phpdoc-parser": "^1.30.0",
-		"phpstan/phpstan": "^1.12.5",
-		"phpunit/phpunit": "^11.0.3",
-		"typo3/testing-framework": "dev-main",
-		"webmozart/assert": "^1.11.0 || ^2.0"
+		"typo3/cms-install": "^14.0 || 15.*.*@dev || dev-main",
+		"friendsofphp/php-cs-fixer": "^3.95",
+		"phpstan/phpstan": "^2.2.2",
+		"phpstan/phpstan-phpunit": "^2.0.16",
+		"phpunit/phpunit": "^11.5.55",
+		"typo3/testing-framework": "^9.5.0 || dev-main",
+		"webmozart/assert": "^2.3"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
@@ -65,8 +64,10 @@
 	"extra": {
 		"typo3/cms": {
 			"extension-key": "sf_register",
-			"app-dir": "Build",
-			"web-dir": "Build/Web"
+			"version": "14.0.2",
+			"Package": {
+				"providesPackages": {}
+			}
 		}
 	},
 	"scripts": {
@@ -79,7 +80,7 @@
 			"sed -i \"s/version' => '.*'/version' => '$(echo ${GITHUB_REF} | cut -d / -f 3)'/\" ext_emconf.php\n"
 		],
 		"post-install-cmd": [
-			"ln -sf vendor/typo3/testing-framework/Resources/Core/Build/ Build/phpunit;"
+			"ln -sf ../vendor/typo3/testing-framework/Resources/Core/Build/ Build/phpunit;"
 		],
 		"post-update-cmd": [
 			"@post-install-cmd"
