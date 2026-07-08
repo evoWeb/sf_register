@@ -18,6 +18,7 @@ namespace Evoweb\SfRegister\Tests\Unit\Services;
 use Doctrine\Common\Annotations\DocParser;
 use Evoweb\SfRegister\Controller\FeuserController;
 use Evoweb\SfRegister\Services\ModifyValidator;
+use Evoweb\SfRegister\Validation\Validator\ConjunctionValidator;
 use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
 use Evoweb\SfRegister\Validation\Validator\RequiredValidator;
@@ -396,6 +397,124 @@ class ModifyValidatorTest extends UnitTestCase
 
         $uidValidators = iterator_to_array($appliedValidator->getPropertyValidators('uid'));
         self::assertSame([$emptyValidator], $uidValidators);
+    }
+
+    #[Test]
+    public function modifyArgumentValidatorsComposesConjunctionValidatorForMultiValidatorField(): void
+    {
+        // Real default config shape, see Configuration/TypoScript/Common/setup.typoscript
+        // validation.create.username = [1 => RequiredValidator, 2 => StringLengthValidator].
+        $requiredValidator = $this->createMock(RequiredValidator::class);
+        // StringLengthValidator is final and cannot be doubled, generic interface stand-in.
+        $stringLengthValidator = $this->createMock(ValidatorInterface::class);
+        $emptyValidator = $this->createMock(EmptyValidator::class);
+
+        $conjunctionValidator = new ConjunctionValidator();
+        $conjunctionValidator->setOptions([]);
+
+        $this->validatorResolver->method('createValidator')
+            ->willReturnCallback(
+                function (string $validatorType) use (
+                    $requiredValidator,
+                    $stringLengthValidator,
+                    $emptyValidator,
+                    $conjunctionValidator
+                ) {
+                    return match ($validatorType) {
+                        UserValidator::class => new UserValidator(),
+                        ConjunctionValidator::class => $conjunctionValidator,
+                        RequiredValidator::class => $requiredValidator,
+                        StringLengthValidator::class => $stringLengthValidator,
+                        EmptyValidator::class => $emptyValidator,
+                        default => null,
+                    };
+                }
+            );
+
+        $controller = $this->createMock(FeuserController::class);
+        $controller->method('getControllerName')->willReturn('Create');
+
+        $request = $this->createMock(RequestInterface::class);
+
+        $settings = [
+            'validation' => [
+                'create' => [
+                    'username' => [
+                        1 => '"' . RequiredValidator::class . '"',
+                        2 => '"' . StringLengthValidator::class . '", options={"minimum": 4, "maximum": 80}',
+                    ],
+                ],
+            ],
+            'fields' => [
+                'selected' => ['username'],
+            ],
+        ];
+
+        $arguments = new Arguments();
+        $arguments->addNewArgument('user', 'array');
+
+        $this->subject->modifyArgumentValidators($controller, $settings, $request, $arguments);
+
+        $appliedValidator = $arguments->getArgument('user')->getValidator();
+        self::assertInstanceOf(UserValidator::class, $appliedValidator);
+
+        $usernameValidators = iterator_to_array($appliedValidator->getPropertyValidators('username'));
+        self::assertSame([$conjunctionValidator], $usernameValidators);
+
+        $constituentValidators = iterator_to_array($conjunctionValidator->getValidators());
+        self::assertSame([$requiredValidator, $stringLengthValidator], $constituentValidators);
+    }
+
+    #[Test]
+    public function modifyArgumentValidatorsUnwrapsSingleElementArrayWithoutConjunction(): void
+    {
+        // count($configuredValidator) === 1 must be unwrapped (reset()) and NOT wrapped
+        // in a ConjunctionValidator, see ModifyValidator lines ~136-138.
+        $requiredValidator = $this->createMock(RequiredValidator::class);
+        $emptyValidator = $this->createMock(EmptyValidator::class);
+
+        $this->validatorResolver->method('createValidator')
+            ->willReturnCallback(function (string $validatorType) use ($requiredValidator, $emptyValidator) {
+                return match ($validatorType) {
+                    UserValidator::class => new UserValidator(),
+                    RequiredValidator::class => $requiredValidator,
+                    EmptyValidator::class => $emptyValidator,
+                    // A ConjunctionValidator must never be requested on the unwrap path.
+                    default => self::fail('Unexpected validator requested: ' . $validatorType),
+                };
+            });
+
+        $controller = $this->createMock(FeuserController::class);
+        $controller->method('getControllerName')->willReturn('Create');
+
+        $request = $this->createMock(RequestInterface::class);
+
+        $settings = [
+            'validation' => [
+                'create' => [
+                    'username' => [
+                        1 => '"' . RequiredValidator::class . '"',
+                    ],
+                ],
+            ],
+            'fields' => [
+                'selected' => ['username'],
+            ],
+        ];
+
+        $arguments = new Arguments();
+        $arguments->addNewArgument('user', 'array');
+
+        $this->subject->modifyArgumentValidators($controller, $settings, $request, $arguments);
+
+        $appliedValidator = $arguments->getArgument('user')->getValidator();
+        self::assertInstanceOf(UserValidator::class, $appliedValidator);
+
+        // The single validator is attached directly, not wrapped in a ConjunctionValidator
+        // (guaranteed by the `default => self::fail(...)` guard in the resolver callback above,
+        // which fails the test should a ConjunctionValidator ever be requested).
+        $usernameValidators = iterator_to_array($appliedValidator->getPropertyValidators('username'));
+        self::assertSame([$requiredValidator], $usernameValidators);
     }
 
     #[Test]
