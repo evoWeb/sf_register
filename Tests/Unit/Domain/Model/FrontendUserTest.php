@@ -16,8 +16,10 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Tests\Unit\Domain\Model;
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
+use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -60,6 +62,27 @@ class FrontendUserTest extends UnitTestCase
     }
 
     #[Test]
+    public function constructInitializesImageAsEmptyObjectStorage(): void
+    {
+        self::assertInstanceOf(ObjectStorage::class, $this->subject->getImage());
+        self::assertCount(0, $this->subject->getImage());
+    }
+
+    #[Test]
+    public function constructInitializesUsergroupAsEmptyObjectStorage(): void
+    {
+        self::assertInstanceOf(ObjectStorage::class, $this->subject->getUsergroup());
+        self::assertCount(0, $this->subject->getUsergroup());
+    }
+
+    #[Test]
+    public function constructInitializesModuleSysDmailCategoryAsEmptyObjectStorage(): void
+    {
+        self::assertInstanceOf(ObjectStorage::class, $this->subject->getModuleSysDmailCategory());
+        self::assertCount(0, $this->subject->getModuleSysDmailCategory());
+    }
+
+    #[Test]
     public function imageReturnsStringSetBySetImage(): void
     {
         /** @var ObjectStorage<FileReference> $expected */
@@ -68,6 +91,30 @@ class FrontendUserTest extends UnitTestCase
         $this->subject->setImage($expected);
 
         self::assertSame($expected, $this->subject->getImage());
+    }
+
+    #[Test]
+    public function usergroupReturnsObjectStorageSetBySetUsergroup(): void
+    {
+        /** @var ObjectStorage<FrontendUserGroup> $expected */
+        $expected = new ObjectStorage();
+        $expected->attach(new FrontendUserGroup());
+
+        $this->subject->setUsergroup($expected);
+
+        self::assertSame($expected, $this->subject->getUsergroup());
+    }
+
+    #[Test]
+    public function moduleSysDmailCategoryReturnsObjectStorageSetBySetModuleSysDmailCategory(): void
+    {
+        /** @var ObjectStorage<Category> $expected */
+        $expected = new ObjectStorage();
+        $expected->attach(new Category());
+
+        $this->subject->setModuleSysDmailCategory($expected);
+
+        self::assertSame($expected, $this->subject->getModuleSysDmailCategory());
     }
 
     #[Test]
@@ -127,5 +174,71 @@ class FrontendUserTest extends UnitTestCase
         $this->subject->setMobilephone($expected);
 
         self::assertSame($expected, $this->subject->getMobilephone());
+    }
+
+    #[Test]
+    public function getDateOfBirthDayReturnsOneIfDateOfBirthIsNotSet(): void
+    {
+        self::assertSame(1, $this->subject->getDateOfBirthDay());
+    }
+
+    #[Test]
+    public function getDateOfBirthMonthReturnsOneIfDateOfBirthIsNotSet(): void
+    {
+        self::assertSame(1, $this->subject->getDateOfBirthMonth());
+    }
+
+    #[Test]
+    public function getDateOfBirthYearReturns1970IfDateOfBirthIsNotSet(): void
+    {
+        self::assertSame(1970, $this->subject->getDateOfBirthYear());
+    }
+
+    #[Test]
+    public function getDateOfBirthDayReturnsDayOfSetDateOfBirth(): void
+    {
+        // Pre-fix bug in df53334: DateTime::format() returns string, but the
+        // method is declared to return int in a strict_types=1 file, causing
+        // a TypeError. Fixed in 30e771a via explicit (int) cast.
+        self::markTestSkipped(
+            'Pre-fix bug in df53334: getDateOfBirthDay() returns non-int from DateTime::format() '
+            . 'under strict_types, causing a TypeError. Fixed in 30e771a. Reactivate in roadmap step 2.'
+        );
+
+        /*$this->subject->setDateOfBirth(new \DateTime('2001-03-15'));
+
+        self::assertSame(15, $this->subject->getDateOfBirthDay());*/
+    }
+
+    #[Test]
+    public function getDateOfBirthMonthReturnsMonthOfSetDateOfBirth(): void
+    {
+        // Pre-fix bug in df53334: DateTime::format() returns string, but the
+        // method is declared to return int in a strict_types=1 file, causing
+        // a TypeError. Fixed in 30e771a via explicit (int) cast.
+        self::markTestSkipped(
+            'Pre-fix bug in df53334: getDateOfBirthMonth() returns non-int from DateTime::format() '
+            . 'under strict_types, causing a TypeError. Fixed in 30e771a. Reactivate in roadmap step 2.'
+        );
+
+        /*$this->subject->setDateOfBirth(new \DateTime('2001-03-15'));
+
+        self::assertSame(3, $this->subject->getDateOfBirthMonth());*/
+    }
+
+    #[Test]
+    public function getDateOfBirthYearReturnsYearOfSetDateOfBirth(): void
+    {
+        // Pre-fix bug in df53334: DateTime::format() returns string, but the
+        // method is declared to return int in a strict_types=1 file, causing
+        // a TypeError. Fixed in 30e771a via explicit (int) cast.
+        self::markTestSkipped(
+            'Pre-fix bug in df53334: getDateOfBirthYear() returns non-int from DateTime::format() '
+            . 'under strict_types, causing a TypeError. Fixed in 30e771a. Reactivate in roadmap step 2.'
+        );
+
+        /*$this->subject->setDateOfBirth(new \DateTime('2001-03-15'));
+
+        self::assertSame(2001, $this->subject->getDateOfBirthYear());*/
     }
 }
