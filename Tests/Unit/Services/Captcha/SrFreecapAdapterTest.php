@@ -51,7 +51,7 @@ class SrFreecapAdapterTest extends UnitTestCase
      * ArgumentCountError. The collaborators are mocked instead so the real production code path can
      * run and be asserted on, per the "prefer mocking the collaborator so the test runs" guidance.
      */
-    protected function mockLocalizationServiceToReturn(string $translation): void
+    protected function mockLocalizationServiceToReturn(?string $translation): void
     {
         $locales = $this->createMock(Locales::class);
         $locales->method('createLocaleFromRequest')->willReturn(new Locale('en'));
@@ -182,6 +182,30 @@ class SrFreecapAdapterTest extends UnitTestCase
         self::assertCount(1, $errors);
         self::assertSame(1306910429, $errors[0]->getCode());
         self::assertSame('Please enter the correct captcha word.', $errors[0]->getMessage());
+    }
+
+    #[Test]
+    public function isValidUsesFallbackMessageWhenTranslationCannotBeResolved(): void
+    {
+        self::markTestSkipped('Pre-fix bug in df53334: isValid() passes LocalizationUtility::translate() result (?string, null when key unresolvable) directly to strictly-typed addError(string,int), throwing TypeError under strict_types. Behoben in 30e771a (Classes/Services/Captcha/SrFreecapAdapter::isValid, `?? \'error_captcha_notcorrect\'`). Reaktivieren in Roadmap-Schritt 2.');
+
+        // SOLL (intended-correct behavior once 30e771a is applied): when translate() cannot resolve
+        // the key and returns null, isValid() falls back to the literal 'error_captcha_notcorrect'
+        // and still reports the captcha as invalid.
+        // $this->mockLocalizationServiceToReturn(null);
+        //
+        // $captchaService = $this->createCaptchaServiceStub(false);
+        // $this->session->method('get')->with('captchaWasValid')->willReturn(false);
+        // $this->session->expects($this->once())->method('set')->with('captchaWasValid', false);
+        //
+        // $subject = $this->createSubjectWithCaptchaService($captchaService);
+        //
+        // self::assertFalse($subject->isValid('wrong-word'));
+        //
+        // $errors = $subject->getErrors();
+        // self::assertCount(1, $errors);
+        // self::assertSame('error_captcha_notcorrect', $errors[0]->getMessage());
+        // self::assertSame(1306910429, $errors[0]->getCode());
     }
 }
 
