@@ -1,0 +1,10 @@
+{
+	"name": "evowebtest/static-info-tables",
+	"type": "typo3-cms-extension",
+	"description": "A minimal static_info_tables stub for sf_register functional tests",
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "static_info_tables"
+		}
+	}
+}
