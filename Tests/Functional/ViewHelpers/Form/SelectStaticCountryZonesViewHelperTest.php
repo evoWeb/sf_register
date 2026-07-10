@@ -8,7 +8,6 @@ use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request as ExtbaseRequest;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextFactory;
@@ -19,9 +18,10 @@ use TYPO3Fluid\Fluid\View\TemplateView;
  * SelectStaticCountryZonesViewHelper::initialize() builds the `options` array handed to
  * the inherited AbstractSelectViewHelper::render() from the `static_country_zones` rows
  * matching the given `parent` (a country ISO-2 code) via
- * StaticCountryZoneRepository::findAllByIso2(). Each row keeps its default
- * optionValueField ("uid") and optionLabelField ("zn_name_local"), and the repository
- * orders rows by "zn_name_local".
+ * StaticCountryZoneRepository::findAllByIso2()
+ * (`SELECT * FROM static_country_zones WHERE zn_country_iso_2 = :iso ORDER BY zn_name_local`).
+ * Each row keeps its default optionValueField ("uid") and optionLabelField
+ * ("zn_name_local").
  *
  *   if ($this->arguments['parent'] === null || !ExtensionManagementUtility::isLoaded('static_info_tables')) {
  *       return;
@@ -30,26 +30,36 @@ use TYPO3Fluid\Fluid\View\TemplateView;
  * initialize() only fills `options` when BOTH a non-null `parent` argument is given AND
  * the `static_info_tables` extension (which owns the `static_country_zones` table) is
  * loaded; otherwise it returns early and `options` stays unset, so render() falls back to
- * an empty select. Both halves of that OR-guard are independently reachable and are
- * covered below without needing the static_country_zones table.
+ * an empty select.
  *
- * sf-register only "suggest"s sjbr/static-info-tables in composer.json (not
- * require/require-dev), so this isolated functional test composer root does not install
- * it: ExtensionManagementUtility::isLoaded('static_info_tables') is false here, which is
- * used directly to cover the "extension not loaded" branch. The remaining branch (options
- * actually built from static_country_zones rows) needs the extension loaded and its table
- * populated, which is not available in this environment and is skipped per test with a
- * dedicated reason.
+ * `ExtensionManagementUtility::isLoaded('static_info_tables')` checks a declared TYPO3
+ * extension-KEY, not the sjbr/static-info-tables composer package. This test therefore
+ * loads a minimal stub extension declaring exactly that extension-key plus the
+ * `static_country_zones` table schema
+ * (Tests/Fixtures/Extensions/static_info_tables/), which makes isLoaded() true and lets
+ * the fixture rows populate the real repository query. That covers the positive path
+ * (options built + zn_country_iso_2 filtering) and the `$parent === null` early-return
+ * clause for real, without needing the actual sjbr vendor package installed.
  */
 class SelectStaticCountryZonesViewHelperTest extends AbstractTestBase
 {
+    /**
+     * Redeclaring the property REPLACES the parent array, so the parent's entries are
+     * copied verbatim and the static_info_tables stub is appended.
+     *
+     * @var array<non-empty-string>
+     */
+    protected array $testExtensionsToLoad = [
+        'typo3conf/ext/sf_register',
+        'typo3conf/ext/sf_register/Tests/Fixtures/Extensions/test_classes',
+        'typo3conf/ext/sf_register/Tests/Fixtures/Extensions/static_info_tables',
+    ];
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/pages.csv');
-        if (ExtensionManagementUtility::isLoaded('static_info_tables')) {
-            $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/static_country_zones.csv');
-        }
+        $this->importCSVDataSet(__DIR__ . '/../../../Fixtures/static_country_zones.csv');
 
         $this->createServerRequest();
         $this->initializeFrontendTypoScript();
@@ -87,11 +97,62 @@ class SelectStaticCountryZonesViewHelperTest extends AbstractTestBase
     }
 
     /**
-     * Covers the first half of the OR-guard (`$this->arguments['parent'] === null`),
-     * which is reachable regardless of whether static_info_tables is loaded.
+     * Positive path: with static_info_tables loaded and a parent iso given, initialize()
+     * builds one option per matching zone (value = uid, label = zn_name_local), ordered by
+     * zn_name_local. The DE fixture row (uid 4) proves findAllByIso2() FILTERS by
+     * zn_country_iso_2 - it must NOT appear when parent="US".
      */
     #[Test]
-    public function rendersEmptySelectWhenParentIsNotGiven(): void
+    public function rendersOneOptionPerZoneOfParentIsoOrderedByNameAndFiltersOtherCountries(): void
+    {
+        self::assertMatchesRegularExpression(
+            '#^<select name="zone">'
+            . '<option value="1">California</option>\n'
+            . '<option value="2">New York</option>\n'
+            . '<option value="3">Texas</option>\n'
+            . '</select>$#',
+            $this->renderTemplate('<register:form.selectStaticCountryZones name="zone" parent="US" />')
+        );
+    }
+
+    /**
+     * Positive path for a different parent iso, further proving the zn_country_iso_2 filter:
+     * only the single DE zone (uid 4) is rendered, none of the US zones.
+     */
+    #[Test]
+    public function rendersOnlyZonesMatchingTheGivenParentIso(): void
+    {
+        self::assertMatchesRegularExpression(
+            '#^<select name="zone">'
+            . '<option value="4">Bayern</option>'
+            . '\n</select>$#',
+            $this->renderTemplate('<register:form.selectStaticCountryZones name="zone" parent="DE" />')
+        );
+    }
+
+    /**
+     * Positive path with a parent iso that has no zones: findAllByIso2() returns no rows,
+     * so options stay empty and an optionless select is rendered.
+     */
+    #[Test]
+    public function rendersEmptySelectWhenNoZoneMatchesTheGivenParentIso(): void
+    {
+        self::assertMatchesRegularExpression(
+            '#^<select name="zone"></select>$#',
+            $this->renderTemplate('<register:form.selectStaticCountryZones name="zone" parent="FR" />')
+        );
+    }
+
+    /**
+     * $parent === null clause: with static_info_tables loaded (so isLoaded() is true and
+     * cannot be the reason for the early return), omitting `parent` isolates the
+     * `$this->arguments['parent'] === null` branch - initialize() returns before touching
+     * the repository, leaving options unset, hence an optionless select. Because the US
+     * fixture rows exist and the extension is loaded, a mutant dropping the null-check
+     * would render zone options instead of this empty select.
+     */
+    #[Test]
+    public function rendersEmptySelectWhenParentIsNotGivenEvenThoughExtensionIsLoaded(): void
     {
         self::assertMatchesRegularExpression(
             '#^<select name="zone"></select>$#',
@@ -100,78 +161,27 @@ class SelectStaticCountryZonesViewHelperTest extends AbstractTestBase
     }
 
     /**
-     * Covers the second half of the OR-guard
-     * (`!ExtensionManagementUtility::isLoaded('static_info_tables')`) with a `parent` given,
-     * which is exactly the state of this functional test environment (sf-register only
-     * "suggest"s sjbr/static-info-tables, so it is never installed/loaded here).
-     */
-    #[Test]
-    public function rendersEmptySelectWhenStaticInfoTablesExtensionIsNotLoaded(): void
-    {
-        if (ExtensionManagementUtility::isLoaded('static_info_tables')) {
-            self::markTestSkipped(
-                'static_info_tables is loaded in this environment, so the'
-                . ' "!ExtensionManagementUtility::isLoaded(\'static_info_tables\')" branch of'
-                . ' initialize() is not reachable here.'
-            );
-        }
-
-        self::assertMatchesRegularExpression(
-            '#^<select name="zone"></select>$#',
-            $this->renderTemplate('<register:form.selectStaticCountryZones name="zone" parent="US" />')
-        );
-    }
-
-    /**
      * @param array<string, mixed> $variables
      */
     #[Test]
-    #[DataProvider('templateProvider')]
-    public function rendersExpectedCountryZonesSelectMarkup(string $template, string $expectedPattern, array $variables = []): void
+    #[DataProvider('selectedValueProvider')]
+    public function marksTheBoundOptionAsSelected(string $template, string $expectedPattern, array $variables = []): void
     {
-        if (!ExtensionManagementUtility::isLoaded('static_info_tables')) {
-            self::markTestSkipped(
-                'static_info_tables extension (providing the static_country_zones table read by'
-                . ' StaticCountryZoneRepository::findAllByIso2()) is not available in this functional'
-                . ' test environment: sf-register only "suggest"s sjbr/static-info-tables in'
-                . ' composer.json (not require/require-dev), so the isolated test composer root does'
-                . ' not install it. Confirmed empirically: adding'
-                . ' "sjbr/static-info-tables" to $testExtensionsToLoad fails bootstrap with'
-                . ' "Test extension path .../public/sjbr/static-info-tables not found". Without the'
-                . ' extension loaded, SelectStaticCountryZonesViewHelper::initialize() always returns'
-                . ' early (see rendersEmptySelectWhenStaticInfoTablesExtensionIsNotLoaded), so the'
-                . ' options-building branch cannot be exercised without changing production'
-                . ' composer.json, which is out of scope for a Tests/-only change.'
-            );
-        }
-
         self::assertMatchesRegularExpression($expectedPattern, $this->renderTemplate($template, $variables));
     }
 
     /**
      * @return iterable<string, array{0: string, 1: string, 2?: array<string, mixed>}>
      */
-    public static function templateProvider(): iterable
+    public static function selectedValueProvider(): iterable
     {
-        yield 'initialize builds one option per zone matching parent, ordered by zn_name_local, value=uid label=zn_name_local' => [
-            '<register:form.selectStaticCountryZones name="zone" parent="US" />',
+        yield 'the option whose uid matches the bound value is marked selected' => [
+            '<register:form.selectStaticCountryZones name="zone" parent="US" value="2" />',
             '#^<select name="zone">'
             . '<option value="1">California</option>\n'
-            . '<option value="2">New York</option>\n'
+            . '<option value="2" selected="selected">New York</option>\n'
             . '<option value="3">Texas</option>\n'
             . '</select>$#',
-        ];
-
-        yield 'initialize filters zones to only those matching the given parent iso2' => [
-            '<register:form.selectStaticCountryZones name="zone" parent="DE" />',
-            '#^<select name="zone">'
-            . '<option value="4">Bayern</option>\n'
-            . '</select>$#',
-        ];
-
-        yield 'initialize leaves options unset (empty select) when no matching zone exists for parent' => [
-            '<register:form.selectStaticCountryZones name="zone" parent="FR" />',
-            '#^<select name="zone"></select>$#',
         ];
     }
 }
