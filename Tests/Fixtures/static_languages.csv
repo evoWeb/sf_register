@@ -1,0 +1,5 @@
+"static_languages"
+,"uid","pid","lg_iso_2","lg_name_en","lg_collate_locale"
+,1,0,"de","German","de_DE"
+,2,0,"en","English","en_US"
+,3,0,"fr","French","fr_FR"
