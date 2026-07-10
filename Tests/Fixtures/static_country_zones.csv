@@ -1,0 +1,6 @@
+"static_country_zones"
+,"uid","pid","deleted","zn_country_iso_2","zn_country_iso_3","zn_country_iso_nr","zn_code","zn_name_local","zn_name_en","zn_country_uid","zn_country_table"
+,1,0,0,"US","USA",840,"US-CA","California","California",1,"static_countries"
+,2,0,0,"US","USA",840,"US-NY","New York","New York",1,"static_countries"
+,3,0,0,"US","USA",840,"US-TX","Texas","Texas",1,"static_countries"
+,4,0,0,"DE","DEU",276,"DE-BY","Bayern","Bavaria",2,"static_countries"
