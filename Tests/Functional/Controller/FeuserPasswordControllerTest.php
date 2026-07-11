@@ -20,10 +20,12 @@ use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
+use Evoweb\SfRegister\Tests\Functional\View\RecordingView;
 use EvowebTests\TestClasses\Controller\FeuserPasswordController;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\DependencyInjection\Container;
+use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
@@ -82,7 +84,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $frontendUser = clone new FrontendUser();
         $frontendUser->setPassword($expected);
 
-        /** @var FrontendUserRepository|MockObject $frontendUserRepository */
+        /** @var FrontendUserRepository&MockObject $frontendUserRepository */
         $frontendUserRepository = $this->getMockBuilder(FrontendUserRepository::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['findByUid', 'update'])
@@ -101,7 +103,7 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $container = $this->getContainer();
         $container->set(FrontendUserRepository::class, $frontendUserRepository);
 
-        /** @var FluidViewAdapter|MockObject $view */
+        /** @var FluidViewAdapter&MockObject $view */
         $view = $this->getMockBuilder(FluidViewAdapter::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['render'])
@@ -144,5 +146,122 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $response = $subject->saveAction($password);
 
         self::assertEquals(200, $response->getStatusCode());
+    }
+
+    /**
+     * configurationManager is a shared object and will be a constructor parameter of the
+     * controller (@see Bootstrap::initializeConfiguration).
+     *
+     * @param array<string, mixed> $arguments
+     */
+    protected function getSubject(
+        string $controllerActionName,
+        array $arguments = [],
+    ): FeuserPasswordController {
+        $configuration = [
+            'extensionName' => 'SfRegister',
+            'pluginName' => 'Password',
+        ];
+        /** @var ConfigurationManagerInterface $configurationManager */
+        $configurationManager = $this->get(ConfigurationManagerInterface::class);
+        $configurationManager->setRequest($this->request);
+        // @extensionScannerIgnoreLine
+        $configurationManager->setConfiguration($configuration);
+
+        $extbaseAttribute = new ExtbaseRequestParameters();
+        $extbaseAttribute->setPluginName('Password');
+        $extbaseAttribute->setControllerExtensionName('SfRegister');
+        $extbaseAttribute->setControllerName('FeuserPassword');
+        $extbaseAttribute->setControllerActionName($controllerActionName);
+        foreach ($arguments as $name => $value) {
+            $extbaseAttribute->setArgument($name, $value);
+        }
+
+        $request = new Request($this->request->withAttribute('extbase', $extbaseAttribute));
+        $contentObjectRenderer = $this->createMock(ContentObjectRenderer::class);
+        $request = $request->withAttribute('currentContentObject', $contentObjectRenderer);
+
+        /** @var FeuserPasswordController $subject */
+        $subject = $this->get(FeuserPasswordController::class);
+        $subject->set('request', $request);
+        $subject->set('settings', []);
+        $subject->set('actionMethodName', $controllerActionName);
+        $subject->set('view', new RecordingView());
+
+        return $subject;
+    }
+
+    // -- formAction -----------------------------------------------------------------------------
+
+    #[Test]
+    public function formActionAssignsNotLoggedInAndNewPasswordWhenNotLoggedInAndNoPasswordGiven(): void
+    {
+        $subject = $this->getSubject('form');
+
+        $response = $subject->formAction(null);
+
+        /** @var RecordingView $view */
+        $view = $subject->get('view');
+        self::assertTrue($view->variables['notLoggedIn']);
+        self::assertInstanceOf(Password::class, $view->variables['password']);
+        self::assertInstanceOf(HtmlResponse::class, $response);
+        self::assertSame(200, $response->getStatusCode());
+    }
+
+    #[Test]
+    public function formActionAssignsGivenPasswordWithoutNotLoggedInFlagWhenLoggedIn(): void
+    {
+        $this->loginFrontendUser('testuser', 'TestPa$5');
+        $subject = $this->getSubject('form');
+        $password = new Password();
+
+        $response = $subject->formAction($password);
+
+        /** @var RecordingView $view */
+        $view = $subject->get('view');
+        self::assertArrayNotHasKey('notLoggedIn', $view->variables);
+        self::assertSame($password, $view->variables['password']);
+        self::assertInstanceOf(HtmlResponse::class, $response);
+        self::assertSame(200, $response->getStatusCode());
+    }
+
+    // -- saveAction -------------------------------------------------------------------------------
+
+    #[Test]
+    public function saveActionThrowsWhenLoggedInUserRecordCannotBeResolved(): void
+    {
+        $this->loginFrontendUser('testuser', 'TestPa$5');
+
+        /** @var FrontendUserRepository&MockObject $repository */
+        $repository = $this->getMockBuilder(FrontendUserRepository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['findByUid'])
+            ->getMock();
+        $repository->method('findByUid')->willReturn(null);
+
+        /** @var Container $container */
+        $container = $this->getContainer();
+        $container->set(FrontendUserRepository::class, $repository);
+
+        $subject = $this->getSubject('save');
+        $password = new Password();
+        $password->_setProperty('password', 'TestPa$5');
+
+        self::markTestSkipped(
+            'Pre-fix bug in df53334: FeuserPasswordController::saveAction() reads '
+            . '$this->frontendUserService->getLoggedInUser() without a null-guard and passes the result '
+            . 'straight into "new PasswordSaveEvent($user, $this->settings)", whose parent constructor '
+            . '(AbstractEventWithUserAndSettings) declares a non-nullable FrontendUser $user parameter. '
+            . 'FrontendUserService::getLoggedInUser() can return null even while userIsLoggedIn() is true '
+            . '(e.g. the FE session is valid but the fe_users row was hidden/deleted afterwards, or '
+            . 'excluded by the repository\'s enable-fields), so this is a genuinely reachable defect. '
+            . 'RED-verified: TypeError: Evoweb\SfRegister\Controller\Event\AbstractEventWithUserAndSettings'
+            . '::__construct(): Argument #1 ($user) must be of type Evoweb\SfRegister\Domain\Model\FrontendUser, '
+            . 'null given, called in .../Classes/Controller/FeuserPasswordController.php on line 70. '
+            . 'Behoben in 30e771a (Classes/Controller/FeuserPasswordController.php, sibling branch) via '
+            . 'getLoggedInUser() ?? new FrontendUser(). Reaktivieren in Roadmap-Schritt 2.'
+        );
+
+        // $subject->saveAction($password);
     }
 }
