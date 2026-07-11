@@ -251,10 +251,11 @@ class FeuserInviteControllerTest extends AbstractTestBase
     public function formActionThrowsWhenLoggedInUserRecordCannotBeResolved(): void
     {
         self::markTestSkipped(
-            'Bug-Protokoll: pre-fix formAction() throws a TypeError when userIsLoggedIn() is'
+            'Pre-fix bug in df53334: formAction() throws a TypeError when userIsLoggedIn() is'
             . ' true but getLoggedInUser() returns null (fe_users row no longer resolves).'
-            . ' Fixed in 30e771a (Classes/Controller/FeuserInviteController.php) via'
+            . ' Behoben in 30e771a (Classes/Controller/FeuserInviteController.php) via'
             . ' "getLoggedInUser() ?? new FrontendUser()". RED-verified, see method doc comment.'
+            . ' Reaktivieren in Roadmap-Schritt 2.'
         );
 
         // $this->loginFrontendUser('testuser', 'TestPa$5');
