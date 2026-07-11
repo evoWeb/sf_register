@@ -13,16 +13,12 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Evoweb\SfRegister\Tests\Unit\Controller;
+namespace EvowebTests\TestClasses\Controller;
 
-use PHPUnit\Framework\Attributes\Test;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use Evoweb\SfRegister\Controller\FeuserEditController as BaseFeuserEditController;
+use Evoweb\SfRegister\Tests\Functional\Traits\SettableCallable;
 
-class FeuserEditControllerTest extends UnitTestCase
+class FeuserEditController extends BaseFeuserEditController
 {
-    #[Test]
-    public function initializeAction(): void
-    {
-        self::markTestIncomplete('not implemented by now');
-    }
+    use SettableCallable;
 }
