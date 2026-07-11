@@ -39,6 +39,27 @@ class ObjectStorageConverterTest extends AbstractTestBase
                 [],
                 [],
             ],
+            // The ONE input shape where 30e771a changes behavior. Pre-fix (df53334) keeps
+            // scalar children: getSourceChildPropertiesToBeConverted() calls isUploadType($value)
+            // on every raw child with no array pre-guard, and pre-fix isUploadType('3') returns
+            // false via its `is_array($propertyValue) &&` check, so the scalar falls through the
+            // else-branch unchanged. 30e771a retypes isUploadType(mixed) -> isUploadType(array)
+            // and drops the is_array() guard, so a scalar child raises a TypeError under
+            // strict_types once merged -> this test goes RED under 30e771a.
+            // This converter is registered (Configuration/Services.yaml) for
+            // target ObjectStorage / sources array at priority 21 -- ABOVE TYPO3 core's own
+            // ObjectStorageConverter (priority 10) -- so it intercepts EVERY array->ObjectStorage<T>
+            // conversion in the instance. Extbase's PersistentObjectConverter accepts
+            // is_string($source) || is_int($source) children (fetch-by-UID), i.e. the standard
+            // multi-select-of-persisted-objects idiom (e.g. FrontendUser::$usergroup, an
+            // ObjectStorage<FrontendUserGroup>, submitting bare UID strings ['0'=>'3','1'=>'7']).
+            // So scalar children are REACHABLE, not dead. This is a REGRESSION 30e771a introduces
+            // (it removes working scalar-child handling), NOT a bug it fixes -> plain green
+            // characterization + regression-flag for human judgment in Roadmap-Schritt 2/3.
+            'scalar child (bare uid reference) is kept as-is' => [
+                ['0' => '3', '1' => '7'],
+                ['0' => '3', '1' => '7'],
+            ],
             'regular child properties are kept unchanged' => [
                 [
                     '0' => ['uid' => 1, 'title' => 'First'],
