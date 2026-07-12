@@ -15,10 +15,14 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\DependencyInjection\Container;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Site\Entity\NullSite;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class EqualCurrentPasswordValidatorTest extends AbstractTestBase
@@ -60,5 +64,63 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         /** @var EqualCurrentPasswordValidator $subject */
         $subject = $this->get(EqualCurrentPasswordValidator::class);
         self::assertFalse($subject->validate($expected)->hasErrors());
+    }
+
+    #[Test]
+    public function isValidReturnsFalseIfPasswordDoesNotMatchCurrentPassword(): void
+    {
+        $this->loginFrontendUser('testuser', 'TestPa$5');
+
+        $this->request = $this->request->withAttribute('language', (new NullSite())->getDefaultLanguage());
+        $GLOBALS['TYPO3_REQUEST'] = $this->request;
+
+        /** @var EqualCurrentPasswordValidator $subject */
+        $subject = $this->get(EqualCurrentPasswordValidator::class);
+        $result = $subject->validate('someOtherPassword');
+
+        self::assertTrue($result->hasErrors());
+        self::assertSame(1301599507, $result->getErrors()[0]->getCode());
+    }
+
+    /**
+     * Pre-fix bug in df53334: EqualCurrentPasswordValidator::isValid() reads
+     * $this->frontendUserService->getLoggedInUser() without a null-guard and calls
+     * $user->getPassword() directly. FrontendUserService::getLoggedInUser() can return null even
+     * while userIsLoggedIn() is true (e.g. the FE session is valid but the fe_users row was
+     * hidden/deleted afterwards, or excluded by the repository's enable-fields), so this is a
+     * genuinely reachable defect - same root cause as FeuserPasswordControllerTest::
+     * saveActionThrowsWhenLoggedInUserRecordCannotBeResolved(). RED-verified: un-skipping this
+     * test and calling $subject->validate() throws "Error: Call to a member function
+     * getPassword() on null" from EqualCurrentPasswordValidator::isValid(); catch (Exception
+     * $exception) does not catch this \Error, so it propagates uncaught. Behoben in 30e771a
+     * (Classes/Validation/Validator/EqualCurrentPasswordValidator.php, sibling branch) via
+     * $user?->getPassword() ?? ''. Reaktivieren in Roadmap-Schritt 2.
+     */
+    #[Test]
+    public function isValidThrowsWhenLoggedInUserRecordCannotBeResolved(): void
+    {
+        $this->loginFrontendUser('testuser', 'TestPa$5');
+
+        /** @var FrontendUserRepository&MockObject $repository */
+        $repository = $this->getMockBuilder(FrontendUserRepository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['findByUid'])
+            ->getMock();
+        $repository->method('findByUid')->willReturn(null);
+
+        /** @var Container $container */
+        $container = $this->getContainer();
+        $container->set(FrontendUserRepository::class, $repository);
+
+        self::markTestSkipped(
+            'Pre-fix bug in df53334: getLoggedInUser() returns null while userIsLoggedIn() is'
+            . ' true, and isValid() calls $user->getPassword() without a null-guard, causing an'
+            . ' uncaught Error. Behoben in 30e771a via $user?->getPassword() ?? \'\'.'
+            . ' Reaktivieren in Roadmap-Schritt 2.'
+        );
+
+        // /** @var EqualCurrentPasswordValidator $subject */
+        // $subject = $this->get(EqualCurrentPasswordValidator::class);
+        // $subject->validate('TestPa$5');
     }
 }
