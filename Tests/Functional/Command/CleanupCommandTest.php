@@ -20,6 +20,8 @@ use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -114,15 +116,20 @@ class CleanupCommandTest extends AbstractTestBase
             ->fetchAllAssociative();
     }
 
-    protected function addFileForUser(int $uidForeign): void
+    protected function createFileInStorage(string $filename): File
     {
         /** @var StorageRepository $storageRepository */
         $storageRepository = $this->get(StorageRepository::class);
         $storage = $storageRepository->getStorageObject(1);
         $rootFolder = $storage->getRootLevelFolder();
 
-        $localFile = $this->createJpegFile('avatar-' . $uidForeign . '.jpg');
-        $file = $storage->addFile($localFile, $rootFolder, 'avatar-' . $uidForeign . '.jpg');
+        $localFile = $this->createJpegFile($filename);
+        return $storage->addFile($localFile, $rootFolder, $filename);
+    }
+
+    protected function addFileForUser(int $uidForeign): void
+    {
+        $file = $this->createFileInStorage('avatar-' . $uidForeign . '.jpg');
 
         $connection = $this->getConnectionPool()->getConnectionForTable('sys_file_reference');
         $connection->insert('sys_file_reference', [
@@ -272,5 +279,51 @@ class CleanupCommandTest extends AbstractTestBase
         self::assertCount(1, $remainingReferences);
         self::assertSame(2, is_scalar($remainingReferences[0]['uid_foreign']) ? (int)$remainingReferences[0]['uid_foreign'] : 0);
         self::assertSame(11, is_scalar($remainingReferences[0]['uid_local']) ? (int)$remainingReferences[0]['uid_local'] : 0);
+    }
+
+    // -- removeImage ------------------------------------------------------------------------------
+
+    /**
+     * SOLL: removeImage() iterates the given reference rows and, for each, resolves the FAL file by
+     * its `uid_local` and deletes it from storage
+     * (`resourceFactory->getFileObject($reference['uid_local'])->getStorage()->deleteFile($file)`).
+     *
+     * This directly exercises the ONE line 30e771a (sibling branch) changes in this method:
+     * `$reference['uid_local']` will be narrowed via
+     * `$uidLocal = is_scalar($reference['uid_local']) ? (int)$reference['uid_local'] : 0;` before it
+     * is handed to getFileObject(). `uid_local` is a NOT NULL int(11) column on sys_file_reference,
+     * so a real reference row always yields an int - dead type-narrowing, behavior-identical.
+     * Plain green characterization (green on pre-fix df53334 too: this is plain FAL file deletion
+     * with no `inSet()`/SQLite involvement, so unlike execute() it is fully reachable here).
+     */
+    #[Test]
+    public function removeImageDeletesReferencedFileFromStorage(): void
+    {
+        $file = $this->createFileInStorage('avatar-removeimage.jpg');
+        $fileUid = $file->getUid();
+        $storage = $file->getStorage();
+        $identifier = $file->getIdentifier();
+
+        // Guard: the file really exists in storage before removeImage runs.
+        self::assertTrue($storage->hasFile($identifier));
+
+        /** @var CleanupCommand $command */
+        $command = $this->get(CleanupCommand::class);
+        $method = $this->getPrivateMethod($command, 'removeImage');
+        // Mirror the array shape fetchReference() passes: a list of rows each carrying uid_local.
+        $method->invoke($command, [['uid_local' => $fileUid]]);
+
+        // deleteFile() ran: the file is gone from storage and from the FAL index.
+        self::assertFalse($storage->hasFile($identifier));
+
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('sys_file');
+        $queryBuilder->getRestrictions()->removeAll();
+        $remainingFiles = $queryBuilder
+            ->select('uid')
+            ->from('sys_file')
+            ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($fileUid, Connection::PARAM_INT)))
+            ->executeQuery()
+            ->fetchAllAssociative();
+        self::assertCount(0, $remainingFiles);
     }
 }
