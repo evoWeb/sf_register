@@ -1,6 +1,6 @@
 "tt_content"
-,"uid","pid","list_type","pi_flexform"
-,1,1,"sfregister_form","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
+,"uid","pid","CType","list_type","pi_flexform"
+,1,0,"list","sfregister_form","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
 <T3FlexForms>
    <data>
        <sheet index=""sDEF"">
@@ -9,10 +9,52 @@
                 <value index=""vDEF"">FeuserCreate->form;FeuserCreate->preview;FeuserCreate->proxy;FeuserCreate->save;FeuserCreate->confirm;FeuserCreate->accept;FeuserCreate->decline;FeuserCreate->refuse;FeuserCreate->removeImage</value>
             </field>
                <field index=""settings.fields.selected"">
-                   <value index=""vDEF"">firstName,lastName,email,clear,password,passwordRepeat,privacy,clear,image,change,submit</value>
+                   <value index=""vDEF"">firstName,lastName,email</value>
                </field>
                <field index=""settings.templateRootPath"">
                    <value index=""vDEF""></value>
+               </field>
+               <field index=""settings.unknownField"">
+                   <value index=""vDEF"">shouldBeRemoved</value>
+               </field>
+           </language>
+       </sheet>
+   </data>
+</T3FlexForms>"
+,2,0,"list","sfregister_form","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
+<T3FlexForms>
+   <data>
+       <sheet index=""sDEF"">
+           <language index=""lDEF"">
+            <field index=""switchableControllerActions"">
+                <value index=""vDEF"">FeuserDelete->form;FeuserDelete->save;FeuserDelete->confirm</value>
+            </field>
+               <field index=""settings.fields.selected"">
+                   <value index=""vDEF"">firstName,lastName,email</value>
+               </field>
+           </language>
+       </sheet>
+   </data>
+</T3FlexForms>"
+,3,0,"list","sfregister_edit","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
+<T3FlexForms>
+   <data>
+       <sheet index=""sDEF"">
+           <language index=""lDEF"">
+               <field index=""settings.fields.selected"">
+                   <value index=""vDEF"">firstName,lastName</value>
+               </field>
+           </language>
+       </sheet>
+   </data>
+</T3FlexForms>"
+,4,0,"list","sfregister_form","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
+<T3FlexForms>
+   <data>
+       <sheet index=""sDEF"">
+           <language index=""lDEF"">
+               <field index=""settings.fields.selected"">
+                   <value index=""vDEF"">firstName</value>
                </field>
            </language>
        </sheet>
