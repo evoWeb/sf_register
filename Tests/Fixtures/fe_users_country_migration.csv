@@ -1,0 +1,7 @@
+"fe_users"
+,"uid","pid","deleted","disable","username","password","usergroup","static_info_country"
+,1,0,0,0,"userGermany","password",2,"54"
+,2,0,0,0,"userUsa","password",2,"220"
+,3,0,0,0,"userSingleDigit","password",2,"9"
+,4,0,0,0,"userAlreadyMigrated","password",2,"DE"
+,5,0,0,0,"userNoCountry","password",2,""
