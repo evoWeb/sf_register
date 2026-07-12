@@ -19,6 +19,7 @@ use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Updates\SwitchableControllerActionsPluginUpdater;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class SwitchableControllerActionsPluginUpdaterTest extends AbstractTestBase
 {
@@ -32,6 +33,20 @@ class SwitchableControllerActionsPluginUpdaterTest extends AbstractTestBase
         /** @var SwitchableControllerActionsPluginUpdater $subject */
         $subject = $this->get(SwitchableControllerActionsPluginUpdater::class);
         return $subject;
+    }
+
+    /**
+     * Point the legacy per-list_type TCA `ds` entry at a real FlexForm DS file so the wizard can
+     * resolve settings for the given list_type. On modern core `...config.ds` is core's default
+     * XML *string*, so we overwrite the whole entry with an array (index-assigning into a string
+     * throws). Functional tests reset $GLOBALS['TCA'] per test, so this mutation is isolated.
+     */
+    protected function injectFlexFormDataStructure(string $listType, string $dataStructureFile): void
+    {
+        // @phpstan-ignore-next-line -- offset write on the mixed-typed $GLOBALS['TCA'] super-global
+        $GLOBALS['TCA']['tt_content']['columns']['pi_flexform']['config']['ds'] = [
+            $listType . ',list' => $dataStructureFile,
+        ];
     }
 
     // -- getTargetListType ----------------------------------------------------------------------
@@ -136,6 +151,30 @@ class SwitchableControllerActionsPluginUpdaterTest extends AbstractTestBase
         self::assertSame([], $method->invoke($subject, 'sfregister_unknown'));
     }
 
+    /**
+     * Drives the REAL parse path of the method (the is_array()-guarded sheets -> ROOT -> el loop
+     * that 30e771a hardens): we point the legacy TCA `ds` entry at a real FlexForm DS file that
+     * sf_register ships (Configuration/FlexForms/create.xml, which has the exact
+     * sheets/sDEF/ROOT/el shape the loop expects). The method then reads and parses that file and
+     * returns the `<el>` setting keys in document order. Functional tests reset $GLOBALS['TCA']
+     * per test, so mutating it here is isolated to this test. 30e771a only wraps this same lookup
+     * and parse chain in type guards; the returned keys are identical pre/post -> plain green.
+     */
+    #[Test]
+    public function getSettingsFromFlexFormDataStructureFileParsesRealDataStructureFile(): void
+    {
+        $listType = 'sfregister_create';
+        $this->injectFlexFormDataStructure($listType, 'FILE:EXT:sf_register/Configuration/FlexForms/create.xml');
+
+        $subject = $this->getSubject();
+        $method = $this->getPrivateMethod($subject, 'getSettingsFromFlexFormDataStructureFile');
+
+        self::assertSame(
+            ['settings.fields.selected', 'settings.templateRootPath'],
+            $method->invoke($subject, $listType)
+        );
+    }
+
     // -- executeUpdate ----------------------------------------------------------------------------
 
     /**
@@ -178,6 +217,60 @@ class SwitchableControllerActionsPluginUpdaterTest extends AbstractTestBase
         $record = $this->fetchRecord(1);
         self::assertSame('sfregister_create', $record['list_type']);
         self::assertSame('', $record['pi_flexform']);
+    }
+
+    /**
+     * Drives executeUpdate()'s flexform-PRESERVATION branch: by injecting a real DS file for the
+     * resolved target list_type, getSettingsFromFlexFormDataStructureFile() returns a NON-empty
+     * allow-list (create.xml's settings.fields.selected + settings.templateRootPath), so
+     * removeFieldsNotPresentInDataStructure() keeps those fields while dropping the
+     * switchableControllerActions field and the disallowed settings.unknownField. The row is
+     * migrated with list_type updated and a rewritten (non-empty) pi_flexform. This is the branch
+     * the other executeUpdate tests cannot reach, because on modern core the DS path is absent and
+     * the allow-list is always empty (see env note above). 30e771a leaves this behavior unchanged.
+     */
+    #[Test]
+    public function executeUpdatePreservesAllowedFlexformFieldsWhenDataStructureResolves(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/tt_content.csv');
+        // So the resolved target list_type maps to a real DS file and the allow-list is non-empty.
+        $this->injectFlexFormDataStructure(
+            'sfregister_create',
+            'FILE:EXT:sf_register/Configuration/FlexForms/create.xml'
+        );
+
+        $subject = $this->getSubject();
+
+        $subject->executeUpdate();
+
+        $record = $this->fetchRecord(1);
+        self::assertSame('sfregister_create', $record['list_type']);
+        $flexform = $record['pi_flexform'];
+        self::assertIsString($flexform);
+        self::assertNotSame('', $flexform);
+
+        // Allowed settings (present in create.xml) survive the migration...
+        self::assertStringContainsString('settings.fields.selected', $flexform);
+        self::assertStringContainsString('settings.templateRootPath', $flexform);
+        self::assertStringContainsString('firstName,lastName,email', $flexform);
+        // ...while the SCA field and the disallowed field are dropped.
+        self::assertStringNotContainsString('switchableControllerActions', $flexform);
+        self::assertStringNotContainsString('settings.unknownField', $flexform);
+        self::assertStringNotContainsString('shouldBeRemoved', $flexform);
+
+        // Assert the concrete surviving lDEF field keys of the rewritten flexform.
+        $decoded = GeneralUtility::xml2array($flexform);
+        self::assertIsArray($decoded);
+        $data = $decoded['data'] ?? null;
+        self::assertIsArray($data);
+        $sheet = $data['sDEF'] ?? null;
+        self::assertIsArray($sheet);
+        $lDEF = $sheet['lDEF'] ?? null;
+        self::assertIsArray($lDEF);
+        self::assertArrayHasKey('settings.fields.selected', $lDEF);
+        self::assertArrayHasKey('settings.templateRootPath', $lDEF);
+        self::assertArrayNotHasKey('switchableControllerActions', $lDEF);
+        self::assertArrayNotHasKey('settings.unknownField', $lDEF);
     }
 
     #[Test]
