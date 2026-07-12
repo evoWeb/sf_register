@@ -56,8 +56,14 @@ cgl: ##@ Coding guideline check with
 .PHONY: functional-test
 functional-test: ##@ Run functional tests
 	echo "Functional tests started"
-	Build/Scripts/runTests.sh -x -p ${PHP_VERSION} -d sqlite -s functional Tests/Functional
+	Build/Scripts/runTests.sh -p ${PHP_VERSION} -d sqlite -s functional Tests/Functional
 	echo "Functional tests finished"
+
+.PHONY: unit-test
+unit-test: ##@ Run unit tests
+	echo "Unit tests started"
+	Build/Scripts/runTests.sh -p ${PHP_VERSION} -s unit Tests/Unit
+	echo "Unit tests finished"
 
 .PHONY: npm-update
 npm-update:
