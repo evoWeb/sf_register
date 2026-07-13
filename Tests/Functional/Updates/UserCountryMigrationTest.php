@@ -18,6 +18,7 @@ namespace Evoweb\SfRegister\Tests\Functional\Updates;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Updates\UserCountryMigration;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use Symfony\Component\Console\Output\NullOutput;
 
 /**
@@ -151,40 +152,28 @@ class UserCountryMigrationTest extends AbstractTestBase
      * columns) and Country::tryFrom()->name null-derefs; migration is broken. Behoben in 30e771a
      * (Classes/Updates/UserCountryMigration::executeUpdate). Reaktivieren in Roadmap-Schritt 2.
      */
+    /**
+     * Characterizes df53334 behaviour: executeUpdate() does `foreach ($records->fetchAssociative()
+     * as $record)`, but fetchAssociative() returns a single associative row, so the foreach iterates
+     * that row's scalar column values. `$record['uid']` / `$record['static_info_country']` then index
+     * into scalars (PHP warnings), `(int)null` is 0, `Country::tryFrom(0)` is null and `->name`
+     * null-derefs -> uncaught \Error (catch (Exception) does not catch it). The migration is broken.
+     * 30e771a rewrites executeUpdate() (fetchAllAssociative + null-safe mapping) so it migrates
+     * correctly = behaviour change, so this test goes RED once 30e771a is cherry-picked -> revert that
+     * part in 30e771a; the real fix belongs in a later step.
+     *
+     * #[WithoutErrorHandler] disables PHPUnit's error handler for this test so the PHP warnings that
+     * precede the \Error do not fail the test via failOnWarning before the characterized \Error is
+     * reached.
+     */
     #[Test]
-    public function executeUpdateMigratesCountryUidsToIsoNamesAndIsIdempotent(): void
+    #[WithoutErrorHandler]
+    public function executeUpdateThrowsErrorBecauseMigrationIsBroken(): void
     {
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: executeUpdate uses fetchAssociative() (single row -> iterates'
-            . ' columns) and Country::tryFrom()->name null-derefs; migration is broken. Behoben in'
-            . ' 30e771a (Classes/Updates/UserCountryMigration::executeUpdate). Reaktivieren in'
-            . ' Roadmap-Schritt 2.'
-        );
+        $subject = $this->getSubject();
 
-        // SOLL assertions below are commented out while the test is skipped (pre-fix bug). They
-        // document and were RED-verified against the expected post-30e771a behavior: each expected
-        // value is the Country enum case NAME for the fixture uid (Country::tryFrom(54)->name ==
-        // "DE", tryFrom(220)->name == "US", tryFrom(9)->name == "AO"). Reactivate together with the
-        // production fix (see message above).
-        //
-        // $subject = $this->getSubject();
-        // $subject->executeUpdate();
-        //
-        // $records = $this->fetchAllRecords();
-        // // Migratable rows now hold the Country enum name.
-        // self::assertSame('DE', $records[1]['static_info_country']); // Country::tryFrom(54)->name
-        // self::assertSame('US', $records[2]['static_info_country']); // Country::tryFrom(220)->name
-        // self::assertSame('AO', $records[3]['static_info_country']); // Country::tryFrom(9)->name
-        // // Non-migratable rows are untouched.
-        // self::assertSame('DE', $records[4]['static_info_country']);
-        // self::assertSame('', $records[5]['static_info_country']);
-        //
-        // // Idempotency: nothing left to migrate, a second run changes nothing.
-        // $countMethod = $this->getPrivateMethod($subject, 'getRecordsToUpdateCount');
-        // self::assertSame(0, $countMethod->invoke($subject));
-        // self::assertFalse($subject->updateNecessary());
-        //
-        // $subject->executeUpdate();
-        // self::assertSame($records, $this->fetchAllRecords());
+        $this->expectException(\Error::class);
+
+        $subject->executeUpdate();
     }
 }

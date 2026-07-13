@@ -197,9 +197,12 @@ class FrontendUserTest extends UnitTestCase
     #[Test]
     public function getDateOfBirthDayReturnsDayOfSetDateOfBirth(): void
     {
-        // Pre-fix bug in df53334: DateTime::format() returns string, but the
-        // method is declared to return int in a strict_types=1 file, causing
-        // a TypeError. Fixed in 30e771a via explicit (int) cast.
+        // Accepted contract fix (NOT a behaviour-preservation concern): df53334 declares this method
+        // `: int` but returns DateTime::format() (string), so under strict_types every call with a set
+        // date throws a TypeError -- the method is effectively uncallable, there is no meaningful old
+        // behaviour to preserve. 30e771a's explicit (int) cast is the minimal way to honour the
+        // existing contract and is accepted as-is. This test therefore stays skipped on df53334 and
+        // reactivates (green) once 30e771a is applied.
         self::markTestSkipped(
             'Pre-fix bug in df53334: getDateOfBirthDay() returns non-int from DateTime::format() '
             . 'under strict_types, causing a TypeError. Fixed in 30e771a. Reactivate in roadmap step 2.'
@@ -213,9 +216,12 @@ class FrontendUserTest extends UnitTestCase
     #[Test]
     public function getDateOfBirthMonthReturnsMonthOfSetDateOfBirth(): void
     {
-        // Pre-fix bug in df53334: DateTime::format() returns string, but the
-        // method is declared to return int in a strict_types=1 file, causing
-        // a TypeError. Fixed in 30e771a via explicit (int) cast.
+        // Accepted contract fix (NOT a behaviour-preservation concern): df53334 declares this method
+        // `: int` but returns DateTime::format() (string), so under strict_types every call with a set
+        // date throws a TypeError -- the method is effectively uncallable, there is no meaningful old
+        // behaviour to preserve. 30e771a's explicit (int) cast is the minimal way to honour the
+        // existing contract and is accepted as-is. This test therefore stays skipped on df53334 and
+        // reactivates (green) once 30e771a is applied.
         self::markTestSkipped(
             'Pre-fix bug in df53334: getDateOfBirthMonth() returns non-int from DateTime::format() '
             . 'under strict_types, causing a TypeError. Fixed in 30e771a. Reactivate in roadmap step 2.'
@@ -229,9 +235,12 @@ class FrontendUserTest extends UnitTestCase
     #[Test]
     public function getDateOfBirthYearReturnsYearOfSetDateOfBirth(): void
     {
-        // Pre-fix bug in df53334: DateTime::format() returns string, but the
-        // method is declared to return int in a strict_types=1 file, causing
-        // a TypeError. Fixed in 30e771a via explicit (int) cast.
+        // Accepted contract fix (NOT a behaviour-preservation concern): df53334 declares this method
+        // `: int` but returns DateTime::format() (string), so under strict_types every call with a set
+        // date throws a TypeError -- the method is effectively uncallable, there is no meaningful old
+        // behaviour to preserve. 30e771a's explicit (int) cast is the minimal way to honour the
+        // existing contract and is accepted as-is. This test therefore stays skipped on df53334 and
+        // reactivates (green) once 30e771a is applied.
         self::markTestSkipped(
             'Pre-fix bug in df53334: getDateOfBirthYear() returns non-int from DateTime::format() '
             . 'under strict_types, causing a TypeError. Fixed in 30e771a. Reactivate in roadmap step 2.'

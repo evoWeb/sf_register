@@ -247,21 +247,16 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $password = new Password();
         $password->_setProperty('password', 'TestPa$5');
 
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: FeuserPasswordController::saveAction() reads '
-            . '$this->frontendUserService->getLoggedInUser() without a null-guard and passes the result '
-            . 'straight into "new PasswordSaveEvent($user, $this->settings)", whose parent constructor '
-            . '(AbstractEventWithUserAndSettings) declares a non-nullable FrontendUser $user parameter. '
-            . 'FrontendUserService::getLoggedInUser() can return null even while userIsLoggedIn() is true '
-            . '(e.g. the FE session is valid but the fe_users row was hidden/deleted afterwards, or '
-            . 'excluded by the repository\'s enable-fields), so this is a genuinely reachable defect. '
-            . 'RED-verified: TypeError: Evoweb\SfRegister\Controller\Event\AbstractEventWithUserAndSettings'
-            . '::__construct(): Argument #1 ($user) must be of type Evoweb\SfRegister\Domain\Model\FrontendUser, '
-            . 'null given, called in .../Classes/Controller/FeuserPasswordController.php on line 70. '
-            . 'Behoben in 30e771a (Classes/Controller/FeuserPasswordController.php, sibling branch) via '
-            . 'getLoggedInUser() ?? new FrontendUser(). Reaktivieren in Roadmap-Schritt 2.'
-        );
+        // Characterizes df53334 behaviour: saveAction() reads getLoggedInUser() without a null-guard
+        // and passes the result into "new PasswordSaveEvent($user, ...)", whose parent constructor
+        // (AbstractEventWithUserAndSettings) declares a non-nullable FrontendUser $user -> uncaught
+        // TypeError when getLoggedInUser() returns null while userIsLoggedIn() is true (reachable when
+        // the fe_users row was hidden/deleted after the session was established). 30e771a changes this
+        // via getLoggedInUser() ?? new FrontendUser() (behaviour change, not a pure type-fix), so this
+        // test goes RED once 30e771a is cherry-picked -> revert that part in 30e771a; the real fix
+        // belongs in a later step.
+        $this->expectException(\TypeError::class);
 
-        // $subject->saveAction($password);
+        $subject->saveAction($password);
     }
 }
