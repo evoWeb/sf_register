@@ -197,57 +197,24 @@ class FrontendUserTest extends UnitTestCase
     #[Test]
     public function getDateOfBirthDayReturnsDayOfSetDateOfBirth(): void
     {
-        // Accepted contract fix (NOT a behaviour-preservation concern): df53334 declares this method
-        // `: int` but returns DateTime::format() (string), so under strict_types every call with a set
-        // date throws a TypeError -- the method is effectively uncallable, there is no meaningful old
-        // behaviour to preserve. 30e771a's explicit (int) cast is the minimal way to honour the
-        // existing contract and is accepted as-is. This test therefore stays skipped on df53334 and
-        // reactivates (green) once 30e771a is applied.
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: getDateOfBirthDay() returns non-int from DateTime::format() '
-            . 'under strict_types, causing a TypeError. Fixed in 30e771a. Reactivate in roadmap step 2.'
-        );
+        $this->subject->setDateOfBirth(new \DateTime('2001-03-15'));
 
-        /*$this->subject->setDateOfBirth(new \DateTime('2001-03-15'));
-
-        self::assertSame(15, $this->subject->getDateOfBirthDay());*/
+        self::assertSame(15, $this->subject->getDateOfBirthDay());
     }
 
     #[Test]
     public function getDateOfBirthMonthReturnsMonthOfSetDateOfBirth(): void
     {
-        // Accepted contract fix (NOT a behaviour-preservation concern): df53334 declares this method
-        // `: int` but returns DateTime::format() (string), so under strict_types every call with a set
-        // date throws a TypeError -- the method is effectively uncallable, there is no meaningful old
-        // behaviour to preserve. 30e771a's explicit (int) cast is the minimal way to honour the
-        // existing contract and is accepted as-is. This test therefore stays skipped on df53334 and
-        // reactivates (green) once 30e771a is applied.
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: getDateOfBirthMonth() returns non-int from DateTime::format() '
-            . 'under strict_types, causing a TypeError. Fixed in 30e771a. Reactivate in roadmap step 2.'
-        );
+        $this->subject->setDateOfBirth(new \DateTime('2001-03-15'));
 
-        /*$this->subject->setDateOfBirth(new \DateTime('2001-03-15'));
-
-        self::assertSame(3, $this->subject->getDateOfBirthMonth());*/
+        self::assertSame(3, $this->subject->getDateOfBirthMonth());
     }
 
     #[Test]
     public function getDateOfBirthYearReturnsYearOfSetDateOfBirth(): void
     {
-        // Accepted contract fix (NOT a behaviour-preservation concern): df53334 declares this method
-        // `: int` but returns DateTime::format() (string), so under strict_types every call with a set
-        // date throws a TypeError -- the method is effectively uncallable, there is no meaningful old
-        // behaviour to preserve. 30e771a's explicit (int) cast is the minimal way to honour the
-        // existing contract and is accepted as-is. This test therefore stays skipped on df53334 and
-        // reactivates (green) once 30e771a is applied.
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: getDateOfBirthYear() returns non-int from DateTime::format() '
-            . 'under strict_types, causing a TypeError. Fixed in 30e771a. Reactivate in roadmap step 2.'
-        );
+        $this->subject->setDateOfBirth(new \DateTime('2001-03-15'));
 
-        /*$this->subject->setDateOfBirth(new \DateTime('2001-03-15'));
-
-        self::assertSame(2001, $this->subject->getDateOfBirthYear());*/
+        self::assertSame(2001, $this->subject->getDateOfBirthYear());
     }
 }

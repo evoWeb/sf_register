@@ -55,17 +55,14 @@ class FeuserControllerTest extends UnitTestCase
     }
 
     #[Test]
-    public function encryptPasswordThrowsTypeErrorForEmptyPassword(): void
+    public function encryptPasswordReturnsUsableFallbackStringForEmptyPassword(): void
     {
-        // Characterizes df53334 behaviour: PasswordHashInterface::getHashedPassword() returns null
-        // for an empty password (see Argon2idPasswordHash::getHashedPassword()), and encryptPassword()
-        // returns that null through its `: string` return type -> uncaught TypeError (not an Exception,
-        // so the surrounding try/catch does not help). 30e771a's `(string)time()` fallback removes the
-        // TypeError = behaviour change, not a pure type-fix. This test goes RED when 30e771a is
-        // cherry-picked -> revert that behaviour-changing part in 30e771a; the real fix belongs in a
-        // later step.
-        $this->expectException(\TypeError::class);
+        // getHashedPassword() returns null for an empty password; encryptPassword() falls back to
+        // (string)time(), so it always returns a usable non-empty string instead of raising a
+        // TypeError against its `: string` return type.
+        $result = $this->getSubject()->encryptPassword('');
 
-        $this->getSubject()->encryptPassword('');
+        self::assertIsString($result);
+        self::assertNotSame('', $result);
     }
 }

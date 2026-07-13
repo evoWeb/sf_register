@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
-use Exception;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
@@ -32,8 +31,7 @@ class EqualCurrentPasswordValidator extends AbstractValidator
     public function __construct(
         protected FrontendUserService $frontendUserService,
         protected PasswordHashFactory $passwordHashFactory,
-    ) {
-    }
+    ) {}
 
     /**
      * If value is equal with the current password
@@ -51,19 +49,15 @@ class EqualCurrentPasswordValidator extends AbstractValidator
 
             $user = $this->frontendUserService->getLoggedInUser();
 
-            // Behaviour-preserving: keep df53334 behaviour where getLoggedInUser() may return null and
-            // $user->getPassword() raises an uncaught Error. 30e771a's `$user?->getPassword() ?? ''`
-            // (and the scalar $value guard) changed behaviour and are deferred to a later fix step.
-            // @phpstan-ignore-next-line
-            $passwordHash = $this->passwordHashFactory->get($user->getPassword(), 'FE');
-            // @phpstan-ignore-next-line
-            if (!$passwordHash->checkPassword((string)$value, $user->getPassword())) {
+            $passwordHash = $this->passwordHashFactory->get($user?->getPassword() ?? '', 'FE');
+            $value = is_scalar($value) ? (string)$value : '';
+            if (!$passwordHash->checkPassword($value, $user?->getPassword() ?? '')) {
                 $this->addError(
                     $this->translateErrorMessage('error_changepassword_notequal', 'SfRegister'),
                     1301599507
                 );
             }
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->addError($exception->getMessage(), $exception->getCode());
         }
     }

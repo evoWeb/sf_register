@@ -372,23 +372,30 @@ class AjaxMiddlewareTest extends AbstractTestBase
      * Reaktivieren in Roadmap-Schritt 2.
      */
     #[Test]
-    public function throwsTypeErrorForNonScalarParentInsteadOfReturningResponse(): void
+    public function gracefullyReturnsJsonErrorForNonScalarParent(): void
     {
-        // Characterizes df53334 behaviour: process() passes an array `tx_sfregister[parent]` straight
-        // into zonesAction(string $parent) -> uncaught TypeError under strict_types=1 (the repository is
-        // never reached). 30e771a adds a scalar guard coercing a non-scalar parent to '' (behaviour
-        // change, not a pure type-fix), so this test goes RED once 30e771a is cherry-picked -> revert
-        // that part in 30e771a; the real fix belongs in a later step.
+        // A non-scalar `tx_sfregister[parent]` is coerced to '' (is_scalar guard) and handled by
+        // zonesAction(''), returning a graceful JSON "no zones" error instead of raising a TypeError.
         $request = $this->requestWithQueryParams([
             'ajax' => 'sf_register',
             'tx_sfregister' => ['action' => 'zones', 'parent' => ['1']],
         ]);
 
         $handler = $this->createMock(RequestHandlerInterface::class);
+        $handler->expects($this->never())->method('handle');
+
         $repository = $this->createMock(StaticCountryZoneRepository::class);
+        $repository->expects($this->once())
+            ->method('findAllByIso2')
+            ->with('')
+            ->willReturn($this->createResultMock(0, []));
 
-        $this->expectException(\TypeError::class);
+        $result = $this->getSubject($repository)->process($request, $handler);
 
-        $this->getSubject($repository)->process($request, $handler);
+        self::assertInstanceOf(JsonResponse::class, $result);
+        self::assertSame(
+            ['status' => 'error', 'message' => 'no zones', 'data' => []],
+            $this->decodeJsonBody($result)
+        );
     }
 }

@@ -229,19 +229,14 @@ class RecordsViewHelperTest extends AbstractTestBase
      * Roadmap-Schritt 2 once 30e771a's render() guard is in place.
      */
     #[Test]
-    public function throwsUnexpectedValueExceptionWhenTableIsEmpty(): void
+    public function rendersEmptyArrayWhenTableIsEmpty(): void
     {
-        // Characterizes df53334 behaviour: render() unconditionally calls getRecordsFromTable('', $uids)
-        // -> ConnectionPool::getQueryBuilderForTable('') rejects the empty table name with an
-        // UnexpectedValueException (before any SQL). 30e771a adds a `$table !== '' && $uids !== []`
-        // guard returning [] (behaviour change, not a pure type-fix), so this test goes RED once
-        // 30e771a is cherry-picked -> revert that part in 30e771a; the real fix belongs in a later step.
+        // An empty table name short-circuits to [] (the `$table !== '' && $uids !== []` guard) instead
+        // of reaching ConnectionPool::getQueryBuilderForTable('') and throwing UnexpectedValueException.
         $subject = $this->get(RecordsViewHelper::class);
         self::assertInstanceOf(RecordsViewHelper::class, $subject);
         $subject->setArguments(['table' => '', 'uids' => '10']);
 
-        $this->expectException(\UnexpectedValueException::class);
-
-        $subject->render();
+        self::assertSame([], $subject->render());
     }
 }

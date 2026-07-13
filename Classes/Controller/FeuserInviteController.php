@@ -52,16 +52,12 @@ class FeuserInviteController extends FeuserController
     {
         if ($user === null) {
             if ($this->frontendUserService->userIsLoggedIn()) {
-                // Behaviour-preserving: keep df53334 behaviour where getLoggedInUser() may return null
-                // (uncaught TypeError into the non-nullable InviteFormEvent constructor). 30e771a's
-                // `?? new FrontendUser()` changed behaviour and is deferred to a later fix step.
-                $user = $this->frontendUserService->getLoggedInUser();
+                $user = $this->frontendUserService->getLoggedInUser() ?? new FrontendUser();
             } else {
                 $user = GeneralUtility::makeInstance(FrontendUser::class);
             }
         }
 
-        // @phpstan-ignore-next-line argument.type
         $event = new InviteFormEvent($user, $this->settings);
         $this->eventDispatcher->dispatch($event);
         $user = $event->getUser();
