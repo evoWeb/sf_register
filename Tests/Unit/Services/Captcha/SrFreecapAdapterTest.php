@@ -185,24 +185,24 @@ class SrFreecapAdapterTest extends UnitTestCase
     }
 
     #[Test]
-    public function isValidThrowsTypeErrorWhenTranslationCannotBeResolved(): void
+    public function isValidUsesFallbackMessageWhenTranslationCannotBeResolved(): void
     {
-        // Characterizes df53334 behaviour: when LocalizationUtility::translate() cannot resolve the
-        // key it returns null, which isValid() passes straight into the strictly-typed
-        // addError(string $message, int $code), throwing an uncaught TypeError under strict_types.
-        // 30e771a changes this (`?? 'error_captcha_notcorrect'`) so no TypeError is thrown -- i.e. it
-        // is NOT a pure type-fix but a behaviour change. When 30e771a is cherry-picked this test goes
-        // RED: revert that behaviour-changing part in 30e771a (keep df53334 behaviour, e.g. via
-        // @phpstan-ignore); the real fix belongs in a later step.
+        // When LocalizationUtility::translate() cannot resolve the key it returns null; isValid()
+        // falls back to the literal 'error_captcha_notcorrect' and still reports the captcha invalid.
         $this->mockLocalizationServiceToReturn(null);
 
         $captchaService = $this->createCaptchaServiceStub(false);
         $this->session->method('get')->with('captchaWasValid')->willReturn(false);
+        $this->session->expects($this->once())->method('set')->with('captchaWasValid', false);
 
         $subject = $this->createSubjectWithCaptchaService($captchaService);
 
-        $this->expectException(\TypeError::class);
-        $subject->isValid('wrong-word');
+        self::assertFalse($subject->isValid('wrong-word'));
+
+        $errors = $subject->getErrors();
+        self::assertCount(1, $errors);
+        self::assertSame('error_captcha_notcorrect', $errors[0]->getMessage());
+        self::assertSame(1306910429, $errors[0]->getCode());
     }
 }
 

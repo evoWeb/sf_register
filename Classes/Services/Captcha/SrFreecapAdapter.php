@@ -94,15 +94,11 @@ class SrFreecapAdapter extends AbstractAdapter
             // @phpstan-ignore-next-line
             if (!$this->captchaService->checkWord($value)) {
                 $validCaptcha = false;
-                // Behaviour-preserving: keep df53334 behaviour where LocalizationUtility::translate()
-                // may return null (uncaught TypeError into addError(string)). The `?? '...'` fallback
-                // from 30e771a changed behaviour and is deferred to a later fix step.
                 $this->addError(
-                    // @phpstan-ignore-next-line argument.type
                     LocalizationUtility::translate(
                         'error_captcha_notcorrect',
                         'SfRegister'
-                    ),
+                    ) ?? 'error_captcha_notcorrect',
                     1306910429
                 );
             }

@@ -24,6 +24,7 @@ use Evoweb\SfRegister\Tests\Functional\View\RecordingView;
 use EvowebTests\TestClasses\Controller\FeuserPasswordController;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\DependencyInjection\Container;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -228,14 +229,16 @@ class FeuserPasswordControllerTest extends AbstractTestBase
     // -- saveAction -------------------------------------------------------------------------------
 
     #[Test]
-    public function saveActionThrowsWhenLoggedInUserRecordCannotBeResolved(): void
+    public function saveActionUsesEmptyUserWhenLoggedInUserRecordCannotBeResolved(): void
     {
         $this->loginFrontendUser('testuser', 'TestPa$5');
 
+        // findByUid returns null (record no longer resolves); update() is stubbed so the fallback
+        // empty user does not hit real persistence for this null-user characterization.
         /** @var FrontendUserRepository&MockObject $repository */
         $repository = $this->getMockBuilder(FrontendUserRepository::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['findByUid'])
+            ->onlyMethods(['findByUid', 'update'])
             ->getMock();
         $repository->method('findByUid')->willReturn(null);
 
@@ -247,16 +250,11 @@ class FeuserPasswordControllerTest extends AbstractTestBase
         $password = new Password();
         $password->_setProperty('password', 'TestPa$5');
 
-        // Characterizes df53334 behaviour: saveAction() reads getLoggedInUser() without a null-guard
-        // and passes the result into "new PasswordSaveEvent($user, ...)", whose parent constructor
-        // (AbstractEventWithUserAndSettings) declares a non-nullable FrontendUser $user -> uncaught
-        // TypeError when getLoggedInUser() returns null while userIsLoggedIn() is true (reachable when
-        // the fe_users row was hidden/deleted after the session was established). 30e771a changes this
-        // via getLoggedInUser() ?? new FrontendUser() (behaviour change, not a pure type-fix), so this
-        // test goes RED once 30e771a is cherry-picked -> revert that part in 30e771a; the real fix
-        // belongs in a later step.
-        $this->expectException(\TypeError::class);
+        // When userIsLoggedIn() is true but getLoggedInUser() returns null, saveAction() falls back to
+        // a fresh FrontendUser ("getLoggedInUser() ?? new FrontendUser()") and returns a response
+        // instead of raising a TypeError in the non-nullable PasswordSaveEvent constructor.
+        $response = $subject->saveAction($password);
 
-        $subject->saveAction($password);
+        self::assertInstanceOf(ResponseInterface::class, $response);
     }
 }

@@ -97,7 +97,7 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
      * $user?->getPassword() ?? ''. Reaktivieren in Roadmap-Schritt 2.
      */
     #[Test]
-    public function isValidThrowsWhenLoggedInUserRecordCannotBeResolved(): void
+    public function isValidReportsErrorWhenLoggedInUserRecordCannotBeResolved(): void
     {
         $this->loginFrontendUser('testuser', 'TestPa$5');
 
@@ -112,16 +112,13 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         $container = $this->getContainer();
         $container->set(FrontendUserRepository::class, $repository);
 
-        // Characterizes df53334 behaviour: getLoggedInUser() returns null while userIsLoggedIn() is
-        // true, and isValid() calls $user->getPassword() without a null-guard -> uncaught \Error
-        // ("Call to a member function getPassword() on null"); catch (Exception) does not catch it.
-        // 30e771a changes this via $user?->getPassword() ?? '' (behaviour change, not a pure type-fix),
-        // so this test goes RED once 30e771a is cherry-picked -> revert that part in 30e771a; the real
-        // fix belongs in a later step.
-        $this->expectException(\Error::class);
-
+        // When getLoggedInUser() returns null, isValid() uses $user?->getPassword() ?? '' instead of
+        // dereferencing null, so validation reports an error gracefully instead of raising an Error.
         /** @var EqualCurrentPasswordValidator $subject */
         $subject = $this->get(EqualCurrentPasswordValidator::class);
-        $subject->validate('TestPa$5');
+
+        $result = $subject->validate('TestPa$5');
+
+        self::assertTrue($result->hasErrors());
     }
 }

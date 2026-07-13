@@ -23,7 +23,6 @@ use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\ModifyValidator;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\UploadedFile;
@@ -72,8 +71,7 @@ class FeuserController extends ActionController
         protected ModifyValidator $modifyValidator,
         protected FileService $fileService,
         protected FrontendUserRepository $userRepository,
-    ) {
-    }
+    ) {}
 
     protected function getErrorFlashMessage(): bool
     {
@@ -106,7 +104,7 @@ class FeuserController extends ActionController
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     protected function modifySettingsBeforeActionMethodValidators(): void
     {
@@ -121,7 +119,7 @@ class FeuserController extends ActionController
             $this->settings['fields']['selected'] = [];
         }
         if (in_array('usergroup', $this->settings['fields']['selected'])) {
-            throw new Exception('Selecting "usergroup" in frontend isn\'t supported.');
+            throw new \Exception('Selecting "usergroup" in frontend isn\'t supported.');
         }
     }
 
@@ -236,8 +234,8 @@ class FeuserController extends ActionController
                 UploadedFileReferenceConverter::class,
                 [
                     UploadedFileReferenceConverter::CONFIGURATION_FILE_VALIDATORS => $imageFileExtensions,
-                    UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
-                        $this->fileService->getTempFolder()->getCombinedIdentifier(),
+                    UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER
+                        => $this->fileService->getTempFolder()->getCombinedIdentifier(),
                 ]
             );
 
@@ -347,14 +345,14 @@ class FeuserController extends ActionController
             /** @var PasswordHashFactory $passwordHashFactory */
             $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
             $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
-            // Behaviour-preserving: keep df53334 behaviour where getHashedPassword() returns null for
-            // an empty password (uncaught TypeError via the `: string` return type). 30e771a's
-            // `?? (string)time()` fallback changed behaviour and is deferred to a later fix step.
-            // @phpstan-ignore-next-line return.type
-            return $passwordHash->getHashedPassword($password);
-        } catch (Exception) {
-            return (string)time();
+            $hashedPassword = $passwordHash->getHashedPassword($password);
+        } catch (\Exception) {
+            $hashedPassword = null;
         }
+
+        // getHashedPassword() returns null for an empty password; don't store a
+        // usable hash for that. Fall back to an unusable value, as on failure.
+        return $hashedPassword ?? (string)time();
     }
 
     protected function persistAll(): void

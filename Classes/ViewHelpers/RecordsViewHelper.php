@@ -17,7 +17,6 @@ namespace Evoweb\SfRegister\ViewHelpers;
 
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Exception;
-use RuntimeException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -30,9 +29,7 @@ class RecordsViewHelper extends AbstractViewHelper
      */
     protected $escapeOutput = false;
 
-    public function __construct(protected ConnectionPool $connectionPool)
-    {
-    }
+    public function __construct(protected ConnectionPool $connectionPool) {}
 
     public function initializeArguments(): void
     {
@@ -51,11 +48,7 @@ class RecordsViewHelper extends AbstractViewHelper
             ? $this->arguments['uids']
             : (is_string($this->arguments['uids']) ? GeneralUtility::intExplode(',', $this->arguments['uids']) : []);
 
-        // Behaviour-preserving: keep df53334 behaviour where render() calls getRecordsFromTable()
-        // unconditionally, so an empty table name reaches ConnectionPool::getQueryBuilderForTable('')
-        // and throws an UnexpectedValueException. 30e771a's `$table !== '' && $uids !== []` guard
-        // changed behaviour and is deferred to a later fix step.
-        return $this->getRecordsFromTable($table, $uids);
+        return $table !== '' && $uids !== [] ? $this->getRecordsFromTable($table, $uids) : [];
     }
 
     /**
@@ -83,7 +76,7 @@ class RecordsViewHelper extends AbstractViewHelper
         try {
             return $result->fetchAllAssociative();
         } catch (Exception $exception) {
-            throw new RuntimeException(
+            throw new \RuntimeException(
                 'Database query failed. Error was: ' . $exception->getMessage(),
                 1511950673
             );

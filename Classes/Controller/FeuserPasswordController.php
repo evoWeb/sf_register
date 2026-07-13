@@ -17,13 +17,13 @@ namespace Evoweb\SfRegister\Controller;
 
 use Evoweb\SfRegister\Controller\Event\PasswordFormEvent;
 use Evoweb\SfRegister\Controller\Event\PasswordSaveEvent;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Attribute;
@@ -68,11 +68,7 @@ class FeuserPasswordController extends FeuserController
     ): ResponseInterface {
         $statusCode = 200;
         if ($this->frontendUserService->userIsLoggedIn()) {
-            // Behaviour-preserving: keep df53334 behaviour where getLoggedInUser() may return null
-            // (uncaught TypeError into the non-nullable PasswordSaveEvent constructor). 30e771a's
-            // `?? new FrontendUser()` changed behaviour and is deferred to a later fix step.
-            $user = $this->frontendUserService->getLoggedInUser();
-            // @phpstan-ignore-next-line argument.type
+            $user = $this->frontendUserService->getLoggedInUser() ?? new FrontendUser();
             $event = new PasswordSaveEvent($user, $this->settings);
             $this->eventDispatcher->dispatch($event);
             $user = $event->getUser();
@@ -81,7 +77,7 @@ class FeuserPasswordController extends FeuserController
 
             try {
                 $this->userRepository->update($user);
-            } catch (Exception) {
+            } catch (\Exception) {
                 $statusCode = 500;
             }
         }

@@ -248,20 +248,19 @@ class FeuserInviteControllerTest extends AbstractTestBase
      * Re-skipped after confirming the failure.
      */
     #[Test]
-    public function formActionThrowsWhenLoggedInUserRecordCannotBeResolved(): void
+    public function formActionUsesEmptyUserWhenLoggedInUserRecordCannotBeResolved(): void
     {
-        // Characterizes df53334 behaviour (see doc comment above): formAction() passes null into the
-        // non-nullable InviteFormEvent constructor -> uncaught TypeError. 30e771a changes this via
-        // "getLoggedInUser() ?? new FrontendUser()" (behaviour change, not a pure type-fix), so this
-        // test goes RED once 30e771a is cherry-picked -> revert that part in 30e771a; the real fix
-        // belongs in a later step.
+        // When userIsLoggedIn() is true but getLoggedInUser() returns null (fe_users row no longer
+        // resolves), formAction() falls back to a fresh FrontendUser ("getLoggedInUser() ?? new
+        // FrontendUser()") and renders a response instead of raising a TypeError.
         $this->loginFrontendUser('testuser', 'TestPa$5');
         $this->mockRepositoryFindByUidReturnsNull();
         $subject = $this->getSubject('form');
 
-        $this->expectException(\TypeError::class);
+        $response = $subject->formAction(null);
 
-        $subject->formAction(null);
+        self::assertInstanceOf(HtmlResponse::class, $response);
+        self::assertSame(200, $response->getStatusCode());
     }
 
     // -- inviteAction ---------------------------------------------------------------------------

@@ -18,10 +18,10 @@ namespace Evoweb\SfRegister\Updates;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Result;
 use Symfony\Component\Console\Output\OutputInterface;
+use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Core\Upgrades\ChattyInterface;
 use TYPO3\CMS\Core\Upgrades\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface;
@@ -33,9 +33,7 @@ class UserCountryMigration implements UpgradeWizardInterface, ChattyInterface
 
     protected OutputInterface $output;
 
-    public function __construct(protected ConnectionPool $connectionPool)
-    {
-    }
+    public function __construct(protected ConnectionPool $connectionPool) {}
 
     public function setOutput(OutputInterface $output): void
     {
@@ -70,11 +68,17 @@ class UserCountryMigration implements UpgradeWizardInterface, ChattyInterface
     {
         $records = $this->getRecordsToUpdate();
         try {
-            foreach ($records->fetchAssociative() as $record) {
-                $this->updateRecordWithNewCountryValue(
-                    $record['uid'],
-                    Country::tryFrom((int)$record['static_info_country'])->name
-                );
+            foreach ($records->fetchAllAssociative() as $record) {
+                $staticCountry = $record['static_info_country'] ?? null;
+                $country = Country::tryFrom(is_numeric($staticCountry) ? (int)$staticCountry : 0);
+                if ($country === null) {
+                    continue;
+                }
+                $uid = $record['uid'] ?? null;
+                if (!is_numeric($uid)) {
+                    continue;
+                }
+                $this->updateRecordWithNewCountryValue((int)$uid, $country->name);
             }
         } catch (Exception $exception) {
             $this->output->write('Querying for users throws an exception: ' . $exception->getMessage());
@@ -106,7 +110,7 @@ class UserCountryMigration implements UpgradeWizardInterface, ChattyInterface
             $count = 0;
         }
 
-        return $count;
+        return is_numeric($count) ? (int)$count : 0;
     }
 
     protected function getRecordsToUpdate(): Result

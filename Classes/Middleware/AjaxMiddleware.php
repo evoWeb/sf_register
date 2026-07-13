@@ -36,8 +36,7 @@ class AjaxMiddleware implements MiddlewareInterface
     public function __construct(
         #[Lazy]
         protected StaticCountryZoneRepository $staticCountryZoneRepository
-    ) {
-    }
+    ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -48,11 +47,8 @@ class AjaxMiddleware implements MiddlewareInterface
         $requestArguments = $this->getParamFromRequest($request, 'tx_sfregister');
         switch ($requestArguments['action']) {
             case 'zones':
-                // Behaviour-preserving: keep df53334 behaviour where a non-scalar `parent` is passed
-                // straight into zonesAction(string) (uncaught TypeError). 30e771a's is_scalar guard
-                // changed behaviour and is deferred to a later fix step.
-                // @phpstan-ignore-next-line argument.type
-                [$status, $message, $result] = $this->zonesAction($requestArguments['parent']);
+                $parent = is_scalar($requestArguments['parent']) ? (string)$requestArguments['parent'] : '';
+                [$status, $message, $result] = $this->zonesAction($parent);
                 break;
 
             default:

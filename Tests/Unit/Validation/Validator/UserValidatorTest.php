@@ -133,16 +133,12 @@ class UserValidatorTest extends UnitTestCase
     }
 
     #[Test]
-    public function isValidThrowsTypeErrorForObjectNotImplementingValidatableInterface(): void
+    public function isValidHandlesObjectsNotImplementingValidatableInterfaceWithoutError(): void
     {
-        // Characterizes df53334 behaviour: UserValidator::isValid() unconditionally assigns the given
-        // $object to the ValidatableInterface-typed $model property. Passing an object that does not
-        // implement ValidatableInterface raises an uncaught TypeError. 30e771a adds an early-return
-        // guard (`if (!$object instanceof ValidatableInterface) { return; }`), which changes this from
-        // "throws" to "silently skips" = behaviour change. This test goes RED when 30e771a is
-        // cherry-picked -> revert that part in 30e771a; the real fix belongs in a later step.
-        $this->expectException(\TypeError::class);
+        // An object that does not implement ValidatableInterface is skipped gracefully by the
+        // early-return guard instead of raising a TypeError on the typed $model assignment.
+        $result = $this->subject->validate(new \stdClass());
 
-        $this->subject->validate(new \stdClass());
+        self::assertFalse($result->hasErrors());
     }
 }
