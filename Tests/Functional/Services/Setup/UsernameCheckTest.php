@@ -19,6 +19,7 @@ use Evoweb\SfRegister\Services\Setup\UsernameCheck;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * NOTE: Despite the "UsernameCheck" name and the task description this class was drafted from
@@ -112,67 +113,60 @@ class UsernameCheckTest extends AbstractTestBase
     }
 
     #[Test]
-    public function checkTreatsMissingFieldsKeyAsNoSelectionWhenEmailAsUsernameEnabled(): void
+    #[WithoutErrorHandler]
+    public function checkThrowsTypeErrorForMissingFieldsKeyWhenEmailAsUsernameEnabled(): void
     {
-        // Pre-fix bug in df53334: $settings['fields']['selected'] is accessed unconditionally.
-        // When the 'fields' key is entirely absent, $settings['fields'] evaluates to null and
-        // in_array('username', null) throws a TypeError (in_array() requires an array haystack)
-        // instead of being treated as "no field selected". Behoben in 30e771a
-        // (Classes/Services/Setup/UsernameCheck::check). Reaktivieren in Roadmap-Schritt 2.
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: missing "fields" key causes in_array() to receive a non-array '
-            . 'haystack (TypeError) instead of being treated as no field selected. '
-            . 'Behoben in 30e771a (Classes/Services/Setup/UsernameCheck::check). '
-            . 'Reaktivieren in Roadmap-Schritt 2.'
-        );
+        // Characterizes df53334 behaviour: $settings['fields']['selected'] is accessed
+        // unconditionally. With the 'fields' key entirely absent, $settings['fields'] is null and
+        // in_array('username', null) throws an uncaught TypeError (in_array() requires an array
+        // haystack). 30e771a adds a guard treating it as "no field selected" (behaviour change, not a
+        // pure type-fix), so this test goes RED once 30e771a is cherry-picked -> revert that part in
+        // 30e771a; the real fix belongs in a later step.
+        //
+        // #[WithoutErrorHandler] disables PHPUnit's error handler so the "Undefined array key"/
+        // "access offset on null" PHP warnings that precede the characterized TypeError do not fail
+        // the test via failOnWarning.
+        $subject = $this->getSubject();
+        $settings = ['useEmailAddressAsUsername' => '1'];
 
-        // $subject = $this->getSubject();
-        // $settings = ['useEmailAddressAsUsername' => '1'];
-        // $result = $subject->check($settings);
-        // self::assertNull($result);
+        $this->expectException(\TypeError::class);
+
+        $subject->check($settings);
     }
 
     #[Test]
-    public function checkTreatsMissingFieldsKeyAsNoSelectionWhenEmailAsUsernameDisabled(): void
+    #[WithoutErrorHandler]
+    public function checkThrowsTypeErrorForMissingFieldsKeyWhenEmailAsUsernameDisabled(): void
     {
-        // Same root cause as above, but here the second branch is the one dereferencing the
-        // missing 'fields' key, and the intended (SOLL) result is the "neither configured"
-        // warning rather than null.
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: missing "fields" key causes in_array() to receive a non-array '
-            . 'haystack (TypeError) instead of being treated as no field selected. '
-            . 'Behoben in 30e771a (Classes/Services/Setup/UsernameCheck::check). '
-            . 'Reaktivieren in Roadmap-Schritt 2.'
-        );
+        // Same root cause as above, but here the second branch dereferences the missing 'fields' key.
+        // df53334 throws an uncaught TypeError; 30e771a changes this to a graceful "neither configured"
+        // result (behaviour change), so this test goes RED once 30e771a is cherry-picked -> revert that
+        // part in 30e771a; the real fix belongs in a later step. #[WithoutErrorHandler] keeps the
+        // preceding PHP warnings from failing the test via failOnWarning (see method above).
+        $subject = $this->getSubject();
+        $settings = ['useEmailAddressAsUsername' => '0'];
 
-        // $subject = $this->getSubject();
-        // $settings = ['useEmailAddressAsUsername' => '0'];
-        // $result = $subject->check($settings);
-        // self::assertNotNull($result);
-        // self::assertStringContainsString('but non was configured', (string)$result->getBody());
+        $this->expectException(\TypeError::class);
+
+        $subject->check($settings);
     }
 
     #[Test]
-    public function checkTreatsNonArraySelectedAsNoSelection(): void
+    public function checkThrowsTypeErrorForNonArraySelected(): void
     {
-        // Pre-fix bug in df53334: 'fields' is present but 'selected' is not an array (e.g. a
-        // single scalar coming from misconfigured TypoScript). in_array('username', $scalar)
-        // throws a TypeError instead of being treated as no field selected. Behoben in 30e771a
-        // (Classes/Services/Setup/UsernameCheck::check) via an is_array() guard.
-        // Reaktivieren in Roadmap-Schritt 2.
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: non-array "fields.selected" causes in_array() to receive a '
-            . 'non-array haystack (TypeError) instead of being treated as no field selected. '
-            . 'Behoben in 30e771a (Classes/Services/Setup/UsernameCheck::check). '
-            . 'Reaktivieren in Roadmap-Schritt 2.'
-        );
+        // Characterizes df53334 behaviour: 'fields' is present but 'selected' is not an array (e.g. a
+        // single scalar from misconfigured TypoScript). in_array('username', $scalar) throws an
+        // uncaught TypeError. 30e771a adds an is_array() guard treating it as "no field selected"
+        // (behaviour change, not a pure type-fix), so this test goes RED once 30e771a is cherry-picked
+        // -> revert that part in 30e771a; the real fix belongs in a later step.
+        $subject = $this->getSubject();
+        $settings = [
+            'useEmailAddressAsUsername' => '1',
+            'fields' => ['selected' => 'username'],
+        ];
 
-        // $subject = $this->getSubject();
-        // $settings = [
-        //     'useEmailAddressAsUsername' => '1',
-        //     'fields' => ['selected' => 'username'],
-        // ];
-        // $result = $subject->check($settings);
-        // self::assertNull($result);
+        $this->expectException(\TypeError::class);
+
+        $subject->check($settings);
     }
 }

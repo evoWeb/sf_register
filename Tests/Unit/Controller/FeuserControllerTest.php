@@ -55,22 +55,17 @@ class FeuserControllerTest extends UnitTestCase
     }
 
     #[Test]
-    public function encryptPasswordReturnsUsableFallbackStringForEmptyPassword(): void
+    public function encryptPasswordThrowsTypeErrorForEmptyPassword(): void
     {
-        // Pre-fix bug in df53334: PasswordHashInterface::getHashedPassword() returns null
-        // for an empty password (see Argon2idPasswordHash::getHashedPassword()), but
-        // encryptPassword() returns that null directly from its `: string` return type,
-        // causing an uncaught TypeError (not an Exception, so the surrounding try/catch
-        // does not help). Fixed in 30e771a by falling back to (string)time() when the
-        // hash is null. Reactivate in roadmap step 2.
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: encryptPassword(\'\') returns null from '
-            . 'getHashedPassword() through a `: string` return type, causing an uncaught '
-            . 'TypeError. Fixed in 30e771a. Reactivate in roadmap step 2.'
-        );
+        // Characterizes df53334 behaviour: PasswordHashInterface::getHashedPassword() returns null
+        // for an empty password (see Argon2idPasswordHash::getHashedPassword()), and encryptPassword()
+        // returns that null through its `: string` return type -> uncaught TypeError (not an Exception,
+        // so the surrounding try/catch does not help). 30e771a's `(string)time()` fallback removes the
+        // TypeError = behaviour change, not a pure type-fix. This test goes RED when 30e771a is
+        // cherry-picked -> revert that behaviour-changing part in 30e771a; the real fix belongs in a
+        // later step.
+        $this->expectException(\TypeError::class);
 
-        /*$result = $this->getSubject()->encryptPassword('');
-
-        self::assertIsString($result);*/
+        $this->getSubject()->encryptPassword('');
     }
 }

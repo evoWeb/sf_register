@@ -176,66 +176,49 @@ class AbstractSelectViewHelperTest extends AbstractTestBase
     }
 
     /**
-     * SOLL (post-30e771a): isSelected() force-selects ALL options when selectAllByDefault
-     * is set, even if an explicit value is bound. The pre-fix code guards the force-select
-     * with `empty($selectedValue)`, so with an explicit value only the matching option is
-     * selected. Asserting the post-fix "all selected" behaviour therefore fails on df53334.
+     * Characterizes df53334 behaviour: isSelected() force-selects ALL options only when no value is
+     * bound (`empty($selectedValue)` guard), so with an explicit value only the matching option is
+     * selected. 30e771a removes that guard so selectAllByDefault force-selects even with an explicit
+     * value (behaviour change), so this test goes RED once 30e771a is cherry-picked -> revert that
+     * part in 30e771a; the real fix belongs in a later step. (The selectAllByDefault docblock still
+     * documents the df53334 "selected if none was set before" behaviour.)
      */
     #[Test]
-    public function selectAllByDefaultForceSelectsEveryOptionEvenWithExplicitValue(): void
+    public function selectAllByDefaultOnlySelectsMatchingOptionWhenExplicitValueIsBound(): void
     {
-        self::markTestSkipped(
-            'Pre-fix df53334: isSelected() only force-selects all when no value is set'
-            . ' (empty($selectedValue) guard). 30e771a removes that guard so selectAllByDefault'
-            . ' force-selects even with an explicit value. SOLL here asserts the 30e771a behavior'
-            . ' (all selected). NOTE: the selectAllByDefault docblock still says "selected if none'
-            . ' was set before" (= pre-fix), so this divergence needs human judgment in'
-            . ' Roadmap-Schritt 2 - it may be an intended change or a regression. Behoben in'
-            . ' 30e771a (Classes/ViewHelpers/Form/AbstractSelectViewHelper::isSelected).'
+        $actual = $this->renderTemplate(
+            '<register:form.abstractSelect name="myField" multiple="1" selectAllByDefault="1" '
+            . 'options="{0: \'Zero\', 1: \'One\', 2: \'Two\'}" value="{selected}" />',
+            ['selected' => [1]]
         );
-
-        // $actual = $this->renderTemplate(
-        //     '<register:form.abstractSelect name="myField" multiple="1" selectAllByDefault="1" '
-        //     . 'options="{0: \'Zero\', 1: \'One\', 2: \'Two\'}" value="{selected}" />',
-        //     ['selected' => [1]]
-        // );
-        // self::assertMatchesRegularExpression(
-        //     '#^<input type="hidden" name="myField" value="" />'
-        //     . '<select multiple="multiple" name="myField\[\]">'
-        //     . '<option value="0" selected="selected">Zero</option>\n'
-        //     . '<option value="1" selected="selected">One</option>\n'
-        //     . '<option value="2" selected="selected">Two</option>\n'
-        //     . '</select>$#',
-        //     $actual
-        // );
+        self::assertMatchesRegularExpression(
+            '#^<input type="hidden" name="myField" value="" />'
+            . '<select multiple="multiple" name="myField\[\]">'
+            . '<option value="0">Zero</option>\n'
+            . '<option value="1" selected="selected">One</option>\n'
+            . '<option value="2">Two</option>\n'
+            . '</select>$#',
+            $actual
+        );
     }
 
     /**
-     * SOLL (post-30e771a): array-value options require an optionValueField; if it is missing,
-     * getOptions() throws a MissingArgumentException with code 1682693720 before any persistence
-     * access. The pre-fix code has no such guard and falls through to
-     * PersistenceManager::getIdentifierByObject() (AbstractSelectViewHelper.php:195), so the
-     * intended MissingArgumentException is never raised.
+     * Characterizes df53334 behaviour: array-value options without optionValueField have no guard, so
+     * getOptions() falls through to PersistenceManager::getIdentifierByObject()
+     * (AbstractSelectViewHelper.php:195) with an array argument -> uncaught \Error (a TypeError against
+     * the object-typed parameter). 30e771a adds a guard raising a MissingArgumentException (code
+     * 1682693720) instead (behaviour change), so this test goes RED once 30e771a is cherry-picked ->
+     * revert that part in 30e771a; the real fix belongs in a later step.
      */
     #[Test]
-    public function getOptionsThrowsMissingArgumentExceptionForArrayOptionsWithoutOptionValueField(): void
+    public function getOptionsForArrayOptionsWithoutOptionValueFieldThrowsError(): void
     {
-        self::markTestSkipped(
-            'Pre-fix df53334: array-value options without optionValueField do not throw the'
-            . ' intended MissingArgumentException (code 1682693720). Missing the guard, the pre-fix'
-            . ' getOptions() falls through to PersistenceManager::getIdentifierByObject()'
-            . ' (AbstractSelectViewHelper.php:195), which raises an unrelated Error instead of the'
-            . ' SOLL exception. SOLL asserts the 30e771a guard. Behoben in 30e771a'
-            . ' (Classes/ViewHelpers/Form/AbstractSelectViewHelper::getOptions). Reaktivieren in'
-            . ' Roadmap-Schritt 2.'
-        );
+        $this->expectException(\Error::class);
 
-        // $this->expectException(\TYPO3Fluid\Fluid\Core\ViewHelper\MissingArgumentException::class);
-        // $this->expectExceptionCode(1682693720);
-        // $this->renderTemplate(
-        //     '<testvh:selectFixture name="myField" '
-        //     . 'options="{r1: {id: \'10\', name: \'Ten\'}}" />'
-        // );
+        $this->renderTemplate(
+            '<testvh:selectFixture name="myField" '
+            . 'options="{r1: {id: \'10\', name: \'Ten\'}}" />'
+        );
     }
 }
 

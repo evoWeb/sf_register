@@ -112,15 +112,16 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         $container = $this->getContainer();
         $container->set(FrontendUserRepository::class, $repository);
 
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: getLoggedInUser() returns null while userIsLoggedIn() is'
-            . ' true, and isValid() calls $user->getPassword() without a null-guard, causing an'
-            . ' uncaught Error. Behoben in 30e771a via $user?->getPassword() ?? \'\'.'
-            . ' Reaktivieren in Roadmap-Schritt 2.'
-        );
+        // Characterizes df53334 behaviour: getLoggedInUser() returns null while userIsLoggedIn() is
+        // true, and isValid() calls $user->getPassword() without a null-guard -> uncaught \Error
+        // ("Call to a member function getPassword() on null"); catch (Exception) does not catch it.
+        // 30e771a changes this via $user?->getPassword() ?? '' (behaviour change, not a pure type-fix),
+        // so this test goes RED once 30e771a is cherry-picked -> revert that part in 30e771a; the real
+        // fix belongs in a later step.
+        $this->expectException(\Error::class);
 
-        // /** @var EqualCurrentPasswordValidator $subject */
-        // $subject = $this->get(EqualCurrentPasswordValidator::class);
-        // $subject->validate('TestPa$5');
+        /** @var EqualCurrentPasswordValidator $subject */
+        $subject = $this->get(EqualCurrentPasswordValidator::class);
+        $subject->validate('TestPa$5');
     }
 }

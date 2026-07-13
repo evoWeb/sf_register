@@ -372,38 +372,23 @@ class AjaxMiddlewareTest extends AbstractTestBase
      * Reaktivieren in Roadmap-Schritt 2.
      */
     #[Test]
-    public function gracefullyHandlesNonScalarParentInsteadOfThrowing(): void
+    public function throwsTypeErrorForNonScalarParentInsteadOfReturningResponse(): void
     {
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: process() passes an array `tx_sfregister[parent]` '
-            . 'straight into zonesAction(string $parent), which throws an uncaught TypeError '
-            . 'under strict_types=1 instead of returning a graceful JSON error response. '
-            . 'Verified RED: TypeError "AjaxMiddleware::zonesAction(): Argument #1 ($parent) '
-            . 'must be of type string, array given" was thrown instead of a Response. '
-            . 'Behoben in 30e771a (scalar guard coercing a non-scalar parent to \'\'). '
-            . 'Reaktivieren in Roadmap-Schritt 2.'
-        );
+        // Characterizes df53334 behaviour: process() passes an array `tx_sfregister[parent]` straight
+        // into zonesAction(string $parent) -> uncaught TypeError under strict_types=1 (the repository is
+        // never reached). 30e771a adds a scalar guard coercing a non-scalar parent to '' (behaviour
+        // change, not a pure type-fix), so this test goes RED once 30e771a is cherry-picked -> revert
+        // that part in 30e771a; the real fix belongs in a later step.
+        $request = $this->requestWithQueryParams([
+            'ajax' => 'sf_register',
+            'tx_sfregister' => ['action' => 'zones', 'parent' => ['1']],
+        ]);
 
-        // $request = $this->requestWithQueryParams([
-        //     'ajax' => 'sf_register',
-        //     'tx_sfregister' => ['action' => 'zones', 'parent' => ['1']],
-        // ]);
-        //
-        // $handler = $this->createMock(RequestHandlerInterface::class);
-        // $handler->expects($this->never())->method('handle');
-        //
-        // $repository = $this->createMock(StaticCountryZoneRepository::class);
-        // $repository->expects($this->once())
-        //     ->method('findAllByIso2')
-        //     ->with('')
-        //     ->willReturn($this->createResultMock(0, []));
-        //
-        // $result = $this->getSubject($repository)->process($request, $handler);
-        //
-        // self::assertInstanceOf(JsonResponse::class, $result);
-        // self::assertSame(
-        //     ['status' => 'error', 'message' => 'no zones', 'data' => []],
-        //     $this->decodeJsonBody($result)
-        // );
+        $handler = $this->createMock(RequestHandlerInterface::class);
+        $repository = $this->createMock(StaticCountryZoneRepository::class);
+
+        $this->expectException(\TypeError::class);
+
+        $this->getSubject($repository)->process($request, $handler);
     }
 }

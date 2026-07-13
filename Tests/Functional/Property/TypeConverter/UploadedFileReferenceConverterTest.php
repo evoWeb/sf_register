@@ -267,42 +267,25 @@ class UploadedFileReferenceConverterTest extends AbstractTestBase
      * in Roadmap-Schritt 2.
      */
     #[Test]
-    public function convertFromCrashesForAPlainUploadInsteadOfReturningAFileReference(): void
+    public function convertFromThrowsErrorForAPlainUploadInsteadOfReturningAFileReference(): void
     {
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: importUploadedResource() ends with '
-            . '`createFileReferenceFromFalFileObject($uploadedFile, (int)$resourcePointer)`. '
-            . 'For a plain upload without a submittedFile.resourcePointer, $resourcePointer is '
-            . 'null, and (int)null is 0 - not null. createFileReferenceFromFalFileReferenceObject() '
-            . 'then treats 0 as a real identifier, persistenceManager->getObjectByIdentifier(0, ...) '
-            . 'returns null (uid 0 never exists), and setOriginalResource() is called on that null. '
-            . 'Verified RED: "Error: Call to a member function setOriginalResource() on null" was '
-            . 'thrown instead of convertFrom() returning a FileReference - for EVERY plain upload, '
-            . 'not just a contrived edge case. Behoben in 30e771a (falls back to a fresh '
-            . 'FileReference whenever the lookup result is null, masking the (int)null===0 '
-            . 'mismatch). Reaktivieren in Roadmap-Schritt 2.'
-        );
+        // Characterizes df53334 behaviour (see doc comment above): for a plain upload without a
+        // submittedFile.resourcePointer, `(int)null === 0` makes createFileReferenceFromFalFileReference
+        // Object() treat 0 as a real identifier; getObjectByIdentifier(0, ...) returns null and
+        // setOriginalResource() is called on that null -> uncaught \Error (not caught by
+        // catch (Exception)). 30e771a falls back to a fresh FileReference when the lookup result is null
+        // (behaviour change, not a pure type-fix), so this test goes RED once 30e771a is cherry-picked
+        // -> revert that part in 30e771a; the real fix belongs in a later step.
+        $this->createUploadFolder();
+        $subject = $this->getSubject();
+        $configuration = $this->buildConfiguration([
+            UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER => '1:/user_upload/',
+        ]);
+        $uploadInfo = $this->buildUploadInfo('avatar.jpg');
 
-        // $this->createUploadFolder();
-        // $subject = $this->getSubject();
-        // $configuration = $this->buildConfiguration([
-        //     UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER => '1:/user_upload/',
-        // ]);
-        // $uploadInfo = $this->buildUploadInfo('avatar.jpg');
-        //
-        // $result = $subject->convertFrom($uploadInfo, ExtbaseFileReference::class, [], $configuration);
-        //
-        // self::assertInstanceOf(ExtbaseFileReference::class, $result);
-        // self::assertSame('avatar.jpg', $result->getOriginalResource()->getOriginalFile()->getName());
-        //
-        // /** @var ResourceFactory $resourceFactory */
-        // $resourceFactory = $this->get(ResourceFactory::class);
-        // $uploadFolder = $resourceFactory->getFolderObjectFromCombinedIdentifier('1:/user_upload/');
-        // self::assertTrue($uploadFolder->hasFile('avatar.jpg'));
-        //
-        // // Repeating the same upload info should hit the $convertedResources cache.
-        // $second = $subject->convertFrom($uploadInfo, ExtbaseFileReference::class, [], $configuration);
-        // self::assertSame($result, $second);
+        $this->expectException(\Error::class);
+
+        $subject->convertFrom($uploadInfo, ExtbaseFileReference::class, [], $configuration);
     }
 
     #[Test]
@@ -498,28 +481,23 @@ class UploadedFileReferenceConverterTest extends AbstractTestBase
      * Reaktivieren in Roadmap-Schritt 2.
      */
     #[Test]
-    public function resourcePointerAsArrayCrashesInsteadOfReturningNullGracefully(): void
+    public function resourcePointerAsArrayThrowsTypeErrorInsteadOfReturningNull(): void
     {
-        self::markTestSkipped(
-            'Pre-fix bug in df53334: convertFrom() checks `isset($source[\'submittedFile\']'
-            . '[\'resourcePointer\'])` without a type guard. A request submitting '
-            . '`myField[submittedFile][resourcePointer][]=x` makes resourcePointer an array, '
-            . 'which is then handed to HashService::validateAndStripHmac(string $string, ...) - '
-            . 'a strictly-typed string parameter - throwing an uncaught TypeError (not an '
-            . 'Exception, so the surrounding catch(Exception) does not catch it) instead of '
-            . 'returning null. Verified RED: TypeError "HashService::validateAndStripHmac(): '
-            . 'Argument #1 ($string) must be of type string, array given" was thrown instead '
-            . 'of convertFrom() returning null. Behoben in 30e771a (is_array/is_string/non-empty '
-            . 'guard before use). Reaktivieren in Roadmap-Schritt 2.'
-        );
+        // Characterizes df53334 behaviour: convertFrom() checks isset($source['submittedFile']
+        // ['resourcePointer']) without a type guard. An array resourcePointer is handed to
+        // HashService::validateAndStripHmac(string $string, ...) -> uncaught TypeError (not caught by
+        // the surrounding catch (Exception)). 30e771a adds an is_array/is_string/non-empty guard
+        // (behaviour change, not a pure type-fix), so this test goes RED once 30e771a is cherry-picked
+        // -> revert that part in 30e771a; the real fix belongs in a later step.
+        $subject = $this->getSubject();
+        $uploadInfo = [
+            'error' => \UPLOAD_ERR_NO_FILE,
+            'submittedFile' => ['resourcePointer' => ['not-a-string']],
+        ];
 
-        // $subject = $this->getSubject();
-        // $uploadInfo = [
-        //     'error' => \UPLOAD_ERR_NO_FILE,
-        //     'submittedFile' => ['resourcePointer' => ['not-a-string']],
-        // ];
-        //
-        // self::assertNull($subject->convertFrom($uploadInfo, ExtbaseFileReference::class));
+        $this->expectException(\TypeError::class);
+
+        $subject->convertFrom($uploadInfo, ExtbaseFileReference::class);
     }
 
 }
