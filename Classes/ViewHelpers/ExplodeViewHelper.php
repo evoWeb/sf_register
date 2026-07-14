@@ -38,7 +38,9 @@ class ExplodeViewHelper extends AbstractViewHelper
     public function render(): array
     {
         $string = $this->arguments['string'] !== '' ? $this->arguments['string'] : $this->renderChildren();
+        $string = is_scalar($string) ? (string)$string : '';
         $delimiter = $this->arguments['delimiter'];
+        $delimiter = is_scalar($delimiter) ? (string)$delimiter : '';
 
         return GeneralUtility::trimExplode($delimiter, $string);
     }

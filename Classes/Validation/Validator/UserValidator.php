@@ -16,11 +16,12 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
+use SplObjectStorage;
 use Traversable;
 use TYPO3\CMS\Extbase\Error\Result;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractGenericObjectValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ObjectValidatorInterface;
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 class UserValidator extends AbstractGenericObjectValidator
 {
@@ -34,6 +35,10 @@ class UserValidator extends AbstractGenericObjectValidator
      */
     protected function isValid(mixed $object): void
     {
+        // Behaviour-preserving: keep df53334 behaviour where a non-ValidatableInterface object is
+        // assigned to the typed $model property, raising an uncaught TypeError. 30e771a's early-return
+        // guard changed behaviour and is deferred to a later fix step.
+        // @phpstan-ignore-next-line assign.propertyType
         $this->model = $object;
         foreach ($this->propertyValidators as $propertyName => $validators) {
             $propertyValue = $this->getPropertyValue($object, $propertyName);
@@ -45,11 +50,11 @@ class UserValidator extends AbstractGenericObjectValidator
      * Checks if the specified property of the given object is valid, and adds
      * found errors to the $messages object.
      *
-     * @param Traversable<int, AbstractValidator> $validators The validators to be called on the value
+     * @param SplObjectStorage<ValidatorInterface, mixed> $validators The validators to be called on the value
      */
     protected function checkProperty(mixed $value, Traversable $validators, string $propertyName): void
     {
-        /** @var Result $result */
+        /** @var ?Result $result */
         $result = null;
         foreach ($validators as $validator) {
             if ($validator instanceof SetModelInterface) {

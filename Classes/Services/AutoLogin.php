@@ -43,7 +43,8 @@ class AutoLogin extends AuthenticationService
             return null;
         }
 
-        $userId = (string)$this->registry->get('sf-register', $hmac);
+        $userId = $this->registry->get('sf-register', $hmac);
+        $userId = is_scalar($userId) ? (string)$userId : '';
         $this->registry->remove('sf-register', $hmac);
 
         $dbUserSetup = [...$this->db_user, 'username_column' => 'uid', 'enable_clause' => ''];

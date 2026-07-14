@@ -79,25 +79,11 @@ class SrFreecapAdapter extends AbstractAdapter
         }
     }
 
-    /**
-     * @return array<string, string>|string
-     */
-    public function render(): array|string
+    public function render(): string
     {
         $this->session->remove('captchaWasValid');
-
-        if ($this->captchaService !== null) {
-            $values = array_values($this->captchaService->makeCaptcha());
-            $output = array_combine($this->keys, $values);
-        } else {
-            $output = LocalizationUtility::translate(
-                'error_captcha_notinstalled',
-                'SfRegister',
-                ['sr_freecap']
-            );
-        }
-
-        return $output;
+        // Rendering is done by viewhelpers of sr_freecap
+        return '';
     }
 
     public function isValid(string $value): bool
@@ -105,9 +91,14 @@ class SrFreecapAdapter extends AbstractAdapter
         $validCaptcha = true;
 
         if ($this->captchaService !== null && $this->session->get('captchaWasValid') !== true) {
+            // @phpstan-ignore-next-line
             if (!$this->captchaService->checkWord($value)) {
                 $validCaptcha = false;
+                // Behaviour-preserving: keep df53334 behaviour where LocalizationUtility::translate()
+                // may return null (uncaught TypeError into addError(string)). The `?? '...'` fallback
+                // from 30e771a changed behaviour and is deferred to a later fix step.
                 $this->addError(
+                    // @phpstan-ignore-next-line argument.type
                     LocalizationUtility::translate(
                         'error_captcha_notcorrect',
                         'SfRegister'

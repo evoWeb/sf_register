@@ -13,6 +13,7 @@ use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request as ExtbaseRequest;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextFactory;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3Fluid\Fluid\Core\ViewHelper\MissingArgumentException;
 use TYPO3Fluid\Fluid\View\TemplateView;
 
 /**
@@ -176,12 +177,10 @@ class AbstractSelectViewHelperTest extends AbstractTestBase
     }
 
     /**
-     * Characterizes df53334 behaviour: isSelected() force-selects ALL options only when no value is
-     * bound (`empty($selectedValue)` guard), so with an explicit value only the matching option is
-     * selected. 30e771a removes that guard so selectAllByDefault force-selects even with an explicit
-     * value (behaviour change), so this test goes RED once 30e771a is cherry-picked -> revert that
-     * part in 30e771a; the real fix belongs in a later step. (The selectAllByDefault docblock still
-     * documents the df53334 "selected if none was set before" behaviour.)
+     * isSelected() force-selects ALL options only when no value is bound (the `empty($selectedValue)`
+     * guard), so with an explicit value only the matching option is selected -- as documented by the
+     * selectAllByDefault "selected if none was set before" contract. (30e771a had dropped that guard,
+     * a regression that is kept reverted here.)
      */
     #[Test]
     public function selectAllByDefaultOnlySelectsMatchingOptionWhenExplicitValueIsBound(): void
@@ -203,17 +202,14 @@ class AbstractSelectViewHelperTest extends AbstractTestBase
     }
 
     /**
-     * Characterizes df53334 behaviour: array-value options without optionValueField have no guard, so
-     * getOptions() falls through to PersistenceManager::getIdentifierByObject()
-     * (AbstractSelectViewHelper.php:195) with an array argument -> uncaught \Error (a TypeError against
-     * the object-typed parameter). 30e771a adds a guard raising a MissingArgumentException (code
-     * 1682693720) instead (behaviour change), so this test goes RED once 30e771a is cherry-picked ->
-     * revert that part in 30e771a; the real fix belongs in a later step.
+     * Array-value options without an optionValueField raise a clear MissingArgumentException instead
+     * of falling through to PersistenceManager::getIdentifierByObject() with an array argument.
      */
     #[Test]
-    public function getOptionsForArrayOptionsWithoutOptionValueFieldThrowsError(): void
+    public function getOptionsForArrayOptionsWithoutOptionValueFieldThrowsMissingArgumentException(): void
     {
-        $this->expectException(\Error::class);
+        $this->expectException(MissingArgumentException::class);
+        $this->expectExceptionCode(1682693720);
 
         $this->renderTemplate(
             '<testvh:selectFixture name="myField" '

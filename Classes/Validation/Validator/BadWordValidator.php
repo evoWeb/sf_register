@@ -42,8 +42,11 @@ class BadWordValidator extends AbstractValidator
      */
     public function isValid(mixed $value): void
     {
-        $badWordItems = GeneralUtility::trimExplode(',', $this->settings['badWordList'] ?? '');
+        $badWordList = $this->settings['badWordList'] ?? '';
+        $badWordList = is_scalar($badWordList) ? (string)$badWordList : '';
+        $badWordItems = GeneralUtility::trimExplode(',', $badWordList);
 
+        $value = is_scalar($value) ? (string)$value : '';
         if (in_array(strtolower($value), $badWordItems)) {
             $this->addError(
                 $this->translateErrorMessage('error_badword', 'SfRegister', $this->options),

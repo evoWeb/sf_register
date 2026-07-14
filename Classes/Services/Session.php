@@ -17,6 +17,7 @@ namespace Evoweb\SfRegister\Services;
 
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\NormalizedParams;
+use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Http\SetCookieService;
 use TYPO3\CMS\Core\Session\UserSession;
 use TYPO3\CMS\Core\Session\UserSessionManager;
@@ -57,12 +58,14 @@ class Session implements SingletonInterface
     public function fetch(): self
     {
         if ($this->values === null) {
+            $this->values = [];
             $sessionValue = $this->session->get($this->sessionKey);
             if (!empty($sessionValue)) {
-                $this->values = unserialize($sessionValue);
-            }
-            if (!is_array($this->values)) {
-                $this->values = [];
+                $values = unserialize($sessionValue);
+                if (is_array($values)) {
+                    /** @var array<string, mixed> $values */
+                    $this->values = $values;
+                }
             }
         }
 
@@ -83,7 +86,7 @@ class Session implements SingletonInterface
     {
         $result = false;
 
-        if (array_key_exists($key, $this->values)) {
+        if (array_key_exists($key, $this->values ?? [])) {
             $result = true;
         }
 
@@ -95,7 +98,7 @@ class Session implements SingletonInterface
         $result = null;
 
         if ($this->has($key)) {
-            $result = $this->values[$key];
+            $result = $this->values[$key] ?? null;
         }
 
         return $result;
@@ -119,6 +122,7 @@ class Session implements SingletonInterface
 
     public function getRequest(): ServerRequestInterface
     {
-        return $GLOBALS['TYPO3_REQUEST'];
+        return $GLOBALS['TYPO3_REQUEST'] instanceof ServerRequestInterface
+            ? $GLOBALS['TYPO3_REQUEST'] : new ServerRequest();
     }
 }

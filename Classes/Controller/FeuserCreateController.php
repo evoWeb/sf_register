@@ -32,6 +32,7 @@ use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Services\Setup\CheckFactory;
+use Evoweb\SfRegister\Services\Setup\CheckInterface;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
@@ -82,7 +83,9 @@ class FeuserCreateController extends FeuserController
         }
 
         if ($user) {
-            $user = $this->eventDispatcher->dispatch(new CreateFormEvent($user, $this->settings))->getUser();
+            $event = new CreateFormEvent($user, $this->settings);
+            $this->eventDispatcher->dispatch($event);
+            $user = $event->getUser();
             $this->view->assign('user', $user);
         }
 
@@ -97,7 +100,9 @@ class FeuserCreateController extends FeuserController
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
 
-        $user = $this->eventDispatcher->dispatch(new CreatePreviewEvent($user, $this->settings))->getUser();
+        $event = new CreatePreviewEvent($user, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $user = $event->getUser();
         $this->view->assign('user', $user);
 
         return new HtmlResponse($this->view->render());
@@ -130,7 +135,9 @@ class FeuserCreateController extends FeuserController
             $user->setUsername($user->getEmail());
         }
 
-        $user = $this->eventDispatcher->dispatch(new CreateSaveEvent($user, $this->settings))->getUser();
+        $event = new CreateSaveEvent($user, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $user = $event->getUser();
 
         try {
             // Persist user to get valid uid
@@ -165,13 +172,13 @@ class FeuserCreateController extends FeuserController
 
         $this->view->assign('user', $user);
 
-        $redirectResponse = null;
         $redirectPageId = (int)($this->settings['redirectPostRegistrationPageId'] ?? 0);
         if ($this->settings['autologinPostRegistration'] ?? false) {
             $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
         }
 
-        if ($redirectResponse === null && $redirectPageId > 0) {
+        $redirectResponse = null;
+        if ($redirectPageId > 0) {
             $redirectResponse = $this->frontendUserService->redirectToPage($this->request, $redirectPageId);
         }
 
@@ -233,7 +240,9 @@ class FeuserCreateController extends FeuserController
                     $user->setDisable(false);
                 }
 
-                $user = $this->eventDispatcher->dispatch(new CreateConfirmEvent($user, $this->settings))->getUser();
+                $event = new CreateConfirmEvent($user, $this->settings);
+                $this->eventDispatcher->dispatch($event);
+                $user = $event->getUser();
                 /** @var FrontendUser $user */
                 $user = $this->mailService->sendEmails(
                     $this->request,
@@ -256,7 +265,7 @@ class FeuserCreateController extends FeuserController
                     $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
                 }
 
-                if ($redirectResponse === null && $redirectPageId > 0) {
+                if ($redirectPageId > 0) {
                     $redirectResponse = $this->frontendUserService->redirectToPage($this->request, $redirectPageId);
                 }
             }
@@ -301,13 +310,17 @@ class FeuserCreateController extends FeuserController
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
-            $user = $this->eventDispatcher->dispatch(new CreateRefuseEvent($user, $this->settings))->getUser();
+            $event = new CreateRefuseEvent($user, $this->settings);
+            $this->eventDispatcher->dispatch($event);
+            $user = $event->getUser();
             $this->view->assign('user', $user);
 
             if ($user->getImage()->count()) {
                 $image = $user->getImage()->current();
-                $this->fileService->removeFile($image);
-                $this->removeImageFromUserAndRequest($user);
+                if ($image) {
+                    $this->fileService->removeFile($image);
+                    $this->removeImageFromUserAndRequest($user);
+                }
             }
 
             $this->userRepository->remove($user);
@@ -379,7 +392,9 @@ class FeuserCreateController extends FeuserController
                     $user->setActivatedOn(new DateTime('now'));
                 }
 
-                $user = $this->eventDispatcher->dispatch(new CreateAcceptEvent($user, $this->settings))->getUser();
+                $event = new CreateAcceptEvent($user, $this->settings);
+                $this->eventDispatcher->dispatch($event);
+                $user = $event->getUser();
 
                 try {
                     $this->userRepository->update($user);
@@ -437,13 +452,17 @@ class FeuserCreateController extends FeuserController
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userNotFound', 1);
         } else {
-            $user = $this->eventDispatcher->dispatch(new CreateDeclineEvent($user, $this->settings))->getUser();
+            $event = new CreateDeclineEvent($user, $this->settings);
+            $this->eventDispatcher->dispatch($event);
+            $user = $event->getUser();
             $this->view->assign('user', $user);
 
             if ($user->getImage()->count()) {
                 $image = $user->getImage()->current();
-                $this->fileService->removeFile($image);
-                $this->removeImageFromUserAndRequest($user);
+                if ($image) {
+                    $this->fileService->removeFile($image);
+                    $this->removeImageFromUserAndRequest($user);
+                }
             }
 
             $this->userRepository->remove($user);
@@ -468,7 +487,7 @@ class FeuserCreateController extends FeuserController
 
         $setupChecks = $this->checkFactory->getCheckInstances();
         foreach ($setupChecks as $setupCheck) {
-            if ($setupResponse = $setupCheck->check($this->settings)) {
+            if ($setupCheck instanceof CheckInterface && $setupResponse = $setupCheck->check($this->settings)) {
                 break;
             }
         }

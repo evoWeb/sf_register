@@ -45,6 +45,7 @@ class CaptchaValidator extends AbstractValidator
     public function isValid(mixed $value): void
     {
         $captchaAdapter = $this->captchaAdapterFactory->getCaptchaAdapter($this->options['type']);
+        $value = is_scalar($value) ? (string)$value : '';
         if (!$captchaAdapter->isValid($value)) {
             foreach ($captchaAdapter->getErrors() as $error) {
                 $this->result->addError($error);

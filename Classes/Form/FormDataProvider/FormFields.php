@@ -28,18 +28,37 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
      */
     public function addData(array $result): array
     {
-        foreach ($result['processedTca']['columns'] as $fieldName => $fieldConfig) {
-            if (!isset($fieldConfig['config']['sfRegisterForm'])) {
+        if (!isset($result['databaseRow']) || !is_array($result['databaseRow'])) {
+            $result['databaseRow'] = [];
+        }
+
+        $processedTca = is_array($result['processedTca'] ?? null) ? $result['processedTca'] : [];
+        $columns = is_array($processedTca['columns'] ?? null) ? $processedTca['columns'] : [];
+
+        foreach ($columns as $fieldName => $fieldConfig) {
+            $fieldName = (string)$fieldName;
+            if (!is_array($fieldConfig)) {
+                continue;
+            }
+            $config = $fieldConfig['config'] ?? null;
+            if (!is_array($config) || !isset($config['sfRegisterForm'])) {
                 continue;
             }
 
-            $result['processedTca']['columns'][$fieldName] = $this->getAvailableFields($fieldConfig);
+            /** @var array<string, mixed> $fieldConfig */
+            $columns[$fieldName] = $this->getAvailableFields($fieldConfig);
 
             $currentDatabaseValuesArray = $this->processDatabaseFieldValue($result['databaseRow'], $fieldName);
-            if (empty($currentDatabaseValuesArray) && !($fieldConfig['config']['doNotPreSelect'] ?? false)) {
-                $result['databaseRow'][$fieldName] = $this->getSelectedFields($fieldConfig['config']['sfRegisterForm']);
+            if (empty($currentDatabaseValuesArray) && !($config['doNotPreSelect'] ?? false)) {
+                $sfRegisterForm = $config['sfRegisterForm'];
+                $result['databaseRow'][$fieldName] = $this->getSelectedFields(
+                    is_string($sfRegisterForm) ? $sfRegisterForm : ''
+                );
             }
         }
+
+        $processedTca['columns'] = $columns;
+        $result['processedTca'] = $processedTca;
 
         return $result;
     }
@@ -50,6 +69,9 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
      */
     protected function getAvailableFields(array $fieldConfig): array
     {
+        if (!isset($fieldConfig['config']) || !is_array($fieldConfig['config'])) {
+            $fieldConfig['config'] = [];
+        }
         $items = [];
         $configuredFields = $this->getAvailableFieldsFromTsConfig();
         foreach ($configuredFields as $fieldName => $configuration) {
@@ -77,7 +99,7 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
      */
     protected function getAvailableFieldsFromTsConfig(): array
     {
-        $tsConfig = $this->getBackendUserAuthentication()->getTSConfig();
+        $tsConfig = $this->getBackendUserAuthentication()?->getTSConfig() ?? [];
         $pluginConfiguration = $tsConfig['plugin.']['tx_sfregister.'] ?? [];
         return $pluginConfiguration['settings.']['fields.']['configuration.'] ?? [];
     }
@@ -87,7 +109,7 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
      */
     protected function getDefaultSelectedFieldsFromTsConfig(): array
     {
-        $tsConfig = $this->getBackendUserAuthentication()->getTSConfig();
+        $tsConfig = $this->getBackendUserAuthentication()?->getTSConfig() ?? [];
         $pluginConfiguration = $tsConfig['plugin.']['tx_sfregister.'] ?? [];
         return $pluginConfiguration['settings.']['fields.']['defaultSelected.'] ?? [];
     }
@@ -98,11 +120,12 @@ class FormFields extends AbstractItemProvider implements FormDataProviderInterfa
     protected function getLabel(string $fieldName, array|string $configuration): string
     {
         $labelPath = $configuration['backendLabel'] ?? 'sf_register.be:fe_users.' . $fieldName;
+        $labelPath = is_string($labelPath) ? $labelPath : 'sf_register.be:fe_users.' . $fieldName;
         return $this->getLanguageService()->sL($labelPath);
     }
 
     protected function getBackendUserAuthentication(): ?BackendUserAuthentication
     {
-        return $GLOBALS['BE_USER'];
+        return $GLOBALS['BE_USER'] instanceof BackendUserAuthentication ? $GLOBALS['BE_USER'] : null;
     }
 }

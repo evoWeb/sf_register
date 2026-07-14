@@ -62,8 +62,9 @@ class FeuserResendController extends FeuserController
             }
         }
 
-        $email = $this->eventDispatcher->dispatch(new ResendFormEvent($email, $this->settings))->getEmail();
-        $this->view->assign('email', $email);
+        $event = new ResendFormEvent($email, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $this->view->assign('email', $event->getEmail());
 
         return new HtmlResponse($this->view->render());
     }
@@ -72,7 +73,9 @@ class FeuserResendController extends FeuserController
         #[Attribute\Validate(validator: UserValidator::class)]
         Email $email
     ): ResponseInterface {
-        $email = $this->eventDispatcher->dispatch(new ResendMailEvent($email, $this->settings))->getEmail();
+        $event = new ResendMailEvent($email, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $email = $event->getEmail();
         $user = $this->userRepository->findByEmail($email->getEmail());
 
         if ($user instanceof FrontendUser) {

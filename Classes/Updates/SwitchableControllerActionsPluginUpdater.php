@@ -120,6 +120,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
             return false;
         }
 
+        /** @var array{uid: int, list_type: string, pi_flexform: string} $record */
         foreach ($records as $record) {
             if (!str_contains($record['pi_flexform'], 'switchableControllerActions')) {
                 continue;
@@ -129,6 +130,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
             $newListType = $this->getTargetListType($record['list_type'], $flexForm['switchableControllerActions']);
             $allowedSettings = $this->getSettingsFromFlexFormDataStructureFile($newListType);
 
+            /** @var array<string, array<string, mixed>> $flexFormData */
             $flexFormData = GeneralUtility::xml2array($record['pi_flexform']);
             $flexFormData = $this->removeFieldsNotPresentInDataStructure($flexFormData, $allowedSettings);
             $newFlexform = count($flexFormData['data']) ? $this->transformArrayToXml($flexFormData) : '';
@@ -183,19 +185,34 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
      */
     protected function getSettingsFromFlexFormDataStructureFile(string $listType): array
     {
-        $flexFormFile =
-            $GLOBALS['TCA'][self::TABLE_NAME]['columns']['pi_flexform']['config']['ds'][$listType . ',list'] ?? null;
+        $tca = is_array($GLOBALS['TCA'] ?? null) ? $GLOBALS['TCA'] : [];
+        $tca = is_array($tca[self::TABLE_NAME] ?? null) ? $tca[self::TABLE_NAME] : [];
+        $columns = is_array($tca['columns'] ?? null) ? $tca['columns'] : [];
+        $piFlexform = is_array($columns['pi_flexform'] ?? null) ? $columns['pi_flexform'] : [];
+        $config = is_array($piFlexform['config'] ?? null) ? $piFlexform['config'] : [];
+        $ds = is_array($config['ds'] ?? null) ? $config['ds'] : [];
+        $flexFormFile = is_string($ds[$listType . ',list'] ?? null) ? $ds[$listType . ',list'] : null;
 
         if ($flexFormFile === null) {
             return [];
         }
 
         $flexFormContent = file_get_contents(GeneralUtility::getFileAbsFileName(substr(trim($flexFormFile), 5)));
+        if ($flexFormContent === false) {
+            return [];
+        }
+
         $flexFormData = GeneralUtility::xml2array($flexFormContent);
+        if (!is_array($flexFormData)) {
+            return [];
+        }
 
         $settings = [];
-        foreach ($flexFormData['sheets'] as $sheet) {
-            foreach ($sheet['ROOT']['el'] as $setting => $tceForms) {
+        $sheets = is_array($flexFormData['sheets'] ?? null) ? $flexFormData['sheets'] : [];
+        foreach ($sheets as $sheet) {
+            $root = is_array($sheet) && is_array($sheet['ROOT'] ?? null) ? $sheet['ROOT'] : [];
+            $elements = is_array($root['el'] ?? null) ? $root['el'] : [];
+            foreach ($elements as $setting => $tceForms) {
                 $settings[] = $setting;
             }
         }
@@ -210,19 +227,29 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
      */
     protected function removeFieldsNotPresentInDataStructure(array $flexFormData, array $allowedSettings): array
     {
-        foreach ($flexFormData['data'] as $sheetKey => $sheetData) {
-            foreach ($sheetData['lDEF'] as $settingName => $setting) {
+        $data = is_array($flexFormData['data'] ?? null) ? $flexFormData['data'] : [];
+        foreach ($data as $sheetKey => $sheetData) {
+            if (!is_array($sheetData)) {
+                continue;
+            }
+
+            $lDEF = is_array($sheetData['lDEF'] ?? null) ? $sheetData['lDEF'] : [];
+            foreach ($lDEF as $settingName => $setting) {
                 // Remove fields which do not exist in flexform data structure of new plugin
                 if (!in_array($settingName, $allowedSettings, true)) {
-                    unset($flexFormData['data'][$sheetKey]['lDEF'][$settingName]);
+                    unset($lDEF[$settingName]);
                 }
             }
 
             // Remove empty sheets
-            if (!count($flexFormData['data'][$sheetKey]['lDEF']) > 0) {
-                unset($flexFormData['data'][$sheetKey]);
+            if (count($lDEF) === 0) {
+                unset($data[$sheetKey]);
+            } else {
+                $sheetData['lDEF'] = $lDEF;
+                $data[$sheetKey] = $sheetData;
             }
         }
+        $flexFormData['data'] = $data;
 
         return $flexFormData;
     }

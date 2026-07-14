@@ -19,6 +19,9 @@ use Psr\Container\ContainerInterface;
 
 class CheckFactory
 {
+    /**
+     * @param string[] $checkClassnames
+     */
     public function __construct(
         protected ContainerInterface $container,
         protected array $checkClassnames = [
@@ -30,7 +33,7 @@ class CheckFactory
     }
 
     /**
-     * @return CheckInterface[]
+     * @return object[]
      */
     public function getCheckInstances(): array
     {

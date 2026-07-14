@@ -42,11 +42,14 @@ class BlockDomainValidator extends AbstractValidator
      */
     public function isValid(mixed $value): void
     {
-        $blockDomainItems = GeneralUtility::trimExplode(',', $this->settings['blockDomainList'] ?? '');
-        $email = trim((string)$value);
+        $blockDomainList = $this->settings['blockDomainList'] ?? '';
+        $blockDomainList = is_scalar($blockDomainList) ? (string)$blockDomainList : '';
+        $blockDomainItems = GeneralUtility::trimExplode(',', $blockDomainList);
+        $email = trim(is_scalar($value) ? (string)$value : '');
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $emailDomain = substr(strrchr($email, '@'), 1);
+            $lastAtPart = strrchr($email, '@');
+            $emailDomain = $lastAtPart !== false ? substr($lastAtPart, 1) : '';
 
             if (in_array($emailDomain, $blockDomainItems, true)) {
                 $this->addError(

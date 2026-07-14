@@ -24,12 +24,9 @@ use Evoweb\SfRegister\Validation\Validator\EmptyValidator;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentUserValidator;
 use Evoweb\SfRegister\Validation\Validator\SetPropertyNameInterface;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
-use Exception;
 use Psr\Log\LoggerInterface;
-use ReflectionException;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Log\LogManager;
-use TYPO3\CMS\Extbase\Attribute as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
@@ -49,7 +46,7 @@ class ModifyValidator
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string>|string> $settings
      * @param string[] $ignoredActions
      */
     public function shouldValidationBeModified(
@@ -67,7 +64,7 @@ class ModifyValidator
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string>|string> $settings
      * @param string[] $ignoredActions
      */
     protected function actionIsIgnored(
@@ -76,7 +73,9 @@ class ModifyValidator
         string $actionMethodName,
         array $ignoredActions,
     ): bool {
-        $ignoredActions = array_merge($settings['ignoredActions'][$controllerName] ?? [], $ignoredActions);
+        $controllerIgnoredActions = $settings['ignoredActions'][$controllerName] ?? [];
+        $controllerIgnoredActions = is_array($controllerIgnoredActions) ? $controllerIgnoredActions : [];
+        $ignoredActions = array_merge($controllerIgnoredActions, $ignoredActions);
         return in_array($actionMethodName, $ignoredActions);
     }
 
@@ -91,7 +90,7 @@ class ModifyValidator
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string>|string> $settings
      */
     public function modifyArgumentValidators(
         FeuserController $controller,
@@ -99,6 +98,10 @@ class ModifyValidator
         RequestInterface $request,
         Arguments $arguments,
     ): Arguments {
+        /**
+         * @var string $argumentName
+         * @var Argument $argument
+         */
         foreach ($arguments as $argumentName => $argument) {
             if (!in_array($argumentName, ['user', 'password', 'email'])) {
                 continue;
@@ -123,13 +126,20 @@ class ModifyValidator
         array $settings,
         FeuserController $controller,
     ): void {
+        /** @var array<string, string[]> $configuredValidators */
         $configuredValidators = $settings['validation'][strtolower($controller->getControllerName())] ?? [];
         $parser = new DocParser();
 
         /** @var UserValidator $validator */
         $validator = $this->validatorResolver->createValidator(UserValidator::class);
         foreach ($configuredValidators as $fieldName => $configuredValidator) {
-            if (!in_array($fieldName, $settings['fields']['selected'] ?? [])) {
+            if (
+                !isset($settings['fields'])
+                || !is_array($settings['fields'])
+                || !isset($settings['fields']['selected'])
+                || !is_array($settings['fields']['selected'])
+                || !in_array($fieldName, $settings['fields']['selected'])
+            ) {
                 continue;
             }
 
@@ -145,7 +155,7 @@ class ModifyValidator
                         $fieldName,
                         $request,
                     );
-                } catch (Exception $exception) {
+                } catch (\Exception $exception) {
                     $this->logger->debug($exception->getMessage());
                     continue;
                 }
@@ -154,22 +164,29 @@ class ModifyValidator
                 $validatorInstance = $this->validatorResolver->createValidator(ConjunctionValidator::class);
                 foreach ($configuredValidator as $individualConfiguredValidator) {
                     try {
+                        if (!is_string($individualConfiguredValidator)) {
+                            continue;
+                        }
                         $individualValidatorInstance = $this->getValidatorByConfiguration(
                             $individualConfiguredValidator,
                             $parser,
                             $fieldName,
                             $request,
                         );
-                    } catch (Exception $exception) {
+                    } catch (\Exception $exception) {
                         $this->logger->debug($exception->getMessage());
                         continue;
                     }
 
-                    $validatorInstance->addValidator($individualValidatorInstance);
+                    if ($individualValidatorInstance) {
+                        $validatorInstance->addValidator($individualValidatorInstance);
+                    }
                 }
             }
 
-            $validator->addPropertyValidator($fieldName, $validatorInstance);
+            if ($validatorInstance) {
+                $validator->addPropertyValidator($fieldName, $validatorInstance);
+            }
         }
 
         $this->addUidValidator($controller->getControllerName(), $validator);
@@ -178,7 +195,7 @@ class ModifyValidator
     }
 
     /**
-     * @throws ReflectionException
+     * @throws \ReflectionException
      * @throws AnnotationException
      */
     protected function getValidatorByConfiguration(
@@ -191,14 +208,19 @@ class ModifyValidator
             $configuration = '"' . $configuration . '"';
         }
 
-        /** @var Extbase\Validate $validateAnnotation */
+        $validator = null;
         $configuration = '@' . Validate::class . '(' . $configuration . ')';
         $validateAnnotation = current($parser->parse($configuration));
-        $validator = $this->validatorResolver->createValidator(
-            $validateAnnotation->validator,
-            $validateAnnotation->options,
-            $request
-        );
+        // The DocParser instantiates the Evoweb\SfRegister\Annotation\Validate annotation named in
+        // $configuration - the instanceof must check exactly that class (parse() may return false);
+        // a validator has to be resolved for every valid annotation.
+        if ($validateAnnotation instanceof Validate) {
+            $validator = $this->validatorResolver->createValidator(
+                $validateAnnotation->validator,
+                $validateAnnotation->options,
+                $request
+            );
+        }
 
         if ($validator instanceof SetPropertyNameInterface) {
             $validator->setPropertyName($fieldName);
@@ -217,8 +239,10 @@ class ModifyValidator
 
         try {
             $validatorInstance = $this->validatorResolver->createValidator($validatorName);
-            $validator->addPropertyValidator('uid', $validatorInstance);
-        } catch (Exception) {
+            if ($validatorInstance instanceof ValidatorInterface) {
+                $validator->addPropertyValidator('uid', $validatorInstance);
+            }
+        } catch (\Exception) {
         }
 
         return $validator;

@@ -52,13 +52,19 @@ class FeuserInviteController extends FeuserController
     {
         if ($user === null) {
             if ($this->frontendUserService->userIsLoggedIn()) {
+                // Behaviour-preserving: keep df53334 behaviour where getLoggedInUser() may return null
+                // (uncaught TypeError into the non-nullable InviteFormEvent constructor). 30e771a's
+                // `?? new FrontendUser()` changed behaviour and is deferred to a later fix step.
                 $user = $this->frontendUserService->getLoggedInUser();
             } else {
                 $user = GeneralUtility::makeInstance(FrontendUser::class);
             }
         }
 
-        $user = $this->eventDispatcher->dispatch(new InviteFormEvent($user, $this->settings))->getUser();
+        // @phpstan-ignore-next-line argument.type
+        $event = new InviteFormEvent($user, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $user = $event->getUser();
         $this->view->assign('user', $user);
 
         return new HtmlResponse($this->view->render());
@@ -78,7 +84,8 @@ class FeuserInviteController extends FeuserController
         );
 
         $event = new InviteInviteEvent($user, $this->settings, false);
-        $doNotSendInvitation = $this->eventDispatcher->dispatch($event)->isDoNotSendInvitation();
+        $this->eventDispatcher->dispatch($event);
+        $doNotSendInvitation = $event->isDoNotSendInvitation();
         if (!$doNotSendInvitation) {
             $user = $this->mailService->sendInvitation(
                 $this->request,

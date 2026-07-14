@@ -32,6 +32,7 @@ use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Security\RequestToken;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Frontend\Page\PageInformation;
@@ -132,7 +133,8 @@ class FrontendUser
             $redirectPageId = $pageInformation->getId();
         }
 
-        $salt = \DateTime::createFromFormat('U.u', (string)microtime(true))->format('Y-m-d H:i:s.u');
+        $dateTime = \DateTime::createFromFormat('U.u', (string)microtime(true));
+        $salt = $dateTime !== false ? $dateTime->format('Y-m-d H:i:s.u') : '';
         $hmac = $this->hashService->hmac('auto-login::' . $user->getUid(), self::ADDITIONAL_SECRET . $salt);
 
         $this->registry->set('sf-register', $hmac, $user->getUid());
@@ -185,7 +187,10 @@ class FrontendUser
     {
         $user = null;
         $userId = $this->getLoggedInUserId();
-        $originalRequest = $request->getAttribute('extbase')->getOriginalRequest();
+        $extbaseParameters = $request->getAttribute('extbase');
+        $originalRequest = $extbaseParameters instanceof ExtbaseRequestParameters
+            ? $extbaseParameters->getOriginalRequest()
+            : null;
         if (
             (
                 $request->hasArgument('user')
@@ -196,7 +201,7 @@ class FrontendUser
             /** @var FrontendUserModel $userData */
             $userData = $request->hasArgument('user')
                 ? $request->getArgument('user')
-                : $originalRequest->getArgument('user');
+                : $originalRequest?->getArgument('user');
             if ($userData instanceof FrontendUserModel && $userData->getUid() == $userId) {
                 $user = $userData;
             }

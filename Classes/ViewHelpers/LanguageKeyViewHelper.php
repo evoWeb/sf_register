@@ -70,12 +70,18 @@ class LanguageKeyViewHelper extends AbstractViewHelper
     protected function getLanguageCode(): string
     {
         $languageCode = '';
-        if (ApplicationType::fromRequest($this->getRequest())->isFrontend()) {
-            $language = $this->getRequest()->getAttribute('language');
+
+        $request = null;
+        if ($this->renderingContext?->hasAttribute(ServerRequestInterface::class)) {
+            $request = $this->renderingContext->getAttribute(ServerRequestInterface::class);
+        }
+
+        if ($request && ApplicationType::fromRequest($request)->isFrontend()) {
+            $language = $request->getAttribute('language');
             if ($language instanceof SiteLanguage && trim($language->getLocale()->getLanguageCode())) {
                 $languageCode = trim($language->getLocale()->getLanguageCode());
             }
-        } elseif ($this->getBackendUserAuthentication()->uc['lang'] != '') {
+        } elseif ($this->getBackendUserAuthentication()?->uc['lang'] != '') {
             $languageCode = $this->getBackendUserAuthentication()->uc['lang'];
         }
         return $languageCode;
@@ -84,6 +90,7 @@ class LanguageKeyViewHelper extends AbstractViewHelper
     protected function getConfiguredType(): string
     {
         $type = $this->arguments['type'] ?? '';
+        $type = is_string($type) ? $type : '';
 
         return in_array($type, ['countries', 'languages', 'zones']) ? $type : '';
     }
@@ -110,13 +117,8 @@ class LanguageKeyViewHelper extends AbstractViewHelper
         return $result;
     }
 
-    protected function getRequest(): ServerRequestInterface
-    {
-        return $GLOBALS['TYPO3_REQUEST'];
-    }
-
     protected function getBackendUserAuthentication(): ?BackendUserAuthentication
     {
-        return $GLOBALS['BE_USER'];
+        return $GLOBALS['BE_USER'] instanceof BackendUserAuthentication ? $GLOBALS['BE_USER'] : null;
     }
 }
