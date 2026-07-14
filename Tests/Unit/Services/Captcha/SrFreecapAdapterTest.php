@@ -205,25 +205,3 @@ class SrFreecapAdapterTest extends UnitTestCase
         self::assertSame(1306910429, $errors[0]->getCode());
     }
 }
-
-/**
- * Stand-in for SJBR\SrFreecap\PiBaseApi (which does not exist in this test environment, see
- * SrFreecapAdapterTest::createCaptchaServiceStub()). Only exposes what SrFreecapAdapter::isValid()
- * actually calls, plus call tracking so delegation and pass-through can be asserted.
- */
-class CaptchaServiceStub
-{
-    public int $checkWordCallCount = 0;
-
-    public ?string $receivedValue = null;
-
-    public function __construct(private readonly bool $checkWordResult) {}
-
-    public function checkWord(string $value): bool
-    {
-        $this->checkWordCallCount++;
-        $this->receivedValue = $value;
-
-        return $this->checkWordResult;
-    }
-}

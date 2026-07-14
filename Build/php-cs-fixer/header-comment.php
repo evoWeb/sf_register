@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is developed by evoWeb.
+ * This file is part of the TYPO3 CMS project.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -11,35 +11,25 @@ declare(strict_types=1);
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
  */
 
-/**
- * This file adds header to php file which don't have any.
- *
- * Run it using runTests.sh, see 'runTests.sh -h' for more options.
- *
- * Fix entire extension:
- * > Build/Scripts/additionalTests.sh -p 8.3 -s composerInstallPackage -q "typo3/cms-core:[dev-main,13...]"
- * > Build/Scripts/runTests.sh -s cglHeader
- *
- * Fix your current patch:
- * > Build/Scripts/runTests.sh -s cglHeaderGit
- */
 if (PHP_SAPI !== 'cli') {
     die('This script supports command line usage only. Please check your command.');
 }
 
 $finder = PhpCsFixer\Finder::create()
     ->name('*.php')
-    ->in(__DIR__ . '/../extender/')
-    ->exclude('Acceptance/Support/_generated') // EXT:core
-    ->exclude('Build')
+    ->in(__DIR__ . '/../../')
+    ->exclude('node_modules')
     // Configuration files do not need header comments
     ->exclude('Configuration')
     ->notName('*locallang*.php')
     ->notName('ext_localconf.php')
     ->notName('ext_tables.php')
     ->notName('ext_emconf.php')
+    ->notName('framework-packages.php')
     // ClassAliasMap files do not need header comments
     ->notName('ClassAliasMap.php')
     // CodeSnippets and Examples in Documentation do not need header comments

@@ -182,6 +182,7 @@ cleanTestFiles() {
         Build/phpunit/FunctionalTests-Job-*.xml \
         Build/phpunit \
         Build/public \
+        packages \
         public/ \
         typo3temp/ \
         var/ \

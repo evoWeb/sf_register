@@ -123,8 +123,7 @@ class ActionViewHelper extends AbstractTagBasedViewHelper
         if ($this->renderingContext?->hasAttribute(ServerRequestInterface::class)) {
             $request = $this->renderingContext->getAttribute(ServerRequestInterface::class);
         }
-        // Since f:uri.action and f:link.action use exactly the same ViewHelper arguments,
-        // the glue code between the ViewHelper API and TYPO3's URI generation is shared across both ViewHelpers.
+
         $childContent = $this->renderChildren();
         $childContent = is_string($childContent) ? $childContent : '';
         if ($request instanceof ExtbaseRequestInterface) {
