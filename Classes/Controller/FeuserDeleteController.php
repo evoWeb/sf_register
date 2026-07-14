@@ -61,7 +61,9 @@ class FeuserDeleteController extends FeuserController
         }
 
         if ($user instanceof FrontendUser) {
-            $user = $this->eventDispatcher->dispatch(new DeleteFormEvent($user, $this->settings))->getUser();
+            $event = new DeleteFormEvent($user, $this->settings);
+            $this->eventDispatcher->dispatch($event);
+            $user = $event->getUser();
         }
 
         $this->view->assign('user', $user);
@@ -76,7 +78,9 @@ class FeuserDeleteController extends FeuserController
         if ($user === null) {
             return $this->redirect('form');
         }
-        $user = $this->eventDispatcher->dispatch(new DeleteSaveEvent($user, $this->settings))->getUser();
+        $event = new DeleteSaveEvent($user, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $user = $event->getUser();
 
         if (!$user->getUsername()) {
             $user->setUsername($user->getEmail());
@@ -115,7 +119,9 @@ class FeuserDeleteController extends FeuserController
         if (!($user instanceof FrontendUser)) {
             $this->view->assign('userAlreadyDeleted', 1);
         } else {
-            $user = $this->eventDispatcher->dispatch(new DeleteConfirmEvent($user, $this->settings))->getUser();
+            $event = new DeleteConfirmEvent($user, $this->settings);
+            $this->eventDispatcher->dispatch($event);
+            $user = $event->getUser();
             $this->view->assign('user', $user);
 
             $this->mailService->sendEmails(
@@ -128,8 +134,10 @@ class FeuserDeleteController extends FeuserController
 
             if ($user->getImage()->count()) {
                 $image = $user->getImage()->current();
-                $this->fileService->removeFile($image);
-                $this->removeImageFromUserAndRequest($user);
+                if ($image) {
+                    $this->fileService->removeFile($image);
+                    $this->removeImageFromUserAndRequest($user);
+                }
             }
 
             $this->userRepository->remove($user);

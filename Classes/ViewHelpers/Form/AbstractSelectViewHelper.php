@@ -15,10 +15,11 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
-use Traversable;
+use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
+use TYPO3Fluid\Fluid\Core\ViewHelper\InvalidArgumentValueException;
+use TYPO3Fluid\Fluid\Core\ViewHelper\MissingArgumentException;
 
 class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
 {
@@ -95,7 +96,10 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
         // @extensionScannerIgnoreLine
         $options = $this->getOptions();
 
-        $viewHelperVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
+        $viewHelperVariableContainer = $this->renderingContext?->getViewHelperVariableContainer();
+        if ($viewHelperVariableContainer === null) {
+            return '';
+        }
 
         $this->addAdditionalIdentityPropertiesIfNeeded();
         $this->setErrorClassAttribute();
@@ -128,9 +132,10 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
         $prependContent = $this->renderPrependOptionTag();
         $tagContent = $this->renderOptionTags($options);
         $childContent = $this->renderChildren();
+        $childContent = is_string($childContent) ? $childContent : '';
         $viewHelperVariableContainer->remove(self::class, 'selectedValue');
         $viewHelperVariableContainer->remove(self::class, 'registerFieldNameForFormTokenGeneration');
-        if (($this->arguments['optionsAfterContent'] ?? false)) {
+        if (isset($this->arguments['optionsAfterContent']) && $this->arguments['optionsAfterContent']) {
             $tagContent = $childContent . $tagContent;
         } else {
             $tagContent .= $childContent;
@@ -143,13 +148,15 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
         return $content;
     }
 
-    protected function renderPrependOptionTag(): string
+    private function renderPrependOptionTag(): string
     {
         $output = '';
         if ($this->hasArgument('prependOptionLabel')) {
             $value = $this->hasArgument('prependOptionValue') ? $this->arguments['prependOptionValue'] : '';
+            $value = is_string($value) ? $value : '';
             $label = $this->arguments['prependOptionLabel'];
-            $output .= $this->renderOptionTag((string)$value, (string)$label, false) . LF;
+            $label = is_string($label) ? $label : '';
+            $output .= $this->renderOptionTag($value, $label, false) . LF;
         }
         return $output;
     }
@@ -157,7 +164,7 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
     /**
      * @param array<int|string, string> $options
      */
-    protected function renderOptionTags(array $options): string
+    private function renderOptionTags(array $options): string
     {
         $output = '';
         foreach ($options as $value => $label) {
@@ -170,59 +177,70 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
     /**
      * @return array<int|string, string>
      */
-    protected function getOptions(): array
+    private function getOptions(): array
     {
-        if (!is_array($this->arguments['options']) && !$this->arguments['options'] instanceof Traversable) {
+        if (!is_array($this->arguments['options']) && !$this->arguments['options'] instanceof \Traversable) {
             return [];
         }
         $options = [];
         $optionsArgument = $this->arguments['options'];
         foreach ($optionsArgument as $key => $value) {
-            if (is_object($value) || is_array($value)) {
-                if ($this->hasArgument('optionValueField')) {
-                    $key = ObjectAccess::getPropertyPath($value, $this->arguments['optionValueField']);
-                    if (is_object($key)) {
-                        if (method_exists($key, '__toString')) {
-                            $key = (string)$key;
-                        } else {
-                            throw new Exception(
-                                'Identifying value for object of class "' . get_debug_type($value)
-                                . '" was an object.',
-                                1247827428
-                            );
-                        }
-                    }
-                } elseif ($this->persistenceManager->getIdentifierByObject($value) !== null) {
-                    // @todo use $this->persistenceManager->isNewObject() once it is implemented
-                    $key = $this->persistenceManager->getIdentifierByObject($value);
-                } elseif (is_object($value) && method_exists($value, '__toString')) {
-                    $key = (string)$value;
-                } elseif (is_object($value)) {
-                    throw new Exception(
-                        'No identifying value for object of class "' . get_class($value) . '" found.',
-                        1247826696
-                    );
-                }
-                if ($this->hasArgument('optionLabelField')) {
-                    $value = ObjectAccess::getPropertyPath($value, $this->arguments['optionLabelField']);
-                    if (is_object($value)) {
-                        if (method_exists($value, '__toString')) {
-                            $value = (string)$value;
-                        } else {
-                            throw new Exception(
-                                'Label value for object of class "' . get_class($value)
-                                . '" was an object without a __toString() method.',
-                                1247827553
-                            );
-                        }
-                    }
-                } elseif (is_object($value) && method_exists($value, '__toString')) {
-                    $value = (string)$value;
-                } elseif ($this->persistenceManager->getIdentifierByObject($value) !== null) {
-                    // @todo use $this->persistenceManager->isNewObject() once it is implemented
-                    $value = $this->persistenceManager->getIdentifierByObject($value);
-                }
+            if (!is_object($value) && !is_array($value)) {
+                $options[$key] = $value;
+                continue;
             }
+            if (is_array($value)) {
+                if (!$this->hasArgument('optionValueField')) {
+                    throw new MissingArgumentException('Missing parameter "optionValueField" in SelectViewHelper for array value options.', 1682693720);
+                }
+                if (!$this->hasArgument('optionLabelField')) {
+                    throw new MissingArgumentException('Missing parameter "optionLabelField" in SelectViewHelper for array value options.', 1682693721);
+                }
+                $optionValueField = is_string($this->arguments['optionValueField'])
+                    ? $this->arguments['optionValueField'] : '';
+                $optionLabelField = is_string($this->arguments['optionLabelField'])
+                    ? $this->arguments['optionLabelField'] : '';
+                $key = ObjectAccess::getPropertyPath($value, $optionValueField);
+                $key = is_int($key) || is_string($key) ? $key : '';
+                $value = ObjectAccess::getPropertyPath($value, $optionLabelField);
+                $options[$key] = $value;
+                continue;
+            }
+            if ($this->hasArgument('optionValueField')) {
+                $optionValueField = is_string($this->arguments['optionValueField'])
+                    ? $this->arguments['optionValueField'] : '';
+                $key = ObjectAccess::getPropertyPath($value, $optionValueField);
+                if (is_object($key)) {
+                    if (method_exists($key, '__toString')) {
+                        $key = (string)$key;
+                    } else {
+                        throw new InvalidArgumentValueException('Identifying value for object of class "' . get_debug_type($value) . '" was an object.', 1247827428);
+                    }
+                }
+            } elseif (!$this->persistenceManager->isNewObject($value)) {
+                $key = $this->persistenceManager->getIdentifierByObject($value);
+            } elseif (method_exists($value, '__toString')) {
+                $key = (string)$value;
+            } else {
+                throw new InvalidArgumentValueException('No identifying value for object of class "' . get_class($value) . '" found.', 1247826696);
+            }
+            if ($this->hasArgument('optionLabelField')) {
+                $optionLabelField = is_string($this->arguments['optionLabelField'])
+                    ? $this->arguments['optionLabelField'] : '';
+                $value = ObjectAccess::getPropertyPath($value, $optionLabelField);
+                if (is_object($value)) {
+                    if (method_exists($value, '__toString')) {
+                        $value = (string)$value;
+                    } else {
+                        throw new InvalidArgumentValueException('Label value for object of class "' . get_class($value) . '" was an object without a __toString() method.', 1247827553);
+                    }
+                }
+            } elseif (method_exists($value, '__toString')) {
+                $value = (string)$value;
+            } elseif (!$this->persistenceManager->isNewObject($value)) {
+                $value = $this->persistenceManager->getIdentifierByObject($value);
+            }
+            $key = is_int($key) || is_string($key) ? $key : '';
             $options[$key] = $value;
         }
         if ($this->arguments['sortByOptionLabel']) {
@@ -234,10 +252,18 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
     protected function isSelected(mixed $value): bool
     {
         $selectedValue = $this->getSelectedValue();
-        if ($value === $selectedValue || (string)$value === $selectedValue) {
+        if (
+            $value === $selectedValue
+            || (
+                is_scalar($value)
+                && (string)$value === $selectedValue
+            )
+        ) {
             return true;
         }
         if ($this->hasArgument('multiple')) {
+            // selectAllByDefault means "selected if none was set before": it must only kick in
+            // when no value is bound, so the empty($selectedValue) guard is load-bearing.
             if (empty($selectedValue) && $this->arguments['selectAllByDefault'] === true) {
                 return true;
             }
@@ -251,11 +277,11 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
     /**
      * @return array<int, string>|string
      */
-    protected function getSelectedValue(): array|string
+    private function getSelectedValue(): array|string
     {
         $this->setRespectSubmittedDataValue(true);
         $value = $this->getValueAttribute();
-        if (!is_array($value) && !$value instanceof Traversable) {
+        if (!is_array($value) && !$value instanceof \Traversable) {
             return $this->getOptionValueScalar($value);
         }
         $selectedValues = [];
@@ -265,17 +291,33 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
         return $selectedValues;
     }
 
-    protected function getOptionValueScalar(mixed $valueElement): string
+    private function getOptionValueScalar(mixed $valueElement): string
     {
         if (is_object($valueElement)) {
             if ($this->hasArgument('optionValueField')) {
-                $valueElement = ObjectAccess::getPropertyPath($valueElement, $this->arguments['optionValueField']);
-            } elseif ($this->persistenceManager->getIdentifierByObject($valueElement) !== null) {
-                // @todo use $this->persistenceManager->isNewObject() once it is implemented
-                $valueElement = $this->persistenceManager->getIdentifierByObject($valueElement);
+                $optionValueField = is_string($this->arguments['optionValueField'])
+                    ? $this->arguments['optionValueField'] : '';
+                $result = ObjectAccess::getPropertyPath($valueElement, $optionValueField);
+                return is_string($result) ? $result : '';
+            }
+            if (!$this->persistenceManager->isNewObject($valueElement)) {
+                if ($valueElement instanceof DomainObjectInterface) {
+                    // We prefer to use the `getUid()` method because this returns the properly overlaid identifier (defaultLanguageRecordUid).
+                    // Otherwise, an identifier would contain '[defaultLanguageRecordUid]_[localizedRecordUid]'. This in turn
+                    // will not properly trigger the select option "is selected" comparison.
+                    // @see AbstractFormFieldViewHelper->convertToPlainValue()
+                    return $valueElement->getUid() ? $this->persistenceManager->getIdentifierByObject($valueElement) ?? '' : '';
+                }
+                return $this->persistenceManager->getIdentifierByObject($valueElement) ?? '';
+            }
+            if ($valueElement instanceof \BackedEnum) {
+                return (string)$valueElement->value;
+            }
+            if ($valueElement instanceof \UnitEnum) {
+                return $valueElement->name;
             }
         }
-        return (string)$valueElement;
+        return is_scalar($valueElement) ? (string)$valueElement : '';
     }
 
     protected function renderOptionTag(string $value, string $label, bool $isSelected): string

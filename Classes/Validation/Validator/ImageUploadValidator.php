@@ -34,6 +34,9 @@ class ImageUploadValidator extends AbstractValidator
      */
     public function isValid(mixed $value): void
     {
+        if ($this->request === null) {
+            return;
+        }
         $this->fileService->setRequest($this->request);
         if (!$this->fileService->isValid()) {
             foreach ($this->fileService->getErrors() as $error) {

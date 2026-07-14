@@ -181,9 +181,17 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
 
     public function initializeObject(): void
     {
-        $this->usergroup = $this->usergroup ?? new ObjectStorage();
-        $this->image = $this->image ?? new ObjectStorage();
-        $this->moduleSysDmailCategory = $this->moduleSysDmailCategory ?? new ObjectStorage();
+        /** @var ObjectStorage<FrontendUserGroup> $usergroup */
+        $usergroup = $this->usergroup ?? new ObjectStorage();
+        $this->usergroup = $usergroup;
+
+        /** @var ObjectStorage<FileReference> $image */
+        $image = $this->image ?? new ObjectStorage();
+        $this->image = $image;
+
+        /** @var ObjectStorage<Category> $moduleSysDmailCategory */
+        $moduleSysDmailCategory = $this->moduleSysDmailCategory ?? new ObjectStorage();
+        $this->moduleSysDmailCategory = $moduleSysDmailCategory;
     }
 
     /**
@@ -199,17 +207,19 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
      */
     public function getUsergroup(): ObjectStorage
     {
-        return $this->usergroup;
+        /** @var ObjectStorage<FrontendUserGroup> $usergroup */
+        $usergroup = $this->usergroup ?? new ObjectStorage();
+        return $usergroup;
     }
 
     public function addUsergroup(FrontendUserGroup $usergroup): void
     {
-        $this->usergroup->attach($usergroup);
+        $this->usergroup?->attach($usergroup);
     }
 
     public function removeUsergroup(FrontendUserGroup $usergroup): void
     {
-        $this->usergroup->detach($usergroup);
+        $this->usergroup?->detach($usergroup);
     }
 
     /**
@@ -225,12 +235,14 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
      */
     public function getImage(): ObjectStorage
     {
-        return $this->image;
+        /** @var ObjectStorage<FileReference> $image */
+        $image = $this->image ?? new ObjectStorage();
+        return $image;
     }
 
     public function removeImage(): void
     {
-        $this->image->removeAll($this->image);
+        $this->image?->removeAll($this->image);
     }
 
     /**
@@ -246,7 +258,9 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
      */
     public function getModuleSysDmailCategory(): ObjectStorage
     {
-        return $this->moduleSysDmailCategory;
+        /** @var ObjectStorage<Category> $moduleSysDmailCategory */
+        $moduleSysDmailCategory = $this->moduleSysDmailCategory ?? new ObjectStorage();
+        return $moduleSysDmailCategory;
     }
 
     public function setLastlogin(DateTime $lastlogin): void
@@ -303,7 +317,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
         $result = 1;
 
         if ($this->dateOfBirth instanceof DateTime) {
-            $result = $this->dateOfBirth->format('j');
+            $result = (int)$this->dateOfBirth->format('j');
         }
 
         return $result;
@@ -320,7 +334,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
         $result = 1;
 
         if ($this->dateOfBirth instanceof DateTime) {
-            $result = $this->dateOfBirth->format('n');
+            $result = (int)$this->dateOfBirth->format('n');
         }
 
         return $result;
@@ -337,7 +351,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
         $result = 1970;
 
         if ($this->dateOfBirth instanceof DateTime) {
-            $result = $this->dateOfBirth->format('Y');
+            $result = (int)$this->dateOfBirth->format('Y');
         }
 
         return $result;

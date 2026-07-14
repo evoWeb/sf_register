@@ -5,6 +5,7 @@ bin/
 Documentation-GENERATED-temp/
 typo3temp/
 var/
+packages/
 public/
 vendor/
 auth.json

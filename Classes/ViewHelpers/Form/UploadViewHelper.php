@@ -99,7 +99,11 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
 
         foreach ($resources as $resource) {
             $resourcePointerIdAttribute = '';
-            if ($this->hasArgument('id')) {
+            if (
+                $this->hasArgument('id')
+                && is_string($this->arguments['id'])
+                && $this->arguments['id'] !== ''
+            ) {
                 $resourcePointerIdAttribute = ' id="' . htmlspecialchars($this->arguments['id']) . '-file-reference"';
             }
             $resourcePointerValue = $resource->getUid();
@@ -118,9 +122,10 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
                 ))
                 . '"' . $resourcePointerIdAttribute . ' />';
 
-            $this->templateVariableContainer->add('resource', $resource);
-            $output .= $this->renderChildren();
-            $this->templateVariableContainer->remove('resource');
+            $this->templateVariableContainer?->add('resource', $resource);
+            $content = $this->renderChildren();
+            $output .= is_string($content) ? $content : '';
+            $this->templateVariableContainer?->remove('resource');
         }
 
         return $output;
@@ -151,9 +156,11 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
             if ($resource instanceof FileReference) {
                 $result = [$resource];
             } elseif ($resource instanceof ObjectStorage) {
+                /** @var FileReference[] $result */
                 $result = $resource->toArray();
             } elseif ($resource !== null) {
                 try {
+                    /** @var FileReference[] $result */
                     $result = [$this->propertyMapper->convert($resource, FileReference::class)];
                 } catch (Exception) {
                 }

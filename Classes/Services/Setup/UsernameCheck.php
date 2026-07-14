@@ -26,8 +26,12 @@ class UsernameCheck implements CheckInterface
     public function check(array $settings): ?ResponseInterface
     {
         $result = null;
+        // Behaviour-preserving: keep df53334 behaviour where a missing/non-array 'fields.selected'
+        // makes in_array() receive a non-array haystack (uncaught TypeError). 30e771a's is_array/isset
+        // guards changed behaviour and are deferred to a later fix step.
         if (
             ($settings['useEmailAddressAsUsername'] ?? false)
+            // @phpstan-ignore-next-line
             && in_array('username', $settings['fields']['selected'])
         ) {
             $result = new HtmlResponse(
@@ -44,6 +48,7 @@ class UsernameCheck implements CheckInterface
         }
         if (
             !($settings['useEmailAddressAsUsername'] ?? false)
+            // @phpstan-ignore-next-line
             && !in_array('username', $settings['fields']['selected'])
         ) {
             $result = new HtmlResponse(

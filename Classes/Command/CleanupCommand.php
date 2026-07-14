@@ -71,11 +71,14 @@ class CleanupCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $result = self::FAILURE;
 
-        $inactiveGroups = GeneralUtility::intExplode(',', $input->getArgument('inactiveGroups'));
+        $inactiveGroupsArgument = $input->getArgument('inactiveGroups');
+        $inactiveGroupsArgument = is_scalar($inactiveGroupsArgument) ? (string)$inactiveGroupsArgument : '';
+        $inactiveGroups = GeneralUtility::intExplode(',', $inactiveGroupsArgument);
         if (empty($inactiveGroups)) {
             $io->comment('List of group marking inactive users may not be empty to prevent unwanted behaviour!');
         } else {
-            $days = (int)$input->getArgument('days');
+            $daysArgument = $input->getArgument('days');
+            $days = is_scalar($daysArgument) ? (int)$daysArgument : 0;
 
             try {
                 foreach ($inactiveGroups as $inactiveGroup) {
@@ -194,7 +197,8 @@ class CleanupCommand extends Command
     protected function removeImage(array $references): void
     {
         foreach ($references as $reference) {
-            $file = $this->resourceFactory->getFileObject($reference['uid_local']);
+            $uidLocal = is_scalar($reference['uid_local']) ? (int)$reference['uid_local'] : 0;
+            $file = $this->resourceFactory->getFileObject($uidLocal);
             $file->getStorage()->deleteFile($file);
         }
     }

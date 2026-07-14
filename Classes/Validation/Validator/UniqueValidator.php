@@ -62,6 +62,7 @@ class UniqueValidator extends AbstractValidator implements SetModelInterface, Se
      */
     public function isValid(mixed $value): void
     {
+        $value = is_scalar($value) ? (string)$value : '';
         if ($this->options['global'] ?? false) {
             if ($this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
                 $this->addError(

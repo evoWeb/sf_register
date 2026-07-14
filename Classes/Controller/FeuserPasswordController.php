@@ -54,7 +54,9 @@ class FeuserPasswordController extends FeuserController
             $password = new Password();
         }
 
-        $password = $this->eventDispatcher->dispatch(new PasswordFormEvent($password, $this->settings))->getPassword();
+        $event = new PasswordFormEvent($password, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $password = $event->getPassword();
         $this->view->assign('password', $password);
 
         return new HtmlResponse($this->view->render());
@@ -66,8 +68,14 @@ class FeuserPasswordController extends FeuserController
     ): ResponseInterface {
         $statusCode = 200;
         if ($this->frontendUserService->userIsLoggedIn()) {
+            // Behaviour-preserving: keep df53334 behaviour where getLoggedInUser() may return null
+            // (uncaught TypeError into the non-nullable PasswordSaveEvent constructor). 30e771a's
+            // `?? new FrontendUser()` changed behaviour and is deferred to a later fix step.
             $user = $this->frontendUserService->getLoggedInUser();
-            $user = $this->eventDispatcher->dispatch(new PasswordSaveEvent($user, $this->settings))->getUser();
+            // @phpstan-ignore-next-line argument.type
+            $event = new PasswordSaveEvent($user, $this->settings);
+            $this->eventDispatcher->dispatch($event);
+            $user = $event->getUser();
 
             $user->setPassword($this->encryptPassword($password->getPassword()));
 

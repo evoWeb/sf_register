@@ -69,6 +69,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements SetMode
             return;
         }
 
+        $value = is_scalar($value) ? (string)$value : '';
         if ($this->options['global']) {
             if ($this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
                 $this->addError(

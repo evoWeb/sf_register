@@ -34,6 +34,7 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
@@ -41,6 +42,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Fluid\View\FluidViewAdapter;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * A frontend user controller containing common methods
@@ -108,7 +110,9 @@ class FeuserController extends ActionController
      */
     protected function modifySettingsBeforeActionMethodValidators(): void
     {
-        $this->settings['hasOriginalRequest'] = $this->request->getAttribute('extbase')->getOriginalRequest() !== null;
+        /** @var ExtbaseRequestParameters $extbaseAttribute */
+        $extbaseAttribute = $this->request->getAttribute('extbase');
+        $this->settings['hasOriginalRequest'] = $extbaseAttribute->getOriginalRequest() !== null;
 
         if (!is_array($this->settings['fields']['selected'] ?? [])) {
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
@@ -149,12 +153,15 @@ class FeuserController extends ActionController
 
         parent::initializeActionMethodArguments();
 
+        /** @var ContentObjectRenderer $currentContentObject */
+        $currentContentObject = $this->request->getAttribute('currentContentObject');
         $event = new OverrideSettingsEvent(
             $this->settings,
             $this->getControllerName(),
-            $this->request->getAttribute('currentContentObject'),
+            $currentContentObject,
         );
-        $this->settings = $this->eventDispatcher->dispatch($event)->getSettings();
+        $this->eventDispatcher->dispatch($event);
+        $this->settings = $event->getSettings();
     }
 
     public function getControllerName(): string
@@ -187,6 +194,7 @@ class FeuserController extends ActionController
         $argumentName = 'user';
         if ($this->request->hasArgument($argumentName)) {
             $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
+            /** @var array<string, mixed>|FrontendUser $user */
             $user = $this->request->getArgument($argumentName);
             if (is_array($user) || $user instanceof FrontendUser) {
                 $this->getPropertyMappingConfiguration($configuration, $user);
@@ -213,12 +221,21 @@ class FeuserController extends ActionController
             true,
         );
 
+        $confVars = $GLOBALS['TYPO3_CONF_VARS'] ?? [];
+        $imageFileExtensions = '';
+        if (
+            is_array($confVars)
+            && is_array($confVars['GFX'] ?? null)
+            && is_string($confVars['GFX']['imagefile_ext'] ?? null)
+        ) {
+            $imageFileExtensions = $confVars['GFX']['imagefile_ext'];
+        }
+
         $configuration->forProperty('image.0')
             ->setTypeConverterOptions(
                 UploadedFileReferenceConverter::class,
                 [
-                    UploadedFileReferenceConverter::CONFIGURATION_FILE_VALIDATORS =>
-                        $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
+                    UploadedFileReferenceConverter::CONFIGURATION_FILE_VALIDATORS => $imageFileExtensions,
                     UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
                         $this->fileService->getTempFolder()->getCombinedIdentifier(),
                 ]
@@ -330,6 +347,10 @@ class FeuserController extends ActionController
             /** @var PasswordHashFactory $passwordHashFactory */
             $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
             $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
+            // Behaviour-preserving: keep df53334 behaviour where getHashedPassword() returns null for
+            // an empty password (uncaught TypeError via the `: string` return type). 30e771a's
+            // `?? (string)time()` fallback changed behaviour and is deferred to a later fix step.
+            // @phpstan-ignore-next-line return.type
             return $passwordHash->getHashedPassword($password);
         } catch (Exception) {
             return (string)time();

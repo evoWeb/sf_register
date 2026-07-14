@@ -34,6 +34,7 @@ class FeuserControllerListener
     public function __invoke(InitializeActionEvent $event): void
     {
         if (!$this->userIsLoggedIn()) {
+            /** @var array<string, string|int> $redirectEvent */
             $redirectEvent = $event->getSettings()['redirectEvent'];
 
             if ((int)$redirectEvent['page']) {
@@ -42,10 +43,10 @@ class FeuserControllerListener
                     $event->setResponse(new RedirectResponse($url));
                 }
             } else {
-                $response = new ForwardResponse($redirectEvent['action']);
+                $response = new ForwardResponse((string)$redirectEvent['action']);
                 $controller = $redirectEvent['controller'] ?? null;
                 if ($controller) {
-                    $response = $response->withControllerName($controller);
+                    $response = $response->withControllerName((string)$controller);
                 }
                 $event->setResponse($response);
             }

@@ -113,7 +113,8 @@ class FrontenUserGroup
 
         $userGroups = [];
         foreach ($settingsUserGroupKeys as $settingsUserGroupKey) {
-            $userGroup = (int)($settings[$settingsUserGroupKey] ?? 0);
+            $userGroup = $settings[$settingsUserGroupKey] ?? 0;
+            $userGroup = is_numeric($userGroup) ? (int)$userGroup : 0;
             if ($userGroup) {
                 $userGroups[$settingsUserGroupKey] = $userGroup;
             }

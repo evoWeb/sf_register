@@ -34,6 +34,7 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Attribute;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 
 /**
@@ -66,12 +67,16 @@ class FeuserEditController extends FeuserController
         }
 
         if ($user instanceof FrontendUser) {
-            $user = $this->eventDispatcher->dispatch(new EditFormEvent($user, $this->settings))->getUser();
+            $event = new EditFormEvent($user, $this->settings);
+            $this->eventDispatcher->dispatch($event);
+            $user = $event->getUser();
         }
 
         $this->view->assign('user', $user);
 
-        $originalRequest = $this->request->getAttribute('extbase')->getOriginalRequest();
+        /** @var ExtbaseRequestParameters $extbaseRequest */
+        $extbaseRequest = $this->request->getAttribute('extbase');
+        $originalRequest = $extbaseRequest->getOriginalRequest();
         if ($originalRequest !== null && $originalRequest->hasArgument('temporaryImage')) {
             $this->view->assign('temporaryImage', $originalRequest->getArgument('temporaryImage'));
         }
@@ -87,7 +92,9 @@ class FeuserEditController extends FeuserController
             $this->view->assign('temporaryImage', $this->request->getArgument('temporaryImage'));
         }
 
-        $user = $this->eventDispatcher->dispatch(new EditPreviewEvent($user, $this->settings))->getUser();
+        $event = new EditPreviewEvent($user, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $user = $event->getUser();
         $this->view->assign('user', $user);
 
         return new HtmlResponse($this->view->render());
@@ -123,7 +130,9 @@ class FeuserEditController extends FeuserController
             $user->setUsername($user->getEmail());
         }
 
-        $user = $this->eventDispatcher->dispatch(new EditSaveEvent($user, $this->settings))->getUser();
+        $event = new EditSaveEvent($user, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $user = $event->getUser();
         /** @var FrontendUser $user */
         $user = $this->mailService->sendEmails(
             $this->request,
@@ -197,7 +206,9 @@ class FeuserEditController extends FeuserController
                     }
                 }
 
-                $user = $this->eventDispatcher->dispatch(new EditConfirmEvent($user, $this->settings))->getUser();
+                $event = new EditConfirmEvent($user, $this->settings);
+                $this->eventDispatcher->dispatch($event);
+                $user = $event->getUser();
                 try {
                     $this->userRepository->update($user);
                 } catch (Exception) {
@@ -220,7 +231,7 @@ class FeuserEditController extends FeuserController
                 $this->frontendUserService->autoLogin($this->request, $user, $redirectPageId);
             }
 
-            if ($redirectResponse === null && $redirectPageId > 0) {
+            if ($redirectPageId > 0) {
                 $redirectResponse = $this->frontendUserService->redirectToPage($this->request, $redirectPageId);
             }
         }
@@ -269,7 +280,9 @@ class FeuserEditController extends FeuserController
                     $user->setUsername($user->getEmail());
                 }
 
-                $user = $this->eventDispatcher->dispatch(new EditAcceptEvent($user, $this->settings))->getUser();
+                $event = new EditAcceptEvent($user, $this->settings);
+                $this->eventDispatcher->dispatch($event);
+                $user = $event->getUser();
                 try {
                     $this->userRepository->update($user);
                 } catch (Exception) {

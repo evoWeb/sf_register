@@ -51,7 +51,12 @@ class EqualCurrentPasswordValidator extends AbstractValidator
 
             $user = $this->frontendUserService->getLoggedInUser();
 
+            // Behaviour-preserving: keep df53334 behaviour where getLoggedInUser() may return null and
+            // $user->getPassword() raises an uncaught Error. 30e771a's `$user?->getPassword() ?? ''`
+            // (and the scalar $value guard) changed behaviour and are deferred to a later fix step.
+            // @phpstan-ignore-next-line
             $passwordHash = $this->passwordHashFactory->get($user->getPassword(), 'FE');
+            // @phpstan-ignore-next-line
             if (!$passwordHash->checkPassword((string)$value, $user->getPassword())) {
                 $this->addError(
                     $this->translateErrorMessage('error_changepassword_notequal', 'SfRegister'),

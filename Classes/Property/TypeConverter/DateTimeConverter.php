@@ -40,7 +40,8 @@ class DateTimeConverter extends BaseDateTimeConverter
         array $convertedChildProperties = [],
         ?PropertyMappingConfigurationInterface $configuration = null
     ): null|DateTime|Error {
-        $userData = $configuration->getConfigurationValue(self::class, self::CONFIGURATION_USER_DATA);
+        /** @var array<string, string> $userData */
+        $userData = $configuration?->getConfigurationValue(self::class, self::CONFIGURATION_USER_DATA);
         if (
             is_array($userData)
             && !empty($userData)

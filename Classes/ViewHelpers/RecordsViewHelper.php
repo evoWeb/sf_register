@@ -45,11 +45,16 @@ class RecordsViewHelper extends AbstractViewHelper
      */
     public function render(): array
     {
-        $table = $this->arguments['table'];
+        $table = is_string($this->arguments['table']) ? $this->arguments['table'] : '';
+        /** @var int[] $uids */
         $uids = is_array($this->arguments['uids'])
             ? $this->arguments['uids']
-            : GeneralUtility::intExplode(',', $this->arguments['uids']);
+            : (is_string($this->arguments['uids']) ? GeneralUtility::intExplode(',', $this->arguments['uids']) : []);
 
+        // Behaviour-preserving: keep df53334 behaviour where render() calls getRecordsFromTable()
+        // unconditionally, so an empty table name reaches ConnectionPool::getQueryBuilderForTable('')
+        // and throws an UnexpectedValueException. 30e771a's `$table !== '' && $uids !== []` guard
+        // changed behaviour and is deferred to a later fix step.
         return $this->getRecordsFromTable($table, $uids);
     }
 
@@ -79,7 +84,7 @@ class RecordsViewHelper extends AbstractViewHelper
             return $result->fetchAllAssociative();
         } catch (Exception $exception) {
             throw new RuntimeException(
-                'Database query failed. Error was: ' . $exception->getPrevious()->getMessage(),
+                'Database query failed. Error was: ' . $exception->getMessage(),
                 1511950673
             );
         }

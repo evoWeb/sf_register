@@ -19,6 +19,8 @@ use Evoweb\SfRegister\Validation\Validator\RequiredValidator;
 use Exception;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 /**
@@ -46,6 +48,11 @@ class RequiredViewHelper extends AbstractConditionViewHelper
      */
     protected $escapeChildren = false;
 
+    /**
+     * @var RenderingContext|null
+     */
+    protected ?RenderingContextInterface $renderingContext = null;
+
     public function __construct(protected ConfigurationManager $configurationManager)
     {
     }
@@ -59,13 +66,15 @@ class RequiredViewHelper extends AbstractConditionViewHelper
     public function render(): ?string
     {
         if ($this->classVerdict($this->arguments)) {
-            return $this->renderThenChild();
+            $result = $this->renderThenChild() ?? null;
+            return is_string($result) || is_null($result) ? $result : null;
         }
-        return $this->renderElseChild();
+        $result = $this->renderElseChild() ?? null;
+        return is_string($result) || is_null($result) ? $result : null;
     }
 
     /**
-     * @return array<string, mixed>[]
+     * @return array<string, mixed>
      */
     protected function getSettings(): array
     {
@@ -83,18 +92,19 @@ class RequiredViewHelper extends AbstractConditionViewHelper
     }
 
     /**
-     * @param array<string, string> $arguments
+     * @param array<string, mixed> $arguments
      */
     public function classVerdict(array $arguments): bool
     {
         $settings = $this->getSettings();
 
-        $controllerName = $this->renderingContext->getControllerName();
+        $controllerName = $this->renderingContext?->getControllerName() ?? '';
         $mode = str_replace('feuser', '', strtolower($controllerName));
-        $controllerSettings = $settings['validation'][$mode] ?? [];
+        $validation = is_array($settings['validation'] ?? null) ? $settings['validation'] : [];
+        $controllerSettings = is_array($validation[$mode] ?? null) ? $validation[$mode] : [];
 
         $fieldName = $arguments['fieldName'];
-        $fieldSettings = $controllerSettings[$fieldName] ?? false;
+        $fieldSettings = is_string($fieldName) ? ($controllerSettings[$fieldName] ?? false) : false;
 
         $result = false;
         if (
