@@ -147,6 +147,7 @@ class UsernameCheckTest extends AbstractTestBase
             'fields' => ['selected' => 'username'],
         ];
 
+        // @phpstan-ignore argument.type (deliberately passes a non-array 'selected' to exercise the guard)
         self::assertNull($subject->check($settings));
     }
 }

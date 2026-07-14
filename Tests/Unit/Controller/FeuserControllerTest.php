@@ -62,7 +62,6 @@ class FeuserControllerTest extends UnitTestCase
         // TypeError against its `: string` return type.
         $result = $this->getSubject()->encryptPassword('');
 
-        self::assertIsString($result);
         self::assertNotSame('', $result);
     }
 }
