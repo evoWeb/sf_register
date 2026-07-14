@@ -115,7 +115,7 @@ class MailTest extends AbstractTestBase
     }
 
     /**
-     * @return array<string, array{0: array<string, mixed>, 1: bool}>
+     * @return array<string, array{0: array<string, array<string, string>>, 1: bool}>
      */
     public static function isNotifyAdminDataProvider(): array
     {
@@ -128,7 +128,7 @@ class MailTest extends AbstractTestBase
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string, string>> $settings
      */
     #[DataProvider('isNotifyAdminDataProvider')]
     #[Test]
@@ -140,7 +140,7 @@ class MailTest extends AbstractTestBase
     }
 
     /**
-     * @return array<string, array{0: array<string, mixed>, 1: bool}>
+     * @return array<string, array{0: array<string, array<string, string>>, 1: bool}>
      */
     public static function isNotifyUserDataProvider(): array
     {
@@ -153,7 +153,7 @@ class MailTest extends AbstractTestBase
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string, string>> $settings
      */
     #[DataProvider('isNotifyUserDataProvider')]
     #[Test]
@@ -327,6 +327,7 @@ class MailTest extends AbstractTestBase
         $user = $this->createUser('tester');
         $settings = $this->createMailSettings();
 
+        // @phpstan-ignore argument.type (createMailSettings() mirrors real TypoScript settings incl. scalar sitename)
         $result = $subject->sendNotifyAdmin($request, $settings, $user, 'Create', 'Save');
 
         self::assertSame($user, $result);
@@ -361,6 +362,7 @@ class MailTest extends AbstractTestBase
         $user = $this->createUser('tester');
         $settings = $this->createMailSettings();
 
+        // @phpstan-ignore argument.type (createMailSettings() mirrors real TypoScript settings incl. scalar sitename)
         $subject->sendNotifyUser($request, $settings, $user, 'Create', 'Save');
 
         self::assertCount(1, $sentMails);
@@ -389,6 +391,7 @@ class MailTest extends AbstractTestBase
         $settings['notifyAdmin'] = ['createSave' => '1'];
         $settings['notifyUser'] = ['createSave' => '1'];
 
+        // @phpstan-ignore argument.type (createMailSettings() mirrors real TypoScript settings incl. scalar sitename)
         $result = $subject->sendEmails($request, $settings, $user, 'Create', 'saveAction');
 
         self::assertSame($user, $result);
@@ -409,6 +412,7 @@ class MailTest extends AbstractTestBase
         $user = $this->createUser('tester');
         $settings = $this->createMailSettings();
 
+        // @phpstan-ignore argument.type (createMailSettings() mirrors real TypoScript settings incl. scalar sitename)
         $result = $subject->sendEmails($request, $settings, $user, 'Create', 'saveAction');
 
         self::assertSame($user, $result);

@@ -387,6 +387,7 @@ class ModifyValidatorTest extends UnitTestCase
         $arguments = new Arguments();
         $arguments->addNewArgument('user', 'array');
 
+        // @phpstan-ignore argument.type ($settings uses the real nested TypoScript shape; the @param is narrower)
         $this->subject->modifyArgumentValidators($controller, $settings, $request, $arguments);
 
         $appliedValidator = $arguments->getArgument('user')->getValidator();
@@ -453,6 +454,7 @@ class ModifyValidatorTest extends UnitTestCase
         $arguments = new Arguments();
         $arguments->addNewArgument('user', 'array');
 
+        // @phpstan-ignore argument.type ($settings uses the real nested TypoScript shape; the @param is narrower)
         $this->subject->modifyArgumentValidators($controller, $settings, $request, $arguments);
 
         $appliedValidator = $arguments->getArgument('user')->getValidator();
@@ -505,6 +507,7 @@ class ModifyValidatorTest extends UnitTestCase
         $arguments = new Arguments();
         $arguments->addNewArgument('user', 'array');
 
+        // @phpstan-ignore argument.type ($settings uses the real nested TypoScript shape; the @param is narrower)
         $this->subject->modifyArgumentValidators($controller, $settings, $request, $arguments);
 
         $appliedValidator = $arguments->getArgument('user')->getValidator();
@@ -550,6 +553,7 @@ class ModifyValidatorTest extends UnitTestCase
         $arguments = new Arguments();
         $arguments->addNewArgument('user', 'array');
 
+        // @phpstan-ignore argument.type ($settings uses the real nested TypoScript shape; the @param is narrower)
         $this->subject->modifyArgumentValidators($controller, $settings, $request, $arguments);
 
         $appliedValidator = $arguments->getArgument('user')->getValidator();
