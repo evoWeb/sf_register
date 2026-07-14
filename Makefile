@@ -29,14 +29,14 @@ install: ##@ Composer install
 cleanup: ##@ Cleanup
 	echo "Cleanup started"
 	Build/Scripts/runTests.sh -s clean
-	echo "Cleanup finished";
+	echo "Cleanup finished"
 
 
 .PHONY: cleanTests
 cleanTests: ##@ Clean test files but leave cache files
 	echo "cleanTests started"
 	Build/Scripts/runTests.sh -s cleanTests
-	echo "cleanTests finished";
+	echo "cleanTests finished"
 
 
 .PHONY: phpstan

@@ -21,8 +21,7 @@ declare(strict_types=1);
  *
  * Run it using runTests.sh, see 'runTests.sh -h' for more options.
  *
- * Fix entire extension:
- * > Build/Scripts/additionalTests.sh -p 8.3 -s composerInstallPackage -q "typo3/cms-core:[dev-main,13...]"
+ * Fix entire core:
  * > Build/Scripts/runTests.sh -s cgl
  *
  * Fix your current patch:
@@ -33,14 +32,11 @@ if (PHP_SAPI !== 'cli') {
 }
 
 // Return a Code Sniffing configuration using
-// all sniffers needed for PER
+// all sniffers needed for PER Coding Style 3.0
 // and additionally:
-//  - Remove leading slashes in use clauses.
 //  - PHP single-line arrays should not have trailing comma.
 //  - Single-line whitespace before closing semicolon are prohibited.
 //  - Remove unused use statements in the PHP source code
-//  - Ensure Concatenation to have at least one whitespace around
-//  - Remove trailing whitespace at the end of blank lines.
 return (new \PhpCsFixer\Config())
     ->setParallelConfig(\PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
     ->setFinder(
@@ -51,10 +47,12 @@ return (new \PhpCsFixer\Config())
             ])
             ->exclude([
                 '.cache',
+                '.superpowers',
                 'bin',
                 'Build',
-                'typo3temp',
+                'packages',
                 'public',
+                'typo3temp',
                 'var',
                 'vendor',
             ])
