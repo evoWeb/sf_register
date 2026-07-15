@@ -58,8 +58,7 @@ use TYPO3\CMS\Core\Http\Response;
  * does) and queried real fixture rows through StaticCountryZoneRepository. That revealed
  * Doctrine\DBAL\Driver\SQLite3\Result::rowCount() returns the *connection's last write
  * "changes" counter* (SQLite3::changes()), NOT the number of rows the SELECT actually
- * matched - a documented SQLite3-driver limitation, present identically before and after
- * 30e771a and entirely unrelated to it. Under `-d sqlite` this makes zonesAction()'s
+ * matched - a documented SQLite3-driver limitation. Under `-d sqlite` this makes zonesAction()'s
  * `rowCount() == 0` branch decision depend on unrelated prior writes instead of the real
  * result set, so asserting a concrete status/data pair through the real DB+driver stack
  * would characterize that driver artifact, not AjaxMiddleware's own logic. To test the
@@ -356,20 +355,12 @@ class AjaxMiddlewareTest extends AbstractTestBase
     }
 
     /**
-     * Pre-fix bug in df53334: process() passes $requestArguments['parent'] straight into
-     * zonesAction(string $parent) without a scalar guard. When `tx_sfregister[parent]`
-     * arrives as an array (e.g. built from `tx_sfregister[parent][]=1` on the querystring),
-     * handing an array to a `string`-typed parameter under `declare(strict_types=1)`
-     * throws an uncaught TypeError instead of returning a graceful JSON error response.
-     *
-     * Verified RED: un-skipping this test against the pre-fix code throws
-     * `TypeError: Evoweb\SfRegister\Middleware\AjaxMiddleware::zonesAction(): Argument #1
-     * ($parent) must be of type string, array given, called in .../AjaxMiddleware.php on
-     * line 51` instead of returning a Response - the repository mock is never reached.
-     *
-     * Behoben in 30e771a (`$parent = is_scalar($requestArguments['parent']) ?
-     * (string)$requestArguments['parent'] : '';` before calling zonesAction()).
-     * Reaktivieren in Roadmap-Schritt 2.
+     * process() guards $requestArguments['parent'] with
+     * `$parent = is_scalar($requestArguments['parent']) ? (string)$requestArguments['parent'] : '';`
+     * before calling zonesAction(string $parent). Without that guard, an array `parent` (e.g.
+     * built from `tx_sfregister[parent][]=1` on the querystring) handed to a `string`-typed
+     * parameter under `declare(strict_types=1)` would throw an uncaught TypeError instead of
+     * returning a graceful JSON error response.
      */
     #[Test]
     public function gracefullyReturnsJsonErrorForNonScalarParent(): void

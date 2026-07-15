@@ -25,49 +25,16 @@ use TYPO3Fluid\Fluid\View\TemplateView;
  *       ->executeQuery();
  *   return $result->fetchAllAssociative();
  *
- * git show 30e771a (phpstan fix) on this class - what ACTUALLY changed, vs. the task
- * brief's claim that getRecordsFromTable/initializeArguments changed:
- *
- * - initializeArguments(): UNCHANGED by 30e771a (confirmed via `git show 30e771a`).
- *   The brief is wrong to list it as a changed method (same kind of mislabeling seen on
- *   task 16). It still just registers the required `table` (string) and `uids`
- *   (string) arguments - exercised implicitly by every render() call below.
- * - render(): DID change substantially, though it is NOT listed by the brief at all.
- *   Pre-fix: `$table = $this->arguments['table'];` and
- *   `$uids = is_array(...) ? ... : GeneralUtility::intExplode(',', $this->arguments['uids']);`,
- *   then unconditionally `return $this->getRecordsFromTable($table, $uids);`.
- *   Post-fix adds `is_string()` guards around $table/$uids (defensive phpstan
- *   type-narrowing - both arguments are registered as required `string` via
- *   registerArgument(), so Fluid's own argument validation already guarantees they
- *   arrive as strings for any template-driven invocation; the array branch for `uids`
- *   is untouched. Dead code for real invocations, exercised implicitly, no observable
- *   difference for the scenarios below) AND a genuinely new guard:
- *   `return $table !== '' && $uids !== [] ? $this->getRecordsFromTable(...) : [];`.
- *   This last part IS a reachable behavior change: `table=""` is a perfectly valid
- *   value for a *required* string argument (required only means "present", not
- *   "non-empty"). Pre-fix, an empty table name is passed straight into
- *   getRecordsFromTable(), which calls connectionPool->getQueryBuilderForTable('') -
- *   which itself rejects an empty table name with an UnexpectedValueException; post-fix
- *   short-circuits to `[]` before ever touching the database. See
- *   rendersAnEmptyArrayInsteadOfThrowingWhenTableIsEmpty() below - this is a genuine
- *   pre-fix bug (Bug-Protokoll skip), verified RED.
- * - getRecordsFromTable(): DID change, but only inside the catch block wrapping
- *   `$result->fetchAllAssociative()`:
- *   `$exception->getPrevious()->getMessage()` (pre-fix) -> `$exception->getMessage()`
- *   (post-fix). The query building/where/orderBy logic that determines *which* records
- *   come back and in *what order* is completely untouched by 30e771a - it is
- *   characterized (not "fixed") by the tests below. The catch block itself sits around
- *   fetchAllAssociative() only; a bogus/invalid table name throws from executeQuery()
- *   one line above the try, i.e. outside this catch entirely, so this diff line is not
- *   reachable through normal record-fetching scenarios (no realistic functional-test
- *   fixture makes fetchAllAssociative() itself throw after a successful executeQuery())
- *   - not exercised here, no skip needed (untestable dead corner via this path, not a
- *   confirmed-safe divergence, but out of reach for a fixture-driven functional test).
- *
- * Net result: getRecordsFromTable's actual query behavior (filter by requested uids,
- * apply DeletedRestriction, order by uid) is unchanged by 30e771a and characterized
- * directly below. The one reachable, in-scope divergence (render()'s empty-table
- * guard) is documented as a Bug-Protokoll skip.
+ * render() guards $table/$uids with `is_string()` checks (dead code for any
+ * template-driven invocation: both arguments are registered as required `string` via
+ * registerArgument(), so Fluid's own argument validation already guarantees they arrive
+ * as strings) and a `$table !== '' && $uids !== [] ? $this->getRecordsFromTable(...) : []`
+ * guard. The latter is a reachable case: `table=""` is a perfectly valid value for a
+ * *required* string argument (required only means "present", not "non-empty"). Without
+ * the guard, an empty table name would be passed straight into getRecordsFromTable(),
+ * which calls connectionPool->getQueryBuilderForTable('') - which itself rejects an
+ * empty table name with an UnexpectedValueException. See rendersEmptyArrayWhenTableIsEmpty()
+ * below.
  */
 class RecordsViewHelperTest extends AbstractTestBase
 {
@@ -206,27 +173,12 @@ class RecordsViewHelperTest extends AbstractTestBase
     }
 
     /**
-     * render(): with an empty `table` argument, the SOLL behavior (post-30e771a) is to
-     * return an empty array without touching the database at all - see the
-     * `$table !== '' && $uids !== []` guard added in 30e771a.
-     *
-     * Pre-fix (df53334), render() unconditionally calls
-     * getRecordsFromTable('', $uids), which calls
+     * render(): with an empty `table` argument, render() returns an empty array without
+     * touching the database at all (the `$table !== '' && $uids !== []` guard). Without
+     * that guard, render() would call getRecordsFromTable('', $uids), which calls
      * $this->connectionPool->getQueryBuilderForTable('') - and an empty table name is
-     * rejected right there (before any SQL is built or executed). Confirmed RED by
-     * temporarily un-skipping this test:
-     *
-     *   1) Evoweb\SfRegister\Tests\Functional\ViewHelpers\RecordsViewHelperTest::rendersAnEmptyArrayInsteadOfThrowingWhenTableIsEmpty
-     *   UnexpectedValueException: ConnectionPool->getQueryBuilderForTable() requires a
-     *   connection name to be provided.
-     *
-     *   /vendor/typo3/cms-core/Classes/Database/ConnectionPool.php:421
-     *   /Classes/ViewHelpers/RecordsViewHelper.php:62 (getRecordsFromTable)
-     *   /Classes/ViewHelpers/RecordsViewHelper.php:53 (render)
-     *
-     * This is a genuine pre-fix bug in the very method under test (render(), which
-     * delegates directly to getRecordsFromTable()) - Bug-Protokoll skip, reactivate in
-     * Roadmap-Schritt 2 once 30e771a's render() guard is in place.
+     * rejected right there with an UnexpectedValueException (before any SQL is built or
+     * executed).
      */
     #[Test]
     public function rendersEmptyArrayWhenTableIsEmpty(): void

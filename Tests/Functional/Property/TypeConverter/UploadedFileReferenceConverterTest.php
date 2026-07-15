@@ -37,115 +37,32 @@ use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
  * resource pointer (a hidden `[submittedFile][resourcePointer]` field emitted by
  * UploadViewHelper, see UploadViewHelperTest) onto an Extbase FileReference.
  *
- * git show 30e771a (sibling branch, phpstan-fix) on this class - what ACTUALLY
- * changed, vs. the task brief's claim that all of __construct, convertFrom,
- * convertUploadedFileToUploadInfoArray, createFileReferenceFromFalFileReferenceObject,
- * importUploadedResource and provideUploadFolder changed:
- *
- * - __construct: NOT changed at all (confirmed via `git show 30e771a` - no hunk
- *   touches it). The brief is wrong to list it.
- * - convertUploadedFileToUploadInfoArray: NOT changed at all either (no hunk).
- *   Also wrongly listed by the brief. Covered below regardless, since the task
- *   explicitly asks for its shape.
- * - convertFrom: DID change.
- *   - `if (!is_array($source)) return null;` is dead: $source is typed
- *     `array|UploadedFile` and is turned into an array two lines above whenever
- *     it was an UploadedFile, so it is always an array at this point.
- *   - `is_int($source['error'])` guard before comparing to UPLOAD_ERR_OK is dead
- *     for the same reason PHP's own upload handling and convertUploadedFileToUploadInfoArray
- *     always yield an int 'error'.
- *   - `is_string($source['tmp_name'])` guard (the `$temporaryName` narrowing) is
- *     likewise dead: 'tmp_name' is always a string when 'error' reached this far.
- *   - the `submittedFile.resourcePointer` check gained
- *     `is_array($source['submittedFile']) && is_string(...) && ... !== ''` on top
- *     of the pre-fix plain `isset(...)`. This IS a reachable bug fix: this value
- *     comes straight from request/form data (`myField[submittedFile][resourcePointer]`),
- *     so an attacker/malformed submission can make it an array (e.g.
- *     `myField[submittedFile][resourcePointer][]=x`). Pre-fix, `isset()` on an
- *     array value is still true, and the array is then handed to
- *     HashService::validateAndStripHmac(string $string, ...) - a strictly-typed
- *     `string` parameter under this file's `declare(strict_types=1)` - throwing
- *     an uncaught TypeError instead of gracefully falling through to `return null`.
- *     Post-fix's `is_string(...) && !== ''` guard makes convertFrom return null
- *     instead. See `resourcePointerAsArrayCrashesInsteadOfReturningNullGracefully`
- *     below (Bug-Protokoll, skipped, RED-verified).
- * - importUploadedResource: DID change.
- *   - `$uploadInfoName = is_scalar($uploadInfo['name']) ? (string)... : ''` is
- *     dead in practice: 'name' always arrives as a string (from
- *     convertUploadedFileToUploadInfoArray's `getClientFilename()` or from a
- *     plain $_FILES-shaped array); `is_scalar(null)` is false either way so the
- *     `null` case resolves to '' both pre- and post-fix.
- *   - `$validators = is_string($validators) ? $validators : ''` and
- *     `$uploadFolderId = is_scalar($uploadFolderId) ? (string)... : ''` are dead:
- *     both values only ever come from this codebase's one call site
- *     (FeuserController::getPropertyMappingConfiguration()), which always sets
- *     CONFIGURATION_FILE_VALIDATORS to a string (`$GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']`)
- *     and CONFIGURATION_UPLOAD_FOLDER to a string (`getCombinedIdentifier()`).
- *   - `$conflictMode = is_scalar($conflictMode) ? (string)... : ''; $conflictMode
- *     = DuplicationBehavior::tryFrom($conflictMode) ?: DuplicationBehavior::RENAME;`
- *     replaces the pre-fix `?: DuplicationBehavior::RENAME`. This *could* matter
- *     if CONFIGURATION_UPLOAD_CONFLICT_MODE were ever configured as a raw string
- *     rather than a DuplicationBehavior enum (Folder::addUploadedFile() requires
- *     a strictly-typed `DuplicationBehavior $conflictMode`), but this codebase's
- *     only call site (FeuserController) never sets this option at all - it is
- *     always null and always falls back to DuplicationBehavior::RENAME on both
- *     sides of 30e771a. Dead for this project's reachable call graph.
- *   - the `submittedFile.resourcePointer` narrowing mirrors convertFrom's fix
- *     (`is_array(...) && is_scalar(...)` instead of plain `isset`/`str_contains`)
- *     for the same reachable-array-crash reason, but only matters when a fresh
- *     upload (`error === UPLOAD_ERR_OK`) is submitted together with a malformed
- *     `submittedFile.resourcePointer`; not separately exercised here since
- *     convertFrom's earlier branch already demonstrates the identical mechanism.
- * - createFileReferenceFromFalFileReferenceObject: DID change. Pre-fix, when
- *   $resourcePointer is not null, it unconditionally uses whatever
- *   `$this->persistenceManager->getObjectByIdentifier($resourcePointer, FileReference::class)`
- *   returns - and that method is typed to return `?object`, i.e. it returns
- *   null whenever no FileReference with that identifier exists. Pre-fix then
- *   calls `$fileReference->setOriginalResource(...)` on that null, an uncaught
- *   Error ("Call to a member function ... on null"), instead of falling back to
- *   creating a fresh FileReference like the $resourcePointer === null branch does.
- *   Post-fix checks the lookup *result* for null and falls back in that case too.
- *
- *   THIS IS NOT AN EDGE CASE - it breaks the converter's primary, most common
- *   path: importUploadedResource()'s last line is
- *   `return $this->createFileReferenceFromFalFileObject($uploadedFile, (int)$resourcePointer);`
- *   where `$resourcePointer` is `null` whenever the upload did not also carry a
- *   `submittedFile.resourcePointer` (the overwhelmingly common case - a plain new
- *   upload). `(int)null` is `0`, not `null` - so createFileReferenceFromFalFileObject()
- *   is always called with resourcePointer `0` (never a real `null`) for a plain
- *   upload, which forwards `0` into createFileReferenceFromFalFileReferenceObject().
- *   Since `0 !== null`, pre-fix takes the "look up existing FileReference" branch,
- *   `persistenceManager->getObjectByIdentifier(0, FileReference::class)` returns
- *   null (uid 0 never exists), and `setOriginalResource()` is called on that null -
- *   crashing. This `(int)$resourcePointer` cast is itself untouched by 30e771a (it
- *   is unchanged context in the diff) - so the "should stay null" mistake remains -
- *   but createFileReferenceFromFalFileReferenceObject()'s new null-result fallback
- *   masks it completely, making every plain upload work post-fix. See
- *   `convertFromCrashesForAPlainUploadInsteadOfReturningAFileReference` below
- *   (Bug-Protokoll, skipped, RED-verified - this is the single most important
- *   finding for this class).
- * - provideUploadFolder: DID change, but only
- *   `$this->storageRepository->getStorageObject((int)$storageId)` losing its
- *   `(int)` cast. StorageRepository::getStorageObject(int|string $uid, ...)
- *   itself does `$uid = (int)$uid;` as its very first line, so passing the
- *   already-string $storageId (from `explode(':', ..., 2)`) produces an
- *   identical outcome on both sides of 30e771a. Dead phpstan narrowing.
- *
- *   Separately (not part of 30e771a, present identically pre- and post-fix):
- *   provideUploadFolder()'s first statement calls
+ * Notable behavior:
+ * - convertFrom()/importUploadedResource(): a `submittedFile.resourcePointer` value
+ *   that arrives as an array (e.g. a malformed submission
+ *   `myField[submittedFile][resourcePointer][]=x`) is guarded with
+ *   `is_array(...) && is_string(...) && ... !== ''` and treated as absent, returning
+ *   null gracefully instead of handing an array to
+ *   `HashService::validateAndStripHmac(string $string, ...)` - a strictly-typed
+ *   `string` parameter under this file's `declare(strict_types=1)` - which would
+ *   otherwise throw an uncaught TypeError (TypeError extends Error, not Exception,
+ *   so a surrounding `catch (Exception)` would not catch it). See
+ *   `resourcePointerAsArrayReturnsNullGracefully`.
+ * - createFileReferenceFromFalFileReferenceObject(): for a plain new upload (no
+ *   `submittedFile.resourcePointer`), importUploadedResource()'s last line passes
+ *   `(int)null` = `0` as $resourcePointer, so this method's "look up existing
+ *   FileReference" branch is always taken for a plain upload, and
+ *   `persistenceManager->getObjectByIdentifier(0, FileReference::class)` always
+ *   returns null (uid 0 never exists). The method therefore checks the lookup
+ *   result for null and falls back to creating a fresh FileReference in that case
+ *   too - this is the converter's primary, most common path, not an edge case. See
+ *   `convertFromReturnsFileReferenceForAPlainUpload`.
+ * - provideUploadFolder(): its first statement calls
  *   getFolderObjectFromCombinedIdentifier() outside its own try/catch, so for a
- *   genuinely missing folder that call throws before the try/catch fallback
- *   (which would create the folder) is ever reached - the "creates it if it does
- *   not exist" docblock promise is unreachable dead code as the method currently
+ *   genuinely missing folder that call throws before the try/catch fallback (which
+ *   would create the folder) is ever reached - the "creates it if it does not
+ *   exist" docblock promise is unreachable dead code as the method currently
  *   stands. See `provideUploadFolderThrowsForAMissingFolderInsteadOfCreatingIt`.
- *
- * Net result: THREE reachable pre-fix bugs fixed by 30e771a (the plain-upload
- * crash above being the most severe - it breaks the converter's primary use
- * case entirely - plus the array-shaped resourcePointer TypeError below),
- * covered here as skipped Bug-Protokoll tests; everything else is dead phpstan
- * narrowing given this project's actual call graph, or (__construct/
- * convertUploadedFileToUploadInfoArray) not changed by 30e771a at all despite
- * the brief's claim. No regression found.
  */
 class UploadedFileReferenceConverterTest extends AbstractTestBase
 {
@@ -206,11 +123,10 @@ class UploadedFileReferenceConverterTest extends AbstractTestBase
      * try (line 267) whose catch block would create the folder. Since the first,
      * unguarded call already throws FolderDoesNotExistException for a genuinely missing
      * folder, that exception always propagates out of provideUploadFolder before the
-     * fallback creation logic is ever reached - identically on both sides of 30e771a
-     * (the diff only touches the (int) cast inside that unreachable catch block). So the
-     * upload folder must already exist for convertFrom()'s happy path to succeed; this
-     * helper creates it up front, matching how the folder would already exist in a real
-     * TYPO3 installation (e.g. fileadmin/user_upload/ is typically pre-created).
+     * fallback creation logic is ever reached. So the upload folder must already exist
+     * for convertFrom()'s happy path to succeed; this helper creates it up front, matching
+     * how the folder would already exist in a real TYPO3 installation (e.g.
+     * fileadmin/user_upload/ is typically pre-created).
      */
     protected function createUploadFolder(): void
     {
@@ -238,33 +154,20 @@ class UploadedFileReferenceConverterTest extends AbstractTestBase
     }
 
     /**
-     * Pre-fix bug in df53334: importUploadedResource()'s last line is
+     * importUploadedResource()'s last line is
      * `return $this->createFileReferenceFromFalFileObject($uploadedFile, (int)$resourcePointer);`.
      * For a plain upload with no `submittedFile.resourcePointer` at all (the
      * overwhelmingly common case - see `convertUploadedFileToUploadInfoArray`, which
      * never sets a `submittedFile` key), `$resourcePointer` is `null`, and `(int)null`
      * is `0` - NOT `null`. So createFileReferenceFromFalFileObject() always receives
      * an actual int (`0`), which it forwards to createFileReferenceFromFalFileReferenceObject().
-     * Since `0 !== null`, pre-fix takes the "reconstitute an existing FileReference"
+     * Since `0 !== null`, that method takes the "reconstitute an existing FileReference"
      * branch: `persistenceManager->getObjectByIdentifier(0, FileReference::class)`
-     * returns null (uid 0 never exists), and `$fileReference->setOriginalResource(...)`
-     * is then called on that null - an uncaught Error, instead of convertFrom()
-     * returning a FileReference. This affects every plain upload, regardless of
-     * whether the source is a `$_FILES`-shaped array or a PSR `UploadedFile` (both
-     * funnel through the identical importUploadedResource() call), and consequently
-     * also means the `$convertedResources[$tmp_name]` cache is never populated on a
-     * first successful call either.
-     *
-     * Verified RED: un-skipping this test against the pre-fix code throws
-     * `Error: Call to a member function setOriginalResource() on null` from
-     * createFileReferenceFromFalFileReferenceObject() (called from
-     * createFileReferenceFromFalFileObject(), called from importUploadedResource(),
-     * called from convertFrom()) instead of returning a FileReference.
-     *
-     * Behoben in 30e771a (createFileReferenceFromFalFileReferenceObject() now checks
-     * the lookup *result* for null and falls back to a fresh FileReference in that
-     * case, which masks the still-present `(int)null === 0` mismatch). Reaktivieren
-     * in Roadmap-Schritt 2.
+     * returns null (uid 0 never exists), and the method's null-result fallback then
+     * creates a fresh FileReference instead of calling `setOriginalResource()` on that
+     * null. This affects every plain upload, regardless of whether the source is a
+     * `$_FILES`-shaped array or a PSR `UploadedFile` (both funnel through the identical
+     * importUploadedResource() call).
      */
     #[Test]
     public function convertFromReturnsFileReferenceForAPlainUpload(): void
@@ -416,15 +319,12 @@ class UploadedFileReferenceConverterTest extends AbstractTestBase
     }
 
     /**
-     * Characterizes the actual (unintended-looking, but present identically on both sides
-     * of 30e771a) behaviour: provideUploadFolder()'s very first statement calls
-     * getFolderObjectFromCombinedIdentifier() outside of its own try/catch, so for a
-     * genuinely missing folder that call throws and propagates out before the try/catch
-     * fallback (which would create the folder) is ever reached. The "creates it if it does
-     * not [exist]" docblock promise is therefore unreachable dead code as the method
-     * currently stands - this is not something 30e771a changes (the diff only touches the
-     * (int) cast inside that unreachable catch block), so it is plain characterization, not
-     * a Bug-Protokoll case.
+     * Characterizes the actual (unintended-looking) behaviour: provideUploadFolder()'s
+     * very first statement calls getFolderObjectFromCombinedIdentifier() outside of its
+     * own try/catch, so for a genuinely missing folder that call throws and propagates
+     * out before the try/catch fallback (which would create the folder) is ever reached.
+     * The "creates it if it does not [exist]" docblock promise is therefore unreachable
+     * dead code as the method currently stands.
      */
     #[Test]
     public function provideUploadFolderThrowsForAMissingFolderInsteadOfCreatingIt(): void
@@ -466,25 +366,17 @@ class UploadedFileReferenceConverterTest extends AbstractTestBase
     }
 
     /**
-     * Pre-fix bug in df53334: convertFrom() checks `isset($source['submittedFile']['resourcePointer'])`
-     * with no type guard, so a request that submits `myField[submittedFile][resourcePointer][]=x`
-     * (yielding a PHP array rather than a string for `resourcePointer`) still passes that
-     * `isset()` check. The array is then handed straight to
-     * `HashService::validateAndStripHmac(string $string, ...)`, whose parameter is strictly
-     * typed `string`. Under this file's `declare(strict_types=1)`, calling it with an array
-     * throws an uncaught TypeError (TypeError extends Error, not Exception, so the
-     * surrounding `catch (Exception)` does not catch it) instead of gracefully falling
-     * through to `return null;` like every other malformed-resourcePointer shape does.
-     *
-     * Verified RED: un-skipping this test against the pre-fix code throws a TypeError at the
-     * `$this->hashService->validateAndStripHmac(...)` call site: "TYPO3\CMS\Core\Crypto\HashService::
-     * validateAndStripHmac(): Argument #1 ($string) must be of type string, array given, called in
-     * .../Classes/Property/TypeConverter/UploadedFileReferenceConverter.php on line 109" - instead of
-     * convertFrom() returning null.
-     *
-     * Behoben in 30e771a (`is_array($source['submittedFile']) && isset(...) &&
-     * is_string($source['submittedFile']['resourcePointer']) && ... !== ''` guard before use).
-     * Reaktivieren in Roadmap-Schritt 2.
+     * convertFrom() guards `$source['submittedFile']['resourcePointer']` with
+     * `is_array($source['submittedFile']) && isset(...) &&
+     * is_string($source['submittedFile']['resourcePointer']) && ... !== ''` before use.
+     * Without that guard, a request that submits
+     * `myField[submittedFile][resourcePointer][]=x` (yielding a PHP array rather than a
+     * string for `resourcePointer`) would pass a plain `isset()` check and be handed
+     * straight to `HashService::validateAndStripHmac(string $string, ...)`, whose
+     * parameter is strictly typed `string` - throwing an uncaught TypeError (TypeError
+     * extends Error, not Exception, so a surrounding `catch (Exception)` would not catch
+     * it) instead of gracefully falling through to `return null;` like every other
+     * malformed-resourcePointer shape does.
      */
     #[Test]
     public function resourcePointerAsArrayReturnsNullGracefully(): void

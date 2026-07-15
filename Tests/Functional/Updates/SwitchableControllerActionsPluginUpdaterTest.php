@@ -129,9 +129,9 @@ class SwitchableControllerActionsPluginUpdaterTest extends AbstractTestBase
      * ['config']['ds'] instead, and 'columns.pi_flexform.config.ds' itself is just core's fixed
      * default XML string (not an array). So the legacy lookup never finds anything for ANY
      * list_type on this core version - verified directly against the real, loaded TCA (no stub
-     * TCA constructed for this test). This is unchanged by 30e771a (sibling branch): it only wraps
-     * the same lookup chain in is_array()/is_string() guards to silence a PHP "illegal string
-     * offset" warning, without altering the resulting empty return value.
+     * TCA constructed for this test). The method wraps this lookup chain in is_array()/is_string()
+     * guards to silence a PHP "illegal string offset" warning; the resulting return value is
+     * still an empty array.
      */
     #[Test]
     public function getSettingsFromFlexFormDataStructureFileReturnsEmptyArrayForKnownListType(): void
@@ -152,13 +152,12 @@ class SwitchableControllerActionsPluginUpdaterTest extends AbstractTestBase
     }
 
     /**
-     * Drives the REAL parse path of the method (the is_array()-guarded sheets -> ROOT -> el loop
-     * that 30e771a hardens): we point the legacy TCA `ds` entry at a real FlexForm DS file that
-     * sf_register ships (Configuration/FlexForms/create.xml, which has the exact
-     * sheets/sDEF/ROOT/el shape the loop expects). The method then reads and parses that file and
-     * returns the `<el>` setting keys in document order. Functional tests reset $GLOBALS['TCA']
-     * per test, so mutating it here is isolated to this test. 30e771a only wraps this same lookup
-     * and parse chain in type guards; the returned keys are identical pre/post -> plain green.
+     * Drives the REAL parse path of the method (the is_array()-guarded sheets -> ROOT -> el loop):
+     * we point the legacy TCA `ds` entry at a real FlexForm DS file that sf_register ships
+     * (Configuration/FlexForms/create.xml, which has the exact sheets/sDEF/ROOT/el shape the loop
+     * expects). The method then reads and parses that file and returns the `<el>` setting keys in
+     * document order. Functional tests reset $GLOBALS['TCA'] per test, so mutating it here is
+     * isolated to this test.
      */
     #[Test]
     public function getSettingsFromFlexFormDataStructureFileParsesRealDataStructureFile(): void
@@ -202,7 +201,7 @@ class SwitchableControllerActionsPluginUpdaterTest extends AbstractTestBase
      * (see comment above), so removeFieldsNotPresentInDataStructure() strips every field from
      * every sheet (nothing is "allowed"), leaving pi_flexform rewritten to an empty string. The
      * list_type is still updated to the resolved target. This is the real, verified behavior of
-     * executeUpdate() as coded, unaffected by 30e771a.
+     * executeUpdate() as coded.
      */
     #[Test]
     public function executeUpdateMigratesRecordListTypeAndEmptiesFlexformFields(): void
@@ -227,7 +226,7 @@ class SwitchableControllerActionsPluginUpdaterTest extends AbstractTestBase
      * switchableControllerActions field and the disallowed settings.unknownField. The row is
      * migrated with list_type updated and a rewritten (non-empty) pi_flexform. This is the branch
      * the other executeUpdate tests cannot reach, because on modern core the DS path is absent and
-     * the allow-list is always empty (see env note above). 30e771a leaves this behavior unchanged.
+     * the allow-list is always empty (see env note above).
      */
     #[Test]
     public function executeUpdatePreservesAllowedFlexformFieldsWhenDataStructureResolves(): void

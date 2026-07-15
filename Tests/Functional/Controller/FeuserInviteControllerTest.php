@@ -227,25 +227,13 @@ class FeuserInviteControllerTest extends AbstractTestBase
     }
 
     /**
-     * Bug-Protokoll (RED-verified): pre-fix, when the FE session reports a logged-in user
-     * (userIsLoggedIn() === true) but that user's fe_users row no longer resolves through the
-     * repository (e.g. hidden/deleted after the session was established, so getLoggedInUser()
-     * returns null), formAction() passes null into `new InviteFormEvent($user, $this->settings)`.
-     * InviteFormEvent extends AbstractEventWithUserAndSettings, whose constructor has a
-     * non-nullable `FrontendUser $user` parameter, so this is a reachable TypeError, not just
-     * dead code.
-     *
-     * 30e771a (sibling branch) fixes this by changing the assignment to
-     * `$this->frontendUserService->getLoggedInUser() ?? new FrontendUser()`, so a fresh
-     * FrontendUser instance is used instead of null.
-     *
-     * RED evidence (assertions below un-skipped and run against the pre-fix code):
-     *   1) FeuserInviteControllerTest::formActionThrowsWhenLoggedInUserRecordCannotBeResolved
-     *   TypeError: Evoweb\SfRegister\Controller\Event\AbstractEventWithUserAndSettings::
-     *   __construct(): Argument #1 ($user) must be of type
-     *   Evoweb\SfRegister\Domain\Model\FrontendUser, null given, called in
-     *   .../Classes/Controller/FeuserInviteController.php on line 61
-     * Re-skipped after confirming the failure.
+     * When the FE session reports a logged-in user (userIsLoggedIn() === true) but that user's
+     * fe_users row no longer resolves through the repository (e.g. hidden/deleted after the
+     * session was established, so getLoggedInUser() returns null), formAction() substitutes a
+     * fresh FrontendUser instance (`getLoggedInUser() ?? new FrontendUser()`) instead of passing
+     * null into `new InviteFormEvent($user, $this->settings)`. InviteFormEvent extends
+     * AbstractEventWithUserAndSettings, whose constructor has a non-nullable `FrontendUser $user`
+     * parameter, so without the fallback this would be a reachable TypeError.
      */
     #[Test]
     public function formActionUsesEmptyUserWhenLoggedInUserRecordCannotBeResolved(): void

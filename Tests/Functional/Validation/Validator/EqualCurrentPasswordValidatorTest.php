@@ -83,18 +83,14 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
     }
 
     /**
-     * Pre-fix bug in df53334: EqualCurrentPasswordValidator::isValid() reads
-     * $this->frontendUserService->getLoggedInUser() without a null-guard and calls
-     * $user->getPassword() directly. FrontendUserService::getLoggedInUser() can return null even
-     * while userIsLoggedIn() is true (e.g. the FE session is valid but the fe_users row was
-     * hidden/deleted afterwards, or excluded by the repository's enable-fields), so this is a
-     * genuinely reachable defect - same root cause as FeuserPasswordControllerTest::
-     * saveActionThrowsWhenLoggedInUserRecordCannotBeResolved(). RED-verified: un-skipping this
-     * test and calling $subject->validate() throws "Error: Call to a member function
-     * getPassword() on null" from EqualCurrentPasswordValidator::isValid(); catch (Exception
-     * $exception) does not catch this \Error, so it propagates uncaught. Behoben in 30e771a
-     * (Classes/Validation/Validator/EqualCurrentPasswordValidator.php, sibling branch) via
-     * $user?->getPassword() ?? ''. Reaktivieren in Roadmap-Schritt 2.
+     * EqualCurrentPasswordValidator::isValid() reads
+     * $this->frontendUserService->getLoggedInUser() and calls `$user?->getPassword() ?? ''`.
+     * FrontendUserService::getLoggedInUser() can return null even while userIsLoggedIn() is true
+     * (e.g. the FE session is valid but the fe_users row was hidden/deleted afterwards, or
+     * excluded by the repository's enable-fields) - same root cause as
+     * FeuserPasswordControllerTest::saveActionThrowsWhenLoggedInUserRecordCannotBeResolved().
+     * Without the null-safe call, calling $user->getPassword() directly on null would throw an
+     * uncaught \Error (catch (Exception $exception) does not catch \Error).
      */
     #[Test]
     public function isValidReportsErrorWhenLoggedInUserRecordCannotBeResolved(): void

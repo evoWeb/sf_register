@@ -34,26 +34,12 @@ use TYPO3Fluid\Fluid\View\TemplateView;
  * render() falls back to `isRenderUpload()` and renders the plain `<input type="file">`
  * element instead, with no preview markup at all.
  *
- * 30e771a only touches this file with phpstan-only changes that have no observable
- * runtime effect:
- * - the `id` attribute guard in renderPreview() additionally checks
- *   `is_string($this->arguments['id']) && $this->arguments['id'] !== ''`. This is
- *   unreachable in both versions: `id` is never a registered argument of
- *   UploadViewHelper (only registered arguments end up in $this->arguments; `id` is
- *   collected as an additionalArgument instead - see
- *   TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperInvoker::invoke()), so
- *   `hasArgument('id')` is always false and $resourcePointerIdAttribute always stays ''.
- * - `$this->templateVariableContainer?->add(...)`/`?->remove(...)` add a nullsafe
- *   operator; templateVariableContainer is always set via setRenderingContext() when
- *   rendering through a TemplateView, so this never changes behaviour here.
- * - `is_string($content) ? $content : ''` guards renderChildren()'s return value; with
- *   the plain-text/element children used here it always returns a string, so the
- *   ternary is a no-op.
- * - the `/** @var FileReference[] $result *\/` annotations in getUploadedResource() are
- *   pure phpstan hints with zero runtime effect.
- *
- * Since none of these changes affect observable behaviour, no Bug-/Deprecation-Protokoll
- * is needed - the tests below assert identical behaviour on both sides of 30e771a.
+ * The `id` attribute guard in renderPreview() (`is_string($this->arguments['id']) &&
+ * $this->arguments['id'] !== ''`) is unreachable: `id` is never a registered argument
+ * of UploadViewHelper (only registered arguments end up in $this->arguments; `id` is
+ * collected as an additionalArgument instead - see
+ * TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperInvoker::invoke()), so `hasArgument('id')`
+ * is always false and $resourcePointerIdAttribute always stays ''.
  */
 class UploadViewHelperTest extends AbstractTestBase
 {

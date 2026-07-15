@@ -36,48 +36,15 @@ use TYPO3Fluid\Fluid\View\TemplateView;
  * getLanguageCode() (frontend branch) reads the SiteLanguage attached to the request's
  * "language" attribute and returns its ISO language code (Locale::getLanguageCode()).
  *
- * git show 30e771a (phpstan fix) on this class - what ACTUALLY changed, vs. the task
- * brief's claim that getLanguageCode/hasTableColumn/render all changed:
- *
- * - getLanguageCode(): DID change. Pre-fix reads $this->getRequest(), a removed helper
- *   that returned $GLOBALS['TYPO3_REQUEST'] directly. Post-fix reads the request from
- *   $this->renderingContext->getAttribute(ServerRequestInterface::class) instead. For
- *   any request driven through this test's renderTemplate() helper, both sources are
- *   populated with an equivalent request (this test mirrors the frontend "language"
- *   attribute onto $GLOBALS['TYPO3_REQUEST'], which is exactly what the pre-fix
- *   getRequest() reads), so no observable output difference is reachable from these
- *   tests - it is a request-plumbing refactor, not a behavior change, for the scenarios
- *   in scope here (single current-request rendering).
- *   Also in getLanguageCode(): the backend fallback branch
- *   (`$this->getBackendUserAuthentication()->uc['lang']`) gained a null-safe `?->` in
- *   30e771a (paired with a defensive instanceof check added to
- *   getBackendUserAuthentication() itself, see below). This branch is only reached when
- *   ApplicationType::fromRequest()->isFrontend() is false. It is out of scope for this
- *   task (which is specifically about "the language code from the request's site
- *   language", i.e. the frontend branch) and is not exercised here; all tests keep the
- *   request's applicationType attribute at REQUESTTYPE_FE (frontend) as set up by
- *   AbstractTestBase::createServerRequest().
- * - getConfiguredType(): DID change (not listed in the brief at all) - gained
- *   `$type = is_string($type) ? $type : '';`. This is pure phpstan type-narrowing: the
- *   `type` argument is registered as `'string'` via registerArgument(), so Fluid's
- *   argument validation already guarantees $this->arguments['type'] is a string (or
- *   absent) before render() ever runs it through getConfiguredType(). Dead code for any
- *   real invocation - no behavior divergence, no skip needed. Exercised implicitly by
- *   every render() call below.
- * - getBackendUserAuthentication(): DID change - added an `instanceof BackendUserAuthentication`
- *   guard so it returns null instead of a non-instance value. Only observable from the
- *   backend branch of getLanguageCode() (see above) - out of scope here, not exercised.
- * - hasTableColumn(): UNCHANGED by 30e771a (confirmed via `git show 30e771a`). The brief
- *   is wrong to list it as a changed method. Tested below directly via reflection (true
- *   for an existing static_languages column, false for a bogus one) and indirectly
- *   through render()'s branching.
- * - render(): UNCHANGED by 30e771a. Also mislisted by the brief. Tested below for its
- *   exact output across the 'languages'/'zones'/no-type argument combinations.
- *
- * Net result: the only reachable, in-scope 30e771a change is the getRequest() ->
- * renderingContext plumbing swap inside getLanguageCode(), which produces no observable
- * difference for the frontend site-language scenarios under test - no Bug-Protokoll or
- * Deprecation-Protokoll skip is needed.
+ * getLanguageCode() reads the current request via
+ * $this->renderingContext->getAttribute(ServerRequestInterface::class). Its backend
+ * fallback branch (`$this->getBackendUserAuthentication()?->uc['lang']`) is only reached
+ * when ApplicationType::fromRequest()->isFrontend() is false - out of scope for this
+ * suite (which covers the frontend site-language behavior) and not exercised here; all
+ * tests keep the request's applicationType attribute at REQUESTTYPE_FE (frontend) as set
+ * up by AbstractTestBase::createServerRequest(). getBackendUserAuthentication() itself
+ * guards with `instanceof BackendUserAuthentication`, returning null instead of a
+ * non-instance value - likewise only observable from that untested backend branch.
  */
 class LanguageKeyViewHelperTest extends AbstractTestBase
 {

@@ -26,52 +26,18 @@ use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
  *       getDefaultSelectedFieldsFromTsConfig()[sfRegisterForm . '.'] ?? [] -
  *       i.e. plugin.tx_sfregister.settings.fields.defaultSelected.<formType>.
  *
- * git show 30e771a (sibling branch, phpstan-fix) on this class - what ACTUALLY
- * changed, vs. the task brief's claim that addData/getAvailableFieldsFromTsConfig/
- * getDefaultSelectedFieldsFromTsConfig/getSelectedFields all changed:
- *
- * - addData(): DID change. Pre-fix iterates $result['processedTca']['columns']
- *   and reads $result['databaseRow'] assuming both are always arrays (and every
- *   column value an array with a 'config' array). 30e771a adds defensive
- *   is_array()/continue guards and defaults databaseRow/processedTca to [] when
- *   missing or not arrays. FormEngine's DataProvider chain always populates
- *   processedTca.columns as an array of arrays and databaseRow as an array
- *   before this provider runs (it is registered late in
- *   Configuration/Backend/AjaxRoutes / providerDependencyMap, after TcaColumns*
- *   providers) - so for every reachable real invocation the guards are dead
- *   phpstan type-narrowing, not a behavior change. Exercised below with
- *   well-formed $result arrays only; no malformed-input test is added since
- *   that shape is never reachable from real FormEngine use, matching the
- *   "dead code -> no skip needed" case.
- * - getAvailableFieldsFromTsConfig() / getDefaultSelectedFieldsFromTsConfig():
- *   DID change, identically: `$this->getBackendUserAuthentication()->getTSConfig()`
- *   became `$this->getBackendUserAuthentication()?->getTSConfig() ?? []`. This
- *   is only observable when getBackendUserAuthentication() returns null, i.e.
- *   $GLOBALS['BE_USER'] is not a BackendUserAuthentication instance. Since this
- *   whole class only ever runs inside a fully bootstrapped TYPO3 backend
- *   FormEngine request (which always has an authenticated BackendUserAuthentication
- *   as $GLOBALS['BE_USER'] before any FormDataProvider runs), that null path is
- *   not reachable in production for this class - same conclusion the sibling
- *   LanguageKeyViewHelperTest already documented for the identical null-safe
- *   change made to this exact getBackendUserAuthentication() helper. No
- *   Bug-Protokoll skip is added; all tests below set up a BE_USER double so the
- *   normal (non-null) path is exercised, matching both pre- and post-fix
- *   behavior.
- * - getSelectedFields(): NOT changed by 30e771a at all (confirmed via
- *   `git show 30e771a` - no hunk touches this method). The brief is wrong to
- *   list it as changed. Tested below directly via reflection.
- * - Not listed by the brief but ACTUALLY changed by 30e771a: getAvailableFields()
- *   (protected, gained a `$fieldConfig['config'] ??= []` guard - dead code for
- *   real TCA columns, which always carry a 'config' array), getLabel() (gained
- *   `is_string($labelPath) ? ... : ...` narrowing - dead code, since
- *   'backendLabel' in real TSconfig is always a string or absent), and
- *   getBackendUserAuthentication() itself (gained an
- *   `instanceof BackendUserAuthentication` guard, paired with the null-safe
- *   call sites above).
- *
- * Net result: no reachable pre-fix bug and no regression - every 30e771a change
- * to this class is defensive phpstan narrowing that is dead for all realistic,
- * well-formed FormEngine invocations. Plain green characterization tests only.
+ * addData() defensively guards processedTca/databaseRow with is_array()/continue
+ * checks, and getAvailableFieldsFromTsConfig()/getDefaultSelectedFieldsFromTsConfig()
+ * null-safe getBackendUserAuthentication()?->getTSConfig(). Neither path is
+ * reachable in production: FormEngine's DataProvider chain always populates
+ * processedTca.columns/databaseRow as well-formed arrays before this provider
+ * runs, and $GLOBALS['BE_USER'] is always an authenticated
+ * BackendUserAuthentication instance inside a bootstrapped backend FormEngine
+ * request (see LanguageKeyViewHelperTest for the identical
+ * getBackendUserAuthentication() reasoning). Tests below therefore only
+ * exercise well-formed input with a BE_USER double; no malformed-input/
+ * null-BE_USER test is added since that shape is never reachable from real
+ * FormEngine use.
  */
 class FormFieldsTest extends AbstractTestBase
 {
