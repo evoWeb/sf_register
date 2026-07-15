@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
-use Exception;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -162,7 +161,7 @@ class UploadViewHelper extends AbstractFormFieldViewHelper
                 try {
                     /** @var FileReference[] $result */
                     $result = [$this->propertyMapper->convert($resource, FileReference::class)];
-                } catch (Exception) {
+                } catch (\Exception) {
                 }
             }
         }

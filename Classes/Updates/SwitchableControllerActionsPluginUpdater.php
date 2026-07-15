@@ -19,15 +19,15 @@ use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Exception as DbalException;
 use Symfony\Component\Console\Output\OutputInterface;
+use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Core\Upgrades\ChattyInterface;
 use TYPO3\CMS\Core\Upgrades\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Core\Upgrades\UpgradeWizardInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 #[UpgradeWizard('sfrSwitchableControllerActionsPluginUpdater')]
 class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface, ChattyInterface
@@ -75,8 +75,7 @@ class SwitchableControllerActionsPluginUpdater implements UpgradeWizardInterface
     public function __construct(
         protected FlexFormTools $flexFormTools,
         protected ConnectionPool $connectionPool,
-    ) {
-    }
+    ) {}
 
     public function setOutput(OutputInterface $output): void
     {

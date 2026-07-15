@@ -34,9 +34,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class LanguageKeyViewHelper extends AbstractViewHelper
 {
-    public function __construct(protected ConnectionPool $connectionPool)
-    {
-    }
+    public function __construct(protected ConnectionPool $connectionPool) {}
 
     public function initializeArguments(): void
     {

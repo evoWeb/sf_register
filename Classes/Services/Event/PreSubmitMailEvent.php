@@ -25,11 +25,10 @@ final class PreSubmitMailEvent
      * @param array<string, FrontendUserInterface> $arguments
      */
     public function __construct(
-        protected MailMessage $mail,
-        protected array $settings,
-        protected array $arguments = []
-    ) {
-    }
+        private MailMessage $mail,
+        private array $settings,
+        private array $arguments = []
+    ) {}
 
     public function getMail(): MailMessage
     {

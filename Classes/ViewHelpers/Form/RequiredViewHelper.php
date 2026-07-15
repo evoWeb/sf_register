@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\ViewHelpers\Form;
 
 use Evoweb\SfRegister\Validation\Validator\RequiredValidator;
-use Exception;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
@@ -53,9 +52,7 @@ class RequiredViewHelper extends AbstractConditionViewHelper
      */
     protected ?RenderingContextInterface $renderingContext = null;
 
-    public function __construct(protected ConfigurationManager $configurationManager)
-    {
-    }
+    public function __construct(protected ConfigurationManager $configurationManager) {}
 
     public function initializeArguments(): void
     {
@@ -85,7 +82,7 @@ class RequiredViewHelper extends AbstractConditionViewHelper
                 'SfRegister',
                 'Form'
             );
-        } catch (Exception) {
+        } catch (\Exception) {
             $settings = [];
         }
         return $settings;

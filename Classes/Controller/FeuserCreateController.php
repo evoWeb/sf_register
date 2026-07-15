@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Controller;
 
-use DateTime;
 use Evoweb\SfRegister\Controller\Event\CreateAcceptEvent;
 use Evoweb\SfRegister\Controller\Event\CreateConfirmEvent;
 use Evoweb\SfRegister\Controller\Event\CreateDeclineEvent;
@@ -46,7 +45,7 @@ use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 class FeuserCreateController extends FeuserController
 {
     public const PLUGIN_ACTIONS = 'form, preview, proxy, save, confirm, refuse, accept, decline,'
-        .  ' confirmForm, refuseForm, acceptForm, declineForm, removeImage';
+        . ' confirmForm, refuseForm, acceptForm, declineForm, removeImage';
 
     /**
      * @var string[]
@@ -59,7 +58,7 @@ class FeuserCreateController extends FeuserController
         'confirmFormAction',
         'refuseFormAction',
         'acceptFormAction',
-        'declineFormAction'
+        'declineFormAction',
     ];
 
     public function __construct(
@@ -165,7 +164,7 @@ class FeuserCreateController extends FeuserController
 
             $this->userRepository->update($user);
             $this->persistAll();
-        } catch (IllegalObjectTypeException | UnknownObjectException) {
+        } catch (IllegalObjectTypeException|UnknownObjectException) {
         }
 
         $this->sessionService->remove('captchaWasValid');
@@ -234,7 +233,7 @@ class FeuserCreateController extends FeuserController
                     (int)($this->settings['usergroupPostConfirm'] ?? 0)
                 );
                 $this->fileService->moveTemporaryImage($user);
-                $user->setActivatedOn(new DateTime('now'));
+                $user->setActivatedOn(new \DateTime('now'));
 
                 if (!($this->settings['acceptEmailPostConfirm'] ?? false)) {
                     $user->setDisable(false);
@@ -255,7 +254,7 @@ class FeuserCreateController extends FeuserController
                 try {
                     $this->userRepository->update($user);
                     $this->persistAll();
-                } catch (IllegalObjectTypeException | UnknownObjectException) {
+                } catch (IllegalObjectTypeException|UnknownObjectException) {
                 }
 
                 $this->view->assign('userConfirmed', 1);
@@ -389,7 +388,7 @@ class FeuserCreateController extends FeuserController
                 $user->setDisable(false);
 
                 if (!($this->settings['confirmEmailPostAccept'] ?? false)) {
-                    $user->setActivatedOn(new DateTime('now'));
+                    $user->setActivatedOn(new \DateTime('now'));
                 }
 
                 $event = new CreateAcceptEvent($user, $this->settings);
@@ -398,7 +397,7 @@ class FeuserCreateController extends FeuserController
 
                 try {
                     $this->userRepository->update($user);
-                } catch (IllegalObjectTypeException | UnknownObjectException) {
+                } catch (IllegalObjectTypeException|UnknownObjectException) {
                 }
 
                 $this->mailService->sendEmails(

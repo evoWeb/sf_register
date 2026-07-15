@@ -26,8 +26,7 @@ class OverrideSettingsEvent
         protected array $settings,
         protected readonly string $controllerName,
         protected readonly ContentObjectRenderer $contentObject
-    ) {
-    }
+    ) {}
 
     public function getControllerName(): string
     {

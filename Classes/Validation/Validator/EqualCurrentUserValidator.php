@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Validation\Validator;
 
-use Exception;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
@@ -28,9 +27,7 @@ class EqualCurrentUserValidator extends AbstractValidator
 {
     protected $acceptsEmptyValues = false;
 
-    public function __construct(protected Context $context)
-    {
-    }
+    public function __construct(protected Context $context) {}
 
     /**
      * If the given value is not equal to logged-in user id
@@ -44,7 +41,7 @@ class EqualCurrentUserValidator extends AbstractValidator
                     1305009260
                 );
             }
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->addError($exception->getMessage(), $exception->getCode());
         }
     }

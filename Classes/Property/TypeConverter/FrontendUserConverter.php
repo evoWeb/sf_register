@@ -21,9 +21,7 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 
 class FrontendUserConverter extends AbstractTypeConverter
 {
-    public function __construct(protected FrontendUserRepository $frontendUserRepository)
-    {
-    }
+    public function __construct(protected FrontendUserRepository $frontendUserRepository) {}
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully

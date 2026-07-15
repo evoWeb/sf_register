@@ -21,9 +21,7 @@ use Evoweb\SfRegister\Domain\Repository\FrontendUserGroupRepository;
 
 class FrontenUserGroup
 {
-    public function __construct(protected FrontendUserGroupRepository $userGroupRepository)
-    {
-    }
+    public function __construct(protected FrontendUserGroupRepository $userGroupRepository) {}
 
     /**
      * Determines whether a user is in given user groups.

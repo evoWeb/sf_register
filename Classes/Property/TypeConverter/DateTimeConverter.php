@@ -15,8 +15,6 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Property\TypeConverter;
 
-use DateMalformedStringException;
-use DateTime;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
@@ -32,14 +30,14 @@ class DateTimeConverter extends BaseDateTimeConverter
      * @param array<string, mixed> $source
      * @param array<string, mixed> $convertedChildProperties
      * @throws TypeConverterException
-     * @throws DateMalformedStringException
+     * @throws \DateMalformedStringException
      */
     public function convertFrom(
         $source,
         string $targetType,
         array $convertedChildProperties = [],
         ?PropertyMappingConfigurationInterface $configuration = null
-    ): null|DateTime|Error {
+    ): \DateTime|Error|null {
         /** @var array<string, string> $userData */
         $userData = $configuration?->getConfigurationValue(self::class, self::CONFIGURATION_USER_DATA);
         if (
@@ -49,7 +47,7 @@ class DateTimeConverter extends BaseDateTimeConverter
             && strlen($userData['dateOfBirthMonth'] ?? '') > 0
             && strlen($userData['dateOfBirthYear'] ?? '') > 0
         ) {
-            $date = new DateTime(implode(
+            $date = new \DateTime(implode(
                 '-',
                 [$userData['dateOfBirthYear'], $userData['dateOfBirthMonth'], $userData['dateOfBirthDay']]
             ));

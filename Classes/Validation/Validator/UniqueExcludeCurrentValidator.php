@@ -46,9 +46,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements SetMode
 
     protected string $propertyName = '';
 
-    public function __construct(protected FrontendUserRepository $userRepository)
-    {
-    }
+    public function __construct(protected FrontendUserRepository $userRepository) {}
 
     public function setModel(ValidatableInterface $model): void
     {

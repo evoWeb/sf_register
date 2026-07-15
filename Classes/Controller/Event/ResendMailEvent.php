@@ -22,9 +22,7 @@ final class ResendMailEvent
     /**
      * @param array<string, mixed> $settings
      */
-    public function __construct(protected Email $email, protected array $settings)
-    {
-    }
+    public function __construct(private Email $email, private array $settings) {}
 
     public function getEmail(): Email
     {

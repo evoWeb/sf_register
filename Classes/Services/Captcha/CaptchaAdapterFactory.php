@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Services\Captcha;
 
-use Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -38,7 +37,7 @@ class CaptchaAdapterFactory
                 'SfRegister',
                 'Form'
             );
-        } catch (Exception) {
+        } catch (\Exception) {
         }
     }
 

@@ -35,9 +35,7 @@ class CaptchaValidator extends AbstractValidator
         ],
     ];
 
-    public function __construct(protected CaptchaAdapterFactory $captchaAdapterFactory)
-    {
-    }
+    public function __construct(protected CaptchaAdapterFactory $captchaAdapterFactory) {}
 
     /**
      * If the given captcha is valid

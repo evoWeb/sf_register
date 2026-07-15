@@ -18,7 +18,6 @@ namespace Evoweb\SfRegister\Services;
 use Evoweb\SfRegister\Domain\Model\FrontendUser as FrontendUserModel;
 use Evoweb\SfRegister\Domain\Model\FrontendUserGroup;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
@@ -49,8 +48,7 @@ class FrontendUser
         protected HashService $hashService,
         protected UriBuilder $uriBuilder,
         protected Registry $registry,
-    ) {
-    }
+    ) {}
 
     public function getLoggedInUserId(): int
     {
@@ -60,7 +58,7 @@ class FrontendUser
             /** @var UserAspect $userAspect */
             $userAspect = $this->context->getAspect('frontend.user');
             $userId = (int)$userAspect->get('id');
-        } catch (AspectNotFoundException | AspectPropertyNotFoundException) {
+        } catch (AspectNotFoundException|AspectPropertyNotFoundException) {
         }
 
         return $userId;
@@ -106,7 +104,7 @@ class FrontendUser
             /** @var UserAspect $userAspect */
             $userAspect = $this->context->getAspect('frontend.user');
             $result = $userAspect->isLoggedIn();
-        } catch (Exception) {
+        } catch (\Exception) {
         }
         return $result;
     }
