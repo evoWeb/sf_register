@@ -43,9 +43,7 @@ class UniqueValidator extends AbstractValidator implements SetModelInterface, Se
 
     protected string $propertyName = '';
 
-    public function __construct(protected FrontendUserRepository $userRepository)
-    {
-    }
+    public function __construct(protected FrontendUserRepository $userRepository) {}
 
     public function setModel(ValidatableInterface $model): void
     {

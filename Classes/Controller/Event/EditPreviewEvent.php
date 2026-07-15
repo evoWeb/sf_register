@@ -15,6 +15,4 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Controller\Event;
 
-final class EditPreviewEvent extends AbstractEventWithUserAndSettings
-{
-}
+final class EditPreviewEvent extends AbstractEventWithUserAndSettings {}

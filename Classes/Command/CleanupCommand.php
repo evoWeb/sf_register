@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Command;
 
 use Doctrine\DBAL\Exception as DbalException;
-use Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -93,7 +92,7 @@ class CleanupCommand extends Command
 
                 $io->comment('Cleaned up all outdated temporary accounts.');
                 $result = self::SUCCESS;
-            } catch (Exception | DbalException $exception) {
+            } catch (\Exception|DbalException $exception) {
                 $io->comment($exception->getMessage());
             }
         }

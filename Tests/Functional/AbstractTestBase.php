@@ -19,9 +19,6 @@ use Evoweb\SfRegister\Tests\Functional\Http\ShortCircuitHandler;
 use Evoweb\SfRegister\Tests\Functional\Http\ShortCircuitResponse;
 use Evoweb\SfRegister\Tests\Functional\Traits\SiteBasedTestTrait;
 use Psr\Http\Message\ServerRequestInterface;
-use ReflectionClass;
-use ReflectionMethod;
-use ReflectionProperty;
 use TYPO3\CMS\Core\Authentication\LoginType;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
 use TYPO3\CMS\Core\Http\NormalizedParams;
@@ -147,15 +144,15 @@ abstract class AbstractTestBase extends FunctionalTestCase
         return $response->getRequest();
     }
 
-    public function getPrivateMethod(object $object, string $methodName): ReflectionMethod
+    public function getPrivateMethod(object $object, string $methodName): \ReflectionMethod
     {
-        $classReflection = new ReflectionClass($object);
+        $classReflection = new \ReflectionClass($object);
         return $classReflection->getMethod($methodName);
     }
 
-    public function getPrivateProperty(object $object, string $propertyName): ReflectionProperty
+    public function getPrivateProperty(object $object, string $propertyName): \ReflectionProperty
     {
-        $classReflection = new ReflectionClass($object);
+        $classReflection = new \ReflectionClass($object);
         return $classReflection->getProperty($propertyName);
     }
 }

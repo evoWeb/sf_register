@@ -15,12 +15,10 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Annotation;
 
-use Attribute;
-
 /**
  * @Annotation
  */
-#[Attribute(Attribute::TARGET_PROPERTY | Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
+#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 class Validate
 {
     public string $validator = '';

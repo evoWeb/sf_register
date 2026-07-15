@@ -16,8 +16,6 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Tests\Functional\Traits;
 
 use EvowebTests\TestClasses\Error\PageErrorHandler\PhpErrorHandler;
-use Exception;
-use LogicException;
 use TYPO3\CMS\Core\Configuration\SiteConfiguration;
 use TYPO3\CMS\Core\Configuration\SiteWriter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -73,7 +71,7 @@ trait SiteBasedTestTrait
             // ensure no previous site configuration influences the test
             GeneralUtility::rmdir($this->instancePath . '/typo3conf/sites/' . $identifier, true);
             $siteWriter->write($identifier, $configuration);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->markTestSkipped($exception->getMessage());
         }
     }
@@ -91,7 +89,7 @@ trait SiteBasedTestTrait
         $configuration = array_merge($configuration, $overrides);
         try {
             $siteWriter->write($identifier, $configuration);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->markTestSkipped($exception->getMessage());
         }
     }
@@ -194,7 +192,7 @@ trait SiteBasedTestTrait
                 'errorPhpClassFQCN' => PhpErrorHandler::class,
             ];
         } else {
-            throw new LogicException(
+            throw new \LogicException(
                 sprintf('Invalid handler "%s"', $handler),
                 1533894782
             );
@@ -217,7 +215,7 @@ trait SiteBasedTestTrait
     protected function resolveLanguagePreset(string $identifier): array
     {
         if (!isset(static::LANGUAGE_PRESETS[$identifier])) {
-            throw new LogicException(
+            throw new \LogicException(
                 sprintf('Undefined preset identifier "%s"', $identifier),
                 1533893665
             );
@@ -250,7 +248,7 @@ trait SiteBasedTestTrait
     protected function mergeInstruction(InstructionInterface $current, InstructionInterface $other): InstructionInterface
     {
         if (get_class($current) !== get_class($other)) {
-            throw new LogicException('Cannot merge different instruction types', 1565863174);
+            throw new \LogicException('Cannot merge different instruction types', 1565863174);
         }
 
         if ($current instanceof TypoScriptInstruction) {

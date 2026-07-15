@@ -25,9 +25,7 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 #[Autoconfigure(public: true)]
 class ImageUploadValidator extends AbstractValidator
 {
-    public function __construct(protected File $fileService)
-    {
-    }
+    public function __construct(protected File $fileService) {}
 
     /**
      * If the given value is a valid image

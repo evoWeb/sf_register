@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Services;
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -80,7 +79,7 @@ class File implements SingletonInterface, LoggerAwareInterface
                 ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
                 'SfRegister'
             );
-        } catch (Exception) {
+        } catch (\Exception) {
         }
 
         $imageFolder = $this->settings['imageFolder'] ?? '';
@@ -140,10 +139,10 @@ class File implements SingletonInterface, LoggerAwareInterface
 
             try {
                 $this->imageFolder = $this->getStorage()->getFolder($this->imageFolderIdentifier);
-            } catch (Exception) {
+            } catch (\Exception) {
             }
         }
-        return $this->imageFolder ?? throw new Exception(
+        return $this->imageFolder ?? throw new \Exception(
             'Image folder "' . $this->imageFolderIdentifier . '" could not be resolved',
             1719300001
         );
@@ -156,10 +155,10 @@ class File implements SingletonInterface, LoggerAwareInterface
 
             try {
                 $this->tempFolder = $this->getStorage()->getFolder($this->tempFolderIdentifier);
-            } catch (Exception) {
+            } catch (\Exception) {
             }
         }
-        return $this->tempFolder ?? throw new Exception(
+        return $this->tempFolder ?? throw new \Exception(
             'Temp folder "' . $this->tempFolderIdentifier . '" could not be resolved',
             1719300002
         );
@@ -210,7 +209,7 @@ class File implements SingletonInterface, LoggerAwareInterface
                 $this->namespace = strtolower(
                     'tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']
                 );
-            } catch (Exception) {
+            } catch (\Exception) {
                 $this->namespace = 'tx_sfregister_create';
             }
         }
@@ -298,7 +297,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         if (!$this->getStorage()->hasFolder($uploadFolder)) {
             try {
                 $this->getStorage()->createFolder($uploadFolder);
-            } catch (Exception) {
+            } catch (\Exception) {
             }
         }
     }
@@ -311,7 +310,7 @@ class File implements SingletonInterface, LoggerAwareInterface
             try {
                 $file->getStorage()
                     ->moveFile($file, $this->getImageFolder());
-            } catch (Exception $exception) {
+            } catch (\Exception $exception) {
                 $this->logger?->info(
                     'sf_register: Image ' . $file->getName() . ' could not be moved! ' . $exception->getMessage()
                 );

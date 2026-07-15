@@ -29,8 +29,7 @@ class CheckFactory
             AutologinCheck::class,
             UsernameCheck::class,
         ]
-    ) {
-    }
+    ) {}
 
     /**
      * @return object[]
@@ -41,7 +40,7 @@ class CheckFactory
 
         /** @var class-string<object> $checkClassname */
         foreach ($this->checkClassnames as $checkClassname) {
-            $checks[] = new $checkClassname;
+            $checks[] = new $checkClassname();
         }
 
         return $checks;

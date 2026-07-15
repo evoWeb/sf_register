@@ -26,7 +26,6 @@ use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Attribute;
@@ -58,7 +57,7 @@ class FeuserResendController extends FeuserController
                 if ($user !== null) {
                     $email->setEmail($user->getEmail());
                 }
-            } catch (Exception) {
+            } catch (\Exception) {
             }
         }
 

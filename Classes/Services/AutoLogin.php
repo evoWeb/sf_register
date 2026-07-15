@@ -26,9 +26,7 @@ use TYPO3\CMS\Core\Registry;
 #[Autoconfigure(public: true)]
 class AutoLogin extends AuthenticationService
 {
-    public function __construct(protected Registry $registry)
-    {
-    }
+    public function __construct(protected Registry $registry) {}
 
     /**
      * Find a user (e.g., look up the user record in the database when a login is sent)

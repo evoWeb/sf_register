@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Validation\Validator;
 
 use Evoweb\SfRegister\Domain\Model\ValidatableInterface;
-use Exception;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
@@ -61,7 +60,7 @@ class RepeatValidator extends AbstractValidator implements SetModelInterface, Se
                     1307965971
                 );
             }
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->addError($exception->getMessage(), $exception->getCode());
         }
     }

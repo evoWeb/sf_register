@@ -28,7 +28,6 @@ use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -144,7 +143,7 @@ class FeuserEditController extends FeuserController
 
         try {
             $this->userRepository->update($user);
-        } catch (Exception) {
+        } catch (\Exception) {
         }
         $this->persistAll();
 
@@ -211,7 +210,7 @@ class FeuserEditController extends FeuserController
                 $user = $event->getUser();
                 try {
                     $this->userRepository->update($user);
-                } catch (Exception) {
+                } catch (\Exception) {
                 }
 
                 $this->mailService->sendEmails(
@@ -285,7 +284,7 @@ class FeuserEditController extends FeuserController
                 $user = $event->getUser();
                 try {
                     $this->userRepository->update($user);
-                } catch (Exception) {
+                } catch (\Exception) {
                 }
 
                 $this->mailService->sendEmails(
