@@ -66,6 +66,7 @@ trait SiteBasedTestTrait
         if (!empty($errorHandling)) {
             $configuration['errorHandling'] = $errorHandling;
         }
+        /** @var SiteWriter $siteWriter */
         $siteWriter = $this->get(SiteWriter::class);
         try {
             // ensure no previous site configuration influences the test
@@ -83,7 +84,9 @@ trait SiteBasedTestTrait
         string $identifier,
         array $overrides
     ): void {
+        /** @var SiteConfiguration $siteConfiguration */
         $siteConfiguration = $this->get(SiteConfiguration::class);
+        /** @var SiteWriter $siteWriter */
         $siteWriter = $this->get(SiteWriter::class);
         $configuration = $siteConfiguration->load($identifier);
         $configuration = array_merge($configuration, $overrides);
@@ -232,11 +235,9 @@ trait SiteBasedTestTrait
 
         foreach ($instructions as $instruction) {
             $identifier = $instruction->getIdentifier();
-            if (isset($modifiedInstructions[$identifier]) || $request->getInstruction($identifier) !== null) {
-                $modifiedInstructions[$identifier] = $this->mergeInstruction(
-                    $modifiedInstructions[$identifier] ?? $request->getInstruction($identifier),
-                    $instruction
-                );
+            $existingInstruction = $modifiedInstructions[$identifier] ?? $request->getInstruction($identifier);
+            if ($existingInstruction !== null) {
+                $modifiedInstructions[$identifier] = $this->mergeInstruction($existingInstruction, $instruction);
             } else {
                 $modifiedInstructions[$identifier] = $instruction;
             }

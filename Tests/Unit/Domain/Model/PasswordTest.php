@@ -29,12 +29,6 @@ class PasswordTest extends UnitTestCase
         $this->subject = new Password();
     }
 
-    public function tearDown(): void
-    {
-        unset($this->subject);
-        parent::tearDown();
-    }
-
     #[Test]
     public function passwordOnInitializeIsEmptyString(): void
     {

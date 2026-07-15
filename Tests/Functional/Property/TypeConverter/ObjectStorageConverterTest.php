@@ -136,6 +136,7 @@ class ObjectStorageConverterTest extends AbstractTestBase
     {
         $subject = $this->getSubject();
 
+        // @phpstan-ignore argument.type (the scalar-child case uses a real bare-uid-reference shape; the @param is narrower)
         self::assertSame($expected, $subject->getSourceChildPropertiesToBeConverted($source));
     }
 }

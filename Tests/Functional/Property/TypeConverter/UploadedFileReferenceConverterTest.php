@@ -141,6 +141,9 @@ class UploadedFileReferenceConverterTest extends AbstractTestBase
     /**
      * @return array<string, mixed>
      */
+    /**
+     * @return array<string, string|int>
+     */
     protected function buildUploadInfo(string $filename, int $error = \UPLOAD_ERR_OK): array
     {
         $tmpName = $this->createJpegFile($filename);
@@ -390,6 +393,7 @@ class UploadedFileReferenceConverterTest extends AbstractTestBase
             'submittedFile' => ['resourcePointer' => ['not-a-string']],
         ];
 
+        // @phpstan-ignore argument.type (deliberately passes an array resourcePointer to exercise the guard)
         self::assertNull($subject->convertFrom($uploadInfo, ExtbaseFileReference::class));
     }
 

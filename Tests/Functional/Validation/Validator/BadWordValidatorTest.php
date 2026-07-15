@@ -19,6 +19,7 @@ use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\BadWordValidator;
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Site\Entity\NullSite;
+use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
@@ -44,6 +45,7 @@ class BadWordValidatorTest extends AbstractTestBase
             ],
         ]);
 
+        /** @var ConfigurationManagerInterface $configurationManager */
         $configurationManager = $this->get(ConfigurationManagerInterface::class);
         $configurationManager->setRequest($this->request);
         // @extensionScannerIgnoreLine
@@ -54,20 +56,15 @@ class BadWordValidatorTest extends AbstractTestBase
         $this->subject = new BadWordValidator($configurationManager);
     }
 
-    public function tearDown(): void
-    {
-        unset($this->subject);
-        parent::tearDown();
-    }
-
     #[Test]
     public function typoscriptContainsValidTypoScriptSettings(): void
     {
-        $typoScriptSetup = $this->request->getAttribute('frontend.typoscript')->getSetupArray();
-        self::assertArrayHasKey(
-            'badWordList',
-            $typoScriptSetup['plugin.']['tx_sfregister.']['settings.']
-        );
+        /** @var FrontendTypoScript $frontendTypoScript */
+        $frontendTypoScript = $this->request->getAttribute('frontend.typoscript');
+        $typoScriptSetup = $frontendTypoScript->getSetupArray();
+        /** @var array<string, mixed> $settings */
+        $settings = $typoScriptSetup['plugin.']['tx_sfregister.']['settings.'];
+        self::assertArrayHasKey('badWordList', $settings);
     }
 
     #[Test]
@@ -75,7 +72,9 @@ class BadWordValidatorTest extends AbstractTestBase
     {
         $property = $this->getPrivateProperty($this->subject, 'settings');
 
-        self::assertArrayHasKey('badWordList', $property->getValue($this->subject));
+        /** @var array<string, mixed> $settings */
+        $settings = $property->getValue($this->subject);
+        self::assertArrayHasKey('badWordList', $settings);
     }
 
     #[Test]
@@ -84,7 +83,9 @@ class BadWordValidatorTest extends AbstractTestBase
         $this->request = $this->request->withAttribute('language', (new NullSite())->getDefaultLanguage());
         $GLOBALS['TYPO3_REQUEST'] = $this->request;
 
-        $typoScriptSetup = $this->request->getAttribute('frontend.typoscript')->getSetupArray();
+        /** @var FrontendTypoScript $frontendTypoScript */
+        $frontendTypoScript = $this->request->getAttribute('frontend.typoscript');
+        $typoScriptSetup = $frontendTypoScript->getSetupArray();
         $words = GeneralUtility::trimExplode(
             ',',
             $typoScriptSetup['plugin.']['tx_sfregister.']['settings.']['badWordList']
