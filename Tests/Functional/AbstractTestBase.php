@@ -58,7 +58,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
         $url = 'https://typo3-testing.local/register/';
         $method = 'GET';
         $requestUrlParts = parse_url($url);
-        $docRoot = getenv('TYPO3_PATH_APP') ?? '';
+        $docRoot = getenv('TYPO3_PATH_APP') ?: '';
         $serverParams = [
             'DOCUMENT_ROOT' => $docRoot,
             'HTTP_USER_AGENT' => 'TYPO3 Functional Test Request',
@@ -111,7 +111,9 @@ abstract class AbstractTestBase extends FunctionalTestCase
     public function loginFrontendUser(string $username, string $password): void
     {
         // needed to ignore the missing request token
+        // @phpstan-ignore-next-line -- offset write on the mixed-typed $GLOBALS['TYPO3_CONF_VARS'] super-global
         $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_alwaysFetchUser'] = true;
+        // @phpstan-ignore-next-line -- offset write on the mixed-typed $GLOBALS['TYPO3_CONF_VARS'] super-global
         $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_alwaysAuthUser'] = true;
 
         $this->request = $this->request

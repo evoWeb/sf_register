@@ -29,7 +29,7 @@ class UniqueValidatorTest extends UnitTestCase
         $fieldName = 'username';
         $expected = 'myValue';
 
-        /** @var FrontendUserRepository|MockObject $repositoryMock */
+        /** @var FrontendUserRepository&MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
         $repositoryMock->expects($this->once())
             ->method('countByField')
@@ -51,7 +51,7 @@ class UniqueValidatorTest extends UnitTestCase
         $fieldName = 'username';
         $expected = 'myValue';
 
-        /** @var FrontendUserRepository|MockObject $repositoryMock */
+        /** @var FrontendUserRepository&MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
         $repositoryMock->expects($this->once())
             ->method('countByField')
@@ -73,7 +73,7 @@ class UniqueValidatorTest extends UnitTestCase
         $fieldName = 'username';
         $expected = 'myValue';
 
-        /** @var FrontendUserRepository|MockObject $repositoryMock */
+        /** @var FrontendUserRepository&MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
         $repositoryMock->expects($this->once())
             ->method('countByField')
@@ -99,7 +99,7 @@ class UniqueValidatorTest extends UnitTestCase
         $fieldName = 'username';
         $expected = 'myValue';
 
-        /** @var FrontendUserRepository|MockObject $repositoryMock */
+        /** @var FrontendUserRepository&MockObject $repositoryMock */
         $repositoryMock = $this->createMock(FrontendUserRepository::class);
         $repositoryMock->expects($this->any())
             ->method('countByField')
@@ -110,7 +110,6 @@ class UniqueValidatorTest extends UnitTestCase
             ->with($fieldName, $expected)
             ->willReturn(1);
 
-        /** @var UniqueValidator $subject */
         $subject = $this->getMockBuilder(UniqueValidator::class)
             ->setConstructorArgs([$repositoryMock])
             ->onlyMethods(['translateErrorMessage'])

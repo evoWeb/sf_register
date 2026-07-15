@@ -32,12 +32,6 @@ class IsTrueValidatorTest extends UnitTestCase
             ->getMock();
     }
 
-    public function tearDown(): void
-    {
-        unset($this->subject);
-        parent::tearDown();
-    }
-
     #[Test]
     public function isValidReturnsTrueIfTrueWasUsed(): void
     {
