@@ -179,8 +179,8 @@ class AbstractSelectViewHelperTest extends AbstractTestBase
     /**
      * isSelected() force-selects ALL options only when no value is bound (the `empty($selectedValue)`
      * guard), so with an explicit value only the matching option is selected -- as documented by the
-     * selectAllByDefault "selected if none was set before" contract. (30e771a had dropped that guard,
-     * a regression that is kept reverted here.)
+     * selectAllByDefault "selected if none was set before" contract. Regression guard: dropping
+     * that guard would force-select every option regardless of the bound value.
      */
     #[Test]
     public function selectAllByDefaultOnlySelectsMatchingOptionWhenExplicitValueIsBound(): void

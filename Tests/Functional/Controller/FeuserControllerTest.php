@@ -209,9 +209,9 @@ class FeuserControllerTest extends AbstractTestBase
 
         // Simulate a listener modifying the event's settings; the dispatcher contract
         // (@see \TYPO3\CMS\Core\EventDispatcher\EventDispatcher::dispatch()) always returns
-        // the very same event instance it received, but 30e771a changed the controller to
-        // read getSettings() off the original $event variable instead of off dispatch()'s
-        // return value. This locks in that both ways yield identical, listener-applied settings.
+        // the very same event instance it received, so reading getSettings() off the original
+        // $event variable is equivalent to reading it off dispatch()'s return value. This locks
+        // in that the listener-applied settings are visible either way.
         $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $eventDispatcher->method('dispatch')->willReturnCallback(function (object $event) {
             if (method_exists($event, 'setSettings') && method_exists($event, 'getSettings')) {

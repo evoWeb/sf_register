@@ -91,10 +91,9 @@ class UserCountryMigrationTest extends AbstractTestBase
     /**
      * getRecordsToUpdate()/getRecordsToUpdateCount() select rows whose static_info_country starts
      * with a digit 1-9. In the fixture that is uid1 "54", uid2 "220", uid3 "9" (3 rows); uid4 "DE"
-     * (already an ISO name) and uid5 "" (empty) are non-migratable. 30e771a (sibling branch) will
-     * change the final `return $count;` to `return is_numeric($count) ? (int)$count : 0;` - dead
-     * type-narrowing, since a COUNT(uid) query always yields a numeric scalar. The returned count
-     * is identical pre/post, so this is a plain green characterization test.
+     * (already an ISO name) and uid5 "" (empty) are non-migratable. The final
+     * `return is_numeric($count) ? (int)$count : 0;` is dead type-narrowing, since a COUNT(uid)
+     * query always yields a numeric scalar.
      */
     #[Test]
     public function getRecordsToUpdateCountReturnsNumberOfMigratableRows(): void
@@ -107,7 +106,7 @@ class UserCountryMigrationTest extends AbstractTestBase
 
     /**
      * updateNecessary() is a thin wrapper over getRecordsToUpdateCount() > 0. With migratable rows
-     * present it must report the wizard as necessary. Unaffected by 30e771a.
+     * present it must report the wizard as necessary.
      */
     #[Test]
     public function updateNecessaryReturnsTrueWhenMigratableRowsExist(): void
@@ -121,7 +120,7 @@ class UserCountryMigrationTest extends AbstractTestBase
      * Marker-of-done / idempotency at the count level, provable WITHOUT running the (pre-fix broken)
      * executeUpdate(): once every static_info_country holds a non-numeric ISO name, no row matches
      * the LIKE 'N%' WHERE, so the count is 0 and updateNecessary() is false. We rewrite the column
-     * directly to simulate the post-migration state. Unaffected by 30e771a.
+     * directly to simulate the post-migration state.
      */
     #[Test]
     public function getRecordsToUpdateCountReturnsZeroWhenAllRowsAlreadyMigrated(): void
@@ -142,14 +141,10 @@ class UserCountryMigrationTest extends AbstractTestBase
     // -- executeUpdate ----------------------------------------------------------------------------
 
     /**
-     * SOLL: executeUpdate() rewrites each migratable row's static_info_country from the numeric
+     * executeUpdate() rewrites each migratable row's static_info_country from the numeric
      * static_info_tables uid to the matching Country enum case NAME (uid1 54 -> "DE", uid2 220 ->
      * "US", uid3 9 -> "AO"), leaves the non-migratable rows (uid4 "DE", uid5 "") untouched, and is
      * idempotent (a second run migrates nothing; the count is 0 afterwards).
-     *
-     * Pre-fix bug in df53334: executeUpdate uses fetchAssociative() (single row -> iterates
-     * columns) and Country::tryFrom()->name null-derefs; migration is broken. Behoben in 30e771a
-     * (Classes/Updates/UserCountryMigration::executeUpdate). Reaktivieren in Roadmap-Schritt 2.
      */
     #[Test]
     public function executeUpdateMigratesCountryUidsToIsoNamesAndIsIdempotent(): void

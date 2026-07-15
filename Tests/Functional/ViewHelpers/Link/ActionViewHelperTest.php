@@ -93,10 +93,9 @@ class ActionViewHelperTest extends AbstractTestBase
             . 'tx_sfregister_create%5Buser%5D=123&amp;cHash=[a-f0-9]+">link text</a>#s',
         ];
 
-        // Characterizes pre-fix behaviour: an array "user" argument (as used by
+        // Regression guard: an array "user" argument (as used by
         // Resources/Private/Templates/Email/InviteToRegister.html for not-yet-persisted invitees)
-        // is reduced to its "email" key for the hash. 30e771a drops this array support
-        // (only string|int "user" will compute a hash afterwards).
+        // must be reduced to its "email" key for the hash, not just string|int "user" values.
         yield [
             '<register:link.action pageUid="1" arguments="{user: {email: \'jane@example.org\'}}" '
             . 'extensionName="SfRegister" pluginName="Create" action="decline" controller="FeuserCreate" '

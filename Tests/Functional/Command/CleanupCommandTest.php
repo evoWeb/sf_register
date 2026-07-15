@@ -32,30 +32,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * What it does: deletes fe_users rows that are still assigned to one of the given "inactive"
  * (pre-confirmation) usergroups AND were created more than <days> days ago - i.e. accounts that
  * never finished the double opt-in (findInOutdatedTemporaryUsers() selects them with all query
- * restrictions reset, so hidden/deleted rows are candidates too - unrelated to 30e771a, unchanged
- * pre/post). For every such orphaned user it additionally removes any sys_file_reference row
- * pointing at it (tablenames=fe_users, fieldname=image) and deletes the referenced FAL file, so an
- * fe_users avatar upload does not leak in storage once its owning temp account is purged.
+ * restrictions reset, so hidden/deleted rows are candidates too). For every such orphaned user it
+ * additionally removes any sys_file_reference row pointing at it (tablenames=fe_users,
+ * fieldname=image) and deletes the referenced FAL file, so an fe_users avatar upload does not leak
+ * in storage once its owning temp account is purged.
  *
- * 30e771a (sibling branch) changes:
- *  - execute(): narrows $input->getArgument('inactiveGroups')/'days' via
- *    `is_scalar($x) ? (string)/(int)$x : ''/0` before feeding them to intExplode()/(int) cast.
- *    Symfony only ever hands back scalars for these string/int InputArgument values (both
- *    CommandTester and real CLI input are strings; the configured 'days' default is already an
- *    int), so is_scalar() is always true for any reachable input - dead type-narrowing,
- *    behavior-identical. Plain green characterization, no skip.
- *  - removeImage(): narrows $reference['uid_local'] the same way before passing it to
- *    ResourceFactory::getFileObject(). uid_local is a NOT NULL int(11) column on
- *    sys_file_reference, so fetchAllAssociative() always returns a real int for it - again dead
- *    type-narrowing, behavior-identical. Plain green characterization, no skip.
- *
- * NOTE (brief vs. reality): the task brief names "removeReference" as one of the two methods
- * 30e771a changes, but the actual 30e771a diff touches execute() and removeImage() only -
- * removeReference() itself is untouched there. It is still characterized below directly (via
- * reflection) since the brief asks for its DB-state behavior (it is reachable from execute() for
- * every orphaned user regardless of whether that user actually has an image reference).
- *
- * FINDING - pre-existing bug, independent of 30e771a: findInOutdatedTemporaryUsers() builds
+ * FINDING - open bug: findInOutdatedTemporaryUsers() builds
  * `$queryBuilder->expr()->inSet('usergroup', $queryBuilder->createNamedParameter($inactiveUserGroup, ...))`.
  * TYPO3 core's ExpressionBuilder::inSet() explicitly forbids SQLite from being given a bound/named
  * query parameter as the `$value` argument (it throws InvalidArgumentException
@@ -64,11 +46,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * InvalidArgumentException is caught by execute()'s `catch (Exception | DbalException)`, so under
  * SQLite, execute() with any non-empty inactiveGroups argument ALWAYS returns Command::FAILURE and
  * removes nothing - it never even reaches removeUser()/fetchReference()/removeReference()/
- * removeImage(). This is unrelated to 30e771a (findInOutdatedTemporaryUsers() is untouched by that
- * commit; the bug is present identically in df53334 and in 30e771a), so there is no roadmap step
- * to reactivate a skipped test against. The SOLL scenario from the brief ("execute() removes the
- * orphaned records and returns exit code 0") is documented below as a skipped, RED-verified test;
- * the ACTUAL (green) behavior under SQLite is characterized directly next to it.
+ * removeImage(). The desired behaviour ("execute() removes the orphaned records and returns exit
+ * code 0") is documented below as a skipped, RED-verified test; the actual (green) behavior under
+ * SQLite is characterized directly next to it.
  */
 class CleanupCommandTest extends AbstractTestBase
 {
@@ -166,8 +146,7 @@ class CleanupCommandTest extends AbstractTestBase
      * far in the future -> not outdated) and uid 3 (outdated but a different usergroup -> not
      * targeted) and uid 2's unrelated image reference untouched, and returns Command::SUCCESS.
      *
-     * Blocked by the pre-existing SQLite/inSet() bug documented in the class docblock (unrelated
-     * to 30e771a - findInOutdatedTemporaryUsers() is untouched by that commit). RED-verified:
+     * Blocked by the pre-existing SQLite/inSet() bug documented in the class docblock. RED-verified:
      * un-skipping this test and running it reproduces
      * "Failed asserting that 1 is identical to 0." with
      * "ExpressionBuilder::inSet() for SQLite can not be used with placeholder arguments." in the
@@ -177,17 +156,16 @@ class CleanupCommandTest extends AbstractTestBase
     public function executeRemovesOutdatedUserAndOrphanedFileReferenceAndReturnsSuccess(): void
     {
         self::markTestSkipped(
-            'Pre-existing bug independent of 30e771a: findInOutdatedTemporaryUsers() passes a'
+            'Pre-existing bug: findInOutdatedTemporaryUsers() passes a'
             . ' bound QueryBuilder parameter into ExpressionBuilder::inSet(), which TYPO3 core'
             . ' forbids for SQLite ("ExpressionBuilder::inSet() for SQLite can not be used with'
             . ' placeholder arguments."). execute() therefore always returns Command::FAILURE'
             . ' under SQLite for any non-empty inactiveGroups argument and removes nothing.'
-            . ' Unrelated to 30e771a (findInOutdatedTemporaryUsers() is untouched there); no'
-            . ' roadmap step to reactivate against. RED-verified.'
+            . ' RED-verified.'
         );
 
-        // SOLL assertions below are commented out while the test is skipped (blocked by the
-        // SQLite incompatibility documented above, not by anything 30e771a changes).
+        // Assertions below are commented out while the test is skipped (blocked by the
+        // SQLite incompatibility documented above).
         //
         // $this->addFileForUser(1);
         // $this->addFileForUser(2);
@@ -247,9 +225,9 @@ class CleanupCommandTest extends AbstractTestBase
     // -- removeReference --------------------------------------------------------------------------
 
     /**
-     * SOLL: removeReference() deletes exactly the sys_file_reference row(s) matching
+     * removeReference() deletes exactly the sys_file_reference row(s) matching
      * uid_foreign/tablenames=fe_users/fieldname=image for the given user, leaving any other
-     * user's reference row untouched. Unaffected by 30e771a (see class docblock).
+     * user's reference row untouched.
      */
     #[Test]
     public function removeReferenceDeletesOnlyTheTargetedUsersImageReference(): void
@@ -284,17 +262,13 @@ class CleanupCommandTest extends AbstractTestBase
     // -- removeImage ------------------------------------------------------------------------------
 
     /**
-     * SOLL: removeImage() iterates the given reference rows and, for each, resolves the FAL file by
+     * removeImage() iterates the given reference rows and, for each, resolves the FAL file by
      * its `uid_local` and deletes it from storage
      * (`resourceFactory->getFileObject($reference['uid_local'])->getStorage()->deleteFile($file)`).
-     *
-     * This directly exercises the ONE line 30e771a (sibling branch) changes in this method:
-     * `$reference['uid_local']` will be narrowed via
+     * `$reference['uid_local']` is narrowed via
      * `$uidLocal = is_scalar($reference['uid_local']) ? (int)$reference['uid_local'] : 0;` before it
-     * is handed to getFileObject(). `uid_local` is a NOT NULL int(11) column on sys_file_reference,
-     * so a real reference row always yields an int - dead type-narrowing, behavior-identical.
-     * Plain green characterization (green on pre-fix df53334 too: this is plain FAL file deletion
-     * with no `inSet()`/SQLite involvement, so unlike execute() it is fully reachable here).
+     * is handed to getFileObject(); `uid_local` is a NOT NULL int(11) column on sys_file_reference,
+     * so a real reference row always yields an int and the else-branch is dead code.
      */
     #[Test]
     public function removeImageDeletesReferencedFileFromStorage(): void
