@@ -139,19 +139,16 @@ class SessionTest extends UnitTestCase
 
         if ($session !== null) {
             $property = $reflectionClass->getProperty('session');
-            $property->setAccessible(true);
             $property->setValue($subject, $session);
         }
 
         if ($userSessionManager !== null) {
             $property = $reflectionClass->getProperty('userSessionManager');
-            $property->setAccessible(true);
             $property->setValue($subject, $userSessionManager);
         }
 
         if ($values !== null) {
             $property = $reflectionClass->getProperty('values');
-            $property->setAccessible(true);
             $property->setValue($subject, $values);
         }
 
