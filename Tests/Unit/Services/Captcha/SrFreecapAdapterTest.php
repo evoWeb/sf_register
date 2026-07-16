@@ -89,11 +89,9 @@ class SrFreecapAdapterTest extends UnitTestCase
         $subject = $reflectionClass->newInstanceWithoutConstructor();
 
         $sessionProperty = $reflectionClass->getProperty('session');
-        $sessionProperty->setAccessible(true);
         $sessionProperty->setValue($subject, $this->session);
 
         $captchaServiceProperty = $reflectionClass->getProperty('captchaService');
-        $captchaServiceProperty->setAccessible(true);
         $captchaServiceProperty->setValue($subject, $captchaService);
 
         return $subject;
@@ -116,7 +114,6 @@ class SrFreecapAdapterTest extends UnitTestCase
         $subject = $this->createSubject();
 
         $reflectionProperty = new \ReflectionProperty(SrFreecapAdapter::class, 'captchaService');
-        $reflectionProperty->setAccessible(true);
 
         self::assertNull($reflectionProperty->getValue($subject));
     }
