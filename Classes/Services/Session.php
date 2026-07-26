@@ -74,6 +74,9 @@ class Session implements SingletonInterface
 
     public function store(): self
     {
+        if ($this->session->isAnonymous() && !$this->userSessionManager->isSessionPersisted($this->session)) {
+            $this->session = $this->userSessionManager->fixateAnonymousSession($this->session);
+        }
         $this->session->set($this->sessionKey, serialize($this->values));
         $this->userSessionManager->updateSession($this->session);
         $setCookieService = SetCookieService::create($this->sessionName, 'FE');
