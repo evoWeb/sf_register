@@ -21,42 +21,49 @@ jobs:
       - name: Install
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p 8.4 \
             -s composerInstall
 
       - name: Lint SCSS
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p 8.4 \
             -s lintScss
 
       - name: Lint Typescript
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p 8.4 \
             -s lintTypescript
 
       - name: Run phpstan
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p 8.4 \
             -s phpstan
 
       - name: Run the cgl lint
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p 8.4 \
             -s cgl
 
       - name: Run the xliff lint
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p 8.4 \
             -s checkIntegrityXliff
 
       - name: Test documentation build
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p 8.4 \
             -s checkRstRenderingSingle
 
@@ -80,30 +87,35 @@ jobs:
       - name: Lint php
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p ${{ matrix.php }} \
             -s lintPhp
 
       - name: Composer install core
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p ${{ matrix.php }} \
             -s composer require ${{ matrix.prefer }} "typo3/cms-core:${{ matrix.packages.core }}"
 
       - name: Composer install framework
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p ${{ matrix.php }} \
             -s composer require --dev ${{ matrix.prefer }} "typo3/testing-framework:${{ matrix.packages.framework }}"
 
       - name: Composer validate
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p ${{ matrix.php }} \
             -s composerValidate
 
       - name: Functional tests with sqlite
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p ${{ matrix.php }} \
             -d sqlite \
             -s functional Tests/Functional
@@ -111,6 +123,7 @@ jobs:
       - name: Unit tests with sqlite
         run: |
           Build/Scripts/runTests.sh \
+            -b docker \
             -p ${{ matrix.php }} \
             -s unit Tests/Unit
 
