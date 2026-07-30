@@ -1291,7 +1291,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintPhp)
-        COMMAND="php -v | grep '^PHP'; find typo3/ -name \\*.php -print0 | xargs -0 -n1 -P"'$(nproc 2>/dev/null || echo 4)'" php -dxdebug.mode=off -l >/dev/null"
+        COMMAND="php -v | grep '^PHP'; find . -name \\*.php -not -path './vendor/*' -not -path './bin/*' -not -path './public/*' -not -path './var/*' -not -path './typo3temp/*' -not -path './.cache/*' -not -path './Build/node_modules/*' -print0 | xargs -0 -n1 -P"'$(nproc 2>/dev/null || echo 4)'" php -dxdebug.mode=off -l >/dev/null"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lint-php-${SUFFIX} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
@@ -1301,7 +1301,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintServicesYaml)
-        COMMAND="php -v | grep '^PHP'; find typo3/ -name 'Services.yaml' | xargs -r php -dxdebug.mode=off bin/yaml-lint --parse-tags"
+        COMMAND="php -v | grep '^PHP'; find Configuration/ Tests/ -name 'Services.yaml' | xargs -r php -dxdebug.mode=off bin/yaml-lint --parse-tags"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lint-php-${SUFFIX} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
@@ -1311,8 +1311,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintYaml)
-        EXCLUDE_INVALID_FIXTURE_YAML_FILES="--exclude typo3/sysext/form/Tests/Unit/Mvc/Configuration/Fixtures/Invalid.yaml --exclude typo3/sysext/core/Tests/Functional/Fixtures/Extensions/test_sets/Configuration/Sets/InvalidSettings/settings.yaml --exclude typo3/sysext/core/Tests/Functional/Configuration/Loader/Fixtures/InvalidYamlFiles/LoadEmptyYaml.yaml --exclude typo3/sysext/core/Tests/Functional/Configuration/Loader/Fixtures/InvalidYamlFiles/LoadInvalidYaml.yaml"
-        COMMAND="php -v | grep '^PHP'; find typo3/ \\( -name '*.yaml' -o -name '*.yml' \\) ! -name 'Services.yaml' | xargs -r php -dxdebug.mode=off bin/yaml-lint --no-parse-tags ${EXCLUDE_INVALID_FIXTURE_YAML_FILES}"
+        COMMAND="php -v | grep '^PHP'; find Configuration/ Tests/ .github/ \\( -name '*.yaml' -o -name '*.yml' \\) ! -name 'Services.yaml' | xargs -r php -dxdebug.mode=off bin/yaml-lint --no-parse-tags"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lint-php-${SUFFIX} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;

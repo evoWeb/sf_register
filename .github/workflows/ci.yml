@@ -39,6 +39,20 @@ jobs:
             -p 8.4 \
             -s lintTypescript
 
+      - name: Lint Yaml
+        run: |
+          Build/Scripts/runTests.sh \
+            -b docker \
+            -p 8.4 \
+            -s lintYaml
+
+      - name: Lint Services Yaml
+        run: |
+          Build/Scripts/runTests.sh \
+            -b docker \
+            -p 8.4 \
+            -s lintServicesYaml
+
       - name: Run phpstan
         run: |
           Build/Scripts/runTests.sh \

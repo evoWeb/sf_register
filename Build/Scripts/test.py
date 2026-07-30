@@ -43,6 +43,8 @@ def check_resources() -> None:
     run(f'./runTests.sh -p {php} -s composerInstall')
     run(f'./runTests.sh -p {php} -s lintScss')
     run(f'./runTests.sh -p {php} -s lintTypescript')
+    run(f'./runTests.sh -p {php} -s lintYaml')
+    run(f'./runTests.sh -p {php} -s lintServicesYaml')
     run(f'./runTests.sh -p {php} -s phpstan')
     run(f'./runTests.sh -p {php} -s cgl -n')
     run(f'./runTests.sh -p {php} -s checkIntegrityXliff')
