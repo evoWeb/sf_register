@@ -1311,7 +1311,7 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         ;;
     lintYaml)
-        COMMAND="php -v | grep '^PHP'; find Configuration/ Tests/ .github/ \\( -name '*.yaml' -o -name '*.yml' \\) ! -name 'Services.yaml' | xargs -r php -dxdebug.mode=off bin/yaml-lint --no-parse-tags"
+        COMMAND="php -v | grep '^PHP'; find . \\( -name '*.yaml' -o -name '*.yml' \\) ! -name 'Services.yaml' -not -path './vendor/*' -not -path './bin/*' -not -path './public/*' -not -path './var/*' -not -path './typo3temp/*' -not -path './.cache/*' -not -path './Build/node_modules/*' | xargs -r php -dxdebug.mode=off bin/yaml-lint --no-parse-tags"
         ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name lint-php-${SUFFIX} ${IMAGE_PHP} /bin/sh -c "${COMMAND}"
         SUITE_EXIT_CODE=$?
         ;;
