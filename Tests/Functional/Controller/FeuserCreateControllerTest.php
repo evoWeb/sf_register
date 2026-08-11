@@ -175,17 +175,24 @@ class FeuserCreateControllerTest extends AbstractTestBase
      * after update() (that normally happens once at the end of a full Extbase request, which
      * these tests bypass by calling the action method directly), so asserting the update() call
      * itself is the reliable way to observe the repository interaction.
+     *
+     * findByUidIgnoringDisabledField() is stubbed as well: the actions resolve their user
+     * through FrontendUserService::determineFrontendUser(), which shares this DI binding and
+     * looks the user up by the uid in the request once the link hash validates.
      */
     protected function mockRepositoryUpdateExpectation(FrontendUser $expectedUser): void
     {
         /** @var FrontendUserRepository&MockObject $repository */
         $repository = $this->getMockBuilder(FrontendUserRepository::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['update'])
+            ->onlyMethods(['update', 'findByUidIgnoringDisabledField'])
             ->getMock();
         $repository->expects($this->once())
             ->method('update')
             ->with(self::identicalTo($expectedUser));
+        $repository->method('findByUidIgnoringDisabledField')
+            ->with($expectedUser->getUid())
+            ->willReturn($expectedUser);
 
         /** @var Container $container */
         $container = $this->getContainer();
@@ -197,17 +204,43 @@ class FeuserCreateControllerTest extends AbstractTestBase
      * instead of writing to the database. refuseAction()/declineAction() never call persistAll()
      * after remove() (same reasoning as mockRepositoryUpdateExpectation() above), so asserting
      * the remove() call itself is the reliable way to observe the repository interaction.
+     *
+     * findByUidIgnoringDisabledField() is stubbed for the same reason as in
+     * mockRepositoryUpdateExpectation() above.
      */
     protected function mockRepositoryRemoveExpectation(FrontendUser $expectedUser): void
     {
         /** @var FrontendUserRepository&MockObject $repository */
         $repository = $this->getMockBuilder(FrontendUserRepository::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['remove'])
+            ->onlyMethods(['remove', 'findByUidIgnoringDisabledField'])
             ->getMock();
         $repository->expects($this->once())
             ->method('remove')
             ->with(self::identicalTo($expectedUser));
+        $repository->method('findByUidIgnoringDisabledField')
+            ->with($expectedUser->getUid())
+            ->willReturn($expectedUser);
+
+        /** @var Container $container */
+        $container = $this->getContainer();
+        $container->set(FrontendUserRepository::class, $repository);
+    }
+
+    /**
+     * Counterpart of mockRepositoryRemoveExpectation() for the fail closed case: neither the
+     * lookup in FrontendUserService::determineFrontendUser() nor remove() may be reached when
+     * the link hash does not validate.
+     */
+    protected function mockRepositoryWithoutRemoveExpectation(): void
+    {
+        /** @var FrontendUserRepository&MockObject $repository */
+        $repository = $this->getMockBuilder(FrontendUserRepository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['remove', 'findByUidIgnoringDisabledField'])
+            ->getMock();
+        $repository->expects($this->never())->method('remove');
+        $repository->expects($this->never())->method('findByUidIgnoringDisabledField');
 
         /** @var Container $container */
         $container = $this->getContainer();
@@ -340,9 +373,9 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $user->setDisable(true);
 
         $this->mockRepositoryUpdateExpectation($user);
-        $subject = $this->getSubject('confirm');
+        $subject = $this->getSubject('confirm', ['action' => 'confirm', 'user' => 1]);
 
-        $response = $subject->confirmAction($user, null);
+        $response = $subject->confirmAction($user, $this->createLinkHash('confirm', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');
@@ -357,14 +390,14 @@ class FeuserCreateControllerTest extends AbstractTestBase
     #[Test]
     public function confirmActionAssignsUserAlreadyConfirmedWhenAlreadyActivated(): void
     {
-        $subject = $this->getSubject('confirm');
+        $subject = $this->getSubject('confirm', ['action' => 'confirm', 'user' => 1]);
         /** @var FrontendUserRepository $userRepository */
         $userRepository = $this->get(FrontendUserRepository::class);
         /** @var FrontendUser $user */
         $user = $userRepository->findByUid(1);
         $user->setActivatedOn(new \DateTime('now'));
 
-        $subject->confirmAction($user, null);
+        $subject->confirmAction($user, $this->createLinkHash('confirm', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');
@@ -397,9 +430,9 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $user->setDisable(true);
 
         $this->mockRepositoryUpdateExpectation($user);
-        $subject = $this->getSubject('accept');
+        $subject = $this->getSubject('accept', ['action' => 'accept', 'user' => 1]);
 
-        $response = $subject->acceptAction($user, null);
+        $response = $subject->acceptAction($user, $this->createLinkHash('accept', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');
@@ -414,14 +447,14 @@ class FeuserCreateControllerTest extends AbstractTestBase
     #[Test]
     public function acceptActionAssignsUserAlreadyAcceptedWhenUserIsNotDisabled(): void
     {
-        $subject = $this->getSubject('accept');
+        $subject = $this->getSubject('accept', ['action' => 'accept', 'user' => 1]);
         /** @var FrontendUserRepository $userRepository */
         $userRepository = $this->get(FrontendUserRepository::class);
         /** @var FrontendUser $user */
         $user = $userRepository->findByUid(1);
         $user->setDisable(false);
 
-        $subject->acceptAction($user, null);
+        $subject->acceptAction($user, $this->createLinkHash('accept', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');
@@ -453,14 +486,32 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $user->_setProperty('uid', 1);
 
         $this->mockRepositoryRemoveExpectation($user);
-        $subject = $this->getSubject('refuse');
+        $subject = $this->getSubject('refuse', ['action' => 'refuse', 'user' => 1]);
 
-        $response = $subject->refuseAction($user, null);
+        $response = $subject->refuseAction($user, $this->createLinkHash('refuse', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');
         self::assertSame(1, $view->variables['userRefused']);
         self::assertSame($user, $view->variables['user']);
+        self::assertInstanceOf(HtmlResponse::class, $response);
+    }
+
+    #[Test]
+    public function refuseActionKeepsSubmittedUserWhenHashIsInvalid(): void
+    {
+        $user = clone new FrontendUser();
+        $user->_setProperty('uid', 1);
+
+        $this->mockRepositoryWithoutRemoveExpectation();
+        $subject = $this->getSubject('refuse', ['action' => 'refuse', 'user' => 1]);
+
+        $response = $subject->refuseAction($user, 'invalid-hash');
+
+        /** @var RecordingView $view */
+        $view = $subject->get('view');
+        self::assertSame(1, $view->variables['userNotFound']);
+        self::assertArrayNotHasKey('userRefused', $view->variables);
         self::assertInstanceOf(HtmlResponse::class, $response);
     }
 
@@ -489,14 +540,32 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $user->_setProperty('uid', 1);
 
         $this->mockRepositoryRemoveExpectation($user);
-        $subject = $this->getSubject('decline');
+        $subject = $this->getSubject('decline', ['action' => 'decline', 'user' => 1]);
 
-        $response = $subject->declineAction($user, null);
+        $response = $subject->declineAction($user, $this->createLinkHash('decline', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');
         self::assertSame(1, $view->variables['userDeclined']);
         self::assertSame($user, $view->variables['user']);
+        self::assertInstanceOf(HtmlResponse::class, $response);
+    }
+
+    #[Test]
+    public function declineActionKeepsSubmittedUserWhenHashIsInvalid(): void
+    {
+        $user = clone new FrontendUser();
+        $user->_setProperty('uid', 1);
+
+        $this->mockRepositoryWithoutRemoveExpectation();
+        $subject = $this->getSubject('decline', ['action' => 'decline', 'user' => 1]);
+
+        $response = $subject->declineAction($user, 'invalid-hash');
+
+        /** @var RecordingView $view */
+        $view = $subject->get('view');
+        self::assertSame(1, $view->variables['userNotFound']);
+        self::assertArrayNotHasKey('userDeclined', $view->variables);
         self::assertInstanceOf(HtmlResponse::class, $response);
     }
 }

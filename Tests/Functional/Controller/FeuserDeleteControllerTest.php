@@ -186,16 +186,45 @@ class FeuserDeleteControllerTest extends AbstractTestBase
     }
 
     #[Test]
+    public function confirmActionKeepsSubmittedUserWhenHashIsInvalid(): void
+    {
+        $subject = $this->getSubject('confirm', ['action' => 'confirm', 'user' => 1]);
+        /** @var FrontendUserRepository $userRepository */
+        $userRepository = $this->get(FrontendUserRepository::class);
+        /** @var FrontendUser $user */
+        $user = $userRepository->findByUid(1);
+
+        $response = $subject->confirmAction($user, 'invalid-hash');
+
+        /** @var RecordingView $view */
+        $view = $subject->get('view');
+        self::assertSame(1, $view->variables['userAlreadyDeleted']);
+        self::assertArrayNotHasKey('userDeleted', $view->variables);
+        self::assertInstanceOf(HtmlResponse::class, $response);
+
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('fe_users');
+        $queryBuilder->getRestrictions()->removeAll();
+        $row = $queryBuilder
+            ->select('deleted')
+            ->from('fe_users')
+            ->where('uid = 1')
+            ->executeQuery()
+            ->fetchAssociative();
+        self::assertIsArray($row);
+        self::assertEquals(0, $row['deleted']);
+    }
+
+    #[Test]
     public function confirmActionDeletesUserFromRepositoryAndAssignsUserDeleted(): void
     {
-        $subject = $this->getSubject('confirm');
+        $subject = $this->getSubject('confirm', ['action' => 'confirm', 'user' => 1]);
         /** @var FrontendUserRepository $userRepository */
         $userRepository = $this->get(FrontendUserRepository::class);
         /** @var FrontendUser $user */
         $user = $userRepository->findByUid(1);
         self::assertSame(0, $user->getImage()->count());
 
-        $response = $subject->confirmAction($user, null);
+        $response = $subject->confirmAction($user, $this->createLinkHash('confirm', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');

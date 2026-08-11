@@ -80,7 +80,10 @@ class FrontendUser
         ?FrontendUserModel $user,
         ?string $hash,
     ): ?FrontendUserModel {
-        $frontendUser = $user;
+        // The mailed link hash is the only authorization for the confirm/accept/refuse/decline
+        // actions. Start from null so a missing or wrong hash never resolves to a user - the
+        // submitted $user is attacker controlled and must not be trusted as a fallback.
+        $frontendUser = null;
 
         $requestArguments = $request->getArguments();
         if (isset($requestArguments['user']) && $hash !== null) {

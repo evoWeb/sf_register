@@ -119,17 +119,24 @@ class FeuserEditControllerTest extends AbstractTestBase
      * database via an unconditional persistAll() at the end of the request; since these tests
      * call the action method directly (bypassing that pipeline), asserting the update() call
      * itself is the reliable way to observe the repository interaction.
+     *
+     * findByUidIgnoringDisabledField() is stubbed as well: the actions resolve their user
+     * through FrontendUserService::determineFrontendUser(), which shares this DI binding and
+     * looks the user up by the uid in the request once the link hash validates.
      */
     protected function mockRepositoryUpdateExpectation(FrontendUser $expectedUser): void
     {
         /** @var FrontendUserRepository&MockObject $repository */
         $repository = $this->getMockBuilder(FrontendUserRepository::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['update'])
+            ->onlyMethods(['update', 'findByUidIgnoringDisabledField'])
             ->getMock();
         $repository->expects($this->once())
             ->method('update')
             ->with(self::identicalTo($expectedUser));
+        $repository->method('findByUidIgnoringDisabledField')
+            ->with($expectedUser->getUid())
+            ->willReturn($expectedUser);
 
         /** @var Container $container */
         $container = $this->getContainer();
@@ -295,9 +302,9 @@ class FeuserEditControllerTest extends AbstractTestBase
         $user->setEmailNew('new@example.com');
 
         $this->mockRepositoryUpdateExpectation($user);
-        $subject = $this->getSubject('confirm');
+        $subject = $this->getSubject('confirm', ['action' => 'confirm', 'user' => 1]);
 
-        $response = $subject->confirmAction($user, null);
+        $response = $subject->confirmAction($user, $this->createLinkHash('confirm', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');
@@ -312,7 +319,7 @@ class FeuserEditControllerTest extends AbstractTestBase
     #[Test]
     public function confirmActionAssignsUserAlreadyConfirmedWhenNoEmailChangeIsPending(): void
     {
-        $subject = $this->getSubject('confirm');
+        $subject = $this->getSubject('confirm', ['action' => 'confirm', 'user' => 1]);
         /** @var FrontendUserRepository $userRepository */
         $userRepository = $this->get(FrontendUserRepository::class);
         /** @var FrontendUser $user */
@@ -320,7 +327,7 @@ class FeuserEditControllerTest extends AbstractTestBase
         $user->setDisable(false);
         $user->setEmailNew('');
 
-        $subject->confirmAction($user, null);
+        $subject->confirmAction($user, $this->createLinkHash('confirm', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');
@@ -330,14 +337,14 @@ class FeuserEditControllerTest extends AbstractTestBase
     #[Test]
     public function confirmActionAssignsUserNotConfirmedWhenUserIsDisabled(): void
     {
-        $subject = $this->getSubject('confirm');
+        $subject = $this->getSubject('confirm', ['action' => 'confirm', 'user' => 1]);
         /** @var FrontendUserRepository $userRepository */
         $userRepository = $this->get(FrontendUserRepository::class);
         /** @var FrontendUser $user */
         $user = $userRepository->findByUid(1);
         $user->setDisable(true);
 
-        $subject->confirmAction($user, null);
+        $subject->confirmAction($user, $this->createLinkHash('confirm', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');
@@ -349,7 +356,7 @@ class FeuserEditControllerTest extends AbstractTestBase
     {
         $this->mockUriBuilderForRedirects();
 
-        $subject = $this->getSubject('confirm');
+        $subject = $this->getSubject('confirm', ['action' => 'confirm', 'user' => 1]);
         $subject->set('settings', ['redirectPostActivationPageId' => 2]);
         /** @var FrontendUserRepository $userRepository */
         $userRepository = $this->get(FrontendUserRepository::class);
@@ -358,7 +365,7 @@ class FeuserEditControllerTest extends AbstractTestBase
         $user->setDisable(false);
         $user->setEmailNew('new@example.com');
 
-        $response = $subject->confirmAction($user, null);
+        $response = $subject->confirmAction($user, $this->createLinkHash('confirm', 1));
 
         self::assertInstanceOf(RedirectResponse::class, $response);
     }
@@ -391,9 +398,9 @@ class FeuserEditControllerTest extends AbstractTestBase
         $user->setEmailNew('new@example.com');
 
         $this->mockRepositoryUpdateExpectation($user);
-        $subject = $this->getSubject('accept');
+        $subject = $this->getSubject('accept', ['action' => 'accept', 'user' => 1]);
 
-        $response = $subject->acceptAction($user, null);
+        $response = $subject->acceptAction($user, $this->createLinkHash('accept', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');
@@ -408,14 +415,14 @@ class FeuserEditControllerTest extends AbstractTestBase
     #[Test]
     public function acceptActionAssignsUserAlreadyConfirmedWhenUserIsNotDisabled(): void
     {
-        $subject = $this->getSubject('accept');
+        $subject = $this->getSubject('accept', ['action' => 'accept', 'user' => 1]);
         /** @var FrontendUserRepository $userRepository */
         $userRepository = $this->get(FrontendUserRepository::class);
         /** @var FrontendUser $user */
         $user = $userRepository->findByUid(1);
         $user->setDisable(false);
 
-        $subject->acceptAction($user, null);
+        $subject->acceptAction($user, $this->createLinkHash('accept', 1));
 
         /** @var RecordingView $view */
         $view = $subject->get('view');
@@ -427,7 +434,7 @@ class FeuserEditControllerTest extends AbstractTestBase
     {
         $this->mockUriBuilderForRedirects();
 
-        $subject = $this->getSubject('accept');
+        $subject = $this->getSubject('accept', ['action' => 'accept', 'user' => 1]);
         $subject->set('settings', ['redirectPostActivationPageId' => 2]);
         /** @var FrontendUserRepository $userRepository */
         $userRepository = $this->get(FrontendUserRepository::class);
@@ -435,7 +442,7 @@ class FeuserEditControllerTest extends AbstractTestBase
         $user = $userRepository->findByUid(1);
         $user->setDisable(true);
 
-        $response = $subject->acceptAction($user, null);
+        $response = $subject->acceptAction($user, $this->createLinkHash('accept', 1));
 
         self::assertInstanceOf(RedirectResponse::class, $response);
     }
