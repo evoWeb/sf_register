@@ -24,6 +24,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Exception\FileOperationErrorException;
 use TYPO3\CMS\Core\Resource\Exception\InsufficientFileAccessPermissionsException;
@@ -96,6 +97,7 @@ class CleanupCommand extends Command
     {
         $table = 'fe_users';
         $queryBuilder = $this->getQueryBuilderForTable($table);
+        $queryBuilder->getRestrictions()->removeByType(HiddenRestriction::class);
 
         $result = $queryBuilder
             ->select('uid')
@@ -161,8 +163,8 @@ class CleanupCommand extends Command
             ->getConnection()
             ->delete($table, [
                 'uid_foreign' => $user['uid'],
-                'tablenames' => $user['fe_users'],
-                'fieldname' => $user['image'],
+                'tablenames' => 'fe_users',
+                'fieldname' => 'image',
             ]);
     }
 
