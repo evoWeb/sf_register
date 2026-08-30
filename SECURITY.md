@@ -14,4 +14,4 @@ Supported are only the last to major versions with their branch, the develop bra
 
 ## Reporting a Vulnerability
 
-In case you find a security issue do not open an issue in GitHub but email security@evoweb.de
+In case you find a security issue do not open an issue in GitHub but follow the proceedure give on https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/Security/SecurityTeam/Index.html
