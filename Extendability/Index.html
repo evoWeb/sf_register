@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <title>Extendability — Frontend User Registration: Multipurpose configurable registration 14.0.2
+    <title>Extendability — Frontend User Registration: Multipurpose configurable registration 14.0.3
         documentation</title>
 
     
@@ -10,14 +10,16 @@
 <meta content="phpdocumentor/guides" name="generator">
 <meta content="Frontend User Registration: Multipurpose configurable registration" name="docsearch:name">
 <meta content="" name="docsearch:package_type">
-<meta content="14.0.2" name="docsearch:release">
-<meta content="14.0.2" name="docsearch:version">
-<meta content="2026-05-18T16:42:50+00:00" name="docsearch:modified">
-<meta content="2026-05-18T16:42:50+00:00" name="dc.modified">
-<meta content="2026-05-18T16:42:50+00:00" property="article:modified_time">
+<meta content="14.0.3" name="docsearch:release">
+<meta content="14.0.3" name="docsearch:version">
+<meta content="2026-11-02T17:07:04+00:00" name="docsearch:modified">
+<meta content="2026-11-02T17:07:04+00:00" name="dc.modified">
+<meta content="2026-11-02T17:07:04+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
+<link href="https://docs.typo3.org/permalink/evoweb/sf-register:extendability@14.0.3" rel="canonical">
+<link href="Index.md" rel="alternate" title="Markdown" type="text/markdown">
 <script src="https://cdn.typo3.com/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
 <script src="https://cdn.typo3.com/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
                         <link href="../Configuration/Validation/Index.html" rel="prev" title="Validation"/>
@@ -36,16 +38,16 @@
     </div>
     <div class="page-header">
         <div class="page-header-inner">
-            <div class="d-flex flex-wrap">
-                <div class="logo-wrapper">
-                    <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
-                        <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
-                    </a>
-                </div>
-                <div class="align-self-center order-lg-2 order-last">
-                    
+            <a class="navbar-brand" href="https://docs.typo3.org/" title="TYPO3 Documentation">
+                <span class="navbar-brand-text">
+                    <img src="../_resources/img/typo3-soul.svg" alt="TYPO3" class="navbar-brand-logo" width="29" height="29">
+                    <span class="navbar-brand-name">Documentation</span>
+                </span>
+            </a>
+            <div class="header-nav">
+                
 <div class="toc-header">
-    <div class="toc-title pe-3">
+    <div class="toc-title">
                             <a class="toc-title-project" href="../Index.html">Frontend User Registration: Multipurpose configurable registration</a>
             </div>
     <label for="languageSelect" class="visually-hidden">Select language</label>
@@ -55,67 +57,57 @@
                                   
         <label for="versionSelect" class="visually-hidden">Select version</label>
         <select id="versionSelect" class="form-select"
-                data-current-version="14.0.2"
+                data-current-version="14.0.3"
             data-override-url-proxy="../_resources/js/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html"
         >
             <option disabled selected>Loading versions...</option>
         </select>
-    </div>                </div>
-                <div class="ms-auto order-lg-3 d-flex">
-                    <div class="menu-search-wrapper">
-                        <button id="toc-toggle" class="btn btn-light d-block d-lg-none" tabindex="0" aria-controls="toc-collapse" aria-expanded="false">
-                            <i class="fas fa-bars"></i> <span class="visually-hidden">Mobile Menu</span>
-                        </button>
-                        <all-documentations-menu data-override-url="../_resources/js/menu-proxy.php"></all-documentations-menu>
-                                                <search role="search">
-                            <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
-                                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
-                                <div class="input-group mb-3 mt-sm-3">
-                                    <select class="form-select search__scope" id="searchscope" name="scope">
-                                        <option value="">Search all</option>
-                                    </select>
-                                    <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                    <button class="btn btn-light" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
-                                </div>
-                            </form>
-                            <div id="global-search-root"></div>
-                        </search>
-                        <div class="position-relative d-inline-block">
-                            <button id="options-toggle" class="btn btn-light d-block" type="button" aria-expanded="false">
-                                <i class="fas fa-cog"></i> <span class="visually-hidden">Options</span>
-                            </button>
-
-                            <div id="options-panel"
-                                 class="shadow p-3"
-                                 role="menu"
-                                 aria-hidden="true">
-                                <h6 class="dropdown-header text-muted text-uppercase small mb-2">Options</h6>
-
-                                                                                                            <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FExtendability%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-comment-dots"></i>
+    </div>            </div>
+            <div class="header-actions">
+                <button id="search-toggle" class="btn btn-light d-lg-none" type="button"
+                        aria-label="Search" aria-keyshortcuts="Control+K Meta+K">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                </button>
+                <button id="toc-toggle" class="btn btn-light d-lg-none" type="button"
+                        aria-label="Menu" aria-expanded="false" aria-controls="toc-collapse">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <all-documentations-menu data-override-url="../_resources/js/menu-proxy.php"></all-documentations-menu>
+                                <search role="search" aria-label="Site search">
+                                        <select id="searchscope" hidden aria-hidden="true">
+                        <option value="">Search all</option>
+                    </select>
+                    <div id="global-search-root"></div>
+                </search>
+                                                <button id="options-toggle" class="btn btn-light" type="button"
+                        aria-controls="options-panel" aria-expanded="false" popovertarget="options-panel">
+                    <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                    <span class="visually-hidden">Options</span>
+                </button>
+                <div id="options-panel" class="shadow p-3" popover>
+                    <h6 class="dropdown-header text-muted text-uppercase small mb-2">Options</h6>
+                        <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FExtendability%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-comment-dots"></i>
         Give feedback
     </a>
-    <a class="dropdown-item d-flex align-items-center gap-2" href="../_sources/Extendability/Index.rst.txt" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-code"></i>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="../_sources/Extendability/Index.rst.txt" id="btnViewSource" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-code"></i>
         View source
     </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="Index.md" id="btnViewMarkdown" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-file-lines"></i>
+        View as Markdown
+    </a>
     <a class="dropdown-item d-flex align-items-center gap-2" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-info-circle"></i>
+        <i class="fa-solid fa-circle-info"></i>
         How to edit
     </a>
     <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/Documentation/edit/develop/Documentation/Extendability/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
-        <i class="fab fa-github"></i>
+        <i class="fa-brands fa-github"></i>
         Edit on GitHub
     </a>
-                                                                                                                <a class="dropdown-item d-flex align-items-center gap-2" href="../singlehtml/Index.html" target="_blank" rel="noopener">
-                                            <i class="fas fa-print"></i>
-                                            Full documentation (single file)
-                                        </a>
-                                                                                                </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
+                            </div>
         </div>
     </div>
 </header>    <main class="page-main">
@@ -166,7 +158,7 @@
         Known problems
     </a></li>    <li class="" role="menuitem">
     <a href="../Changelog/Index.html">
-        ChangeLog
+        Change<wbr>Log
     </a></li>    <li class="" role="menuitem">
     <a href="../BreakingChanges/Index.html">
         Breaking Changes
@@ -177,7 +169,30 @@
     </a></li>    </ul>
     </div>
                         </div>
-                    </div>
+                                                <div class="toc-options d-lg-none">
+                            <p class="caption">Options</p>
+                                <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FExtendability%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-comment-dots"></i>
+        Give feedback
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="../_sources/Extendability/Index.rst.txt" id="btnViewSource" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-code"></i>
+        View source
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="Index.md" id="btnViewMarkdown" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-file-lines"></i>
+        View as Markdown
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-circle-info"></i>
+        How to edit
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/Documentation/edit/develop/Documentation/Extendability/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
+        <i class="fa-brands fa-github"></i>
+        Edit on GitHub
+    </a>
+                        </div>
+                                            </div>
                 </nav>
             </div>
             <div class="page-main-content">
@@ -187,12 +202,17 @@
     <li class="breadcrumb-item"><a href="../Index.html">Frontend User Registration: Multipurpose configurable registration</a></li>
                     <li aria-current="page"  class="breadcrumb-item  active">Extendability</li>
         </ol>
+
         <div class="breadcrumb-additions">                <a class="btn btn-sm btn-light" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FExtendability%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
-                    <span class="btn-icon"><i class="fas fa-comment-dots"></i></span>
+                    <span class="btn-icon"><i class="fa-solid fa-comment-dots"></i></span>
                     <span class="btn-text">Give feedback</span>
                 </a>
+                            <a class="btn btn-sm btn-light" href="Index.md" id="btnDownloadMarkdown" rel="nofollow noopener" download="evoweb-sf-register-extendability.md">
+                    <span class="btn-icon"><i class="fa-solid fa-download"></i></span>
+                    <span class="btn-text">Markdown</span>
+                </a>
                             <a class="btn btn-sm btn-secondary" href="https://github.com/Documentation/edit/develop/Documentation/Extendability/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
-                    <span class="btn-icon"><span class="fab fa-github"></span></span>
+                    <span class="btn-icon"><span class="fa-brands fa-github"></span></span>
                     <span class="btn-text">Edit on GitHub</span>
                 </a>
             </div>
@@ -202,9 +222,9 @@
     <div itemprop="articleBody">
         <!-- content start -->
                 
-<section class="section" id="extendability-1" data-rst-anchor="extendability">
-            <a id="extendability"></a>
-            <h1>Extendability<a class="headerlink" href="#extendability-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
+<section class="section" id="extendability" data-rst-anchor="extendability"><a id="extendability-1"></a>
+            
+            <h1>Extendability<a class="headerlink" href="#extendability" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
             <div class="contents-wrapper">
         <ul class="menu-level">
     <li class="toc-item">
@@ -282,9 +302,9 @@
 
     <button class="toggle-all-sections btn btn-sm btn-light">Collapse all Sections</button>
 </div>
-            <section class="section" id="use-your-own-flavor-of-fields" data-rst-anchor="createcustomfields">
+            <section class="section" id="createcustomfields" data-rst-anchor="createcustomfields"><a id="use-your-own-flavor-of-fields"></a>
             <a id="CreateCustomFields"></a>
-            <h2>Use your own flavor of fields<a class="headerlink" href="#use-your-own-flavor-of-fields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
+            <h2>Use your own flavor of fields<a class="headerlink" href="#createcustomfields" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>Since version 8.8.0 its easier then ever to user your own fields. Just add your
 partial folder via typoscript and register your own field configuration. After
@@ -353,9 +373,9 @@ No additional configuration is needed.</p>
 </ul>
 
     </section>
-            <section class="section" id="adding-custom-properties" data-rst-anchor="addcustomproperties">
+            <section class="section" id="addcustomproperties" data-rst-anchor="addcustomproperties"><a id="adding-custom-properties"></a>
             <a id="AddCustomProperties"></a>
-            <h2>Adding custom properties<a class="headerlink" href="#adding-custom-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
+            <h2>Adding custom properties<a class="headerlink" href="#addcustomproperties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>Since late the frontend user domain model can be extended. This can be done the
 extension <a href="https://github.com/evoWeb/extender">evoweb/extender</a> which sole purpose is to extend extbase domain models.
@@ -373,15 +393,17 @@ The path to the file matches extension key and extbase compatible path to the do
     <p>For highlighting purpose its advised to let the domain model extend
 from <code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code></p>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code></p>
 
                 <div class="code-block-caption">
         <span class="caption-text">ext_localconf.php</span>
@@ -443,22 +465,24 @@ needs to be created for sql and registered in TCA.</p>
     </div>
 </div>
     </section>
-            <section class="section" id="bring-in-your-own-captcha" data-rst-anchor="addcustomcaptcha">
+            <section class="section" id="addcustomcaptcha" data-rst-anchor="addcustomcaptcha"><a id="bring-in-your-own-captcha"></a>
             <a id="AddCustomCaptcha"></a>
-            <h2>Bring in your own captcha<a class="headerlink" href="#bring-in-your-own-captcha" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
+            <h2>Bring in your own captcha<a class="headerlink" href="#addcustomcaptcha" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>By implementing a adapter which is extending the
 <code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Services\Captcha\AbstractAdapter"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Services\Captcha\AbstractAdapter in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Services\<wbr>Captcha\<wbr>Abstract<wbr>Adapter</code> you are able to add
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Services\<wbr>Captcha\<wbr>Abstract<wbr>Adapter
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Services\Captcha\AbstractAdapter"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Services\Captcha\AbstractAdapter in the internet."                    data-fqn="\Evoweb\SfRegister\Services\Captcha\AbstractAdapter"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code> you are able to add
 an own captcha. The adapter now then has to be configured to be usable by adding
 typoscript settings like the following taken from <a href="https://github.com/evoWeb/recaptcha">recaptcha</a>:</p>
 
@@ -490,9 +514,9 @@ typoscript settings like the following taken from <a href="https://github.com/ev
     </div>
 </div>
     </section>
-            <section class="section" id="psr-14-events" data-rst-anchor="psr14event">
+            <section class="section" id="psr14event" data-rst-anchor="psr14event"><a id="psr-14-events"></a>
             <a id="Psr14Event"></a>
-            <h2>PSR-14 Events<a class="headerlink" href="#psr-14-events" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
+            <h2>PSR-14 Events<a class="headerlink" href="#psr14event" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>This kind of event is superseding Hooks and Signal-Slots in TYPO3 and are the
 way to go. That&#039;s why all signals are replaced with their event counterparts.</p>
@@ -507,19 +531,21 @@ Services.yaml:</p>
 
                 <div class="code-block-caption">
         <span class="caption-text">YourEventListener.php</span>
-    </div><div class="code-block-wrapper" translate="no">
+    </div><div class="code-block-wrapper code-block-foldable" translate="no">
             
-    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">use</span> <span class="hljs-title">Evoweb</span>\<span class="hljs-title">SfRegister</span>\<span class="hljs-title">Controller</span>\<span class="hljs-title">Event</span>\<span class="hljs-title">ProcessInitializeActionEvent</span>;
+    <pre class="code-block"><code class="hljs php"><button type="button" class="code-fold-toggle" data-fold-label="3 lines" aria-label="Show 3 lines"></button><span class="code-fold"><span class="hljs-keyword">use</span> <span class="hljs-title">Evoweb</span>\<span class="hljs-title">SfRegister</span>\<span class="hljs-title">Controller</span>\<span class="hljs-title">Event</span>\<span class="hljs-title">ProcessInitializeActionEvent</span>;
 <span class="hljs-keyword">use</span> <span class="hljs-title">TYPO3</span>\<span class="hljs-title">CMS</span>\<span class="hljs-title">Core</span>\<span class="hljs-title">Attribute</span>\<span class="hljs-title">AsEventListener</span>;
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">YourEventListener</span>
-</span>{
+</span><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">YourEventListener</span></span>
+<span class="hljs-class"></span>{
     <span class="hljs-comment">#[AsEventListener('your-extension-identifier', ProcessInitializeActionEvent::class)]</span>
-    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__invoke</span><span class="hljs-params">(ProcessInitializeActionEvent $event)</span>: <span class="hljs-title">void</span>
-    </span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__invoke</span><span class="hljs-params">(ProcessInitializeActionEvent $event)</span>: <span class="hljs-title">void</span></span>
+<span class="hljs-function">    </span>{
     }
 }</code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">            <button type="button" class="code-block-unfold" title="Show all lines" aria-pressed="false" hidden>
+                <i class="icon fa-solid fa-up-right-and-down-left-from-center"></i>
+            </button>        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -540,7 +566,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-initializeactionevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\InitializeActionEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -560,39 +585,45 @@ Services.yaml:</p>
                                                 <dt class="field-even">$controller</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Controller\FeuserController"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Controller\FeuserController in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Controller\<wbr>Feuser<wbr>Controller</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Controller\<wbr>Feuser<wbr>Controller
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Controller\FeuserController"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Controller\FeuserController in the internet."                    data-fqn="\Evoweb\SfRegister\Controller\FeuserController"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$response</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Psr\Http\Message\ResponseInterface"
-          data-shortdescription="PHP class or interface"
-          data-details="This PHP class or interface belongs to the PHP Standards Recommendations (PSR). "
-          data-morelink="https://www.php-fig.org/psr/"          data-bs-html="true"
     >
-        \Psr\<wbr>Http\<wbr>Message\<wbr>Response<wbr>Interface            <span class="text-secondary"><i class="fa-regular fa-circle-question"></i></span></code>
+        \Psr\<wbr>Http\<wbr>Message\<wbr>Response<wbr>Interface
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Psr\Http\Message\ResponseInterface"
+                data-shortdescription="PHP class or interface"
+                data-details="This PHP class or interface belongs to the PHP Standards Recommendations (PSR). "                    data-morelink="https://www.php-fig.org/psr/"                    data-fqn="\Psr\Http\Message\ResponseInterface"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -610,7 +641,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-createformevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\CreateFormEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -630,27 +660,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -665,7 +699,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-createpreviewevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\CreatePreviewEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -685,27 +718,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -720,7 +757,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-createsaveevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\CreateSaveEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -740,27 +776,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -775,7 +815,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-createconfirmevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\CreateConfirmEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -795,27 +834,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -830,7 +873,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-createrefuseevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\CreateRefuseEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -850,27 +892,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -885,7 +931,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-createacceptevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\CreateAcceptEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -905,27 +950,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -940,7 +989,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-createdeclineevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\CreateDeclineEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -960,27 +1008,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -998,7 +1050,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-deleteformevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\DeleteFormEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1018,27 +1069,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1053,7 +1108,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-deletesaveevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\DeleteSaveEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1073,27 +1127,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1108,7 +1166,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-deleteconfirmevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\DeleteConfirmEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1128,27 +1185,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1166,7 +1227,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-editformevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\EditFormEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1186,27 +1246,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1221,7 +1285,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-editpreviewevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\EditPreviewEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1241,27 +1304,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1276,7 +1343,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-editsaveevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\EditSaveEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1296,27 +1362,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1331,7 +1401,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-editconfirmevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\EditConfirmEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1351,27 +1420,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1386,7 +1459,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-editacceptevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\EditAcceptEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1406,27 +1478,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1444,7 +1520,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-inviteformevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\InviteFormEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1464,27 +1539,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1499,7 +1578,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-inviteinviteevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\InviteInviteEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1519,27 +1597,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1557,7 +1639,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-passwordformevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\PasswordFormEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1577,27 +1658,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$password</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\Password"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\Password in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Password</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Password
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\Password"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\Password in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\Password"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1612,7 +1697,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-passwordsaveevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\PasswordSaveEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1632,27 +1716,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1670,7 +1758,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-resendformevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\ResendFormEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1690,27 +1777,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$email</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\Email"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\Email in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Email</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Email
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\Email"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\Email in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\Email"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1725,7 +1816,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-controller-event-resendmailevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Controller\Event\ResendMailEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1745,27 +1835,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$email</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\Email"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\Email in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Email</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Email
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\Email"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\Email in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\Email"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1783,7 +1877,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadmincreateacceptevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminCreateAcceptEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1803,27 +1896,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1838,7 +1935,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadmincreateconfirmevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminCreateConfirmEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1858,27 +1954,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1893,7 +1993,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadmincreatedeclineevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminCreateDeclineEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1913,27 +2012,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -1948,7 +2051,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadmincreaterefuseevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminCreateRefuseEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1968,27 +2070,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2003,7 +2109,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadmincreatesaveevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminCreateSaveEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2023,27 +2128,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2058,7 +2167,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadmindeleteconfirmevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminDeleteConfirmEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2078,27 +2186,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2113,7 +2225,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadmindeletesaveevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminDeleteSaveEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2133,27 +2244,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2168,7 +2283,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadmineditacceptevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminEditAcceptEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2188,27 +2302,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2223,7 +2341,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadmineditconfirmevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminEditConfirmEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2243,27 +2360,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2278,7 +2399,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadmineditsaveevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminEditSaveEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2298,27 +2418,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2333,7 +2457,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadmininviteinviteevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminInviteInviteEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2353,27 +2476,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2388,7 +2515,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyadminresendmailevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyAdminResendMailEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2408,27 +2534,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2443,7 +2573,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyusercreateacceptevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserCreateAcceptEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2463,27 +2592,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2498,7 +2631,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyusercreateconfirmevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserCreateConfirmEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2518,27 +2650,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2553,7 +2689,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyusercreatedeclineevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserCreateDeclineEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2573,27 +2708,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2608,7 +2747,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyusercreaterefuseevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserCreateRefuseEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2628,27 +2766,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2663,7 +2805,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyusercreatesaveevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserCreateSaveEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2683,27 +2824,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2718,7 +2863,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyuserdeleteconfirmevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserDeleteConfirmEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2738,27 +2882,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2773,7 +2921,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyuserdeletesaveevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserDeleteSaveEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2793,27 +2940,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2828,7 +2979,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyusereditacceptevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserEditAcceptEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2848,27 +2998,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2883,7 +3037,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyusereditconfirmevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserEditConfirmEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2903,27 +3056,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2938,7 +3095,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyusereditsaveevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserEditSaveEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -2958,27 +3114,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -2993,7 +3153,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyuserinviteinviteevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserInviteInviteEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -3013,27 +3172,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -3048,7 +3211,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-notifyuserresendmailevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\NotifyUserResendMailEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -3068,27 +3230,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -3103,7 +3269,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-invitationtoregisterevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\InvitationToRegisterEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -3123,27 +3288,31 @@ Services.yaml:</p>
                                                 <dt class="field-even">$user</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User</code>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>Domain\<wbr>Model\<wbr>Frontend<wbr>User
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\Domain\Model\FrontendUser"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\Domain\Model\FrontendUser in the internet."                    data-fqn="\Evoweb\SfRegister\Domain\Model\FrontendUser"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -3158,7 +3327,6 @@ Services.yaml:</p>
          class="confval-section"
          id="confval-evoweb-sfregister-services-event-presubmitmailevent"
 >
-    <h3 class="sr-only">Evoweb\SfRegister\Services\Event\PreSubmitMailEvent</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -3178,38 +3346,44 @@ Services.yaml:</p>
                                                 <dt class="field-even">$mail</dt>
                             <dd class="field-even"><code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\TYPO3\CMS\Core\Mail\MailMessage"
-          data-shortdescription="PHP class"
-          data-details="<code>class MailMessage</code><br><em>Adapter for Symfony Mime to be used by TYPO3 extensions.</em>"
-          data-morelink="https://api.typo3.org/main/classes/TYPO3-CMS-Core-Mail-MailMessage.html"              data-fqn="\TYPO3\CMS\Core\Mail\MailMessage"          data-bs-html="true"
     >
-        \TYPO3\<wbr>CMS\<wbr>Core\<wbr>Mail\<wbr>Mail<wbr>Message            <span class="text-secondary"><i class="fa-regular fa-circle-question"></i></span></code>
+        \TYPO3\<wbr>CMS\<wbr>Core\<wbr>Mail\<wbr>Mail<wbr>Message
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\TYPO3\CMS\Core\Mail\MailMessage"
+                data-shortdescription="PHP class"
+                data-details=""                    data-signature="class MailMessage"                    data-summary="Adapter for Symfony Mime to be used by TYPO3 extensions."                    data-morelink="https://api.typo3.org/main/classes/TYPO3-CMS-Core-Mail-MailMessage.html"                    data-fqn="\TYPO3\CMS\Core\Mail\MailMessage"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$settings</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                                                     <dt class="field-even">$arguments</dt>
                             <dd class="field-even"><code class="code-inline"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="array"
-          data-shortdescription="Code written in PHP"
-          data-details="Dynamic server-side scripting language."
-          data-morelink=""          data-bs-html="true"
     >
-        array</code>
+        array
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="array"
+                data-shortdescription="Code written in PHP"
+                data-details="Dynamic server-side scripting language."                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>
                             </dd>
                         </dl>
                         <div class="confval-description">
@@ -3260,14 +3434,14 @@ Services.yaml:</p>
                         <label for="permalink-short" class="col-form-label">Permalink (Shortlink)</label>
                         <div class="input-group">
                             <input class="form-control code" id="permalink-short" readonly>
-                            <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-short"><i class="far fa-clone"></i></button>
+                            <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-short"><i class="fa-regular fa-clone"></i></button>
                         </div>
                         <p><em>Copy and freely share the link</em></p>
                     </div>
                     <label for="permalink-uri" class="col-form-label">URL</label>
                     <div class="input-group">
                         <input class="form-control code" id="permalink-uri" readonly>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -3277,7 +3451,7 @@ Services.yaml:</p>
                     <label for="permalink-rst" class="col-form-label">Link in reStructuredText (reST)</label>
                     <div class="input-group">
                         <textarea class="form-control code" id="permalink-rst" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="fa-regular fa-clone"></i></button>
                     </div>
                     <p><em>Copy this link into your TYPO3 manual.</em></p>
                 </div>
@@ -3285,14 +3459,14 @@ Services.yaml:</p>
                     <label for="permalink-md" class="col-form-label">Link in Markdown</label>
                     <div class="input-group">
                         <textarea class="form-control code" id="permalink-md" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-md"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-md"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="permalink-html" class="col-form-label">Link in HTML</label>
                                         <div class="input-group">
                         <textarea class="form-control code" id="permalink-html" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
             </div>
@@ -3304,7 +3478,7 @@ Services.yaml:</p>
 </div>    <div class="modal fade" id="generalModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
     aria-hidden="true" data-current-filename="Extendability/Index"
 >
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="generalModalLabel"></h5>
@@ -3321,9 +3495,7 @@ Services.yaml:</p>
             </div>
         </div>
     </div>
-</div></div>
-
-
+</div>    
 <footer class="page-footer">
     <div class="frame frame-ruler-before frame-background-dark">
         <div class="frame-container">
@@ -3334,7 +3506,7 @@ Services.yaml:</p>
                                                 <li><a href="https://github.com/evoWeb/sf_register/issues" rel="nofollow noopener" title="Issues"><span>Issues</span></a></li>
                                                 <li><a href="https://github.com/evoWeb/sf_register" rel="nofollow noopener" title="Repository"><span>Repository</span></a></li>
                                             </ul>                <div class="footer-additional">
-                    <p class="text-center">Last rendered: May 18, 2026 16:42</p>
+                    <p class="text-center">Last rendered: Nov 02, 2026 17:07</p>
                 </div>
                 <div class="footer-meta">
                                         <div class="footer-meta-copyright">
@@ -3348,7 +3520,9 @@ Services.yaml:</p>
             </div>
         </div>
     </div>
-</footer>
+</footer></div>
+
+
 <script src="../_resources/js/bootstrap.min.js"></script>
 <script src="../_resources/js/theme.min.js"></script>
 

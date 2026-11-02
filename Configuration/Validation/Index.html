@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <title>Validation — Frontend User Registration: Multipurpose configurable registration 14.0.2
+    <title>Validation — Frontend User Registration: Multipurpose configurable registration 14.0.3
         documentation</title>
 
     
@@ -10,14 +10,16 @@
 <meta content="phpdocumentor/guides" name="generator">
 <meta content="Frontend User Registration: Multipurpose configurable registration" name="docsearch:name">
 <meta content="" name="docsearch:package_type">
-<meta content="14.0.2" name="docsearch:release">
-<meta content="14.0.2" name="docsearch:version">
-<meta content="2026-05-18T16:42:50+00:00" name="docsearch:modified">
-<meta content="2026-05-18T16:42:50+00:00" name="dc.modified">
-<meta content="2026-05-18T16:42:50+00:00" property="article:modified_time">
+<meta content="14.0.3" name="docsearch:release">
+<meta content="14.0.3" name="docsearch:version">
+<meta content="2026-11-02T17:07:04+00:00" name="docsearch:modified">
+<meta content="2026-11-02T17:07:04+00:00" name="dc.modified">
+<meta content="2026-11-02T17:07:04+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
+<link href="https://docs.typo3.org/permalink/evoweb/sf-register:configuration-validation@14.0.3" rel="canonical">
+<link href="Index.md" rel="alternate" title="Markdown" type="text/markdown">
 <script src="https://cdn.typo3.com/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
 <script src="https://cdn.typo3.com/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
                         <link href="../Emails/Index.html" rel="prev" title="Emails"/>
@@ -36,16 +38,16 @@
     </div>
     <div class="page-header">
         <div class="page-header-inner">
-            <div class="d-flex flex-wrap">
-                <div class="logo-wrapper">
-                    <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
-                        <img alt="TYPO3 Logo" class="logo-image" src="../../_resources/img/typo3-logo.svg" width="484" height="130">
-                    </a>
-                </div>
-                <div class="align-self-center order-lg-2 order-last">
-                    
+            <a class="navbar-brand" href="https://docs.typo3.org/" title="TYPO3 Documentation">
+                <span class="navbar-brand-text">
+                    <img src="../../_resources/img/typo3-soul.svg" alt="TYPO3" class="navbar-brand-logo" width="29" height="29">
+                    <span class="navbar-brand-name">Documentation</span>
+                </span>
+            </a>
+            <div class="header-nav">
+                
 <div class="toc-header">
-    <div class="toc-title pe-3">
+    <div class="toc-title">
                             <a class="toc-title-project" href="../../Index.html">Frontend User Registration: Multipurpose configurable registration</a>
             </div>
     <label for="languageSelect" class="visually-hidden">Select language</label>
@@ -55,67 +57,57 @@
                                   
         <label for="versionSelect" class="visually-hidden">Select version</label>
         <select id="versionSelect" class="form-select"
-                data-current-version="14.0.2"
+                data-current-version="14.0.3"
             data-override-url-proxy="../../_resources/js/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html"
         >
             <option disabled selected>Loading versions...</option>
         </select>
-    </div>                </div>
-                <div class="ms-auto order-lg-3 d-flex">
-                    <div class="menu-search-wrapper">
-                        <button id="toc-toggle" class="btn btn-light d-block d-lg-none" tabindex="0" aria-controls="toc-collapse" aria-expanded="false">
-                            <i class="fas fa-bars"></i> <span class="visually-hidden">Mobile Menu</span>
-                        </button>
-                        <all-documentations-menu data-override-url="../../_resources/js/menu-proxy.php"></all-documentations-menu>
-                                                <search role="search">
-                            <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
-                                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
-                                <div class="input-group mb-3 mt-sm-3">
-                                    <select class="form-select search__scope" id="searchscope" name="scope">
-                                        <option value="">Search all</option>
-                                    </select>
-                                    <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                    <button class="btn btn-light" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
-                                </div>
-                            </form>
-                            <div id="global-search-root"></div>
-                        </search>
-                        <div class="position-relative d-inline-block">
-                            <button id="options-toggle" class="btn btn-light d-block" type="button" aria-expanded="false">
-                                <i class="fas fa-cog"></i> <span class="visually-hidden">Options</span>
-                            </button>
-
-                            <div id="options-panel"
-                                 class="shadow p-3"
-                                 role="menu"
-                                 aria-hidden="true">
-                                <h6 class="dropdown-header text-muted text-uppercase small mb-2">Options</h6>
-
-                                                                                                            <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FConfiguration%2FValidation%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-comment-dots"></i>
+    </div>            </div>
+            <div class="header-actions">
+                <button id="search-toggle" class="btn btn-light d-lg-none" type="button"
+                        aria-label="Search" aria-keyshortcuts="Control+K Meta+K">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                </button>
+                <button id="toc-toggle" class="btn btn-light d-lg-none" type="button"
+                        aria-label="Menu" aria-expanded="false" aria-controls="toc-collapse">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <all-documentations-menu data-override-url="../../_resources/js/menu-proxy.php"></all-documentations-menu>
+                                <search role="search" aria-label="Site search">
+                                        <select id="searchscope" hidden aria-hidden="true">
+                        <option value="">Search all</option>
+                    </select>
+                    <div id="global-search-root"></div>
+                </search>
+                                                <button id="options-toggle" class="btn btn-light" type="button"
+                        aria-controls="options-panel" aria-expanded="false" popovertarget="options-panel">
+                    <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                    <span class="visually-hidden">Options</span>
+                </button>
+                <div id="options-panel" class="shadow p-3" popover>
+                    <h6 class="dropdown-header text-muted text-uppercase small mb-2">Options</h6>
+                        <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FConfiguration%2FValidation%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-comment-dots"></i>
         Give feedback
     </a>
-    <a class="dropdown-item d-flex align-items-center gap-2" href="../../_sources/Configuration/Validation/Index.rst.txt" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-code"></i>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="../../_sources/Configuration/Validation/Index.rst.txt" id="btnViewSource" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-code"></i>
         View source
     </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="Index.md" id="btnViewMarkdown" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-file-lines"></i>
+        View as Markdown
+    </a>
     <a class="dropdown-item d-flex align-items-center gap-2" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-info-circle"></i>
+        <i class="fa-solid fa-circle-info"></i>
         How to edit
     </a>
     <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/Documentation/edit/develop/Documentation/Configuration/Validation/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
-        <i class="fab fa-github"></i>
+        <i class="fa-brands fa-github"></i>
         Edit on GitHub
     </a>
-                                                                                                                <a class="dropdown-item d-flex align-items-center gap-2" href="../../singlehtml/Index.html" target="_blank" rel="noopener">
-                                            <i class="fas fa-print"></i>
-                                            Full documentation (single file)
-                                        </a>
-                                                                                                </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
+                            </div>
         </div>
     </div>
 </header>    <main class="page-main">
@@ -166,7 +158,7 @@
         Known problems
     </a></li>    <li class="" role="menuitem">
     <a href="../../Changelog/Index.html">
-        ChangeLog
+        Change<wbr>Log
     </a></li>    <li class="" role="menuitem">
     <a href="../../BreakingChanges/Index.html">
         Breaking Changes
@@ -177,7 +169,30 @@
     </a></li>    </ul>
     </div>
                         </div>
-                    </div>
+                                                <div class="toc-options d-lg-none">
+                            <p class="caption">Options</p>
+                                <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FConfiguration%2FValidation%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-comment-dots"></i>
+        Give feedback
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="../../_sources/Configuration/Validation/Index.rst.txt" id="btnViewSource" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-code"></i>
+        View source
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="Index.md" id="btnViewMarkdown" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-file-lines"></i>
+        View as Markdown
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-circle-info"></i>
+        How to edit
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/Documentation/edit/develop/Documentation/Configuration/Validation/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
+        <i class="fa-brands fa-github"></i>
+        Edit on GitHub
+    </a>
+                        </div>
+                                            </div>
                 </nav>
             </div>
             <div class="page-main-content">
@@ -188,12 +203,17 @@
         <li class="breadcrumb-item"><a href="../Index.html">Configuration</a></li>
                     <li aria-current="page"  class="breadcrumb-item  active">Validation</li>
         </ol>
+
         <div class="breadcrumb-additions">                <a class="btn btn-sm btn-light" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FConfiguration%2FValidation%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
-                    <span class="btn-icon"><i class="fas fa-comment-dots"></i></span>
+                    <span class="btn-icon"><i class="fa-solid fa-comment-dots"></i></span>
                     <span class="btn-text">Give feedback</span>
                 </a>
+                            <a class="btn btn-sm btn-light" href="Index.md" id="btnDownloadMarkdown" rel="nofollow noopener" download="evoweb-sf-register-configuration-validation.md">
+                    <span class="btn-icon"><i class="fa-solid fa-download"></i></span>
+                    <span class="btn-text">Markdown</span>
+                </a>
                             <a class="btn btn-sm btn-secondary" href="https://github.com/Documentation/edit/develop/Documentation/Configuration/Validation/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
-                    <span class="btn-icon"><span class="fab fa-github"></span></span>
+                    <span class="btn-icon"><span class="fa-brands fa-github"></span></span>
                     <span class="btn-text">Edit on GitHub</span>
                 </a>
             </div>
@@ -203,9 +223,9 @@
     <div itemprop="articleBody">
         <!-- content start -->
                 
-<section class="section" id="validation" data-rst-anchor="configuration-validation">
-            <a id="configuration-validation"></a>
-            <h1>Validation<a class="headerlink" href="#validation" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
+<section class="section" id="configuration-validation" data-rst-anchor="configuration-validation"><a id="validation"></a>
+            
+            <h1>Validation<a class="headerlink" href="#configuration-validation" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
             <div class="contents-wrapper">
         <ul class="menu-level">
     <li class="toc-item">
@@ -284,9 +304,9 @@
 
     <button class="toggle-all-sections btn btn-sm btn-light">Collapse all Sections</button>
 </div>
-            <section class="section" id="purpose-of-validators" data-rst-anchor="configuration-validation-purpose">
-            <a id="configuration-validation-purpose"></a>
-            <h2>Purpose of Validators<a class="headerlink" href="#purpose-of-validators" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
+            <section class="section" id="configuration-validation-purpose" data-rst-anchor="configuration-validation-purpose"><a id="purpose-of-validators"></a>
+            
+            <h2>Purpose of Validators<a class="headerlink" href="#configuration-validation-purpose" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>Validators are a mechanism to ensure that all information given by the user
 meet your expectation as an admin. Either if the values make sense in terms
@@ -535,7 +555,7 @@ which are suited for the usage on fields.</p>
                                     </tr>
         </thead>
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-badwordvalidator">Bad<wbr>Word<wbr>Validator</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-badwordvalidator">Bad<wbr>Word<wbr>Validator</a></div></td>
                     <td>
                             string
                         </td>
@@ -545,7 +565,7 @@ which are suited for the usage on fields.</p>
             </tr>
                             
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-istruevalidator">Is<wbr>True<wbr>Validator</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-istruevalidator">Is<wbr>True<wbr>Validator</a></div></td>
                     <td>
                             string
                         </td>
@@ -554,7 +574,7 @@ which are suited for the usage on fields.</p>
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-requiredvalidator">Required<wbr>Validator</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-requiredvalidator">Required<wbr>Validator</a></div></td>
                     <td>
                             string
                         </td>
@@ -563,7 +583,7 @@ which are suited for the usage on fields.</p>
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-blockdomainvalidator">Block<wbr>Domain<wbr>Validator</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-blockdomainvalidator">Block<wbr>Domain<wbr>Validator</a></div></td>
                     <td>
                             string
                         </td>
@@ -581,7 +601,6 @@ which are suited for the usage on fields.</p>
          class="confval-section"
          id="confval-badwordvalidator"
 >
-    <h3 class="sr-only">BadWordValidator</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -627,7 +646,6 @@ which are suited for the usage on fields.</p>
          class="confval-section"
          id="confval-istruevalidator"
 >
-    <h3 class="sr-only">IsTrueValidator</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -665,7 +683,6 @@ which are suited for the usage on fields.</p>
          class="confval-section"
          id="confval-requiredvalidator"
 >
-    <h3 class="sr-only">RequiredValidator</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -705,7 +722,6 @@ validator as condition to render required sign or not.</p>
          class="confval-section"
          id="confval-blockdomainvalidator"
 >
-    <h3 class="sr-only">BlockDomainValidator</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -764,7 +780,7 @@ validator as condition to render required sign or not.</p>
                                     </tr>
         </thead>
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-captchavalidator">Captcha<wbr>Validator</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-captchavalidator">Captcha<wbr>Validator</a></div></td>
                     <td>
                             string
                         </td>
@@ -774,7 +790,7 @@ validator as condition to render required sign or not.</p>
             </tr>
                                                                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-emptyvalidator">Empty<wbr>Validator</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-emptyvalidator">Empty<wbr>Validator</a></div></td>
                     <td>
                             string
                         </td>
@@ -783,7 +799,7 @@ validator as condition to render required sign or not.</p>
             </tr>
                             
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-equalcurrentpasswordvalidator">Equal<wbr>Current<wbr>Password<wbr>Validator</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-equalcurrentpasswordvalidator">Equal<wbr>Current<wbr>Password<wbr>Validator</a></div></td>
                     <td>
                             string
                         </td>
@@ -792,7 +808,7 @@ validator as condition to render required sign or not.</p>
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-equalcurrentuservalidator">Equal<wbr>Current<wbr>User<wbr>Validator</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-equalcurrentuservalidator">Equal<wbr>Current<wbr>User<wbr>Validator</a></div></td>
                     <td>
                             string
                         </td>
@@ -801,7 +817,7 @@ validator as condition to render required sign or not.</p>
             </tr>
                             
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-imageuploadvalidator">Image<wbr>Upload<wbr>Validator</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-imageuploadvalidator">Image<wbr>Upload<wbr>Validator</a></div></td>
                     <td>
                             string
                         </td>
@@ -810,7 +826,7 @@ validator as condition to render required sign or not.</p>
             </tr>
                             
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-uniquevalidator">Unique<wbr>Validator</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-uniquevalidator">Unique<wbr>Validator</a></div></td>
                     <td>
                             string
                         </td>
@@ -820,7 +836,7 @@ validator as condition to render required sign or not.</p>
             </tr>
                                                                             
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-repeatvalidator">Repeat<wbr>Validator</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-repeatvalidator">Repeat<wbr>Validator</a></div></td>
                     <td>
                             string
                         </td>
@@ -837,7 +853,6 @@ validator as condition to render required sign or not.</p>
          class="confval-section"
          id="confval-captchavalidator"
 >
-    <h3 class="sr-only">CaptchaValidator</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -895,7 +910,6 @@ captchas to validate. How to use create custom is described in
          class="confval-section"
          id="confval-emptyvalidator"
 >
-    <h3 class="sr-only">EmptyValidator</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -937,7 +951,6 @@ This validator gets auto-assigned to the uid field in the create process</p>
          class="confval-section"
          id="confval-equalcurrentpasswordvalidator"
 >
-    <h3 class="sr-only">EqualCurrentPasswordValidator</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -977,7 +990,6 @@ the user is logged in with.</p>
          class="confval-section"
          id="confval-equalcurrentuservalidator"
 >
-    <h3 class="sr-only">EqualCurrentUserValidator</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1021,7 +1033,6 @@ This validator gets auto-assigned to the uid field in the edit process</p>
          class="confval-section"
          id="confval-imageuploadvalidator"
 >
-    <h3 class="sr-only">ImageUploadValidator</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1075,7 +1086,6 @@ $GLOBALS[<span class="hljs-string">'TCA'</span>][<span class="hljs-string">'fe_u
          class="confval-section"
          id="confval-uniquevalidator"
 >
-    <h3 class="sr-only">UniqueValidator</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1136,7 +1146,6 @@ collisions in authentication you would choose to set globals = 1 .</p>
          class="confval-section"
          id="confval-repeatvalidator"
 >
-    <h3 class="sr-only">RepeatValidator</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1216,14 +1225,14 @@ password fields.</p>
                         <label for="permalink-short" class="col-form-label">Permalink (Shortlink)</label>
                         <div class="input-group">
                             <input class="form-control code" id="permalink-short" readonly>
-                            <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-short"><i class="far fa-clone"></i></button>
+                            <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-short"><i class="fa-regular fa-clone"></i></button>
                         </div>
                         <p><em>Copy and freely share the link</em></p>
                     </div>
                     <label for="permalink-uri" class="col-form-label">URL</label>
                     <div class="input-group">
                         <input class="form-control code" id="permalink-uri" readonly>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -1233,7 +1242,7 @@ password fields.</p>
                     <label for="permalink-rst" class="col-form-label">Link in reStructuredText (reST)</label>
                     <div class="input-group">
                         <textarea class="form-control code" id="permalink-rst" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="fa-regular fa-clone"></i></button>
                     </div>
                     <p><em>Copy this link into your TYPO3 manual.</em></p>
                 </div>
@@ -1241,14 +1250,14 @@ password fields.</p>
                     <label for="permalink-md" class="col-form-label">Link in Markdown</label>
                     <div class="input-group">
                         <textarea class="form-control code" id="permalink-md" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-md"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-md"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="permalink-html" class="col-form-label">Link in HTML</label>
                                         <div class="input-group">
                         <textarea class="form-control code" id="permalink-html" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
             </div>
@@ -1260,7 +1269,7 @@ password fields.</p>
 </div>    <div class="modal fade" id="generalModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
     aria-hidden="true" data-current-filename="Configuration/Validation/Index"
 >
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="generalModalLabel"></h5>
@@ -1277,9 +1286,7 @@ password fields.</p>
             </div>
         </div>
     </div>
-</div></div>
-
-
+</div>    
 <footer class="page-footer">
     <div class="frame frame-ruler-before frame-background-dark">
         <div class="frame-container">
@@ -1290,7 +1297,7 @@ password fields.</p>
                                                 <li><a href="https://github.com/evoWeb/sf_register/issues" rel="nofollow noopener" title="Issues"><span>Issues</span></a></li>
                                                 <li><a href="https://github.com/evoWeb/sf_register" rel="nofollow noopener" title="Repository"><span>Repository</span></a></li>
                                             </ul>                <div class="footer-additional">
-                    <p class="text-center">Last rendered: May 18, 2026 16:42</p>
+                    <p class="text-center">Last rendered: Nov 02, 2026 17:07</p>
                 </div>
                 <div class="footer-meta">
                                         <div class="footer-meta-copyright">
@@ -1304,7 +1311,9 @@ password fields.</p>
             </div>
         </div>
     </div>
-</footer>
+</footer></div>
+
+
 <script src="../../_resources/js/bootstrap.min.js"></script>
 <script src="../../_resources/js/theme.min.js"></script>
 

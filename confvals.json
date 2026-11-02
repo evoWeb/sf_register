@@ -1,0 +1,1458 @@
+{
+    "project": {
+        "title": "Frontend User Registration: Multipurpose configurable registration",
+        "version": "14.0.3",
+        "permalink": "https://docs.typo3.org/permalink/evoweb/sf-register:{anchor}@14.0.3"
+    },
+    "confvals": {
+        "confval-notifyadminpostcreatesave": {
+            "name": "notifyAdminPostCreateSave",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify admin create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the admin should get an email after the user saved the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyadminpostcreateconfirm": {
+            "name": "notifyAdminPostCreateConfirm",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify admin create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the admin should get an email after the user confirmed the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyadminpostcreaterefuse": {
+            "name": "notifyAdminPostCreateRefuse",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify admin create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the admin should get an email after the user refused the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyadminpostcreateaccept": {
+            "name": "notifyAdminPostCreateAccept",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify admin create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the admin should get an email after the admin accepted the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyadminpostcreatedecline": {
+            "name": "notifyAdminPostCreateDecline",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify admin create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the admin should get an email after the admin declined the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-acceptemailpostcreate": {
+            "name": "acceptEmailPostCreate",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify admin create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the admin need to accept the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyadminposteditsave": {
+            "name": "notifyAdminPostEditSave",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify admin edit properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the admin should get an email after the user saved the changes",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyadminposteditconfirm": {
+            "name": "notifyAdminPostEditConfirm",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify admin edit properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the admin should get an email after the user confirmed the email change",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyadminposteditaccept": {
+            "name": "notifyAdminPostEditAccept",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify admin edit properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the admin should get an email after the user accepted the email change",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-acceptemailpostedit": {
+            "name": "acceptEmailPostEdit",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify admin edit properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the admin need to accepted the email change",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyuserpostcreatesave": {
+            "name": "notifyUserPostCreateSave",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify user create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the user should get an email after the user saved the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyuserpostcreateconfirm": {
+            "name": "notifyUserPostCreateConfirm",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify user create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the user should get an email after the user confirmed the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyuserpostcreaterefuse": {
+            "name": "notifyUserPostCreateRefuse",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify user create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the user should get an email after the user refused the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyuserpostcreateaccept": {
+            "name": "notifyUserPostCreateAccept",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify user create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the user should get an email after the admin accepted the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyuserpostcreatedecline": {
+            "name": "notifyUserPostCreateDecline",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify user create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the user should get an email after the admin declined the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-confirmemailpostcreate": {
+            "name": "confirmEmailPostCreate",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify user create properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the user need to confirm the registration",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyuserposteditsave": {
+            "name": "notifyUserPostEditSave",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify user edit properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the user should get an email after the user saved the changes",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyuserposteditconfirm": {
+            "name": "notifyUserPostEditConfirm",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify user edit properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the user should get an email after the user confirmed the email change",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-notifyuserposteditaccept": {
+            "name": "notifyUserPostEditAccept",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify user edit properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the user should get an email after the user accepted the email change",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-confirmemailpostedit": {
+            "name": "confirmEmailPostEdit",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Notify user edit properties"
+            ],
+            "type": "boolean",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Defines wether the user need to confirm the email change",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-sitename": {
+            "name": "sitename",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Address and subject properties"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "dummy Site"
+            },
+            "summary": "Page Title for email subject",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-useremail-fromname": {
+            "name": "userEmail.fromName",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Address and subject properties"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "userEmail from"
+            },
+            "summary": "Name used as from for email to user",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-useremail-fromemail": {
+            "name": "userEmail.fromEmail",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Address and subject properties"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "userEmailfrom@test.local"
+            },
+            "summary": "Email used as from for email to user",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-useremail-replyname": {
+            "name": "userEmail.replyName",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Address and subject properties"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "userEmail reply"
+            },
+            "summary": "Name used as reply for email to user",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-useremail-replyemail": {
+            "name": "userEmail.replyEmail",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Address and subject properties"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "userEmailreply@test.local"
+            },
+            "summary": "Email used as reply for email to user",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-adminemail-toname": {
+            "name": "adminEmail.toName",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Address and subject properties"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "adminEmail to"
+            },
+            "summary": "Name used as recipient for email to admin",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-adminemail-toemail": {
+            "name": "adminEmail.toEmail",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Address and subject properties"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "adminToEmail@test.local"
+            },
+            "summary": "Email used as recipient for email to admin",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-adminemail-fromname": {
+            "name": "adminEmail.fromName",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Address and subject properties"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "adminEmail from"
+            },
+            "summary": "Name used as from for email to admin",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-adminemail-fromemail": {
+            "name": "adminEmail.fromEmail",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Address and subject properties"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "adminEmailfrom@test.local"
+            },
+            "summary": "Email used as from for email to admin",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-adminemail-replyname": {
+            "name": "adminEmail.replyName",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Address and subject properties"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "adminEmail reply"
+            },
+            "summary": "Name used as reply for email to admin",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-adminemail-replyemail": {
+            "name": "adminEmail.replyEmail",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Emails",
+                "Address and subject properties"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "adminEmailreply@test.local"
+            },
+            "summary": "Email used as reply for email to admin",
+            "path": "Configuration/Emails/Index"
+        },
+        "confval-badwordlist": {
+            "name": "badWordList",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "god, sex, password"
+            },
+            "summary": "Comma separated list of word, that validator badWordFilter will avoid",
+            "path": "Configuration/Index"
+        },
+        "confval-redirectpostregistrationpageid": {
+            "name": "redirectPostRegistrationPageId",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "integer",
+            "summary": "Redirect page after registration",
+            "path": "Configuration/Index"
+        },
+        "confval-redirectpostactivationpageid": {
+            "name": "redirectPostActivationPageId",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "integer",
+            "summary": "Redirect page after activation",
+            "path": "Configuration/Index"
+        },
+        "confval-useemailaddressasusername": {
+            "name": "useEmailAddressAsUsername",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "boolean",
+            "summary": "Use email address as username",
+            "path": "Configuration/Index"
+        },
+        "confval-useencryptedfilename": {
+            "name": "useEncryptedFilename",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "integer",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Encrypt filenames",
+            "path": "Configuration/Index"
+        },
+        "confval-autologinpostregistration": {
+            "name": "autologinPostRegistration",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "integer",
+            "summary": "Log in user after registration",
+            "path": "Configuration/Index"
+        },
+        "confval-autologinpostconfirmation": {
+            "name": "autologinPostConfirmation",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "integer",
+            "summary": "Log in user after activation",
+            "path": "Configuration/Index"
+        },
+        "confval-usergrouppostsave": {
+            "name": "usergroupPostSave",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "integer",
+            "summary": "Frontend usergroup after registration",
+            "path": "Configuration/Index"
+        },
+        "confval-usergrouppostconfirm": {
+            "name": "usergroupPostConfirm",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "integer",
+            "summary": "Frontend usergroup after activation",
+            "path": "Configuration/Index"
+        },
+        "confval-usergroup": {
+            "name": "usergroup",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "integer",
+            "summary": "Frontend usergroup after activation",
+            "path": "Configuration/Index"
+        },
+        "confval-captcha-jmrecaptcha": {
+            "name": "captcha.jmrecaptcha",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "string",
+            "default": "\\Evoweb\\SfRegister\\Services\\Captcha\\JmRecaptchaAdapter",
+            "summary": "Adapter for Captcha-Extension jm_recaptcha",
+            "path": "Configuration/Index"
+        },
+        "confval-captcha-srfreecap": {
+            "name": "captcha.srfreecap",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Settings"
+            ],
+            "type": "string",
+            "default": "\\Evoweb\\SfRegister\\Services\\Captcha\\SrFreecapAdapter",
+            "summary": "Adapter for Captcha-Extension sr_freecap",
+            "path": "Configuration/Index"
+        },
+        "confval-storagepid": {
+            "name": "storagePid",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Table of content",
+                "Persistence"
+            ],
+            "type": "integer",
+            "summary": "Sysfolder with Frontend User records",
+            "path": "Configuration/Index"
+        },
+        "confval-badwordvalidator": {
+            "name": "BadWordValidator",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Validation",
+                "Available validators"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "god, sex, password",
+                "Configured in": "plugin.tx_sfregister.settings.badWordList"
+            },
+            "summary": "Checks if the field contains non of the word in the list is present.",
+            "path": "Configuration/Validation/Index"
+        },
+        "confval-istruevalidator": {
+            "name": "IsTrueValidator",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Validation",
+                "Available validators"
+            ],
+            "type": "string",
+            "summary": "Checks if the field is set for example the general terms and conditions",
+            "path": "Configuration/Validation/Index"
+        },
+        "confval-requiredvalidator": {
+            "name": "RequiredValidator",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Validation",
+                "Available validators"
+            ],
+            "type": "string",
+            "summary": "This validator serves two purpose. First of check if the field contains a value and that it is not empty. Second the rendering uses this validator as condition to render required sign or not.",
+            "path": "Configuration/Validation/Index"
+        },
+        "confval-blockdomainvalidator": {
+            "name": "BlockDomainValidator",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Validation",
+                "Available validators"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "0-mail.com, 027168.com, 0815.ru, mail.ru, bk.ru, list.ru",
+                "Configured in": "plugin.tx_sfregister.settings.blockDomainList"
+            },
+            "summary": "Check that the email field does not contain any of the words in the list for the domain.",
+            "path": "Configuration/Validation/Index"
+        },
+        "confval-captchavalidator": {
+            "name": "CaptchaValidator",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Validation",
+                "Special fields Validators"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "recaptcha"
+            },
+            "summary": "Checks if the entered value matches the captcha text by using the same captcha adapter like the one used for the rendering. Therefor the option type needs to equal the configuration of the rendering.",
+            "path": "Configuration/Validation/Index"
+        },
+        "confval-emptyvalidator": {
+            "name": "EmptyValidator",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Validation",
+                "Special fields Validators"
+            ],
+            "type": "string",
+            "summary": "Checks if the field uid is empty to no unauthorized user manipulation could happen.",
+            "path": "Configuration/Validation/Index"
+        },
+        "confval-equalcurrentpasswordvalidator": {
+            "name": "EqualCurrentPasswordValidator",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Validation",
+                "Special fields Validators"
+            ],
+            "type": "string",
+            "summary": "This validator is used in the password change process. It compares if the entered old password is equal to the current set password for the account the user is logged in with.",
+            "path": "Configuration/Validation/Index"
+        },
+        "confval-equalcurrentuservalidator": {
+            "name": "EqualCurrentUserValidator",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Validation",
+                "Special fields Validators"
+            ],
+            "type": "string",
+            "summary": "On edit process it's important that the correct user data get modified. To ensure that the submitted data does not temper the user id. This validator compares the user id send by the form with the user id of the logged in user to prevent and change of the id.",
+            "path": "Configuration/Validation/Index"
+        },
+        "confval-imageuploadvalidator": {
+            "name": "ImageUploadValidator",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Validation",
+                "Special fields Validators"
+            ],
+            "type": "string",
+            "summary": "The image upload validator checks if the file uploaded has an allowed file extension and if the file size is in the allowed max size. Both checks uses system configuration.",
+            "path": "Configuration/Validation/Index"
+        },
+        "confval-uniquevalidator": {
+            "name": "UniqueValidator",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Validation",
+                "Special fields Validators"
+            ],
+            "type": "string",
+            "fields": {
+                "Default": "0"
+            },
+            "summary": "Checks if the value is unique for the field in the storage folder. If the option 'global' is set a second check for the value in the field is done system wide.",
+            "path": "Configuration/Validation/Index"
+        },
+        "confval-repeatvalidator": {
+            "name": "RepeatValidator",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Configuration",
+                "Validation",
+                "Special fields Validators"
+            ],
+            "type": "string",
+            "summary": "To ensure that the input of a user was done without mistake by the user self it's a good idea to have the values entered in two fields and then compare their values. That is possible with this validator.",
+            "path": "Configuration/Validation/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-initializeactionevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\InitializeActionEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserController"
+            ],
+            "fields": {
+                "$controller": "\\Evoweb\\SfRegister\\Controller\\FeuserController",
+                "$settings": "array",
+                "$response": "\\Psr\\Http\\Message\\ResponseInterface"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-createformevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\CreateFormEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserCreateController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-createpreviewevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\CreatePreviewEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserCreateController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-createsaveevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\CreateSaveEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserCreateController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-createconfirmevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\CreateConfirmEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserCreateController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-createrefuseevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\CreateRefuseEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserCreateController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-createacceptevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\CreateAcceptEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserCreateController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-createdeclineevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\CreateDeclineEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserCreateController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-deleteformevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\DeleteFormEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserDeleteController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-deletesaveevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\DeleteSaveEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserDeleteController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-deleteconfirmevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\DeleteConfirmEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserDeleteController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-editformevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\EditFormEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserEditController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-editpreviewevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\EditPreviewEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserEditController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-editsaveevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\EditSaveEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserEditController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-editconfirmevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\EditConfirmEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserEditController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-editacceptevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\EditAcceptEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserEditController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-inviteformevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\InviteFormEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserInviteController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-inviteinviteevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\InviteInviteEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserInviteController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-passwordformevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\PasswordFormEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserPasswordController"
+            ],
+            "fields": {
+                "$password": "\\Evoweb\\SfRegister\\Domain\\Model\\Password",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-passwordsaveevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\PasswordSaveEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserPasswordController"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-resendformevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\ResendFormEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserResendController"
+            ],
+            "fields": {
+                "$email": "\\Evoweb\\SfRegister\\Domain\\Model\\Email",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-controller-event-resendmailevent": {
+            "name": "Evoweb\\SfRegister\\Controller\\Event\\ResendMailEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "FeuserResendController"
+            ],
+            "fields": {
+                "$email": "\\Evoweb\\SfRegister\\Domain\\Model\\Email",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadmincreateacceptevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateAcceptEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadmincreateconfirmevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateConfirmEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadmincreatedeclineevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateDeclineEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadmincreaterefuseevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateRefuseEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadmincreatesaveevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminCreateSaveEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadmindeleteconfirmevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminDeleteConfirmEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadmindeletesaveevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminDeleteSaveEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadmineditacceptevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminEditAcceptEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadmineditconfirmevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminEditConfirmEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadmineditsaveevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminEditSaveEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadmininviteinviteevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminInviteInviteEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyadminresendmailevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyAdminResendMailEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyusercreateacceptevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateAcceptEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyusercreateconfirmevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateConfirmEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyusercreatedeclineevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateDeclineEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyusercreaterefuseevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateRefuseEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyusercreatesaveevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserCreateSaveEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyuserdeleteconfirmevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserDeleteConfirmEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyuserdeletesaveevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserDeleteSaveEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyusereditacceptevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserEditAcceptEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyusereditconfirmevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserEditConfirmEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyusereditsaveevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserEditSaveEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyuserinviteinviteevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserInviteInviteEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-notifyuserresendmailevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\NotifyUserResendMailEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-invitationtoregisterevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\InvitationToRegisterEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$user": "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser",
+                "$settings": "array"
+            },
+            "path": "Extendability/Index"
+        },
+        "confval-evoweb-sfregister-services-event-presubmitmailevent": {
+            "name": "Evoweb\\SfRegister\\Services\\Event\\PreSubmitMailEvent",
+            "searchFacet": "TypoScript",
+            "context": [
+                "Extendability",
+                "Available events",
+                "Mail"
+            ],
+            "fields": {
+                "$mail": "\\TYPO3\\CMS\\Core\\Mail\\MailMessage",
+                "$settings": "array",
+                "$arguments": "array"
+            },
+            "path": "Extendability/Index"
+        }
+    }
+}

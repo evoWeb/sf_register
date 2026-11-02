@@ -1,0 +1,95 @@
+{
+    "project": {
+        "title": "Frontend User Registration: Multipurpose configurable registration",
+        "version": "14.0.3",
+        "permalink": "https://docs.typo3.org/permalink/evoweb/sf-register:{anchor}@14.0.3"
+    },
+    "classes": {
+        "\\Evoweb\\SfRegister\\Controller\\Event\\ProcessInitializeActionEvent": {
+            "places": [
+                {
+                    "path": "Extendability/Index",
+                    "anchor": "extendability",
+                    "section": "how-to-implement-a-slot",
+                    "kind": "code"
+                }
+            ]
+        },
+        "\\Evoweb\\SfRegister\\Domain\\Model\\FrontendUser": {
+            "places": [
+                {
+                    "path": "Extendability/Index",
+                    "anchor": "addcustomproperties",
+                    "kind": "inline"
+                }
+            ]
+        },
+        "\\Evoweb\\SfRegister\\Services\\Captcha\\AbstractAdapter": {
+            "places": [
+                {
+                    "path": "Configuration/Index",
+                    "anchor": "configuration",
+                    "section": "integrate-other-captcha-extension",
+                    "kind": "inline"
+                },
+                {
+                    "path": "Extendability/Index",
+                    "anchor": "addcustomcaptcha",
+                    "kind": "inline"
+                }
+            ]
+        },
+        "\\Evoweb\\SfRegister\\Validation\\Validator\\AbstractValidator": {
+            "places": [
+                {
+                    "path": "BreakingChanges/Index",
+                    "anchor": "breaking-changes",
+                    "section": "2021-12-31",
+                    "kind": "code"
+                }
+            ]
+        },
+        "\\Evoweb\\SfRegister\\Validation\\Validator\\InjectableInterface": {
+            "places": [
+                {
+                    "path": "BreakingChanges/Index",
+                    "anchor": "breaking-changes",
+                    "section": "2021-12-31",
+                    "kind": "code"
+                }
+            ]
+        },
+        "\\Evoweb\\SfRegister\\ViewHelpers\\ApplicationContextViewHelper": {
+            "places": [
+                {
+                    "path": "BreakingChanges/Index",
+                    "anchor": "breaking-changes",
+                    "section": "2024-10-24",
+                    "kind": "inline"
+                }
+            ]
+        },
+        "\\TYPO3\\CMS\\Core\\Attribute\\AsEventListener": {
+            "type": "class",
+            "places": [
+                {
+                    "path": "Extendability/Index",
+                    "anchor": "extendability",
+                    "section": "how-to-implement-a-slot",
+                    "kind": "code"
+                }
+            ]
+        },
+        "\\TYPO3\\CMS\\Extbase\\Validation\\Validator\\AbstractValidator": {
+            "type": "class",
+            "places": [
+                {
+                    "path": "Configuration/Index",
+                    "anchor": "configuration",
+                    "section": "write-own-validators",
+                    "kind": "inline"
+                }
+            ]
+        }
+    }
+}

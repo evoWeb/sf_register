@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <title>Emails — Frontend User Registration: Multipurpose configurable registration 14.0.2
+    <title>Emails — Frontend User Registration: Multipurpose configurable registration 14.0.3
         documentation</title>
 
     
@@ -10,14 +10,16 @@
 <meta content="phpdocumentor/guides" name="generator">
 <meta content="Frontend User Registration: Multipurpose configurable registration" name="docsearch:name">
 <meta content="" name="docsearch:package_type">
-<meta content="14.0.2" name="docsearch:release">
-<meta content="14.0.2" name="docsearch:version">
-<meta content="2026-05-18T16:42:50+00:00" name="docsearch:modified">
-<meta content="2026-05-18T16:42:50+00:00" name="dc.modified">
-<meta content="2026-05-18T16:42:50+00:00" property="article:modified_time">
+<meta content="14.0.3" name="docsearch:release">
+<meta content="14.0.3" name="docsearch:version">
+<meta content="2026-11-02T17:07:04+00:00" name="docsearch:modified">
+<meta content="2026-11-02T17:07:04+00:00" name="dc.modified">
+<meta content="2026-11-02T17:07:04+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
+<link href="https://docs.typo3.org/permalink/evoweb/sf-register:configuration-emails@14.0.3" rel="canonical">
+<link href="Index.md" rel="alternate" title="Markdown" type="text/markdown">
 <script src="https://cdn.typo3.com/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
 <script src="https://cdn.typo3.com/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
                         <link href="../Index.html" rel="prev" title="Configuration"/>
@@ -36,16 +38,16 @@
     </div>
     <div class="page-header">
         <div class="page-header-inner">
-            <div class="d-flex flex-wrap">
-                <div class="logo-wrapper">
-                    <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
-                        <img alt="TYPO3 Logo" class="logo-image" src="../../_resources/img/typo3-logo.svg" width="484" height="130">
-                    </a>
-                </div>
-                <div class="align-self-center order-lg-2 order-last">
-                    
+            <a class="navbar-brand" href="https://docs.typo3.org/" title="TYPO3 Documentation">
+                <span class="navbar-brand-text">
+                    <img src="../../_resources/img/typo3-soul.svg" alt="TYPO3" class="navbar-brand-logo" width="29" height="29">
+                    <span class="navbar-brand-name">Documentation</span>
+                </span>
+            </a>
+            <div class="header-nav">
+                
 <div class="toc-header">
-    <div class="toc-title pe-3">
+    <div class="toc-title">
                             <a class="toc-title-project" href="../../Index.html">Frontend User Registration: Multipurpose configurable registration</a>
             </div>
     <label for="languageSelect" class="visually-hidden">Select language</label>
@@ -55,67 +57,57 @@
                                   
         <label for="versionSelect" class="visually-hidden">Select version</label>
         <select id="versionSelect" class="form-select"
-                data-current-version="14.0.2"
+                data-current-version="14.0.3"
             data-override-url-proxy="../../_resources/js/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html"
         >
             <option disabled selected>Loading versions...</option>
         </select>
-    </div>                </div>
-                <div class="ms-auto order-lg-3 d-flex">
-                    <div class="menu-search-wrapper">
-                        <button id="toc-toggle" class="btn btn-light d-block d-lg-none" tabindex="0" aria-controls="toc-collapse" aria-expanded="false">
-                            <i class="fas fa-bars"></i> <span class="visually-hidden">Mobile Menu</span>
-                        </button>
-                        <all-documentations-menu data-override-url="../../_resources/js/menu-proxy.php"></all-documentations-menu>
-                                                <search role="search">
-                            <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
-                                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
-                                <div class="input-group mb-3 mt-sm-3">
-                                    <select class="form-select search__scope" id="searchscope" name="scope">
-                                        <option value="">Search all</option>
-                                    </select>
-                                    <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                    <button class="btn btn-light" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
-                                </div>
-                            </form>
-                            <div id="global-search-root"></div>
-                        </search>
-                        <div class="position-relative d-inline-block">
-                            <button id="options-toggle" class="btn btn-light d-block" type="button" aria-expanded="false">
-                                <i class="fas fa-cog"></i> <span class="visually-hidden">Options</span>
-                            </button>
-
-                            <div id="options-panel"
-                                 class="shadow p-3"
-                                 role="menu"
-                                 aria-hidden="true">
-                                <h6 class="dropdown-header text-muted text-uppercase small mb-2">Options</h6>
-
-                                                                                                            <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FConfiguration%2FEmails%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-comment-dots"></i>
+    </div>            </div>
+            <div class="header-actions">
+                <button id="search-toggle" class="btn btn-light d-lg-none" type="button"
+                        aria-label="Search" aria-keyshortcuts="Control+K Meta+K">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                </button>
+                <button id="toc-toggle" class="btn btn-light d-lg-none" type="button"
+                        aria-label="Menu" aria-expanded="false" aria-controls="toc-collapse">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <all-documentations-menu data-override-url="../../_resources/js/menu-proxy.php"></all-documentations-menu>
+                                <search role="search" aria-label="Site search">
+                                        <select id="searchscope" hidden aria-hidden="true">
+                        <option value="">Search all</option>
+                    </select>
+                    <div id="global-search-root"></div>
+                </search>
+                                                <button id="options-toggle" class="btn btn-light" type="button"
+                        aria-controls="options-panel" aria-expanded="false" popovertarget="options-panel">
+                    <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                    <span class="visually-hidden">Options</span>
+                </button>
+                <div id="options-panel" class="shadow p-3" popover>
+                    <h6 class="dropdown-header text-muted text-uppercase small mb-2">Options</h6>
+                        <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FConfiguration%2FEmails%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-comment-dots"></i>
         Give feedback
     </a>
-    <a class="dropdown-item d-flex align-items-center gap-2" href="../../_sources/Configuration/Emails/Index.rst.txt" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-code"></i>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="../../_sources/Configuration/Emails/Index.rst.txt" id="btnViewSource" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-code"></i>
         View source
     </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="Index.md" id="btnViewMarkdown" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-file-lines"></i>
+        View as Markdown
+    </a>
     <a class="dropdown-item d-flex align-items-center gap-2" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-info-circle"></i>
+        <i class="fa-solid fa-circle-info"></i>
         How to edit
     </a>
     <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/Documentation/edit/develop/Documentation/Configuration/Emails/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
-        <i class="fab fa-github"></i>
+        <i class="fa-brands fa-github"></i>
         Edit on GitHub
     </a>
-                                                                                                                <a class="dropdown-item d-flex align-items-center gap-2" href="../../singlehtml/Index.html" target="_blank" rel="noopener">
-                                            <i class="fas fa-print"></i>
-                                            Full documentation (single file)
-                                        </a>
-                                                                                                </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
+                            </div>
         </div>
     </div>
 </header>    <main class="page-main">
@@ -166,7 +158,7 @@
         Known problems
     </a></li>    <li class="" role="menuitem">
     <a href="../../Changelog/Index.html">
-        ChangeLog
+        Change<wbr>Log
     </a></li>    <li class="" role="menuitem">
     <a href="../../BreakingChanges/Index.html">
         Breaking Changes
@@ -177,7 +169,30 @@
     </a></li>    </ul>
     </div>
                         </div>
-                    </div>
+                                                <div class="toc-options d-lg-none">
+                            <p class="caption">Options</p>
+                                <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FConfiguration%2FEmails%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-comment-dots"></i>
+        Give feedback
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="../../_sources/Configuration/Emails/Index.rst.txt" id="btnViewSource" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-code"></i>
+        View source
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="Index.md" id="btnViewMarkdown" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-file-lines"></i>
+        View as Markdown
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-circle-info"></i>
+        How to edit
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/Documentation/edit/develop/Documentation/Configuration/Emails/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
+        <i class="fa-brands fa-github"></i>
+        Edit on GitHub
+    </a>
+                        </div>
+                                            </div>
                 </nav>
             </div>
             <div class="page-main-content">
@@ -188,12 +203,17 @@
         <li class="breadcrumb-item"><a href="../Index.html">Configuration</a></li>
                     <li aria-current="page"  class="breadcrumb-item  active">Emails</li>
         </ol>
+
         <div class="breadcrumb-additions">                <a class="btn btn-sm btn-light" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FConfiguration%2FEmails%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
-                    <span class="btn-icon"><i class="fas fa-comment-dots"></i></span>
+                    <span class="btn-icon"><i class="fa-solid fa-comment-dots"></i></span>
                     <span class="btn-text">Give feedback</span>
                 </a>
+                            <a class="btn btn-sm btn-light" href="Index.md" id="btnDownloadMarkdown" rel="nofollow noopener" download="evoweb-sf-register-configuration-emails.md">
+                    <span class="btn-icon"><i class="fa-solid fa-download"></i></span>
+                    <span class="btn-text">Markdown</span>
+                </a>
                             <a class="btn btn-sm btn-secondary" href="https://github.com/Documentation/edit/develop/Documentation/Configuration/Emails/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
-                    <span class="btn-icon"><span class="fab fa-github"></span></span>
+                    <span class="btn-icon"><span class="fa-brands fa-github"></span></span>
                     <span class="btn-text">Edit on GitHub</span>
                 </a>
             </div>
@@ -203,9 +223,9 @@
     <div itemprop="articleBody">
         <!-- content start -->
                 
-<section class="section" id="emails" data-rst-anchor="configuration-emails">
-            <a id="configuration-emails"></a>
-            <h1>Emails<a class="headerlink" href="#emails" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
+<section class="section" id="configuration-emails" data-rst-anchor="configuration-emails"><a id="emails"></a>
+            
+            <h1>Emails<a class="headerlink" href="#configuration-emails" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
             <div class="contents-wrapper">
         <ul class="menu-level">
     <li class="toc-item">
@@ -237,9 +257,9 @@
 
     <button class="toggle-all-sections btn btn-sm btn-light">Collapse all Sections</button>
 </div>
-            <section class="section" id="notify-admin-create-properties" data-rst-anchor="configuration-emails-notify-admin-create-properties">
-            <a id="configuration-emails-notify-admin-create-properties"></a>
-            <h2>Notify admin create properties<a class="headerlink" href="#notify-admin-create-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
+            <section class="section" id="configuration-emails-notify-admin-create-properties" data-rst-anchor="configuration-emails-notify-admin-create-properties"><a id="notify-admin-create-properties"></a>
+            
+            <h2>Notify admin create properties<a class="headerlink" href="#configuration-emails-notify-admin-create-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
 
 
@@ -256,7 +276,7 @@
                                     </tr>
         </thead>
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyadminpostcreatesave">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Save</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyadminpostcreatesave">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Save</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -266,7 +286,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyadminpostcreateconfirm">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Confirm</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyadminpostcreateconfirm">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Confirm</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -276,7 +296,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyadminpostcreaterefuse">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Refuse</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyadminpostcreaterefuse">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Refuse</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -286,7 +306,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyadminpostcreateaccept">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Accept</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyadminpostcreateaccept">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Accept</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -296,7 +316,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyadminpostcreatedecline">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Decline</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyadminpostcreatedecline">notify<wbr>Admin<wbr>Post<wbr>Create<wbr>Decline</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -306,7 +326,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-acceptemailpostcreate">accept<wbr>Email<wbr>Post<wbr>Create</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-acceptemailpostcreate">accept<wbr>Email<wbr>Post<wbr>Create</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -324,7 +344,6 @@
          class="confval-section"
          id="confval-notifyadminpostcreatesave"
 >
-    <h3 class="sr-only">notifyAdminPostCreateSave</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -365,7 +384,6 @@
          class="confval-section"
          id="confval-notifyadminpostcreateconfirm"
 >
-    <h3 class="sr-only">notifyAdminPostCreateConfirm</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -406,7 +424,6 @@
          class="confval-section"
          id="confval-notifyadminpostcreaterefuse"
 >
-    <h3 class="sr-only">notifyAdminPostCreateRefuse</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -447,7 +464,6 @@
          class="confval-section"
          id="confval-notifyadminpostcreateaccept"
 >
-    <h3 class="sr-only">notifyAdminPostCreateAccept</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -488,7 +504,6 @@
          class="confval-section"
          id="confval-notifyadminpostcreatedecline"
 >
-    <h3 class="sr-only">notifyAdminPostCreateDecline</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -529,7 +544,6 @@
          class="confval-section"
          id="confval-acceptemailpostcreate"
 >
-    <h3 class="sr-only">acceptEmailPostCreate</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -565,9 +579,9 @@
 </section>
         
     </section>
-            <section class="section" id="notify-admin-edit-properties" data-rst-anchor="configuration-emails-notify-admin-edit-properties">
-            <a id="configuration-emails-notify-admin-edit-properties"></a>
-            <h2>Notify admin edit properties<a class="headerlink" href="#notify-admin-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
+            <section class="section" id="configuration-emails-notify-admin-edit-properties" data-rst-anchor="configuration-emails-notify-admin-edit-properties"><a id="notify-admin-edit-properties"></a>
+            
+            <h2>Notify admin edit properties<a class="headerlink" href="#configuration-emails-notify-admin-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
 
 
@@ -584,7 +598,7 @@
                                     </tr>
         </thead>
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyadminposteditsave">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Save</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyadminposteditsave">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Save</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -594,7 +608,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyadminposteditconfirm">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Confirm</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyadminposteditconfirm">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Confirm</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -604,7 +618,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyadminposteditaccept">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Accept</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyadminposteditaccept">notify<wbr>Admin<wbr>Post<wbr>Edit<wbr>Accept</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -614,7 +628,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-acceptemailpostedit">accept<wbr>Email<wbr>Post<wbr>Edit</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-acceptemailpostedit">accept<wbr>Email<wbr>Post<wbr>Edit</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -632,7 +646,6 @@
          class="confval-section"
          id="confval-notifyadminposteditsave"
 >
-    <h3 class="sr-only">notifyAdminPostEditSave</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -673,7 +686,6 @@
          class="confval-section"
          id="confval-notifyadminposteditconfirm"
 >
-    <h3 class="sr-only">notifyAdminPostEditConfirm</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -714,7 +726,6 @@
          class="confval-section"
          id="confval-notifyadminposteditaccept"
 >
-    <h3 class="sr-only">notifyAdminPostEditAccept</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -755,7 +766,6 @@
          class="confval-section"
          id="confval-acceptemailpostedit"
 >
-    <h3 class="sr-only">acceptEmailPostEdit</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -791,9 +801,9 @@
 </section>
         
     </section>
-            <section class="section" id="notify-user-create-properties" data-rst-anchor="configuration-emails-notify-user-create-properties">
-            <a id="configuration-emails-notify-user-create-properties"></a>
-            <h2>Notify user create properties<a class="headerlink" href="#notify-user-create-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
+            <section class="section" id="configuration-emails-notify-user-create-properties" data-rst-anchor="configuration-emails-notify-user-create-properties"><a id="notify-user-create-properties"></a>
+            
+            <h2>Notify user create properties<a class="headerlink" href="#configuration-emails-notify-user-create-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
 
 
@@ -810,7 +820,7 @@
                                     </tr>
         </thead>
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyuserpostcreatesave">notify<wbr>User<wbr>Post<wbr>Create<wbr>Save</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyuserpostcreatesave">notify<wbr>User<wbr>Post<wbr>Create<wbr>Save</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -820,7 +830,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyuserpostcreateconfirm">notify<wbr>User<wbr>Post<wbr>Create<wbr>Confirm</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyuserpostcreateconfirm">notify<wbr>User<wbr>Post<wbr>Create<wbr>Confirm</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -830,7 +840,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyuserpostcreaterefuse">notify<wbr>User<wbr>Post<wbr>Create<wbr>Refuse</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyuserpostcreaterefuse">notify<wbr>User<wbr>Post<wbr>Create<wbr>Refuse</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -840,7 +850,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyuserpostcreateaccept">notify<wbr>User<wbr>Post<wbr>Create<wbr>Accept</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyuserpostcreateaccept">notify<wbr>User<wbr>Post<wbr>Create<wbr>Accept</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -850,7 +860,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyuserpostcreatedecline">notify<wbr>User<wbr>Post<wbr>Create<wbr>Decline</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyuserpostcreatedecline">notify<wbr>User<wbr>Post<wbr>Create<wbr>Decline</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -860,7 +870,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-confirmemailpostcreate">confirm<wbr>Email<wbr>Post<wbr>Create</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-confirmemailpostcreate">confirm<wbr>Email<wbr>Post<wbr>Create</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -878,7 +888,6 @@
          class="confval-section"
          id="confval-notifyuserpostcreatesave"
 >
-    <h3 class="sr-only">notifyUserPostCreateSave</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -919,7 +928,6 @@
          class="confval-section"
          id="confval-notifyuserpostcreateconfirm"
 >
-    <h3 class="sr-only">notifyUserPostCreateConfirm</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -960,7 +968,6 @@
          class="confval-section"
          id="confval-notifyuserpostcreaterefuse"
 >
-    <h3 class="sr-only">notifyUserPostCreateRefuse</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1001,7 +1008,6 @@
          class="confval-section"
          id="confval-notifyuserpostcreateaccept"
 >
-    <h3 class="sr-only">notifyUserPostCreateAccept</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1042,7 +1048,6 @@
          class="confval-section"
          id="confval-notifyuserpostcreatedecline"
 >
-    <h3 class="sr-only">notifyUserPostCreateDecline</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1083,7 +1088,6 @@
          class="confval-section"
          id="confval-confirmemailpostcreate"
 >
-    <h3 class="sr-only">confirmEmailPostCreate</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1119,9 +1123,9 @@
 </section>
         
     </section>
-            <section class="section" id="notify-user-edit-properties" data-rst-anchor="configuration-emails-notify-user-edit-properties">
-            <a id="configuration-emails-notify-user-edit-properties"></a>
-            <h2>Notify user edit properties<a class="headerlink" href="#notify-user-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
+            <section class="section" id="configuration-emails-notify-user-edit-properties" data-rst-anchor="configuration-emails-notify-user-edit-properties"><a id="notify-user-edit-properties"></a>
+            
+            <h2>Notify user edit properties<a class="headerlink" href="#configuration-emails-notify-user-edit-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
 
 
@@ -1138,7 +1142,7 @@
                                     </tr>
         </thead>
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyuserposteditsave">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Save</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyuserposteditsave">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Save</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -1148,7 +1152,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyuserposteditconfirm">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Confirm</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyuserposteditconfirm">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Confirm</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -1158,7 +1162,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-notifyuserposteditaccept">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Accept</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-notifyuserposteditaccept">notify<wbr>User<wbr>Post<wbr>Edit<wbr>Accept</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -1168,7 +1172,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-confirmemailpostedit">confirm<wbr>Email<wbr>Post<wbr>Edit</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-confirmemailpostedit">confirm<wbr>Email<wbr>Post<wbr>Edit</a></div></td>
                     <td>
                             boolean
                         </td>
@@ -1186,7 +1190,6 @@
          class="confval-section"
          id="confval-notifyuserposteditsave"
 >
-    <h3 class="sr-only">notifyUserPostEditSave</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1227,7 +1230,6 @@
          class="confval-section"
          id="confval-notifyuserposteditconfirm"
 >
-    <h3 class="sr-only">notifyUserPostEditConfirm</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1268,7 +1270,6 @@
          class="confval-section"
          id="confval-notifyuserposteditaccept"
 >
-    <h3 class="sr-only">notifyUserPostEditAccept</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1309,7 +1310,6 @@
          class="confval-section"
          id="confval-confirmemailpostedit"
 >
-    <h3 class="sr-only">confirmEmailPostEdit</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1345,9 +1345,9 @@
 </section>
         
     </section>
-            <section class="section" id="address-and-subject-properties" data-rst-anchor="configuration-emails-address-and-subject-properties">
-            <a id="configuration-emails-address-and-subject-properties"></a>
-            <h2>Address and subject properties<a class="headerlink" href="#address-and-subject-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
+            <section class="section" id="configuration-emails-address-and-subject-properties" data-rst-anchor="configuration-emails-address-and-subject-properties"><a id="address-and-subject-properties"></a>
+            
+            <h2>Address and subject properties<a class="headerlink" href="#configuration-emails-address-and-subject-properties" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
 
 
@@ -1364,7 +1364,7 @@
                                     </tr>
         </thead>
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-sitename">sitename</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-sitename">sitename</a></div></td>
                     <td>
                             string
                         </td>
@@ -1374,7 +1374,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-useremail-fromname">user<wbr>Email.<wbr>from<wbr>Name</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-useremail-fromname">user<wbr>Email.<wbr>from<wbr>Name</a></div></td>
                     <td>
                             string
                         </td>
@@ -1384,7 +1384,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-useremail-fromemail">user<wbr>Email.<wbr>from<wbr>Email</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-useremail-fromemail">user<wbr>Email.<wbr>from<wbr>Email</a></div></td>
                     <td>
                             string
                         </td>
@@ -1394,7 +1394,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-useremail-replyname">user<wbr>Email.<wbr>reply<wbr>Name</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-useremail-replyname">user<wbr>Email.<wbr>reply<wbr>Name</a></div></td>
                     <td>
                             string
                         </td>
@@ -1404,7 +1404,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-useremail-replyemail">user<wbr>Email.<wbr>reply<wbr>Email</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-useremail-replyemail">user<wbr>Email.<wbr>reply<wbr>Email</a></div></td>
                     <td>
                             string
                         </td>
@@ -1414,7 +1414,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-adminemail-toname">admin<wbr>Email.<wbr>to<wbr>Name</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-adminemail-toname">admin<wbr>Email.<wbr>to<wbr>Name</a></div></td>
                     <td>
                             string
                         </td>
@@ -1424,7 +1424,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-adminemail-toemail">admin<wbr>Email.<wbr>to<wbr>Email</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-adminemail-toemail">admin<wbr>Email.<wbr>to<wbr>Email</a></div></td>
                     <td>
                             string
                         </td>
@@ -1434,7 +1434,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-adminemail-fromname">admin<wbr>Email.<wbr>from<wbr>Name</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-adminemail-fromname">admin<wbr>Email.<wbr>from<wbr>Name</a></div></td>
                     <td>
                             string
                         </td>
@@ -1444,7 +1444,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-adminemail-fromemail">admin<wbr>Email.<wbr>from<wbr>Email</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-adminemail-fromemail">admin<wbr>Email.<wbr>from<wbr>Email</a></div></td>
                     <td>
                             string
                         </td>
@@ -1454,7 +1454,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-adminemail-replyname">admin<wbr>Email.<wbr>reply<wbr>Name</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-adminemail-replyname">admin<wbr>Email.<wbr>reply<wbr>Name</a></div></td>
                     <td>
                             string
                         </td>
@@ -1464,7 +1464,7 @@
             </tr>
                 
                         <tr>
-        <td><div class="confval-label ps-0"><a href="#confval-adminemail-replyemail">admin<wbr>Email.<wbr>reply<wbr>Email</a></div></td>
+        <td><div class="confval-label" style="--confval-level: 0"><a href="#confval-adminemail-replyemail">admin<wbr>Email.<wbr>reply<wbr>Email</a></div></td>
                     <td>
                             string
                         </td>
@@ -1482,7 +1482,6 @@
          class="confval-section"
          id="confval-sitename"
 >
-    <h3 class="sr-only">sitename</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1523,7 +1522,6 @@
          class="confval-section"
          id="confval-useremail-fromname"
 >
-    <h3 class="sr-only">userEmail.fromName</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1564,7 +1562,6 @@
          class="confval-section"
          id="confval-useremail-fromemail"
 >
-    <h3 class="sr-only">userEmail.fromEmail</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1605,7 +1602,6 @@
          class="confval-section"
          id="confval-useremail-replyname"
 >
-    <h3 class="sr-only">userEmail.replyName</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1646,7 +1642,6 @@
          class="confval-section"
          id="confval-useremail-replyemail"
 >
-    <h3 class="sr-only">userEmail.replyEmail</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1687,7 +1682,6 @@
          class="confval-section"
          id="confval-adminemail-toname"
 >
-    <h3 class="sr-only">adminEmail.toName</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1728,7 +1722,6 @@
          class="confval-section"
          id="confval-adminemail-toemail"
 >
-    <h3 class="sr-only">adminEmail.toEmail</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1769,7 +1762,6 @@
          class="confval-section"
          id="confval-adminemail-fromname"
 >
-    <h3 class="sr-only">adminEmail.fromName</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1810,7 +1802,6 @@
          class="confval-section"
          id="confval-adminemail-fromemail"
 >
-    <h3 class="sr-only">adminEmail.fromEmail</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1851,7 +1842,6 @@
          class="confval-section"
          id="confval-adminemail-replyname"
 >
-    <h3 class="sr-only">adminEmail.replyName</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1892,7 +1882,6 @@
          class="confval-section"
          id="confval-adminemail-replyemail"
 >
-    <h3 class="sr-only">adminEmail.replyEmail</h3>
     <dl class="confval">
         <dt             class="d-flex justify-content-between">
             <div class="confval-header flex-grow-1">
@@ -1968,14 +1957,14 @@
                         <label for="permalink-short" class="col-form-label">Permalink (Shortlink)</label>
                         <div class="input-group">
                             <input class="form-control code" id="permalink-short" readonly>
-                            <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-short"><i class="far fa-clone"></i></button>
+                            <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-short"><i class="fa-regular fa-clone"></i></button>
                         </div>
                         <p><em>Copy and freely share the link</em></p>
                     </div>
                     <label for="permalink-uri" class="col-form-label">URL</label>
                     <div class="input-group">
                         <input class="form-control code" id="permalink-uri" readonly>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -1985,7 +1974,7 @@
                     <label for="permalink-rst" class="col-form-label">Link in reStructuredText (reST)</label>
                     <div class="input-group">
                         <textarea class="form-control code" id="permalink-rst" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="fa-regular fa-clone"></i></button>
                     </div>
                     <p><em>Copy this link into your TYPO3 manual.</em></p>
                 </div>
@@ -1993,14 +1982,14 @@
                     <label for="permalink-md" class="col-form-label">Link in Markdown</label>
                     <div class="input-group">
                         <textarea class="form-control code" id="permalink-md" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-md"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-md"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="permalink-html" class="col-form-label">Link in HTML</label>
                                         <div class="input-group">
                         <textarea class="form-control code" id="permalink-html" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
             </div>
@@ -2012,7 +2001,7 @@
 </div>    <div class="modal fade" id="generalModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
     aria-hidden="true" data-current-filename="Configuration/Emails/Index"
 >
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="generalModalLabel"></h5>
@@ -2029,9 +2018,7 @@
             </div>
         </div>
     </div>
-</div></div>
-
-
+</div>    
 <footer class="page-footer">
     <div class="frame frame-ruler-before frame-background-dark">
         <div class="frame-container">
@@ -2042,7 +2029,7 @@
                                                 <li><a href="https://github.com/evoWeb/sf_register/issues" rel="nofollow noopener" title="Issues"><span>Issues</span></a></li>
                                                 <li><a href="https://github.com/evoWeb/sf_register" rel="nofollow noopener" title="Repository"><span>Repository</span></a></li>
                                             </ul>                <div class="footer-additional">
-                    <p class="text-center">Last rendered: May 18, 2026 16:42</p>
+                    <p class="text-center">Last rendered: Nov 02, 2026 17:07</p>
                 </div>
                 <div class="footer-meta">
                                         <div class="footer-meta-copyright">
@@ -2056,7 +2043,9 @@
             </div>
         </div>
     </div>
-</footer>
+</footer></div>
+
+
 <script src="../../_resources/js/bootstrap.min.js"></script>
 <script src="../../_resources/js/theme.min.js"></script>
 

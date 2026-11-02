@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <title>Breaking Changes — Frontend User Registration: Multipurpose configurable registration 14.0.2
+    <title>Breaking Changes — Frontend User Registration: Multipurpose configurable registration 14.0.3
         documentation</title>
 
     
@@ -10,14 +10,16 @@
 <meta content="phpdocumentor/guides" name="generator">
 <meta content="Frontend User Registration: Multipurpose configurable registration" name="docsearch:name">
 <meta content="" name="docsearch:package_type">
-<meta content="14.0.2" name="docsearch:release">
-<meta content="14.0.2" name="docsearch:version">
-<meta content="2026-05-18T16:42:50+00:00" name="docsearch:modified">
-<meta content="2026-05-18T16:42:50+00:00" name="dc.modified">
-<meta content="2026-05-18T16:42:50+00:00" property="article:modified_time">
+<meta content="14.0.3" name="docsearch:release">
+<meta content="14.0.3" name="docsearch:version">
+<meta content="2026-11-02T17:07:04+00:00" name="docsearch:modified">
+<meta content="2026-11-02T17:07:04+00:00" name="dc.modified">
+<meta content="2026-11-02T17:07:04+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
+<link href="https://docs.typo3.org/permalink/evoweb/sf-register:breaking-changes@14.0.3" rel="canonical">
+<link href="Index.md" rel="alternate" title="Markdown" type="text/markdown">
 <script src="https://cdn.typo3.com/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
 <script src="https://cdn.typo3.com/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
                         <link href="../Changelog/Index.html" rel="prev" title="ChangeLog"/>
@@ -36,16 +38,16 @@
     </div>
     <div class="page-header">
         <div class="page-header-inner">
-            <div class="d-flex flex-wrap">
-                <div class="logo-wrapper">
-                    <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
-                        <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
-                    </a>
-                </div>
-                <div class="align-self-center order-lg-2 order-last">
-                    
+            <a class="navbar-brand" href="https://docs.typo3.org/" title="TYPO3 Documentation">
+                <span class="navbar-brand-text">
+                    <img src="../_resources/img/typo3-soul.svg" alt="TYPO3" class="navbar-brand-logo" width="29" height="29">
+                    <span class="navbar-brand-name">Documentation</span>
+                </span>
+            </a>
+            <div class="header-nav">
+                
 <div class="toc-header">
-    <div class="toc-title pe-3">
+    <div class="toc-title">
                             <a class="toc-title-project" href="../Index.html">Frontend User Registration: Multipurpose configurable registration</a>
             </div>
     <label for="languageSelect" class="visually-hidden">Select language</label>
@@ -55,67 +57,57 @@
                                   
         <label for="versionSelect" class="visually-hidden">Select version</label>
         <select id="versionSelect" class="form-select"
-                data-current-version="14.0.2"
+                data-current-version="14.0.3"
             data-override-url-proxy="../_resources/js/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html"
         >
             <option disabled selected>Loading versions...</option>
         </select>
-    </div>                </div>
-                <div class="ms-auto order-lg-3 d-flex">
-                    <div class="menu-search-wrapper">
-                        <button id="toc-toggle" class="btn btn-light d-block d-lg-none" tabindex="0" aria-controls="toc-collapse" aria-expanded="false">
-                            <i class="fas fa-bars"></i> <span class="visually-hidden">Mobile Menu</span>
-                        </button>
-                        <all-documentations-menu data-override-url="../_resources/js/menu-proxy.php"></all-documentations-menu>
-                                                <search role="search">
-                            <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
-                                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
-                                <div class="input-group mb-3 mt-sm-3">
-                                    <select class="form-select search__scope" id="searchscope" name="scope">
-                                        <option value="">Search all</option>
-                                    </select>
-                                    <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                    <button class="btn btn-light" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
-                                </div>
-                            </form>
-                            <div id="global-search-root"></div>
-                        </search>
-                        <div class="position-relative d-inline-block">
-                            <button id="options-toggle" class="btn btn-light d-block" type="button" aria-expanded="false">
-                                <i class="fas fa-cog"></i> <span class="visually-hidden">Options</span>
-                            </button>
-
-                            <div id="options-panel"
-                                 class="shadow p-3"
-                                 role="menu"
-                                 aria-hidden="true">
-                                <h6 class="dropdown-header text-muted text-uppercase small mb-2">Options</h6>
-
-                                                                                                            <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FBreakingChanges%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-comment-dots"></i>
+    </div>            </div>
+            <div class="header-actions">
+                <button id="search-toggle" class="btn btn-light d-lg-none" type="button"
+                        aria-label="Search" aria-keyshortcuts="Control+K Meta+K">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                </button>
+                <button id="toc-toggle" class="btn btn-light d-lg-none" type="button"
+                        aria-label="Menu" aria-expanded="false" aria-controls="toc-collapse">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <all-documentations-menu data-override-url="../_resources/js/menu-proxy.php"></all-documentations-menu>
+                                <search role="search" aria-label="Site search">
+                                        <select id="searchscope" hidden aria-hidden="true">
+                        <option value="">Search all</option>
+                    </select>
+                    <div id="global-search-root"></div>
+                </search>
+                                                <button id="options-toggle" class="btn btn-light" type="button"
+                        aria-controls="options-panel" aria-expanded="false" popovertarget="options-panel">
+                    <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                    <span class="visually-hidden">Options</span>
+                </button>
+                <div id="options-panel" class="shadow p-3" popover>
+                    <h6 class="dropdown-header text-muted text-uppercase small mb-2">Options</h6>
+                        <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FBreakingChanges%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-comment-dots"></i>
         Give feedback
     </a>
-    <a class="dropdown-item d-flex align-items-center gap-2" href="../_sources/BreakingChanges/Index.rst.txt" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-code"></i>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="../_sources/BreakingChanges/Index.rst.txt" id="btnViewSource" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-code"></i>
         View source
     </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="Index.md" id="btnViewMarkdown" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-file-lines"></i>
+        View as Markdown
+    </a>
     <a class="dropdown-item d-flex align-items-center gap-2" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
-        <i class="fas fa-info-circle"></i>
+        <i class="fa-solid fa-circle-info"></i>
         How to edit
     </a>
     <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/Documentation/edit/develop/Documentation/BreakingChanges/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
-        <i class="fab fa-github"></i>
+        <i class="fa-brands fa-github"></i>
         Edit on GitHub
     </a>
-                                                                                                                <a class="dropdown-item d-flex align-items-center gap-2" href="../singlehtml/Index.html" target="_blank" rel="noopener">
-                                            <i class="fas fa-print"></i>
-                                            Full documentation (single file)
-                                        </a>
-                                                                                                </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
+                            </div>
         </div>
     </div>
 </header>    <main class="page-main">
@@ -166,7 +158,7 @@
         Known problems
     </a></li>    <li class="" role="menuitem">
     <a href="../Changelog/Index.html">
-        ChangeLog
+        Change<wbr>Log
     </a></li>    <li class=" current active" role="menuitem">
     <a href="#" aria-current="page">
         Breaking Changes
@@ -177,7 +169,30 @@
     </a></li>    </ul>
     </div>
                         </div>
-                    </div>
+                                                <div class="toc-options d-lg-none">
+                            <p class="caption">Options</p>
+                                <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FBreakingChanges%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-comment-dots"></i>
+        Give feedback
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="../_sources/BreakingChanges/Index.rst.txt" id="btnViewSource" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-code"></i>
+        View source
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="Index.md" id="btnViewMarkdown" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-file-lines"></i>
+        View as Markdown
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
+        <i class="fa-solid fa-circle-info"></i>
+        How to edit
+    </a>
+    <a class="dropdown-item d-flex align-items-center gap-2" href="https://github.com/Documentation/edit/develop/Documentation/BreakingChanges/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
+        <i class="fa-brands fa-github"></i>
+        Edit on GitHub
+    </a>
+                        </div>
+                                            </div>
                 </nav>
             </div>
             <div class="page-main-content">
@@ -187,12 +202,17 @@
     <li class="breadcrumb-item"><a href="../Index.html">Frontend User Registration: Multipurpose configurable registration</a></li>
                     <li aria-current="page"  class="breadcrumb-item  active">Breaking Changes</li>
         </ol>
+
         <div class="breadcrumb-additions">                <a class="btn btn-sm btn-light" href="https://github.com/evoWeb/sf_register/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fsf_register%2FBreakingChanges%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
-                    <span class="btn-icon"><i class="fas fa-comment-dots"></i></span>
+                    <span class="btn-icon"><i class="fa-solid fa-comment-dots"></i></span>
                     <span class="btn-text">Give feedback</span>
                 </a>
+                            <a class="btn btn-sm btn-light" href="Index.md" id="btnDownloadMarkdown" rel="nofollow noopener" download="evoweb-sf-register-breaking-changes.md">
+                    <span class="btn-icon"><i class="fa-solid fa-download"></i></span>
+                    <span class="btn-text">Markdown</span>
+                </a>
                             <a class="btn btn-sm btn-secondary" href="https://github.com/Documentation/edit/develop/Documentation/BreakingChanges/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
-                    <span class="btn-icon"><span class="fab fa-github"></span></span>
+                    <span class="btn-icon"><span class="fa-brands fa-github"></span></span>
                     <span class="btn-text">Edit on GitHub</span>
                 </a>
             </div>
@@ -202,9 +222,9 @@
     <div itemprop="articleBody">
         <!-- content start -->
                 
-<section class="section" id="breaking-changes-1" data-rst-anchor="breaking-changes">
-            <a id="breaking-changes"></a>
-            <h1>Breaking Changes<a class="headerlink" href="#breaking-changes-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
+<section class="section" id="breaking-changes" data-rst-anchor="breaking-changes"><a id="breaking-changes-1"></a>
+            
+            <h1>Breaking Changes<a class="headerlink" href="#breaking-changes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
             <section class="section" id="2025-12-09">
             <h2>2025.12.09<a class="headerlink" href="#2025-12-09" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
@@ -258,15 +278,17 @@ need to use the fully qualified classname again.</p>
     <p>Replace TypoScript condition and <code class="code-inline" translate="no">plugin.<wbr>tx_<wbr>sfregister.<wbr>settings.<wbr>minified</code> value
 with <code class="code-inline code-inline-long"
           translate="no"
-          data-bs-toggle="modal"
-          data-bs-target="#generalModal"
-          data-code="\Evoweb\SfRegister\ViewHelpers\ApplicationContextViewHelper"
-          data-shortdescription="PHP class or interface"
-          data-details="This is a fully-qualified class or interface name,
-            try searching for \Evoweb\SfRegister\ViewHelpers\ApplicationContextViewHelper in the internet."
-          data-morelink=""          data-bs-html="true"
     >
-        \Evoweb\<wbr>Sf<wbr>Register\<wbr>View<wbr>Helpers\<wbr>Application<wbr>Context<wbr>View<wbr>Helper</code>.</p>
+        \Evoweb\<wbr>Sf<wbr>Register\<wbr>View<wbr>Helpers\<wbr>Application<wbr>Context<wbr>View<wbr>Helper
+        <button class="btn btn-light"
+                aria-label="Open modal for code and class information"
+                data-bs-toggle="modal"
+                data-bs-target="#generalModal"
+                data-code="\Evoweb\SfRegister\ViewHelpers\ApplicationContextViewHelper"
+                data-shortdescription="PHP class or interface"
+                data-details="This is a fully-qualified class or interface name,
+            try searching for \Evoweb\SfRegister\ViewHelpers\ApplicationContextViewHelper in the internet."                    data-fqn="\Evoweb\SfRegister\ViewHelpers\ApplicationContextViewHelper"                data-bs-html="true"
+        ><i class="fa-regular fa-circle-question"></i></button></code>.</p>
 
             
     <p>Environments are matched with Expression Languages and allow values like:</p>
@@ -393,13 +415,15 @@ sf_register.</p>
 </div>
                 <div class="code-block-caption">
         <span class="caption-text">Class definition</span>
-    </div><div class="code-block-wrapper" translate="no">
+    </div><div class="code-block-wrapper code-block-foldable" translate="no">
             
-    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">use</span> <span class="hljs-title">Evoweb</span>\<span class="hljs-title">SfRegister</span>\<span class="hljs-title">Validation</span>\<span class="hljs-title">Validator</span>\<span class="hljs-title">AbstractValidator</span>;
+    <pre class="code-block"><code class="hljs php"><button type="button" class="code-fold-toggle" data-fold-label="3 lines" aria-label="Show 3 lines"></button><span class="code-fold"><span class="hljs-keyword">use</span> <span class="hljs-title">Evoweb</span>\<span class="hljs-title">SfRegister</span>\<span class="hljs-title">Validation</span>\<span class="hljs-title">Validator</span>\<span class="hljs-title">AbstractValidator</span>;
 <span class="hljs-keyword">use</span> <span class="hljs-title">Evoweb</span>\<span class="hljs-title">SfRegister</span>\<span class="hljs-title">Validation</span>\<span class="hljs-title">Validator</span>\<span class="hljs-title">InjectableInterface</span>;
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UniqueValidator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractValidator</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">InjectableInterface</span>, ...</span></code></pre>
-    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
+</span><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UniqueValidator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractValidator</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">InjectableInterface</span>, ...</span></code></pre>
+    <div class="code-block-actions">            <button type="button" class="code-block-unfold" title="Show all lines" aria-pressed="false" hidden>
+                <i class="icon fa-solid fa-up-right-and-down-left-from-center"></i>
+            </button>        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -571,14 +595,14 @@ method needs to be changed accordingly.</li>
                         <label for="permalink-short" class="col-form-label">Permalink (Shortlink)</label>
                         <div class="input-group">
                             <input class="form-control code" id="permalink-short" readonly>
-                            <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-short"><i class="far fa-clone"></i></button>
+                            <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-short"><i class="fa-regular fa-clone"></i></button>
                         </div>
                         <p><em>Copy and freely share the link</em></p>
                     </div>
                     <label for="permalink-uri" class="col-form-label">URL</label>
                     <div class="input-group">
                         <input class="form-control code" id="permalink-uri" readonly>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -588,7 +612,7 @@ method needs to be changed accordingly.</li>
                     <label for="permalink-rst" class="col-form-label">Link in reStructuredText (reST)</label>
                     <div class="input-group">
                         <textarea class="form-control code" id="permalink-rst" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-rst"><i class="fa-regular fa-clone"></i></button>
                     </div>
                     <p><em>Copy this link into your TYPO3 manual.</em></p>
                 </div>
@@ -596,14 +620,14 @@ method needs to be changed accordingly.</li>
                     <label for="permalink-md" class="col-form-label">Link in Markdown</label>
                     <div class="input-group">
                         <textarea class="form-control code" id="permalink-md" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-md"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-md"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="permalink-html" class="col-form-label">Link in HTML</label>
                                         <div class="input-group">
                         <textarea class="form-control code" id="permalink-html" readonly></textarea>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="far fa-clone"></i></button>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-html"><i class="fa-regular fa-clone"></i></button>
                     </div>
                 </div>
             </div>
@@ -615,7 +639,7 @@ method needs to be changed accordingly.</li>
 </div>    <div class="modal fade" id="generalModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
     aria-hidden="true" data-current-filename="BreakingChanges/Index"
 >
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="generalModalLabel"></h5>
@@ -632,9 +656,7 @@ method needs to be changed accordingly.</li>
             </div>
         </div>
     </div>
-</div></div>
-
-
+</div>    
 <footer class="page-footer">
     <div class="frame frame-ruler-before frame-background-dark">
         <div class="frame-container">
@@ -645,7 +667,7 @@ method needs to be changed accordingly.</li>
                                                 <li><a href="https://github.com/evoWeb/sf_register/issues" rel="nofollow noopener" title="Issues"><span>Issues</span></a></li>
                                                 <li><a href="https://github.com/evoWeb/sf_register" rel="nofollow noopener" title="Repository"><span>Repository</span></a></li>
                                             </ul>                <div class="footer-additional">
-                    <p class="text-center">Last rendered: May 18, 2026 16:42</p>
+                    <p class="text-center">Last rendered: Nov 02, 2026 17:07</p>
                 </div>
                 <div class="footer-meta">
                                         <div class="footer-meta-copyright">
@@ -659,7 +681,9 @@ method needs to be changed accordingly.</li>
             </div>
         </div>
     </div>
-</footer>
+</footer></div>
+
+
 <script src="../_resources/js/bootstrap.min.js"></script>
 <script src="../_resources/js/theme.min.js"></script>
 

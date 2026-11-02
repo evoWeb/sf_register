@@ -1,0 +1,30 @@
+# Frontend User Registration: Multipurpose configurable registration
+
+> Version 14.0.3 of this manual.
+> Every page is also available as Markdown: the same path with .md instead of .html.
+> The permalink of an anchor is https://docs.typo3.org/permalink/evoweb/sf-register:{anchor}@14.0.3.
+
+## Indexes
+
+- [toc.json](toc.json): Table of contents: every page in order, with its title and permalink anchor
+- [classes.json](classes.json): Every PHP class the manual speaks of, and where
+- [confvals.json](confvals.json): Every option the manual documents, with its type, default and context
+- [objects.inv.json](objects.inv.json): Every link target, as the interlinks of other manuals use them
+
+## Pages
+
+- [Frontend User Registration: Multipurpose configurable registration](Index.md)
+  - [Introduction](Introduction/Index.md)
+  - [Users manual](UsersManual/Index.md)
+  - [Administration](Administration/Index.md)
+  - [Configuration](Configuration/Index.md)
+    - [Emails](Configuration/Emails/Index.md)
+    - [Validation](Configuration/Validation/Index.md)
+  - [Extendability](Extendability/Index.md)
+  - [Templating](Templating/Index.md)
+  - [Tutorial](Tutorial/Index.md)
+  - [Registration actions](RegistrationActions/Index.md)
+  - [Known problems](KnownProblems/Index.md)
+  - [ChangeLog](Changelog/Index.md)
+  - [Breaking Changes](BreakingChanges/Index.md)
+  - [Sitemap](Sitemap.md)

@@ -1,0 +1,118 @@
+{
+    "project": {
+        "title": "Frontend User Registration: Multipurpose configurable registration",
+        "version": "14.0.3",
+        "permalink": "https://docs.typo3.org/permalink/evoweb/sf-register:{anchor}@14.0.3"
+    },
+    "pages": [
+        {
+            "path": "Index",
+            "html": "Index.html",
+            "md": "Index.md",
+            "title": "Frontend User Registration: Multipurpose configurable registration",
+            "anchor": "start",
+            "pages": [
+                {
+                    "path": "Introduction/Index",
+                    "html": "Introduction/Index.html",
+                    "md": "Introduction/Index.md",
+                    "title": "Introduction",
+                    "anchor": "introduction"
+                },
+                {
+                    "path": "UsersManual/Index",
+                    "html": "UsersManual/Index.html",
+                    "md": "UsersManual/Index.md",
+                    "title": "Users manual",
+                    "anchor": "user-manual"
+                },
+                {
+                    "path": "Administration/Index",
+                    "html": "Administration/Index.html",
+                    "md": "Administration/Index.md",
+                    "title": "Administration",
+                    "anchor": "administration"
+                },
+                {
+                    "path": "Configuration/Index",
+                    "html": "Configuration/Index.html",
+                    "md": "Configuration/Index.md",
+                    "title": "Configuration",
+                    "anchor": "configuration",
+                    "pages": [
+                        {
+                            "path": "Configuration/Emails/Index",
+                            "html": "Configuration/Emails/Index.html",
+                            "md": "Configuration/Emails/Index.md",
+                            "title": "Emails",
+                            "anchor": "configuration-emails"
+                        },
+                        {
+                            "path": "Configuration/Validation/Index",
+                            "html": "Configuration/Validation/Index.html",
+                            "md": "Configuration/Validation/Index.md",
+                            "title": "Validation",
+                            "anchor": "configuration-validation"
+                        }
+                    ]
+                },
+                {
+                    "path": "Extendability/Index",
+                    "html": "Extendability/Index.html",
+                    "md": "Extendability/Index.md",
+                    "title": "Extendability",
+                    "anchor": "extendability"
+                },
+                {
+                    "path": "Templating/Index",
+                    "html": "Templating/Index.html",
+                    "md": "Templating/Index.md",
+                    "title": "Templating",
+                    "anchor": "templating"
+                },
+                {
+                    "path": "Tutorial/Index",
+                    "html": "Tutorial/Index.html",
+                    "md": "Tutorial/Index.md",
+                    "title": "Tutorial",
+                    "anchor": "tutorial"
+                },
+                {
+                    "path": "RegistrationActions/Index",
+                    "html": "RegistrationActions/Index.html",
+                    "md": "RegistrationActions/Index.md",
+                    "title": "Registration actions",
+                    "anchor": "registration-actions"
+                },
+                {
+                    "path": "KnownProblems/Index",
+                    "html": "KnownProblems/Index.html",
+                    "md": "KnownProblems/Index.md",
+                    "title": "Known problems",
+                    "anchor": "known-problems"
+                },
+                {
+                    "path": "Changelog/Index",
+                    "html": "Changelog/Index.html",
+                    "md": "Changelog/Index.md",
+                    "title": "ChangeLog",
+                    "anchor": "changelog"
+                },
+                {
+                    "path": "BreakingChanges/Index",
+                    "html": "BreakingChanges/Index.html",
+                    "md": "BreakingChanges/Index.md",
+                    "title": "Breaking Changes",
+                    "anchor": "breaking-changes"
+                },
+                {
+                    "path": "Sitemap",
+                    "html": "Sitemap.html",
+                    "md": "Sitemap.md",
+                    "title": "Sitemap",
+                    "anchor": "sitemap"
+                }
+            ]
+        }
+    ]
+}
