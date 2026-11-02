@@ -4,7 +4,7 @@ manual: "Frontend User Registration: Multipurpose configurable registration"
 version: "14.0.3"
 permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:breaking-changes@14.0.3"
 source: "BreakingChanges/Index.rst"
-rendered: "2026-11-02T17:07:04+00:00"
+rendered: "2026-11-02T17:38:37+00:00"
 ---
 
 # Breaking Changes {#breaking-changes}

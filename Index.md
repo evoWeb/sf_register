@@ -5,7 +5,7 @@ version: "14.0.3"
 permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:start@14.0.3"
 source: "Index.rst"
 start: true
-rendered: "2026-11-02T17:07:04+00:00"
+rendered: "2026-11-02T17:38:37+00:00"
 ---
 
 # Frontend User Registration: Multipurpose configurable registration {#start}
@@ -21,7 +21,7 @@ rendered: "2026-11-02T17:07:04+00:00"
     [Open Publication](https://www.opencontent.org/openpub/).
     license.
 
--   *Rendered:* Mon, 02 Nov 2026 17:07:04 +0000
+-   *Rendered:* Mon, 02 Nov 2026 17:38:37 +0000
 -   *Copyright:* 2010-2024
 
 ---
