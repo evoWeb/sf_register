@@ -66,7 +66,7 @@
 	"extra": {
 		"typo3/cms": {
 			"extension-key": "sf_register",
-			"version": "14.0.3",
+			"version": "14.0.4",
 			"Package": {
 				"providesPackages": {}
 			}
