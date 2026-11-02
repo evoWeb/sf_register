@@ -15,15 +15,14 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Tests\Functional;
 
+use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Tests\Functional\Http\ShortCircuitHandler;
 use Evoweb\SfRegister\Tests\Functional\Http\ShortCircuitResponse;
 use Evoweb\SfRegister\Tests\Functional\Traits\SiteBasedTestTrait;
 use Psr\Http\Message\ServerRequestInterface;
-use ReflectionClass;
-use ReflectionMethod;
-use ReflectionProperty;
 use TYPO3\CMS\Core\Authentication\LoginType;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\TypoScript\AST\Node\RootNode;
@@ -61,7 +60,7 @@ abstract class AbstractTestBase extends FunctionalTestCase
         $url = 'https://typo3-testing.local/register/';
         $method = 'GET';
         $requestUrlParts = parse_url($url);
-        $docRoot = getenv('TYPO3_PATH_APP') ?? '';
+        $docRoot = getenv('TYPO3_PATH_APP') ?: '';
         $serverParams = [
             'DOCUMENT_ROOT' => $docRoot,
             'HTTP_USER_AGENT' => 'TYPO3 Functional Test Request',
@@ -114,7 +113,9 @@ abstract class AbstractTestBase extends FunctionalTestCase
     public function loginFrontendUser(string $username, string $password): void
     {
         // needed to ignore the missing request token
+        // @phpstan-ignore-next-line -- offset write on the mixed-typed $GLOBALS['TYPO3_CONF_VARS'] super-global
         $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_alwaysFetchUser'] = true;
+        // @phpstan-ignore-next-line -- offset write on the mixed-typed $GLOBALS['TYPO3_CONF_VARS'] super-global
         $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_alwaysAuthUser'] = true;
 
         $this->request = $this->request
@@ -129,6 +130,19 @@ abstract class AbstractTestBase extends FunctionalTestCase
             ]);
 
         $this->request = $this->processLocalMiddleWareStack($this->request);
+    }
+
+    /**
+     * Builds the link hash that Link/Uri\ActionViewHelper adds to the mailed confirm, accept,
+     * refuse and decline links, and that FrontendUserService::determineFrontendUser() validates
+     * before it resolves the user. Actions relying on that hash can only be tested with a
+     * request that carries the "action" and "user" arguments the hash is calculated from.
+     */
+    protected function createLinkHash(string $action, int $userUid): string
+    {
+        /** @var HashService $hashService */
+        $hashService = $this->get(HashService::class);
+        return $hashService->hmac($action . '::' . $userUid, FrontendUserService::ADDITIONAL_SECRET);
     }
 
     public function createEmptyFrontendUser(): void
@@ -147,15 +161,15 @@ abstract class AbstractTestBase extends FunctionalTestCase
         return $response->getRequest();
     }
 
-    public function getPrivateMethod(object $object, string $methodName): ReflectionMethod
+    public function getPrivateMethod(object $object, string $methodName): \ReflectionMethod
     {
-        $classReflection = new ReflectionClass($object);
+        $classReflection = new \ReflectionClass($object);
         return $classReflection->getMethod($methodName);
     }
 
-    public function getPrivateProperty(object $object, string $propertyName): ReflectionProperty
+    public function getPrivateProperty(object $object, string $propertyName): \ReflectionProperty
     {
-        $classReflection = new ReflectionClass($object);
+        $classReflection = new \ReflectionClass($object);
         return $classReflection->getProperty($propertyName);
     }
 }

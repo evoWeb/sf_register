@@ -19,6 +19,7 @@ use Evoweb\SfRegister\Domain\Model\FrontendUserInterface;
 use Evoweb\SfRegister\Services\Event\AbstractEventWithUser;
 use Evoweb\SfRegister\Services\Event\PreSubmitMailEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -54,7 +55,8 @@ class Mail implements SingletonInterface
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string, string>> $settings
+     * @throws TransportExceptionInterface
      */
     public function sendEmails(
         RequestInterface $request,
@@ -78,7 +80,7 @@ class Mail implements SingletonInterface
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string, string>> $settings
      */
     public function isNotifyAdmin(array $settings, string $type): bool
     {
@@ -88,7 +90,7 @@ class Mail implements SingletonInterface
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string, string>> $settings
      */
     public function isNotifyUser(array $settings, string $type): bool
     {
@@ -98,7 +100,8 @@ class Mail implements SingletonInterface
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string, string>> $settings
+     * @throws TransportExceptionInterface
      */
     public function sendNotifyAdmin(
         RequestInterface $request,
@@ -124,7 +127,8 @@ class Mail implements SingletonInterface
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string, string>> $settings
+     * @throws TransportExceptionInterface
      */
     public function sendNotifyUser(
         RequestInterface $request,
@@ -150,7 +154,8 @@ class Mail implements SingletonInterface
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string, string>> $settings
+     * @throws TransportExceptionInterface
      */
     public function sendInvitation(
         RequestInterface $request,
@@ -187,7 +192,7 @@ class Mail implements SingletonInterface
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string, string>> $settings
      * @return array<string, string>
      */
     protected function getAdminRecipient(array $settings): array
@@ -214,8 +219,9 @@ class Mail implements SingletonInterface
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @param array<string, array<string, string>> $settings
      * @param array<string, string> $recipient
+     * @throws TransportExceptionInterface
      */
     protected function sendEmail(
         array $settings,
@@ -321,16 +327,24 @@ class Mail implements SingletonInterface
         string $action,
         string $format
     ): ViewInterface {
-        $request = $request->withControllerExtensionName($this->frameworkConfiguration['extensionName']);
-        $request = $request->withPluginName($this->frameworkConfiguration['pluginName']);
+        $extensionName = is_string($this->frameworkConfiguration['extensionName'])
+            ? $this->frameworkConfiguration['extensionName'] : '';
+        $request = $request->withControllerExtensionName($extensionName);
+
+        $pluginName = is_string($this->frameworkConfiguration['pluginName'])
+            ? $this->frameworkConfiguration['pluginName'] : '';
+        $request = $request->withPluginName($pluginName);
+
         $request = $request->withControllerName($controller);
         $request = $request->withControllerActionName($action);
         $request = $request->withFormat($format);
 
+        /** @var array<string, string[]> $viewConfiguration */
+        $viewConfiguration = $this->frameworkConfiguration['view'] ?? [];
         $viewFactoryData = new ViewFactoryData(
-            templateRootPaths: $this->frameworkConfiguration['view']['templateRootPaths'],
-            partialRootPaths: $this->frameworkConfiguration['view']['partialRootPaths'],
-            layoutRootPaths: $this->frameworkConfiguration['view']['layoutRootPaths'],
+            templateRootPaths: $viewConfiguration['templateRootPaths'],
+            partialRootPaths: $viewConfiguration['partialRootPaths'],
+            layoutRootPaths: $viewConfiguration['layoutRootPaths'],
             request: $request,
             format: $format
         );
@@ -346,7 +360,8 @@ class Mail implements SingletonInterface
         FrontendUserInterface $user
     ): MailMessage {
         $eventObject = new PreSubmitMailEvent($mail, $settings, ['user' => $user]);
-        return $this->eventDispatcher->dispatch($eventObject)->getMail();
+        $this->eventDispatcher->dispatch($eventObject);
+        return $eventObject->getMail();
     }
 
     /**
@@ -360,6 +375,7 @@ class Mail implements SingletonInterface
         $event = 'Evoweb\\SfRegister\\Services\\Event\\' . $method . 'Event';
         /** @var AbstractEventWithUser $eventObject */
         $eventObject = new $event($user, $settings);
-        return $this->eventDispatcher->dispatch($eventObject)->getUser();
+        $this->eventDispatcher->dispatch($eventObject);
+        return $eventObject->getUser();
     }
 }

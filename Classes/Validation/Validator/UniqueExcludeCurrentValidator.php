@@ -46,9 +46,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements SetMode
 
     protected string $propertyName = '';
 
-    public function __construct(protected FrontendUserRepository $userRepository)
-    {
-    }
+    public function __construct(protected FrontendUserRepository $userRepository) {}
 
     public function setModel(ValidatableInterface $model): void
     {
@@ -69,6 +67,7 @@ class UniqueExcludeCurrentValidator extends AbstractValidator implements SetMode
             return;
         }
 
+        $value = is_scalar($value) ? (string)$value : '';
         if ($this->options['global']) {
             if ($this->userRepository->countByFieldGlobal($this->propertyName, $value)) {
                 $this->addError(

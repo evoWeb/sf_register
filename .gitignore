@@ -5,7 +5,9 @@ bin/
 Documentation-GENERATED-temp/
 typo3temp/
 var/
+packages/
 public/
 vendor/
+auth.json
 composer.lock
 .php-cs-fixer.cache

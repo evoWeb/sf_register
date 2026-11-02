@@ -23,6 +23,4 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  *
  * @extends Repository<FrontendUserGroup>
  */
-class FrontendUserGroupRepository extends Repository
-{
-}
+class FrontendUserGroupRepository extends Repository {}

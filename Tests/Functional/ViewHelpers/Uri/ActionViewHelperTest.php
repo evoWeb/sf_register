@@ -34,15 +34,27 @@ class ActionViewHelperTest extends AbstractTestBase
     #[DataProvider('templateProvider')]
     public function renderWithExtbaseContext(string $template, string $expectedPattern): void
     {
-        $GLOBALS['TYPO3_REQUEST'] = $GLOBALS['TYPO3_REQUEST']->withAttribute('extbase', $this->createMock(ExtbaseRequestParameters::class));
-        $extbaseRequest = new ExtbaseRequest($GLOBALS['TYPO3_REQUEST']);
-        $extbaseRequest = $extbaseRequest
-            ->withAttribute('currentContentObject', $this->get(ContentObjectRenderer::class));
+        /** @var ServerRequestInterface $request */
+        $request = $GLOBALS['TYPO3_REQUEST'];
+        $request = $request->withAttribute('extbase', $this->createMock(ExtbaseRequestParameters::class));
+        $GLOBALS['TYPO3_REQUEST'] = $request;
+        $extbaseRequest = new ExtbaseRequest($request);
 
-        $context = $this->get(RenderingContextFactory::class)->create();
+        $contentObjectRenderer = $this->get(ContentObjectRenderer::class);
+        self::assertInstanceOf(ContentObjectRenderer::class, $contentObjectRenderer);
+        // Set the request explicitly so ContentObjectRenderer::getRequest() does not fall back to
+        // $GLOBALS['TYPO3_REQUEST'] (deprecated since TYPO3 v14, removed in v15).
+        $contentObjectRenderer->setRequest($request);
+        $extbaseRequest = $extbaseRequest
+            ->withAttribute('currentContentObject', $contentObjectRenderer);
+
+        $renderingContextFactory = $this->get(RenderingContextFactory::class);
+        self::assertInstanceOf(RenderingContextFactory::class, $renderingContextFactory);
+        $context = $renderingContextFactory->create();
         $context->setAttribute(ServerRequestInterface::class, $extbaseRequest);
         $context->getTemplatePaths()->setTemplateSource('{namespace register=Evoweb\SfRegister\ViewHelpers}' . $template);
         $result = (new TemplateView($context))->render();
+        self::assertIsString($result);
 
         self::assertMatchesRegularExpression($expectedPattern, $result);
     }
@@ -51,12 +63,18 @@ class ActionViewHelperTest extends AbstractTestBase
     #[DataProvider('templateProvider')]
     public function renderFrontendLinkWithCoreContext(string $template, string $expectedPattern): void
     {
-        $GLOBALS['TYPO3_REQUEST'] = $GLOBALS['TYPO3_REQUEST']->withAttribute('extbase', $this->createMock(ExtbaseRequestParameters::class));
+        /** @var ServerRequestInterface $request */
+        $request = $GLOBALS['TYPO3_REQUEST'];
+        $request = $request->withAttribute('extbase', $this->createMock(ExtbaseRequestParameters::class));
+        $GLOBALS['TYPO3_REQUEST'] = $request;
 
-        $context = $this->get(RenderingContextFactory::class)->create();
-        $context->setAttribute(ServerRequestInterface::class, $GLOBALS['TYPO3_REQUEST']);
+        $renderingContextFactory = $this->get(RenderingContextFactory::class);
+        self::assertInstanceOf(RenderingContextFactory::class, $renderingContextFactory);
+        $context = $renderingContextFactory->create();
+        $context->setAttribute(ServerRequestInterface::class, $request);
         $context->getTemplatePaths()->setTemplateSource('{namespace register=Evoweb\SfRegister\ViewHelpers}' . $template);
         $result = (new TemplateView($context))->render();
+        self::assertIsString($result);
 
         self::assertMatchesRegularExpression($expectedPattern, $result);
     }

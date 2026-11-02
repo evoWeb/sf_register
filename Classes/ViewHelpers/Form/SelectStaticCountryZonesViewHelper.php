@@ -58,15 +58,14 @@ class SelectStaticCountryZonesViewHelper extends AbstractSelectViewHelper
     {
         parent::initialize();
 
-        if (
-            $this->arguments['parent'] === null
-            || !ExtensionManagementUtility::isLoaded('static_info_tables')
-        ) {
+        /** @var ?string $parent */
+        $parent = $this->arguments['parent'] ?? null;
+        if ($parent === null || !ExtensionManagementUtility::isLoaded('static_info_tables')) {
             return;
         }
 
         try {
-            $options = $this->countryZonesRepository->findAllByIso2($this->arguments['parent'])->fetchAllAssociative();
+            $options = $this->countryZonesRepository->findAllByIso2($parent)->fetchAllAssociative();
 
             $this->arguments['options'] = $options;
         } catch (Exception) {

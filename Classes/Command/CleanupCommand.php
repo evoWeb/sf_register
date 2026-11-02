@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Command;
 
 use Doctrine\DBAL\Exception as DbalException;
-use Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,6 +25,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Exception\FileOperationErrorException;
 use TYPO3\CMS\Core\Resource\Exception\InsufficientFileAccessPermissionsException;
@@ -71,11 +71,14 @@ class CleanupCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $result = self::FAILURE;
 
-        $inactiveGroups = GeneralUtility::intExplode(',', $input->getArgument('inactiveGroups'));
+        $inactiveGroupsArgument = $input->getArgument('inactiveGroups');
+        $inactiveGroupsArgument = is_scalar($inactiveGroupsArgument) ? (string)$inactiveGroupsArgument : '';
+        $inactiveGroups = GeneralUtility::intExplode(',', $inactiveGroupsArgument);
         if (empty($inactiveGroups)) {
             $io->comment('List of group marking inactive users may not be empty to prevent unwanted behaviour!');
         } else {
-            $days = (int)$input->getArgument('days');
+            $daysArgument = $input->getArgument('days');
+            $days = is_scalar($daysArgument) ? (int)$daysArgument : 0;
 
             try {
                 foreach ($inactiveGroups as $inactiveGroup) {
@@ -90,7 +93,7 @@ class CleanupCommand extends Command
 
                 $io->comment('Cleaned up all outdated temporary accounts.');
                 $result = self::SUCCESS;
-            } catch (Exception | DbalException $exception) {
+            } catch (\Exception|DbalException $exception) {
                 $io->comment($exception->getMessage());
             }
         }
@@ -106,7 +109,7 @@ class CleanupCommand extends Command
     {
         $table = 'fe_users';
         $queryBuilder = $this->getQueryBuilderForTable($table);
-        $queryBuilder->resetRestrictions();
+        $queryBuilder->getRestrictions()->removeByType(HiddenRestriction::class);
 
         $result = $queryBuilder
             ->select('uid')
@@ -194,7 +197,8 @@ class CleanupCommand extends Command
     protected function removeImage(array $references): void
     {
         foreach ($references as $reference) {
-            $file = $this->resourceFactory->getFileObject($reference['uid_local']);
+            $uidLocal = is_scalar($reference['uid_local']) ? (int)$reference['uid_local'] : 0;
+            $file = $this->resourceFactory->getFileObject($uidLocal);
             $file->getStorage()->deleteFile($file);
         }
     }

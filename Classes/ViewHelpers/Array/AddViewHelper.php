@@ -38,7 +38,9 @@ class AddViewHelper extends AbstractViewHelper
     public function render(): array
     {
         $array = $this->arguments['array'] ?: [];
+        $array = is_array($array) ? $array : [];
         $key = $this->arguments['key'];
+        $key = is_scalar($key) ? (string)$key : '';
 
         $array[$key] = $this->arguments['value'] ?: $this->renderChildren();
 

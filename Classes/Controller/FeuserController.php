@@ -23,7 +23,6 @@ use Evoweb\SfRegister\Property\TypeConverter\DateTimeConverter;
 use Evoweb\SfRegister\Property\TypeConverter\UploadedFileReferenceConverter;
 use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\ModifyValidator;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Http\UploadedFile;
@@ -34,6 +33,7 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
@@ -41,6 +41,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Fluid\View\FluidViewAdapter;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * A frontend user controller containing common methods
@@ -70,8 +71,7 @@ class FeuserController extends ActionController
         protected ModifyValidator $modifyValidator,
         protected FileService $fileService,
         protected FrontendUserRepository $userRepository,
-    ) {
-    }
+    ) {}
 
     protected function getErrorFlashMessage(): bool
     {
@@ -104,11 +104,13 @@ class FeuserController extends ActionController
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     protected function modifySettingsBeforeActionMethodValidators(): void
     {
-        $this->settings['hasOriginalRequest'] = $this->request->getAttribute('extbase')->getOriginalRequest() !== null;
+        /** @var ExtbaseRequestParameters $extbaseAttribute */
+        $extbaseAttribute = $this->request->getAttribute('extbase');
+        $this->settings['hasOriginalRequest'] = $extbaseAttribute->getOriginalRequest() !== null;
 
         if (!is_array($this->settings['fields']['selected'] ?? [])) {
             $this->settings['fields']['selected'] = explode(',', $this->settings['fields']['selected']);
@@ -117,7 +119,7 @@ class FeuserController extends ActionController
             $this->settings['fields']['selected'] = [];
         }
         if (in_array('usergroup', $this->settings['fields']['selected'])) {
-            throw new Exception('Selecting "usergroup" in frontend isn\'t supported.');
+            throw new \Exception('Selecting "usergroup" in frontend isn\'t supported.');
         }
     }
 
@@ -149,12 +151,15 @@ class FeuserController extends ActionController
 
         parent::initializeActionMethodArguments();
 
+        /** @var ContentObjectRenderer $currentContentObject */
+        $currentContentObject = $this->request->getAttribute('currentContentObject');
         $event = new OverrideSettingsEvent(
             $this->settings,
             $this->getControllerName(),
-            $this->request->getAttribute('currentContentObject'),
+            $currentContentObject,
         );
-        $this->settings = $this->eventDispatcher->dispatch($event)->getSettings();
+        $this->eventDispatcher->dispatch($event);
+        $this->settings = $event->getSettings();
     }
 
     public function getControllerName(): string
@@ -187,6 +192,7 @@ class FeuserController extends ActionController
         $argumentName = 'user';
         if ($this->request->hasArgument($argumentName)) {
             $configuration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
+            /** @var array<string, mixed>|FrontendUser $user */
             $user = $this->request->getArgument($argumentName);
             if (is_array($user) || $user instanceof FrontendUser) {
                 $this->getPropertyMappingConfiguration($configuration, $user);
@@ -213,14 +219,23 @@ class FeuserController extends ActionController
             true,
         );
 
+        $confVars = $GLOBALS['TYPO3_CONF_VARS'] ?? [];
+        $imageFileExtensions = '';
+        if (
+            is_array($confVars)
+            && is_array($confVars['GFX'] ?? null)
+            && is_string($confVars['GFX']['imagefile_ext'] ?? null)
+        ) {
+            $imageFileExtensions = $confVars['GFX']['imagefile_ext'];
+        }
+
         $configuration->forProperty('image.0')
             ->setTypeConverterOptions(
                 UploadedFileReferenceConverter::class,
                 [
-                    UploadedFileReferenceConverter::CONFIGURATION_FILE_VALIDATORS =>
-                        $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
-                    UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER =>
-                        $this->fileService->getTempFolder()->getCombinedIdentifier(),
+                    UploadedFileReferenceConverter::CONFIGURATION_FILE_VALIDATORS => $imageFileExtensions,
+                    UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER
+                        => $this->fileService->getTempFolder()->getCombinedIdentifier(),
                 ]
             );
 
@@ -330,10 +345,14 @@ class FeuserController extends ActionController
             /** @var PasswordHashFactory $passwordHashFactory */
             $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
             $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
-            return $passwordHash->getHashedPassword($password);
-        } catch (Exception) {
-            return (string)time();
+            $hashedPassword = $passwordHash->getHashedPassword($password);
+        } catch (\Exception) {
+            $hashedPassword = null;
         }
+
+        // getHashedPassword() returns null for an empty password; don't store a
+        // usable hash for that. Fall back to an unusable value, as on failure.
+        return $hashedPassword ?? (string)time();
     }
 
     protected function persistAll(): void

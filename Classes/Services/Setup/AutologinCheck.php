@@ -31,7 +31,7 @@ class AutologinCheck implements CheckInterface
                 ($settings['confirmEmailPostCreate'] ?? false)
                 || ($settings['acceptEmailPostCreate'] ?? false)
             )
-            && $settings['autologinPostRegistration'] ?? false
+            && ($settings['autologinPostRegistration'] ?? false)
         ) {
             $result = new HtmlResponse(
                 '<h3>Please check your setup.</h3>

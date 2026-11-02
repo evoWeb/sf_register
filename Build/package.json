@@ -8,8 +8,8 @@
 	"version": "9.2.0",
 	"license": "GPL-2.0-or-later",
 	"engines": {
-		"node": ">=22.0.0 <23.0.0",
-		"npm": ">=10.0.0"
+		"node": ">=24.0.0 <25.0.0",
+		"npm": ">=11.0.0"
 	},
 	"type": "module",
 	"devDependencies": {
@@ -29,9 +29,7 @@
 		"@typescript-eslint/eslint-plugin": "^8.49.0",
 		"@typescript-eslint/parser": "^8.49.0",
 		"@typescript-eslint/typescript-estree": "^8.49.0",
-		"@eslint/js": "^9.39.2",
-		"@eslint/eslintrc": "^3.3.3",
-		"eslint": "^9.39.2"
+		"eslint": "^9.9.0"
 	},
 	"scripts": {
 		"lint:css": "stylelint Sources/Css/*.css",

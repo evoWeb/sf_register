@@ -15,12 +15,10 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Annotation;
 
-use Attribute;
-
 /**
  * @Annotation
  */
-#[Attribute(Attribute::TARGET_PROPERTY | Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
+#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 class Validate
 {
     public string $validator = '';
@@ -67,6 +65,7 @@ class Validate
         if (count($this->options) > 0) {
             $validatorOptionsStrings = [];
             foreach ($this->options as $optionKey => $optionValue) {
+                $optionValue = is_scalar($optionValue) ? (string)$optionValue : '';
                 $validatorOptionsStrings[] = $optionKey . '=' . $optionValue;
             }
 

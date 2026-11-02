@@ -1,0 +1,6 @@
+"static_country_zones"
+,"uid","pid","zn_country_iso_2","zn_code","zn_name_local","zn_name_en"
+,1,0,"US","US-CA","California","California"
+,2,0,"US","US-NY","New York","New York"
+,3,0,"US","US-TX","Texas","Texas"
+,4,0,"DE","DE-BY","Bayern","Bavaria"

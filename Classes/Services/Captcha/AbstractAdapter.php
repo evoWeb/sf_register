@@ -33,9 +33,8 @@ abstract class AbstractAdapter implements CaptchaInterface
 
     /**
      * Renders the output of a concrete captcha
-     * @return array<string, string>|string
      */
-    abstract public function render(): array|string;
+    abstract public function render(): string;
 
     /**
      * Returns if the result of the validation was valid or not

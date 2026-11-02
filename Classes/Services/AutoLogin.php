@@ -26,9 +26,7 @@ use TYPO3\CMS\Core\Registry;
 #[Autoconfigure(public: true)]
 class AutoLogin extends AuthenticationService
 {
-    public function __construct(protected Registry $registry)
-    {
-    }
+    public function __construct(protected Registry $registry) {}
 
     /**
      * Find a user (e.g., look up the user record in the database when a login is sent)
@@ -43,7 +41,8 @@ class AutoLogin extends AuthenticationService
             return null;
         }
 
-        $userId = (string)$this->registry->get('sf-register', $hmac);
+        $userId = $this->registry->get('sf-register', $hmac);
+        $userId = is_scalar($userId) ? (string)$userId : '';
         $this->registry->remove('sf-register', $hmac);
 
         $dbUserSetup = [...$this->db_user, 'username_column' => 'uid', 'enable_clause' => ''];

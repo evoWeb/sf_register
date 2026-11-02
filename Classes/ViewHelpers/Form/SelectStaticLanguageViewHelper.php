@@ -67,8 +67,10 @@ class SelectStaticLanguageViewHelper extends AbstractSelectViewHelper
             return;
         }
 
-        if (count($this->arguments['allowedLanguages'])) {
-            $options = $this->languageRepository->findByLgCollateLocale($this->arguments['allowedLanguages']);
+        /** @var string[] $allowedLanguages */
+        $allowedLanguages = $this->arguments['allowedLanguages'] ?? [];
+        if (is_array($allowedLanguages) && count($allowedLanguages)) {
+            $options = $this->languageRepository->findByLgCollateLocale($allowedLanguages);
         } else {
             $options = $this->languageRepository->findAll();
         }

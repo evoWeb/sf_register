@@ -26,9 +26,13 @@ class UsernameCheck implements CheckInterface
     public function check(array $settings): ?ResponseInterface
     {
         $result = null;
+        $fields = $settings['fields'] ?? [];
+        $selectedFields = is_array($fields) && is_array($fields['selected'] ?? null)
+            ? $fields['selected']
+            : [];
         if (
             ($settings['useEmailAddressAsUsername'] ?? false)
-            && in_array('username', $settings['fields']['selected'])
+            && in_array('username', $selectedFields)
         ) {
             $result = new HtmlResponse(
                 '<h3>Please check your setup.</h3>
@@ -44,7 +48,7 @@ class UsernameCheck implements CheckInterface
         }
         if (
             !($settings['useEmailAddressAsUsername'] ?? false)
-            && !in_array('username', $settings['fields']['selected'])
+            && !in_array('username', $selectedFields)
         ) {
             $result = new HtmlResponse(
                 '<h3>Please check your setup.</h3>

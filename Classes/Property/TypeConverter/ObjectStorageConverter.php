@@ -38,6 +38,7 @@ class ObjectStorageConverter extends ExtbaseObjectStorageConverter
      * Return the source, if it is an array, otherwise an empty array.
      * Filter out empty uploads
      *
+     * @param array<string, array<string, int|array<string, mixed>>> $source
      * @return array<string, mixed>
      */
     public function getSourceChildPropertiesToBeConverted(mixed $source): array
@@ -63,6 +64,8 @@ class ObjectStorageConverter extends ExtbaseObjectStorageConverter
 
     protected function isUploadType(mixed $propertyValue): bool
     {
+        // A scalar child (e.g. a bare uid string) is a reachable input and must be treated as
+        // "not an upload", not raise a TypeError - hence the mixed parameter and is_array() guard.
         return is_array($propertyValue) && isset($propertyValue['tmp_name']) && isset($propertyValue['error']);
     }
 }

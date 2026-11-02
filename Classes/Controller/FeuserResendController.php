@@ -26,7 +26,6 @@ use Evoweb\SfRegister\Services\Mail as MailService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Services\Session as SessionService;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Attribute;
@@ -58,12 +57,13 @@ class FeuserResendController extends FeuserController
                 if ($user !== null) {
                     $email->setEmail($user->getEmail());
                 }
-            } catch (Exception) {
+            } catch (\Exception) {
             }
         }
 
-        $email = $this->eventDispatcher->dispatch(new ResendFormEvent($email, $this->settings))->getEmail();
-        $this->view->assign('email', $email);
+        $event = new ResendFormEvent($email, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $this->view->assign('email', $event->getEmail());
 
         return new HtmlResponse($this->view->render());
     }
@@ -72,7 +72,9 @@ class FeuserResendController extends FeuserController
         #[Attribute\Validate(validator: UserValidator::class)]
         Email $email
     ): ResponseInterface {
-        $email = $this->eventDispatcher->dispatch(new ResendMailEvent($email, $this->settings))->getEmail();
+        $event = new ResendMailEvent($email, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $email = $event->getEmail();
         $user = $this->userRepository->findByEmail($email->getEmail());
 
         if ($user instanceof FrontendUser) {

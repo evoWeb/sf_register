@@ -24,11 +24,10 @@ final class InitializeActionEvent
      * @param array<string, mixed> $settings
      */
     public function __construct(
-        protected readonly FeuserController $controller,
-        protected readonly array $settings,
-        protected ?ResponseInterface $response
-    ) {
-    }
+        private readonly FeuserController $controller,
+        private readonly array $settings,
+        private ?ResponseInterface $response
+    ) {}
 
     public function getController(): FeuserController
     {

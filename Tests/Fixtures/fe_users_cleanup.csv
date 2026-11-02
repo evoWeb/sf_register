@@ -1,0 +1,5 @@
+"fe_users"
+,"uid","pid","deleted","disable","username","password","usergroup","crdate"
+,1,0,0,0,"outdated-in-group","pass",2,1000000000
+,2,0,0,0,"recent-in-group","pass",2,9999999999
+,3,0,0,0,"outdated-other-group","pass",5,1000000000
