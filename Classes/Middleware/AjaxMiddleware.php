@@ -36,8 +36,7 @@ class AjaxMiddleware implements MiddlewareInterface
     public function __construct(
         #[Lazy]
         protected StaticCountryZoneRepository $staticCountryZoneRepository
-    ) {
-    }
+    ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -48,7 +47,8 @@ class AjaxMiddleware implements MiddlewareInterface
         $requestArguments = $this->getParamFromRequest($request, 'tx_sfregister');
         switch ($requestArguments['action']) {
             case 'zones':
-                [$status, $message, $result] = $this->zonesAction($requestArguments['parent']);
+                $parent = is_scalar($requestArguments['parent']) ? (string)$requestArguments['parent'] : '';
+                [$status, $message, $result] = $this->zonesAction($parent);
                 break;
 
             default:
@@ -78,9 +78,9 @@ class AjaxMiddleware implements MiddlewareInterface
         if (MathUtility::canBeInterpretedAsInteger($parent)) {
             $zones = $this->staticCountryZoneRepository->findAllByParentUid((int)$parent);
         } else {
-            $zones = $this->staticCountryZoneRepository->findAllByIso2(
-                strtoupper(preg_replace('/[^A-Za-z]{2}/', '', $parent))
-            );
+            $upper = preg_replace('/[^A-Za-z]{2}/', '', $parent);
+            $upper = is_string($upper) ? mb_strtoupper($upper) : '';
+            $zones = $this->staticCountryZoneRepository->findAllByIso2($upper);
         }
 
         $result = [];
@@ -113,7 +113,9 @@ class AjaxMiddleware implements MiddlewareInterface
      */
     protected function getParamFromRequest(ServerRequestInterface $request, string $name): array
     {
-        $arguments = $request->getParsedBody()[$name] ?? $request->getQueryParams()[$name] ?? [];
+        $parsedBody = $request->getParsedBody();
+        $parsedBody = is_array($parsedBody) ? $parsedBody : [];
+        $arguments = $parsedBody[$name] ?? $request->getQueryParams()[$name] ?? [];
         return is_array($arguments) ? $arguments : [];
     }
 

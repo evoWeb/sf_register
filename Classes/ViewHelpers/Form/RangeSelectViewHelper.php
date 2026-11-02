@@ -72,10 +72,10 @@ class RangeSelectViewHelper extends AbstractSelectViewHelper
     {
         parent::initialize();
 
-        $start = (int)$this->arguments['start'];
-        $end = (int)$this->arguments['end'];
-        $step = (int)$this->arguments['step'];
-        $digits = (int)$this->arguments['digits'];
+        $start = is_int($this->arguments['start']) ? $this->arguments['start'] : 1;
+        $end = is_int($this->arguments['end']) ? $this->arguments['end'] : 20;
+        $step = is_int($this->arguments['step']) ? $this->arguments['step'] : 1;
+        $digits = is_int($this->arguments['digits']) ? $this->arguments['digits'] : 2;
 
         $this->arguments['options'] = array_map(
             static fn($number) => sprintf('%0' . $digits . 's', $number),

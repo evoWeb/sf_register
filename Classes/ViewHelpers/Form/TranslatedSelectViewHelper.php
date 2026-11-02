@@ -50,11 +50,12 @@ class TranslatedSelectViewHelper extends AbstractSelectViewHelper
     protected function renderOptionTags(array $options): string
     {
         $extensionName = $this->hasArgument('extensionName') ? $this->arguments['extensionName'] : null;
+        $extensionName = is_string($extensionName) ? $extensionName : null;
         $extensionName = $extensionName === null ? $this->getRequest()->getControllerExtensionName() : $extensionName;
 
         $output = '';
         foreach ($options as $value => $label) {
-            $label = htmlspecialchars(LocalizationUtility::translate($label, $extensionName));
+            $label = htmlspecialchars(LocalizationUtility::translate($label, $extensionName) ?? '');
 
             $isSelected = $this->isSelected($value);
             $output .= $this->renderOptionTag((string)$value, $label, $isSelected) . LF;

@@ -39,7 +39,7 @@ class CaptchaViewHelper extends AbstractFormFieldViewHelper
 
     public function render(): string
     {
-        $type = $this->arguments['type'];
+        $type = is_string($this->arguments['type'] ?? null) ? $this->arguments['type'] : '';
         return $this->captchaAdapterFactory->getCaptchaAdapter($type)->render();
     }
 }

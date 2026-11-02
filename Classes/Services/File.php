@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Services;
 
 use Evoweb\SfRegister\Domain\Model\FrontendUser;
-use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -80,14 +79,22 @@ class File implements SingletonInterface, LoggerAwareInterface
                 ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
                 'SfRegister'
             );
-        } catch (Exception) {
+        } catch (\Exception) {
         }
 
-        if (($this->settings['imageFolder'] ?? '') !== '') {
-            $this->setImageFolderIdentifier($this->settings['imageFolder']);
+        $imageFolder = $this->settings['imageFolder'] ?? '';
+        if (is_string($imageFolder) && $imageFolder !== '') {
+            $this->setImageFolderIdentifier($imageFolder);
         }
 
-        $this->allowedFileExtensions = $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'];
+        $confVars = $GLOBALS['TYPO3_CONF_VARS'] ?? [];
+        if (
+            is_array($confVars)
+            && is_array($confVars['GFX'] ?? null)
+            && is_string($confVars['GFX']['imagefile_ext'] ?? null)
+        ) {
+            $this->allowedFileExtensions = $confVars['GFX']['imagefile_ext'];
+        }
         $uploadMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('upload_max_filesize'));
         $postMaxFileSize = $this->convertSizeStringToBytes((string)ini_get('post_max_size'));
         $this->maxFilesize = min($uploadMaxFileSize, $postMaxFileSize);
@@ -107,11 +114,11 @@ class File implements SingletonInterface, LoggerAwareInterface
         $this->request = $request;
     }
 
-    public function getStorage(): ?ResourceStorage
+    public function getStorage(): ResourceStorage
     {
         if (!$this->storage) {
             // @extensionScannerIgnoreLine
-            $this->storage = $this->storageRepository->getStorageObject($this->storageUid);
+            $this->storage = $this->storageRepository->getStorageObject(max(0, $this->storageUid));
         }
 
         return $this->storage;
@@ -132,10 +139,13 @@ class File implements SingletonInterface, LoggerAwareInterface
 
             try {
                 $this->imageFolder = $this->getStorage()->getFolder($this->imageFolderIdentifier);
-            } catch (Exception) {
+            } catch (\Exception) {
             }
         }
-        return $this->imageFolder;
+        return $this->imageFolder ?? throw new \Exception(
+            'Image folder "' . $this->imageFolderIdentifier . '" could not be resolved',
+            1719300001
+        );
     }
 
     public function getTempFolder(): Folder
@@ -145,16 +155,19 @@ class File implements SingletonInterface, LoggerAwareInterface
 
             try {
                 $this->tempFolder = $this->getStorage()->getFolder($this->tempFolderIdentifier);
-            } catch (Exception) {
+            } catch (\Exception) {
             }
         }
-        return $this->tempFolder;
+        return $this->tempFolder ?? throw new \Exception(
+            'Temp folder "' . $this->tempFolderIdentifier . '" could not be resolved',
+            1719300002
+        );
     }
 
     protected function convertSizeStringToBytes(string $value): int
     {
         $value = trim($value);
-        $last = strtolower(preg_replace('/[^gmk]/i', '', $value));
+        $last = strtolower((string)preg_replace('/[^gmk]/i', '', $value));
         $value = (int)preg_replace('/\D/', '', $value);
         switch ($last) {
             case 'g':
@@ -196,7 +209,7 @@ class File implements SingletonInterface, LoggerAwareInterface
                 $this->namespace = strtolower(
                     'tx_' . $frameworkSettings['extensionName'] . '_' . $frameworkSettings['pluginName']
                 );
-            } catch (Exception) {
+            } catch (\Exception) {
                 $this->namespace = 'tx_sfregister_create';
             }
         }
@@ -209,20 +222,23 @@ class File implements SingletonInterface, LoggerAwareInterface
         $fileData = $this->request->getUploadedFiles()['user']['image'][0] ?? null;
 
         if ($fileData instanceof UploadedFile) {
-            $filename = str_replace([chr(0), ' '], ['', '_'], $fileData->getClientFilename());
+            $filename = str_replace([chr(0), ' '], ['', '_'], (string)$fileData->getClientFilename());
             if ($filename !== '' && GeneralUtility::validPathStr($filename)) {
                 if (($this->settings['useEncryptedFilename'] ?? false)) {
                     $extension = pathinfo($filename, PATHINFO_EXTENSION);
-                    $filename = sha1(
-                        $filename . uniqid('sfregister')
-                        . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']
-                    ) . '.' . $extension;
+                    $confVars = $GLOBALS['TYPO3_CONF_VARS'] ?? [];
+                    $encryptionKey = is_array($confVars)
+                        && is_array($confVars['SYS'] ?? null)
+                        && is_string($confVars['SYS']['encryptionKey'] ?? null)
+                        ? $confVars['SYS']['encryptionKey']
+                        : '';
+                    $filename = sha1($filename . uniqid('sfregister') . $encryptionKey) . '.' . $extension;
                 }
                 if ($fileData->getClientFilename() !== $filename) {
                     $fileData = new UploadedFile(
                         $fileData->getStream(),
                         // @extensionScannerIgnoreLine
-                        $fileData->getSize(),
+                        $fileData->getSize() ?? 0,
                         $fileData->getError(),
                         $filename,
                         $fileData->getClientMediaType(),
@@ -238,7 +254,7 @@ class File implements SingletonInterface, LoggerAwareInterface
     {
         $fileData = $this->getUploadedFileInfo();
         if ($fileData instanceof UploadedFile) {
-            $fileExtension = pathinfo($fileData->getClientFilename(), PATHINFO_EXTENSION);
+            $fileExtension = pathinfo((string)$fileData->getClientFilename(), PATHINFO_EXTENSION);
 
             // @extensionScannerIgnoreLine
             $result = $this->isAllowedFilesize($fileData->getSize() ?? 0);
@@ -254,7 +270,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         $result = true;
 
         if ($filesize > $this->maxFilesize) {
-            $this->addError(LocalizationUtility::translate('error_image_filesize', 'SfRegister'), 1296591064);
+            $this->addError(LocalizationUtility::translate('error_image_filesize', 'SfRegister') ?? '', 1296591064);
             $result = false;
         }
 
@@ -269,7 +285,7 @@ class File implements SingletonInterface, LoggerAwareInterface
             $fileExtension !== ''
             && !GeneralUtility::inList($this->allowedFileExtensions, strtolower($fileExtension))
         ) {
-            $this->addError(LocalizationUtility::translate('error_image_extension', 'SfRegister'), 1296591065);
+            $this->addError(LocalizationUtility::translate('error_image_extension', 'SfRegister') ?? '', 1296591065);
             $result = false;
         }
 
@@ -281,7 +297,7 @@ class File implements SingletonInterface, LoggerAwareInterface
         if (!$this->getStorage()->hasFolder($uploadFolder)) {
             try {
                 $this->getStorage()->createFolder($uploadFolder);
-            } catch (Exception) {
+            } catch (\Exception) {
             }
         }
     }
@@ -294,8 +310,8 @@ class File implements SingletonInterface, LoggerAwareInterface
             try {
                 $file->getStorage()
                     ->moveFile($file, $this->getImageFolder());
-            } catch (Exception $exception) {
-                $this->logger->info(
+            } catch (\Exception $exception) {
+                $this->logger?->info(
                     'sf_register: Image ' . $file->getName() . ' could not be moved! ' . $exception->getMessage()
                 );
             }
@@ -315,6 +331,6 @@ class File implements SingletonInterface, LoggerAwareInterface
     {
         $filenameParts = GeneralUtility::trimExplode('/', $filename, true);
 
-        return array_pop($filenameParts);
+        return array_pop($filenameParts) ?? '';
     }
 }

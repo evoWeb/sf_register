@@ -15,6 +15,4 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Services\Event;
 
-final class NotifyUserCreateAcceptEvent extends AbstractEventWithUser
-{
-}
+final class NotifyUserCreateAcceptEvent extends AbstractEventWithUser {}

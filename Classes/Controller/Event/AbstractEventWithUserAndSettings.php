@@ -22,9 +22,7 @@ abstract class AbstractEventWithUserAndSettings
     /**
      * @param array<string, mixed> $settings
      */
-    public function __construct(protected FrontendUser $user, protected array $settings)
-    {
-    }
+    public function __construct(protected FrontendUser $user, protected array $settings) {}
 
     public function getUser(): FrontendUser
     {

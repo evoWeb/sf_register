@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Domain\Repository;
 
 use Evoweb\SfRegister\Domain\Model\StaticCountry;
-use Exception;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
@@ -53,7 +52,7 @@ class StaticCountryRepository extends Repository
 
         try {
             $query->matching($query->in('cn_iso_2', $cnIso2));
-        } catch (Exception) {
+        } catch (\Exception) {
         }
 
         /** @var QueryResult<StaticCountry> $result */

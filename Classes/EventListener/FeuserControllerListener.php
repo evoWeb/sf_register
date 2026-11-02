@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\EventListener;
 
 use Evoweb\SfRegister\Controller\Event\InitializeActionEvent;
-use Exception;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
@@ -26,14 +25,13 @@ use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
 class FeuserControllerListener
 {
-    public function __construct(protected Context $context, protected UriBuilder $uriBuilder)
-    {
-    }
+    public function __construct(protected Context $context, protected UriBuilder $uriBuilder) {}
 
     #[AsEventListener('evoweb-sf-register-feusercontroller', InitializeActionEvent::class)]
     public function __invoke(InitializeActionEvent $event): void
     {
         if (!$this->userIsLoggedIn()) {
+            /** @var array<string, string|int> $redirectEvent */
             $redirectEvent = $event->getSettings()['redirectEvent'];
 
             if ((int)$redirectEvent['page']) {
@@ -42,10 +40,10 @@ class FeuserControllerListener
                     $event->setResponse(new RedirectResponse($url));
                 }
             } else {
-                $response = new ForwardResponse($redirectEvent['action']);
+                $response = new ForwardResponse((string)$redirectEvent['action']);
                 $controller = $redirectEvent['controller'] ?? null;
                 if ($controller) {
-                    $response = $response->withControllerName($controller);
+                    $response = $response->withControllerName((string)$controller);
                 }
                 $event->setResponse($response);
             }
@@ -58,7 +56,7 @@ class FeuserControllerListener
             /** @var UserAspect $userAspect */
             $userAspect = $this->context->getAspect('frontend.user');
             return $userAspect->isLoggedIn();
-        } catch (Exception) {
+        } catch (\Exception) {
         }
         return false;
     }

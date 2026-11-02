@@ -19,6 +19,9 @@ use Psr\Container\ContainerInterface;
 
 class CheckFactory
 {
+    /**
+     * @param string[] $checkClassnames
+     */
     public function __construct(
         protected ContainerInterface $container,
         protected array $checkClassnames = [
@@ -26,11 +29,10 @@ class CheckFactory
             AutologinCheck::class,
             UsernameCheck::class,
         ]
-    ) {
-    }
+    ) {}
 
     /**
-     * @return CheckInterface[]
+     * @return object[]
      */
     public function getCheckInstances(): array
     {
@@ -38,7 +40,7 @@ class CheckFactory
 
         /** @var class-string<object> $checkClassname */
         foreach ($this->checkClassnames as $checkClassname) {
-            $checks[] = new $checkClassname;
+            $checks[] = new $checkClassname();
         }
 
         return $checks;

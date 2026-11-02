@@ -17,13 +17,13 @@ namespace Evoweb\SfRegister\Controller;
 
 use Evoweb\SfRegister\Controller\Event\PasswordFormEvent;
 use Evoweb\SfRegister\Controller\Event\PasswordSaveEvent;
+use Evoweb\SfRegister\Domain\Model\FrontendUser;
 use Evoweb\SfRegister\Domain\Model\Password;
 use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\FrontendUser as FrontendUserService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Attribute;
@@ -54,7 +54,9 @@ class FeuserPasswordController extends FeuserController
             $password = new Password();
         }
 
-        $password = $this->eventDispatcher->dispatch(new PasswordFormEvent($password, $this->settings))->getPassword();
+        $event = new PasswordFormEvent($password, $this->settings);
+        $this->eventDispatcher->dispatch($event);
+        $password = $event->getPassword();
         $this->view->assign('password', $password);
 
         return new HtmlResponse($this->view->render());
@@ -66,14 +68,16 @@ class FeuserPasswordController extends FeuserController
     ): ResponseInterface {
         $statusCode = 200;
         if ($this->frontendUserService->userIsLoggedIn()) {
-            $user = $this->frontendUserService->getLoggedInUser();
-            $user = $this->eventDispatcher->dispatch(new PasswordSaveEvent($user, $this->settings))->getUser();
+            $user = $this->frontendUserService->getLoggedInUser() ?? new FrontendUser();
+            $event = new PasswordSaveEvent($user, $this->settings);
+            $this->eventDispatcher->dispatch($event);
+            $user = $event->getUser();
 
             $user->setPassword($this->encryptPassword($password->getPassword()));
 
             try {
                 $this->userRepository->update($user);
-            } catch (Exception) {
+            } catch (\Exception) {
                 $statusCode = 500;
             }
         }

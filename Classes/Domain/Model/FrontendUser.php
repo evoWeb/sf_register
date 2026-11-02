@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Domain\Model;
 
-use DateTime;
 use TYPO3\CMS\Extbase\Attribute as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -139,11 +138,11 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
      */
     protected string $invitationEmail = '';
 
-    protected ?DateTime $lastlogin = null;
+    protected ?\DateTime $lastlogin = null;
 
-    protected ?DateTime $activatedOn = null;
+    protected ?\DateTime $activatedOn = null;
 
-    protected ?DateTime $dateOfBirth = null;
+    protected ?\DateTime $dateOfBirth = null;
 
     #[Extbase\ORM\Transient]
     protected string $captcha = '';
@@ -181,9 +180,17 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
 
     public function initializeObject(): void
     {
-        $this->usergroup = $this->usergroup ?? new ObjectStorage();
-        $this->image = $this->image ?? new ObjectStorage();
-        $this->moduleSysDmailCategory = $this->moduleSysDmailCategory ?? new ObjectStorage();
+        /** @var ObjectStorage<FrontendUserGroup> $usergroup */
+        $usergroup = $this->usergroup ?? new ObjectStorage();
+        $this->usergroup = $usergroup;
+
+        /** @var ObjectStorage<FileReference> $image */
+        $image = $this->image ?? new ObjectStorage();
+        $this->image = $image;
+
+        /** @var ObjectStorage<Category> $moduleSysDmailCategory */
+        $moduleSysDmailCategory = $this->moduleSysDmailCategory ?? new ObjectStorage();
+        $this->moduleSysDmailCategory = $moduleSysDmailCategory;
     }
 
     /**
@@ -199,17 +206,19 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
      */
     public function getUsergroup(): ObjectStorage
     {
-        return $this->usergroup;
+        /** @var ObjectStorage<FrontendUserGroup> $usergroup */
+        $usergroup = $this->usergroup ?? new ObjectStorage();
+        return $usergroup;
     }
 
     public function addUsergroup(FrontendUserGroup $usergroup): void
     {
-        $this->usergroup->attach($usergroup);
+        $this->usergroup?->attach($usergroup);
     }
 
     public function removeUsergroup(FrontendUserGroup $usergroup): void
     {
-        $this->usergroup->detach($usergroup);
+        $this->usergroup?->detach($usergroup);
     }
 
     /**
@@ -225,12 +234,14 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
      */
     public function getImage(): ObjectStorage
     {
-        return $this->image;
+        /** @var ObjectStorage<FileReference> $image */
+        $image = $this->image ?? new ObjectStorage();
+        return $image;
     }
 
     public function removeImage(): void
     {
-        $this->image->removeAll($this->image);
+        $this->image?->removeAll($this->image);
     }
 
     /**
@@ -246,35 +257,37 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
      */
     public function getModuleSysDmailCategory(): ObjectStorage
     {
-        return $this->moduleSysDmailCategory;
+        /** @var ObjectStorage<Category> $moduleSysDmailCategory */
+        $moduleSysDmailCategory = $this->moduleSysDmailCategory ?? new ObjectStorage();
+        return $moduleSysDmailCategory;
     }
 
-    public function setLastlogin(DateTime $lastlogin): void
+    public function setLastlogin(\DateTime $lastlogin): void
     {
         $this->lastlogin = $lastlogin;
     }
 
-    public function getLastlogin(): ?DateTime
+    public function getLastlogin(): ?\DateTime
     {
         return $this->lastlogin;
     }
 
-    public function setActivatedOn(?DateTime $activatedOn): void
+    public function setActivatedOn(?\DateTime $activatedOn): void
     {
         $this->activatedOn = $activatedOn;
     }
 
-    public function getActivatedOn(): ?DateTime
+    public function getActivatedOn(): ?\DateTime
     {
         return $this->activatedOn;
     }
 
-    public function setDateOfBirth(?DateTime $dateOfBirth): void
+    public function setDateOfBirth(?\DateTime $dateOfBirth): void
     {
         $this->dateOfBirth = $dateOfBirth;
     }
 
-    public function getDateOfBirth(): ?DateTime
+    public function getDateOfBirth(): ?\DateTime
     {
         return $this->dateOfBirth;
     }
@@ -286,7 +299,7 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
     {
         if ($this->dateOfBirthDay > 0 && $this->dateOfBirthMonth > 0 && $this->dateOfBirthYear > 0) {
             if ($this->dateOfBirth === null) {
-                $this->dateOfBirth = new DateTime();
+                $this->dateOfBirth = new \DateTime();
             }
             $this->dateOfBirth->setDate($this->dateOfBirthYear, $this->dateOfBirthMonth, $this->dateOfBirthDay);
         }
@@ -302,8 +315,8 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
     {
         $result = 1;
 
-        if ($this->dateOfBirth instanceof DateTime) {
-            $result = $this->dateOfBirth->format('j');
+        if ($this->dateOfBirth instanceof \DateTime) {
+            $result = (int)$this->dateOfBirth->format('j');
         }
 
         return $result;
@@ -319,8 +332,8 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
     {
         $result = 1;
 
-        if ($this->dateOfBirth instanceof DateTime) {
-            $result = $this->dateOfBirth->format('n');
+        if ($this->dateOfBirth instanceof \DateTime) {
+            $result = (int)$this->dateOfBirth->format('n');
         }
 
         return $result;
@@ -336,8 +349,8 @@ class FrontendUser extends AbstractEntity implements FrontendUserInterface, Vali
     {
         $result = 1970;
 
-        if ($this->dateOfBirth instanceof DateTime) {
-            $result = $this->dateOfBirth->format('Y');
+        if ($this->dateOfBirth instanceof \DateTime) {
+            $result = (int)$this->dateOfBirth->format('Y');
         }
 
         return $result;

@@ -28,8 +28,6 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Property\TypeConverter;
 
-use Exception;
-use InvalidArgumentException;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Exception\Crypto\InvalidHashStringException;
 use TYPO3\CMS\Core\Http\UploadedFile;
@@ -84,14 +82,13 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         protected HashService $hashService,
         protected PersistenceManager $persistenceManager,
         protected StorageRepository $storageRepository,
-    ) {
-    }
+    ) {}
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
      * built $convertedChildProperties and $configuration.
      *
-     * @param array<string, mixed>|UploadedFile $source
+     * @param array<string, int|string|array<string, string>>|UploadedFile $source
      * @param array<string, mixed> $convertedChildProperties
      */
     public function convertFrom(
@@ -103,8 +100,17 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         if ($source instanceof UploadedFile) {
             $source = $this->convertUploadedFileToUploadInfoArray($source);
         }
+        if (!is_array($source)) {
+            return null;
+        }
         if (!isset($source['error']) || $source['error'] === \UPLOAD_ERR_NO_FILE) {
-            if (isset($source['submittedFile']['resourcePointer'])) {
+            if (
+                isset($source['submittedFile'])
+                && is_array($source['submittedFile'])
+                && isset($source['submittedFile']['resourcePointer'])
+                && is_string($source['submittedFile']['resourcePointer'])
+                && $source['submittedFile']['resourcePointer'] !== ''
+            ) {
                 try {
                     $resourcePointer = $this->hashService->validateAndStripHmac(
                         $source['submittedFile']['resourcePointer'],
@@ -122,14 +128,14 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
                         );
                     }
                     return $resource;
-                } catch (Exception) {
+                } catch (\Exception) {
                     // Nothing to do. No file is uploaded, and a resource pointer is invalid. Discard!
                 }
             }
             return null;
         }
 
-        if ($source['error'] !== \UPLOAD_ERR_OK) {
+        if (is_int($source['error']) && $source['error'] !== \UPLOAD_ERR_OK) {
             return GeneralUtility::makeInstance(
                 Error::class,
                 $this->getUploadErrorMessage($source['error']),
@@ -137,21 +143,22 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             );
         }
 
-        if (isset($this->convertedResources[$source['tmp_name']])) {
-            return $this->convertedResources[$source['tmp_name']];
+        $temporaryName = is_string($source['tmp_name']) ? $source['tmp_name'] : '';
+        if ($temporaryName && isset($this->convertedResources[$temporaryName])) {
+            return $this->convertedResources[$temporaryName];
         }
 
         if ($configuration === null) {
-            throw new InvalidArgumentException('Argument $configuration must not be null', 1589183114);
+            throw new \InvalidArgumentException('Argument $configuration must not be null', 1589183114);
         }
 
         try {
             $resource = $this->importUploadedResource($source, $configuration);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return GeneralUtility::makeInstance(Error::class, $e->getMessage(), $e->getCode());
         }
 
-        $this->convertedResources[$source['tmp_name']] = $resource;
+        $this->convertedResources[$temporaryName] = $resource;
         return $resource;
     }
 
@@ -167,7 +174,8 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     ): FileReference {
         /** @var FileNameValidator $fileNameValidator */
         $fileNameValidator = GeneralUtility::makeInstance(FileNameValidator::class);
-        if (!$fileNameValidator->isValid((string)$uploadInfo['name'])) {
+        $uploadInfoName = is_scalar($uploadInfo['name']) ? (string)$uploadInfo['name'] : '';
+        if (!$fileNameValidator->isValid($uploadInfoName)) {
             throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
         }
 
@@ -178,29 +186,34 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         $conflictMode = $configuration->getConfigurationValue(
             self::class,
             (string)self::CONFIGURATION_UPLOAD_CONFLICT_MODE
-        ) ?: DuplicationBehavior::RENAME;
+        );
+        $conflictMode = is_scalar($conflictMode) ? (string)$conflictMode : '';
+        $conflictMode = DuplicationBehavior::tryFrom($conflictMode) ?: DuplicationBehavior::RENAME;
 
         $validators = $configuration->getConfigurationValue(
             self::class,
             (string)self::CONFIGURATION_FILE_VALIDATORS
         );
         if ($validators !== null) {
-            $fileExtension = PathUtility::pathinfo($uploadInfo['name'], PATHINFO_EXTENSION);
+            $validators = is_string($validators) ? $validators : '';
+            $fileExtension = PathUtility::pathinfo($uploadInfoName, PATHINFO_EXTENSION);
             if (!GeneralUtility::inList($validators, strtolower($fileExtension))) {
                 throw new TypeConverterException('File extension is not allowed!', 1399312430);
             }
         }
 
+        $uploadFolderId = is_scalar($uploadFolderId) ? (string)$uploadFolderId : '';
         $uploadFolder = $this->provideUploadFolder($uploadFolderId);
         /** @var File $uploadedFile */
         $uploadedFile = $uploadFolder->addUploadedFile($uploadInfo, $conflictMode);
 
-        $resourcePointer = isset($uploadInfo['submittedFile']['resourcePointer'])
-            && !str_contains($uploadInfo['submittedFile']['resourcePointer'], 'file:')
-            ? (int)$this->hashService->validateAndStripHmac(
-                $uploadInfo['submittedFile']['resourcePointer'],
-                self::RESOURCE_POINTER_PREFIX
-            )
+        $resourcePointer = isset($uploadInfo['submittedFile'])
+            && is_array($uploadInfo['submittedFile'])
+            && isset($uploadInfo['submittedFile']['resourcePointer'])
+            && is_scalar($uploadInfo['submittedFile']['resourcePointer'])
+            ? (string)$uploadInfo['submittedFile']['resourcePointer'] : '';
+        $resourcePointer = !str_contains($resourcePointer, 'file:') && $resourcePointer !== ''
+            ? (int)$this->hashService->validateAndStripHmac($resourcePointer, self::RESOURCE_POINTER_PREFIX)
             : null;
 
         return $this->createFileReferenceFromFalFileObject($uploadedFile, (int)$resourcePointer);
@@ -231,16 +244,18 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         CoreFileReference $falFileReference,
         ?int $resourcePointer = null
     ): FileReference {
-        if ($resourcePointer === null) {
-            /** @var FileReference $fileReference */
-            $fileReference = GeneralUtility::makeInstance(FileReference::class);
-        } else {
+        /** @var ?FileReference $fileReference */
+        $fileReference = null;
+        if ($resourcePointer !== null) {
+            /** @var FileReference|null $fileReference */
             $fileReference = $this->persistenceManager->getObjectByIdentifier(
                 $resourcePointer,
                 FileReference::class
             );
         }
-
+        if ($fileReference === null) {
+            $fileReference = GeneralUtility::makeInstance(FileReference::class);
+        }
         $fileReference->setOriginalResource($falFileReference);
         return $fileReference;
     }
@@ -265,10 +280,10 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
         try {
             return $this->resourceFactory->getFolderObjectFromCombinedIdentifier($uploadFolderIdentifier);
-        } catch (Exception) {
+        } catch (\Exception) {
             [$storageId, $storagePath] = explode(':', $uploadFolderIdentifier, 2);
             // @extensionScannerIgnoreLine
-            $storage = $this->storageRepository->getStorageObject((int)$storageId);
+            $storage = $this->storageRepository->getStorageObject($storageId);
             $folderNames = GeneralUtility::trimExplode('/', $storagePath, true);
             $uploadFolder = $this->provideTargetFolder($storage->getRootLevelFolder(), ...$folderNames);
             $this->provideFolderInitialization($uploadFolder);
@@ -314,6 +329,8 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
 
     private function getLanguageService(): LanguageService
     {
-        return $GLOBALS['LANG'];
+        /** @var LanguageService $languageService */
+        $languageService = $GLOBALS['LANG'];
+        return $languageService;
     }
 }

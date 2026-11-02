@@ -13,16 +13,12 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Evoweb\SfRegister\Tests\Unit\Services;
+namespace EvowebTests\TestClasses\Controller;
 
-use PHPUnit\Framework\Attributes\Test;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use Evoweb\SfRegister\Controller\FeuserInviteController as BaseFeuserInviteController;
+use Evoweb\SfRegister\Tests\Functional\Traits\SettableCallable;
 
-class MailTest extends UnitTestCase
+class FeuserInviteController extends BaseFeuserInviteController
 {
-    #[Test]
-    public function sendEmail(): void
-    {
-        self::markTestIncomplete('not implemented by now');
-    }
+    use SettableCallable;
 }

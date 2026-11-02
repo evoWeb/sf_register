@@ -39,7 +39,8 @@ class ApplicationContextViewHelper extends AbstractConditionViewHelper
 
     public function render(): mixed
     {
-        if ($this->resolver->evaluate('applicationContext matches \'/^' . $this->arguments['environment'] . '/\'')) {
+        $environment = is_scalar($this->arguments['environment']) ? (string)$this->arguments['environment'] : '';
+        if ($this->resolver->evaluate('applicationContext matches \'/^' . $environment . '/\'')) {
             return $this->renderThenChild();
         }
         return $this->renderElseChild();

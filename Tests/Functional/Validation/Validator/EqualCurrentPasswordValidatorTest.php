@@ -15,10 +15,14 @@ declare(strict_types=1);
 
 namespace Evoweb\SfRegister\Tests\Functional\Validation\Validator;
 
+use Evoweb\SfRegister\Domain\Repository\FrontendUserRepository;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use Evoweb\SfRegister\Validation\Validator\EqualCurrentPasswordValidator;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\DependencyInjection\Container;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Site\Entity\NullSite;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class EqualCurrentPasswordValidatorTest extends AbstractTestBase
@@ -60,5 +64,57 @@ class EqualCurrentPasswordValidatorTest extends AbstractTestBase
         /** @var EqualCurrentPasswordValidator $subject */
         $subject = $this->get(EqualCurrentPasswordValidator::class);
         self::assertFalse($subject->validate($expected)->hasErrors());
+    }
+
+    #[Test]
+    public function isValidReturnsFalseIfPasswordDoesNotMatchCurrentPassword(): void
+    {
+        $this->loginFrontendUser('testuser', 'TestPa$5');
+
+        $this->request = $this->request->withAttribute('language', (new NullSite())->getDefaultLanguage());
+        $GLOBALS['TYPO3_REQUEST'] = $this->request;
+
+        /** @var EqualCurrentPasswordValidator $subject */
+        $subject = $this->get(EqualCurrentPasswordValidator::class);
+        $result = $subject->validate('someOtherPassword');
+
+        self::assertTrue($result->hasErrors());
+        self::assertSame(1301599507, $result->getErrors()[0]->getCode());
+    }
+
+    /**
+     * EqualCurrentPasswordValidator::isValid() reads
+     * $this->frontendUserService->getLoggedInUser() and calls `$user?->getPassword() ?? ''`.
+     * FrontendUserService::getLoggedInUser() can return null even while userIsLoggedIn() is true
+     * (e.g. the FE session is valid but the fe_users row was hidden/deleted afterwards, or
+     * excluded by the repository's enable-fields) - same root cause as
+     * FeuserPasswordControllerTest::saveActionThrowsWhenLoggedInUserRecordCannotBeResolved().
+     * Without the null-safe call, calling $user->getPassword() directly on null would throw an
+     * uncaught \Error (catch (Exception $exception) does not catch \Error).
+     */
+    #[Test]
+    public function isValidReportsErrorWhenLoggedInUserRecordCannotBeResolved(): void
+    {
+        $this->loginFrontendUser('testuser', 'TestPa$5');
+
+        /** @var FrontendUserRepository&MockObject $repository */
+        $repository = $this->getMockBuilder(FrontendUserRepository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['findByUid'])
+            ->getMock();
+        $repository->method('findByUid')->willReturn(null);
+
+        /** @var Container $container */
+        $container = $this->getContainer();
+        $container->set(FrontendUserRepository::class, $repository);
+
+        // When getLoggedInUser() returns null, isValid() uses $user?->getPassword() ?? '' instead of
+        // dereferencing null, so validation reports an error gracefully instead of raising an Error.
+        /** @var EqualCurrentPasswordValidator $subject */
+        $subject = $this->get(EqualCurrentPasswordValidator::class);
+
+        $result = $subject->validate('TestPa$5');
+
+        self::assertTrue($result->hasErrors());
     }
 }

@@ -25,15 +25,16 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 #[Autoconfigure(public: true)]
 class ImageUploadValidator extends AbstractValidator
 {
-    public function __construct(protected File $fileService)
-    {
-    }
+    public function __construct(protected File $fileService) {}
 
     /**
      * If the given value is a valid image
      */
     public function isValid(mixed $value): void
     {
+        if ($this->request === null) {
+            return;
+        }
         $this->fileService->setRequest($this->request);
         if (!$this->fileService->isValid()) {
             foreach ($this->fileService->getErrors() as $error) {

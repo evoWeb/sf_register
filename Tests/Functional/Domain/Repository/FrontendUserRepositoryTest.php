@@ -43,6 +43,7 @@ class FrontendUserRepositoryTest extends AbstractTestBase
         $this->createServerRequest();
         $this->initializeFrontendTypoScript();
 
+        /** @var ConfigurationManager $configurationManager */
         $configurationManager = $this->get(ConfigurationManager::class);
         $configurationManager->setRequest($this->request);
         // @extensionScannerIgnoreLine
@@ -50,6 +51,7 @@ class FrontendUserRepositoryTest extends AbstractTestBase
             'extensionName' => 'SfRegister',
             'pluginName' => 'Create',
         ]);
+        /** @var DataMapFactory $dataMapFactory */
         $dataMapFactory = $this->get(DataMapFactory::class);
 
         $queryFactory = new QueryFactory(

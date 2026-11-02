@@ -13,16 +13,12 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Evoweb\SfRegister\Tests\Unit\Services;
+namespace EvowebTests\TestClasses\Controller;
 
-use PHPUnit\Framework\Attributes\Test;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use Evoweb\SfRegister\Controller\FeuserResendController as BaseFeuserResendController;
+use Evoweb\SfRegister\Tests\Functional\Traits\SettableCallable;
 
-class FileTest extends UnitTestCase
+class FeuserResendController extends BaseFeuserResendController
 {
-    #[Test]
-    public function isValid(): void
-    {
-        self::markTestIncomplete('not implemented by now');
-    }
+    use SettableCallable;
 }

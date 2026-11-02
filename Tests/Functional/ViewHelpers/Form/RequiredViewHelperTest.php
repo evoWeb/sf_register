@@ -35,7 +35,7 @@ class RequiredViewHelperTest extends AbstractTestBase
     }
 
     /**
-     * @param array<string, array<string, object>> $validation
+     * @param array<string, array<string, class-string<RequiredValidator>>> $validation
      */
     #[Test]
     #[DataProvider('templateProvider')]
@@ -53,7 +53,9 @@ class RequiredViewHelperTest extends AbstractTestBase
         $setup['plugin.']['tx_sfregister.']['settings.']['validation.'] = $validation;
         $frontendTypoScript->setSetupArray($setup);
 
-        $context = $this->get(RenderingContextFactory::class)->create();
+        /** @var RenderingContextFactory $renderingContextFactory */
+        $renderingContextFactory = $this->get(RenderingContextFactory::class);
+        $context = $renderingContextFactory->create();
         $context->setAttribute(ServerRequestInterface::class, $extbaseRequest);
         $context->getTemplatePaths()
             ->setTemplateSource('{namespace register=Evoweb\SfRegister\ViewHelpers}' . $template);
@@ -67,7 +69,7 @@ class RequiredViewHelperTest extends AbstractTestBase
     }
 
     /**
-     * @return iterable<array<string, string|array<string, object>>>
+     * @return iterable<array{template: string, expected: string|null, validation: array<string, array<string, class-string<RequiredValidator>>>}>
      */
     public static function templateProvider(): iterable
     {
