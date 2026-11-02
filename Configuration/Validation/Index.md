@@ -1,22 +1,22 @@
 ---
 title: "Validation"
 manual: "Frontend User Registration: Multipurpose configurable registration"
-version: "14.0.3"
-permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:configuration-validation@14.0.3"
+version: "14.0.4"
+permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:configuration-validation@14.0.4"
 source: "Configuration/Validation/Index.rst"
-rendered: "2026-11-02T17:38:37+00:00"
+rendered: "2026-11-02T18:38:00+00:00"
 ---
 
 # Validation {#configuration-validation}
 
--   [Purpose of Validators](https://docs.typo3.org/permalink/evoweb/sf-register:purpose-of-validators@14.0.3)
--   [Changes since version 9.0.0](https://docs.typo3.org/permalink/evoweb/sf-register:changes-since-version-9-0-0@14.0.3)
--   [Different possibilities of assigning validators](https://docs.typo3.org/permalink/evoweb/sf-register:different-possibilities-of-assigning-validators@14.0.3)
--   [Separate validators per process](https://docs.typo3.org/permalink/evoweb/sf-register:separate-validators-per-process@14.0.3)
--   [Special validators](https://docs.typo3.org/permalink/evoweb/sf-register:special-validators@14.0.3)
--   [Custom validators](https://docs.typo3.org/permalink/evoweb/sf-register:custom-validators@14.0.3)
--   [Available validators](https://docs.typo3.org/permalink/evoweb/sf-register:available-validators@14.0.3)
--   [Special fields Validators](https://docs.typo3.org/permalink/evoweb/sf-register:special-fields-validators@14.0.3)
+-   [Purpose of Validators](https://docs.typo3.org/permalink/evoweb/sf-register:purpose-of-validators@14.0.4)
+-   [Changes since version 9.0.0](https://docs.typo3.org/permalink/evoweb/sf-register:changes-since-version-9-0-0@14.0.4)
+-   [Different possibilities of assigning validators](https://docs.typo3.org/permalink/evoweb/sf-register:different-possibilities-of-assigning-validators@14.0.4)
+-   [Separate validators per process](https://docs.typo3.org/permalink/evoweb/sf-register:separate-validators-per-process@14.0.4)
+-   [Special validators](https://docs.typo3.org/permalink/evoweb/sf-register:special-validators@14.0.4)
+-   [Custom validators](https://docs.typo3.org/permalink/evoweb/sf-register:custom-validators@14.0.4)
+-   [Available validators](https://docs.typo3.org/permalink/evoweb/sf-register:available-validators@14.0.4)
+-   [Special fields Validators](https://docs.typo3.org/permalink/evoweb/sf-register:special-fields-validators@14.0.4)
 
 ## Purpose of Validators {#configuration-validation-purpose}
 
@@ -24,7 +24,7 @@ Validators are a mechanism to ensure that all information given by the user
 meet your expectation as an admin. Either if the values make sense in terms
 of format like emails oder in required information value like age verification.
 
-If values need to be enforce your should use the [RequiredValidator](https://docs.typo3.org/permalink/evoweb/sf-register:requiredvalidator@14.0.3) because
+If values need to be enforce your should use the [RequiredValidator](https://docs.typo3.org/permalink/evoweb/sf-register:requiredvalidator@14.0.4) because
 this validator does not only check if the value of the configured field is
 filled but it also serves as a signal for the Required Partial to render the
 corresponding flag.
@@ -224,7 +224,7 @@ which are suited for the usage on fields.
 
     Likewise the rendering of the captcha its possible to use custom
     captchas to validate. How to use create custom is described in
-    [Bring in your own captcha](https://docs.typo3.org/permalink/evoweb/sf-register:addcustomcaptcha@14.0.3)
+    [Bring in your own captcha](https://docs.typo3.org/permalink/evoweb/sf-register:addcustomcaptcha@14.0.4)
 
     Possible options are:
 

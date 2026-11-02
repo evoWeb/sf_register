@@ -1,19 +1,19 @@
 ---
 title: "Emails"
 manual: "Frontend User Registration: Multipurpose configurable registration"
-version: "14.0.3"
-permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:configuration-emails@14.0.3"
+version: "14.0.4"
+permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:configuration-emails@14.0.4"
 source: "Configuration/Emails/Index.rst"
-rendered: "2026-11-02T17:38:37+00:00"
+rendered: "2026-11-02T18:38:00+00:00"
 ---
 
 # Emails {#configuration-emails}
 
--   [Notify admin create properties](https://docs.typo3.org/permalink/evoweb/sf-register:notify-admin-create-properties@14.0.3)
--   [Notify admin edit properties](https://docs.typo3.org/permalink/evoweb/sf-register:notify-admin-edit-properties@14.0.3)
--   [Notify user create properties](https://docs.typo3.org/permalink/evoweb/sf-register:notify-user-create-properties@14.0.3)
--   [Notify user edit properties](https://docs.typo3.org/permalink/evoweb/sf-register:notify-user-edit-properties@14.0.3)
--   [Address and subject properties](https://docs.typo3.org/permalink/evoweb/sf-register:address-and-subject-properties@14.0.3)
+-   [Notify admin create properties](https://docs.typo3.org/permalink/evoweb/sf-register:notify-admin-create-properties@14.0.4)
+-   [Notify admin edit properties](https://docs.typo3.org/permalink/evoweb/sf-register:notify-admin-edit-properties@14.0.4)
+-   [Notify user create properties](https://docs.typo3.org/permalink/evoweb/sf-register:notify-user-create-properties@14.0.4)
+-   [Notify user edit properties](https://docs.typo3.org/permalink/evoweb/sf-register:notify-user-edit-properties@14.0.4)
+-   [Address and subject properties](https://docs.typo3.org/permalink/evoweb/sf-register:address-and-subject-properties@14.0.4)
 
 ## Notify admin create properties {#configuration-emails-notify-admin-create-properties}
 

@@ -1,25 +1,25 @@
 ---
 title: "Configuration"
 manual: "Frontend User Registration: Multipurpose configurable registration"
-version: "14.0.3"
-permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:configuration@14.0.3"
+version: "14.0.4"
+permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:configuration@14.0.4"
 source: "Configuration/Index.rst"
-rendered: "2026-11-02T17:38:37+00:00"
+rendered: "2026-11-02T18:38:00+00:00"
 ---
 
 # Configuration {#configuration}
 
 ## More complex configuration {#more-complex-configuration}
 
--   [Emails](https://docs.typo3.org/permalink/evoweb/sf-register:emails@14.0.3)
--   [Validation](https://docs.typo3.org/permalink/evoweb/sf-register:validation@14.0.3)
+-   [Emails](https://docs.typo3.org/permalink/evoweb/sf-register:emails@14.0.4)
+-   [Validation](https://docs.typo3.org/permalink/evoweb/sf-register:validation@14.0.4)
 
 ## Table of content {#table-of-content}
 
--   [Integrate other captcha extension](https://docs.typo3.org/permalink/evoweb/sf-register:integrate-other-captcha-extension@14.0.3)
--   [Write own validators](https://docs.typo3.org/permalink/evoweb/sf-register:write-own-validators@14.0.3)
--   [Settings](https://docs.typo3.org/permalink/evoweb/sf-register:settings@14.0.3)
--   [Persistence](https://docs.typo3.org/permalink/evoweb/sf-register:persistence@14.0.3)
+-   [Integrate other captcha extension](https://docs.typo3.org/permalink/evoweb/sf-register:integrate-other-captcha-extension@14.0.4)
+-   [Write own validators](https://docs.typo3.org/permalink/evoweb/sf-register:write-own-validators@14.0.4)
+-   [Settings](https://docs.typo3.org/permalink/evoweb/sf-register:settings@14.0.4)
+-   [Persistence](https://docs.typo3.org/permalink/evoweb/sf-register:persistence@14.0.4)
 
 ### Integrate other captcha extension {#integrate-other-captcha-extension}
 

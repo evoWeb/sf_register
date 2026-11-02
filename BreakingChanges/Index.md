@@ -1,10 +1,10 @@
 ---
 title: "Breaking Changes"
 manual: "Frontend User Registration: Multipurpose configurable registration"
-version: "14.0.3"
-permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:breaking-changes@14.0.3"
+version: "14.0.4"
+permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:breaking-changes@14.0.4"
 source: "BreakingChanges/Index.rst"
-rendered: "2026-11-02T17:38:37+00:00"
+rendered: "2026-11-02T18:38:00+00:00"
 ---
 
 # Breaking Changes {#breaking-changes}
@@ -152,7 +152,7 @@ public function __construct(FrontendUserRepository $userRepository)
 The hole extension was refactored to make best usage of TYPO3 10 changes. Namely
 
 -   constructor DI
--   exchange Signal/Slot dispatcher with PSR-14 events, have a look in extendability at [PSR-14 events](https://docs.typo3.org/permalink/evoweb/sf-register:psr14event@14.0.3)
+-   exchange Signal/Slot dispatcher with PSR-14 events, have a look in extendability at [PSR-14 events](https://docs.typo3.org/permalink/evoweb/sf-register:psr14event@14.0.4)
 -   refactor to fully match the PSR-12 standard
 -   rename TypoScript setting processInitializeActionSignal to processInitializeActionEvent
 -   rename TypoScript setting redirectSignal. *to redirectEvent.*

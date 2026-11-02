@@ -1,8 +1,8 @@
 # Frontend User Registration: Multipurpose configurable registration
 
-> Version 14.0.3 of this manual.
+> Version 14.0.4 of this manual.
 > Every page is also available as Markdown: the same path with .md instead of .html.
-> The permalink of an anchor is https://docs.typo3.org/permalink/evoweb/sf-register:{anchor}@14.0.3.
+> The permalink of an anchor is https://docs.typo3.org/permalink/evoweb/sf-register:{anchor}@14.0.4.
 
 ## Indexes
 

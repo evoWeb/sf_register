@@ -1,20 +1,20 @@
 ---
 title: "Extendability"
 manual: "Frontend User Registration: Multipurpose configurable registration"
-version: "14.0.3"
-permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:extendability@14.0.3"
+version: "14.0.4"
+permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:extendability@14.0.4"
 source: "Extendability/Index.rst"
-rendered: "2026-11-02T17:38:37+00:00"
+rendered: "2026-11-02T18:38:00+00:00"
 ---
 
 # Extendability {#extendability}
 
--   [Use your own flavor of fields](https://docs.typo3.org/permalink/evoweb/sf-register:use-your-own-flavor-of-fields@14.0.3)
--   [Adding custom properties](https://docs.typo3.org/permalink/evoweb/sf-register:adding-custom-properties@14.0.3)
--   [Bring in your own captcha](https://docs.typo3.org/permalink/evoweb/sf-register:bring-in-your-own-captcha@14.0.3)
--   [PSR-14 Events](https://docs.typo3.org/permalink/evoweb/sf-register:psr-14-events@14.0.3)
--   [How to implement a slot](https://docs.typo3.org/permalink/evoweb/sf-register:how-to-implement-a-slot@14.0.3)
--   [Available events](https://docs.typo3.org/permalink/evoweb/sf-register:available-events@14.0.3)
+-   [Use your own flavor of fields](https://docs.typo3.org/permalink/evoweb/sf-register:use-your-own-flavor-of-fields@14.0.4)
+-   [Adding custom properties](https://docs.typo3.org/permalink/evoweb/sf-register:adding-custom-properties@14.0.4)
+-   [Bring in your own captcha](https://docs.typo3.org/permalink/evoweb/sf-register:bring-in-your-own-captcha@14.0.4)
+-   [PSR-14 Events](https://docs.typo3.org/permalink/evoweb/sf-register:psr-14-events@14.0.4)
+-   [How to implement a slot](https://docs.typo3.org/permalink/evoweb/sf-register:how-to-implement-a-slot@14.0.4)
+-   [Available events](https://docs.typo3.org/permalink/evoweb/sf-register:available-events@14.0.4)
 
 ## Use your own flavor of fields {#createcustomfields}
 

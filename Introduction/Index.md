@@ -1,17 +1,17 @@
 ---
 title: "Introduction"
 manual: "Frontend User Registration: Multipurpose configurable registration"
-version: "14.0.3"
-permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:introduction@14.0.3"
+version: "14.0.4"
+permalink: "https://docs.typo3.org/permalink/evoweb/sf-register:introduction@14.0.4"
 source: "Introduction/Index.rst"
-rendered: "2026-11-02T17:38:37+00:00"
+rendered: "2026-11-02T18:38:00+00:00"
 ---
 
 # Introduction {#introduction}
 
 This Documentation was written for version 13.0.0 of the extension.
 
--   [What does it do?](https://docs.typo3.org/permalink/evoweb/sf-register:what-does-it-do@14.0.3)
+-   [What does it do?](https://docs.typo3.org/permalink/evoweb/sf-register:what-does-it-do@14.0.4)
 
 ## What does it do? {#what-does-it-do}
 
