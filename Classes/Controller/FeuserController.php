@@ -747,11 +747,15 @@ class FeuserController extends ActionController
     }
 
     /**
-     * Determines the frontend user, either if it's already submitted, or by looking up the mail hash code.
+     * Determines the frontend user solely from a validated mailed-link hash. Returns null when
+     * the hash is missing or does not match.
      */
     protected function determineFrontendUser(?FrontendUser $user, ?string $hash): ?FrontendUser
     {
-        $frontendUser = $user;
+        // The mailed link hash is the only authorization for the confirm/accept/refuse/decline
+        // actions. Start from null so a missing or wrong hash never resolves to a user. The
+        // submitted $user is attacker controlled and must not be trusted as a fallback.
+        $frontendUser = null;
 
         $requestArguments = $this->request->getArguments();
         if (isset($requestArguments['user']) && $hash !== null) {
