@@ -164,7 +164,7 @@ class AbstractSelectViewHelper extends AbstractFormFieldViewHelper
     /**
      * @param array<int|string, string> $options
      */
-    private function renderOptionTags(array $options): string
+    protected function renderOptionTags(array $options): string
     {
         $output = '';
         foreach ($options as $value => $label) {
