@@ -91,19 +91,24 @@ class ModifyValidator
 
     /**
      * @param array<string, array<string>|string> $settings
+     * @param string[] $ignoredArgumentNames arguments with IgnoreValidation that must not get validators
      */
     public function modifyArgumentValidators(
         FeuserController $controller,
         array $settings,
         RequestInterface $request,
         Arguments $arguments,
+        array $ignoredArgumentNames = [],
     ): Arguments {
         /**
          * @var string $argumentName
          * @var Argument $argument
          */
         foreach ($arguments as $argumentName => $argument) {
-            if (!in_array($argumentName, ['user', 'password', 'email'])) {
+            if (
+                !in_array($argumentName, ['user', 'password', 'email'])
+                || in_array($argumentName, $ignoredArgumentNames, true)
+            ) {
                 continue;
             }
 
