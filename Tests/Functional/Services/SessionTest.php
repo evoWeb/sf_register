@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License or any later version.
+ * of the License, or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -18,143 +18,124 @@ namespace Evoweb\SfRegister\Tests\Functional\Services;
 use Evoweb\SfRegister\Services\Session;
 use Evoweb\SfRegister\Tests\Functional\AbstractTestBase;
 use PHPUnit\Framework\Attributes\Test;
-use TYPO3\CMS\Core\Session\UserSession;
-use TYPO3\CMS\Core\Session\UserSessionManager;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use TYPO3\CMS\Core\Http\NormalizedParams;
+use TYPO3\CMS\Core\Http\Response;
+use TYPO3\CMS\Frontend\Middleware\FrontendUserAuthenticator;
 
 class SessionTest extends AbstractTestBase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
         $this->createServerRequest();
     }
 
-    protected function getSubject(): Session
+    #[Test]
+    public function valueSetInOneRequestIsAvailableInFollowingRequest(): void
     {
-        /** @var Session $subject */
-        $subject = $this->get(Session::class);
-        return $subject;
+        $firstResponse = $this->processFrontendRequest(
+            static fn() => (new Session())->set('captchaWasValid', true)
+        );
+
+        $value = null;
+        $this->processFrontendRequest(
+            static function () use (&$value): void {
+                $value = (new Session())->get('captchaWasValid');
+            },
+            $this->getCookiesFromResponse($firstResponse)
+        );
+
+        self::assertTrue($value);
     }
 
-    protected function getUnderlyingSession(Session $subject): UserSession
+    #[Test]
+    public function readingValuesDoesNotStartASession(): void
     {
-        /** @var UserSession $session */
-        $session = $this->getPrivateProperty($subject, 'session')->getValue($subject);
-        return $session;
+        $response = $this->processFrontendRequest(
+            static function (): void {
+                $session = new Session();
+                $session->has('captchaWasValid');
+                $session->get('captchaWasValid');
+            }
+        );
+
+        self::assertSame([], $this->getCookiesFromResponse($response));
+    }
+
+    #[Test]
+    public function removedValueIsNotAvailableInFollowingRequest(): void
+    {
+        $firstResponse = $this->processFrontendRequest(
+            static function (): void {
+                $session = new Session();
+                $session->set('captchaWasValid', true);
+                $session->set('other', 'value');
+                $session->remove('captchaWasValid');
+            }
+        );
+
+        $has = null;
+        $other = null;
+        $this->processFrontendRequest(
+            static function () use (&$has, &$other): void {
+                $session = new Session();
+                $has = $session->has('captchaWasValid');
+                $other = $session->get('other');
+            },
+            $this->getCookiesFromResponse($firstResponse)
+        );
+
+        self::assertFalse($has);
+        self::assertSame('value', $other);
     }
 
     /**
-     * @return array<int, array<string, mixed>>
-     */
-    protected function fetchAllPersistedSessionRecords(): array
-    {
-        return $this->getConnectionPool()
-            ->getQueryBuilderForTable('fe_sessions')
-            ->select('*')
-            ->from('fe_sessions')
-            ->executeQuery()
-            ->fetchAllAssociative();
-    }
-
-    /**
-     * Reloads the session directly from the TYPO3 core session backend, bypassing
-     * the subject entirely, to prove the data was really persisted and not just
-     * held in the in-memory session object.
+     * Runs the callback inside the frontend user middleware, like a plugin would be rendered
      *
-     * @return array<string, mixed>
+     * @param array<string, string> $cookies
      */
-    protected function reloadStoredValues(Session $subject): array
+    protected function processFrontendRequest(callable $callback, array $cookies = []): ResponseInterface
     {
-        $identifier = $this->getUnderlyingSession($subject)->getIdentifier();
-        $reloadedSession = UserSessionManager::create('FE')->createSessionFromStorage($identifier);
+        $request = $this->request->withCookieParams($cookies);
+        $request = $request->withAttribute('normalizedParams', NormalizedParams::createFromRequest($request));
+        $GLOBALS['TYPO3_REQUEST'] = $request;
 
-        $sessionValue = $reloadedSession->get('sf_register');
-        if (empty($sessionValue)) {
-            return [];
+        $handler = new class ($callback) implements RequestHandlerInterface {
+            /** @var callable */
+            private $callback;
+
+            public function __construct(callable $callback)
+            {
+                $this->callback = $callback;
+            }
+
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                $GLOBALS['TYPO3_REQUEST'] = $request;
+                ($this->callback)();
+                return new Response();
+            }
+        };
+
+        /** @var FrontendUserAuthenticator $frontendUserAuthenticator */
+        $frontendUserAuthenticator = $this->get(FrontendUserAuthenticator::class);
+        return $frontendUserAuthenticator->process($request, $handler);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    protected function getCookiesFromResponse(ResponseInterface $response): array
+    {
+        $cookies = [];
+        foreach ($response->getHeader('Set-Cookie') as $header) {
+            [$cookie] = explode(';', $header, 2);
+            [$name, $value] = explode('=', $cookie, 2);
+            $cookies[urldecode($name)] = urldecode($value);
         }
-
-        $values = unserialize((string)$sessionValue);
-        return is_array($values) ? $values : [];
-    }
-
-    // -- __construct --------------------------------------------------------------------------
-
-    #[Test]
-    public function constructInitializesEmptyValuesWhenSessionHasNoStoredData(): void
-    {
-        $subject = $this->getSubject();
-
-        self::assertFalse($subject->has('foo'));
-        self::assertNull($subject->get('foo'));
-    }
-
-    #[Test]
-    public function constructDoesNotYetPersistAFreshAnonymousSession(): void
-    {
-        $this->getSubject();
-
-        self::assertCount(0, $this->fetchAllPersistedSessionRecords());
-    }
-
-    // -- set ------------------------------------------------------------------------------------
-
-    #[Test]
-    public function setPersistsThePreviouslyUnfixatedAnonymousSessionToTheBackend(): void
-    {
-        $subject = $this->getSubject();
-
-        $subject->set('foo', 'bar');
-
-        $records = $this->fetchAllPersistedSessionRecords();
-        self::assertCount(1, $records);
-        self::assertEquals(0, $records[0]['ses_userid']);
-    }
-
-    #[Test]
-    public function setStoresValueRetrievableAfterReloadingTheSessionFromTheBackend(): void
-    {
-        $subject = $this->getSubject();
-
-        $subject->set('foo', 'bar');
-
-        self::assertSame(['foo' => 'bar'], $this->reloadStoredValues($subject));
-    }
-
-    #[Test]
-    public function getReturnsValueStoredForExistingKey(): void
-    {
-        $subject = $this->getSubject();
-        $subject->set('foo', 'bar');
-
-        self::assertSame('bar', $subject->get('foo'));
-    }
-
-    #[Test]
-    public function secondSetOnAnAlreadyFixatedSessionDoesNotFailAndKeepsBothValues(): void
-    {
-        $subject = $this->getSubject();
-
-        $subject->set('foo', 'bar');
-        $subject->set('other', 'value');
-
-        self::assertCount(1, $this->fetchAllPersistedSessionRecords());
-        self::assertSame(['foo' => 'bar', 'other' => 'value'], $this->reloadStoredValues($subject));
-    }
-
-    // -- remove ---------------------------------------------------------------------------------
-
-    #[Test]
-    public function removeDeletesKeyButKeepsSessionPersistedWithRemainingData(): void
-    {
-        $subject = $this->getSubject();
-        $subject->set('foo', 'bar');
-        $subject->set('other', 'value');
-
-        $subject->remove('foo');
-
-        self::assertFalse($subject->has('foo'));
-        self::assertTrue($subject->has('other'));
-        self::assertCount(1, $this->fetchAllPersistedSessionRecords());
-        self::assertSame(['other' => 'value'], $this->reloadStoredValues($subject));
+        return $cookies;
     }
 }
