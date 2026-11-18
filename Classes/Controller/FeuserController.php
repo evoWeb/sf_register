@@ -25,6 +25,7 @@ use Evoweb\SfRegister\Services\File as FileService;
 use Evoweb\SfRegister\Services\ModifyValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
+use TYPO3\CMS\Core\Exception\Crypto\InvalidHashStringException;
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -32,12 +33,14 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
+use TYPO3\CMS\Extbase\Security\HashScope;
 use TYPO3\CMS\Fluid\View\FluidViewAdapter;
 
 /**
@@ -245,6 +248,61 @@ class FeuserController extends ActionController
                 );
             }
         }
+    }
+
+    /**
+     * Requests submitted by the preview have the preview as referring request,
+     * which would validate the originally submitted values again. Values like a
+     * captcha can only be validated once, so forwarding to the preview would go
+     * back and forth until an InfiniteLoopException is thrown. The form gets
+     * displayed instead.
+     *
+     * The arguments need to be emptied, otherwise the dispatcher passes the user of
+     * the current request to the form. The form fields get the submitted values from
+     * the original request, which the dispatcher sets to the failed request.
+     */
+    protected function errorAction(): ResponseInterface
+    {
+        if ($this->getReferringActionName() === 'preview') {
+            $this->addErrorFlashMessage();
+            return (new ForwardResponse('form'))
+                ->withArguments([])
+                ->withArgumentsValidationResult($this->arguments->validate())
+                ->withStatus(400);
+        }
+
+        return parent::errorAction();
+    }
+
+    /**
+     * Only the signed referring request is taken into account
+     */
+    protected function getReferringActionName(): ?string
+    {
+        /** @var ExtbaseRequestParameters $extbaseRequestParameters */
+        $extbaseRequestParameters = $this->request->getAttribute('extbase');
+        $referrer = $extbaseRequestParameters->getInternalArgument('__referrer');
+        if (!is_string($referrer['@request'] ?? null)) {
+            return null;
+        }
+
+        try {
+            $referringRequest = json_decode(
+                $this->hashService->validateAndStripHmac(
+                    $referrer['@request'],
+                    HashScope::ReferringRequest->prefix()
+                ),
+                true
+            );
+        } catch (InvalidHashStringException) {
+            return null;
+        }
+
+        $controllerName = $referringRequest['@controller'] ?? null;
+        $actionName = $referringRequest['@action'] ?? null;
+        return $controllerName === $this->request->getControllerName() && is_string($actionName)
+            ? $actionName
+            : null;
     }
 
     protected function callActionMethod(RequestInterface $request): ResponseInterface
