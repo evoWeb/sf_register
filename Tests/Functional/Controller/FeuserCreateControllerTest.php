@@ -23,19 +23,26 @@ use Evoweb\SfRegister\Validation\Validator\RequiredValidator;
 use Evoweb\SfRegister\Validation\Validator\UniqueValidator;
 use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use EvowebTests\TestClasses\Controller\FeuserCreateController;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\DependencyInjection\Container;
+use TYPO3\CMS\Core\Crypto\HashAlgo;
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Security\HashScope;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class FeuserCreateControllerTest extends AbstractTestBase
 {
+    protected const REFERRING_ARGUMENTS = ['user' => ['username' => 'tester', 'captcha' => 'solved']];
     public function setUp(): void
     {
         parent::setUp();
@@ -567,5 +574,99 @@ class FeuserCreateControllerTest extends AbstractTestBase
         self::assertSame(1, $view->variables['userNotFound']);
         self::assertArrayNotHasKey('userDeclined', $view->variables);
         self::assertInstanceOf(HtmlResponse::class, $response);
+    }
+
+    /**
+     * Forwarding to the referring preview action would validate the original form
+     * data again. Because a captcha can only be solved once, this ends in an
+     * InfiniteLoopException, so the form needs to be displayed instead.
+     */
+    #[Test]
+    #[DataProvider('actionsReferredByPreviewProvider')]
+    public function failedActionReferredByPreviewForwardsToForm(string $actionMethodName): void
+    {
+        $subject = $this->getSubjectWithFailedValidation($actionMethodName, 'preview');
+
+        /** @var ForwardResponse $response */
+        $response = $this->getPrivateMethod($subject, 'errorAction')->invoke($subject);
+
+        self::assertInstanceOf(ForwardResponse::class, $response);
+        self::assertSame('form', $response->getActionName());
+        self::assertSame([], $response->getArguments());
+        self::assertTrue($response->getArgumentsValidationResult()->hasErrors());
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function actionsReferredByPreviewProvider(): iterable
+    {
+        yield 'proxy' => ['proxyAction'];
+        yield 'save' => ['saveAction'];
+        // forwarded to the preview by a failed save of an older version
+        yield 'preview' => ['previewAction'];
+    }
+
+    #[Test]
+    public function failedActionNotReferredByPreviewForwardsToReferringRequest(): void
+    {
+        $subject = $this->getSubjectWithFailedValidation('saveAction', 'form');
+
+        /** @var ForwardResponse $response */
+        $response = $this->getPrivateMethod($subject, 'errorAction')->invoke($subject);
+
+        self::assertInstanceOf(ForwardResponse::class, $response);
+        self::assertSame('form', $response->getActionName());
+        self::assertSame(self::REFERRING_ARGUMENTS, $response->getArguments());
+    }
+
+    protected function getSubjectWithFailedValidation(
+        string $actionMethodName,
+        string $referringAction,
+    ): FeuserCreateController {
+        /** @var HashService $hashService */
+        $hashService = $this->get(HashService::class);
+
+        $extbaseAttribute = new ExtbaseRequestParameters();
+        $extbaseAttribute->setPluginName('Create');
+        $extbaseAttribute->setControllerExtensionName('SfRegister');
+        $extbaseAttribute->setControllerName('FeuserCreate');
+        $extbaseAttribute->setControllerActionName(substr($actionMethodName, 0, -6));
+        $extbaseAttribute->setArgument('__referrer', [
+            '@request' => $hashService->appendHmac(
+                (string)json_encode([
+                    '@extension' => 'SfRegister',
+                    '@controller' => 'FeuserCreate',
+                    '@action' => $referringAction,
+                ]),
+                HashScope::ReferringRequest->prefix(),
+                HashAlgo::SHA3_256
+            ),
+            'arguments' => $hashService->appendHmac(
+                base64_encode(serialize(self::REFERRING_ARGUMENTS)),
+                HashScope::ReferringArguments->prefix(),
+                HashAlgo::SHA3_256
+            ),
+        ]);
+        $request = new Request($this->request->withAttribute('extbase', $extbaseAttribute));
+
+        $failingValidator = new class extends AbstractValidator {
+            protected function isValid(mixed $value): void
+            {
+                $this->addError('captcha not correct', 1306910429);
+            }
+        };
+        $arguments = new Arguments();
+        $arguments->addNewArgument('user', FrontendUser::class, true)
+            ->setValidator($failingValidator)
+            ->setValue(new FrontendUser());
+
+        /** @var FeuserCreateController $subject */
+        $subject = $this->get(FeuserCreateController::class);
+        $subject->set('request', $request);
+        $subject->set('arguments', $arguments);
+        $subject->set('actionMethodName', $actionMethodName);
+
+        return $subject;
     }
 }
