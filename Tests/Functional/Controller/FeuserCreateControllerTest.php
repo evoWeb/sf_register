@@ -29,6 +29,7 @@ use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Security\HashScope;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class FeuserCreateControllerTest extends AbstractTestBase
@@ -67,6 +68,31 @@ class FeuserCreateControllerTest extends AbstractTestBase
     #[Test]
     public function isUserValidatorSet(): void
     {
+        $validator = $this->getUserValidatorAfterInitialization('formAction');
+
+        $this->assertInstanceOf(UserValidator::class, $validator);
+    }
+
+    #[Test]
+    #[DataProvider('actionsWithIgnoredValidationProvider')]
+    public function noValidatorIsSetForArgumentWithIgnoredValidation(string $actionMethodName): void
+    {
+        $validator = $this->getUserValidatorAfterInitialization($actionMethodName);
+
+        self::assertNull($validator);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function actionsWithIgnoredValidationProvider(): iterable
+    {
+        yield 'proxy' => ['proxyAction'];
+        yield 'removeImage' => ['removeImageAction'];
+    }
+
+    protected function getUserValidatorAfterInitialization(string $actionMethodName): ?ValidatorInterface
+    {
         // configurationManager is a shared object, and will be a constructor parameter of the controller
         // @see Bootstrap::initializeConfiguration
         $configuration = [
@@ -83,7 +109,7 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $extbaseAttribute->setPluginName('Create');
         $extbaseAttribute->setControllerExtensionName('SfRegister');
         $extbaseAttribute->setControllerName('FeuserCreate');
-        $extbaseAttribute->setControllerActionName('create');
+        $extbaseAttribute->setControllerActionName(substr($actionMethodName, 0, -6));
 
         $extbaseAttribute->setArgument('user', [
             'gender' => 1,
@@ -106,15 +132,13 @@ class FeuserCreateControllerTest extends AbstractTestBase
         $subject = $this->get(FeuserCreateController::class);
 
         $subject->set('request', $request);
-        $subject->set('actionMethodName', 'formAction');
+        $subject->set('actionMethodName', $actionMethodName);
         $subject->call('initializeActionMethodArguments');
         $subject->call('initializeActionMethodValidators');
 
         /** @var Arguments $arguments */
         $arguments = $subject->get('arguments');
-        $validator = $arguments->getArgument('user')->getValidator();
-
-        $this->assertInstanceOf(UserValidator::class, $validator);
+        return $arguments->getArgument('user')->getValidator();
     }
 
     /**

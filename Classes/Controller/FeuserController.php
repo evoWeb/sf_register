@@ -95,10 +95,27 @@ class FeuserController extends ActionController
                 $this->settings,
                 $this->request,
                 $this->arguments,
+                $this->getArgumentNamesWithIgnoredValidation(),
             );
         } else {
             parent::initializeActionMethodValidators();
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getArgumentNamesWithIgnoredValidation(): array
+    {
+        $method = $this->reflectionService->getClassSchema(static::class)->getMethod($this->actionMethodName);
+
+        $argumentNames = [];
+        foreach ($this->arguments as $argument) {
+            if ($method->getParameter($argument->getName())->ignoreValidation()) {
+                $argumentNames[] = $argument->getName();
+            }
+        }
+        return $argumentNames;
     }
 
     /**
