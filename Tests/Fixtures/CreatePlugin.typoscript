@@ -1,0 +1,12 @@
+page = PAGE
+page.10 = EXTBASEPLUGIN
+page.10 {
+  extensionName = SfRegister
+  pluginName = Create
+}
+
+plugin.tx_sfregister.settings {
+  fields.selected = firstName,lastName,email,privacy,submit
+  validation.create.email >
+  validation.create.email = "EvowebTests\TestClasses\Validation\Validator\FailingValidator"
+}
