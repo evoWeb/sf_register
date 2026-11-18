@@ -22,7 +22,7 @@ use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Extbase\Security\HashScope;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
-class FeuserCreateControllerSaveTest extends AbstractTestBase
+class FeuserCreateControllerFrontendTest extends AbstractTestBase
 {
     protected const PLUGIN_NAMESPACE = 'tx_sfregister_create';
 
@@ -88,6 +88,39 @@ class FeuserCreateControllerSaveTest extends AbstractTestBase
         self::assertMatchesRegularExpression('/<input[^>]+name="tx_sfregister_create\[user\]\[email\]"[^>]+value="jane\.doe@example\.org"/', $body);
         self::assertMatchesRegularExpression('/<input[^>]+name="tx_sfregister_create\[user\]\[privacy\]"[^>]+checked="checked"/', $body);
         self::assertStringContainsString(FailingValidator::MESSAGE, $body);
+    }
+
+    /**
+     * The form maps an identity to an existing record. Without the uid validator of
+     * the form, the data of any user could be rendered in the registration form.
+     */
+    #[Test]
+    public function formDoesNotRenderDataOfExistingUser(): void
+    {
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/fe_users.csv');
+        $this->getConnectionPool()
+            ->getConnectionForTable('fe_users')
+            ->update(
+                'fe_users',
+                ['first_name' => 'Foreign', 'email' => 'foreign.user@example.org'],
+                ['uid' => 1]
+            );
+
+        $request = (new InternalRequest('https://example.org/'))->withMethod('POST');
+        $request->getBody()->write(http_build_query([
+            self::PLUGIN_NAMESPACE => [
+                'action' => 'form',
+                'controller' => 'FeuserCreate',
+                'user' => ['__identity' => 1],
+            ],
+        ]));
+
+        $response = $this->executeFrontendSubRequest($request);
+
+        $body = (string)$response->getBody();
+
+        self::assertStringNotContainsString('foreign.user@example.org', $body);
+        self::assertStringNotContainsString('Foreign', $body);
     }
 
     /**

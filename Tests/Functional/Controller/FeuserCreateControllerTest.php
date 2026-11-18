@@ -168,6 +168,8 @@ class FeuserCreateControllerTest extends AbstractTestBase
     {
         yield 'proxy' => ['proxyAction'];
         yield 'save' => ['saveAction'];
+        // change button of the preview forwards to the form with the user
+        yield 'form' => ['formAction'];
         // forwarded to the preview by a failed save of an older version
         yield 'preview' => ['previewAction'];
     }
