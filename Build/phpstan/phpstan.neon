@@ -1,6 +1,5 @@
 includes:
   - phpstan-baseline.neon
-  - ../vendor/friendsoftypo3/phpstan-typo3/extension.neon
 
 parameters:
   # Use local .cache dir instead of /tmp
@@ -18,4 +17,4 @@ parameters:
     # we do not check required extensions
     - ../../Build/*
     # ext_emconf.php get the $_EXTKEY set from outside. We'll ignore all of them
-    - ../ext_emconf.php
+    - ../../ext_emconf.php
