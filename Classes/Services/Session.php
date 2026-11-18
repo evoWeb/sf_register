@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License or any later version.
+ * of the License, or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -16,23 +16,17 @@ declare(strict_types=1);
 namespace Evoweb\SfRegister\Services;
 
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Http\NormalizedParams;
-use TYPO3\CMS\Core\Http\ServerRequest;
-use TYPO3\CMS\Core\Http\SetCookieService;
-use TYPO3\CMS\Core\Session\UserSession;
-use TYPO3\CMS\Core\Session\UserSessionManager;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /**
- * Service to handle the user session
+ * Service to handle values in the session of the frontend user
+ *
+ * Values are stored in the session data of the core frontend user, which takes
+ * care of persisting the anonymous session and sending the session cookie.
  */
 class Session implements SingletonInterface
 {
-    /**
-     * String to identify session values
-     */
-    protected string $sessionName = 'evoweb-sfregister-session';
-
     protected string $sessionKey = 'sf_register';
 
     /**
@@ -41,32 +35,11 @@ class Session implements SingletonInterface
      */
     protected ?array $values = null;
 
-    protected UserSessionManager $userSessionManager;
-
-    protected UserSession $session;
-
-    public function __construct()
-    {
-        $this->userSessionManager = UserSessionManager::create('FE');
-        $this->session = $this->userSessionManager->createFromRequestOrAnonymous(
-            $this->getRequest(),
-            $this->sessionName,
-        );
-        $this->fetch();
-    }
-
     public function fetch(): self
     {
         if ($this->values === null) {
-            $this->values = [];
-            $sessionValue = $this->session->get($this->sessionKey);
-            if (!empty($sessionValue)) {
-                $values = unserialize($sessionValue);
-                if (is_array($values)) {
-                    /** @var array<string, mixed> $values */
-                    $this->values = $values;
-                }
-            }
+            $sessionValue = $this->getFrontendUser()?->getSessionData($this->sessionKey);
+            $this->values = is_array($sessionValue) ? $sessionValue : [];
         }
 
         return $this;
@@ -74,41 +47,26 @@ class Session implements SingletonInterface
 
     public function store(): self
     {
-        if ($this->session->isAnonymous() && !$this->userSessionManager->isSessionPersisted($this->session)) {
-            $this->session = $this->userSessionManager->fixateAnonymousSession($this->session);
-        }
-        $this->session->set($this->sessionKey, serialize($this->values));
-        $this->userSessionManager->updateSession($this->session);
-        $setCookieService = SetCookieService::create($this->sessionName, 'FE');
-        $normalizedParams = NormalizedParams::createFromRequest($this->getRequest());
-        $setCookieService->setSessionCookie($this->session, $normalizedParams);
+        // null removes the key, so no session gets persisted for empty values
+        $this->getFrontendUser()?->setAndSaveSessionData($this->sessionKey, $this->values ?: null);
         return $this;
     }
 
     public function has(string $key): bool
     {
-        $result = false;
-
-        if (array_key_exists($key, $this->values ?? [])) {
-            $result = true;
-        }
-
-        return $result;
+        $this->fetch();
+        return array_key_exists($key, $this->values ?? []);
     }
 
     public function get(string $key): mixed
     {
-        $result = null;
-
-        if ($this->has($key)) {
-            $result = $this->values[$key] ?? null;
-        }
-
-        return $result;
+        $this->fetch();
+        return $this->values[$key] ?? null;
     }
 
     public function set(string $key, mixed $value): self
     {
+        $this->fetch();
         $this->values[$key] = $value;
 
         return $this->store();
@@ -118,14 +76,21 @@ class Session implements SingletonInterface
     {
         if ($this->has($key)) {
             unset($this->values[$key]);
+            $this->store();
         }
 
-        return $this->store();
+        return $this;
     }
 
-    public function getRequest(): ServerRequestInterface
+    protected function getFrontendUser(): ?FrontendUserAuthentication
     {
-        return $GLOBALS['TYPO3_REQUEST'] instanceof ServerRequestInterface
-            ? $GLOBALS['TYPO3_REQUEST'] : new ServerRequest();
+        $frontendUser = $this->getRequest()?->getAttribute('frontend.user');
+        return $frontendUser instanceof FrontendUserAuthentication ? $frontendUser : null;
+    }
+
+    public function getRequest(): ?ServerRequestInterface
+    {
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? null;
+        return $request instanceof ServerRequestInterface ? $request : null;
     }
 }
