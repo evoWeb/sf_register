@@ -28,6 +28,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\DependencyInjection\Container;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
@@ -345,6 +346,19 @@ class FeuserCreateControllerTest extends AbstractTestBase
             ->fetchAssociative();
         self::assertIsArray($row);
         self::assertSame('newlycreated', $row['username']);
+    }
+
+    // -- proxyAction ----------------------------------------------------------------------------
+
+    #[Test]
+    public function proxyActionForwardsToFormWithoutUser(): void
+    {
+        $subject = $this->getSubject('proxy');
+
+        $response = $subject->proxyAction(null);
+
+        self::assertInstanceOf(ForwardResponse::class, $response);
+        self::assertSame('form', $response->getActionName());
     }
 
     // -- confirmAction --------------------------------------------------------------------------
