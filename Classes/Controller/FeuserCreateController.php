@@ -36,6 +36,7 @@ use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Attribute;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 
@@ -182,6 +183,24 @@ class FeuserCreateController extends FeuserController
         }
 
         return $redirectResponse ?: new HtmlResponse($this->view->render());
+    }
+
+    /**
+     * The preview form names the preview action as referring request. Extbase would forward a failed
+     * save there, the preview validates the same user again and fails again, until the dispatcher
+     * gives up with an InfiniteLoopException, for example after reloading the page that saved the
+     * user. A failed save therefore returns to the form, which shows the validation errors and the data
+     * sent with the original request. Without arguments, the form action has no user to validate again.
+     */
+    protected function errorAction(): ResponseInterface
+    {
+        if ($this->actionMethodName !== 'saveAction') {
+            return parent::errorAction();
+        }
+
+        return (new ForwardResponse('form'))
+            ->withArguments([])
+            ->withArgumentsValidationResult($this->arguments->validate());
     }
 
     public function confirmFormAction(?FrontendUser $user, ?string $hash): ResponseInterface

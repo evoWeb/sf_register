@@ -25,9 +25,11 @@ use Evoweb\SfRegister\Validation\Validator\UserValidator;
 use EvowebTests\TestClasses\Controller\FeuserCreateController;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\DependencyInjection\Container;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
@@ -362,6 +364,37 @@ class FeuserCreateControllerTest extends AbstractTestBase
             ->fetchAssociative();
         self::assertIsArray($row);
         self::assertSame('newlycreated', $row['username']);
+    }
+
+    // -- errorAction ----------------------------------------------------------------------------
+
+    #[Test]
+    public function errorActionForwardsFailedSaveToFormWithoutArguments(): void
+    {
+        $user = new FrontendUser();
+        $user->setUsername('existing');
+        $subject = $this->getSubject('save', ['user' => $user]);
+        $subject->set('actionMethodName', 'saveAction');
+        $subject->call('initializeActionMethodArguments');
+
+        $response = (fn(): ResponseInterface => $this->errorAction())->call($subject);
+
+        self::assertInstanceOf(ForwardResponse::class, $response);
+        self::assertSame('form', $response->getActionName());
+        self::assertSame([], $response->getArguments());
+    }
+
+    #[Test]
+    public function errorActionKeepsDefaultHandlingForFailedPreview(): void
+    {
+        $subject = $this->getSubject('preview', ['user' => new FrontendUser()]);
+        $subject->set('actionMethodName', 'previewAction');
+        $subject->call('initializeActionMethodArguments');
+
+        $response = (fn(): ResponseInterface => $this->errorAction())->call($subject);
+
+        self::assertNotInstanceOf(ForwardResponse::class, $response);
+        self::assertSame(400, $response->getStatusCode());
     }
 
     // -- confirmAction --------------------------------------------------------------------------
