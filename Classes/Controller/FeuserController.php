@@ -274,10 +274,18 @@ class FeuserController extends ActionController
         return parent::callActionMethod($request);
     }
 
+    /**
+     * Only the preview form sends a user. Called without one, for example by opening its URL again,
+     * the proxy shows the form instead of failing on the missing argument.
+     */
     public function proxyAction(
         #[Attribute\IgnoreValidation]
-        FrontendUser $user
+        ?FrontendUser $user = null
     ): ResponseInterface {
+        if ($user === null) {
+            return new ForwardResponse('form');
+        }
+
         $action = $this->request->hasArgument('form') ? 'form' : 'save';
 
         return (new ForwardResponse($action))
