@@ -123,6 +123,23 @@ class FeuserCreateControllerTest extends AbstractTestBase
         self::assertInstanceOf(UserValidator::class, $validator);
     }
 
+    #[Test]
+    public function proxyActionKeepsUserWithoutValidator(): void
+    {
+        $subject = $this->getSubject('proxy', ['user' => ['username' => '']], [
+            'fields' => ['selected' => ['username']],
+            'validation' => ['create' => ['username' => RequiredValidator::class]],
+        ]);
+        $subject->set('actionMethodName', 'proxyAction');
+        $subject->call('initializeActionMethodArguments');
+        $subject->call('initializeActionMethodValidators');
+
+        /** @var Arguments $arguments */
+        $arguments = $subject->get('arguments');
+
+        self::assertNull($arguments->getArgument('user')->getValidator());
+    }
+
     /**
      * configurationManager is a shared object and will be a constructor parameter of the
      * controller (@see Bootstrap::initializeConfiguration).

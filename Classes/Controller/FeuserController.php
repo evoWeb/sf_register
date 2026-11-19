@@ -84,7 +84,8 @@ class FeuserController extends ActionController
         $this->modifySettingsBeforeActionMethodValidators();
 
         if (
-            $this->modifyValidator->shouldValidationBeModified(
+            !$this->actionIgnoresValidation()
+            && $this->modifyValidator->shouldValidationBeModified(
                 $this,
                 $this->settings,
                 $this->request,
@@ -101,6 +102,22 @@ class FeuserController extends ActionController
         } else {
             parent::initializeActionMethodValidators();
         }
+    }
+
+    /**
+     * The validators configured in the settings must not replace an #[IgnoreValidation], for example on
+     * the proxy action: if the data sent from the preview became invalid in the meantime, the proxy would
+     * fail and forward to the preview, which fails again for the same data until the dispatcher gives up.
+     */
+    protected function actionIgnoresValidation(): bool
+    {
+        $actionMethod = $this->reflectionService->getClassSchema(static::class)->getMethod($this->actionMethodName);
+        foreach ($actionMethod->getParameters() as $parameter) {
+            if ($parameter->ignoreValidation()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
